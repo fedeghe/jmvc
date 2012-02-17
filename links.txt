@@ -1,9 +1,0 @@
-MODULE
-------
-http://www.adequatelygood.com/2010/3/JavaScript-Module-Pattern-In-Depth
-http://snook.ca/archives/javascript/no-love-for-module-pattern
-http://www.codeproject.com/KB/scripting/ModulePattern.aspx
-
-Patterns
---------
-http://addyosmani.com/resources/essentialjsdesignpatterns/book/#creationalpatternjavascript
