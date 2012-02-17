@@ -1,0 +1,64 @@
+   ___     ____  __  ____ 
+  (_) \   / /  \/  |/ ___|
+  | |\ \ / /| |\/| | |    
+  | | \ V / | |  | | |___ 
+ _/ |  \_/  |_|  |_|\____|
+|__/                      
+
+Description: jmvc module
+
+Author: Federico Ghedina
+Version: 0.1
+Date : 26-01-2012
+
+
+<b>Installation</b>
+------------
+Thanks to a basic .htaccess jmcv access point is an index.html which loads in the head the main script
+and is meant to have empty body, in fact the whole body will be rewritten (see index.html)
+NOTE: the src attribute of the script must be the absolute url for jmvc.js
+All you have to do is, write controllers, models and views.
+
+
+<b>Features</b>
+--------
+$fr$ url dispatching
+$fr$ from a controller action is possible to load views and models (synchronous ajax requests, otherwise eval is late)
+$fr$ default controller and action (inherited 'index')
+$fr$ each view has his own hash to contain variables.
+$fr$ in views you can write special variable placeholders in the format <b>&#36;variable_name&#36;</b> that will be replaced with the view variable (contained in the relative hash)
+$fr$ substitution is recursive (up limited to 10 nesting levels)
+$fr$ dinamically load other scripts and stylesheets 
+$fr$ the content produced affects ONLY the content of the body, You can edit the head with some limitations using JMVC.head methods (or external scripts)
+$fr$ no global variables
+$fr$ 3.5Kb (minified and packed)
+$fr$ automatic extra parameters from url
+$fr$ automatic extra parameters from querystring
+$fr$ utilities for ajax requests, some dom manipulations and some useful functions
+
+
+<b>Url structure</b>
+-------------
+Supposing we're using virtual host http://www.jmvc.dev , a location will be 
+
+something like: http://www.jsbase.dev / controller_name / action_name / var1/val1/var2/val2/var3 ? var4=Fred&var5=notme&var1=foo
+                '-------------------'   '-------------'   '---------'   '----------------------'   '---------------------------'
+                         A                     A               A                   A                            A
+> proto+domain ----------'                     |               |                   |                            |
+                                               |               |                   |                            |
+> controller ---------------------------------'                |                   |                            |
+                                                               |                   |                            |
+> action -----------------------------------------------------'                    |                            |
+                                                                                   |                            |
+> parameters ---------------------------------------------------------------------'                             |
+                                                                                                                |
+> get params (do not override previous) -----------------------------------------------------------------------'
+
+
+NOTE: parameters are meant to be even, in the controller You will be able
+      to access and use 2 variables: var1="val1" and var2="val2"; the third
+      one will be ignored because unvalued.
+
+Try it
+------
+The fastest way to try it out is to create a virtual host or put it online (ex: http://www.jmvc.dev)

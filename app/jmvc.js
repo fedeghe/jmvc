@@ -1,0 +1,619 @@
+/*
+       ___     ____  __  ____ 
+      (_) \   / /  \/  |/ ___|
+      | |\ \ / /| |\/| | |    
+      | | \ V / | |  | | |___ 
+     _/ |  \_/  |_|  |_|\____|
+    |__/                      
+
+Description: jmvc module
+
+
+Author: Federico Ghedina
+Version: 0.1
+Date : 26-01-2012
+
+
+*/
+
+(function () {
+	
+	// 'use strict';
+	// strict mode locks callee function  on test/flag action cback, easy to WA
+	
+	var JMVC = (
+		function () {
+			var url, route, extend, dispatched,
+				Controller, Model, View;
+
+
+			/*****************/
+			/*  CONTROLLER   */
+			/*****************/
+			// parent controller
+			Controller = function () {};
+			/*for storing url vars*/
+			Controller.prototype.vars = {};
+			Controller.prototype.index = function () {alert('Default index action');};
+			Controller.prototype.relocate = function (uri) {document.location.href = '' + uri;};
+			Controller.prototype.render = function(content,cback){
+				var tmp_v = new View(content);
+				tmp_v.render(typeof cback === 'function'?{cback:cback} : null);
+			};
+			
+
+			/*****************/
+			/*     MODEL     */
+			/*****************/
+			Model = function () {};
+			Model.prototype.vars = {};
+			Model.prototype.constructor = 'model';	
+	
+
+			/*****************/
+			/*      VIEW     */
+			/*****************/
+			/* directly instantiated assinging content */
+			View = function (cnt) {	
+				this.content = cnt || 'content';
+				this.vars = {
+					'baseurl':JMVC.baseurl
+				};
+			};
+			
+			//meat to pass a model, all %name% placeholders in the view content
+			// will be replaced with the model variable value if exists
+			View.prototype.parse = function(obj){
+				for(var j in obj.vars){
+					this.content = this.content.replace('$'+j+'$', obj.vars[j]);
+				}
+			};
+			
+			View.prototype.render = function(){//} (cback, argz) {
+				
+				var arg = arguments[0] || {},
+					
+					// maybe a callback is passed
+					cback = arg.cback || false,
+					// and maybe some args must be passed to the callback
+					argz = arg.argz || null,
+					
+					// the use may specify a string with an id, that's where the content will be loaded
+					// note that here dom is not loaded so you cannot pass an element
+					target = arg.target || false,
+					
+					//for binding this context in the callback
+					that = this,
+					cont = that.content,
+					
+					//for blocks
+					patt = new RegExp("{{(.[^\\$}]*)}}",'gm'),
+					
+					// for variables
+					pattvar = new RegExp("\\$(.[^\\$}]*)\\$",'gm'),
+					
+					res,
+					myview,
+					resvar,
+					i=0, limit=100;
+					
+				while (true && i++<limit) {
+					res = patt.exec(cont);
+					if (res) {
+						//se nn creata avverto
+						if (!JMVC.views[res[1]]) {
+							alert('`'+res[1]+'` view not loaded.\nUse Factory in the controller to get it. \n\njmvc will'+
+								' load it for you but variables are\n lost and will not be replaced.');
+							JMVC.factory('view',res[1]);
+						} 
+						myview = JMVC.views[res[1]];
+
+						/* before view substitution, look for variables*/					
+						while (true) {
+							resvar = pattvar.exec(myview.content);
+							if (resvar) {
+								myview.content = myview.content.replace('$'+resvar[1]+'$', myview.get(resvar[1]) );
+							}else{
+								break;
+							}
+						}
+						// now the whole view
+						cont = cont.replace('{{'+res[1]+'}}', myview.content);					
+					}else{
+						break;
+					}
+				}
+
+				// look for / substitute  vars in the main view
+				while (true) {
+					resvar = pattvar.exec(cont);
+					if (resvar) {
+						var t = this.get(resvar[1]);
+						//alert(t);						
+						cont = cont.replace('$'+resvar[1]+'$', t  );
+					} else {
+						break;
+					}
+				}			
+				that.content = cont;			
+				JMVC.events.bind(window, 'load', function () {
+						var targ = (typeof target === 'string' && document.getElementById(target))	?
+							document.getElementById(target)	:	document.body ;
+						JMVC.dom.html(targ, that.content);
+						//may be a callback?
+						if (cback) {
+							argz = JMVC.util.isSet(argz)	?
+								argz : [];
+							cback.apply(argz);
+						}
+					}				
+				);
+			};
+			
+			//for inheritance
+			extend = function(Child, Parent) {				
+				/*var F = function(){};
+				F.prototype = Parent.prototype;
+				Child.prototype = new F();
+				Child.prototype.constructor = Child;
+				Child.uber = Parent.prototype;
+				*/
+			   Child.prototype = new Parent();
+			   
+			};
+/*
+			function gsd () {
+				this.get = function (vname) { return (JMVC.util.isSet(this.vars[vname])) ? this.vars[vname] : false; };
+				this.set = function (vname, vval, force) { if(!JMVC.util.isSet(this.vars[vname]) || force){ this.vars[vname] = vval; } };
+				this.del = function (vname) { if(JMVC.util.isSet(this.vars[vname])){ delete this.vars[vname];} };
+			};
+
+			extend (View, gsd);
+			extend (Controller, gsd);
+			extend (Model, gsd);
+*/
+
+			View.prototype.get =
+			Model.prototype.get =
+			Controller.prototype.get = function (vname) {return (JMVC.util.isSet(this.vars[vname])) ? this.vars[vname] : false;}; 
+			
+			View.prototype.set = Model.prototype.set = Controller.prototype.set = function (vname, vval, force) {
+				switch(typeof vname){
+					case 'string':
+						if(!JMVC.util.isSet(this.vars[vname]) || force){this.vars[vname] = vval;}
+					break;
+					case 'object':
+						for(var i in vname){
+							if(!JMVC.util.isSet(this.vars[i]) || force){this.vars[i] = vname[i];}
+						}
+					break;
+				}
+				 return this;
+			};
+			View.prototype.del =
+			Model.prototype.del =
+			Controller.prototype.del = function (vname) {if(JMVC.util.isSet(this.vars[vname])){delete this.vars[vname];}};
+
+
+
+			
+			// ensure ucfirst controller name
+			var normalize = function(n){return n.charAt(0).toUpperCase() + n.substr(1).toLowerCase();};
+
+
+			// type can be only 'view' or 'model'
+			function factory_method(type, ename){
+				var path_absolute = '/app/'+type+'s/'+ename, r;
+				switch(type){
+					case 'view':path_absolute += '.html';break;
+					case 'model': case 'controller':path_absolute += '.js';break;
+					default:type = false;break;
+				}
+				if(!type){return false;}
+				//ajax get script content and return it
+				return get(path_absolute, type, ename);
+				///return type=='view' ? JMVC.views[name] : r;
+			}
+			
+
+			// instance new view content or eval a model or controller
+			function get(path, type, name){
+				
+				var ret = false;
+				
+				switch(true){
+					case type==='view' && typeof JMVC.views[name] == 'function':
+						ret = JMVC.views[name];
+					break;
+					case type==='model' && typeof JMVC.models[name] == 'function':
+						var o = new JMVC.models[name]();
+						o.vars = {};
+						ret = o;
+					break;
+					default :
+						JMVC.io.get(
+							path,
+							type,
+							function cback(res){
+								switch(type){
+									case 'view':
+										JMVC.views[name] = new View(res);
+										ret =  JMVC.views[name];
+									break;
+									case 'controller':
+										res = res.replace(/^(\s*)\/\/(.*)[\n]/g,'/*$1*/\n');
+										eval(res); /* ##################### */
+										extend(JMVC[type+'s'][name], Controller);
+									break;
+									case 'model':
+										eval(res); /* ##################### */
+										extend(JMVC[type+'s'][name], Model);
+										var o = new JMVC.models[name]();
+										o.vars = {};
+										ret = o;
+									break;
+								}
+							}
+						);
+					break;
+					
+				}
+				
+				return ret;
+			}
+
+			
+
+
+			dispatched = (function dispatch(){
+				var l = document.location,
+					mid = {
+						url : l.protocol+'//'+l.hostname+l.pathname+l.search,
+						proto : l.protocol, 
+						host : l.hostname,
+						path : l.pathname,
+						hash : l.search
+					},
+					url = mid,
+					els = mid.path.substr(1).split('/'),
+					controller = els.shift() || 'index',
+					action = els.shift() || 'index',
+					params = {},
+					lab_val,
+					ret,
+					i,len=els.length;
+
+				
+			   
+				for(i = 0; i+1 < len;i+=2){
+					params[els[i]] = els[i+1];
+				}
+
+				//even hash for GET params
+				if(mid.hash !== ''){ // spliting an empty string give an array with one empty string
+					els = mid.hash.substr(1).split('&');
+					for(i = 0; i<len; i++){
+
+						lab_val = els[i].split('=');
+						//do not override path params
+						if(!params[lab_val[0]]){
+							params[lab_val[0]] = lab_val[1];
+						}
+
+					}
+				}
+				ret = {
+					controller : controller.replace(/\//g,''),
+					action : action.replace(/\//g,''),
+					params : params,
+					baseurl : l.protocol+'//'+l.hostname
+				};
+				ret.controller = normalize(ret.controller);
+				
+				
+				
+				
+				return ret;
+			})();
+
+
+
+			// 
+			function render(){
+
+				var controller;
+
+				//"import" the controller (eval ajax code) 
+				JMVC.factory('controller',route.c);
+
+				//if the constructor has been evalued correctly
+				if(JMVC.controllers[route.c]){
+
+					//grant ineritance from parent Controller
+					extend(JMVC.controllers[route.c], Controller);
+
+					//make an instance
+					controller = new JMVC.controllers[route.c]();
+
+					for(var i in route.p){
+						controller.set(i,  decodeURI(route.p[i]) );
+					}
+
+					//call action
+					if(controller[route.a]){
+						controller[route.a]();
+					}else{
+						document.location.href = '/404/msg/act/'+route.a;
+					}
+				}else{
+					document.location.href = '/404/msg/cnt/'+route.c;
+				}
+
+			}
+
+			//
+			// DO NOT return directly, route is used above
+			//
+			route = {
+				c : dispatched.controller || 'index',
+				a : dispatched.action || 'index',
+				p : dispatched.params || {},
+
+				controllers : {},
+				models : {},
+				views : {},
+
+				baseurl:	dispatched.baseurl,
+				render:		render,
+				factory:	factory_method,
+				getView :	function(n){return factory_method('view', n);},
+				getModel :	function(n){return factory_method('model', n);},
+				getController :	function(n){return factory_method('controller', n);}
+			};
+
+			return route;
+		}
+	)();
+	
+	/*
+	ajax utility
+	*/
+	JMVC.io = {
+		x : [],//requests pool
+		
+		get : function(u, tipo, cback, p){
+			var id = JMVC.io.x.length;
+			
+			var IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'],
+				//be synchronous, otherwise eval is late	
+				sync = false;
+			try {
+				JMVC.io.x[id] = new XMLHttpRequest();
+			}catch (e) {
+				try{
+					for (var i = 0, len = IEfuckIds.length; i < len; i++){
+						try{ JMVC.io.x[id] = new ActiveXObject(IEfuckIds[i]); }catch(e){} 
+					}
+				}catch (e) {}
+			}
+
+			JMVC.io.x[id].onreadystatechange=function(){
+				if(JMVC.io.x[id].readyState==4 && JMVC.io.x[id].status==200){
+					cback(JMVC.io.x[id].responseText);
+				}
+				return '';
+			};
+			if(p){
+				try{
+					JMVC.io.x[id].open('POST',u,sync);
+					JMVC.io.x[id].setRequestHeader('Content-type','application/x-www-form-urlencoded');
+					if (JMVC.io.x[id].overrideMimeType) {JMVC.io.x[id].setRequestHeader("Connection", "close");}
+					JMVC.io.x[id].send(p);
+				}catch(e){}
+			}else{
+				try{
+					JMVC.io.x[id].open('GET',u,sync);
+					JMVC.io.x[id].send(null);
+				}catch(e){}
+			}
+		}
+	};	
+
+	JMVC.extend = function(){
+		var what = arguments[0],
+			arr_func_obj = arguments[1] || {};
+		for(var i in arr_func_obj){
+
+			if(typeof what[i] === 'undefined' && (typeof arr_func_obj[i] === 'function' || typeof arr_func_obj[i] === 'object' )){
+
+				switch(true){
+					case typeof arr_func_obj[i] === 'function' :
+						what.method(i,arr_func_obj[i]);
+					break;
+					case typeof arr_func_obj[i] === 'object' :
+						j[i] = arr_func_obj[i];
+					break;
+					default:break;
+				}
+
+			}
+		}
+	};
+
+	/*
+	inner html utility
+	*/
+	JMVC.dom = {
+		append : function(where, what){
+			where.appendChild(what);
+		},
+		create : function(tag, attrs, inner){
+			var node = document.createElement(tag);
+			attrs = attrs || {};
+			for(var att in attrs){
+				node.setAttribute(''+att, ''+attrs[att]);
+			}
+			if(typeof inner !== 'undefined'){
+				this.html(node, inner);
+			}
+			return node;
+		},
+		html : function(el, html) { 
+			var t = ""; 
+			if(typeof html !== 'undefined'){
+				el.innerHTML = html;
+				return this;
+			}else{
+				t = (el.nodeType === 1) ? el.innerHTML : el;
+			}
+			return t.trim(); 
+		},
+		is_array : function(o){
+			return o instanceof Array;
+		},
+		istypeOf : function(el, type){
+			return typeof el === type;
+		}
+		//,isSet : function(e){return typeof e !== 'undefined';}
+	};
+
+	/*
+	basic event utility
+	*/
+	JMVC.events = {
+		bind : function(el,tipo,fun) { 
+			if (window.addEventListener) { 
+				el.addEventListener(tipo, fun, false); 
+			}else if (window.attachEvent) {
+				var f = function(){fun.call(el, window.event)};
+				el.attachEvent('on'+tipo, f)
+			}else{
+				el['on'+tipo] = function(){fun.call(el, window.event)};
+			}
+		},
+		onedone : false,
+		one : function(what, type, fn){
+			var newf = function(){if(! this.onedone)fn();this.onedone = true;};
+			this.bind(what,type, newf);
+		},	
+		
+		ready : function(func){
+			return this.bind(window, 'load',func);
+		}
+	};
+	JMVC.util = {
+		isSet : function(e){return typeof e !== 'undefined';},
+		in_array : function(arr, nome){
+			var res = -1;
+			for(var i = 0, len = arr.length; i<len; i++){
+				if(nome === arr[i]){res = i;break;}
+			}
+			return res;
+		},
+		getRandomColor : function(){
+			var ret = '#';
+			for(var i = 0; i < 6; i++){
+				var num = Math.floor((Math.random()*100) % 16);
+
+				var temp = num.toString(16);
+				ret += ''+temp;
+			}
+			return ret;
+		},
+	
+		hex2rgb : function(hex){
+			var strhex = ''+hex;
+			var more = (strhex.charAt(0)=='#')?1:0;
+			//alert(hex);
+			return {
+				r : parseInt(strhex.substr(more,2),16),
+				g : parseInt(strhex.substr(more+2,2),16),
+				b : parseInt(strhex.substr(more+4,2),16)
+			};
+		},
+	
+		rgb2hex : function(obj){
+			var r,g,b;
+			if(typeof obj === 'object'){
+				r = obj.r;g = obj.g;b = obj.b;
+			}else
+			if(typeof obj === 'string'){
+				var arr_rgb = obj.split(',');
+				r = parseInt(arr_rgb[0],10);
+				g = parseInt(arr_rgb[1],10);
+				b = parseInt(arr_rgb[2],10);
+				//	alert(r+' '+g+' '+b);
+			}
+			return '#'+JMVC.util.padme(r.toString(16),0,'pre')+JMVC.util.padme(g.toString(16),0,'pre')+JMVC.util.padme(b.toString(16),0,'pre');
+		},
+		padme : function(val,el,pos,len){
+			len = len || 2;
+			while((val+'').length<len){
+				switch(pos){
+					case 'pre':
+						val = ''+el+val;
+					break;
+					case 'post':
+						val = ''+val+el;
+					break;
+				}
+			}
+			return val;
+		},
+		rand : function(min,max){
+			return min+Math.floor(Math.random()*(max-min + 1));
+		}
+	};
+
+	JMVC.head = {
+		addscript: function(src){
+			var script = document.createElement('script');
+			script.type = 'text/javascript';
+			script.src = src;
+			var head = document.getElementsByTagName('head').item(0);
+			head.appendChild(script);
+		},
+		addstyle : function(src){
+			var style = document.createElement('link');
+			style.type = 'text/css';
+			style.rel = 'stylesheet';
+			style.href = src;
+			var head = document.getElementsByTagName('head').item(0);
+			head.appendChild(style);
+		},
+		title : function(t){
+			if(!JMVC.util.isSet(t)){return document.title;}
+			document.title = t;
+			return true;
+		},
+		element : document.getElementsByTagName('head').item(0),
+		meta : function(){}
+	};
+
+
+
+
+	// Basic function to create an object of a prototype
+	Object.create = function (o) {
+		var O = function () {};
+		O.prototype = o;
+		return new O();
+	};
+	//
+	// Basic Function extension to add a method to an object function
+	Function.prototype.method = function (name, fn) {
+		if (name instanceof Array) {
+			for (var n in name) {
+				this.method(n, name[n]);
+			}
+		}
+		this.prototype[name] = fn;
+		return this;
+	};
+	//disable the console
+	//delete console;
+	//... render
+	JMVC.render();
+	
+
+})();

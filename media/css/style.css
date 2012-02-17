@@ -1,0 +1,28 @@
+body{	
+	color: #003366;
+	background-color: lightGray;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 12px;
+	background-image: url(../img/pattern.jpg) 
+}
+div#cent{
+	color: #009933;
+	padding:10px;
+	letter-spacing: 5px;
+	font-size:20px;
+	font-weight:bold;
+	width:650px;
+	margin:0 auto;
+	text-align:center;
+	margin-top:180px;
+}
+a{
+	color:#ddd;
+	text-decoration:none;
+	font-size:20px;
+	letter-spacing: 0px;
+}
+a:hover{
+	color:#fff;
+}
+

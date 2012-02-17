@@ -1,0 +1,25 @@
+# ###########################
+#     _ __  ____     ______ 
+#    (_)  \/  \ \   / / ___|
+#    | | |\/| |\ \ / / |    
+#    | | |  | | \ V /| |___ 
+#   _/ |_|  |_|  \_/  \____|
+#  |__/    
+#
+# ###########################
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+	#	comment RewriteBase for go in localhost
+	#	RewriteBase /
+
+	#	per modelli, viste e controller e storage
+	RewriteRule ^(app|media)(.*)?$ - [L]
+
+	#	Page (if not a file/directory)
+	RewriteCond   %{REQUEST_FILENAME} !-d
+	RewriteCond   %{REQUEST_FILENAME} !-f
+	#
+	RewriteRule ^.*$ index.html [PT,L]
+</IfModule>
