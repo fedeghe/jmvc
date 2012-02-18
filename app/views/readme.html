@@ -1,8 +1,8 @@
-   ___     ____  __  ____ 
-  (_) \   / /  \/  |/ ___|
-  | |\ \ / /| |\/| | |    
-  | | \ V / | |  | | |___ 
- _/ |  \_/  |_|  |_|\____|
+   _  __  __ __     __ ____ 
+  (_)|  \/  |\ \   / //  __|
+  | || |\/| | \ \ / / | |    
+  | || |  | |  \ v /  | |__ 
+ _/ ||_|  |_|   \_/   \____|
 |__/                      
 
 Description: jmvc module
@@ -36,6 +36,28 @@ $fr$ automatic extra parameters from url
 $fr$ automatic extra parameters from querystring
 $fr$ utilities for ajax requests, some dom manipulations and some useful functions
 
+$fr$ cross-browser
+$fr$ no global variables so no collisions are possible
+$fr$ url dispatching
+$fr$ load views and models (synchronous ajax requests, otherwise model eval is late) from a controller
+$fr$ default controller and action (inherited 'index')
+$fr$ each view, model or controller has his own hash as private registry to contain variables.
+$fr$ in views you can write special variable placeholders for other views or for view's variable:
+  >	<b>&#36;variable_name&#36;</b> for variable
+  >	<b>{{my_view}}</b> for a view
+  > <b>{{my_view name=`Federico` surname=`Ghedina`}}</b>
+  these will be replaced with the element content (recusively parsed, within 10 nesting level)
+$fr$ dinamically load other scripts and stylesheets 
+$fr$ the content produced by default affects the content of the body, but You can choose to affect
+	the content of a node with an ID attribute.
+	You can edit the head with some limitations using JMVC.head methods (or your scripts)
+$fr$ 7.1Kb (packed)
+$fr$ total warranty for completely seo <b>un</b>friendly pages
+$fr$ automatic extra parameters from url
+$fr$ automatic extra parameters from querystring
+$fr$ add action routes in the controller (see test controller)
+
+
 
 <b>Url structure</b>
 -------------
@@ -59,6 +81,77 @@ NOTE: parameters are meant to be even, in the controller You will be able
       to access and use 2 variables: var1="val1" and var2="val2"; the third
       one will be ignored because unvalued.
 
-Try it
+<b>Try it</b>
 ------
 The fastest way to try it out is to create a virtual host or put it online (ex: http://www.jmvc.dev)
+
+
+
+<b>API</b>
+===
+
+
+<b>Controller</b>
+----------
+>>> set(String varname,	Mixed value);
+Add a variable to the Controller registry.
+
+>>> get(String varname);
+If exists retrieve a variable from the Controller registry.
+
+>>> del(String varname);
+If exists deletes a variable from the Controller registry.
+
+>>> relocate(uri location);
+Redirects to a specified location.
+
+>>> render(String content,	Javascript function callback);
+Renders directly something from the controller.
+
+
+
+<b>View</b>
+----
+>>> set(String varname, Mixed value);
+Add a variable to the View registry.
+
+>>> get(String varname);
+If exists retrieve a variable from the View registry.
+
+>>> del(String varname);
+If exists deletes a variable from the View registry.
+
+>>> parse(Model object);
+If the view has some $var$ placeholders within and these
+variables are stored in a model instance with the right
+names, that method get values from model instance and uses
+them in the placeholders content substitution.
+
+>>> render( {
+	cback : Javascript function,
+	argz : callback array parameters,
+	target : dom node id attribute (default document.body)
+});
+This is the function intended to be used to render the document
+or a part of it. You can optionally pass three elements within
+a literal object:
+cback : a callback function that will be executed after rendereing
+argz : an array of parameters that wil be used with the callback
+target : the default target is the document.body but if you pass a
+	string containing the id attribute of an element that is in the
+	DOM (set from previous render with the default target) the content
+	will be set in that element.
+
+
+
+<b>Model</b>
+-----
+>>> set(String varname, Mixed value);
+Add a variable to the Model registry.
+
+>>> get(String varname);
+If exists retrieve a variable from the Model registry.
+
+>>> del(String varname);
+If exists deletes a variable from the Model registry.
+
