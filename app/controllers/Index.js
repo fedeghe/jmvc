@@ -50,18 +50,19 @@ JMVC.controllers.Index = function(){
 		index.set('i_say', 'be seo-unfriendly');
 		
 		index.render({
-			cback:function(){
-				var link = JMVC.dom.create('a',{href:JMVC.baseurl+'/info', title:'more info'},'&infin;');
+			cback:function(n, c){
+				var link = JMVC.dom.create('a',{href:JMVC.baseurl+'/info', title:'more info'},'&infin;'+n+c);
 				JMVC.events.bind(link, 'click',function(){this.blur();});
 				JMVC.dom.append(document.getElementById('cent'), link);
 			},
+			argz : [' or what ', 'else?'],
 			target:'trial'
 		});
 		//
 		// now index is loaded and contains a #cent div
 		// we try to substitute the content with the hello view content
 		// and give value to a var in it
-		hello.set('name', 'My guest');
+		hello.set('name', 'My JMVC guest');
 		hello.render({target:'cent'});
 		
 	};

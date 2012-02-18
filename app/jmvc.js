@@ -19,7 +19,10 @@ Date : 26-01-2012
 (function () {
 	
 	// 'use strict';
-	// strict mode locks callee function  on test/flag action cback, easy to WA
+	/*
+	 * strict mode locks callee function
+	 * on test/flag action cback, easy to WA
+	 */
 	
 	var JMVC = (
 		function () {
@@ -30,9 +33,10 @@ Date : 26-01-2012
 			/*****************/
 			/*  CONTROLLER   */
 			/*****************/
-			// parent controller
+			/* parent controller */
 			Controller = function () {};
-			/*for storing url vars*/
+			
+			/* for storing url vars */
 			Controller.prototype.vars = {};
 			Controller.prototype.index = function () {alert('Default index action');};
 			Controller.prototype.relocate = function (uri) {document.location.href = '' + uri;};
@@ -61,55 +65,110 @@ Date : 26-01-2012
 				};
 			};
 			
-			//meat to pass a model, all %name% placeholders in the view content
-			// will be replaced with the model variable value if exists
+			/*
+			 * meat to pass a model, all %name%
+			 * placeholders in the view content
+			 * will be replaced with the model
+			 * variable value if exists
+			 */
 			View.prototype.parse = function(obj){
-				for(var j in obj.vars){
+				var j;
+				for(j in obj.vars){
 					this.content = this.content.replace('$'+j+'$', obj.vars[j]);
 				}
 			};
 			
-			View.prototype.render = function(){//} (cback, argz) {
+			View.prototype.render = function(){
 				
+				//console.debug(arguments[0]);
 				var arg = arguments[0] || {},
 					
-					// maybe a callback is passed
+					/* maybe a callback is passed */
 					cback = arg.cback || false,
-					// and maybe some args must be passed to the callback
+					/* and maybe some args must be passed to the callback */
 					argz = arg.argz || null,
 					
-					// the use may specify a string with an id, that's where the content will be loaded
-					// note that here dom is not loaded so you cannot pass an element
+					/* the use may specify a string with an id,
+					 * that's where the content will be loaded
+					 * note that here dom is not loaded so you
+					 * cannot pass an element
+					 */
 					target = arg.target || false,
 					
-					//for binding this context in the callback
+					/* for binding this context in the callback */
 					that = this,
 					cont = that.content,
 					
-					//for blocks
+					/* for blocks */
 					patt = new RegExp("{{(.[^\\$}]*)}}",'gm'),
-					//pattb = new RegExp("([a-z]*)=`(.[^`]*)`",'gm'),
+					pattpar = new RegExp("\\s(.[A-z]*)=`(.[^/`]*)`",'gm'),
 					
-					// for variables
+					/* for variables */
 					pattvar = new RegExp("\\$(.[^\\$}]*)\\$",'gm'),
 					
 					res,
 					myview,
 					resvar,
-					i=0, limit=100;
+					i=0, limit=100,
+					viewname,orig,tmp,
+					register, t, k;
 					
 				while (true && i++<limit) {
 					res = patt.exec(cont);
-					if (res) {						
-						//se nn creata avverto
-						if (!JMVC.views[res[1]]) {
-							alert('`'+res[1]+'` view not loaded.\nUse Factory in the controller to get it. \n\njmvc will'+
+					if (res) {
+						
+						viewname = orig = res[1];
+						
+						register = false;
+						
+						/* got params? */
+						if(pattpar.test(res[1])){
+							
+							register = {};
+							
+							/* get the view name */
+							tmp  = (new RegExp("^(.[A-z]*)\\s")).exec(res[1]);
+							viewname = tmp[1];
+							
+							tmp = res[1];
+							while (true) {
+								/* this is exactly pattpar but if I use it does not work */
+								resvar = (new RegExp("\\s(.[A-z]*)=`(.[^/`]*)`",'gm')).exec(tmp);
+								
+								if (resvar) {
+									/* add to temporary register */
+									register[resvar[1]] = resvar[2];
+									tmp = tmp.replace(' '+resvar[1]+'=`'+resvar[2]+'`', "" );
+								}else{
+									break;
+								}
+							}
+						}
+						
+						/* if not loaded give an alert */
+						if (!JMVC.views[viewname]) {
+							alert('`'+viewname+'` view not loaded.\nUse Factory in the controller to get it. \n\njmvc will'+
 								' load it for you but variables are\n lost and will not be replaced.');
-							JMVC.factory('view',res[1]);
+							JMVC.factory('view',viewname);
 						} 
-						myview = JMVC.views[res[1]];
+						myview = JMVC.views[viewname];
+						
+						/*
+						 * in case there are some vars in placeholder
+						 * register will hold values obtained above
+						 * and we give'em to the view, the parse method
+						 * will do the rest
+						 */
+						if(register !== false){
+							for(k in register){
+								myview.set(k, register[k]);
+							}
+						}
 	
-						/* before view substitution, look for variables*/					
+						/*
+						 * before view substitution,
+						 * look for variables
+						 */
 						while (true) {
 							resvar = pattvar.exec(myview.content);
 							if (resvar) {
@@ -118,19 +177,20 @@ Date : 26-01-2012
 								break;
 							}
 						}
-						// now the whole view
-						cont = cont.replace('{{'+res[1]+'}}', myview.content);					
+						/* now the whole view */
+						cont = cont.replace('{{'+orig+'}}', myview.content);					
 					}else{
 						break;
 					}
 				}
 
-				// look for / substitute  vars in the main view
+				/* look for / substitute  vars
+				 * in the main view
+				 */
 				while (true) {
 					resvar = pattvar.exec(cont);
 					if (resvar) {
-						var t = this.get(resvar[1]);
-						//alert(t);						
+						t = this.get(resvar[1]);	
 						cont = cont.replace('$'+resvar[1]+'$', t  );
 					} else {
 						break;
@@ -141,11 +201,12 @@ Date : 26-01-2012
 						var targ = (typeof target === 'string' && document.getElementById(target))	?
 							document.getElementById(target)	:	document.body ;
 						JMVC.dom.html(targ, that.content);
-						//may be a callback?
+						/* may be a callback? */
 						if (cback) {
 							argz = JMVC.util.isSet(argz)	?
 								argz : [];
-							cback.apply(argz);
+							
+							cback.apply(this, argz);
 						}
 					}				
 				);
@@ -153,7 +214,8 @@ Date : 26-01-2012
 			
 			//for inheritance
 			extend = function(Child, Parent) {				
-				/*var F = function(){};
+				/*
+				 *var F = function(){};
 				F.prototype = Parent.prototype;
 				Child.prototype = new F();
 				Child.prototype.constructor = Child;
@@ -179,12 +241,13 @@ Date : 26-01-2012
 			Controller.prototype.get = function (vname) {return (JMVC.util.isSet(this.vars[vname])) ? this.vars[vname] : false;}; 
 			
 			View.prototype.set = Model.prototype.set = Controller.prototype.set = function (vname, vval, force) {
+				var i ;
 				switch(typeof vname){
 					case 'string':
 						if(!JMVC.util.isSet(this.vars[vname]) || force){this.vars[vname] = vval;}
 					break;
 					case 'object':
-						for(var i in vname){
+						for(i in vname){
 							if(!JMVC.util.isSet(this.vars[i]) || force){this.vars[i] = vname[i];}
 						}
 					break;
@@ -198,11 +261,11 @@ Date : 26-01-2012
 
 
 			
-			// ensure ucfirst controller name
+			/* ensure ucfirst controller name */
 			var normalize = function(n){return n.charAt(0).toUpperCase() + n.substr(1).toLowerCase();};
 
 
-			// type can be only 'view' or 'model'
+			/* type can be only 'view' or 'model' */
 			function factory_method(type, ename){
 				var path_absolute = '/app/'+type+'s/'+ename, r;
 				switch(type){
@@ -211,23 +274,23 @@ Date : 26-01-2012
 					default:type = false;break;
 				}
 				if(!type){return false;}
-				//ajax get script content and return it
+				/* ajax get script content and return it */
 				return get(path_absolute, type, ename);
-				///return type=='view' ? JMVC.views[name] : r;
+				/* return type=='view' ? JMVC.views[name] : r; */
 			}
 			
 
-			// instance new view content or eval a model or controller
+			/* instance new view content or eval a model or controller */
 			function get(path, type, name){
 				
-				var ret = false;
+				var ret = false, o;
 				
 				switch(true){
 					case type==='view' && typeof JMVC.views[name] == 'function':
 						ret = JMVC.views[name];
 					break;
 					case type==='model' && typeof JMVC.models[name] == 'function':
-						var o = new JMVC.models[name]();
+						o = new JMVC.models[name]();
 						o.vars = {};
 						ret = o;
 					break;
@@ -249,7 +312,7 @@ Date : 26-01-2012
 									case 'model':
 										eval(res); /* ##################### */
 										extend(JMVC[type+'s'][name], Model);
-										var o = new JMVC.models[name]();
+										o = new JMVC.models[name]();
 										o.vars = {};
 										ret = o;
 									break;
@@ -257,13 +320,9 @@ Date : 26-01-2012
 							}
 						);
 					break;
-					
 				}
-				
 				return ret;
 			}
-
-			
 
 
 			dispatched = (function dispatch(){
@@ -283,24 +342,24 @@ Date : 26-01-2012
 					lab_val,
 					ret,
 					i,len=els.length;
-
-				
-			   
+					
 				for(i = 0; i+1 < len;i+=2){
 					params[els[i]] = els[i+1];
 				}
 
-				//even hash for GET params
-				if(mid.hash !== ''){ // spliting an empty string give an array with one empty string
+				/* even hash for GET params */
+				if(mid.hash !== ''){
+					/* spliting an empty string give
+					 * an array with one empty string
+					 */
 					els = mid.hash.substr(1).split('&');
+					
 					for(i = 0; i<len; i++){
-
 						lab_val = els[i].split('=');
-						//do not override path params
+						/* do not override path params */
 						if(!params[lab_val[0]]){
 							params[lab_val[0]] = lab_val[1];
 						}
-
 					}
 				}
 				ret = {
@@ -311,37 +370,39 @@ Date : 26-01-2012
 				};
 				ret.controller = normalize(ret.controller);
 				
-				
-				
-				
 				return ret;
 			})();
 
 
 
-			// 
+			/* render function */
 			function render(){
 
-				var controller;
+				var controller, i;
 
-				//"import" the controller (eval ajax code) 
+				/* "import" the controller (eval ajax code) */
 				JMVC.factory('controller',route.c);
 
-				//if the constructor has been evalued correctly
+				/* if the constructor has been evalued correctly */
 				if(JMVC.controllers[route.c]){
 
-					//grant ineritance from parent Controller
+					/* grant basic ineritance from parent Controller */
 					extend(JMVC.controllers[route.c], Controller);
 
-					//make an instance
+					/* make an instance */
 					controller = new JMVC.controllers[route.c]();
+					
+					/* manage routes */
+					if(controller['_routes']){
+						route.a = controller['_routes'][route.a] || route.a;
+					}
 
-					for(var i in route.p){
+					for(i in route.p){
 						controller.set(i,  decodeURI(route.p[i]) );
 					}
 
-					//call action
-					if(controller[route.a]){
+					/* call action */
+					if(controller[route.a] && typeof controller[route.a] === 'function'){
 						controller[route.a]();
 					}else{
 						document.location.href = '/404/msg/act/'+route.a;
@@ -352,9 +413,9 @@ Date : 26-01-2012
 
 			}
 
-			//
-			// DO NOT return directly, route is used above
-			//
+			/*
+			 *DO NOT return directly, route is used above
+			 */
 			route = {
 				c : dispatched.controller || 'index',
 				a : dispatched.action || 'index',
@@ -380,13 +441,15 @@ Date : 26-01-2012
 	ajax utility
 	*/
 	JMVC.io = {
-		x : [],//requests pool
+		
+		/* requests pool */
+		x : [],
 		
 		get : function(u, tipo, cback, p){
 			var id = JMVC.io.x.length;
 			
 			var IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'],
-				//be synchronous, otherwise eval is late	
+				/* be synchronous, otherwise eval is late */
 				sync = false;
 			try {
 				JMVC.io.x[id] = new XMLHttpRequest();
@@ -442,8 +505,8 @@ Date : 26-01-2012
 	};
 
 	/*
-	inner html utility
-	*/
+	 * inner html utility
+	 */
 	JMVC.dom = {
 		append : function(where, what){
 			where.appendChild(what);
@@ -475,12 +538,11 @@ Date : 26-01-2012
 		istypeOf : function(el, type){
 			return typeof el === type;
 		}
-		//,isSet : function(e){return typeof e !== 'undefined';}
 	};
 
 	/*
-	basic event utility
-	*/
+	 * basic event utility
+	 */
 	JMVC.events = {
 		bind : function(el,tipo,fun) { 
 			if (window.addEventListener) { 
@@ -587,21 +649,20 @@ Date : 26-01-2012
 			document.title = t;
 			return true;
 		},
-		element : document.getElementsByTagName('head').item(0),
-		meta : function(){}
+		element : document.getElementsByTagName('head').item(0)
 	};
 
 
 
 
-	// Basic function to create an object of a prototype
+	/* Basic function to create an object of a prototype */
 	Object.create = function (o) {
 		var O = function () {};
 		O.prototype = o;
 		return new O();
 	};
-	//
-	// Basic Function extension to add a method to an object function
+	
+	/* Basic Function extension to add a method to an object function */
 	Function.prototype.method = function (name, fn) {
 		if (name instanceof Array) {
 			for (var n in name) {
@@ -611,9 +672,11 @@ Date : 26-01-2012
 		this.prototype[name] = fn;
 		return this;
 	};
+	/*
 	//disable the console
 	//delete console;
 	//... render
+	*/
 	JMVC.render();
 	
 

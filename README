@@ -23,7 +23,7 @@ All you have to do is, write controllers, models and views.
 Features
 --------
 - cross-browser
-- no global variables so no collision are possible
+- no global variables so no collisions are possible
 - url dispatching
 - load views and models (synchronous ajax requests, otherwise model eval is late) from a controller
 - default controller and action (inherited 'index')
@@ -31,6 +31,7 @@ Features
 - in views you can write special variable placeholders for other views or for view's variable:
   >	$variable_name$ for variable
   >	{{my_view}} for a view
+  > {{my_view name=`Federico` surname=`Ghedina`}}
   these will be replaced with the element content (recusively parsed, within 10 nesting level)
 - dinamically load other scripts and stylesheets 
 - the content produced by default affects the content of the body, but You can choose to affect
@@ -40,6 +41,7 @@ Features
 - total warranty for sompletely seo unfriendly pages
 - automatic extra parameters from url
 - automatic extra parameters from querystring
+- add action routes in the controller
 
 
 Url structure

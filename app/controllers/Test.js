@@ -1,5 +1,10 @@
 JMVC.controllers.Test = function(){
-
+	
+	/* test a route */ 
+	this._routes = {
+		swiss : 'flag',
+		f : 'flag'
+	};
 
 	// test a VIEW	
 	this.view = function(){
@@ -139,4 +144,13 @@ JMVC.controllers.Test = function(){
 			}
 		);
 	}
+	
+	this.viewplus = function(){
+		JMVC.head.title('Hello');
+		JMVC.getView('superview');
+		var _v = JMVC.getView('sv');
+		_v.set('hello', ', I said hellooooooo !!!');
+		_v.render();
+		
+	};
 };
