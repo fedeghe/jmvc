@@ -73,6 +73,13 @@ JMVC.controllers.Index = function(){
 		//directly render some code
 		this.render('<b>yupeeee</b>');
 	};
-	
+	this.codes = function(){
+		var content = '';
+		for(var i = 30; i<200; i++){
+			content += i+' : &#'+i+';<br />';
+			
+		}
+		this.render(content);
+	};
 	
 };

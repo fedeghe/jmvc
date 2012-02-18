@@ -22,20 +22,6 @@ All you have to do is, write controllers, models and views.
 
 <b>Features</b>
 --------
-$fr$ url dispatching
-$fr$ from a controller action is possible to load views and models (synchronous ajax requests, otherwise eval is late)
-$fr$ default controller and action (inherited 'index')
-$fr$ each view has his own hash to contain variables.
-$fr$ in views you can write special variable placeholders in the format <b>&#36;variable_name&#36;</b> that will be replaced with the view variable (contained in the relative hash)
-$fr$ substitution is recursive (up limited to 10 nesting levels)
-$fr$ dinamically load other scripts and stylesheets 
-$fr$ the content produced affects ONLY the content of the body, You can edit the head with some limitations using JMVC.head methods (or external scripts)
-$fr$ no global variables
-$fr$ 3.5Kb (minified and packed)
-$fr$ automatic extra parameters from url
-$fr$ automatic extra parameters from querystring
-$fr$ utilities for ajax requests, some dom manipulations and some useful functions
-
 $fr$ cross-browser
 $fr$ no global variables so no collisions are possible
 $fr$ url dispatching
@@ -43,10 +29,10 @@ $fr$ load views and models (synchronous ajax requests, otherwise model eval is l
 $fr$ default controller and action (inherited 'index')
 $fr$ each view, model or controller has his own hash as private registry to contain variables.
 $fr$ in views you can write special variable placeholders for other views or for view's variable:
-  >	<b>&#36;variable_name&#36;</b> for variable
-  >	<b>{{my_view}}</b> for a view
-  > <b>{{my_view name=`Federico` surname=`Ghedina`}}</b>
-  these will be replaced with the element content (recusively parsed, within 10 nesting level)
+	>	<b>&#36;variable_name&#36;</b> for variable
+	>	<b>&#123;&#123;my_view&#125;&#125;</b> for a view
+	>	<b>&#123;&#123;my_view name=`Federico` surname=`Ghedina`&#125;&#125;</b>
+	these will be replaced with the element content (recusively parsed, within 10 nesting level)
 $fr$ dinamically load other scripts and stylesheets 
 $fr$ the content produced by default affects the content of the body, but You can choose to affect
 	the content of a node with an ID attribute.
