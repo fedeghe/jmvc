@@ -23,19 +23,21 @@ All you have to do is, write controllers, models and views.
 Features
 --------
 - cross-browser
-- no global variables, no collision are possible
+- no global variables so no collision are possible
 - url dispatching
-- load views and models (synchronous ajax requests, otherwise eval is late) from a controller
+- load views and models (synchronous ajax requests, otherwise model eval is late) from a controller
 - default controller and action (inherited 'index')
-- each view has his own hash to contain variables.
+- each view, model or controller has his own hash as private registry to contain variables.
 - in views you can write special variable placeholders for other views or for view's variable:
   >	$variable_name$ for variable
-  > {{my_view}} for a view
+  >	{{my_view}} for a view
   these will be replaced with the element content (recusively parsed, within 10 nesting level)
 - dinamically load other scripts and stylesheets 
-- the content produced affects ONLY the content of the body, You can edit the head with some limitations using JMVC.head methods (or external scripts)
+- the content produced by default affects the content of the body, but You can choose to affect
+	the content of a node with an ID attribute.
+	You can edit the head with some limitations using JMVC.head methods (or your scripts)
 - 2.9Kb (minified and packed)
-- totally seo unfriendly pages
+- total warranty for sompletely seo unfriendly pages
 - automatic extra parameters from url
 - automatic extra parameters from querystring
 
@@ -69,19 +71,70 @@ The fastest way to try it out is to create a virtual host or put it online (ex: 
 
 
 API
----
+===
 
-Controller: 
-> addvar(String varname, Mixed value);
-> getvar(String varname);
-> delvar(String varname);
-> relocate(uri location);
 
-View:
-> addvar(String varname, Mixed value);
-> getvar(String varname);
-> delvar(String varname);
-> render();
+Controller
+----------
+>>> set(String varname,	Mixed value);
+Add a variable to the Controller registry.
 
-Model:
-no api
+>>> get(String varname);
+If exists retrieve a variable from the Controller registry.
+
+>>> del(String varname);
+If exists deletes a variable from the Controller registry.
+
+>>> relocate(uri location);
+Redirects to a specified location.
+
+>>> render(String content,	Javascript function callback);
+Renders directly something from the controller.
+
+
+
+View
+----
+>>> set(String varname, Mixed value);
+Add a variable to the View registry.
+
+>>> get(String varname);
+If exists retrieve a variable from the View registry.
+
+>>> del(String varname);
+If exists deletes a variable from the View registry.
+
+>>> parse(Model object);
+If the view has some $var$ placeholders within and these
+variables are stored in a model instance with the right
+names, that method get values from model instance and uses
+them in the placeholders content substitution.
+
+>>> render( {
+	cback : Javascript function,
+	argz : callback array parameters,
+	target : dom node id attribute (default document.body)
+});
+This is the function intended to be used to render the document
+or a part of it. You can optionally pass three elements within
+a literal object:
+cback : a callback function that will be executed after rendereing
+argz : an array of parameters that wil be used with the callback
+target : the default target is the document.body but if you pass a
+	string containing the id attribute of an element that is in the
+	DOM (set from previous render with the default target) the content
+	will be set in that element.
+
+
+
+Model
+-----
+>>> set(String varname, Mixed value);
+Add a variable to the Model registry.
+
+>>> get(String varname);
+If exists retrieve a variable from the Model registry.
+
+>>> del(String varname);
+If exists deletes a variable from the Model registry.
+

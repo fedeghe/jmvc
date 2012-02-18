@@ -88,6 +88,7 @@ Date : 26-01-2012
 					
 					//for blocks
 					patt = new RegExp("{{(.[^\\$}]*)}}",'gm'),
+					//pattb = new RegExp("([a-z]*)=`(.[^`]*)`",'gm'),
 					
 					// for variables
 					pattvar = new RegExp("\\$(.[^\\$}]*)\\$",'gm'),
@@ -99,7 +100,7 @@ Date : 26-01-2012
 					
 				while (true && i++<limit) {
 					res = patt.exec(cont);
-					if (res) {
+					if (res) {						
 						//se nn creata avverto
 						if (!JMVC.views[res[1]]) {
 							alert('`'+res[1]+'` view not loaded.\nUse Factory in the controller to get it. \n\njmvc will'+
@@ -107,7 +108,7 @@ Date : 26-01-2012
 							JMVC.factory('view',res[1]);
 						} 
 						myview = JMVC.views[res[1]];
-
+	
 						/* before view substitution, look for variables*/					
 						while (true) {
 							resvar = pattvar.exec(myview.content);

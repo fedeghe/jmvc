@@ -26,7 +26,7 @@ JMVC.controllers.Index = function(){
 				JMVC.events.bind(link, 'click',function(){this.blur();});
 				JMVC.dom.append(document.getElementById('cent'), link);
 				//see the pool
-				console.debug(JMVC.io.x);
+				//console.debug(JMVC.io.x);
 			}
 		});
 		
