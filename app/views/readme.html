@@ -49,18 +49,18 @@ $fr$ add action routes in the controller (see test controller)
 -------------
 Supposing we're using virtual host http://www.jmvc.dev , a location will be 
 
-something like: http://www.jsbase.dev / controller_name / action_name / var1/val1/var2/val2/var3 ? var4=Fred&var5=notme&var1=foo
-                '-------------------'   '-------------'   '---------'   '----------------------'   '---------------------------'
-                         A                     A               A                   A                            A
-> proto+domain ----------'                     |               |                   |                            |
-                                               |               |                   |                            |
-> controller ---------------------------------'                |                   |                            |
-                                                               |                   |                            |
-> action -----------------------------------------------------'                    |                            |
-                                                                                   |                            |
-> parameters ---------------------------------------------------------------------'                             |
-                                                                                                                |
-> get params (do not override previous) -----------------------------------------------------------------------'
+something like: http://www.jsbase.dev / controller / action / var1/val1/var2/val2/var3 ? var4=Fred&var5=notme&var1=foo
+                '-------------------'   '--------'   '----'   '----------------------'   '---------------------------'
+                         A                   A          A                A                            A
+> proto+domain ----------'                   |          |                |                            |
+                                             |          |                |                            |
+> controller -------------------------------'           |                |                            |
+                                                        |                |                            |
+> action ----------------------------------------------'                 |                            |
+                                                                         |                            |
+> parameters -----------------------------------------------------------'                             |
+                                                                                                      |
+> get params (do not override previous) -------------------------------------------------------------'
 
 
 NOTE: parameters are meant to be even, in the controller You will be able
