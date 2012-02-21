@@ -26,8 +26,12 @@ Date : 26-01-2012
 	
 	var JMVC = (
 		function () {
-			var url, route, extend, dispatched,
-				Controller, Model, View;
+			
+			var url,	/* current url */
+				route,	/* returning JMVC object */
+				extend,	/* minimal dummy function for granting basic inheritance */
+				dispatched,	/* literal to contain url mvc components */
+				Controller, Model, View; /* MVC objects constructors */
 
 
 			/*****************/
@@ -194,9 +198,7 @@ Date : 26-01-2012
 						JMVC.dom.html(targ, that.content);
 						/* may be a callback? */
 						if (cback) {
-							argz = JMVC.util.isSet(argz)	?
-								argz : [];
-							
+							argz = !!argz ? argz : [];							
 							cback.apply(this, argz);
 						}
 					}				
@@ -205,49 +207,32 @@ Date : 26-01-2012
 			
 			//for inheritance
 			extend = function(Child, Parent) {				
-				/*
-				 *var F = function(){};
-				F.prototype = Parent.prototype;
-				Child.prototype = new F();
-				Child.prototype.constructor = Child;
-				Child.uber = Parent.prototype;
-				*/
-			   Child.prototype = new Parent();
-			   
-			};
-/*
-			function gsd () {
-				this.get = function (vname) { return (JMVC.util.isSet(this.vars[vname])) ? this.vars[vname] : false; };
-				this.set = function (vname, vval, force) { if(!JMVC.util.isSet(this.vars[vname]) || force){ this.vars[vname] = vval; } };
-				this.del = function (vname) { if(JMVC.util.isSet(this.vars[vname])){ delete this.vars[vname];} };
+				Child.prototype = new Parent();			   
 			};
 
-			extend (View, gsd);
-			extend (Controller, gsd);
-			extend (Model, gsd);
-*/
 
-			View.prototype.get =
-			Model.prototype.get =
-			Controller.prototype.get = function (vname) {return (JMVC.util.isSet(this.vars[vname])) ? this.vars[vname] : false;}; 
+
+			View.prototype.get = Model.prototype.get = Controller.prototype.get = function (vname) {
+				return ( !! this.vars[vname]) ? this.vars[vname] : false;
+			}; 
 			
 			View.prototype.set = Model.prototype.set = Controller.prototype.set = function (vname, vval, force) {
 				var i ;
 				switch(typeof vname){
 					case 'string':
-						if(!JMVC.util.isSet(this.vars[vname]) || force){this.vars[vname] = vval;}
+						if(!this.vars[vname] || force){this.vars[vname] = vval;}
 					break;
 					case 'object':
 						for(i in vname){
-							if(!JMVC.util.isSet(this.vars[i]) || force){this.vars[i] = vname[i];}
+							if(!this.vars[i] || force){this.vars[i] = vname[i];}
 						}
 					break;
 				}
 				 return this;
 			};
-			View.prototype.del =
-			Model.prototype.del =
-			Controller.prototype.del = function (vname) {if(JMVC.util.isSet(this.vars[vname])){delete this.vars[vname];}};
+			View.prototype.del = Model.prototype.del = Controller.prototype.del = function (vname) {
+				if( !! this.vars[vname] ){delete this.vars[vname];}
+			};
 
 
 
@@ -568,6 +553,9 @@ Date : 26-01-2012
 		istypeOf : function(el, type){
 			return typeof el === type;
 		},
+		gettype : function(el){
+			return typeof el;
+		},
 		getRandomColor : function(){
 			var ret = '#';
 			for(var i = 0; i < 6; i++){
@@ -577,8 +565,7 @@ Date : 26-01-2012
 				ret += ''+temp;
 			}
 			return ret;
-		},
-	
+		},	
 		hex2rgb : function(hex){
 			var strhex = ''+hex;
 			var more = (strhex.charAt(0)=='#')?1:0;
@@ -635,7 +622,7 @@ Date : 26-01-2012
 			head.appendChild(style);
 		},
 		title : function(t){
-			if(!JMVC.util.isSet(t)){return document.title;}
+			if(! t ){return document.title;}
 			document.title = t;
 			return true;
 		},
