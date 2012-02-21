@@ -141,3 +141,24 @@ If exists retrieve a variable from the Model registry.
 >>> del(String varname);
 If exists deletes a variable from the Model registry.
 
+
+
+<b>JMVC utility library</b>
+--------------------
+<b>JMVC.dom.append(where, what)</b> :
+Description	: append an element inside another one
+Params		: dom element target, dom element to append
+Returns		: void
+
+<b>JMVC.dom.create(tag, attrs, inner)</b>:
+Description	: try to create an html element
+Params		: tag string to be created, attrs literal for attributes, inner html content
+Returns		: the brand new tag
+
+<b>JMVC.dom.add(where, tag, attrs, inner)</b>: 
+Description	: this is a shortcut that merges the previous two
+
+<b>JMVC.dom.html(el, html)</b>
+Description	: sets or returns the html into an existing element
+Params		: el element target, html to set in target, otherwise gets it
+Returns		: html if used as getter on nonempty nodes
