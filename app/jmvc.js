@@ -80,38 +80,29 @@ Date : 26-01-2012
 			
 			View.prototype.render = function(){
 				
-				//console.debug(arguments[0]);
 				var arg = arguments[0] || {},
+					cback = arg.cback || false,	/* maybe a callback is passed */
+					argz = arg.argz || null,	/* and maybe some args must be passed to the callback */
 					
-					/* maybe a callback is passed */
-					cback = arg.cback || false,
-					/* and maybe some args must be passed to the callback */
-					argz = arg.argz || null,
-					
-					/* the use may specify a string with an id,
-					 * that's where the content will be loaded
+					/* You may specify a string with an id,
+					 * that's where the content will be loaded,
 					 * note that here dom is not loaded so you
 					 * cannot pass an element
 					 */
 					target = arg.target || false,
-					
-					/* for binding this context in the callback */
-					that = this,
-					cont = that.content,
-					
-					/* for blocks */
-					patt = new RegExp("{{(.[^\\$}]*)}}",'gm'),
-					pattpar = new RegExp("\\s(.[A-z]*)=`(.[^/`]*)`",'gm'),
-					
-					/* for variables */
-					pattvar = new RegExp("\\$(.[^\\$}]*)\\$",'gm'),
-					
-					res,
-					myview,
-					resvar,
-					i=0, limit=100,
-					viewname,orig,tmp,
-					register, t, k;
+					that = this,	/* for binding this context in the callback */
+					cont = that.content,	/* the view content */
+					patt = new RegExp("{{(.[^\\$}]*)}}",'gm'),	/* for hunting view placeholders */
+					pattpar = new RegExp("\\s(.[A-z]*)=`(.[^/`]*)`",'gm'),	/* for getting explicit params passed within view placeholders */
+					pattvar = new RegExp("\\$(.[^\\$}]*)\\$",'gm'),	/* for variables */
+					res,		/* results of view hunt */
+					myview,		/* the view instance */
+					tmp1, tmp2,	/* two temporary variables for regexp results */
+					i=0, t, k,	/* some loop counters */
+					limit=100,	/* recursion limit for replacement */
+					viewname,	/* only the view name */
+					orig,		/*original content of {{}} stored for final replacement*/
+					register;	/* to store inner variables found in the placeholder */
 					
 				while (true && i++<limit) {
 					res = patt.exec(cont);
@@ -121,24 +112,24 @@ Date : 26-01-2012
 						
 						register = false;
 						
-						/* got params? */
+						/* got params within ? */
 						if(pattpar.test(res[1])){
-							
+							/* register becomes an object and flags result for later check */
 							register = {};
 							
-							/* get the view name */
-							tmp  = (new RegExp("^(.[A-z]*)\\s")).exec(res[1]);
-							viewname = tmp[1];
+							/* get only the view name, ingoring parameters*/
+							tmp2  = (new RegExp("^(.[A-z]*)\\s")).exec(res[1]);
+							viewname = tmp2[1];
 							
-							tmp = res[1];
+							tmp2 = res[1];
 							while (true) {
 								/* this is exactly pattpar but if I use it does not work */
-								resvar = (new RegExp("\\s(.[A-z]*)=`(.[^/`]*)`",'gm')).exec(tmp);
+								tmp1 = (new RegExp("\\s(.[A-z]*)=`(.[^/`]*)`",'gm')).exec(tmp2);
 								
-								if (resvar) {
+								if (tmp1) {
 									/* add to temporary register */
-									register[resvar[1]] = resvar[2];
-									tmp = tmp.replace(' '+resvar[1]+'=`'+resvar[2]+'`', "" );
+									register[tmp1[1]] = tmp1[2];
+									tmp2 = tmp2.replace(' '+tmp1[1]+'=`'+tmp1[2]+'`', "" );
 								}else{
 									break;
 								}
@@ -170,9 +161,9 @@ Date : 26-01-2012
 						 * look for variables
 						 */
 						while (true) {
-							resvar = pattvar.exec(myview.content);
-							if (resvar) {
-								myview.content = myview.content.replace('$'+resvar[1]+'$', myview.get(resvar[1]) );
+							tmp1 = pattvar.exec(myview.content);
+							if (tmp1) {
+								myview.content = myview.content.replace('$'+tmp1[1]+'$', myview.get(tmp1[1]) );
 							}else{
 								break;
 							}
@@ -456,7 +447,7 @@ Date : 26-01-2012
 			}catch (e) {
 				try{
 					for (var i = 0, len = IEfuckIds.length; i < len; i++){
-						try{ JMVC.io.x[id] = new ActiveXObject(IEfuckIds[i]); }catch(e){} 
+						try{JMVC.io.x[id] = new ActiveXObject(IEfuckIds[i]);}catch(e){} 
 					}
 				}catch (e) {}
 			}
@@ -522,6 +513,10 @@ Date : 26-01-2012
 			}
 			return node;
 		},
+		/* create and append */
+		add : function(where, tag, attrs, inner){
+			this.append(where, this.create(tag,attrs,inner));
+		},
 		html : function(el, html) { 
 			var t = ""; 
 			if(typeof html !== 'undefined'){
@@ -531,12 +526,6 @@ Date : 26-01-2012
 				t = (el.nodeType === 1) ? el.innerHTML : el;
 			}
 			return t.trim(); 
-		},
-		is_array : function(o){
-			return o instanceof Array;
-		},
-		istypeOf : function(el, type){
-			return typeof el === type;
 		}
 	};
 
@@ -572,6 +561,12 @@ Date : 26-01-2012
 				if(nome === arr[i]){res = i;break;}
 			}
 			return res;
+		},
+		is_array : function(o){
+			return o instanceof Array;
+		},
+		istypeOf : function(el, type){
+			return typeof el === type;
 		},
 		getRandomColor : function(){
 			var ret = '#';
@@ -630,18 +625,13 @@ Date : 26-01-2012
 
 	JMVC.head = {
 		addscript: function(src){
-			var script = document.createElement('script');
-			script.type = 'text/javascript';
-			script.src = src;
-			var head = document.getElementsByTagName('head').item(0);
+			var script = JMVC.dom.create('script', {type:'text/javascript',src:src}, ' ')
+			var head = this.element;//document.getElementsByTagName('head').item(0);
 			head.appendChild(script);
 		},
 		addstyle : function(src){
-			var style = document.createElement('link');
-			style.type = 'text/css';
-			style.rel = 'stylesheet';
-			style.href = src;
-			var head = document.getElementsByTagName('head').item(0);
+			var style = JMVC.dom.create('link', {type:'text/css', rel:'stylesheet', href:src});
+			var head = this.element;//document.getElementsByTagName('head').item(0);
 			head.appendChild(style);
 		},
 		title : function(t){
