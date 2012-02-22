@@ -18,7 +18,7 @@ Date : 26-01-2012
 
 (function () {
 	
-	// 'use strict';
+	'use strict';
 	/*
 	 * strict mode locks callee function
 	 * on test/flag action cback, easy to WA
@@ -29,9 +29,11 @@ Date : 26-01-2012
 			
 			var url,	/* current url */
 				route,	/* returning JMVC object */
-				extend,	/* minimal dummy function for granting basic inheritance */
+				basic_inherit,	/* minimal dummy function for granting basic inheritance */				
 				dispatched,	/* literal to contain url mvc components */
-				Controller, Model, View; /* MVC objects constructors */
+				Controller, Model, View, /* MVC objects constructors */
+				extend, /* basic function to add modules */
+				Modules = ['trial']; /* modules to load */
 
 
 			/*****************/
@@ -47,6 +49,7 @@ Date : 26-01-2012
 			Controller.prototype.render = function(content,cback){
 				var tmp_v = new View(content);
 				tmp_v.render(typeof cback === 'function'?{cback:cback} : null);
+				return this;
 			};
 			
 
@@ -100,6 +103,7 @@ Date : 26-01-2012
 					pattpar = new RegExp("\\s(.[A-z]*)=`(.[^/`]*)`",'gm'),	/* for getting explicit params passed within view placeholders */
 					pattvar = new RegExp("\\$(.[^\\$}]*)\\$",'gm'),	/* for variables */
 					res,		/* results of view hunt */
+					resvar,		/* variables found */
 					myview,		/* the view instance */
 					tmp1, tmp2,	/* two temporary variables for regexp results */
 					i=0, t, k,	/* some loop counters */
@@ -205,11 +209,25 @@ Date : 26-01-2012
 				);
 			};
 			
-			//for inheritance
-			extend = function(Child, Parent) {				
+			//for basic inheritance
+			basic_inherit = function(Child, Parent) {				
 				Child.prototype = new Parent();			   
 			};
-
+			
+			// for extending with modules
+			extend = function(){
+				var target = arguments[0];				
+				if(! route[target]){route[target] = {};}				
+				var arr_func_obj = arguments[1] || {};				
+				for(var i in arr_func_obj){
+					/* it won`t let You override */
+					if(typeof route[target][i] === 'undefined' && typeof arr_func_obj[i] === 'function'){
+						if(typeof arr_func_obj[i] === 'function'){
+							route[target][i] = arr_func_obj[i];
+						}
+					}
+				}				
+			};
 
 
 			View.prototype.get = Model.prototype.get = Controller.prototype.get = function (vname) {
@@ -273,7 +291,7 @@ Date : 26-01-2012
 					default :
 						JMVC.io.get(
 							path,
-							type,
+							//type,
 							function cback(res){
 								switch(type){
 									case 'view':
@@ -283,11 +301,11 @@ Date : 26-01-2012
 									case 'controller':
 										res = res.replace(/^(\s*)\/\/(.*)[\n]/g,'/*$1*/\n');
 										eval(res); /* ##################### */
-										extend(JMVC[type+'s'][name], Controller);
+										basic_inherit(JMVC[type+'s'][name], Controller);
 									break;
 									case 'model':
 										eval(res); /* ##################### */
-										extend(JMVC[type+'s'][name], Model);
+										basic_inherit(JMVC[type+'s'][name], Model);
 										o = new JMVC.models[name]();
 										o.vars = {};
 										ret = o;
@@ -363,7 +381,7 @@ Date : 26-01-2012
 				if(JMVC.controllers[route.c]){
 
 					/* grant basic ineritance from parent Controller */
-					extend(JMVC.controllers[route.c], Controller);
+					basic_inherit(JMVC.controllers[route.c], Controller);
 
 					/* make an instance */
 					controller = new JMVC.controllers[route.c]();
@@ -396,7 +414,9 @@ Date : 26-01-2012
 				c : dispatched.controller || 'index',
 				a : dispatched.action || 'index',
 				p : dispatched.params || {},
-
+				
+				modules : Modules,
+				
 				controllers : {},
 				models : {},
 				views : {},
@@ -404,11 +424,14 @@ Date : 26-01-2012
 				baseurl:	dispatched.baseurl,
 				render:		render,
 				factory:	factory_method,
+				extend : extend,
 				getView :	function(n){return factory_method('view', n);},
 				getModel :	function(n){return factory_method('model', n);},
 				getController :	function(n){return factory_method('controller', n);}
 			};
-
+			
+			
+			
 			return route;
 		}
 	)();
@@ -421,7 +444,7 @@ Date : 26-01-2012
 		/* requests pool */
 		x : [],
 		
-		get : function(u, tipo, cback, p){
+		get : function(u, /*tipo,*/ cback, p){
 			var id = JMVC.io.x.length;
 			
 			var IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'],
@@ -459,7 +482,7 @@ Date : 26-01-2012
 		}
 	};	
 
-	JMVC.extend = function(){
+	JMVC.basic_inherit = function(){
 		var what = arguments[0],
 			arr_func_obj = arguments[1] || {};
 		for(var i in arr_func_obj){
@@ -630,15 +653,6 @@ Date : 26-01-2012
 	};
 
 
-
-
-	/* Basic function to create an object of a prototype */
-	Object.create = function (o) {
-		var O = function () {};
-		O.prototype = o;
-		return new O();
-	};
-	
 	/* Basic Function extension to add a method to an object function */
 	Function.prototype.method = function (name, fn) {
 		if (name instanceof Array) {
@@ -649,12 +663,35 @@ Date : 26-01-2012
 		this.prototype[name] = fn;
 		return this;
 	};
-	/*
-	//disable the console
-	//delete console;
-	//... render
-	*/
-	JMVC.render();
 	
+	/* before rendering, load requested extensions (must be set in the Modules var and the file must be in the extensions folder) */
+	if(JMVC.modules.length > 0){
+		//aj load and eval
+		for(var i = 0, l=JMVC.modules.length ; i<l ; i++){
+			JMVC.io.get(
+				'/app/extensions/'+JMVC.modules[i]+'.js',
+				function cback(res){
+					eval(res); /* ##################### */
+				}
+			);
+		}
+	}
+	
+	
+	
+	/*
+	 *
+	 * EXPOSE ?
+	 * 
+	 */
+	// window.JMVC = JMVC;
+	
+	
+	/*
+	 *
+	 * now render
+	 * 
+	 */
+	JMVC.render();	
 
 })();

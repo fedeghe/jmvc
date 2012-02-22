@@ -1,12 +1,14 @@
 JMVC.controllers.Info = function(){
 	this.index = function(){
 		
+		//JMVC.head.addstyle(JMVC.baseurl+'/media/css/info.css');
+		
 		var main  = JMVC.getView('info');
 		var readme = JMVC.getView('readme');
 		main.set('nome', this.get('name') || 'Guest');
 		readme.set('fr', '<b style="font-size:26px;position:relative;top:8px;color:green;font-weight:bold">&#9758;</b>');
 		
-		
+		JMVC.mac.titlesay();
 		/*
 		//load the model
 		JMVC.factory('model','Persona');

@@ -83,6 +83,9 @@ JMVC.controllers.Test = function(){
 		};
 		recall();
 		
+		
+		// this is a callee varsion, unsupported in strict mode
+		/*
 		v.render({
 			cback : function(s){
 				var basesize = s || box_size,
@@ -108,9 +111,6 @@ JMVC.controllers.Test = function(){
 						JMVC.dom.append(f, tmp);
 					}
 				}
-				
-				
-				
 				var fun = arguments.callee;
 				if(basesize>box_size*top_fact){
 					mode='shrink';
@@ -129,9 +129,61 @@ JMVC.controllers.Test = function(){
 					},
 					25
 				);
-				//}
 			}
 		});
+		*/
+		
+		var back = function(s){
+			var basesize = s || box_size,
+				f = document.getElementById('flag'),
+				boxes = [],
+				tmp, i, j, l,
+				fact;
+			f.style.width = (basesize*7.5)+'px'; // damnIE
+			f.style.height = (basesize*5.5)+'px';// damnIE
+			f.style.margin = '0 auto';
+			f.style.marginTop = (basesize)+'px';
+			j=0;
+			for(i=0, l=5*7; i<l; i++){
+				j++;					
+				tmp = JMVC.dom.create('div',{'style':'width:'+basesize+'px; height:'+basesize+'px;', 'class':'box'},'&nbsp;');
+				JMVC.dom.append(f, tmp);
+				tmp.style.backgroundColor = (basesize > els_top[i]) ?
+					((JMVC.util.in_array([10,16,17,18,24], i)>=0)? 'white':'red')
+					:
+					JMVC.util.getRandomColor();
+				if(j%7 == 0){
+					tmp = JMVC.dom.create('div',{'class':'clearer'},'&nbsp;');
+					JMVC.dom.append(f, tmp);
+				}
+			}
+
+			var fun = back;
+			if(basesize>box_size*top_fact){
+				mode='shrink';
+				recall();
+			}
+			if(basesize<box_size){
+				mode='grow';					
+				recall();
+			}				
+			fact = (mode == 'grow')?factor:-factor;
+			//if(basesize<50){
+			window.setTimeout(
+				function(){
+					f.innerHTML = '';
+					fun(basesize+fact);
+				},
+				25
+			);
+		};
+		
+		v.render({cback : back });
+		
+		
+		
+		
+		
 	};
 	
 	this.direct = function(){

@@ -42,6 +42,7 @@ $fr$ total warranty for completely seo <b>un</b>friendly pages
 $fr$ automatic extra parameters from url
 $fr$ automatic extra parameters from querystring
 $fr$ add action routes in the controller (see test controller)
+$fr$ easily extend the inner main object with your code (see trial extension)
 
 
 
@@ -79,33 +80,65 @@ The fastest way to try it out is to create a virtual host or put it online (ex: 
 
 <b>Controller</b>
 ----------
->>> set(String varname,	Mixed value);
-Add a variable to the Controller registry.
 
->>> get(String varname);
-If exists retrieve a variable from the Controller registry.
+<table>
+	<caption style="text-align:left;font-weight:bold">set(String varname,	Mixed value)</caption>
+	<tr>
+		<td>Description</td><td>Add a variable to the Controller registry.</td>
+	</tr>
+	<tr valign="top">
+		<td>Parameters</td><td>varname > the name of the variable<br />value > the value for the variable</td>
+	</tr>
+	<tr>
+		<td>Returns</td><td>the controller instance</td>
+	</tr>	
+</table>
 
->>> del(String varname);
-If exists deletes a variable from the Controller registry.
 
->>> relocate(uri location);
-Redirects to a specified location.
 
->>> render(String content,	Javascript function callback);
-Renders directly something from the controller.
+
+<b>get(String varname)</b>
+Description	: If exists retrieve a variable from the Controller registry.
+Parameters	: varname > the name of the variable needed
+Returns		: the variable value if exists or false
+
+<b>del(String varname)</b>
+Description	: If exists deletes a variable from the Controller registry.
+Parameters	: varname > the name of the variable to be deleted
+Returns		: void (undefined)
+
+<b>relocate(uri location)</b>
+Description	: Redirects to a specified location.
+Parameters	: uri > the location to be redirected to
+Returns		: void (undefined)
+
+<b>render(String content, Javascript function callback)</b>
+Description	: Renders directly something from the controller, optionally invokes a callback at the end.
+Parameters	: content > the content to render
+			  callback : a function that will be invoked after content is set
+Returns		: the Controller instance
 
 
 
 <b>View</b>
 ----
->>> set(String varname, Mixed value);
-Add a variable to the View registry.
+<b>set(String varname, Mixed value)</b>
+Description	: Add a variable to the View registry.
+Parameters	: varname > the name of the variable
+			  value > the value for the variable
+Returns		: the View instance
 
->>> get(String varname);
-If exists retrieve a variable from the View registry.
+<b>get(String varname)</b>
+Description	: If exists retrieve a variable from the View registry.
+Parameters	: varname > the name of the variable needed
+Returns		: the variable value if exists or false
 
->>> del(String varname);
-If exists deletes a variable from the View registry.
+<b>del(String varname)</b>
+Description	: If exists deletes a variable from the View registry.
+Parameters	: varname > the name of the variable to be deleted
+Returns		: void (undefined)
+
+
 
 >>> parse(Model object);
 If the view has some $var$ placeholders within and these
@@ -132,14 +165,22 @@ target : the default target is the document.body but if you pass a
 
 <b>Model</b>
 -----
->>> set(String varname, Mixed value);
-Add a variable to the Model registry.
+<b>set(String varname, Mixed value)</b>
+Description	: Add a variable to the Model registry.
+Parameters	: varname > the name of the variable
+			  value > the value for the variable
+Returns		: the model instance
 
->>> get(String varname);
-If exists retrieve a variable from the Model registry.
+<b>get(String varname)</b>
+Description	: If exists retrieve a variable from the Model registry.
+Parameters	: varname > the name of the variable needed
+Returns		: the variable value if exists or false
 
->>> del(String varname);
-If exists deletes a variable from the Model registry.
+
+<b>del(String varname)</b>
+Description	: If exists deletes a variable from the Model registry.
+Parameters	: varname > the name of the variable to be deleted
+Returns		: void (undefined)
 
 
 
