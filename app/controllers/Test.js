@@ -11,7 +11,7 @@ JMVC.controllers.Test = function(){
 		var v = JMVC.getView('test'),
 			v1= JMVC.factory('view','test1'),
 			v2= JMVC.factory('view','test2');
-		
+			
 		v1.set('result', 'ok1');
 		v2.set('result', 'ok2');
 		v2.set('result2', 'ok2bis');
@@ -47,8 +47,7 @@ JMVC.controllers.Test = function(){
 		var _p = JMVC.getModel('Persona');
 		_p.set('name', 'Fredrich');
 		var _v = JMVC.getView('parse');
-		_v.parse(_p);
-		_v.render();
+		_v.parse(_p).render();
 	};
 
 	// test a CONTROLLER
@@ -62,9 +61,10 @@ JMVC.controllers.Test = function(){
 	};
 	
 	
-	// happiness test
+	// just to celebrate a good start
 	this.flag = function(){
-		// add link tag
+		// color extension is needed
+		this.require('color');
 		
 		JMVC.head.title('CH beat');
 		JMVC.head.addstyle(JMVC.baseurl+'/media/css/flag.css');
@@ -82,56 +82,6 @@ JMVC.controllers.Test = function(){
 			}
 		};
 		recall();
-		
-		
-		// this is a callee varsion, unsupported in strict mode
-		/*
-		v.render({
-			cback : function(s){
-				var basesize = s || box_size,
-					f = document.getElementById('flag'),
-					boxes = [],
-					tmp, i, j, l,
-					fact;
-				f.style.width = (basesize*7.5)+'px'; // damnIE
-				f.style.height = (basesize*5.5)+'px';// damnIE
-				f.style.margin = '0 auto';
-				f.style.marginTop = (basesize)+'px';
-				j=0;
-				for(i=0, l=5*7; i<l; i++){
-					j++;					
-					tmp = JMVC.dom.create('div',{'style':'width:'+basesize+'px; height:'+basesize+'px;', 'class':'box'},'&nbsp;');
-					JMVC.dom.append(f, tmp);
-					tmp.style.backgroundColor = (basesize > els_top[i]) ?
-						((JMVC.util.in_array([10,16,17,18,24], i)>=0)? 'white':'red')
-						:
-						JMVC.util.getRandomColor();
-					if(j%7 == 0){
-						tmp = JMVC.dom.create('div',{'class':'clearer'},'&nbsp;');
-						JMVC.dom.append(f, tmp);
-					}
-				}
-				var fun = arguments.callee;
-				if(basesize>box_size*top_fact){
-					mode='shrink';
-					recall();
-				}
-				if(basesize<box_size){
-					mode='grow';					
-					recall();
-				}				
-				fact = (mode == 'grow')?factor:-factor;
-				//if(basesize<50){
-				window.setTimeout(
-					function(){
-						f.innerHTML = '';
-						fun(basesize+fact);
-					},
-					25
-				);
-			}
-		});
-		*/
 		
 		var back = function(s){
 			var basesize = s || box_size,
@@ -158,7 +108,6 @@ JMVC.controllers.Test = function(){
 				}
 			}
 
-			var fun = back;
 			if(basesize>box_size*top_fact){
 				mode='shrink';
 				recall();
@@ -172,7 +121,7 @@ JMVC.controllers.Test = function(){
 			window.setTimeout(
 				function(){
 					f.innerHTML = '';
-					fun(basesize+fact);
+					back(basesize+fact);
 				},
 				25
 			);

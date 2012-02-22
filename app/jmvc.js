@@ -19,10 +19,6 @@ Date : 26-01-2012
 (function () {
 	
 	'use strict';
-	/*
-	 * strict mode locks callee function
-	 * on test/flag action cback, easy to WA
-	 */
 	
 	var JMVC = (
 		function () {
@@ -32,8 +28,9 @@ Date : 26-01-2012
 				basic_inherit,	/* minimal dummy function for granting basic inheritance */				
 				dispatched,	/* literal to contain url mvc components */
 				Controller, Model, View, /* MVC objects constructors */
-				extend, /* basic function to add modules */
-				Modules = ['trial']; /* modules to load */
+				extend, /* basic function to add modules */	
+				load_ext, /* function to load modules on demand */
+				Modules = ['trial']; /* modules to load always*/
 
 
 			/*****************/
@@ -50,6 +47,17 @@ Date : 26-01-2012
 				var tmp_v = new View(content);
 				tmp_v.render(typeof cback === 'function'?{cback:cback} : null);
 				return this;
+			};
+			Controller.prototype.require = function(){
+				var exts = arguments;
+				for(var i = 0, l=exts.length ; i<l ; i++){
+					JMVC.io.get(
+						'/app/extensions/'+exts[i]+'.js',
+						function cback(res){
+							eval(res); /* ##################### */
+						}
+					);
+				}
 			};
 			
 
@@ -83,6 +91,7 @@ Date : 26-01-2012
 				for(j in obj.vars){
 					this.content = this.content.replace('$'+j+'$', obj.vars[j]);
 				}
+				return this; /* allow chain */
 			};
 			
 			View.prototype.render = function(){
@@ -207,6 +216,7 @@ Date : 26-01-2012
 						}
 					}				
 				);
+				return this; /* allow chain */
 			};
 			
 			//for basic inheritance
@@ -228,7 +238,6 @@ Date : 26-01-2012
 					}
 				}				
 			};
-
 
 			View.prototype.get = Model.prototype.get = Controller.prototype.get = function (vname) {
 				return ( !! this.vars[vname]) ? this.vars[vname] : false;
@@ -415,8 +424,6 @@ Date : 26-01-2012
 				a : dispatched.action || 'index',
 				p : dispatched.params || {},
 				
-				modules : Modules,
-				
 				controllers : {},
 				models : {},
 				views : {},
@@ -425,13 +432,13 @@ Date : 26-01-2012
 				render:		render,
 				factory:	factory_method,
 				extend : extend,
+				modules : Modules,
+				
 				getView :	function(n){return factory_method('view', n);},
 				getModel :	function(n){return factory_method('model', n);},
 				getController :	function(n){return factory_method('controller', n);}
 			};
-			
-			
-			
+			/* return JMVC */
 			return route;
 		}
 	)();
@@ -579,41 +586,6 @@ Date : 26-01-2012
 		gettype : function(el){
 			return typeof el;
 		},
-		getRandomColor : function(){
-			var ret = '#';
-			for(var i = 0; i < 6; i++){
-				var num = Math.floor((Math.random()*100) % 16);
-
-				var temp = num.toString(16);
-				ret += ''+temp;
-			}
-			return ret;
-		},	
-		hex2rgb : function(hex){
-			var strhex = ''+hex;
-			var more = (strhex.charAt(0)=='#')?1:0;
-			//alert(hex);
-			return {
-				r : parseInt(strhex.substr(more,2),16),
-				g : parseInt(strhex.substr(more+2,2),16),
-				b : parseInt(strhex.substr(more+4,2),16)
-			};
-		},
-	
-		rgb2hex : function(obj){
-			var r,g,b;
-			if(typeof obj === 'object'){
-				r = obj.r;g = obj.g;b = obj.b;
-			}else
-			if(typeof obj === 'string'){
-				var arr_rgb = obj.split(',');
-				r = parseInt(arr_rgb[0],10);
-				g = parseInt(arr_rgb[1],10);
-				b = parseInt(arr_rgb[2],10);
-				//	alert(r+' '+g+' '+b);
-			}
-			return '#'+JMVC.util.padme(r.toString(16),0,'pre')+JMVC.util.padme(g.toString(16),0,'pre')+JMVC.util.padme(b.toString(16),0,'pre');
-		},
 		padme : function(val,el,pos,len){
 			len = len || 2;
 			while((val+'').length<len){
@@ -676,7 +648,6 @@ Date : 26-01-2012
 			);
 		}
 	}
-	
 	
 	
 	/*
