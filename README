@@ -14,9 +14,9 @@ Date : 26-01-2012
 
 Installation
 ------------
-Thanks to a basic .htaccess jmcv access point is an index.html which loads in the head the main script
+Thanks to a basic .htaccess JMVC access point is an index.html which loads in the head the main script
 and is meant to have empty body, in fact the whole body will be rewritten (see index.html)
-NOTE: the src attribute of the script must be the absolute url for jmvc.js
+NOTE: the `src` attribute of the script must be the absolute url for jmvc.js
 All you have to do is, write controllers, models and views.
 
 
@@ -32,13 +32,13 @@ Features
   >	$variable_name$ for variable
   >	{{my_view}} for a view
   > {{my_view name=`Federico` surname=`Ghedina`}}
-  these will be replaced with the element content (recusively parsed, within 10 nesting level)
-- dinamically load other scripts and stylesheets 
+  these will be replaced with the element content (recursively parsed, within 10 nesting level)
+- dynamically load other scripts and stylesheets 
 - the content produced by default affects the content of the body, but You can choose to affect
 	the content of a node with an ID attribute.
 	You can edit the head with some limitations using JMVC.head methods (or your scripts)
 - 2.9Kb (minified and packed)
-- total warranty for sompletely seo unfriendly pages
+- total warranty for completely seo unfriendly pages
 - automatic extra parameters from url
 - automatic extra parameters from querystring
 - add action routes in the controller
