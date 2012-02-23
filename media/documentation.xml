@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet href="$baseurl$/media/css/info.css" title="Modern" media="screen" type="text/css"?>
+<doc>
+    <functions name="Controller">
+		<function>
+			<func>set(String varname, Mixed value); </func>
+			<description>Add a variable to the Controller registry.</description>
+			<params>
+				<param>
+					<name>varname</name>
+					<desc>the name of the variable</desc>
+				</param>
+				<param>
+					<name>value</name>
+					<desc>the value for the variable</desc>
+				</param>
+			</params>
+			<returns>the controller instance</returns>
+		</function>
+		<function>
+			<func>get(String varname);</func>
+			<description>If exists retrieve a variable from the Controller registry.</description>
+			<params>
+				<param>
+					<name>varname</name>
+					<desc>the name of the variable needed</desc>
+				</param>
+			</params>
+			<returns>the variable value if exists or false</returns>
+		</function>
+		<function>
+			<func>del(String varname);</func>
+			<description>If exists deletes a variable from the Controller registry.</description>
+			<params>
+				<param>
+					<name>varname</name>
+					<desc>the name of the variable to be deleted</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<func>relocate(uri location);</func>
+			<description>Redirects to a specified location.</description>
+			<params>
+				<param>
+					<name>uri</name>
+					<desc>the location to be redirected to</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<func>render(String content, Javascript function callback);</func>
+			<description>Renders directly something from the controller, optionally invokes a callback at the end.</description>
+			<params>
+				<param>
+					<name>content</name>
+					<desc>the content to render</desc>
+				</param>
+				<param>
+					<name>callback</name>
+					<desc>a function that will be invoked after content is set</desc>
+				</param>
+			</params>
+			<returns>the Controller instance</returns>
+		</function>
+		
+	</functions>
+	
+	
+	<functions name="View">
+		<function>
+			<func>set(String varname, Mixed value);</func>
+			<description>Add a variable to the View registry.</description>
+			<params>
+				<param>
+					<name>varname</name>
+					<desc>the name of the variable</desc>
+				</param>
+				<param>
+					<name>value</name>
+					<desc>the value for the variable</desc>
+				</param>
+			</params>
+			<returns>the View instance</returns>
+		</function>
+		<function>
+			<func>get(String varname);</func>
+			<description>If exists retrieve a variable from the View registry.</description>
+			<params>
+				<param>
+					<name>varname</name>
+					<desc>the name of the variable needed</desc>
+				</param>
+			</params>
+			<returns>the variable value if exists or false</returns>
+		</function>
+		<function>
+			<func>del(String varname);</func>
+			<description>If exists deletes a variable from the View registry.</description>
+			<params>
+				<param>
+					<name>varname</name>
+					<desc>the name of the variable to be deleted</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<func>parse(Model object);</func>
+			<description>If the view has some $var$ placeholders within and these variables are stored in a model instance with the right names, that method get values from model instance and uses them in the placeholders content substitution.</description>
+			<params>
+				<param>
+					<name>object</name>
+					<desc>Is a Model instance which should contain variables that the view will render through placeholders substitution.</desc>
+				</param>
+			</params>
+			<returns>the View instance (to access the content use .content attribute)</returns>
+		</function>
+		<function>
+			<func>render({<br/>cback : Javascript function,<br/>argz : callback array parameters,<br/>target : dom node id attribute (default document.body)<br/>})</func>
+			<description>This is the function intended to be used to render the document or a part of it. You can optionally pass three elements within a literal object.</description>
+			<params>
+				<param>
+					<name>cback</name>
+					<desc>a callback function that will be executed after rendering</desc>
+				</param>
+				<param>
+					<name>argz</name>
+					<desc>an array of parameters that will be passed to the callback</desc>
+				</param>
+				<param>
+					<name>target</name>
+					<desc>the default target is document.body but if you pass a string containing the id attribute of an element that is in the
+					DOM (set from previous render with the default target) the content will be set in that element.</desc>
+				</param>
+			</params>
+			<returns></returns>
+		</function>
+		
+	</functions>
+	
+	
+	
+	
+	
+	<functions name="Model">
+		<function>
+			<func>set(String varname, Mixed value)</func>
+			<description>Add a variable to the Model registry.</description>
+			<params>
+				<param>
+					<name>varname</name>
+					<desc>the name of the variable</desc>
+				</param>
+				<param>
+					<name>value</name>
+					<desc> the value for the variable</desc>
+				</param>
+			</params>
+			<returns>the model instance</returns>
+		</function>
+		<function>
+			<func>get(String varname)</func>
+			<description>If exists retrieve a variable from the Model registry.</description>
+			<params>
+				<param>
+					<name>varname</name>
+					<desc>the name of the variable needed</desc>
+				</param>
+			</params>
+			<returns>the variable value if exists or false</returns>
+		</function>
+		<function>
+			<func>del(String varname)</func>
+			<description>If exists deletes a variable from the Model registry.</description>
+			<params>
+				<param>
+					<name>varname</name>
+					<desc>the name of the variable to be deleted</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>		
+	</functions>
+	
+	
+	<functions name="Utility">
+		<function>
+			<func>JMVC.dom.create(tag, attrs, inner)</func>
+			<description>try to create an html element.</description>
+			<params>
+				<param>
+					<name>tag</name>
+					<desc>tag to be created</desc>
+				</param>
+				<param>
+					<name>attrs</name>
+					<desc>object literal for attributes</desc>
+				</param>
+				<param>
+					<name>inner</name>
+					<desc>html content</desc>
+				</param>
+			</params>
+			<returns>the brand new tag</returns>
+		</function>
+		<function>
+			<func>JMVC.dom.append(where, what)</func>
+			<description>append an element inside another one</description>
+			<params>
+				<param>
+					<name>where</name>
+					<desc>dom element target</desc>
+				</param>
+				<param>
+					<name>what</name>
+					<desc>dom element to append</desc>
+				</param>
+			</params>
+			<returns>void</returns>
+		</function>
+		<function>
+			<func>JMVC.dom.add(where, tag, attrs, inner)</func>
+			<description>this is a shortcut that merges create+append</description>
+			<params>
+				<param>
+					<name>where</name>
+					<desc>dom element target</desc>
+				</param>
+				<param>
+					<name>tag</name>
+					<desc>tag to be created</desc>
+				</param>
+				<param>
+					<name>attrs</name>
+					<desc>object literal for attributes</desc>
+				</param>
+				<param>
+					<name>inner</name>
+					<desc>html content</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>	
+		<function>
+			<func>JMVC.dom.html(el, html)</func>
+			<description>sets or returns the html into an existing element.</description>
+			<params>
+				<param>
+					<name>el</name>
+					<desc>dom element target</desc>
+				</param>
+				<param>
+					<name>html</name>
+					<desc>html to set in target, otherwise gets it</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>		
+	</functions>	
+</doc>
+
+
+
+				

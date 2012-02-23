@@ -1,5 +1,5 @@
 JMVC.extend('mac',{
-	titlesay : function(){
+	titlesay : function() {
 		var date = new Date();
 		var phrases = [
 			'Hello',

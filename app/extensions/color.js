@@ -1,7 +1,7 @@
 JMVC.extend('util',{
-	getRandomColor : function(){
+	getRandomColor : function() {
 		var ret = '#';
-		for(var i = 0; i < 6; i++){
+		for(var i = 0; i < 6; i++) {
 			var num = Math.floor((Math.random()*100) % 16);
 
 			var temp = num.toString(16);
@@ -10,7 +10,7 @@ JMVC.extend('util',{
 		return ret;
 	},	
 	
-	hex2rgb : function(hex){
+	hex2rgb : function(hex) {
 		var strhex = ''+hex;
 		var more = (strhex.charAt(0)=='#')?1:0;
 		//alert(hex);
@@ -21,12 +21,12 @@ JMVC.extend('util',{
 		};
 	},
 
-	rgb2hex : function(obj){
+	rgb2hex : function(obj) {
 		var r,g,b;
-		if(typeof obj === 'object'){
+		if(typeof obj === 'object') {
 			r = obj.r;g = obj.g;b = obj.b;
 		}else
-		if(typeof obj === 'string'){
+		if(typeof obj === 'string') {
 			var arr_rgb = obj.split(',');
 			r = parseInt(arr_rgb[0],10);
 			g = parseInt(arr_rgb[1],10);

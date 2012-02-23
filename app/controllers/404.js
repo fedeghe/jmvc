@@ -1,11 +1,11 @@
-JMVC.controllers['404'] = function(){
-	this.msg = function(){		
+JMVC.controllers['404'] = function() {
+	this.msg = function() {		
 		var f0f = JMVC.factory('view','404');
 		
-		if(this.get('act')){ 
+		if(this.get('act')) { 
 				f0f.set('msg','action `'+(this.get('act'))+'` not found');
 		}
-		if(this.get('cnt')){ 
+		if(this.get('cnt')) { 
 				f0f.set('msg','controller `'+(this.get('cnt'))+'` not found');
 		}
 		
@@ -20,11 +20,7 @@ JMVC.controllers['404'] = function(){
 		
 		
 		JMVC.head.title('404 PAGE NOT FOUND');
-		window.setTimeout(
-			function(){
-				document.location.href = '/';
-			}
-		, 5000);
+		//window.setTimeout(function() {document.location.href = '/';	}, 5000);
 		JMVC.dom.append( JMVC.head.element, meta);
 	};
 };

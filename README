@@ -42,7 +42,7 @@ Features
 - automatic extra parameters from url
 - automatic extra parameters from querystring
 - add action routes in the controller
-- easily extend the inner main object with your code
+- easily extend the inner main object with your code, from a controller or globally
 
 
 For further informations visit http://www.jsbase.org/info

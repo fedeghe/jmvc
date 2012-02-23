@@ -1,12 +1,35 @@
-ul{
-	list-style-type: disc;
+body{
+	font-family: Verdana, "MS Trebuchet", sans-serif;
+	font-size:12px;
+	background-color:#C4DDED;
+} 
+p{
 	padding:10px;
-	margin:10px;
-	border:0px;
 }
-li{
-	display:inline-block;
-	line-height:15px;
-	padding:0px;
-	margin:0px;
+label{
+	font-weight:bold;
+}
+.cl1_Controller{
+	background-color: #ffefef;
+}
+.cl2_Controller{
+	background-color: #fff;
+}
+.cl1_View{
+	background-color: #efffef;
+}
+.cl2_View{
+	background-color: #fff;
+}
+.cl1_Model{
+	background-color: #efefff;
+}
+.cl2_Model{
+	background-color: #fff;
+}
+.cl1_Utility{
+	background-color: #ffffef;
+}
+.cl2_Utility{
+	background-color: #fff;
 }

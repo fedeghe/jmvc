@@ -1,4 +1,4 @@
-JMVC.controllers.Test = function(){
+JMVC.controllers.Test = function() {
 	
 	/* test a route */ 
 	this._routes = {
@@ -7,7 +7,7 @@ JMVC.controllers.Test = function(){
 	};
 
 	// test a VIEW	
-	this.view = function(){
+	this.view = function() {
 		var v = JMVC.getView('test'),
 			v1= JMVC.factory('view','test1'),
 			v2= JMVC.factory('view','test2');
@@ -21,7 +21,7 @@ JMVC.controllers.Test = function(){
 	
 	
 	// test some MODELs
-	this.model = function(){
+	this.model = function() {
 		var _p1 = JMVC.getModel('Persona'),
 			_p2 = JMVC.getModel('Persona2'),
 			_p3 = JMVC.getModel('Persona2'),tpl,v, al = '';
@@ -43,7 +43,7 @@ JMVC.controllers.Test = function(){
 		v.render();
 	};
 
-	this.modelviewparse = function(){
+	this.modelviewparse = function() {
 		var _p = JMVC.getModel('Persona');
 		_p.set('name', 'Fredrich');
 		var _v = JMVC.getView('parse');
@@ -51,18 +51,18 @@ JMVC.controllers.Test = function(){
 	};
 
 	// test a CONTROLLER
-	this.controller = function(){
+	this.controller = function() {
 		this.set('nome','Federico');
 		alert(this.get('nome'));
 	};
-	this.controller2 = function(){
+	this.controller2 = function() {
 		this.set('nome','Federico2');
 		alert(this.get('nome'));
 	};
 	
 	
 	// just to celebrate a good start
-	this.flag = function(){
+	this.flag = function() {
 		// color extension is needed
 		this.require('color');
 		
@@ -76,14 +76,14 @@ JMVC.controllers.Test = function(){
 			top_fact = 80,
 			els_top = [];
 		
-		var recall = function(){
-			for(var i=0, l=5*7; i<l; i++){
+		var recall = function() {
+			for(var i=0, l=5*7; i<l; i++) {
 				els_top[i] = JMVC.util.rand(10, top_fact-5);
 			}
 		};
 		recall();
 		
-		var back = function(s){
+		var back = function(s) {
 			var basesize = s || box_size,
 				f = document.getElementById('flag'),
 				boxes = [],
@@ -94,7 +94,7 @@ JMVC.controllers.Test = function(){
 			f.style.margin = '0 auto';
 			f.style.marginTop = (basesize)+'px';
 			j=0;
-			for(i=0, l=5*7; i<l; i++){
+			for(i=0, l=5*7; i<l; i++) {
 				j++;					
 				tmp = JMVC.dom.create('div',{'style':'width:'+basesize+'px; height:'+basesize+'px;', 'class':'box'},'&nbsp;');
 				JMVC.dom.append(f, tmp);
@@ -102,24 +102,24 @@ JMVC.controllers.Test = function(){
 					((JMVC.util.in_array([10,16,17,18,24], i)>=0)? 'white':'red')
 					:
 					JMVC.util.getRandomColor();
-				if(j%7 == 0){
+				if(j%7 == 0) {
 					tmp = JMVC.dom.create('div',{'class':'clearer'},'&nbsp;');
 					JMVC.dom.append(f, tmp);
 				}
 			}
 
-			if(basesize>box_size*top_fact){
+			if(basesize>box_size*top_fact) {
 				mode='shrink';
 				recall();
 			}
-			if(basesize<box_size){
+			if(basesize<box_size) {
 				mode='grow';					
 				recall();
 			}				
 			fact = (mode == 'grow')?factor:-factor;
-			//if(basesize<50){
+			//if(basesize<50) {
 			window.setTimeout(
-				function(){
+				function() {
 					f.innerHTML = '';
 					back(basesize+fact);
 				},
@@ -135,18 +135,18 @@ JMVC.controllers.Test = function(){
 		
 	};
 	
-	this.direct = function(){
+	this.direct = function() {
 		JMVC.head.title('Swiss beat');
 		JMVC.head.addstyle(JMVC.baseurl+'/media/css/flag.css');
 		this.render(
 			'<b style="color:white">hello</b>',
-			function(){
+			function() {
 				console.debug('simple callback on render!');
 			}
 		);
 	}
 	
-	this.viewplus = function(){
+	this.viewplus = function() {
 		JMVC.head.title('Hello');
 		JMVC.getView('superview');
 		var _v = JMVC.getView('sv');

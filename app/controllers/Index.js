@@ -1,15 +1,15 @@
-JMVC.controllers.Index = function(){
+JMVC.controllers.Index = function() {
 
-	this.index = function(){
+	this.index = function() {
 		/*alert('index controller, index action');*/
 		
 		var index = JMVC.getView('index');
 		
 		// add link tag
-		JMVC.head.addstyle(JMVC.baseurl+'/media/css/style.css');
+		JMVC.head.addstyle(JMVC.vars.baseurl+'/media/css/style.css');
 		
 		// edit title
-		JMVC.head.title('JS base');
+		JMVC.head.title('JMVC');
 		
 		
 		var n = this.get('name') || 'Federico';
@@ -21,19 +21,19 @@ JMVC.controllers.Index = function(){
 		
 
 		index.render({
-			cback:function(){
+			cback:function() {
 				
 				var el = document.getElementById('cent');
 				
-				var link = JMVC.dom.create('a',{href:JMVC.baseurl+'/info', title:'get more info'},'&#9406;');
-				JMVC.events.bind(link, 'click',function(){this.blur();});
+				var link = JMVC.dom.create('a',{href:JMVC.vars.baseurl+'/info', title:'get more info'},'&#9406;');
+				JMVC.events.bind(link, 'click',function() {this.blur();});
 				JMVC.dom.append(el, link);
 				
 				//JMVC.dom.append(document.getElementById('cent'), JMVC.dom.create('br'));
 				JMVC.dom.add(el, 'br');
 				
 				var downlink = JMVC.dom.create('a',{href:'https://github.com/fedeghe/jmvc', title:'get code from github!', target:'_blank'},'&#9416;');
-				JMVC.events.bind(downlink, 'click',function(){this.blur();});
+				JMVC.events.bind(downlink, 'click',function() {this.blur();});
 				JMVC.dom.append(el, downlink);
 				//see the pool
 				//console.debug(JMVC.io.x);
@@ -41,14 +41,14 @@ JMVC.controllers.Index = function(){
 		});
 		
 	};
-	this.index2 = function(){
+	this.index2 = function() {
 		/*alert('index controller, index action');*/
 		
 		var index = JMVC.getView('index');
 		var hello = JMVC.getView('hello');
 		
 		// add link tag
-		JMVC.head.addstyle(JMVC.baseurl+'/media/css/style.css');
+		JMVC.head.addstyle(JMVC.vars.baseurl+'/media/css/style.css');
 		
 		// edit title
 		JMVC.head.title('JS base');
@@ -60,9 +60,9 @@ JMVC.controllers.Index = function(){
 		index.set('i_say', 'be seo-unfriendly');
 		
 		index.render({
-			cback:function(n, c){
-				var link = JMVC.dom.create('a',{href:JMVC.baseurl+'/info', title:'more info'},'&infin;'+n+c);
-				JMVC.events.bind(link, 'click',function(){this.blur();});
+			cback:function(n, c) {
+				var link = JMVC.dom.create('a',{href:JMVC.vars.baseurl+'/info', title:'more info'},'&infin;'+n+c);
+				JMVC.events.bind(link, 'click',function() {this.blur();});
 				JMVC.dom.append(document.getElementById('cent'), link);
 				
 			},
@@ -80,13 +80,13 @@ JMVC.controllers.Index = function(){
 	
 	
 	
-	this.index3 = function(){
+	this.index3 = function() {
 		//directly render some code
 		this.render('<b>yupeeee</b>');
 	};
-	this.codes = function(){
+	this.codes = function() {
 		var content = '';
-		for(var i = 10; i<10000; i++){
+		for(var i = 10; i<10000; i++) {
 			content += i+' : &#'+i+';<br />';
 			
 		}

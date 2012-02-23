@@ -1,4 +1,4 @@
-JMVC.models.Persona2 = function(){
+JMVC.models.Persona2 = function() {
 	this.name = 'Fede';
-	this.hello = function(name){return 'Hello I`m '+(name || this.name) ;};
+	this.hello = function(name) {return 'Hello I`m '+(name || this.name) ;};
 };
