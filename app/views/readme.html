@@ -1,16 +1,20 @@
-<pre>
-   _  __  __ __     __ ____ 
-  (_)|  \/  |\ \   / //  __|
-  | || |\/| | \ \ / / | |    
-  | || |  | |  \ v /  | |__ 
- _/ ||_|  |_|   \_/   \____|
-|__/                      
-</pre>
+<div style="text-align:center">
+	<a href="$baseurl$">
+		<img src="$baseurl$/media/img/jmvc_h.png" alt="JMVC logo"/>
+	</a>
+</div>
 <b>Description</b>: jmvc module<br />
 <b>Author</b>: Federico Ghedina<br />
 <b>Version</b>: 0.1</br>
 <b>Date</b>: 26-01-2012<br />
 <hr>
+<h3>Description</h3>
+<p>JMVC tries to implement the mvc pattern using <i>only</i> javascript. That in not completely true because
+	the rooted .htaccess file allows to have one access point that always loads the main jmvc source that
+	process the request, gets the needed resources and changes the dom, while the url remains fiendly but....
+	it means that from the point of view of a crawler every page contains what is in the original access file
+	(index.html) and this will not correspond with what a user see as far as navigate to a page with a browser.
+</p>
 
 <h3>Installation</h3>
 <p>Thanks to a basic .htaccess jmcv access point is an index.html which loads in the head the main script
@@ -49,20 +53,17 @@ NOTE: the src attribute of the script must be the absolute url for jmvc.js</p>
 
 <h3>Url structure</h3>
 <p>Supposing we're using virtual host http://www.jmvc.dev , a location will be something like the following:</p>
-<pre>
-                http://www.jsbase.dev / controller / action / var1/val1/var2/val2/var3 ? var4=Fred&var5=notme&var1=foo
-                '-------------------'   '--------'   '----'   '----------------------'   '---------------------------'
-                         A                   A          A                A                            A
-> proto+domain ----------'                   |          |                |                            |
-                                             |          |                |                            |
-> controller -------------------------------'           |                |                            |
-                                                        |                |                            |
-> action ----------------------------------------------'                 |                            |
-                                                                         |                            |
-> parameters -----------------------------------------------------------'                             |
-                                                                                                      |
-> get params (do not override previous) -------------------------------------------------------------'
-</pre>
+<p>
+http://www.jmvc.dev/C/A/n1/v1/n2/v2/n3?v4=Fede&v5=ghe
+</p>
+<ul>
+	<li><label class="lab">proto+domain</label> : http://www.jsbase.dev</li>
+	<li><label class="lab">controller</label> : C</li>
+	<li><label class="lab">action</label> : A</li>
+	<li><label class="lab">parameters</label> : n1/v1/n2/v2/n3</li>
+	<li><label class="lab">querystring</label> : ?v4=Fede&v5=ghe</li>
+</ul>
+
 
 <p><b>NOTE</b>: parameters are meant to be even, in the controller You will be able
       to access and use 2 variables: var1="val1" and var2="val2"; the third
