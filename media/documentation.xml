@@ -186,7 +186,7 @@
 	</functions>
 	
 	
-	<functions name="Utility">
+	<functions name="Dom">
 		<function>
 			<func>JMVC.dom.create(String tag, Literal attrs,String inner)</func>
 			<description>try to create an html element.</description>
@@ -262,7 +262,7 @@
 	</functions>
 	
 	
-	<functions name="Event-Binding">
+	<functions name="Events">
 		
 		<function>
 			<func>JMVC.events.bind(Element el, String type, Javascript function fun)</func>
