@@ -564,6 +564,8 @@ Date : 26-01-2012
 	 * basic event utility
 	 */
 	JMVC.events = {
+		bindings :{},
+		onedone : false,
 		bind : function(el,tipo,fun) { 
 			if (window.addEventListener) { 
 				el.addEventListener(tipo, fun, false); 
@@ -573,13 +575,22 @@ Date : 26-01-2012
 			}else{
 				el['on'+tipo] = function() {fun.call(el, window.event)};
 			}
+			if(!this.bindings[el]){this.bindings[el]={};}
+			this.bindings[el][tipo] = fun;
 		},
-		onedone : false,
+		unbind : function(el, tipo){			
+			if(el == null)return;
+			if(el.removeEventListener){
+				el.removeEventListener(tipo, this.bindings[el][tipo], false);
+			}else if(el.detachEvent){
+				el.detachEvent("on" + tipo, this.bindings[el][tipo]);
+			}
+			delete this.bindings[el][tipo];			
+		},
 		one : function(what, type, fn) {
 			var newf = function() {if(! this.onedone)fn();this.onedone = true; };
 			this.bind(what,type, newf);
-		},	
-		
+		},		
 		ready : function(func) {
 			return this.bind(window, 'load',func);
 		}
