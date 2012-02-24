@@ -1,7 +1,6 @@
 JMVC.controllers.Index = function() {
 
 	this.index = function() {
-		/*alert('index controller, index action');*/
 		
 		var index = JMVC.getView('index');
 		
@@ -10,16 +9,12 @@ JMVC.controllers.Index = function() {
 		
 		// edit title
 		JMVC.head.title('JMVC');
-		
-		
+				
 		var n = this.get('name') || 'Federico';
 		
 		index.set('nome', n);
 		index.set('i_say', '100% seo-unfriendly');
 		
-		//JMVC.views['index'].set('baseurl', JMVC.baseurl);
-		
-
 		index.render({
 			cback:function() {
 				
@@ -42,7 +37,6 @@ JMVC.controllers.Index = function() {
 		
 	};
 	this.index2 = function() {
-		/*alert('index controller, index action');*/
 		
 		var index = JMVC.getView('index');
 		var hello = JMVC.getView('hello');
@@ -85,12 +79,18 @@ JMVC.controllers.Index = function() {
 		this.render('<b>yupeeee</b>');
 	};
 	this.codes = function() {
-		var content = '';
-		for(var i = 10; i<10000; i++) {
-			content += i+' : &#'+i+';<br />';
-			
+		
+		if(confirm('That may hang your browser!.. continue ? ')){
+			var content = '';
+			for(var i = 10; i<10000; i++) {
+				content += i+' : &#'+i+';<br />';
+
+			}
+			this.render(content);
+		}else{
+			this.render(':D');
 		}
-		this.render(content);
+		
 	};
 	
 };

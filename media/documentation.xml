@@ -188,7 +188,7 @@
 	
 	<functions name="Utility">
 		<function>
-			<func>JMVC.dom.create(tag, attrs, inner)</func>
+			<func>JMVC.dom.create(String tag, Literal attrs,String inner)</func>
 			<description>try to create an html element.</description>
 			<params>
 				<param>
@@ -207,7 +207,7 @@
 			<returns>the brand new tag</returns>
 		</function>
 		<function>
-			<func>JMVC.dom.append(where, what)</func>
+			<func>JMVC.dom.append(Element where, Element what)</func>
 			<description>append an element inside another one</description>
 			<params>
 				<param>
@@ -222,7 +222,7 @@
 			<returns>void</returns>
 		</function>
 		<function>
-			<func>JMVC.dom.add(where, tag, attrs, inner)</func>
+			<func>JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</func>
 			<description>this is a shortcut that merges create+append</description>
 			<params>
 				<param>
@@ -245,7 +245,7 @@
 			<returns>void (undefined)</returns>
 		</function>	
 		<function>
-			<func>JMVC.dom.html(el, html)</func>
+			<func>JMVC.dom.html(Element el, String html)</func>
 			<description>sets or returns the html into an existing element.</description>
 			<params>
 				<param>
@@ -258,10 +258,80 @@
 				</param>
 			</params>
 			<returns>void (undefined)</returns>
-		</function>		
+		</function>			
+	</functions>
+	
+	
+	<functions name="Event-Binding">
+		
+		<function>
+			<func>JMVC.events.bind(Element el, String type, Javascript function fun)</func>
+			<description>binds a callback to an event fired from an element</description>
+			<params>
+				<param>
+					<name>el</name>
+					<desc>dom element target</desc>
+				</param>
+				
+				<param>
+					<name>type</name>
+					<desc>the event</desc>
+				</param>
+				<param>
+					<name>func</name>
+					<desc>Javascript function callback</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>	
+		<function>
+			<func>JMVC.events.unbind(Element el, String type)</func>
+			<description>unbinds an existing binding</description>
+			<params>
+				<param>
+					<name>el</name>
+					<desc>dom element target</desc>
+				</param>				
+				<param>
+					<name>type</name>
+					<desc>the event</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>	
+				
+		<function>
+			<func>JMVC.events.one(Element el, String type, Javascript function fun)</func>
+			<description>binds only once a callback to an event fired from an element</description>
+			<params>
+				<param>
+					<name>el</name>
+					<desc>dom element target</desc>
+				</param>
+				
+				<param>
+					<name>type</name>
+					<desc>the event</desc>
+				</param>
+				<param>
+					<name>func</name>
+					<desc>Javascript function callback</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>	
+		<function>
+			<func>JMVC.events.ready(Javascript function fun)</func>
+			<description>binds a callback to document load event</description>
+			<params>
+				<param>
+					<name>func</name>
+					<desc>Javascript function callback</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>	
 	</functions>	
 </doc>
 
-
-
-				
+	

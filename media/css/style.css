@@ -11,18 +11,18 @@ div#cent{
 	letter-spacing: 5px;
 	font-size:20px;
 	font-weight:bold;
-	width:850px;
+	width:750px;
 	margin:0 auto;
 	text-align:center;
-	margin-top:180px;
+	margin-top:130px;
 }
 a{
-	color:#ddd;
+	color:#aaa;
 	text-decoration:none;
 	font-size:20px;
 	letter-spacing: 0px;
 }
 a:hover{
-	color:#aaa;
+	color:#555;
 }
 

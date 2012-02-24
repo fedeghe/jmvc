@@ -6,6 +6,20 @@ JMVC.controllers.Test = function() {
 		f : 'flag'
 	};
 
+	this.index = function(){
+		var content = '<h3>tests</h3>';
+		content+='<a href="test/model">Model</a><br />'+
+			'<a href="test/controller">Controller</a><br />'+
+			'<a href="test/view">View</a><br />'+
+			'<a href="test/flag">Some fun</a><br />';
+		
+		var v = JMVC.getView('vacuum');
+		v.set('style','');
+		v.set('content',content);
+		v.render();		
+	};
+
+
 	// test a VIEW	
 	this.view = function() {
 		var v = JMVC.getView('test'),
@@ -67,7 +81,7 @@ JMVC.controllers.Test = function() {
 		this.require('color');
 		
 		JMVC.head.title('CH beat');
-		JMVC.head.addstyle(JMVC.baseurl+'/media/css/flag.css');
+		JMVC.head.addstyle(JMVC.vars.baseurl+'/media/css/flag.css');
 
 		var v = JMVC.getView('flag'),
 			mode = 'grow',
