@@ -519,9 +519,9 @@ Date : 26-01-2012
 		get : function(u, cback, p, sync) {
 			
 			var id = JMVC.io.x.length;
-			var IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'];
+			var IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'],
 			/* be synchronous, otherwise eval is late */
-			sync = sync || false;
+				dosync = sync || false;
 			
 			try {
 				JMVC.io.x[id] = new XMLHttpRequest();
@@ -541,14 +541,14 @@ Date : 26-01-2012
 			};
 			if(p) {
 				try{
-					JMVC.io.x[id].open('POST',u,sync);
+					JMVC.io.x[id].open('POST',u,dosync);
 					JMVC.io.x[id].setRequestHeader('Content-type','application/x-www-form-urlencoded');
 					if (JMVC.io.x[id].overrideMimeType) {JMVC.io.x[id].setRequestHeader("Connection", "close"); }
 					JMVC.io.x[id].send(p);
 				}catch(e) {}
 			}else{
 				try{
-					JMVC.io.x[id].open('GET',u,sync);
+					JMVC.io.x[id].open('GET',u,dosync);
 					JMVC.io.x[id].send(null);
 				}catch(e) {}
 			}
