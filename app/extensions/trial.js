@@ -8,7 +8,7 @@ JMVC.extend('mac',{
 			date.getHours()+':'+date.getMinutes(),
 			'Enjoy JMVC'
 		];
-		JMVC.head.title('INFO::'+phrases[JMVC.util.rand(0, phrases.length-1)]);
+		JMVC.head.title('INFO :: '+phrases[JMVC.util.rand(0, phrases.length-1)]);
 	}
 });
 

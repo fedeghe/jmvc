@@ -20,7 +20,6 @@ JMVC.controllers['404'] = function() {
 		
 		
 		JMVC.head.title('404 PAGE NOT FOUND');
-		//window.setTimeout(function() {document.location.href = '/';	}, 5000);
-		JMVC.dom.append( JMVC.head.element, meta);
+		window.setTimeout(function() {document.location.href = '/';	}, 5000);
 	};
 };

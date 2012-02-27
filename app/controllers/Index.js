@@ -15,6 +15,8 @@ JMVC.controllers.Index = function() {
 		index.set('nome', n);
 		index.set('i_say', '100% seo-unfriendly');
 		
+		
+		
 		index.render({
 			cback:function() {
 				

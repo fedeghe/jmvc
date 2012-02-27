@@ -1,3 +1,10 @@
+/*
+ * thanks to Thomas Frank
+ * http://www.thomasfrank.se/xml_to_json.html
+ * 
+ * even though it causes A LOT of warnings :(
+ **/
+
 JMVC.extend('xml2json',{
 	parser:function(xmlcode,ignoretags,debug) {
 		if(!ignoretags) {ignoretags=""};

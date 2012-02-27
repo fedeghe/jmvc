@@ -30,12 +30,14 @@ Date : 26-01-2012
 				Controller, Model, View, /* MVC objects constructors */
 				extend, /* basic function to add modules */	
 				load_ext, /* function to load modules on demand */
-				Modules = ['trial']; /* modules to load always*/
+				Modules = [], /* modules to load always, none */
+				pathname_allowed_extensions = ['html','htm','jmvc','j','mvc','fg'];
 
-
-			/*****************/
-			/*  CONTROLLER   */
-			/*****************/
+			/*
+			**************
+			* CONTROLLER *
+			**************
+		    */
 			/* parent controller */
 			Controller = function () {};
 			
@@ -62,18 +64,22 @@ Date : 26-01-2012
 			};
 			
 
-			/*****************/
-			/*     MODEL     */
-			/*****************/
+			/*
+			*********
+			* MODEL *
+			*********
+		    */
 			Model = function () {};
 			Model.prototype.vars = {};
 			Model.prototype.reset = function() {this.vars = {};return this; };
 			Model.prototype.constructor = 'model';	
 	
 
-			/*****************/
-			/*      VIEW     */
-			/*****************/
+			/*
+			********
+			* VIEW *
+			********
+		    */
 			/* directly instantiated assinging content */
 			View = function (cnt) {
 				this.ocontent = cnt || 'content'; /*original content*/
@@ -97,16 +103,24 @@ Date : 26-01-2012
 				}
 				// jmvc parse
 				for(var j in JMVC.vars) {
-						this.content = this.content.replace('$'+j+'$', JMVC.vars[j]);
-					}
+					this.content = this.content.replace('$'+j+'$', JMVC.vars[j]);
+				}
 				return this; /* allow chain */
 			};
+			
+			/*
+			 * reset content to orginal (unparsed) value
+			 * and reset all vars
+			 */
 			View.prototype.reset = function() {
 				this.content = this.ocontent;
 				this.vars = {};
 				return this;
 			};
 			
+			/*
+			 * render the view parsing for variable&view placeholders
+			 */
 			View.prototype.render = function() {
 				
 				var arg = arguments[0] || {},
@@ -168,8 +182,15 @@ Date : 26-01-2012
 						
 						/* if not loaded give an alert */
 						if (!JMVC.views[viewname]) {
+							/* here the view is requested but not explicitly loaded with the JMVC.getView method.
+							 * You should use that method, and you'll do for sure if You mean to use View's variable
+							 * but if You just load a view as a simple chunk with {{myview}} placeholder inside another one
+							 * then JMVC will load it automatically (take care to not loop, parsing stops after 100 subsitutions)
+							 */
+							/*
 							alert('`'+viewname+'` view not loaded.\nUse Factory in the controller to get it. \n\njmvc will'+
 								' load it for you but variables are\n lost and will not be replaced.');
+							*/
 							JMVC.factory('view',viewname);
 						} 
 						myview = JMVC.views[viewname];
@@ -252,10 +273,13 @@ Date : 26-01-2012
 				}				
 			};
 
+
+			/*
+			 * getter, setter and "deleter" for mvc classes
+			 */
 			View.prototype.get = Model.prototype.get = Controller.prototype.get = function (vname) {
 				return ( !! this.vars[vname]) ? this.vars[vname] : false;
-			}; 
-			
+			};
 			View.prototype.set = Model.prototype.set = Controller.prototype.set = function (vname, vval, force) {
 				var i ;
 				switch(typeof vname) {
@@ -340,7 +364,9 @@ Date : 26-01-2012
 				return ret;
 			}
 
-
+			/*
+			 * Dispatch url getting controller, action and parameters
+			 */
 			dispatched = (function dispatch() {
 				var l = document.location,
 					mid = {
@@ -351,14 +377,18 @@ Date : 26-01-2012
 						hash : l.search
 					},
 					url = mid,
-					els = mid.path.substr(1).split('/'),
+					
+					/* adjust extensions, them all*/
+					els = mid.path.replace(new RegExp('.'+pathname_allowed_extensions.join('|.')), '').substr(1).split('/'),
+								
 					controller = els.shift() || 'index',
 					action = els.shift() || 'index',
-					params = {},
+					params = {}, /* extra params */
 					lab_val,
 					ret,
 					i,len=els.length;
-					
+				
+				/* now if els has non zero size, these are extra path params*/
 				for(i = 0; i+1 < len;i+=2) {
 					params[els[i]] = els[i+1];
 				}
@@ -370,9 +400,9 @@ Date : 26-01-2012
 					 */
 					els = mid.hash.substr(1).split('&');
 					
-					for(i = 0; i<len; i++) {
+					for(i = 0, len = els.length; i<len; i++) {
 						lab_val = els[i].split('=');
-						/* do not override path params */
+						/* do not override extra path params */
 						if(!params[lab_val[0]]) {
 							params[lab_val[0]] = lab_val[1];
 						}
@@ -429,6 +459,15 @@ Date : 26-01-2012
 
 			}
 
+
+			
+			/* setter unsetter JMVC vars */
+			function set(name, content){
+				JMVC.vars[name] = content;
+			}
+			function del(name){
+				if(JMVC.vars[name]){delete JMVC.vars[name];}
+			}
 			/*
 			 *DO NOT return directly, route is used above
 			 */
@@ -444,10 +483,21 @@ Date : 26-01-2012
 				vars :{
 					baseurl:	dispatched.baseurl
 				},
+				set : set,
+				del : del,
+				
 				render:		render,
 				factory:	factory_method,
 				extend : extend,
 				modules : Modules,
+				
+				parse: function(content){
+					// jmvc parse
+					for(var j in JMVC.vars) {
+						content = content.replace(new RegExp("\\$"+j+"\\$", 'g'), JMVC.vars[j]);
+					}
+					return content;
+				},
 				
 				getView :	function(n) {return factory_method('view', n); },
 				getModel :	function(n) {return factory_method('model', n); },
@@ -466,12 +516,13 @@ Date : 26-01-2012
 		/* requests pool */
 		x : [],
 		
-		get : function(u, cback, p) {
+		get : function(u, cback, p, sync) {
 			
 			var id = JMVC.io.x.length;
-			var IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'],
-				/* be synchronous, otherwise eval is late */
-				sync = false;
+			var IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'];
+			/* be synchronous, otherwise eval is late */
+			sync = sync || false;
+			
 			try {
 				JMVC.io.x[id] = new XMLHttpRequest();
 			}catch (e) {
@@ -633,15 +684,39 @@ Date : 26-01-2012
 	};
 
 	JMVC.head = {
-		addscript: function(src) {
-			var script = JMVC.dom.create('script', {type:'text/javascript',src:src}, ' ');
-			var head = this.element;
-			head.appendChild(script);
+		addscript: function(src, parse) {
+			
+			var script, head, tmp, that = this, postmode = true, async = true;
+			if(parse){
+				/* get css content, async */
+				tmp = JMVC.io.get(src, function(script_content){
+					script_content = JMVC.parse(script_content);
+					script = JMVC.dom.create('script', {type:'text/javascript'}, script_content);
+					head = that.element;
+					head.appendChild(script);
+				}, postmode, async);				
+			}else{
+				script = JMVC.dom.create('script', {type:'text/javascript',src:src}, ' ');
+				head = this.element;
+				head.appendChild(script);
+			}
 		},
-		addstyle : function(src) {
-			var style = JMVC.dom.create('link', {type:'text/css', rel:'stylesheet', href:src});
-			var head = this.element;
-			head.appendChild(style);
+		addstyle : function(src, parse) {
+			var style, head, tmp, that = this, postmode = true, async = true;
+			if(parse){
+				/* get css content, async */
+				tmp = JMVC.io.get(src, function(csscontent){
+					csscontent = JMVC.parse(csscontent);
+					style = JMVC.dom.create('style', {type:'text/css'}, csscontent);
+					head = that.element;
+					head.appendChild(style);
+				}, postmode, async);				
+			}else{
+				style = JMVC.dom.create('link', {type:'text/css', rel:'stylesheet', href:src});
+				head = this.element;
+				head.appendChild(style);
+			}
+			
 		},
 		title : function(t) {
 			if(! t ) {return document.title; }

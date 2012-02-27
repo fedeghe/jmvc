@@ -119,7 +119,7 @@
 			<returns>the View instance (to access the content use .content attribute)</returns>
 		</function>
 		<function>
-			<func>render({<br/>cback : Javascript function,<br/>argz : callback array parameters,<br/>target : dom node id attribute (default document.body)<br/>})</func>
+			<func>render(Literal pars{Javascript function cback, Array argz, String target})</func>
 			<description>This is the function intended to be used to render the document or a part of it. You can optionally pass three elements within a literal object.</description>
 			<params>
 				<param>
@@ -136,7 +136,7 @@
 					DOM (set from previous render with the default target) the content will be set in that element.</desc>
 				</param>
 			</params>
-			<returns></returns>
+			<returns>the View instance</returns>
 		</function>
 		
 	</functions>

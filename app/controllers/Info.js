@@ -1,21 +1,24 @@
 JMVC.controllers.Info = function() {
 	this.index = function() {
 		
-		/*  */
+		/* needen for documentation xml -> json */
 		this.require('xml2json');
 		
 		/* get doc from xml */
 		var d =JMVC.io.get(JMVC.vars.baseurl+'/media/documentation.xml'),
 			jsondoc = JMVC.xml2json.parser(d);
-		console.debug(JMVC);
+		//console.debug(JMVC);
 		
 		
-		JMVC.head.addstyle(JMVC.vars.baseurl+'/media/css/info.css');
+		JMVC.head.addstyle(JMVC.vars.baseurl+'/media/css/info.css',true);// parsed
+		
+		
 		
 		var main  = JMVC.getView('info');
 		var readme = JMVC.getView('readme');
+		var features = JMVC.getView('features');
 		main.set('nome', this.get('name') || 'Guest');
-		readme.set('fr', '<b style="font-size:26px;position:relative;top:8px;color:green;font-weight:bold">&#9758;</b>');
+		features.set('fr', '<b style="font-size:26px;position:relative;top:0px;color:green;font-weight:bold">&#9758;</b>');
 		
 		
 		var doc_tpl = JMVC.getView('doctpl'),
@@ -23,9 +26,9 @@ JMVC.controllers.Info = function() {
 		
 		var ret='', tmp;
 		
-		
+		/* yeah, that`s pretty ugly, but You'll surely find a better way to do that,!...so, let me know please */
 		for(var k in jsondoc.doc.functions) {
-			ret+='<h3><u>'+jsondoc.doc.functions[k]['name']+'</u></h3>';
+			ret+='<h3 class="apisection">'+jsondoc.doc.functions[k]['name']+'</h3>';
 			for(var t=0, len = jsondoc.doc.functions[k]['function'].length; t<len; t++) {
 				//adjust parameters
 				var h = '';
@@ -47,6 +50,7 @@ JMVC.controllers.Info = function() {
 		
 		readme.set('desc', ret);
 		
+		this.require('trial');
 		JMVC.mac.titlesay();
 
 		main.parse().render();

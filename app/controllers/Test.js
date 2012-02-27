@@ -3,7 +3,8 @@ JMVC.controllers.Test = function() {
 	/* test a route */ 
 	this._routes = {
 		swiss : 'flag',
-		f : 'flag'
+		f : 'flag',
+		angelo : 'flag'
 	};
 
 	this.index = function(){
