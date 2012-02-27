@@ -48,6 +48,12 @@ label.lab{
 .cl2_Events{
 	background-color: #fff;
 }
+.cl1_Head{
+	background-color: #fafaaa;
+}
+.cl2_Head{
+	background-color: #fff;
+}
 h3{
 	padding-top:15px;
 	padding-bottom:5px;
@@ -79,11 +85,11 @@ hr{
 	background-color:white;
 }
 a{
-	color:#888;
+	color:#88f;
 	text-decoration:none;
 }
 a:hover{
-	color:#faa;
+	color:#00f;
 }
 ul{
 	margin:0px;
@@ -100,9 +106,6 @@ div#centerinfo{
 	background-color: white;
 	padding:10px;
 }
-.prova1{
-	$mystyle$
-}
-.prova2{
-	$mystyle$
+.apitable{
+	$my_table_style$
 }

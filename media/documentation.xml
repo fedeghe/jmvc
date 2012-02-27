@@ -7,11 +7,11 @@
 			<description>Add a variable to the Controller registry.</description>
 			<params>
 				<param>
-					<name>varname</name>
+					<name>*varname</name>
 					<desc>the name of the variable</desc>
 				</param>
 				<param>
-					<name>value</name>
+					<name>*value</name>
 					<desc>the value for the variable</desc>
 				</param>
 			</params>
@@ -22,7 +22,7 @@
 			<description>If exists retrieve a variable from the Controller registry.</description>
 			<params>
 				<param>
-					<name>varname</name>
+					<name>*varname</name>
 					<desc>the name of the variable needed</desc>
 				</param>
 			</params>
@@ -33,19 +33,23 @@
 			<description>If exists deletes a variable from the Controller registry.</description>
 			<params>
 				<param>
-					<name>varname</name>
+					<name>*varname</name>
 					<desc>the name of the variable to be deleted</desc>
 				</param>
 			</params>
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
-			<func>relocate(uri location);</func>
+			<func>relocate(uri location, int ms);</func>
 			<description>Redirects to a specified location.</description>
 			<params>
 				<param>
-					<name>uri</name>
+					<name>*uri</name>
 					<desc>the location to be redirected to</desc>
+				</param>
+				<param>
+					<name>*ms</name>
+					<desc>after how many ms (default is 0)</desc>
 				</param>
 			</params>
 			<returns>void (undefined)</returns>
@@ -55,7 +59,7 @@
 			<description>Renders directly something from the controller, optionally invokes a callback at the end.</description>
 			<params>
 				<param>
-					<name>content</name>
+					<name>*content</name>
 					<desc>the content to render</desc>
 				</param>
 				<param>
@@ -75,11 +79,11 @@
 			<description>Add a variable to the View registry.</description>
 			<params>
 				<param>
-					<name>varname</name>
+					<name>*varname</name>
 					<desc>the name of the variable</desc>
 				</param>
 				<param>
-					<name>value</name>
+					<name>*value</name>
 					<desc>the value for the variable</desc>
 				</param>
 			</params>
@@ -90,7 +94,7 @@
 			<description>If exists retrieve a variable from the View registry.</description>
 			<params>
 				<param>
-					<name>varname</name>
+					<name>*varname</name>
 					<desc>the name of the variable needed</desc>
 				</param>
 			</params>
@@ -101,7 +105,7 @@
 			<description>If exists deletes a variable from the View registry.</description>
 			<params>
 				<param>
-					<name>varname</name>
+					<name>*varname</name>
 					<desc>the name of the variable to be deleted</desc>
 				</param>
 			</params>
@@ -151,11 +155,11 @@
 			<description>Add a variable to the Model registry.</description>
 			<params>
 				<param>
-					<name>varname</name>
+					<name>*varname</name>
 					<desc>the name of the variable</desc>
 				</param>
 				<param>
-					<name>value</name>
+					<name>*value</name>
 					<desc> the value for the variable</desc>
 				</param>
 			</params>
@@ -166,7 +170,7 @@
 			<description>If exists retrieve a variable from the Model registry.</description>
 			<params>
 				<param>
-					<name>varname</name>
+					<name>*varname</name>
 					<desc>the name of the variable needed</desc>
 				</param>
 			</params>
@@ -177,7 +181,7 @@
 			<description>If exists deletes a variable from the Model registry.</description>
 			<params>
 				<param>
-					<name>varname</name>
+					<name>*varname</name>
 					<desc>the name of the variable to be deleted</desc>
 				</param>
 			</params>
@@ -192,7 +196,7 @@
 			<description>try to create an html element.</description>
 			<params>
 				<param>
-					<name>tag</name>
+					<name>*tag</name>
 					<desc>tag to be created</desc>
 				</param>
 				<param>
@@ -211,11 +215,11 @@
 			<description>append an element inside another one</description>
 			<params>
 				<param>
-					<name>where</name>
+					<name>*where</name>
 					<desc>dom element target</desc>
 				</param>
 				<param>
-					<name>what</name>
+					<name>*what</name>
 					<desc>dom element to append</desc>
 				</param>
 			</params>
@@ -226,11 +230,11 @@
 			<description>this is a shortcut that merges create+append</description>
 			<params>
 				<param>
-					<name>where</name>
+					<name>*where</name>
 					<desc>dom element target</desc>
 				</param>
 				<param>
-					<name>tag</name>
+					<name>*tag</name>
 					<desc>tag to be created</desc>
 				</param>
 				<param>
@@ -249,7 +253,7 @@
 			<description>sets or returns the html into an existing element.</description>
 			<params>
 				<param>
-					<name>el</name>
+					<name>*el</name>
 					<desc>dom element target</desc>
 				</param>
 				<param>
@@ -269,16 +273,16 @@
 			<description>binds a callback to an event fired from an element</description>
 			<params>
 				<param>
-					<name>el</name>
+					<name>*el</name>
 					<desc>dom element target</desc>
 				</param>
 				
 				<param>
-					<name>type</name>
+					<name>*type</name>
 					<desc>the event</desc>
 				</param>
 				<param>
-					<name>func</name>
+					<name>*func</name>
 					<desc>Javascript function callback</desc>
 				</param>
 			</params>
@@ -289,11 +293,11 @@
 			<description>unbinds an existing binding</description>
 			<params>
 				<param>
-					<name>el</name>
+					<name>*el</name>
 					<desc>dom element target</desc>
 				</param>				
 				<param>
-					<name>type</name>
+					<name>*type</name>
 					<desc>the event</desc>
 				</param>
 			</params>
@@ -305,16 +309,16 @@
 			<description>binds only once a callback to an event fired from an element</description>
 			<params>
 				<param>
-					<name>el</name>
+					<name>*el</name>
 					<desc>dom element target</desc>
 				</param>
 				
 				<param>
-					<name>type</name>
+					<name>*type</name>
 					<desc>the event</desc>
 				</param>
 				<param>
-					<name>func</name>
+					<name>*func</name>
 					<desc>Javascript function callback</desc>
 				</param>
 			</params>
@@ -325,13 +329,73 @@
 			<description>binds a callback to document load event</description>
 			<params>
 				<param>
-					<name>func</name>
+					<name>*func</name>
 					<desc>Javascript function callback</desc>
 				</param>
 			</params>
 			<returns>void (undefined)</returns>
 		</function>	
 	</functions>	
+	
+	
+	
+	<functions name="Head">
+		
+		<function>
+			<func>JMVC.head.addscript(String src, Boolean parse, Boolean explicit)</func>
+			<description>Add a script in the head section</description>
+			<params>
+				<param>
+					<name>*src</name>
+					<desc>this can be the url of the script or the script content (you can even use &#123;&#123;myscript name=`hello` ... &#125;&#125; )</desc>
+				</param>
+				
+				<param>
+					<name>parse</name>
+					<desc>set true if You mean to use JMVC.vars variables placeholders in the script</desc>
+				</param>
+				<param>
+					<name>explicit</name>
+					<desc>set true if You mean to pass the script content or a view placeholder (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>	
+		<function>
+			<func>JMVC.head.addstyle(String src, Boolean parse, Boolean explicit)</func>
+			<description>Add a stylesheet in the head section</description>
+			<params>
+				<param>
+					<name>*src</name>
+					<desc>this can be the url of the stylesheet or the stylesheet content (you can even use &#123;&#123;mystyle color=`#ff33cc` ... &#125;&#125; )</desc>
+				</param>
+				
+				<param>
+					<name>parse</name>
+					<desc>set true if You mean to use JMVC.vars variables placeholders in the stylesheet</desc>
+				</param>
+				<param>
+					<name>explicit</name>
+					<desc>set true if You mean to pass the stylesheet content or a view placeholder (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>	
+				
+		<function>
+			<func>JMVC.head.title(String title)</func>
+			<description>Gets/sets document title</description>
+			<params>
+				<param>
+					<name>title</name>
+					<desc>The string You want to be set as document title</desc>
+				</param>
+			</params>
+			<returns>the title if no param is passed</returns>
+		</function>
+	</functions>	
+	
+	
 </doc>
 
 	

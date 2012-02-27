@@ -9,13 +9,15 @@ JMVC.controllers.Info = function() {
 			jsondoc = JMVC.xml2json.parser(d);
 		//console.debug(JMVC);
 		
-		
+		JMVC.set('my_table_style', 'border:2px solid #ddd; padding:2px; background-color:#aaa');
 		JMVC.head.addstyle(JMVC.vars.baseurl+'/media/css/info.css',true);// parsed
 		
 		
 		
 		var main  = JMVC.getView('info');
+		
 		var readme = JMVC.getView('readme');
+		
 		var features = JMVC.getView('features');
 		main.set('nome', this.get('name') || 'Guest');
 		features.set('fr', '<b style="font-size:26px;position:relative;top:0px;color:green;font-weight:bold">&#9758;</b>');
@@ -46,9 +48,12 @@ JMVC.controllers.Info = function() {
 				ret += doc_tpl.reset().parse(doc).content;
 				doc.reset();
 			}
+			ret+='<p>$legend$</p>';
 		}
 		
 		readme.set('desc', ret);
+		
+		readme.set('legend', '<b>*</b> : mandatory parameter');
 		
 		this.require('trial');
 		JMVC.mac.titlesay();

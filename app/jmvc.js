@@ -44,7 +44,10 @@ Date : 26-01-2012
 			/* for storing url vars */
 			Controller.prototype.vars = {};
 			Controller.prototype.index = function () {alert('Default index action'); };
-			Controller.prototype.relocate = function (uri) {document.location.href = '' + uri; };
+			Controller.prototype.relocate = function (uri, ms) {
+				var t = parseInt(ms,10) || 0;
+				window.setTimeout(function(){document.location.href = '' + uri;}, t);
+			};
 			Controller.prototype.render = function(content,cback) {
 				var tmp_v = new View(content);
 				tmp_v.render(typeof cback === 'function'?{cback:cback} : null);
@@ -101,10 +104,25 @@ Date : 26-01-2012
 						this.content = this.content.replace('$'+j+'$', obj.get(j));
 					}
 				}
-				// jmvc parse
+				// jmvc parse vars
 				for(var j in JMVC.vars) {
 					this.content = this.content.replace('$'+j+'$', JMVC.vars[j]);
 				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				return this; /* allow chain */
 			};
 			
@@ -135,99 +153,15 @@ Date : 26-01-2012
 					target = arg.target || false,
 					that = this,	/* for binding this context in the callback */
 					cont = that.content,	/* the view content */
-					patt = new RegExp("{{(.[^\\$}]*)}}",'gm'),	/* for hunting view placeholders */
-					pattpar = new RegExp("\\s(.[A-z]*)=`(.[^/`]*)`",'gm'),	/* for getting explicit params passed within view placeholders */
 					pattvar = new RegExp("\\$(.[^\\$}]*)\\$",'gm'),	/* for variables */
-					res,		/* results of view hunt */
 					resvar,		/* variables found */
-					myview,		/* the view instance */
-					tmp1, tmp2,	/* two temporary variables for regexp results */
-					i=0, t, k,	/* some loop counters */
-					limit=100,	/* recursion limit for replacement */
-					viewname,	/* only the view name */
-					orig,		/*original content of {{}} stored for final replacement*/
-					register;	/* to store inner variables found in the placeholder */
+					t;	/* some loop counters */
 					
-				while (true && i++<limit) {
-					res = patt.exec(cont);
-					if (res) {
-						
-						viewname = orig = res[1];
-						
-						register = false;
-						
-						/* got params within ? */
-						if(pattpar.test(res[1])) {
-							/* register becomes an object and flags result for later check */
-							register = {};
-							
-							/* get only the view name, ingoring parameters*/
-							tmp2  = (new RegExp("^(.[A-z]*)\\s")).exec(res[1]);
-							viewname = tmp2[1];
-							
-							tmp2 = res[1];
-							while (true) {
-								/* this is exactly pattpar but if I use it does not work */
-								tmp1 = (new RegExp("\\s(.[A-z]*)=`(.[^/`]*)`",'gm')).exec(tmp2);
-								
-								if (tmp1) {
-									/* add to temporary register */
-									register[tmp1[1]] = tmp1[2];
-									tmp2 = tmp2.replace(' '+tmp1[1]+'=`'+tmp1[2]+'`', "" );
-								}else{
-									break;
-								}
-							}
-						}
-						
-						/* if not loaded give an alert */
-						if (!JMVC.views[viewname]) {
-							/* here the view is requested but not explicitly loaded with the JMVC.getView method.
-							 * You should use that method, and you'll do for sure if You mean to use View's variable
-							 * but if You just load a view as a simple chunk with {{myview}} placeholder inside another one
-							 * then JMVC will load it automatically (take care to not loop, parsing stops after 100 subsitutions)
-							 */
-							/*
-							alert('`'+viewname+'` view not loaded.\nUse Factory in the controller to get it. \n\njmvc will'+
-								' load it for you but variables are\n lost and will not be replaced.');
-							*/
-							JMVC.factory('view',viewname);
-						} 
-						myview = JMVC.views[viewname];
-						
-						/*
-						 * in case there are some vars in placeholder
-						 * register will hold values obtained above
-						 * and we give'em to the view, the parse method
-						 * will do the rest
-						 */
-						if(register !== false) {
-							for(k in register) {
-								myview.set(k, register[k]);
-							}
-						}
-	
-						/*
-						 * before view substitution,
-						 * look for variables
-						 */
-						while (true) {
-							tmp1 = pattvar.exec(myview.content);
-							if (tmp1) {
-								myview.content = myview.content.replace('$'+tmp1[1]+'$', myview.get(tmp1[1]) );
-							}else{
-								break;
-							}
-						}
-						/* now the whole view */
-						cont = cont.replace('{{'+orig+'}}', myview.content);					
-					}else{
-						break;
-					}
-				}
+				/* parse for other views or JMVC.vars*/
+				cont = jmvcparse(cont);
 
 				/* look for / substitute  vars
-				 * in the main view
+				 * in the view (these belongs to the view)
 				 */
 				while (true) {
 					resvar = pattvar.exec(cont);
@@ -237,8 +171,12 @@ Date : 26-01-2012
 					} else {
 						break;
 					}
-				}			
-				that.content = cont;			
+				}	
+				///////////////////////////////////////
+				
+				that.content = cont;	
+				
+				
 				JMVC.events.bind(window, 'load', function () {
 						var targ = (typeof target === 'string' && document.getElementById(target))	?
 							document.getElementById(target)	:	document.body ;
@@ -458,14 +396,161 @@ Date : 26-01-2012
 				}
 
 			}
+			
+			
+			
+			
+			
+
+
+
+
+
+
+
+			
+			
+			
+			
+			
+			/* this function get a content and substitute jmvc.vars and direct view placeholders like {{viewname .... }}
+			 * returns content parsed
+			 */
+			function jmvcparse(content){
+				var cont = content,	/* the view content */
+					patt = new RegExp("{{(.[^\\$}]*)}}",'gm'),	/* for hunting view placeholders */
+					pattpar = new RegExp("\\s(.[A-z]*)=`(.[^/`]*)`",'gm'),	/* for getting explicit params passed within view placeholders */
+					pattvar = new RegExp("\\$(.[^\\$}]*)\\$",'gm'),	/* for variables */
+					res,		/* results of view hunt */
+					resvar,		/* variables found */
+					myview,		/* the view instance */
+					tmp1, tmp2,	/* two temporary variables for regexp results */
+					i=0, t, k,	/* some loop counters */
+					limit=100,	/* recursion limit for replacement */
+					viewname,	/* only the view name */
+					orig,		/*original content of {{}} stored for final replacement*/
+					register;	/* to store inner variables found in the placeholder */
+					
+				while (true && i++<limit) {
+					res = patt.exec(cont);
+					if (res) {
+						
+						viewname = orig = res[1];
+						
+						register = false;
+						
+						/* got params within ? */
+						if(pattpar.test(res[1])) {
+							/* register becomes an object and flags result for later check */
+							register = {};
+							
+							/* get only the view name, ingoring parameters*/
+							tmp2  = (new RegExp("^(.[A-z]*)\\s")).exec(res[1]);
+							viewname = tmp2[1];
+							
+							tmp2 = res[1];
+							while (true) {
+								/* this is exactly pattpar but if I use it does not work */
+								tmp1 = (new RegExp("\\s(.[A-z]*)=`(.[^/`]*)`",'gm')).exec(tmp2);
+								
+								if (tmp1) {
+									/* add to temporary register */
+									register[tmp1[1]] = tmp1[2];
+									tmp2 = tmp2.replace(' '+tmp1[1]+'=`'+tmp1[2]+'`', "" );
+								}else{
+									break;
+								}
+							}
+						}
+						
+						/* if not loaded give an alert */
+						if (!JMVC.views[viewname]) {
+							/* here the view is requested but not explicitly loaded with the JMVC.getView method.
+							 * You should use that method, and you'll do for sure if You mean to use View's variable
+							 * but if You just load a view as a simple chunk with {{myview}} placeholder inside another one
+							 * then JMVC will load it automatically (take care to not loop, parsing stops after 100 subsitutions)
+							 */
+							/*
+							alert('`'+viewname+'` view not loaded.\nUse Factory in the controller to get it. \n\njmvc will'+
+								' load it for you but variables are\n lost and will not be replaced.');
+							*/
+							JMVC.factory('view',viewname);
+						} 
+						myview = JMVC.views[viewname];
+						
+						/*
+						 * in case there are some vars in placeholder
+						 * register will hold values obtained above
+						 * and we give'em to the view, the parse method
+						 * will do the rest
+						 */
+						if(register !== false) {
+							for(k in register) {
+								myview.set(k, register[k]);
+							}
+						}
+	
+						/*
+						 * before view substitution,
+						 * look for variables, these have to be set with set method on view instance,
+						 * (and that cannot be done using {{viewname}} placeholder )
+						 */
+						while (true) {
+							tmp1 = pattvar.exec(myview.content);
+							if (tmp1) {
+								myview.content = myview.content.replace('$'+tmp1[1]+'$', myview.get(tmp1[1]) );
+							}else{
+								break;
+							}
+						}
+						/* now the whole view */
+						cont = cont.replace('{{'+orig+'}}', myview.content);					
+					}else{
+						break;
+					}
+				}
+				
+				// now JMVC.vars parse
+				for(var j in JMVC.vars) {
+					cont = cont.replace(new RegExp("\\$"+j+"\\$", 'g'), JMVC.vars[j]);
+				}
+				
+				return cont;
+				
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 			
 			/* setter unsetter JMVC vars */
-			function set(name, content){
+			function jmvcset(name, content){
 				JMVC.vars[name] = content;
 			}
-			function del(name){
+			function jmvcdel(name){
 				if(JMVC.vars[name]){delete JMVC.vars[name];}
 			}
 			/*
@@ -483,22 +568,51 @@ Date : 26-01-2012
 				vars :{
 					baseurl:	dispatched.baseurl
 				},
-				set : set,
-				del : del,
+				set : jmvcset,
+				del : jmvcdel,
 				
 				render:		render,
 				factory:	factory_method,
 				extend : extend,
 				modules : Modules,
 				
+				parse : jmvcparse,
+				/*
 				parse: function(content){
+					
 					// jmvc parse
 					for(var j in JMVC.vars) {
 						content = content.replace(new RegExp("\\$"+j+"\\$", 'g'), JMVC.vars[j]);
+						
+					}
+					
+					
+					var patt = new RegExp("{{(.[^\\$}]*)}}",'gm'),	
+						res,
+						myview,
+						viewname;
+					
+					while (true) {
+						res = patt.exec(content);
+						if (res) {
+							viewname = res[1];
+					
+							if (!JMVC.views[viewname]) {
+								JMVC.factory('view',viewname);
+							} 
+							myview = JMVC.views[viewname];
+
+					
+							content = content.replace('{{'+viewname+'}}', myview.content);					
+						}else{
+							break;
+						}
 					}
 					return content;
+					
+					
 				},
-				
+				*/
 				getView :	function(n) {return factory_method('view', n); },
 				getModel :	function(n) {return factory_method('model', n); },
 				getController :	function(n) {return factory_method('controller', n); }
@@ -684,33 +798,51 @@ Date : 26-01-2012
 	};
 
 	JMVC.head = {
-		addscript: function(src, parse) {
+		addscript: function(src, parse, explicit) {
 			
 			var script, head, tmp, that = this, postmode = true, async = true;
 			if(parse){
-				/* get css content, async */
-				tmp = JMVC.io.get(src, function(script_content){
-					script_content = JMVC.parse(script_content);
+				if(explicit){
+					var script_content = JMVC.parse(src /* in this case is mean to be the content */);
+					script_content = JMVC.parse(script_content,true);
 					script = JMVC.dom.create('script', {type:'text/javascript'}, script_content);
 					head = that.element;
 					head.appendChild(script);
-				}, postmode, async);				
+				}else{
+					/* get css content, async */
+					tmp = JMVC.io.get(src, function(script_content){
+						script_content = JMVC.parse(script_content,true);
+						script = JMVC.dom.create('script', {type:'text/javascript'}, script_content);
+						head = that.element;
+						head.appendChild(script);
+					}, postmode, async);
+				}
 			}else{
-				script = JMVC.dom.create('script', {type:'text/javascript',src:src}, ' ');
+				script = (explicit)?
+					JMVC.dom.create('script', {type:'text/javascript'}, src)
+					:
+					JMVC.dom.create('script', {type:'text/javascript',src:src}, ' ');
 				head = this.element;
 				head.appendChild(script);
 			}
 		},
-		addstyle : function(src, parse) {
+		addstyle : function(src, parse, explicit) {
 			var style, head, tmp, that = this, postmode = true, async = true;
 			if(parse){
-				/* get css content, async */
-				tmp = JMVC.io.get(src, function(csscontent){
-					csscontent = JMVC.parse(csscontent);
-					style = JMVC.dom.create('style', {type:'text/css'}, csscontent);
+				if(explicit){
+					var css_content = JMVC.parse(src /* in this case is mean to be the content */, true);
+					style = JMVC.dom.create('style', {type:'text/css'}, css_content);
 					head = that.element;
 					head.appendChild(style);
-				}, postmode, async);				
+				}else{
+				/* get css content, async */
+					tmp = JMVC.io.get(src, function(csscontent){
+						csscontent = JMVC.parse(csscontent,true);
+						style = JMVC.dom.create('style', {type:'text/css'}, csscontent);
+						head = that.element;
+						head.appendChild(style);
+					}, postmode, async);	
+				}
 			}else{
 				style = JMVC.dom.create('link', {type:'text/css', rel:'stylesheet', href:src});
 				head = this.element;
