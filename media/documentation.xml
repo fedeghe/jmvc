@@ -356,7 +356,7 @@
 				</param>
 				<param>
 					<name>explicit</name>
-					<desc>set true if You mean to pass the script content or a view placeholder (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</desc>
+					<desc>set true if You mean to pass the script content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</desc>
 				</param>
 			</params>
 			<returns>void (undefined)</returns>
@@ -376,7 +376,7 @@
 				</param>
 				<param>
 					<name>explicit</name>
-					<desc>set true if You mean to pass the stylesheet content or a view placeholder (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</desc>
+					<desc>set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</desc>
 				</param>
 			</params>
 			<returns>void (undefined)</returns>

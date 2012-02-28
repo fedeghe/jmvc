@@ -10,7 +10,7 @@ Description: jmvc module
 
 
 Author: Federico Ghedina
-Version: 0.1
+Version: 0.3
 Date : 26-01-2012
 
 
@@ -24,14 +24,18 @@ Date : 26-01-2012
 		function () {
 			
 			var url,	/* current url */
-				route,	/* returning JMVC object */
+				_jmvc,	/* returning object, will be JMVC */
 				basic_inherit,	/* minimal dummy function for granting basic inheritance */				
 				dispatched,	/* literal to contain url mvc components */
 				Controller, Model, View, /* MVC objects constructors */
 				extend, /* basic function to add modules */	
 				load_ext, /* function to load modules on demand */
 				Modules = [], /* modules to load always, none */
-				pathname_allowed_extensions = ['html','htm','jmvc','j','mvc','fg'];
+				pathname_allowed_extensions = ['html','htm','jmvc','j','mvc','fg'],
+				jmvc_default = {
+					controller : 'index',
+					action : 'index'
+				} ;
 
 			/*
 			**************
@@ -199,13 +203,13 @@ Date : 26-01-2012
 			// for extending with modules
 			extend = function() {
 				var target = arguments[0];				
-				if(! route[target]) {route[target] = {}; }				
+				if(! _jmvc[target]) {_jmvc[target] = {}; }				
 				var arr_func_obj = arguments[1] || {};				
 				for(var i in arr_func_obj) {
 					/* it won`t let You override */
-					if(typeof route[target][i] === 'undefined' && typeof arr_func_obj[i] === 'function') {
+					if(typeof _jmvc[target][i] === 'undefined' && typeof arr_func_obj[i] === 'function') {
 						if(typeof arr_func_obj[i] === 'function') {
-							route[target][i] = arr_func_obj[i];
+							_jmvc[target][i] = arr_func_obj[i];
 						}
 					}
 				}				
@@ -317,15 +321,15 @@ Date : 26-01-2012
 					url = mid,
 					
 					/* adjust extensions, them all*/
-					els = mid.path.replace(new RegExp('.'+pathname_allowed_extensions.join('|.')), '').substr(1).split('/'),
-								
+					
+					els = mid.path.replace(new RegExp('\\.'+pathname_allowed_extensions.join('|\\.'),'gm'), '').substr(1).split('/'),
 					controller = els.shift() || 'index',
 					action = els.shift() || 'index',
 					params = {}, /* extra params */
 					lab_val,
 					ret,
-					i,len=els.length;
-				
+					i,len=els.length;		
+					
 				/* now if els has non zero size, these are extra path params*/
 				for(i = 0; i+1 < len;i+=2) {
 					params[els[i]] = els[i+1];
@@ -365,34 +369,34 @@ Date : 26-01-2012
 				var controller, i;
 
 				/* "import" the controller (eval ajax code) */
-				JMVC.factory('controller',route.c);
+				JMVC.factory('controller',_jmvc.c);
 
 				/* if the constructor has been evalued correctly */
-				if(JMVC.controllers[route.c]) {
+				if(JMVC.controllers[_jmvc.c]) {
 
 					/* grant basic ineritance from parent Controller */
-					basic_inherit(JMVC.controllers[route.c], Controller);
+					basic_inherit(JMVC.controllers[_jmvc.c], Controller);
 
 					/* make an instance */
-					controller = new JMVC.controllers[route.c]();
+					controller = new JMVC.controllers[_jmvc.c]();
 					
 					/* manage routes */
 					if(controller['_routes']) {
-						route.a = controller['_routes'][route.a] || route.a;
+						_jmvc.a = controller['_routes'][_jmvc.a] || _jmvc.a;
 					}
 
-					for(i in route.p) {
-						controller.set(i,  decodeURI(route.p[i]) );
+					for(i in _jmvc.p) {
+						controller.set(i,  decodeURI(_jmvc.p[i]) );
 					}
 
 					/* call action */
-					if(controller[route.a] && typeof controller[route.a] === 'function') {
-						controller[route.a]();
+					if(controller[_jmvc.a] && typeof controller[_jmvc.a] === 'function') {
+						controller[_jmvc.a]();
 					}else{
-						document.location.href = '/404/msg/act/'+route.a;
+						document.location.href = '/404/msg/act/'+_jmvc.a;
 					}
 				}else{
-					document.location.href = '/404/msg/cnt/'+route.c;
+					document.location.href = '/404/msg/cnt/'+_jmvc.c;
 				}
 
 			}
@@ -413,23 +417,25 @@ Date : 26-01-2012
 			
 			
 			
-			/* this function get a content and substitute jmvc.vars and direct view placeholders like {{viewname .... }}
-			 * returns content parsed
+			/* 
+			 * This function get a content and substitute jmvc.vars
+			 * and direct view placeholders like {{viewname .... }}
+			 * returns parsed content
 			 */
 			function jmvcparse(content){
 				var cont = content,	/* the view content */
 					patt = new RegExp("{{(.[^\\$}]*)}}",'gm'),	/* for hunting view placeholders */
 					pattpar = new RegExp("\\s(.[A-z]*)=`(.[^/`]*)`",'gm'),	/* for getting explicit params passed within view placeholders */
 					pattvar = new RegExp("\\$(.[^\\$}]*)\\$",'gm'),	/* for variables */
-					res,		/* results of view hunt */
+					res,			/* results of view hunt */
 					resvar,		/* variables found */
 					myview,		/* the view instance */
 					tmp1, tmp2,	/* two temporary variables for regexp results */
-					i=0, t, k,	/* some loop counters */
-					limit=100,	/* recursion limit for replacement */
-					viewname,	/* only the view name */
-					orig,		/*original content of {{}} stored for final replacement*/
-					register;	/* to store inner variables found in the placeholder */
+					i=0, t, k,		/* some loop counters */
+					limit=100,		/* recursion limit for replacement */
+					viewname,		/* only the view name */
+					orig,			/*original content of {{}} stored for final replacement*/
+					register;		/* to store inner variables found in the placeholder */
 					
 				while (true && i++<limit) {
 					res = patt.exec(cont);
@@ -468,7 +474,7 @@ Date : 26-01-2012
 							/* here the view is requested but not explicitly loaded with the JMVC.getView method.
 							 * You should use that method, and you'll do for sure if You mean to use View's variable
 							 * but if You just load a view as a simple chunk with {{myview}} placeholder inside another one
-							 * then JMVC will load it automatically (take care to not loop, parsing stops after 100 subsitutions)
+							 * then JMVC will load it automatically (take care to not loop, parsing stops after 100 replacements)
 							 */
 							/*
 							alert('`'+viewname+'` view not loaded.\nUse Factory in the controller to get it. \n\njmvc will'+
@@ -516,49 +522,19 @@ Date : 26-01-2012
 				}
 				
 				return cont;
-				
 			}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 			
 			/* setter unsetter JMVC vars */
-			function jmvcset(name, content){
-				JMVC.vars[name] = content;
-			}
-			function jmvcdel(name){
-				if(JMVC.vars[name]){delete JMVC.vars[name];}
-			}
+			function jmvcset(name, content){ JMVC.vars[name] = content;	}
+			function jmvcdel(name){ if(JMVC.vars[name]){delete JMVC.vars[name];} }
+			
 			/*
-			 *DO NOT return directly, route is used above
+			 *DO NOT return directly, _jmvc is used above
 			 */
-			route = {
-				c : dispatched.controller || 'index',
-				a : dispatched.action || 'index',
+			_jmvc = {
+				c : dispatched.controller || jmvc_default.controller,
+				a : dispatched.action || jmvc_default.action,
 				p : dispatched.params || {},
 				
 				controllers : {},
@@ -577,48 +553,13 @@ Date : 26-01-2012
 				modules : Modules,
 				
 				parse : jmvcparse,
-				/*
-				parse: function(content){
-					
-					// jmvc parse
-					for(var j in JMVC.vars) {
-						content = content.replace(new RegExp("\\$"+j+"\\$", 'g'), JMVC.vars[j]);
-						
-					}
-					
-					
-					var patt = new RegExp("{{(.[^\\$}]*)}}",'gm'),	
-						res,
-						myview,
-						viewname;
-					
-					while (true) {
-						res = patt.exec(content);
-						if (res) {
-							viewname = res[1];
-					
-							if (!JMVC.views[viewname]) {
-								JMVC.factory('view',viewname);
-							} 
-							myview = JMVC.views[viewname];
-
-					
-							content = content.replace('{{'+viewname+'}}', myview.content);					
-						}else{
-							break;
-						}
-					}
-					return content;
-					
-					
-				},
-				*/
+				
 				getView :	function(n) {return factory_method('view', n); },
 				getModel :	function(n) {return factory_method('model', n); },
 				getController :	function(n) {return factory_method('controller', n); }
 			};
 			/* return JMVC */
-			return route;
+			return _jmvc;
 		}
 	)();
 	
