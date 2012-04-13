@@ -6,7 +6,7 @@
 </div>
 <b>Description</b>: jmvc module<br />
 <b>Contact</b>: fedeghe@gmail.com<br />
-<b>Version</b>: 0.1</br>
+<b>Version</b>: $version$</br>
 <b>Date</b>: 26-01-2012<br />
 <hr>
 <h3>Description</h3>
@@ -48,6 +48,9 @@ http://www.jmvc.dev/C/A/n1/v1/n2/v2/n3?v4=Fede&v5=ghe
 	<li><label class="lab">querystring</label> : ?v4=Fede&v5=ghe</li>
 </ul>
 <br />
+<p>All parameters (including those ones coming from querystring) will be automatically loaded into the current controller register, meaning that any view rendered from it can use 
+	the placeholders to show their value. $ciccio$
+</p>
 <p><b>HINT</b>: parameters are meant to be even, in the controller You will be able
       to access and use 2 variables: n1="v1" and n2="v2"; the third
       one will be ignored because unvalued.</p>
@@ -59,3 +62,5 @@ http://www.jmvc.dev/C/A/n1/v1/n2/v2/n3?v4=Fede&v5=ghe
 
 <h2>API</h2>
 $desc$
+<div id="footer"></div>
+<hr />

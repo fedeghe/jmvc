@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <?xml-stylesheet href="$baseurl$/media/css/info.css" title="Modern" media="screen" type="text/css"?>
 <doc>
-    <functions name="Controller">
+	
+	<functions name="Model">
 		<function>
-			<func>set(String varname, Mixed value); </func>
-			<description>Add a variable to the Controller registry.</description>
+			<func>set(String varname, Mixed value)</func>
+			<description>Add a variable to the Model registry.</description>
 			<params>
 				<param>
 					<name>*varname</name>
@@ -12,14 +13,14 @@
 				</param>
 				<param>
 					<name>*value</name>
-					<desc>the value for the variable</desc>
+					<desc> the value for the variable</desc>
 				</param>
 			</params>
-			<returns>the controller instance</returns>
+			<returns>the model instance</returns>
 		</function>
 		<function>
-			<func>get(String varname);</func>
-			<description>If exists retrieve a variable from the Controller registry.</description>
+			<func>get(String varname)</func>
+			<description>If exists retrieve a variable from the Model registry.</description>
 			<params>
 				<param>
 					<name>*varname</name>
@@ -29,8 +30,8 @@
 			<returns>the variable value if exists or false</returns>
 		</function>
 		<function>
-			<func>del(String varname);</func>
-			<description>If exists deletes a variable from the Controller registry.</description>
+			<func>del(String varname)</func>
+			<description>If exists deletes a variable from the Model registry.</description>
 			<params>
 				<param>
 					<name>*varname</name>
@@ -40,36 +41,16 @@
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
-			<func>relocate(uri location, int ms);</func>
-			<description>Redirects to a specified location.</description>
+			<func>reset();</func>
+			<description>Deletes all variables from the Model registry.</description>
 			<params>
 				<param>
-					<name>*uri</name>
-					<desc>the location to be redirected to</desc>
-				</param>
-				<param>
-					<name>*ms</name>
-					<desc>after how many ms (default is 0)</desc>
+					<name>no params</name>
+					<desc>this function needs no parameters</desc>
 				</param>
 			</params>
 			<returns>void (undefined)</returns>
-		</function>
-		<function>
-			<func>render(String content, Javascript function callback);</func>
-			<description>Renders directly something from the controller, optionally invokes a callback at the end.</description>
-			<params>
-				<param>
-					<name>*content</name>
-					<desc>the content to render</desc>
-				</param>
-				<param>
-					<name>callback</name>
-					<desc>a function that will be invoked after content is set</desc>
-				</param>
-			</params>
-			<returns>the Controller instance</returns>
-		</function>
-		
+		</function>		
 	</functions>
 	
 	
@@ -142,17 +123,30 @@
 			</params>
 			<returns>the View instance</returns>
 		</function>
-		
-	</functions>
-	
-	
-	
-	
-	
-	<functions name="Model">
 		<function>
-			<func>set(String varname, Mixed value)</func>
-			<description>Add a variable to the Model registry.</description>
+			<func>set_from_url(String vname, String alt)</func>
+			<description>All extra parameters are automatically added into the Controller register, so if You plan to use one of these values in a view You should do something like:
+				myview.set('myvar', this.get('myvar')); and manage fallback values; that function do that for You 
+			</description>
+			<params>
+				<param>
+					<name>*vname</name>
+					<desc>the name of the variable You plan to be in extra params</desc>
+				</param>
+				<param>
+					<name>alt</name>
+					<desc>an alternative String in case vname is not found in extra params (otherwise You'll see `false`)</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+	</functions>	
+	
+	
+	<functions name="Controller">
+		<function>
+			<func>set(String varname, Mixed value); </func>
+			<description>Add a variable to the Controller registry.</description>
 			<params>
 				<param>
 					<name>*varname</name>
@@ -160,14 +154,14 @@
 				</param>
 				<param>
 					<name>*value</name>
-					<desc> the value for the variable</desc>
+					<desc>the value for the variable</desc>
 				</param>
 			</params>
-			<returns>the model instance</returns>
+			<returns>the controller instance</returns>
 		</function>
 		<function>
-			<func>get(String varname)</func>
-			<description>If exists retrieve a variable from the Model registry.</description>
+			<func>get(String varname);</func>
+			<description>If exists retrieve a variable from the Controller registry.</description>
 			<params>
 				<param>
 					<name>*varname</name>
@@ -177,8 +171,8 @@
 			<returns>the variable value if exists or false</returns>
 		</function>
 		<function>
-			<func>del(String varname)</func>
-			<description>If exists deletes a variable from the Model registry.</description>
+			<func>del(String varname);</func>
+			<description>If exists deletes a variable from the Controller registry.</description>
 			<params>
 				<param>
 					<name>*varname</name>
@@ -186,8 +180,69 @@
 				</param>
 			</params>
 			<returns>void (undefined)</returns>
-		</function>		
+		</function>
+		<function>
+			<func>reset();</func>
+			<description>Deletes all variables from the Controller registry.</description>
+			<params>
+				<param>
+					<name>no params</name>
+					<desc>this function needs no parameters</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<func>relocate(uri location, int ms);</func>
+			<description>Redirects to a specified location.</description>
+			<params>
+				<param>
+					<name>*uri</name>
+					<desc>the location to be redirected to</desc>
+				</param>
+				<param>
+					<name>*ms</name>
+					<desc>after how many ms (default is 0)</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<func>render(String content, Javascript function callback);</func>
+			<description>Renders directly something from the controller, optionally invokes a callback at the end.</description>
+			<params>
+				<param>
+					<name>*content</name>
+					<desc>the content to render</desc>
+				</param>
+				<param>
+					<name>callback</name>
+					<desc>a function that will be invoked after content is set</desc>
+				</param>
+			</params>
+			<returns>the Controller instance</returns>
+		</function>
+		<function>
+			<func>require(String extension1, String extension2, ...);</func>
+			<description>Loads one or more extensions into the JMVC object</description>
+			<params>
+				<param>
+					<name>*extension1</name>
+					<desc>the name of the javascript file (must be in extensions folder) to be loaded. That file will use JMVC.extend function (see the `More` section)</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
 	</functions>
+	
+	
+
+	
+	
+	
+	
+	
+
 	
 	
 	<functions name="Dom">
@@ -325,7 +380,7 @@
 			<returns>void (undefined)</returns>
 		</function>	
 		<function>
-			<func>JMVC.events.ready(Javascript function fun)</func>
+			<func>JMVC.events.ready(Javascript function func)</func>
 			<description>binds a callback to document load event</description>
 			<params>
 				<param>
@@ -340,7 +395,6 @@
 	
 	
 	<functions name="Head">
-		
 		<function>
 			<func>JMVC.head.addscript(String src, Boolean parse, Boolean explicit)</func>
 			<description>Add a script in the head section</description>
@@ -392,6 +446,25 @@
 				</param>
 			</params>
 			<returns>the title if no param is passed</returns>
+		</function>
+	</functions>	
+	
+	
+	<functions name="More">
+		<function>
+			<func>JMVC.extend(String section, Literal extension)</func>
+			<description>Extends JMVC object with Your methods</description>
+			<params>
+				<param>
+					<name>*section</name>
+					<desc>that parameter is needed to set the namespace under which Your functions will be added toJMVC, if You use `ajax` then all functions in the literal will be callable with JMVC.ajax.my_function(....)</desc>
+				</param>
+				<param>
+					<name>*extension</name>
+					<desc>this object literal defines all the functions in your extension (JMVC is in that scope, so You can use it)</desc>
+				</param>
+			</params>
+			<returns>void (undefined)</returns>
 		</function>
 	</functions>	
 	

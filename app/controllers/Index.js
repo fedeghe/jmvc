@@ -34,14 +34,14 @@ JMVC.controllers.Index = function() {
 				
 				var el = document.getElementById('cent');
 				
-				var link = JMVC.dom.create('a',{href:JMVC.vars.baseurl+'/info', title:'get more info'},'&#9406;');
+				var link = JMVC.dom.create('a',{href:JMVC.vars.baseurl+'/info.jmvc', title:'get more info'},'&laquo; more &raquo;');
 				JMVC.events.bind(link, 'click',function() {this.blur();});
 				JMVC.dom.append(el, link);
 				
 				//JMVC.dom.append(document.getElementById('cent'), JMVC.dom.create('br'));
 				JMVC.dom.add(el, 'br');
 				
-				var downlink = JMVC.dom.create('a',{href:'https://github.com/fedeghe/jmvc', title:'get code from github!', target:'_blank'},'&#9416;');
+				var downlink = JMVC.dom.create('a',{href:'https://github.com/fedeghe/jmvc', title:'get code from github!', target:'_blank'},'&laquo; source &raquo;');
 				JMVC.events.bind(downlink, 'click',function() {this.blur();});
 				JMVC.dom.append(el, downlink);
 				//see the pool
@@ -81,7 +81,7 @@ JMVC.controllers.Index = function() {
 		// now index is loaded and contains a #cent div
 		// we try to substitute the content with the hello view content
 		// and give value to a var in it
-		hello.set('name', 'My JMVC guest');
+		hello.set('name', this.get('name'));
 		hello.render({target:'cent'});
 		
 	};

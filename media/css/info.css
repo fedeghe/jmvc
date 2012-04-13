@@ -54,6 +54,12 @@ label.lab{
 .cl2_Head{
 	background-color: #fff;
 }
+.cl1_More{
+	background-color: #faa;
+}
+.cl2_More{
+	background-color: #fff;
+}
 h3{
 	padding-top:15px;
 	padding-bottom:5px;
@@ -108,4 +114,10 @@ div#centerinfo{
 }
 .apitable{
 	$my_table_style$
+}
+div#footer{
+	height:200px;
+}
+p.footer{
+	text-align:center
 }
