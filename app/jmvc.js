@@ -1,15 +1,11 @@
 /*
-
- JMVC
+JMVC
 
 Description: jmvc module
 
-
 Author: Federico Ghedina
-Version: 0.3
-Date : 26-01-2012
-
-
+Version: 0.4
+Date : 13-04-2012
 */
 
 (function () {
@@ -27,11 +23,11 @@ Date : 26-01-2012
 				extend, /* basic function to add modules */	
 				load_ext, /* function to load modules on demand */
 				Modules = [], /* modules to load always, none */
-				pathname_allowed_extensions = ['html','htm','jmvc','j','mvc','fg'],
+				pathname_allowed_extensions = ['html','htm','jmvc','j','mvc','fg','gab','cri'],
 				jmvc_default = {
 					controller : 'index',
 					action : 'index'
-				} ;
+				};
 
 			/*
 			**************
@@ -65,6 +61,7 @@ Date : 26-01-2012
 					);
 				}
 			};
+			
 			
 
 			/*
@@ -108,21 +105,6 @@ Date : 26-01-2012
 				for(var j in JMVC.vars) {
 					this.content = this.content.replace('$'+j+'$', JMVC.vars[j]);
 				}
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				return this; /* allow chain */
 			};
 			
@@ -134,17 +116,21 @@ Date : 26-01-2012
 				this.content = this.ocontent;
 				this.vars = {};
 				return this;
+			};			
+			
+			View.prototype.set_from_url = function(vname, alt){	
+				var t = JMVC.controllers[_jmvc.c].get(vname),
+					alternative = alt || 'unset';
+				this.set(''+vname, t ? t : alternative);
 			};
 			
 			/*
 			 * render the view parsing for variable&view placeholders
 			 */
 			View.prototype.render = function() {
-				
 				var arg = arguments[0] || {},
 					cback = arg.cback || false,	/* maybe a callback is passed */
 					argz = arg.argz || null,	/* and maybe some args must be passed to the callback */
-					
 					/* You may specify a string with an id,
 					 * that's where the content will be loaded,
 					 * note that here dom is not loaded so you
@@ -176,18 +162,16 @@ Date : 26-01-2012
 				
 				that.content = cont;	
 				
-				
 				JMVC.events.bind(window, 'load', function () {
-						var targ = (typeof target === 'string' && document.getElementById(target))	?
+					var targ = (typeof target === 'string' && document.getElementById(target))	?
 							document.getElementById(target)	:	document.body ;
-						JMVC.dom.html(targ, that.content);
-						/* may be a callback? */
-						if (cback) {
-							argz = !!argz ? argz : [];							
-							cback.apply(this, argz);
-						}
-					}				
-				);
+					JMVC.dom.html(targ, that.content);
+					// may be a callback? 
+					if (cback) {
+						argz = !!argz ? argz : [];							
+						cback.apply(this, argz);
+					}
+				});
 				return this; /* allow chain */
 			};
 			
@@ -217,7 +201,7 @@ Date : 26-01-2012
 			 */
 			View.prototype.get = Model.prototype.get = Controller.prototype.get = function (vname) {
 				return ( !! this.vars[vname]) ? this.vars[vname] : false;
-			};
+			};			
 			View.prototype.set = Model.prototype.set = Controller.prototype.set = function (vname, vval, force) {
 				var i ;
 				switch(typeof vname) {
@@ -245,7 +229,7 @@ Date : 26-01-2012
 
 			/* type can be only 'view' or 'model' */
 			function factory_method(type, ename) {
-				var path_absolute = '/app/'+type+'s/'+ename, r;
+				var path_absolute = JMVC.vars.baseurl+'/app/'+type+'s/'+ename, r;
 				switch(type) {
 					case 'view':path_absolute += '.html';break;
 					case 'model': case 'controller':path_absolute += '.js';break;
@@ -302,10 +286,15 @@ Date : 26-01-2012
 				return ret;
 			}
 
+
+
+
+
 			/*
 			 * Dispatch url getting controller, action and parameters
 			 */
 			dispatched = (function dispatch() {
+				
 				var l = document.location,
 					mid = {
 						url : l.protocol+'//'+l.hostname+l.pathname+l.search,
@@ -316,16 +305,19 @@ Date : 26-01-2012
 					},
 					url = mid,
 					
-					/* adjust extensions, them all*/
+					/* adjust extensions */
+					els = mid.path.replace(new RegExp('\\.'+pathname_allowed_extensions.join('|\\.'),'gm'), '').substr(1).split('/');
 					
-					els = mid.path.replace(new RegExp('\\.'+pathname_allowed_extensions.join('|\\.'),'gm'), '').substr(1).split('/'),
-					controller = els.shift() || 'index',
-					action = els.shift() || 'index',
+				if(l.hostname=='localhost'){
+					els.shift();
+				}	
+				var	controller = els.shift() || jmvc_default.controller,
+					action = els.shift() || jmvc_default.action,
 					params = {}, /* extra params */
 					lab_val,
 					ret,
 					i,len=els.length;		
-					
+			
 				/* now if els has non zero size, these are extra path params*/
 				for(i = 0; i+1 < len;i+=2) {
 					params[els[i]] = els[i+1];
@@ -346,12 +338,15 @@ Date : 26-01-2012
 						}
 					}
 				}
+				
+				
 				ret = {
 					controller : controller.replace(/\//g,''),
 					action : action.replace(/\//g,''),
 					params : params,
 					baseurl : l.protocol+'//'+l.hostname
 				};
+				
 				ret.controller = normalize(ret.controller);
 				
 				return ret;
@@ -376,15 +371,19 @@ Date : 26-01-2012
 					/* make an instance */
 					controller = new JMVC.controllers[_jmvc.c]();
 					
+					/*store it*/
+					JMVC.controllers[_jmvc.c] = controller;
+					
 					/* manage routes */
 					if(controller['_routes']) {
 						_jmvc.a = controller['_routes'][_jmvc.a] || _jmvc.a;
 					}
 
+					/* parameters are set to controller */
 					for(i in _jmvc.p) {
 						controller.set(i,  decodeURI(_jmvc.p[i]) );
 					}
-
+					
 					/* call action */
 					if(controller[_jmvc.a] && typeof controller[_jmvc.a] === 'function') {
 						controller[_jmvc.a]();
@@ -569,9 +568,9 @@ Date : 26-01-2012
 		
 		get : function(u, cback, p, sync) {
 			
-			var id = JMVC.io.x.length;
-			var IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'],
-			/* be synchronous, otherwise eval is late */
+			var id = JMVC.io.x.length,
+				IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'],
+				/* be synchronous, otherwise eval is late */
 				dosync = sync || false;
 			
 			try {
@@ -585,7 +584,7 @@ Date : 26-01-2012
 			}
 
 			JMVC.io.x[id].onreadystatechange=function() {
-				if(JMVC.io.x[id].readyState==4 && JMVC.io.x[id].status==200 && cback) {
+				if( ( JMVC.io.x[id].readyState=="complete" || (JMVC.io.x[id].readyState==4 /*&& JMVC.io.x[id].status==200*/ )) && cback) {
 					cback(JMVC.io.x[id].responseText);
 				}
 				return '';
@@ -603,7 +602,9 @@ Date : 26-01-2012
 					JMVC.io.x[id].send(null);
 				}catch(e) {}
 			}
-			return JMVC.io.x[id].responseText;
+			try{
+				return JMVC.io.x[id].responseText;
+			}catch(e){}
 		}
 	};	
 
@@ -611,19 +612,10 @@ Date : 26-01-2012
 		var what = arguments[0],
 			arr_func_obj = arguments[1] || {};
 		for(var i in arr_func_obj) {
-
 			if(typeof what[i] === 'undefined' && (typeof arr_func_obj[i] === 'function' || typeof arr_func_obj[i] === 'object' )) {
-
-				switch(true) {
-					case typeof arr_func_obj[i] === 'function' :
-						what.method(i,arr_func_obj[i]);
-					break;
-					case typeof arr_func_obj[i] === 'object' :
-						j[i] = arr_func_obj[i];
-					break;
-					default:break;
+				if(arr_func_obj[i] === 'function' ){
+					what.method(i,arr_func_obj[i]);
 				}
-
 			}
 		}
 	};
@@ -650,10 +642,14 @@ Date : 26-01-2012
 		add : function(where, tag, attrs, inner) {
 			this.append(where, this.create(tag,attrs,inner));
 		},
-		html : function(el, html) { 
-			var t = ""; 
+		html : function(el, html) {
+			if(!el) return this;
+			var t = "";
+			//alert(el);
 			if(typeof html !== 'undefined') {
-				el.innerHTML = html;
+				if(el){
+					try{el.innerHTML = html+'';}catch(e){}
+				}
 				return this;
 			}else{
 				t = (el.nodeType === 1) ? el.innerHTML : el;
@@ -668,12 +664,12 @@ Date : 26-01-2012
 	JMVC.events = {
 		bindings :{},
 		onedone : false,
-		bind : function(el,tipo,fun) { 
+		bind : function(el,tipo,fun) {			
 			if (window.addEventListener) { 
 				el.addEventListener(tipo, fun, false); 
 			}else if (window.attachEvent) {
 				var f = function() {fun.call(el, window.event)};
-				el.attachEvent('on'+tipo, f)
+				el.attachEvent('on'+tipo, f);
 			}else{
 				el['on'+tipo] = function() {fun.call(el, window.event)};
 			}
@@ -764,21 +760,40 @@ Date : 26-01-2012
 			}
 		},
 		addstyle : function(src, parse, explicit) {
-			var style, head, tmp, that = this, postmode = true, async = true;
+			var style, head, tmp, that = this, postmode = true, async = false, rules;
 			if(parse){
 				if(explicit){
-					var css_content = JMVC.parse(src /* in this case is mean to be the content */, true);
-					style = JMVC.dom.create('style', {type:'text/css'}, css_content);
+					/* in this case src is meant to be the content */
+					var csscontent = JMVC.parse(src , true);
+					
+					
 					head = that.element;
-					head.appendChild(style);
+					style = document.createElement('style');
+					rules = document.createTextNode(''+csscontent);
+
+					style.type = 'text/css';
+					if(style.styleSheet)
+						style.styleSheet.cssText = rules.nodeValue;
+					else style.appendChild(rules);
+					head.appendChild(style);	
+					
 				}else{
 				/* get css content, async */
 					tmp = JMVC.io.get(src, function(csscontent){
 						csscontent = JMVC.parse(csscontent,true);
-						style = JMVC.dom.create('style', {type:'text/css'}, csscontent);
+						
+						
 						head = that.element;
+						style = document.createElement('style');
+						rules = document.createTextNode(''+csscontent);
+
+						style.type = 'text/css';
+						if(style.styleSheet)
+							style.styleSheet.cssText = rules.nodeValue;
+						else style.appendChild(rules);
 						head.appendChild(style);
-					}, postmode, async);	
+					
+					}, false, async); // if post mode then ie7+ fail => get
 				}
 			}else{
 				style = JMVC.dom.create('link', {type:'text/css', rel:'stylesheet', href:src});
@@ -827,6 +842,10 @@ Date : 26-01-2012
 	 * 
 	 */
 	// window.JMVC = JMVC;
+	//
+	//naaaa
+	//
+	
 	
 	
 	/*
