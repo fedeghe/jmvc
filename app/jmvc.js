@@ -182,7 +182,7 @@ Date : 13-04-2012
 			
 			// for extending with modules
 			extend = function() {
-				var target = arguments[0];				
+				var target = arguments[0];
 				if(! _jmvc[target]) {_jmvc[target] = {}; }				
 				var arr_func_obj = arguments[1] || {};				
 				for(var i in arr_func_obj) {
@@ -194,7 +194,8 @@ Date : 13-04-2012
 					}
 				}				
 			};
-
+			
+			
 
 			/*
 			 * getter, setter and "deleter" for mvc classes
@@ -727,6 +728,11 @@ Date : 13-04-2012
 		},
 		rand : function(min,max) {
 			return min+Math.floor(Math.random()*(max-min + 1));
+		},
+		// replace more %var%  in one shot
+		allreplace : function(tpl, vars){
+			var r = new RegExp('%([A-z]*)%', 'gi');
+			return tpl.replace(r, function(str,S){return vars[S];});
 		}
 	};
 
@@ -841,7 +847,7 @@ Date : 13-04-2012
 	 * EXPOSE ?
 	 * 
 	 */
-	// window.JMVC = JMVC;
+	 window.JMVC = JMVC;
 	//
 	//naaaa
 	//
