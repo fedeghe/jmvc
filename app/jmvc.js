@@ -1,52 +1,52 @@
 /*
+ *
 JMVC
-
 Description: jmvc module
 
 Author: Federico Ghedina
-Version: 0.4
-Date : 13-04-2012
-*/
+Version: 0.3
+Date : 26-01-2012
 
-(function () {
-	
+*/
+(function () {	
 	'use strict';
-	
 	var JMVC = (
-		function () {
-			
+		function () {			
 			var url,	/* current url */
-				_jmvc,	/* returning object, will be JMVC */
+				$jmvc,	/* returning object, will be JMVC */
 				basic_inherit,	/* minimal dummy function for granting basic inheritance */				
 				dispatched,	/* literal to contain url mvc components */
 				Controller, Model, View, /* MVC objects constructors */
 				extend, /* basic function to add modules */	
 				load_ext, /* function to load modules on demand */
 				Modules = [], /* modules to load always, none */
-				pathname_allowed_extensions = ['html','htm','jmvc','j','mvc','fg','gab','cri'],
+				pathname_allowed_extensions = ['html','htm','jmvc','j','mvc','fg'],
 				jmvc_default = {
 					controller : 'index',
 					action : 'index'
-				};
-
+				},
+				time_begin = new Date(),
+				time_end = false;
 			/*
 			**************
 			* CONTROLLER *
 			**************
-		    */
+			*/
 			/* parent controller */
 			Controller = function () {};
-			
+			/***/
 			/* for storing url vars */
 			Controller.prototype.vars = {};
 			Controller.prototype.index = function () {alert('Default index action'); };
 			Controller.prototype.relocate = function (uri, ms) {
 				var t = parseInt(ms,10) || 0;
-				window.setTimeout(function(){document.location.href = '' + uri;}, t);
+				window.setTimeout(
+					function(){document.location.href = '' + uri;}, t
+				);
 			};
-			Controller.prototype.render = function(content,cback) {
+			Controller.prototype.render = function(content, cback) {
 				var tmp_v = new View(content);
-				tmp_v.render(typeof cback === 'function'?{cback:cback} : null);
+				tmp_v.render(typeof cback === 'function'?{cback :cback} : null);
 				return this;
 			};
 			Controller.prototype.reset = function() {this.vars = {};return this; };
@@ -55,31 +55,30 @@ Date : 13-04-2012
 				for(var i = 0, l=exts.length ; i<l ; i++) {
 					JMVC.io.get(
 						'/app/extensions/'+exts[i]+'.js',
-						function cback(res) {
-							eval(res); /* ##################### */
-						}
+						function cback(res){ eval(res); }
 					);
 				}
 			};
-			
-			
-
 			/*
+			 *
+			 *
+			 *
 			*********
 			* MODEL *
 			*********
-		    */
+			*/
 			Model = function () {};
 			Model.prototype.vars = {};
 			Model.prototype.reset = function() {this.vars = {};return this; };
-			Model.prototype.constructor = 'model';	
-	
-
+			Model.prototype.constructor = 'model';
 			/*
+			 *
+			 *
+			 *
 			********
 			* VIEW *
 			********
-		    */
+			*/
 			/* directly instantiated assinging content */
 			View = function (cnt) {
 				this.ocontent = cnt || 'content'; /*original content*/
@@ -88,8 +87,10 @@ Date : 13-04-2012
 					'baseurl':JMVC.vars.baseurl
 				};
 			};
-			
 			/*
+			 *
+			 *
+			 *
 			 * meat to pass a model, all %name%
 			 * placeholders in the view content
 			 * will be replaced with the model
@@ -105,7 +106,7 @@ Date : 13-04-2012
 				for(var j in JMVC.vars) {
 					this.content = this.content.replace('$'+j+'$', JMVC.vars[j]);
 				}
-				return this; /* allow chain */
+				return this; /* chain */
 			};
 			
 			/*
@@ -115,14 +116,18 @@ Date : 13-04-2012
 			View.prototype.reset = function() {
 				this.content = this.ocontent;
 				this.vars = {};
-				return this;
-			};			
-			
-			View.prototype.set_from_url = function(vname, alt){	
-				var t = JMVC.controllers[_jmvc.c].get(vname),
-					alternative = alt || 'unset';
-				this.set(''+vname, t ? t : alternative);
+				return this;/* chain */
 			};
+			
+			
+			View.prototype.set_from_url = function(vname, alt){
+				var t = JMVC.controllers[$jmvc.c].get(vname),
+					alternative = alt || 'unset';
+				this.set(''+vname, t || alternative);
+				return this;/* chain */
+			};
+			
+			
 			
 			/*
 			 * render the view parsing for variable&view placeholders
@@ -131,7 +136,9 @@ Date : 13-04-2012
 				var arg = arguments[0] || {},
 					cback = arg.cback || false,	/* maybe a callback is passed */
 					argz = arg.argz || null,	/* and maybe some args must be passed to the callback */
-					/* You may specify a string with an id,
+					/*
+					 *
+					 *You may specify a string with an id,
 					 * that's where the content will be loaded,
 					 * note that here dom is not loaded so you
 					 * cannot pass an element
@@ -153,25 +160,28 @@ Date : 13-04-2012
 					resvar = pattvar.exec(cont);
 					if (resvar) {
 						t = this.get(resvar[1]);	
-						cont = cont.replace('$'+resvar[1]+'$', t  );
+						cont = cont.replace('$' + resvar[1] + '$', t);
 					} else {
 						break;
 					}
 				}	
-				///////////////////////////////////////
-				
-				that.content = cont;	
-				
+				that.content = cont;
+				/*
+				 *
+				 */
 				JMVC.events.bind(window, 'load', function () {
-					var targ = (typeof target === 'string' && document.getElementById(target))	?
+						var targ = (typeof target === 'string' && document.getElementById(target))	?
 							document.getElementById(target)	:	document.body ;
-					JMVC.dom.html(targ, that.content);
-					// may be a callback? 
-					if (cback) {
-						argz = !!argz ? argz : [];							
-						cback.apply(this, argz);
-					}
-				});
+						JMVC.dom.html(targ, that.content);
+						// may be a callback? 
+						if (cback) {
+							argz = !!argz ? argz : [];							
+							cback.apply(this, argz);
+						}
+						time_end = new Date();
+						$jmvc.time = time_end.getTime() - time_begin.getTime();
+					}				
+				);
 				return this; /* allow chain */
 			};
 			
@@ -182,20 +192,19 @@ Date : 13-04-2012
 			
 			// for extending with modules
 			extend = function() {
-				var target = arguments[0];
-				if(! _jmvc[target]) {_jmvc[target] = {}; }				
+				var target = arguments[0];				
+				if(! $jmvc[target]) {$jmvc[target] = {}; }				
 				var arr_func_obj = arguments[1] || {};				
 				for(var i in arr_func_obj) {
 					/* it won`t let You override */
-					if(typeof _jmvc[target][i] === 'undefined' && typeof arr_func_obj[i] === 'function') {
+					if(typeof $jmvc[target][i] === 'undefined' && typeof arr_func_obj[i] === 'function') {
 						if(typeof arr_func_obj[i] === 'function') {
-							_jmvc[target][i] = arr_func_obj[i];
+							$jmvc[target][i] = arr_func_obj[i];
 						}
 					}
 				}				
 			};
-			
-			
+
 
 			/*
 			 * getter, setter and "deleter" for mvc classes
@@ -230,6 +239,7 @@ Date : 13-04-2012
 
 			/* type can be only 'view' or 'model' */
 			function factory_method(type, ename) {
+				//console.debug(JMVC.vars.baseurl);
 				var path_absolute = JMVC.vars.baseurl+'/app/'+type+'s/'+ename, r;
 				switch(type) {
 					case 'view':path_absolute += '.html';break;
@@ -296,6 +306,7 @@ Date : 13-04-2012
 			 */
 			dispatched = (function dispatch() {
 				
+				
 				var l = document.location,
 					mid = {
 						url : l.protocol+'//'+l.hostname+l.pathname+l.search,
@@ -307,8 +318,8 @@ Date : 13-04-2012
 					url = mid,
 					
 					/* adjust extensions */
-					els = mid.path.replace(new RegExp('\\.'+pathname_allowed_extensions.join('|\\.'),'gm'), '').substr(1).split('/');
 					
+					els = mid.path.replace(new RegExp('\\.'+pathname_allowed_extensions.join('|\\.'),'gm'), '').substr(1).split('/');
 				if(l.hostname=='localhost'){
 					els.shift();
 				}	
@@ -318,6 +329,8 @@ Date : 13-04-2012
 					lab_val,
 					ret,
 					i,len=els.length;		
+			
+		
 			
 				/* now if els has non zero size, these are extra path params*/
 				for(i = 0; i+1 < len;i+=2) {
@@ -361,38 +374,38 @@ Date : 13-04-2012
 				var controller, i;
 
 				/* "import" the controller (eval ajax code) */
-				JMVC.factory('controller',_jmvc.c);
+				JMVC.factory('controller',$jmvc.c);
 
 				/* if the constructor has been evalued correctly */
-				if(JMVC.controllers[_jmvc.c]) {
+				if(JMVC.controllers[$jmvc.c]) {
 
 					/* grant basic ineritance from parent Controller */
-					basic_inherit(JMVC.controllers[_jmvc.c], Controller);
+					basic_inherit(JMVC.controllers[$jmvc.c], Controller);
 
 					/* make an instance */
-					controller = new JMVC.controllers[_jmvc.c]();
+					controller = new JMVC.controllers[$jmvc.c]();
 					
 					/*store it*/
-					JMVC.controllers[_jmvc.c] = controller;
+					JMVC.controllers[$jmvc.c] = controller;
 					
 					/* manage routes */
 					if(controller['_routes']) {
-						_jmvc.a = controller['_routes'][_jmvc.a] || _jmvc.a;
+						$jmvc.a = controller['_routes'][$jmvc.a] || $jmvc.a;
 					}
 
 					/* parameters are set to controller */
-					for(i in _jmvc.p) {
-						controller.set(i,  decodeURI(_jmvc.p[i]) );
+					for(i in $jmvc.p) {
+						controller.set(i,  decodeURI($jmvc.p[i]) );
 					}
 					
 					/* call action */
-					if(controller[_jmvc.a] && typeof controller[_jmvc.a] === 'function') {
-						controller[_jmvc.a]();
+					if(controller[$jmvc.a] && typeof controller[$jmvc.a] === 'function') {
+						controller[$jmvc.a]();
 					}else{
-						document.location.href = '/404/msg/act/'+_jmvc.a;
+						document.location.href = '/404/msg/act/'+$jmvc.a;
 					}
 				}else{
-					document.location.href = '/404/msg/cnt/'+_jmvc.c;
+					document.location.href = '/404/msg/cnt/'+$jmvc.c;
 				}
 
 			}
@@ -526,75 +539,75 @@ Date : 13-04-2012
 			function jmvcdel(name){ if(JMVC.vars[name]){delete JMVC.vars[name];} }
 			
 			/*
-			 *DO NOT return directly, _jmvc is used above
+			 *DO NOT return directly, $jmvc is used above
 			 */
-			_jmvc = {
+			$jmvc = {
 				c : dispatched.controller || jmvc_default.controller,
 				a : dispatched.action || jmvc_default.action,
 				p : dispatched.params || {},
-				
 				controllers : {},
 				models : {},
 				views : {},
-
-				vars :{
+				/***/
+				vars : {
 					baseurl:	dispatched.baseurl
 				},
-				set : jmvcset,
+				set :	jmvcset,
 				del : jmvcdel,
-				
-				render:		render,
+				/***/
+				render:	render,
 				factory:	factory_method,
 				extend : extend,
 				modules : Modules,
-				
+				/***/
 				parse : jmvcparse,
-				
+				/***/
 				getView :	function(n) {return factory_method('view', n); },
 				getModel :	function(n) {return factory_method('model', n); },
 				getController :	function(n) {return factory_method('controller', n); }
 			};
 			/* return JMVC */
-			return _jmvc;
+			return $jmvc;
 		}
 	)();
-	
 	/*
-	ajax utility
-	*/
+	 *
+	 *
+	 *	ajax utility
+	 */
 	JMVC.io = {
-		
-		/* requests pool */
+		/*
+		 *
+		 * requests pool */
 		x : [],
-		
 		get : function(u, cback, p, sync) {
-			
 			var id = JMVC.io.x.length,
 				IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'],
 				/* be synchronous, otherwise eval is late */
 				dosync = sync || false;
-			
 			try {
 				JMVC.io.x[id] = new XMLHttpRequest();
 			}catch (e) {
 				try{
-					for (var i = 0, len = IEfuckIds.length; i < len; i++) {
+					for (var i = 0, len = IEfuckIds.length; i < len; i+=1) {
 						try{JMVC.io.x[id] = new ActiveXObject(IEfuckIds[i]); }catch(e) {} 
 					}
 				}catch (e) {}
 			}
 
 			JMVC.io.x[id].onreadystatechange=function() {
-				if( ( JMVC.io.x[id].readyState=="complete" || (JMVC.io.x[id].readyState==4 /*&& JMVC.io.x[id].status==200*/ )) && cback) {
+				if( ( JMVC.io.x[id].readyState=="complete" || (JMVC.io.x[id].readyState==4 && JMVC.io.x[id].status==200 )) && cback) {
 					cback(JMVC.io.x[id].responseText);
 				}
 				return '';
 			};
-			if(p) {
+			if (p){
 				try{
-					JMVC.io.x[id].open('POST',u,dosync);
+					JMVC.io.x[id].open('POST', u, dosync);
 					JMVC.io.x[id].setRequestHeader('Content-type','application/x-www-form-urlencoded');
-					if (JMVC.io.x[id].overrideMimeType) {JMVC.io.x[id].setRequestHeader("Connection", "close"); }
+					if (JMVC.io.x[id].overrideMimeType){
+						JMVC.io.x[id].setRequestHeader("Connection", "close");
+					}
 					JMVC.io.x[id].send(p);
 				}catch(e) {}
 			}else{
@@ -606,9 +619,12 @@ Date : 13-04-2012
 			try{
 				return JMVC.io.x[id].responseText;
 			}catch(e){}
+		},
+		ejson : function (uri){
+			return eval( '(' + JMVC.io.get(uri) + ')');
 		}
 	};	
-
+/*
 	JMVC.basic_inherit = function() {
 		var what = arguments[0],
 			arr_func_obj = arguments[1] || {};
@@ -620,7 +636,7 @@ Date : 13-04-2012
 			}
 		}
 	};
-
+*/
 	/*
 	 * inner html utility
 	 */
@@ -728,11 +744,6 @@ Date : 13-04-2012
 		},
 		rand : function(min,max) {
 			return min+Math.floor(Math.random()*(max-min + 1));
-		},
-		// replace more %var%  in one shot
-		allreplace : function(tpl, vars){
-			var r = new RegExp('%([A-z]*)%', 'gi');
-			return tpl.replace(r, function(str,S){return vars[S];});
 		}
 	};
 
@@ -773,6 +784,7 @@ Date : 13-04-2012
 					var csscontent = JMVC.parse(src , true);
 					
 					
+					
 					head = that.element;
 					style = document.createElement('style');
 					rules = document.createTextNode(''+csscontent);
@@ -781,10 +793,19 @@ Date : 13-04-2012
 					if(style.styleSheet)
 						style.styleSheet.cssText = rules.nodeValue;
 					else style.appendChild(rules);
-					head.appendChild(style);	
+					head.appendChild(style);
+					
+
+
+					
+					
+					
+					
+					
 					
 				}else{
 				/* get css content, async */
+					//console.debug(src);
 					tmp = JMVC.io.get(src, function(csscontent){
 						csscontent = JMVC.parse(csscontent,true);
 						
@@ -799,7 +820,7 @@ Date : 13-04-2012
 						else style.appendChild(rules);
 						head.appendChild(style);
 					
-					}, false, async); // if post mode then ie7+ fail => get
+					}, postmode, async);
 				}
 			}else{
 				style = JMVC.dom.create('link', {type:'text/css', rel:'stylesheet', href:src});
@@ -818,6 +839,7 @@ Date : 13-04-2012
 
 
 	/* Basic Function extension to add a method to an object function */
+	/*
 	Function.prototype.method = function (name, fn) {
 		if (name instanceof Array) {
 			for (var n in name) {
@@ -827,7 +849,8 @@ Date : 13-04-2012
 		this.prototype[name] = fn;
 		return this;
 	};
-	
+	*/
+   
 	/* before rendering, load requested extensions (must be set in the Modules var and the file must be in the extensions folder) */
 	if(JMVC.modules.length > 0) {
 		//aj load and eval
@@ -847,13 +870,7 @@ Date : 13-04-2012
 	 * EXPOSE ?
 	 * 
 	 */
-	 window.JMVC = JMVC;
-	//
-	//naaaa
-	//
-	
-	
-	
+	// window.JMVC = JMVC;
 	/*
 	 *
 	 * now render

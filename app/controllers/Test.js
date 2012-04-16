@@ -143,17 +143,13 @@ JMVC.controllers.Test = function() {
 		
 		v.render({cback : back });
 		
-		
-		
-		
-		
 	};
 	
 	this.direct = function() {
 		JMVC.head.title('Swiss beat');
 		JMVC.head.addstyle(JMVC.baseurl+'/media/css/flag.css');
 		this.render(
-			'<b style="color:white">hello</b>',
+			'<b style="color:green">hello</b>',
 			function() {
 				console.debug('simple callback on render!');
 			}

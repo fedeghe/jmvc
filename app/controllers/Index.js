@@ -38,7 +38,6 @@ JMVC.controllers.Index = function() {
 				JMVC.events.bind(link, 'click',function() {this.blur();});
 				JMVC.dom.append(el, link);
 				
-				//JMVC.dom.append(document.getElementById('cent'), JMVC.dom.create('br'));
 				JMVC.dom.add(el, 'br');
 				
 				var downlink = JMVC.dom.create('a',{href:'https://github.com/fedeghe/jmvc', title:'get code from github!', target:'_blank'},'&laquo; source &raquo;');
@@ -49,6 +48,16 @@ JMVC.controllers.Index = function() {
 			}
 		});
 		
+	};
+	this.video = function(){
+		this.require('html5');
+		var index = JMVC.getView('index');
+		index.set('i_say', 'Federico');
+		var video = JMVC.html5.video({w:240, h:180, uri:'http://html5demos.com/assets/dizzy.webm', autoplay:false, controls:true}),
+			progress = JMVC.html5.progress(35);
+		index.render({cback:function(){
+			JMVC.dom.html(document.getElementById('cent'), video+'<br />'+progress);
+		}});
 	};
 	this.index2 = function() {
 		

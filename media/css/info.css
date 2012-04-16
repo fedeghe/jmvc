@@ -2,7 +2,7 @@ body{
 	font-family: Verdana, "MS Trebuchet", sans-serif;
 	font-size:12px;
 	background-color:#C4DDED;
-	width:600px;
+	width:780px;
 	margin:0 auto;
 	background-image: url($baseurl$/media/img/pattern.jpg);
 } 
@@ -110,7 +110,7 @@ ul li{
 }
 div#centerinfo{
 	background-color: white;
-	padding:10px;
+	padding:30px;
 }
 .apitable{
 	$my_table_style$
