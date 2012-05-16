@@ -39,9 +39,8 @@ Date : 26-01-2012
 			Controller.prototype.vars = {};
 			Controller.prototype.index = function () {alert('Default index action'); };
 			Controller.prototype.relocate = function (uri, ms) {
-				var t = parseInt(ms,10) || 0;
 				window.setTimeout(
-					function(){document.location.href = '' + uri;}, t
+					function(){document.location.href = '' + uri;}, parseInt(ms,10) || 0
 				);
 			};
 			Controller.prototype.render = function(content, cback) {
@@ -51,10 +50,9 @@ Date : 26-01-2012
 			};
 			Controller.prototype.reset = function() {this.vars = {};return this; };
 			Controller.prototype.require = function() {
-				var exts = arguments;
-				for(var i = 0, l=exts.length ; i<l ; i++) {
+				for(var i = 0, l=arguments.length ; i<l ; i++) {
 					JMVC.io.get(
-						'/app/extensions/'+exts[i]+'.js',
+						'/app/extensions/'+arguments[i]+'.js',
 						function cback(res){ eval(res); }
 					);
 				}
@@ -97,13 +95,14 @@ Date : 26-01-2012
 			 * variable value if exists
 			 */
 			View.prototype.parse = function(obj) {
+				var j;
 				if(obj) {
-					for(var j in obj.vars) {
+					for(j in obj.vars) {
 						this.content = this.content.replace('$'+j+'$', obj.get(j));
 					}
 				}
 				// jmvc parse vars
-				for(var j in JMVC.vars) {
+				for(j in JMVC.vars) {
 					this.content = this.content.replace('$'+j+'$', JMVC.vars[j]);
 				}
 				return this; /* chain */
@@ -121,9 +120,11 @@ Date : 26-01-2012
 			
 			
 			View.prototype.set_from_url = function(vname, alt){
-				var t = JMVC.controllers[$jmvc.c].get(vname),
+				/*var t = JMVC.controllers[$jmvc.c].get(vname),
 					alternative = alt || 'unset';
-				this.set(''+vname, t || alternative);
+				this.set(''+vname, t || alternative);*/
+				this.set(''+vname, JMVC.controllers[$jmvc.c].get(vname) || (alt || 'unset'));
+				
 				return this;/* chain */
 			};
 			
@@ -166,8 +167,9 @@ Date : 26-01-2012
 					}
 				}	
 				that.content = cont;
+				
 				/*
-				 *
+				 * render in body or elsewhere
 				 */
 				JMVC.events.bind(window, 'load', function () {
 						var targ = (typeof target === 'string' && document.getElementById(target))	?
@@ -746,8 +748,10 @@ Date : 26-01-2012
 		rand : function(min,max) {
 			return min+Math.floor(Math.random()*(max-min + 1));
 		},
-		replaceall : function(tpl , o){
-			var reg = new RegExp( '%([A-z]*)%', 'g' );
+		replaceall : function(tpl , o, pre, post){
+			var _p = pre || '%',
+				p_ = post || '%',
+				reg = new RegExp( _p+'([A-z]*)'+p_, 'g' );
 			return  tpl.replace( reg, function(str, $1) {return  o[$1];  } ); 
 		}
 	};
@@ -788,8 +792,6 @@ Date : 26-01-2012
 					/* in this case src is meant to be the content */
 					var csscontent = JMVC.parse(src , true);
 					
-					
-					
 					head = that.element;
 					style = document.createElement('style');
 					rules = document.createTextNode(''+csscontent);
@@ -799,15 +801,7 @@ Date : 26-01-2012
 						style.styleSheet.cssText = rules.nodeValue;
 					else style.appendChild(rules);
 					head.appendChild(style);
-					
-
-
-					
-					
-					
-					
-					
-					
+										
 				}else{
 				/* get css content, async */
 					//console.debug(src);
@@ -875,7 +869,7 @@ Date : 26-01-2012
 	 * EXPOSE ?
 	 * 
 	 */
-	// window.JMVC = JMVC;
+	 //window.JMVC = JMVC;
 	/*
 	 *
 	 * now render
