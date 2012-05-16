@@ -27,7 +27,8 @@ JMVC.controllers.Index = function() {
 		index.set('nome', n);
 		index.set('i_say', '100% seo-unfriendly');
 		
-		
+		//prova replaceall
+		//index.set('message', JMVC.util.replaceall('%n% %c%', {n:'fede', c:'ghe'}));
 		
 		index.render({
 			cback:function() {

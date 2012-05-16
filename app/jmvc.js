@@ -294,6 +294,7 @@ Date : 26-01-2012
 						);
 					break;
 				}
+				//alert(ret);
 				return ret;
 			}
 
@@ -375,7 +376,7 @@ Date : 26-01-2012
 
 				/* "import" the controller (eval ajax code) */
 				JMVC.factory('controller',$jmvc.c);
-
+				//alert($jmvc.c);
 				/* if the constructor has been evalued correctly */
 				if(JMVC.controllers[$jmvc.c]) {
 
@@ -744,6 +745,10 @@ Date : 26-01-2012
 		},
 		rand : function(min,max) {
 			return min+Math.floor(Math.random()*(max-min + 1));
+		},
+		replaceall : function(tpl , o){
+			var reg = new RegExp( '%([A-z]*)%', 'g' );
+			return  tpl.replace( reg, function(str, $1) {return  o[$1];  } ); 
 		}
 	};
 
