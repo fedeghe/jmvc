@@ -8,7 +8,7 @@ Version: 0.3
 Date : 26-01-2012
 
 */
-(function () {	
+(function (W) {	
 	'use strict';
 	var JMVC = (
 		function () {			
@@ -39,8 +39,9 @@ Date : 26-01-2012
 			Controller.prototype.vars = {};
 			Controller.prototype.index = function () {alert('Default index action'); };
 			Controller.prototype.relocate = function (uri, ms) {
-				window.setTimeout(
-					function(){document.location.href = '' + uri;}, parseInt(ms,10) || 0
+				W.setTimeout(
+					//function(){document.location.href = '' + uri;}, parseInt(ms,10) || 0
+					function(){document.location.href = '' + uri;}, ~~(1 * ms) || 0
 				);
 			};
 			Controller.prototype.render = function(content, cback) {
@@ -171,7 +172,7 @@ Date : 26-01-2012
 				/*
 				 * render in body or elsewhere
 				 */
-				JMVC.events.bind(window, 'load', function () {
+				JMVC.events.bind(W, 'load', function () {
 						var targ = (typeof target === 'string' && document.getElementById(target))	?
 							document.getElementById(target)	:	document.body ;
 						JMVC.dom.html(targ, that.content);
@@ -622,6 +623,7 @@ Date : 26-01-2012
 			try{
 				return JMVC.io.x[id].responseText;
 			}catch(e){}
+			return false;
 		},
 		ejson : function (uri){
 			return eval( '(' + JMVC.io.get(uri) + ')');
@@ -685,13 +687,13 @@ Date : 26-01-2012
 		bindings :{},
 		onedone : false,
 		bind : function(el,tipo,fun) {			
-			if (window.addEventListener) { 
+			if (W.addEventListener) { 
 				el.addEventListener(tipo, fun, false); 
-			}else if (window.attachEvent) {
-				var f = function() {fun.call(el, window.event)};
+			}else if (W.attachEvent) {
+				var f = function() {fun.call(el, W.event)};
 				el.attachEvent('on'+tipo, f);
 			}else{
-				el['on'+tipo] = function() {fun.call(el, window.event)};
+				el['on'+tipo] = function() {fun.call(el, W.event)};
 			}
 			if(!this.bindings[el]){this.bindings[el]={};}
 			this.bindings[el][tipo] = fun;
@@ -710,7 +712,7 @@ Date : 26-01-2012
 			this.bind(what,type, newf);
 		},		
 		ready : function(func) {
-			return this.bind(window, 'load',func);
+			return this.bind(W, 'load',func);
 		}
 	};
 	JMVC.util = {
@@ -746,7 +748,7 @@ Date : 26-01-2012
 			return val;
 		},
 		rand : function(min,max) {
-			return min+Math.floor(Math.random()*(max-min + 1));
+			return min +  ~~(Math.random()*(max-min + 1));
 		},
 		replaceall : function(tpl , o, pre, post){
 			var _p = pre || '%',
@@ -869,7 +871,7 @@ Date : 26-01-2012
 	 * EXPOSE ?
 	 * 
 	 */
-	 //window.JMVC = JMVC;
+	 // W.JMVC = JMVC;
 	/*
 	 *
 	 * now render
@@ -877,4 +879,4 @@ Date : 26-01-2012
 	 */
 	JMVC.render();	
 
-})();
+})(this);
