@@ -1,0 +1,12 @@
+version 0.5
+> added templating function on views
+> api enhanchements [
+
+]
+> some extensions [
+
+]
+
+>	JMVC object can be published to window just including exp=true in the querystring af actual url 
+	OR
+	loading jmvc script as FIRST script in the document and including exp=true as part of the querystring

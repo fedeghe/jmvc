@@ -1,0 +1,154 @@
+body{
+	font-family: Verdana, "MS Trebuchet", sans-serif;
+	font-size:12px;
+	background-color:#C4DDED;
+	width:780px;
+	margin:0 auto;
+	background-image: url($baseurl$/media/img/oy.png);
+	color:white;
+} 
+p{
+	padding-bottom:10px;
+	padding-top:0px;
+	margin:0px;
+	text-align:justify;
+}
+label{
+	font-weight:bold;
+}
+label.lab{
+	font-weight:normal;
+}
+.cl1_Controller{
+	background-color: #001010;
+}
+.cl2_Controller{
+	background-color: #000;
+}
+.cl1_View{
+	background-color: #100010;
+}
+.cl2_View{
+	background-color: #000;
+}
+.cl1_Model{
+	background-color: #101000;
+}
+.cl2_Model{
+	background-color: #000;
+}
+.cl1_Dom{
+	background-color: #000010;
+}
+.cl2_Dom{
+	background-color: #000;
+}
+.cl1_Events{
+	background-color: #001000;
+}
+.cl2_Events{
+	background-color: #000;
+}
+.cl1_Head{
+	background-color: #050555;
+}
+.cl2_Head{
+	background-color: #000;
+}
+.cl1_JMVC{
+	background-color: #0E4956;
+}
+.cl2_JMVC{
+	background-color: #000;
+}
+h3{
+	padding-top:15px;
+	padding-bottom:5px;
+	margin:0px;
+}
+h3.apisection{
+	padding-top:15px;
+	padding-bottom:5px;
+	margin:0px;
+	text-decoration:underline;
+	color:red;
+}
+div#guest{
+	padding-top: 20px;
+	padding-bottom:20px;
+	font-size:20px;
+}
+tr{
+	margin-top:10px;
+}
+tr > td {
+	padding-bottom:8px;
+	height:0px;
+	line-height:18px;
+
+
+	
+
+    border:none 5px #000000;
+    -moz-border-radius-topleft: 16px;
+    -moz-border-radius-topright:0px;
+    -moz-border-radius-bottomleft:16px;
+    -moz-border-radius-bottomright:0px;
+    -webkit-border-top-left-radius:16px;
+    -webkit-border-top-right-radius:0px;
+    -webkit-border-bottom-left-radius:16px;
+    -webkit-border-bottom-right-radius:0px;
+    border-top-left-radius:16px;
+    border-top-right-radius:0px;
+    border-bottom-left-radius:16px;
+    border-bottom-right-radius:0px;
+
+
+
+} 
+tr > td.first {
+	text-align:right;
+	padding-right:5px;
+	color:#aaa;
+	font-weight:bold;
+} 
+hr{
+	height:5px;
+	border:1px solid white;
+	background-color:black;
+}
+a{
+	color:#88f;
+	text-decoration:none;
+}
+a:hover{
+	color:#00f;
+}
+ul{
+	margin:0px;
+	padding:0px;
+	list-style-type:circle;
+}
+ul li{
+	margin:0px;
+	padding:0px;
+	padding-left:5px;
+	margin-left:15px;
+}
+div#centerinfo{
+	background-color: black;
+	padding:30px;
+}
+.tablecontainer{
+	padding:5px;
+	margin-bottom:20px;
+}
+.apitable{
+	$my_table_style$
+}
+div#footer{
+	height:200px;
+}
+p.footer{
+	text-align:center
+}

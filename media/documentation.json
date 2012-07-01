@@ -2,6 +2,92 @@
 	"doc":{
 		"functions":[
 			{
+				"name":"JMVC",
+				"functions":[
+					{
+						"func":"JMVC.extend(String section, Literal extension)",
+						"description":"Extends JMVC object with Your methods",
+						"params":{
+							"param":[
+								{
+									"name":"*section",
+									"desc":"that parameter is needed to set the namespace under which Your functions will be added toJMVC, if You use `ajax` then all functions in the literal will be callable with JMVC.ajax.my_function(....)"
+								},{
+									"name":"*extension",
+									"desc":"this object literal defines all the functions in your extension (JMVC is in that scope, so You can use it)"
+								}
+							]
+						},
+						"returns":"void (undefined)"
+					},
+					{
+						"func":"require(String extension1, String extension2, ...);",
+						"description":"Loads one or more extensions into the JMVC object",
+						"params":{
+							"param":{
+								"name":"*extension1",
+								"desc":"the name of the javascript file (must be in extensions folder) to be loaded. That file will use JMVC.extend function (see the `More` section)"
+							}
+						},
+						"returns":"void (undefined)"
+					},
+					{
+						"func":"JMVC.add(String name, String value)",
+						"description":"Adds a variable that You can use anywhere",
+						"params":{
+							"param":[
+								{
+									"name":"*name",
+									"desc":"the name of the new variable, use it typing &#36;thename&#36;"
+								},{
+									"name":"*value",
+									"desc":"the value of the variable"
+								}
+							]
+						},
+						"returns":"void (undefined)"
+					},
+					{
+						"func":"JMVC.del(String name)",
+						"description":"Removes a variable from the global JMVC scope",
+						"params":{
+							"param":[
+								{
+									"name":"*name",
+									"desc":"the name of the new variable to be removed"
+								}
+							]
+						},
+						"returns":"void (undefined)"
+					},
+					{
+						"func":"JMVC.getView(String name)",
+						"description":"Gets a view instance, even on a subfolder",
+						"params":{
+							"param":[
+								{
+									"name":"*name",
+									"desc":"the name of the new view"
+								}
+							]
+						},
+						"returns":"the view instance"
+					},
+					{
+						"func":"JMVC.getModel(String name)",
+						"description":"Gets a model instance, even on a subfolder",
+						"params":{
+							"param":[
+								{
+									"name":"*name",
+									"desc":"the name of the model"
+								}
+							]
+						},
+						"returns":"the model instance"
+					}
+				]
+			},{
 				"name":"Model",
 				"functions":[
 					{
@@ -91,7 +177,7 @@
 						"returns":"void (undefined)"
 					},{
 						"func":"parse(Model object);",
-						"description":"If the view has some $var$ placeholders within and these variables are stored in a model instance with the right names, that method get values from model instance and uses them in the placeholders content substitution.",
+						"description":"If the view has some &#36;var&#36; placeholders within and these variables are stored in a model instance with the right names, that method get values from model instance and uses them in the placeholders content substitution.",
 						"params":{
 							"param":{
 								"name":"object",
@@ -119,7 +205,7 @@
 						"returns":"the View instance"
 					},{
 						"func":"set_from_url(String vname, String alt)",
-						"description":"All extra parameters are automatically added into the Controller register, so if You plan to use one of these values in a view You should do something like:\n\t\t\t\tmyview.set('myvar', this.get('myvar')); and manage fallback values; that function do that for You \n\t\t\t",
+						"description":"All extra parameters are automatically added into the Controller register, so if You plan to use one of these values in a view You should do something like:\n\t\t\t\tmyview.set(&#39;myvar&#39;, this.get(&#39;myvar&#39;)); and manage fallback values; that function do that for You \n\t\t\t",
 						"params":{
 							"param":[
 								{
@@ -127,7 +213,7 @@
 									"desc":"the name of the variable You plan to be in extra params"
 								},{
 									"name":"alt",
-									"desc":"an alternative String in case vname is not found in extra params (otherwise You'll see `false`)"
+									"desc":"an alternative String in case vname is not found in extra params (otherwise You&#39;ll see `false`)"
 								}
 							]
 						},
@@ -212,23 +298,13 @@
 							]
 						},
 						"returns":"the Controller instance"
-					},{
-						"func":"require(String extension1, String extension2, ...);",
-						"description":"Loads one or more extensions into the JMVC object",
-						"params":{
-							"param":{
-								"name":"*extension1",
-								"desc":"the name of the javascript file (must be in extensions folder) to be loaded. That file will use JMVC.extend function (see the `More` section)"
-							}
-						},
-						"returns":"void (undefined)"
 					}
 				]
 			},{
 				"name":"Dom",
 				"functions":[
 					{
-						"func":"JMVC.dom.create(String tag, Literal attrs,String inner)",
+						"func":"JMVC.dom.create(String tag, Literal attrs, String inner)",
 						"description":"try to create an html element.",
 						"params":{
 							"param":[
@@ -380,7 +456,7 @@
 									"desc":"set true if You mean to use JMVC.vars variables placeholders in the script"
 								},{
 									"name":"explicit",
-									"desc":"set true if You mean to pass the script content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case"
+									"desc":"set true if You mean to pass the script content or a view placeholder in the src (even with on-the-fly variables), in that case &#39;parse&#39; argument will be considered as true in any case"
 								}
 							]
 						},
@@ -398,7 +474,7 @@
 									"desc":"set true if You mean to use JMVC.vars variables placeholders in the stylesheet"
 								},{
 									"name":"explicit",
-									"desc":"set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case"
+									"desc":"set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case &#39;parse&#39; argument will be considered as true in any case"
 								}
 							]
 						},
@@ -415,24 +491,6 @@
 						"returns":"the title if no param is passed"
 					}
 				]
-			},{
-				"name":"More",
-				"functions":{
-					"func":"JMVC.extend(String section, Literal extension)",
-					"description":"Extends JMVC object with Your methods",
-					"params":{
-						"param":[
-							{
-								"name":"*section",
-								"desc":"that parameter is needed to set the namespace under which Your functions will be added toJMVC, if You use `ajax` then all functions in the literal will be callable with JMVC.ajax.my_function(....)"
-							},{
-								"name":"*extension",
-								"desc":"this object literal defines all the functions in your extension (JMVC is in that scope, so You can use it)"
-							}
-						]
-					},
-					"returns":"void (undefined)"
-				}
 			}
 		]
 	}

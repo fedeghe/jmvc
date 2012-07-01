@@ -1,10 +1,12 @@
 body{
 	font-family: Verdana, "MS Trebuchet", sans-serif;
-	font-size:12px;
+	font-size:14px;
 	background-color:#C4DDED;
-	width:780px;
+	width:900px;
 	margin:0 auto;
-	background-image: url($baseurl$/media/img/pattern.jpg);
+	background-image: url($baseurl$/media/img/oy.png);
+	border-left: 5px solid #aaa;
+    border-right: 5px solid #555;
 } 
 p{
 	padding-bottom:10px;
@@ -18,47 +20,51 @@ label{
 label.lab{
 	font-weight:normal;
 }
+
+
+
+
 .cl1_Controller{
-	background-color: #ffefef;
+	background-color: #CCF;
 }
 .cl2_Controller{
-	background-color: #fff;
+	background-color: #FFF;
 }
 .cl1_View{
-	background-color: #efffef;
+	background-color: #CFC;
 }
 .cl2_View{
-	background-color: #fff;
+	background-color: #FFF;
 }
 .cl1_Model{
-	background-color: #efefff;
+	background-color: #FCC;
 }
 .cl2_Model{
-	background-color: #fff;
+	background-color: #FFF;
 }
 .cl1_Dom{
-	background-color: #ffffef;
+	background-color: #9CF;
 }
 .cl2_Dom{
-	background-color: #fff;
+	background-color: #FFF;
 }
 .cl1_Events{
-	background-color: #ffefff;
+	background-color: #FCF;
 }
 .cl2_Events{
-	background-color: #fff;
+	background-color: #FFF;
 }
 .cl1_Head{
-	background-color: #fafaaa;
+	background-color: #FC9;
 }
 .cl2_Head{
-	background-color: #fff;
+	background-color: #FFF;
 }
-.cl1_More{
-	background-color: #faa;
+.cl1_JMVC{
+	background-color: #FFC;	
 }
-.cl2_More{
-	background-color: #fff;
+.cl2_JMVC{
+	background-color: #FFF;
 }
 h3{
 	padding-top:15px;
@@ -85,17 +91,23 @@ tr > td {
 	height:0px;
 	line-height:18px;
 } 
+tr > td.first {
+	text-align:right;
+	padding-right:5px;
+	color:#222;
+	font-weight:bold;
+} 
 hr{
 	height:5px;
-	border:1px solid black;
+	border:1px solid #ccc;
 	background-color:white;
 }
 a{
-	color:#88f;
+	color:#888;
 	text-decoration:none;
 }
 a:hover{
-	color:#00f;
+	color:#a00;
 }
 ul{
 	margin:0px;
@@ -112,11 +124,15 @@ div#centerinfo{
 	background-color: white;
 	padding:30px;
 }
+.tablecontainer{
+	padding:5px;
+	margin-bottom:20px;
+}
 .apitable{
 	$my_table_style$
 }
 div#footer{
-	height:200px;
+	height:40px;
 }
 p.footer{
 	text-align:center
