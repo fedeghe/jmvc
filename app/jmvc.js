@@ -1,4 +1,4 @@
-/*
+/* 
  JMVC Javascript module
 Version: 0.5
 Date : 15-06-2012
@@ -338,12 +338,12 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				//					exists
 				case type==='view' && typeof $jmvc.views[name] == 'function':
 					ret = $jmvc.views[name];
-					break;
+				break;
 				case type==='model' && typeof $jmvc.models[name] == 'function':
 					o = new $jmvc.models[name]();
 					o.vars = {};
 					ret = o;
-					break;
+				break;
 
 				//					do not exists
 				default :
@@ -369,8 +369,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 									break;
 							}
 						}
-						);
-					break;
+					);
+				break;
 			}
 			return ret;
 		}
@@ -911,14 +911,22 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		var call = function(uri, options){
 			var xhr = getxhr(),
 				method = (options && options.method) || 'POST',
-				cback = (options && options.cback) || false,
-				sync = (options && options.sync) || false,
-				data = (options && options.data) || {};
+				cback = (options && options.cback),
+				sync = (options && options.sync),
+				data = (options && options.data) || {},
+				type = (options && options.type),
+				cache = (options && options.cache!== undefined) ? options.cache : true,
+				targetType = (type=='xml')? 'responseXML' : 'responseText';
+			
+			//prepare data
+			if(!cache)data['C'] = JMVC.util.now();
+			data = JMVC.util.obj2qs(data).substr(1);
+			
 			xhr.onreadystatechange = function() {
 				switch(true){
 					case xhr.readyState=="complete" || (xhr.readyState==4 && xhr.status==200 ) :
-						if(cback){cback(xhr.responseText);}
-						return xhr.responseText;
+						if(cback){cback(xhr[targetType]);}
+						return xhr[targetType];
 					break;
 				}
 			};
@@ -931,101 +939,49 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 						if (xhr.overrideMimeType){
 							xhr.setRequestHeader("Connection", "close");
 						}
-						xhr.send(true);
+						xhr.send(data || true);
 					}catch(e) {}
 				break;
 				case 'GET':
 					try{
+						uri = uri + ((data)?'?'+data:'');
 						xhr.open('GET', uri, sync);
+						if(type=='xml' &&  xhr.overrideMimeType){
+							xhr.overrideMimeType('text/xml');
+						}
 						xhr.send(null);
 					}catch(e) {}
 				break;
 			}
 			try{
-				//if(type=='xml'){return xhr.responseXML;}
-				return xhr.responseText;
+				return xhr[targetType];
 			}catch(e){}
 			return false;
 		}
 		
-		var post = function(){};
-		
-		var get = function(uri, cback, p, sync){
-			return call(uri, {cback : cback, method : 'GET', sync : sync});
+		var post = function(uri, cback, sync, data, cache){
+			return call(uri, {cback : cback, method : 'POST', sync : sync, data : data, cache : cache});
 		};
-		var ejson = function (uri){
-			return (JSON && JSON.parse) ? JSON.parse(get(uri)) : eval( '(' + get(uri) + ')');
+		
+		var get = function(uri, cback, sync, data, cache){
+			return call(uri, {cback : cback, method : 'GET', sync : sync, data : data, cache : cache});
+		};
+		var getJson = function (uri){
+			return (W.JSON && W.JSON.parse) ? JSON.parse(get(uri)) : eval( '(' + get(uri) + ')');
+		}
+		var getXML = function(uri){
+			return call(uri, {method : 'GET', sync : false, type : 'xml'});
 		}
 		
 		return {
 			get : get,
 			post : post,
-			ejson : ejson
+			getJson : getJson
 		}
 	})();
 	
 	
 	
-	
-	/*
-	*
-	*
-	*	ajax utility
-	*/
-   /*
-	JMVC.io2 = {
-
-		pool : [],
-		
-		get : function(uri, cback, p, sync) {
-			var id = JMVC.io.pool.length,
-			IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'],
-			dosync = sync || false;
-			try {
-				JMVC.io.pool[id] = new XMLHttpRequest();
-			}catch (e) {
-				try{
-					for (var i = 0, len = IEfuckIds.length; i<len; i+=1) {
-						try{
-							JMVC.io.pool[id] = new ActiveXObject(IEfuckIds[i]);
-						}catch(e) {} 
-					}
-				}catch (e) {}
-			}
-
-			JMVC.io.pool[id].onreadystatechange = function() {
-				if( ( JMVC.io.pool[id].readyState=="complete" || (JMVC.io.pool[id].readyState==4 && JMVC.io.pool[id].status==200 )) && cback) {
-					
-					cback(JMVC.io.pool[id].responseText);
-				}
-				return '';
-			};
-			if (p){
-				try{
-					JMVC.io.pool[id].open('POST', uri, dosync);
-					JMVC.io.pool[id].setRequestHeader('Content-type','application/x-www-form-urlencoded');
-
-					if (JMVC.io.pool[id].overrideMimeType){
-						JMVC.io.pool[id].setRequestHeader("Connection", "close");
-					}
-					JMVC.io.pool[id].send(p);
-				}catch(e) {}
-			}else{
-				try{
-					JMVC.io.pool[id].open('GET',uri,dosync);
-					JMVC.io.pool[id].send(null);
-				}catch(e) {}
-			}
-			try{
-				return JMVC.io.pool[id].responseText;
-			}catch(e){}
-			return false;
-		},
-		ejson : function (uri){
-			return eval( '(' + JMVC.io.get(uri) + ')');
-		}
-	};
-*/
 
 	/*
 	* inner html utility
