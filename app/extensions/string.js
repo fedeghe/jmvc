@@ -1,12 +1,8 @@
 JMVC.extend('string',{
-	hide : function(txt, write){
+	hide : function(txt){
 		var out = [];
 		for(var i in txt){
 			out.push(txt.charCodeAt(i));
-		}
-		///manca che crei il document.write
-		if(write){
-			return '['+out.join(',')+']';
 		}
 		return out;
 	},
@@ -16,3 +12,9 @@ JMVC.extend('string',{
 });
 
 
+
+
+//window.addEvent('domready',function(){
+//	var e = String.fromCharCode.apply(null, [105,110,102,111,64,101,120,109,97,99,104,105,110,97,46,99,104]);
+//	$('contactemail').set('html', e).setProperty('href','mailto:'+e);
+//});

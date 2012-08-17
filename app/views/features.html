@@ -1,29 +1,33 @@
 <table>
-	<tr valign="top">
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
-		<td>No global variables.</td>
+		<td>One global variable.</td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
-		<td>Supports dead IE6+ and all alive browsers</td>
+		<td>Supports all alive browsers</td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
 		<td>Includes many useful utilities: ajax, dom manipulation, event binding, etc...</td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
-		<td>Load views and models (synchronous ajax requests, otherwise model eval is late) from a controller.</td>
+		<td>Load views and models (synchronous ajax requests, otherwise model eval could be late) from a controller.</td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
 		<td>Default `index` controller and action (configurable). </td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
+		<td>$fr$</td>
+		<td>Easily add aliases to actions</td>
+	</tr>
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
 		<td>Each view, model or controller has his own hash as private registry to contain variables.</td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
 		<td>
 			In views you can write special variable placeholders for other views or for view`s variable:
@@ -37,49 +41,58 @@
 			</ul>
 		</td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
 		<td>Dinamically load other scripts and stylesheets.</td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
 		<td>The content produced by default affects the content of the body, but You can choose to affect
 	the content of any node with an <cite>id</cite> attribute.
 	You can edit the head with some limitations using JMVC.head methods (or your scripts).</td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
-		<td>10 Kb (packed).</td>
+		<td>File sizes:
+			<ul>
+				<li>13 KB for jmvc.pack.js (base62 encode, shrinked variables)</li>
+				<li>37 KB for jmvc.js (development version, full commented)</li>
+			</ul>
+		</td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
 		<td>Total warranty for completely seo <b>un</b>friendly pages :D</td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
+		<td>$fr$</td>
+		<td>Optimize modules dependencies with a <b>require</b> dummy function, .... no (AMD)ceremonies</td>
+	</tr>
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
 		<td>Automatic extra parameters extraction from url (a/d/y/u/5/...).</td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
 		<td>Automatic extra parameters extraction from querystring (?id=3e3&t=rre&...).</td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
 		<td>Add action routes in the controller (see test controller).</td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
-		<td>Easily extend the JMVC object with your code (see trial extension).</td>
+		<td>Easily extend the JMVC object with your code (see any extension).</td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
 		<td>Allow .html extension or <b>any</b> extension You prefer</td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
-		<td>Handles 404 Status for requests not matching any action/controller or routes rendering an error view and redirecting to the default route</td>
+		<td>Handles 404 Status for requests not matching a route rendering an error view and redirecting after three seconds to the default route</td>
 	</tr>
-	<tr valign="top">
+	<tr valign="top" class="dline">
 		<td>$fr$</td>
 		<td>Use placeholders even in js and css to substitute your own variables or the special
 			preset variable <strong>&#36;baseurl&#36;</strong> (this can be useful for absolute path to images, or for chunks of style rules shared among more selectors)

@@ -7,8 +7,9 @@
 </div>
 <b>Description</b>: jmvc module<br />
 <b>Contact</b>: fedeghe@gmail.com<br />
-<b>Version</b>: $version$</br>
-<b>Date</b>: 20-Jun-2012<br />
+<b>Version</b>: $version$ (rev. $review$)</br>
+<b>Last modified</b>: $last_modified$<br />
+<b>Render time</b>: <span id="render_time"></span><br />
 <hr>
 <h3>Description</h3>
 <p>JMVC implements the mvc pattern using <i>only</i> javascript. That is not completely true because
@@ -36,14 +37,14 @@ Get the source <a href="https://github.com/fedeghe/jmvc">here</a>
 <h3>Url structure</h3>
 <p>Supposing we`re using virtual host http://www.jmvc.dev , a location will be something like the following:</p>
 <p>
-http://www.jmvc.dev/C/A/n1/v1/n2/v2/n3?v4=Fede&v5=ghe
+	<span style="color:red">http://www.jmvc.dev</span>/<span style="color:green">Cnt</span>/<span style="color:blue">Act</span>/<span style="color:#f0f">n1/v1/n2/v2/n3</span><span style="color:#63c">?v4=Fede&v5=ghe</span>
 </p>
 <ul>
-	<li><label class="lab">proto+domain</label> : http://www.jmvc.dev</li>
-	<li><label class="lab">controller</label> : C</li>
-	<li><label class="lab">action</label> : A</li>
-	<li><label class="lab">parameters</label> : n1/v1/n2/v2/n3</li>
-	<li><label class="lab">querystring</label> : ?v4=Fede&v5=ghe</li>
+	<li><label class="lab" style="color:red">proto+domain</label> : http://www.jmvc.dev</li>
+	<li><label class="lab" style="color:green">controller</label> : Cnt</li>
+	<li><label class="lab" style="color:blue">action</label> : Act</li>
+	<li><label class="lab" style="color:#f0f">extra parameters</label> : n1/v1/n2/v2/n3</li>
+	<li><label class="lab" style="color:#63c">querystring</label> : ?v4=Fede&v5=ghe</li>
 </ul>
 <br />
 <p>All parameters (including those ones coming from querystring) will be automatically loaded into the current controller register, meaning that any view rendered from it can use 
@@ -60,5 +61,6 @@ http://www.jmvc.dev/C/A/n1/v1/n2/v2/n3?v4=Fede&v5=ghe
 
 <h2>API</h2>
 $desc$
+<div id="desc"></div>
 <div id="footer"></div>
 <hr />

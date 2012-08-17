@@ -4,7 +4,7 @@ var ttt = '<div id="extralogo"></div> <div id="cent"><h1>$i_say$</h1></div> <h1 
 (function(){
 
  
-  this.tmpl = function tmpl(str, data){
+  this.tmpl = function tmpl(str,data){
     // Figure out if we're getting a template, or if we need to
     // load the template - and be sure to cache the result.
     var fn = !/\W/.test(str) ?

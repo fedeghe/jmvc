@@ -1,0 +1,22 @@
+var a = [1,2,3,4];
+var bucket = new JMVC.bucket.create(a);
+console.debug(bucket.next());
+console.debug('size '+ bucket.hasmore());
+console.debug(bucket.next());
+console.debug('size '+ bucket.hasmore());
+console.debug(bucket.next());
+console.debug('size '+ bucket.hasmore());
+console.debug(bucket.next());
+console.debug('size '+ bucket.hasmore());
+console.debug(bucket.next());
+bucket.reset();
+
+console.debug(bucket.next());
+console.debug('size '+ bucket.hasmore());
+console.debug(bucket.next());
+console.debug('size '+ bucket.hasmore());
+console.debug(bucket.next());
+console.debug('size '+ bucket.hasmore());
+console.debug(bucket.next());
+console.debug('size '+ bucket.hasmore());
+console.debug(bucket.next());

@@ -1,0 +1,6 @@
+Estensioni
+> per gestire il load utilizzare start ed end mettendo 
+	il body a opacity 0 e all' end a 1
+	cfr http://www.jmvc.dev/google
+>portings da j
+tooltip

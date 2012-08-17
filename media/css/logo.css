@@ -4,7 +4,7 @@ body{
 #extralogo span.point{
 	display:block;
 	position:absolute;
-	font-size:8px;
+	font-size:0px;
 	line-height:3px;
 	height:3px;
 	top:-10px;

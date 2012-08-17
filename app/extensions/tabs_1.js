@@ -13,7 +13,7 @@ JMVC.extend('tabs',{
 			'ul.tablabels li.sel':'border:1px solid black;;border-bottom:none; background-color:white; z-index:10;position:relative;top:1px',
 			'div.tabcontainer':'line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;border:1px solid black;position:relative;top:-3px;z-index:5; padding:5px'			
 		};
-		//console.debug(JMVC.util.json2css(this.styles));
+		//JMVC.debug(JMVC.util.json2css(this.styles));
 		
 	},
 	add : function(label, content){

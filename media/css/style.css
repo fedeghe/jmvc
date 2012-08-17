@@ -3,14 +3,7 @@ body{
 	font-family: Verdana,Arial,Helvetica,sans-serif;
 	font-size: 12px;
 	border-top:15px solid #aaa;
-	/*
-	background-image: url($baseurl$/media/img/oy.png);
-	*/
-	/*
-	background-color: $bgcolor$;
-	
-		color:$color$;
-	*/
+	/* background-image: url($baseurl$/media/img/oy.png); */	
 }
 div#cent{
 
@@ -24,19 +17,19 @@ div#cent{
 	background-repeat : repeat-x;
  */
 }
-h1{font-size:16px;}
-h6{margin:0px;padding:0px;line-height:30px}
-a{	
-	color:indianred;
+div.pagewrap h1{font-size:16px;}
+div.pagewrap h6{margin:0px;padding:0px;line-height:30px}
+div.pagewrap a{	
+	color:red;
 	text-decoration:none;
 	font-size:16px;
 	font-weight:bold;
 	letter-spacing: 0px;
 	line-height:42px;
 }
-a:hover{
-	color:#f00;
-	text-shadow:0px 0px 10px fff;
+div.pagewrap a:hover{
+	text-shadow:0px 0px 10px #fff;
+	color:#0A0;
 }
 
 
@@ -67,3 +60,8 @@ div.pagewrap{
 	position:relative;
 	z-index:5;
 }
+
+h1.tryme{
+	padding-bottom:20px;
+}
+

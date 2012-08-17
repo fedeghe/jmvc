@@ -1,22 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0"?>
 <api>
 	<jmvc>
 		<function>
-			<signature>JMVC.extend(String section, Literal extension)</signature>
+			<signature name="extend">JMVC.extend(String section, Literal extension)</signature>
 			<description>Extends JMVC object with Your methods</description>
 			<params>
-				<param name="*section">
-					that parameter is needed to set the namespace under which Your functions will be added toJMVC, if You use `ajax` then all functions in the literal will be callable with JMVC.ajax.my_function(....)
-				</param>
-				<param name="*extension">
-					this object literal defines all the functions in your extension (JMVC is in that scope, so You can use it)
-				</param>
+				<param name="*section">	that parameter is needed to set the namespace under which Your functions will be added toJMVC, if You use `ajax` then all functions in the literal will be callable with JMVC.ajax.my_function(....)</param>
+				<param name="*extension">this object literal defines all the functions in your extension (JMVC is in that scope, so You can use it)</param>
 			</params>
 			<returns>void (undefined)</returns>
 		</function>
-		
 		<function>
-			<signature>JMVC.require(String extension1, String extension2, ...)</signature>
+			<signature name="require">JMVC.require(String extension1, String extension2, ...)</signature>
 			<description>Loads one or more extensions into the JMVC object</description>
 			<params>
 				<param name="*extension1">the name of the javascript file (must be in extensions folder) to be loaded. That file will use JMVC.extend function (see the `More` section)</param>
@@ -25,7 +20,7 @@
 		</function>
 		
 		<function>
-			<signature>JMVC.add(String name, String value)</signature>
+			<signature name="add">JMVC.add(String name, String value)</signature>
 			<description>Adds a variable that You can use anywhere</description>
 			<params>
 				<param name="*name">the name of the new variable, use it typing &#36;thename&#36;</param>
@@ -35,7 +30,7 @@
 		</function>
 		
 		<function>
-			<signature>JMVC.del(String name)</signature>
+			<signature name="del">JMVC.del(String name)</signature>
 			<description>Removes a variable from the global JMVC scope</description>
 			<params>
 				<param name="*name">the name of the new variable to be removed</param>
@@ -44,7 +39,7 @@
 		</function>
 		
 		<function>
-			<signature>JMVC.getView(String name)</signature>
+			<signature name="getView">JMVC.getView(String name)</signature>
 			<description>Gets a view instance, even on a subfolder</description>
 			<params>
 				<param name="*name">the name of the new view</param>
@@ -53,17 +48,26 @@
 		</function>
 
 		<function>
-			<signature>JMVC.getModel(String name)</signature>
+			<signature name="getModel">JMVC.getModel(String name)</signature>
 			<description>Gets a model instance, even on a subfolder</description>
 			<params>
 				<param name="*name">the name of the model</param>
 			</params>
 			<returns>the model instance</returns>
 		</function>
+		<function>
+			<signature name="prototipize">JMVC.prototipize(Constructor func, Enanching Literal)</signature>
+			<description>Allows to add properties and methods to the prototype of a constructor</description>
+			<params>
+				<param name="*unc">the constructor to be enanched</param>
+				<param name="*name">the literal object that contains wanted properties and methods</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
 	</jmvc>	
 	<model>	
 		<function>
-			<signature>set(String varname, Mixed value)</signature>
+			<signature name="set">set(String varname, Mixed value)</signature>
 			<description>Add a variable to the Model registry.</description>
 			<params>
 				<param name="*varname">the name of the variable</param>
@@ -74,7 +78,7 @@
 
 
 		<function>
-			<signature>get(String varname)</signature>
+			<signature name="get">get(String varname)</signature>
 			<description>If exists retrieve a variable from the Model registry.</description>
 			<params>
 				<param name="*varname">the name of the variable needed</param>
@@ -84,7 +88,7 @@
 
 
 		<function>
-			<signature>del(String varname)</signature>
+			<signature name="del">del(String varname)</signature>
 			<description>If exists deletes a variable from the Model registry.</description>
 			<params>
 				<param name="*varname">the name of the variable to be deleted</param>
@@ -94,7 +98,7 @@
 
 
 		<function>
-			<signature>reset()</signature>
+			<signature name="reset">reset()</signature>
 			<description>Deletes all variables from the Model registry.</description>
 			<params>
 				<param name="no params">this function needs no parameters</param>
@@ -107,7 +111,7 @@
 
 
 		<function>
-			<signature>set(String varname, Mixed value);</signature>
+			<signature name="set">set(String varname, Mixed value);</signature>
 			<description>Add a variable to the View registry.</description>
 			<params>
 				<param name="*varname">the name of the variable</param>
@@ -118,7 +122,7 @@
 
 
 		<function>
-			<signature>get(String varname)</signature>
+			<signature name="get">get(String varname)</signature>
 			<description>If exists retrieve a variable from the View registry.</description>
 			<params>
 				<param name="*varname">the name of the variable needed</param>
@@ -128,7 +132,7 @@
 
 
 		<function>
-			<signature>del(String varname)</signature>
+			<signature name="del">del(String varname)</signature>
 			<description>If exists deletes a variable from the View registry.</description>
 			<params>
 				<param name="*varname">the name of the variable to be deleted</param>
@@ -138,7 +142,7 @@
 
 		
 		<function>
-			<signature>parse(Model object)</signature>
+			<signature name="parse">parse(Model object)</signature>
 			<description>If the view has some &#36;var&#36; placeholders within and these variables are stored in a model instance with the right names, that method get values from model instance and uses them in the placeholders content substitution.</description>
 			<params>
 				<param name="object">Is a Model instance which should contain variables that the view will render through placeholders substitution.</param>
@@ -148,7 +152,7 @@
 
 							
 		<function>
-			<signature>render(Literal pars{Javascript function cback, Array argz, String target})</signature>
+			<signature name="render">render(Literal pars{Javascript function cback, Array argz, String target})</signature>
 			<description>This is the function intended to be used to render the document or a part of it. You can optionally pass three elements within a literal object.</description>
 			<params>
 				<param name="cback">a callback function that will be executed after rendering</param>
@@ -163,7 +167,7 @@
 	<controller>
 
 		<function>
-			<signature>set(String varname, Mixed value)</signature>
+			<signature name="set">set(String varname, Mixed value)</signature>
 			<description>Add a variable to the Controller registry.</description>
 			<params>
 				<param name="*varname">the name of the variable</param>
@@ -174,7 +178,7 @@
 
 
 		<function>
-			<signature>get(String varname)</signature>
+			<signature name="get">get(String varname)</signature>
 			<description>If exists retrieve a variable from the Controller registry.</description>
 			<params>
 				<param name="*varname">the name of the variable needed</param>
@@ -183,7 +187,7 @@
 		</function>
 
 		<function>
-			<signature>del(String varname)</signature>
+			<signature name="del">del(String varname)</signature>
 			<description>If exists deletes a variable from the Controller registry.</description>
 			<params>
 				<param name="*varname">the name of the variable to be deleted</param>
@@ -192,17 +196,17 @@
 		</function>
 
 		<function>
-			<signature>reset()</signature>
+			<signature name="reset">reset()</signature>
 			<description>Deletes all variables from the Controller registry.</description>
 			<params>
-				<param name="no params">this function needs no paameters</param>
+				<param name="no params">this function needs no parameters</param>
 			</params>
 			<returns>void (undefined)</returns>
 		</function>
 
 
 		<function>
-			<signature>relocate(String url, int ms)</signature>
+			<signature name="relocate">relocate(String url, int ms)</signature>
 			<description>Redirects to a specified location.</description>
 			<params>
 				<param name="*url">the location to be redirected to</param>
@@ -212,8 +216,26 @@
 		</function>
 				
 		<function>
-			<signature>render(String content, Javascript function callback)</signature>
+			<signature name="render">render(String content, Javascript function callback)</signature>
 			<description>Renders directly something from the controller, optionally invokes a callback at the end.</description>
+			<params>
+				<param name="*content">the content to render</param>
+				<param name="callback">a function that will be invoked after content is set</param>
+			</params>
+			<returns>the Controller instance</returns>
+		</function>
+		<function>
+			<signature name="set_from_url">set_from_url(String varname, Mixed value)</signature>
+			<description>none</description>
+			<params>
+				<param name="*varname">the name of the variable</param>
+				<param name="*value">the value for the variable</param>
+			</params>
+			<returns>none</returns>
+		</function>	
+		<function>
+			<signature name="addRoutes">addRoutes(Mixed var, String val)</signature>
+			<description>Add action routes.</description>
 			<params>
 				<param name="*content">the content to render</param>
 				<param name="callback">a function that will be invoked after content is set</param>
@@ -225,7 +247,7 @@
 
 	<dom>
 		<function>
-			<signature>JMVC.dom.create(String tag, Literal attrs,String inner)</signature>
+			<signature name="create">JMVC.dom.create(String tag, Literal attrs,String inner)</signature>
 			<description>creates a DOM node.</description>
 			<params>
 				<param name="*tag">tag to be created</param>
@@ -236,7 +258,7 @@
 		</function>
 
 		<function>
-			<signature>JMVC.dom.append(Element where, Element what)</signature>
+			<signature name="append">JMVC.dom.append(Element where, Element what)</signature>
 			<description>appends an DOM node inside another one</description>
 			<params>
 				<param name="*where">DOM target node</param>
@@ -246,7 +268,7 @@
 		</function>
 		
 		<function>
-			<signature>JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
+			<signature name="add">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
 			<description>this is a shortcut that merges create+append</description>
 			<params>
 				<param name="*where">dom element target</param>
@@ -258,7 +280,7 @@
 		</function>
 
 		<function>
-			<signature>JMVC.dom.html(Element el, String html)</signature>
+			<signature name="html">JMVC.dom.html(Element el, String html)</signature>
 			<description>sets or returns the html into an existing element.</description>
 			<params>
 				<param name="*el">dom element target</param>
@@ -268,7 +290,7 @@
 		</function>
 
 		<function>
-			<signature>JMVC.dom.insertBefore(Element newNode, Element referenceNode)</signature>
+			<signature name="insertBefore">JMVC.dom.insertBefore(Element newNode, Element referenceNode)</signature>
 			<description>inserts a sibling node before another one</description>
 			<params>
 				<param name="*newNode">the brand new node</param>
@@ -278,7 +300,7 @@
 		</function>
 
 		<function>
-			<signature>JMVC.dom.insertAfter(Element newNode, Element referenceNode)</signature>
+			<signature name="insertAfter">JMVC.dom.insertAfter(Element newNode, Element referenceNode)</signature>
 			<description>inserts a sibling node after another one</description>
 			<params>
 				<param name="*newNode">the brand new node</param>
@@ -288,8 +310,8 @@
 		</function>
 
 		<function>
-			<signature>JMVC.dom.nthchild(Element node, int  num [, Array types ])</signature>
-			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but Yo cab specify any set</description>
+			<signature name="nthchild">JMVC.dom.nthchild(Element node, int  num [, Array types ])</signature>
+			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
 			<params>
 				<param name="node">The parent where search n-th child</param>
 				<param name="num">Starting from 0 the number of the child needed</param>
@@ -305,7 +327,7 @@
 	
 	<events>
 		<function>
-			<signature>JMVC.events.bind(Element el, String type, Javascript function fun)</signature>
+			<signature name="bind">JMVC.events.bind(Element el, String type, Javascript function fun)</signature>
 			<description>binds a callback to an event fired from an element</description>
 			<params>
 				<param name="el*">dom element target</param>
@@ -315,7 +337,7 @@
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
-			<signature>JMVC.events.unbind(Element el, String type)</signature>
+			<signature name="unbind">JMVC.events.unbind(Element el, String type)</signature>
 			<description>unbinds an existing binding</description>
 			<params>
 				<param name="*el">dom element target</param>
@@ -324,7 +346,7 @@
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
-			<signature>JMVC.events.one(Element el, String type, Javascript function fun)</signature>
+			<signature name="one">JMVC.events.one(Element el, String type, Javascript function fun)</signature>
 			<description>binds only once a callback to an event fired from an element</description>
 			<params>
 				<param name="el*">dom element target</param>
@@ -334,7 +356,7 @@
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
-			<signature>JMVC.events.ready(Javascript function func)</signature>
+			<signature name="ready">JMVC.events.ready(Javascript function func)</signature>
 			<description>binds a callback to document load event</description>
 			<params>
 				<param name="*func">Javascript function callback</param>
@@ -346,7 +368,7 @@
 	<head>
 		
 		<function>
-			<signature>JMVC.head.addscript(String src, Boolean parse, Boolean explicit)</signature>
+			<signature name="addscript">JMVC.head.addscript(String src, Boolean parse, Boolean explicit)</signature>
 			<description>Add a script in the head section</description>
 			<params>
 				<param name="*src">this can be the url of the script or the script content (you can even use &#123;&#123;myscript name=`hello` ... &#125;&#125; )</param>
@@ -356,7 +378,7 @@
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
-			<signature>JMVC.head.addstyle(String src, Boolean parse, Boolean explicit)</signature>
+			<signature name="addstyle">JMVC.head.addstyle(String src, Boolean parse, Boolean explicit)</signature>
 			<description>Add a stylesheet in the head section</description>
 			<params>
 				<param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use &#123;&#123;mystyle color=`#ff33cc` ... &#125;&#125; )</param>
@@ -366,7 +388,7 @@
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
-			<signature>JMVC.head.title(String title)</signature>
+			<signature name="title">JMVC.head.title(String title)</signature>
 			<description>Gets/sets document title</description>
 			<params>
 				<param name="title">The string You want to be set as document title</param>
@@ -374,7 +396,7 @@
 			<returns>the title if no param is passed</returns>
 		</function>
 		<function>
-			<signature>JMVC.head.meta(String name, String value)</signature>
+			<signature name="meta">JMVC.head.meta(String name, String value)</signature>
 			<description>Gets/sets document title</description>
 			<params>
 				<param name="name">The name of the meta You want to add</param>
@@ -386,7 +408,7 @@
 	
 	<util>
 		<function>
-			<signature>JMVC.util.isSet(var variable)</signature>
+			<signature name="isSet">JMVC.util.isSet(var variable)</signature>
 			<description>Checks if a variable is defined</description>
 			<params>
 				<param name="variable">The variable to check</param>
@@ -394,7 +416,7 @@
 			<returns>Boolean</returns>
 		</function>
 		<function>
-			<signature>JMVC.util.isArray(var variable)</signature>
+			<signature name="isArray">JMVC.util.isArray(var variable)</signature>
 			<description>Checks if a variable is an Array</description>
 			<params>
 				<param name="variable">The variable to check</param>
@@ -402,7 +424,7 @@
 			<returns>Boolean</returns>
 		</function>
 		<function>
-			<signature>JMVC.util.inArray(Array arr, var myvar)</signature>
+			<signature name="inArray">JMVC.util.inArray(Array arr, var myvar)</signature>
 			<description>Checks if an Array contains a variable</description>
 			<params>
 				<param name="arr">The array to search in</param>
@@ -411,7 +433,7 @@
 			<returns>Boolean</returns>
 		</function>
 		<function>
-			<signature>JMVC.util.isTypeOf(var myvar, String type)</signature>
+			<signature name="isTypeOf">JMVC.util.isTypeOf(var myvar, String type)</signature>
 			<description>Checks if a variable is of a type</description>
 			<params>
 				<param name="myvar">The varbiale to check</param>
@@ -420,7 +442,7 @@
 			<returns>Boolean</returns>
 		</function>
 		<function>
-			<signature>JMVC.util.getType(var myvar)</signature>
+			<signature name="getType">JMVC.util.getType(var myvar)</signature>
 			<description>Gets the type of a variable</description>
 			<params>
 				<param name="myvar">The target variable</param>
@@ -428,7 +450,7 @@
 			<returns hint="The type of the variable">String</returns>
 		</function>
 		<function>
-			<signature>JMVC.util.rand(int n1, int n2)</signature>
+			<signature name="rand">JMVC.util.rand(int n1, int n2)</signature>
 			<description>Returns a pseudo-random value in [n1, n2]</description>
 			<params>
 				<param name="*n1">The minimum value</param>
@@ -437,7 +459,7 @@
 			<returns>int</returns>
 		</function>
 		<function>
-			<signature>JMVC.util.replaceall(String tpl , Literal o, String pre, String post)</signature>
+			<signature name="replaceall">JMVC.util.replaceall(String tpl , Literal o, String pre, String post)</signature>
 			<description>Replace many placeholders in a string</description>
 			<params>
 				<param name="*tpl">The template where placeholders must be replaced</param>
@@ -450,7 +472,7 @@
 	</util>
 	<io>
 		<function>
-			<signature>JMVC.io.get(String uri, function cback, boolean p, boolean sync)</signature>
+			<signature name="get">JMVC.io.get(String uri, function cback, boolean p, boolean sync)</signature>
 			<description>Performs an ajax call</description>
 			<params>
 				<param name="*uri">The resource to get</param>
@@ -461,7 +483,7 @@
 			<returns hint="the response">String</returns>
 		</function>
 		<function>
-			<signature>JMVC.io.ejson(String uri)</signature>
+			<signature name="getJson">JMVC.io.getJson(String uri)</signature>
 			<description>Evaluate a json and return it</description>
 			<params>
 				<param name="uri">The resource to get</param>
