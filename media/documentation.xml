@@ -101,15 +101,13 @@
 			<signature name="reset">reset()</signature>
 			<description>Deletes all variables from the Model registry.</description>
 			<params>
-				<param name="no params">this function needs no parameters</param>
+				<param name="noparams">this function needs no parameters</param>
 			</params>
 			<returns>void (undefined)</returns>
 		</function>
 	</model>
 	
 	<view>
-
-
 		<function>
 			<signature name="set">set(String varname, Mixed value);</signature>
 			<description>Add a variable to the View registry.</description>
@@ -468,6 +466,14 @@
 				<param name="post" default="%">The string that follows the inner_value</param>
 			</params>
 			<returns>The template with all values replaced</returns>
+		</function>
+		<function>
+			<signature name="denyframe">JMVC.util.denyframe()</signature>
+			<description>Replace many placeholders in a string</description>
+			<params>
+				<param name="no params">this function needs no parameters</param>
+			</params>
+			<returns>void (undefined)</returns>
 		</function>
 	</util>
 	<io>

@@ -1,0 +1,29 @@
+
+body{
+	background-color:yellow !important;
+}
+table.cal{
+	border:1px solid black;
+	padding:0px;
+	table-layout: table;
+	cell-spacing:5px;
+}
+td.calendar{
+	background-color : red;
+}
+table.cal th, table.cal td{
+	line-height:14px;
+	font-size:12px;
+}
+table.cal td.pre, table.cal td.curr, table.cal td.after{
+	text-align: center;
+	border:1px solid black;
+	padding:5px;
+	
+	
+}
+table.cal td:hover{
+	color:#fff;
+	background-color: #000;
+	cursor:pointer;
+}

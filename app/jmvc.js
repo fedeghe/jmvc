@@ -31,7 +31,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 (function (W) {
 	//
 	// this is due !!! :D 
-	//
 	'use strict';
 	//
 	var JMVC = window.JMVC = (
@@ -112,8 +111,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				}
 				//maybe init, in case call it
 				if (typeof $jmvc[trg].init === 'function') {
-					$jmvc[trg].init();
-					//$jmvc[trg].init.call($jmvc);
+					//$jmvc[trg].init();
+					$jmvc[trg].init.call($jmvc);
 				}
 			}
 			//
@@ -405,21 +404,28 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			}
 			function jmvc_del(name) {
 				if ($jmvc.vars[name]) {
-					delete $jmvc.vars[name];
+					$jmvc.vars[name] = null;
 				}
 			}
-			// require
+			// require, 'test' is an exception, if passed then the path will be /app/test
 			function jmvc_require() {
 				var i = 0,
-					l = arguments.length;
+					l = arguments.length,
+					curr = -1,
+					ext_path = ['/app/extensions/', '/app/test/'];
 				for (null; i < l; i += 1) {
-					if (!$jmvc.extensions[arguments[i]]) {
+					//
+					//JMVC.debug(typeof arguments[i]);
+					if (typeof arguments[i]==='string' && !$jmvc.extensions[arguments[i]]) {
+						curr += 1;
 						$jmvc.io.get(
-							'/app/extensions/' + arguments[i] + '.js',
+							ext_path[~~(arguments[i]=='test')] + arguments[i] + '.js',
 							function (jres) { jmvc_eval(jres); }
 						);
 						$jmvc.extensions[arguments[i]] = arguments[i];
+						
 					}
+					
 				}
 			}
 			//
@@ -442,6 +448,22 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 							alert(e.message);
 						}
 					}
+				}
+			}
+			
+			function jmvc_purge(o){
+				var a = o.attributes, i, l, n;
+				if(a){
+					for(i = 0, l = a.length; i < l; i ++){
+						n = a[i].name;
+						if(typeof o[n] === 'function'){
+							o[n] = null;
+						}
+					}
+				}
+				a = o.childNodes;
+				if(a){
+					for(i=0, l=a.length; i<l; i++){jmvc_purge(o.childNodes[i]);}
 				}
 			}
 			//
@@ -542,8 +564,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			// directly instantiated assinging content
 			View = function (cnt) {
 				// original content
-				this.ocontent = cnt || 'content';
-				this.content = cnt || 'content';
+				this.ocontent = cnt || '';
+				this.content = cnt || '';
 				this.vars = {'baseurl' : $jmvc.vars.baseurl};
 			};
 			//
@@ -667,7 +689,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				return this;
 			};
 			View.prototype.del = Model.prototype.del = Controller.prototype.del = function (n) {
-				if (!!this.vars[n]) {delete this.vars[n]; }
+				if (!!this.vars[n]) {this.vars[n] = null; }
 			};
 			
 			
@@ -762,6 +784,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				views : {},
 				vars : {
 					baseurl:	dispatched.baseurl,
+					extensions : dispatched.baseurl+'/app/extensions',
 					devurl :	jmvc_dev_url,
 					produrl :	jmvc_prod_url,
 					version : jmvc_version,
@@ -774,9 +797,11 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				del : jmvc_del,
 				require : jmvc_require,
 				extensions : {},
+				extensions_params : {},
 				//garbage collector
 				gc : function () {var i = 0; l = arguments.length; for (null; i < l; i += 1){arguments[i] = null; }},
-				gco : function (o) {for (var p in o){if (o.hasOwnProperty(p)){o.p = null;}} o = null; },
+				purge : jmvc_purge,
+				//gco : function (o) {for (var p in o){if (o.hasOwnProperty(p)){o.p = null;}} o = null; },
 				//
 				hook : jmvc_hook,
 				checkhook : jmvc_check_hook,
@@ -842,15 +867,13 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	 * #
 	 */
 	JMVC.io = (function () {
-		var getxhr,
-			ajcall,
-			post,
-			get,
-			getJson,
-			getXML;
+		var getxhr, ajcall, post, get, getJson, getXML, xhrcount = 0;
+		//
 		getxhr = function () {
+			xhrcount++;
 			var xhr,
-				IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'],
+				//IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'],
+				IEfuckIds = ['Msxml2.XMLHTTP', 'Msxml3.XMLHTTP', 'Microsoft.XMLHTTP'],
 				i = 0,
 				len = IEfuckIds.length;
 			//
@@ -881,6 +904,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				targetType = (type === 'xml') ?  'responseXML' : 'responseText',
 				timeout = (options && options.timeout) || 3000,
 				complete = false,
+				res = false,
 				ret = false,
 				state = false;
 			//
@@ -895,14 +919,18 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				//JMVC.debug('called '+uri + ' ('+xhr.readyState+')');
 				if (xhr.readyState === "complete" || (xhr.readyState === 4 && xhr.status === 200)) {
 					complete = true;
-					if (cback) {cback((targetType==='responseXML') ?  xhr[targetType].childNodes[0] : xhr[targetType]); }
+					if (cback) {
+						res = (targetType==='responseXML') ?  xhr[targetType].childNodes[0] : xhr[targetType];
+						(function(){cback(res);})(res);
+					}
 					ret = xhr[targetType];
-					delete xhr['onreadystatechange'];
-					
-				//	JMVC.debug('out '+uri);
-					//window.setTimeout(function(){xhr=null;},50);
-					//JMVC.gc(method,cback,cb_opened,cb_loading,cb_error,sync,data,type,cache,targetType,timeout,complete);
-					JMVC.gco(xhr);
+					//
+					//IE leak ?????
+					window.setTimeout(function(){
+						xhrcount--;
+						JMVC.purge(xhr);
+					}, 50);
+					//
 					return ret;
 				} else if (xhr.readyState === 3) {
 					cb_loading();
@@ -946,6 +974,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			try {
 				return(targetType==='responseXML') ?  xhr[targetType].childNodes[0] : xhr[targetType];
 			} catch (e3) {}
+			
 			return false;
 		};
 		//
@@ -965,6 +994,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		};
 		//
 		return {
+			count : xhrcount,
 			get : get,
 			post : post,
 			getXML : getXML,
@@ -982,12 +1012,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	 * #
 	 */
 	JMVC.util = {
-		isSet : function (e) {
-			return typeof e !== 'undefined';
-		},
-		defined : function (e) {
-			return typeof e !== 'undefined';
-		},
+		denyframe : function () {if (window.top !== window.self) {window.top.location = JMVC.vars.baseurl; }},
+		isSet : function (e) {return typeof e !== 'undefined'; },
+		defined : function (e) {return typeof e !== 'undefined'; },
 		inArray : function (arr, myvar) {
 			var res = -1,
 				i = 0,
@@ -1000,18 +1027,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			}
 			return res;
 		},
-		in_object : function(obj ,field){
-			return (typeof obj==='object' && obj[field]);
-		},
-		isArray : function (o) {
-			return Object.prototype.toString.call(o) === '[object Array]';
-		},
-		isTypeOf : function (el, type) {
-			return typeof el === type;
-		},
-		getType : function (el) {
-			return typeof el;
-		},
+		in_object : function (obj ,field) {return (typeof obj === 'object' && obj[field]); },
+		isArray : function (o) { return '' + o !== o && {}.toString.call(o) === '[object Array]'; },
+		isTypeOf : function (el, type) {return typeof el === type;	},
+		getType : function (el) {return typeof el; },
 		padme : function (val, el, pos, lngt) {
 			var len = lngt || 2;
 			while ((String(val)).length < len) {
@@ -1026,24 +1045,23 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			}
 			return val;
 		},
-		rand : function (min, max) {
-			return min +  ~~(Math.random() * (max - min + 1));
-		},
-		
-		
-		
+		rand : function (min, max) {return min +  ~~(Math.random() * (max - min + 1));},
 		replaceall : function (tpl, o, pre, post) {
 			var Op = pre || '%',
 				pO = post || '%',
-				reg = new RegExp(Op + '([A-z]*)' + pO, 'g'),
+				reg = new RegExp(Op + '([A-z][0-9]*)' + pO, 'g'),
 				str;
 			return tpl.replace(reg, function (str, $1) {
 				return o[$1];
 			});
 		},
+		str_repeat : function(str, n){
+			var t = [];
+			while(n--){t.push(str.replace(/\%n\%/g, n) );}
+			return t.reverse().join('');
+		},
 		obj2attr : function (o) {
-			var ret = '',
-				i;
+			var ret = '', si;
 			for (i in o) {
 				if (o.hasOwnProperty(i)) {
 					ret += ' ' + i + '"' + o[i] + '"';
@@ -1052,8 +1070,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			return ret;
 		},
 		obj2qs : function (o) {
-			var ret = '',
-				i;
+			var ret = '', si;
 			for (i in o) {
 				if (o.hasOwnProperty(i)) {
 					ret += String((ret ? '&' : '?') + i + '=' + encodeURI(o[i]));
@@ -1061,12 +1078,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			}
 			return ret;
 		},
-		rad2deg : function (r) {
-			return 180 * r / Math.PI;
-		},
-		deg2rad : function (d) {
-			return Math.PI * d / 180;
-		},
+		rad2deg : function (r) {return 180 * r / Math.PI; },
+		deg2rad : function (d) {return Math.PI * d / 180; },
 		//funzione di iterazione
 		each : function (that, fn) {
 			var i = 0,
@@ -1082,9 +1095,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			var n = document.location.href;
 			document.location.href = n;//do not cause wierd alert
 		},
-		now : function () {
-			return (new Date()).getTime();
-		},
+		now : function () {return (new Date()).getTime(); },
 		json2css : function (json) {
 			var out = '',
 				i;
@@ -1095,9 +1106,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			}
 			return out;
 		},
-		array_clone : function (arr) {
-			return arr.slice(0);
-		},
+		array_clone : function (arr) {return arr.slice(0); },
 		range : function(start, end){
 			var ret = [];
 			while (end - start + 1) {
@@ -1105,8 +1114,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			}
 			return ret;
 		}
-
-		
 	};
 	//
 	//
@@ -1120,12 +1127,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	 * #
 	 */
 	JMVC.dom = {
-		body : function () {
-			return document.body;
-		},
-		append : function (where, what) {
-			where.appendChild(what);
-		},
+		body : function () {return document.body; },
+		append : function (where, what) {where.appendChild(what); },
 		addClass : function (el, addingClass) {
 			var now = this.attr(el, 'class'),
 				spacer = (now !== '') ? ' ' : "";
@@ -1176,6 +1179,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			return node;
 		},
 		/* create and append */
+		
+		/**
+		 * Create an element into an existing one
+		 */
 		add : function (where, tag, attrs, inner) {
 			var n = this.create(tag, attrs, inner);
 			this.append(where, n);
@@ -1195,18 +1202,13 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			} else {
 				t = (el.nodeType === 1) ? el.innerHTML : el;
 			}
+			JMVC.purge(el);
 			return t.trim();
 		},
-		find : function (sel) {
-			return document.getElementById(sel);
-		},
+		find : function (sel) {return document.getElementById(sel); },
 		//ha un attributo?
-		hasAttribute : function (el, name) {
-			return el.getAttribute(name) !== null;
-		},
-		hasClass : function (el, classname) {
-			return el.className.match(new RegExp('(\\s|^)' + classname + '(\\s|$)'));
-		},
+		hasAttribute : function (el, name) {return el.getAttribute(name) !== null; },
+		hasClass : function (el, classname) {return el.className.match(new RegExp('(\\s|^)' + classname + '(\\s|$)')); },
 		insertBefore : function (node, referenceNode) {
 			var p = referenceNode.parentNode;
 			p.insertBefore(node, referenceNode);
@@ -1248,9 +1250,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			i.src = src;
 			return i;
 		},
-		parent : function (node) {
-			return node.parentNode;
-		},
+		parent : function (node) {	return node.parentNode; },
 		prepend : function (where, what) {
 			var c = where.childNodes[0];
 			where.insertBefore(what, c);
@@ -1316,7 +1316,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			} else if (el.detachEvent) {
 				el.detachEvent("on" + tipo, this.bindings[el][tipo]);
 			}
-			delete this.bindings[el][tipo];
+			this.bindings[el][tipo] = null;
 		},
 		one : function (what, type, fn) {
 			var newf = function () {
@@ -1532,7 +1532,13 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	//
 	//	W.JMVC = JMVC;
 	//
-	//	###  hooray ... RENDER 
-	JMVC.render();
-	
+	//	###  hooray ... RENDER
+	// polling ajax finishing
+	(function r(){
+		if(JMVC.io.count === 0 ){
+			JMVC.render();
+		}else{
+			window.setTimeout(r, 5);
+		}
+	})();
 })(this);

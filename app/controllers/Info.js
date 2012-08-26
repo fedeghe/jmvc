@@ -6,7 +6,7 @@ JMVC.controllers.Info = function () {
 	this.index = function () {
 		//
 		JMVC.events.loadify(1000);
-		JMVC.require('analytics', 'bsniff');
+		JMVC.require('analytics', 'sniffer');
 		var main  = JMVC.getView('info'),
 			readme = JMVC.getView('readme'),
 			features = JMVC.getView('features'),

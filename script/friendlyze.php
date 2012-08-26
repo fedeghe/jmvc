@@ -157,7 +157,7 @@ class friendlyze{
 		}
 	}	
 }
-$usage = "USAGE:\nphp jslintfrieldyze.php relativepath_with_end_slash [adjust | clean]\nbye\n";
+$usage = "USAGE:\nphp frieldyze.php relativepath_with_end_slash [adjust | clean]\nbye\n";
 if(count($argv)== 3){
 	friendlyze::set_path($argv[1]);
 	switch(true){
@@ -169,7 +169,7 @@ if(count($argv)== 3){
 		break;
 		default :
 			echo $usage;
-			echo 'Maybe oyu should try to use `adjust` or `clean` as third parameter'."\n\n";
+			echo 'Maybe You should try to use `adjust` or `clean` as third parameter'."\n\n";
 		break;
 	}
 }else{

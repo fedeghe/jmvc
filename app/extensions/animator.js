@@ -24,7 +24,7 @@ JMVC.extend('animator',{
 		
 		var parent = JMVC.dom.parent(that);
 		
-		JMVC.debug(_ani);
+		//JMVC.debug(_ani);
 		
 		JMVC.css.style(parent, 'position', 'relative');
 		

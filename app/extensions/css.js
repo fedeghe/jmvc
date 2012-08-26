@@ -1,4 +1,4 @@
-JMVC.require('color', 'bsniff');
+JMVC.require('color', 'sniffer');
 JMVC.extend('css',{
 	style : function(el, prop, val) {
 		
@@ -41,7 +41,7 @@ JMVC.extend('css',{
 	
 	getComputedStyle : function(el, styleProperty){ 
 		
-		if(JMVC.sniff.browser.name == 'Opera'){
+		if(JMVC.sniffer.browser.name == 'Opera'){
 			return  window.getComputedStyle(el, null).getPropertyValue(styleProperty);
 		}
 		var computedStyle = null;

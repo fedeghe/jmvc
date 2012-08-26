@@ -1,6 +1,6 @@
 JMVC.controllers.Tabs = function () {
 	this.one = function () {
-		JMVC.require('tabs', 'bsniff');
+		JMVC.require('tabs', 'sniffer');
 		var index = JMVC.getView('index'),
 			tab = new JMVC.tabs.tab('v'),
 			tab2 = new JMVC.tabs.tab('o'),
@@ -19,6 +19,7 @@ JMVC.controllers.Tabs = function () {
 			ids = tab.render('cent', 'ciccio');
 			JMVC.dom.add(JMVC.dom.find('cent'), 'br', {'style' : 'line-height:30px'});
 			tab2.render(ids[2], 'ciccio2');
+			
 		}});
 	};
 }
