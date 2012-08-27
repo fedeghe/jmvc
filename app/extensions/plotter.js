@@ -10,7 +10,7 @@ JMVC.extend('graf', {
 		this.top = top;
 		
 		mod = {
-			adddot : function (x, y) {that.arr.push([~~x, ~~y]);},
+			adddot : function (x, y) {that.arr.push([x, y]);},
 			addarc : function (centerx, centery, radiusx, radiusy, radstep, radfrom, howmany, rad) {
 				var i = 0,
 					x,
@@ -22,7 +22,7 @@ JMVC.extend('graf', {
 					x = radiusx * Math.cos(radfrom + i * radstep);
 					y = radiusy * Math.sin(radfrom + i * radstep);
 					i += 1;
-					iarr.push([~~x, ~~y]);
+					iarr.push([x, y]);
 					howmany -= 1;
 				}
 				if (rad) {
@@ -36,8 +36,8 @@ JMVC.extend('graf', {
 					}
 				}
 				for (var i = 0, l = iarr.length; i<l; i+=1 ){
-					iarr[i][0] = ~~ ( iarr[i][0] + centerx);
-					iarr[i][1] = ~~ (iarr[i][1] + centery);
+					iarr[i][0] = iarr[i][0] + centerx;
+					iarr[i][1] = iarr[i][1] + centery;
 				}
 				that.arr = that.arr.concat(iarr);
 			},
@@ -51,8 +51,8 @@ JMVC.extend('graf', {
 				
 				for(null; percent <= 1; percent += step){
 					var point = [];
-					point[0] = ~~ ( x1*B1(percent) + x2*B2(percent) + x3*B3(percent) + x4*B4(percent) );
-					point[1] = ~~( y1*B1(percent) + y2*B2(percent) + y3*B3(percent) + y4*B4(percent) );
+					point[0] = x1*B1(percent) + x2*B2(percent) + x3*B3(percent) + x4*B4(percent);
+					point[1] = y1*B1(percent) + y2*B2(percent) + y3*B3(percent) + y4*B4(percent);
 					that.arr.push(point);
 				}
 			},
@@ -64,26 +64,28 @@ JMVC.extend('graf', {
 					i = 1;
 				that.arr.push([x1, y1]);
 				while (howmany) {
-					that.arr.push([~~(x1 + tx * i), ~~(y1 + ty * i)]);
+					that.arr.push([x1 + tx * i, y1 + ty * i]);
 					i += 1;
 					howmany -= 1;
 				}
-				that.arr.push([~~x2, ~~y2]);
+				that.arr.push([x2, y2]);
 			},
-			plot : function (node, positions, character) {
+			plot : function (node, positions, character, top, left) {
 				JMVC.debug(that.arr);
 				for(var letter in positions){
-					JMVC.graf.plotarr(node, positions[letter], letter, character);
+					JMVC.graf.plotarr(node, positions[letter], letter, character, top, left);
 				}
 			},
-			plotarr : function (node, positions, letter, character) {
+			plotarr : function (node, positions, letter, character, top, left, scale) {
 				var i = 0,
 					l = positions.length,
 					tmp;
+				if (typeof scale == 'undefined'){scale = 1;}
+				
 				for(null; i < l; i += 1){
 					tmp = JMVC.dom.create('span', {
 						'class' : 'point ' + letter,
-						'style' : JMVC.util.replaceall('top:%top%px;left:%left%px', {top : positions[i][0], left : positions[i][1]})
+						'style' : JMVC.util.replaceall('top:%top%px;left:%left%px', {top : ~~ (positions[i][0] + top)*scale, left : ~~(positions[i][1] + left)*scale})
 					}, character);
 					JMVC.dom.append(node, tmp);
 				}
@@ -102,16 +104,14 @@ JMVC.extend('graf', {
 				}
 			},
 			clone : function (inst) {
-				
 				that.arr = Array.prototype.slice.call(inst.arr, 0);
-				JMVC.debug(that.arr);
 			}
 		};
-		this.dot = function (x, y) {mod.adddot(this.top + x, this.left + y);};
-		this.arc = function (cx, cy, rx, ry, rstep, rfrom, hm, rad) {mod.addarc(this.top + cx, this.left + cy, rx, ry, rstep, rfrom, hm, rad);};
-		this.beizer = function (x1,y1, x2,y2, x3,y3, x4,y4, points) {mod.beizer(this.top+x1,this.left+y1, this.top+x2,this.left+y2, this.top+x3,this.left+y3, this.top+x4,this.left+y4, points);}
-		this.line = function (x1, y1, x2, y2, p) {mod.addline(this.top + x1, this.left + y1, this.top + x2, this.left + y2, p);};
-		this.plot = function (node) {mod.plotarr(node, this.arr, letter, this['char']);};
+		this.dot = function (x, y) {mod.adddot(x, y);};
+		this.arc = function (cx, cy, rx, ry, rstep, rfrom, hm, rad) {mod.addarc(cx, cy, rx, ry, rstep, rfrom, hm, rad);};
+		this.beizer = function (x1,y1, x2,y2, x3,y3, x4,y4, points) {mod.beizer(x1, y1, x2, y2, x3, y3, x4, y4, points);}
+		this.line = function (x1, y1, x2, y2, p) {mod.addline(x1, y1, x2, y2, p);};
+		this.plot = function (node ,scale) {mod.plotarr(node, this.arr, letter, this['char'], this.top, this.left, scale);};
 		this.rotate = function (rad) {mod.rotate(rad);};
 		this.clone = function(inst){mod.clone(inst);};
 	}
