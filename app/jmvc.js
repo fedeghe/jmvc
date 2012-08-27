@@ -75,7 +75,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				//
 				// get initial time
 				time_begin = new Date(),
-				undef = 'undefined';
+				undef = 'undefined',
+				noop = function(){};
 			//
 			//
 			//
@@ -882,13 +883,21 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	 * #  AJAX
 	 * #
 	 */
-	JMVC.io = (function () {
-		var getxhr, ajcall, post, get, getJson, getXML, xhrcount = 0;
+	
+	
+	
+	
+	
+	
+	
+	JMVC.io = {
+		xhrcount : 0,
 		//
-		getxhr = function () {
-			xhrcount++;
+		getxhr : function () {
+			JMVC.io.xhrcount++;
 			var xhr,
 				//IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'],
+						//'Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'
 				IEfuckIds = ['Msxml2.XMLHTTP', 'Msxml3.XMLHTTP', 'Microsoft.XMLHTTP'],
 				i = 0,
 				len = IEfuckIds.length;
@@ -904,9 +913,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			}
 			JMVC.gc(IEfuckIds,i,len);
 			return xhr;
-		};
-		ajcall = function (uri, options) {
-			var xhr = getxhr(),
+		},
+		ajcall : function (uri, options) {
+			var xhr = JMVC.io.getxhr(),
 				method = (options && options.method) || 'POST',
 				cback = (options && options.cback),
 				cb_opened = (options && options.opened) || function () {},
@@ -943,7 +952,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					//
 					//IE leak ?????
 					window.setTimeout(function(){
-						xhrcount--;
+						JMVC.io.xhrcount--;
 						JMVC.purge(xhr);
 					}, 50);
 					//
@@ -992,31 +1001,104 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			} catch (e3) {}
 			
 			return false;
-		};
+		},
 		//
-		post = function (uri, cback, sync, data, cache) {
-			return ajcall(uri, {cback : cback, method : 'POST', sync : sync, data : data, cache : cache});
-		};
+		post : function (uri, cback, sync, data, cache) {
+			return JMVC.io.ajcall(uri, {cback : cback, method : 'POST', sync : sync, data : data, cache : cache});
+		},
 		//
-		get = function (uri, cback, sync, data, cache) {
-			return ajcall(uri, {cback : cback, method : 'GET', sync : sync, data : data, cache : cache});
-		};
-		getJson = function (uri, cback, data) {
-			var r = ajcall(uri, {type : 'json', sync : false, cback : cback, data : data});
+		get : function (uri, cback, sync, data, cache) {
+			return JMVC.io.ajcall(uri, {cback : cback, method : 'GET', sync : sync, data : data, cache : cache});
+		},
+		getJson : function (uri, cback, data) {
+			var r = JMVC.io.ajcall(uri, {type : 'json', sync : false, cback : cback, data : data});
 			return (W.JSON && W.JSON.parse) ? JSON.parse(r) : JMVC.jeval('(' + r + ')');
-		};
-		getXML = function (uri, cback) {
-			return ajcall(uri, {method : 'GET', sync : false, type : 'xml', cback : cback || function(){}});
-		};
-		//
-		return {
-			count : xhrcount,
-			get : get,
-			post : post,
-			getXML : getXML,
-			getJson : getJson
-		};
-	})();
+		},
+		getXML : function (uri, cback) {
+			return JMVC.io.ajcall(uri, {method : 'GET', sync : false, type : 'xml', cback : cback || function(){}});
+		}
+	};
+	
+	
+	
+	
+	/*
+	
+	JMVC.io = {
+		count : 0,
+		/// requests pool 
+		x : [],
+		
+		//get : function(u, cback, p, sync) {
+		get : function(u, cback, sync, data, cache) {
+			JMVC.io.count ++;
+			var p = false;
+			if(typeof data == 'undefined')data = {};
+			if (!cache) {data.$C = JMVC.util.now(); }
+			data = JMVC.util.obj2qs(data).substr(1);
+			
+			var id = JMVC.io.x.length,
+				IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'],
+				// be synchronous, otherwise eval is late 
+				dosync = sync || false;
+			
+			try {
+				JMVC.io.x[id] = new XMLHttpRequest();
+			}catch (e) {
+				try{
+					for (var i = 0, len = IEfuckIds.length; i < len; i++) {
+						try{JMVC.io.x[id] = new ActiveXObject(IEfuckIds[i]); }catch(e) {} 
+					}
+				}catch (e) {}
+			}
+
+			JMVC.io.x[id].onreadystatechange=function() {
+				if( ( JMVC.io.x[id].readyState=="complete" || (JMVC.io.x[id].readyState==4 
+					//&& JMVC.io.x[id].status==200
+					)) && cback) {
+					cback(JMVC.io.x[id].responseText);
+				}
+				JMVC.io.count --;
+				return '';
+			};
+			if(p) {
+				try{
+					JMVC.io.x[id].open('POST',u,dosync);
+					JMVC.io.x[id].setRequestHeader('Content-type','application/x-www-form-urlencoded');
+					if (JMVC.io.x[id].overrideMimeType) {JMVC.io.x[id].setRequestHeader("Connection", "close"); }
+					JMVC.io.x[id].send(p);
+				}catch(e) {}
+			}else{
+				try{
+					JMVC.io.x[id].open('GET',u,dosync);
+					JMVC.io.x[id].send(null);
+				}catch(e) {}
+			}
+			try{
+				JMVC.io.count --;
+				return JMVC.io.x[id].responseText;
+			}catch(e){}
+		},
+		
+		getJson : function(u){
+			var r = JMVC.io.get(u);
+			return (W.JSON && W.JSON.parse) ? JSON.parse(r) : JMVC.jeval('(' + r + ')');
+		}
+		
+	};
+	*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//
 	//
 	//
@@ -1551,7 +1633,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	//	###  hooray ... RENDER
 	// polling ajax finishing
 	(function r(){
-		if(JMVC.io.count === 0 ){
+		if(JMVC.io.xhrcount === 0 ){
 			JMVC.render();
 		}else{
 			window.setTimeout(r, 5);
