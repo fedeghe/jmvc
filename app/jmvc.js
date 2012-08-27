@@ -74,7 +74,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				},
 				//
 				// get initial time
-				time_begin = new Date();
+				time_begin = new Date(),
+				undef = 'undefined';
 			//
 			//
 			//
@@ -85,7 +86,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			// for basic dummy inheritance
 			function jmvc_basic_inherit(Child, Parent) {Child.prototype = new Parent(); }
 			//for models
-			function jmvc_model_inherit(m){
+			function jmvc_model_inherit(m) {
 				m.prototype.get = Model.prototype.get;
 				m.prototype.set = Model.prototype.set;
 				m.prototype.del = Model.prototype.del;
@@ -115,6 +116,20 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					$jmvc[trg].init.call($jmvc);
 				}
 			}
+			
+			function namespace(str, obj, ctx){
+				var chr = '.',
+					els = str.split(chr);
+
+				if (typeof ctx === undef){ctx = $jmvc; }
+				if (typeof obj === undef){obj = {}; }
+				if (!ctx[els[0]]){
+					ctx[els[0]] = (els.length == 1)? obj : {};
+				}
+				els.length > 1 && namespace(els.slice(1).join(chr), obj, ctx[els[0]]);
+			}
+			
+			
 			//
 			// ensure ucfirst controller name
 			function jmvc_normalize(n) {
@@ -416,10 +431,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				for (null; i < l; i += 1) {
 					//
 					//JMVC.debug(typeof arguments[i]);
-					if (typeof arguments[i]==='string' && !$jmvc.extensions[arguments[i]]) {
+					if (typeof arguments[i] === 'string' && !$jmvc.extensions[arguments[i]]) {
 						curr += 1;
 						$jmvc.io.get(
-							ext_path[~~(arguments[i]=='test')] + arguments[i] + '.js',
+							ext_path[~~(arguments[i] == 'test')] + arguments[i] + '.js',
 							function (jres) { jmvc_eval(jres); }
 						);
 						$jmvc.extensions[arguments[i]] = arguments[i];
@@ -809,6 +824,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				render:	jmvc_render,
 				factory:	jmvc_factory_method,
 				extend : jmvc_extend,
+				namespace : namespace,
 				modules : Modules,
 				//
 				prototipize : prototipize,
@@ -950,7 +966,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 						try {
 							switch (type) {
 							case 'xml':
-								if (xhr.overrriveMimeType) {xhr.overridemimetype('text/xml'); }
+								if (xhr.overrideMimeType) {xhr.overridemimetype('text/xml'); }
 								break;
 							case 'json':
 								xhr.setRequestHeader("Accept", "application/json; charset=utf-8");
@@ -1049,7 +1065,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		replaceall : function (tpl, o, pre, post) {
 			var Op = pre || '%',
 				pO = post || '%',
-				reg = new RegExp(Op + '([A-z][0-9]*)' + pO, 'g'),
+				reg = new RegExp(Op + '([A-z0-9]*)' + pO, 'g'),
 				str;
 			return tpl.replace(reg, function (str, $1) {
 				return o[$1];
