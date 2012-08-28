@@ -117,19 +117,33 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					$jmvc[trg].init.call($jmvc);
 				}
 			}
-			
-			function namespace(str, obj, ctx){
+			//
+			//
+			function jmvc_makeNS(str, obj, ctx){
 				var chr = '.',
-					els = str.split(chr);
-
-				if (typeof ctx === undef){ctx = $jmvc; }
-				if (typeof obj === undef){obj = {}; }
+					els = str.split(chr),
+					u = 'undefined';
+				if (typeof ctx === u){ctx = W; }
+				if (typeof obj === u){obj = {}; }
 				if (!ctx[els[0]]){
 					ctx[els[0]] = (els.length == 1)? obj : {};
 				}
-				els.length > 1 && namespace(els.slice(1).join(chr), obj, ctx[els[0]]);
+				els.length > 1 && jmvc_makeNS(els.slice(1).join(chr), obj, ctx[els[0]]);
 			}
-			
+			function jmvc_checkNS(ns, ctx){
+				var els = ns.split('.'),
+					i = 0,
+					l = els.length;
+				ctx = (typeof ctx !== undef) ? ctx : W;
+				for(null;i<l; i++){
+					if(ctx[els[i]] ){
+						ctx = ctx[els[i]];
+					} else{
+						return false;
+					}
+				}
+				return true;
+			} 			
 			
 			//
 			// ensure ucfirst controller name
@@ -825,7 +839,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				render:	jmvc_render,
 				factory:	jmvc_factory_method,
 				extend : jmvc_extend,
-				namespace : namespace,
+				makeNS : jmvc_makeNS,
+				checkNS : jmvc_checkNS,
 				modules : Modules,
 				//
 				prototipize : prototipize,
