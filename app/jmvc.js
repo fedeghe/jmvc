@@ -1,7 +1,7 @@
 /* 
  JMVC Javascript module
-Version: 0.5
-Date : 15-06-2012
+Version: 0.7
+Date : 3-09-2012
 Copyright (c) 2008, Federico Ghedina <fedeghe@gmail.com>
 All rights reserved.
 
@@ -33,27 +33,31 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	// this is due !!! :D 
 	'use strict';
 	//
-	var JMVC = window.JMVC = (
+	//var JMVC = window.JMVC = (
+	var WD = W.document,
+	WDL = WD.location,
+	JMVC = W.JMVC = (
 		function () {
 			//	
 			// returning object, will be JMVC
-			var $jmvc,
-				WD = W.document,
-				WDL = WD.location,
+			var $JMVC,
+				//url separator
+				US = '/',
 				//
-				jmvc_dev_url = WDL.protocol + '//www.jmvc.dev',
-				jmvc_prod_url = WDL.protocol + '//www.jmvc.org',
-				//
+				DEV_URL = WDL.protocol + US + US + 'www.jmvc.dev',
+				PROD_URL = WDL.protocol + US + US + 'www.jmvc.org',
+				PATH = [US+'app' + US + 'extensions' + US, US + 'app' + US + 'test' + US],
 				// set here your crazy ones
-				url_allowed_extensions = ['html', 'htm', 'jsp', 'php', 'js', 'jmvc', 'j', 'mvc', 'fg'],
+				URL_ALLOWED_EXTENSIONS = ['html', 'htm', 'jsp', 'php', 'js', 'jmvc', 'j', 'mvc', 'fg'],
+				JMVC_VERSION = 1.6,
+				JMVC_REVIEW = 1,
+				JMVC_DEFAULT = {
+					controller : 'index',
+					action : 'index'
+				},
 				//
-				jmvc_version = 1.6,
-				jmvc_review = 1,
-				//
-				//
-				// literal to contain url mvc components
+				// dispather function
 				dispatched,
-				prototipize,
 				//
 				// MVC objects constructors
 				Controller,
@@ -62,30 +66,40 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				//
 				// for Observer
 				Event,
+				Promise,
+				jmvc_promise,
 				//
 				// modules to load always, none
 				Modules = [],
 				//
 				// hooks
 				hooks = {},
-				jmvc_default = {
-					controller : 'index',
-					action : 'index'
-				},
 				//
 				// get initial time
 				time_begin = new Date(),
 				undef = 'undefined',
-				noop = function(){};
+				noop = function () {};
 			//
 			//
 			//
 			//
 			// basic eval
-			function jmvc_eval(r) {window.eval(r); }
+			//function jmvc_eval(r) {window.eval(r); }
+			function jmvc_eval(r) {W.eval(r); }
 			//
 			// for basic dummy inheritance
-			function jmvc_basic_inherit(Child, Parent) {Child.prototype = new Parent(); }
+			//function jmvc_basic_inherit(Child, Parent) {Child.prototype = new Parent(); }
+			// true D.C.inheritance
+			function jmvc_basic_inherit(Child, Parent) {
+				function tmp(){};
+				tmp.prototype = Parent.prototype;
+				Child.prototype = new tmp();
+				Child.prototype.constructor = Child;
+				//
+				Child.superClass = Parent.prototype;
+				Child.baseConstructor = Parent;
+			}
+			
 			//for models
 			function jmvc_model_inherit(m) {
 				m.prototype.get = Model.prototype.get;
@@ -95,28 +109,38 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				m.prototype.reset = Model.prototype.reset;
 				m.prototype.constructor = Model.prototype.constructor;
 			}
+			function extend(trg, obj){
+				for (i in obj) {
+					if (typeof trg[i] === 'undefined') {
+						trg[i] = obj[i];
+					}
+				}
+			}
 			//
 			// for extending with modules
 			function jmvc_extend(t, obj) {
 				var i, trg = t.replace(/\//, '_');
 				//var trg = arguments[0];		
-				if (!$jmvc[trg]) {
-					$jmvc[trg] = {};
+				if (!$JMVC[trg]) {
+					$JMVC[trg] = {};
 				}
 				//var arr_func_obj = arguments[1] || {};
+				extend($JMVC[trg], obj);
+				/*
 				for (i in obj) {
-					// $jmvc won`t let You override; do NOT check with hasOwnProperty
+					// $JMVC won`t let You override; do NOT check with hasOwnProperty
 					// && typeof arr_func_obj[i] === 'function'
-					if (typeof $jmvc[trg][i] === 'undefined') {
-						$jmvc[trg][i] = obj[i];
+					if (typeof $JMVC[trg][i] === 'undefined') {
+						$JMVC[trg][i] = obj[i];
 					}
-				}
+				}*/
 				//maybe init, in case call it
-				if (typeof $jmvc[trg].init === 'function') {
-					//$jmvc[trg].init();
-					$jmvc[trg].init.call($jmvc);
+				if (typeof $JMVC[trg].init === 'function') {
+					//$JMVC[trg].init();
+					$JMVC[trg].init.call($JMVC);
 				}
 			}
+			
 			//
 			//
 			function jmvc_makeNS(str, obj, ctx){
@@ -135,16 +159,15 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					i = 0,
 					l = els.length;
 				ctx = (typeof ctx !== undef) ? ctx : W;
-				for(null;i<l; i++){
-					if(ctx[els[i]] ){
+				for (null; i < l; i += 1) {
+					if (ctx[els[i]]) {
 						ctx = ctx[els[i]];
-					} else{
+					} else {
 						return false;
 					}
 				}
 				return true;
-			} 			
-			
+			}
 			//
 			// ensure ucfirst controller name
 			function jmvc_normalize(n) {
@@ -166,33 +189,37 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			function jmvc_get(path, type, name, params) {
 				//
 				var ret = false, o;
-				if (type === 'view' && typeof $jmvc.views[name] === 'function') {
-					ret = $jmvc.views[name];
-				} else if (type === 'model' && typeof $jmvc.models[name] === 'function') {
-					o = new $jmvc.models[name]();
+				if (type === 'view' && typeof $JMVC.views[name] === 'function') {
+					ret = $JMVC.views[name];
+				} else if (type === 'model' && typeof $JMVC.models[name] === 'function') {
+					o = new $JMVC.models[name]();
 					o.vars = {};
 					ret = o;
 				} else {
-					$jmvc.io.get(
+					$JMVC.io.get(
 						path,
 						function cback(res) {
 							switch (type) {
 							case 'view':
-								$jmvc.views[name] = new View(res);
-								ret =  $jmvc.views[name];
+								$JMVC.views[name] = new View(res);
+								ret =  $JMVC.views[name];
 								break;
 							case 'controller':
-								res = res.replace(/^(\s*)\/\/(.*)[\n]/g, '/*$1*/\n');
+								//res = res.replace(/^(\s*)\/\/(.*)[\n]/g, '/*$1*/')
+								//res = res.replace(/(\/\*.*\*\/)/gm, '');
+								//res = res.replace(/(\/\/.*)/g, '');
+									// WARNING : removes only inlines;
+								jmvc_debug(res);
 								jmvc_eval(res);
-								jmvc_basic_inherit($jmvc[type + 's'][name], Controller);
+								jmvc_basic_inherit($JMVC[type + 's'][name], Controller);
 								break;
 							case 'model':
 								jmvc_eval(res);
-								//jmvc_basic_inherit($jmvc[type + 's'][name], Model);
-								jmvc_model_inherit($jmvc[type + 's'][name]);
-								o = new $jmvc.models[name]();
+								//jmvc_basic_inherit($JMVC[type + 's'][name], Model);
+								jmvc_model_inherit($JMVC[type + 's'][name]);
+								o = new $JMVC.models[name]();
 								if (params) {
-									$jmvc.models[name].apply(o, params);
+									$JMVC.models[name].apply(o, params);
 								}
 								o.vars = {};
 								ret = o;
@@ -208,12 +235,14 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			// type can be only 'view' or 'model'
 			function jmvc_factory_method(type, name, params) {
 				// using namespace ?
-				var pieces = name.split('/'), path = false, path_absolute =  $jmvc.vars.baseurl + '/app/' + type + 's/';
+				var pieces = name.split('/'),
+					path = false,
+					path_absolute =  $JMVC.vars.baseurl + US + 'app' + US + type + 's/';
 				if (pieces.length > 1) {
 					name = pieces.pop();
-					path = pieces.join('/');
+					path = pieces.join(US);
 				}
-				path_absolute += (path ? path + '/' : "") + name;
+				path_absolute += (path ? path + US : "") + name;
 				//
 				switch (type) {
 				case 'view':
@@ -243,46 +272,48 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				//
 				var ctrl, i;
 				// "import" the controller (eval ajax code)
-				$jmvc.factory('controller', $jmvc.c);
+				$JMVC.factory('controller', $JMVC.c);
 				// if the constructor has been evalued correctly
-				if ($jmvc.controllers[$jmvc.c]) {
+				if ($JMVC.controllers[$JMVC.c]) {
 					// grant basic ineritance from parent Controller
-					jmvc_basic_inherit($jmvc.controllers[$jmvc.c], Controller);
+					jmvc_basic_inherit($JMVC.controllers[$JMVC.c], Controller);
 					// make an instance
-					ctrl = new $jmvc.controllers[$jmvc.c]();
+					ctrl = new $JMVC.controllers[$JMVC.c]();
 					// store it
-					$jmvc.controllers[$jmvc.c] = ctrl;
+					$JMVC.controllers[$JMVC.c] = ctrl;
 					// manage routes
 					if (ctrl.jmvc_routes) {
-						$jmvc.a = ctrl.jmvc_routes[$jmvc.a] || $jmvc.a;
+						$JMVC.a = ctrl.jmvc_routes[$JMVC.a] || $JMVC.a;
 					}
 					// parameters are set to controller
-					for (i in $jmvc.p) {
-						if ($jmvc.p.hasOwnProperty(i)) {
-							ctrl.set(i, decodeURI($jmvc.p[i]));
+					for (i in $JMVC.p) {
+						if ($JMVC.p.hasOwnProperty(i)) {
+							ctrl.set(i, decodeURI($JMVC.p[i]));
 						}
 					}
 					// call action
-					if (ctrl[$jmvc.a] && typeof ctrl[$jmvc.a] === 'function') {
-						ctrl[$jmvc.a]();
+					if (ctrl[$JMVC.a] && typeof ctrl[$JMVC.a] === 'function') {
+						ctrl[$JMVC.a]();
 					} else {
-						if ($jmvc.a.toLowerCase() !== jmvc_default.action) {
-							WDL.href = '/404/msg/act/' + $jmvc.a;
+						if ($JMVC.a.toLowerCase() !== JMVC_DEFAULT.action) {
+							//WDL.href = US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a;
+							WDL.href = US + ['404', 'msg', 'act', $JMVC.a].join(US);// '404' + US + 'msg' + US + 'act' + US + $JMVC.a;
 						}
 					}
 				} else {
-					if ($jmvc.c.toLowerCase() !== jmvc_default.controller) {
-						WDL.href = '/404/msg/cnt/' + $jmvc.c;
+					if ($JMVC.c.toLowerCase() !== JMVC_DEFAULT.controller) {
+						//WDL.href = '/404/msg/cnt/' + $JMVC.c;
+						WDL.href = US + ['404', 'msg' , 'cnt', $JMVC.c].join(US);
 					}
 				}
 				if(cback && typeof cback == 'function'){
-					cback.call($jmvc);
+					cback.call($JMVC);
 				}
 			}
 			//
 			//
 			//
-			// this is the only external snippet embedded in $jmvc
+			// this is the only external snippet embedded in $JMVC
 			function jmvc_tpl(cont) {
 				// MIT licence
 				// based on the work of John Resig
@@ -365,18 +396,18 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 							}
 						}
 						// if not loaded give an alert
-						if (!$jmvc.views[viewname]) {
-							// here the view is requested but not explicitly loaded with the $jmvc.getView method.
+						if (!$JMVC.views[viewname]) {
+							// here the view is requested but not explicitly loaded with the $JMVC.getView method.
 							// You should use that method, and you'll do for sure if You mean to use View's variable
 							// but if You just load a view as a simple chunk with {{myview}} placeholder inside another one
-							// then $jmvc will load it automatically (take care to not loop, parsing stops after 100 replacements)
+							// then $JMVC will load it automatically (take care to not loop, parsing stops after 100 replacements)
 							/*
 								alert('`'+viewname+'` view not loaded.\nUse Factory in the controller to get it. \n\njmvc will'+
 									' load it for you but variables are\n lost and will not be replaced.');
 							*/
-							$jmvc.factory('view', viewname);
+							$JMVC.factory('view', viewname);
 						}
-						myview = $jmvc.views[viewname];
+						myview = $JMVC.views[viewname];
 						//
 						// in case there are some vars in placeholder
 						// register will hold values obtained above
@@ -408,10 +439,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					}
 				}
 				//
-				// now $jmvc.vars parse
-				for (j in $jmvc.vars) {
-					if ($jmvc.vars.hasOwnProperty(j)) {
-						cont = cont.replace(new RegExp("\\$" + j + "\\$", 'g'), $jmvc.vars[j]);
+				// now $JMVC.vars parse
+				for (j in $JMVC.vars) {
+					if ($JMVC.vars.hasOwnProperty(j)) {
+						cont = cont.replace(new RegExp("\\$" + j + "\\$", 'g'), $JMVC.vars[j]);
 					}
 				}
 				//
@@ -428,31 +459,36 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			//
 			//
 			//
-			// setter unsetter $jmvc vars
+			// setter unsetter $JMVC vars
 			function jmvc_set(name, content) {
-				$jmvc.vars[name] = content;
+				$JMVC.vars[name] = content;
 			}
 			function jmvc_del(name) {
-				if ($jmvc.vars[name]) {
-					$jmvc.vars[name] = null;
+				if ($JMVC.vars[name]) {
+					$JMVC.vars[name] = null;
 				}
+			}
+			//lambda function2context binding
+			function jmvc_bind(func, ctx){
+				return function(){
+					return func.apply(ctx, arguments);
+				};
 			}
 			// require, 'test' is an exception, if passed then the path will be /app/test
 			function jmvc_require() {
 				var i = 0,
 					l = arguments.length,
-					curr = -1,
-					ext_path = ['/app/extensions/', '/app/test/'];
+					curr = -1;
 				for (null; i < l; i += 1) {
 					//
 					//JMVC.debug(typeof arguments[i]);
-					if (typeof arguments[i] === 'string' && !$jmvc.extensions[arguments[i]]) {
+					if (typeof arguments[i] === 'string' && !$JMVC.extensions[arguments[i]]) {
 						curr += 1;
-						$jmvc.io.get(
-							ext_path[~~(arguments[i] == 'test')] + arguments[i] + '.js',
+						$JMVC.io.get(
+							PATH[~~(arguments[i] == 'test')] + arguments[i] + '.js',
 							function (jres) { jmvc_eval(jres); }
 						);
-						$jmvc.extensions[arguments[i]] = arguments[i];
+						$JMVC.extensions[arguments[i]] = arguments[i];
 						
 					}
 					
@@ -467,7 +503,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				for (f in obj) {
 					if (obj.hasOwnProperty(f)) {
 						try {
-							if ($jmvc.util.inArray(allowed, f) > 0 || force) {
+							if ($JMVC.util.inArray(allowed, f) > 0 || force) {
 								hooks[f] = obj[f];
 							} else {
 								throw {
@@ -492,10 +528,17 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					}
 				}
 				a = o.childNodes;
-				if(a){
-					for(i=0, l=a.length; i<l; i++){jmvc_purge(o.childNodes[i]);}
+				if (a) {
+					for (i = 0, l = a.length; i < l; i += 1){
+						jmvc_purge(o.childNodes[i]);
+					}
 				}
 			}
+			function jmvc_prototipize(el, obj){
+				for (var p in obj){
+					el.prototype[p] = obj[p];
+				}
+			};
 			//
 			// ninja
 			function jmvc_debug() {
@@ -509,14 +552,14 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					}
 				}
 			}
-
-			
-			
+			//
+			//
+			//
 			Event = function (sender) {
 				this._sender = sender;
 				this._listeners = [];
 			};
-
+			//
 			Event.prototype = {
 				attach : function (listener) {
 					this._listeners.push(listener);
@@ -527,7 +570,72 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					}
 				}
 			};
-			
+			//
+			Promise = function (){
+				this._cbacks = [];
+				this._len = 0;
+				this._completed = false;
+				this.res = false;
+				this.err = false;
+				this._reset = function(){
+					this._len = 0;
+					this._cbacks = [];
+				}
+			};
+			Promise.prototype.done = function(res, err){
+				var i = 0;
+				this._completed = true;
+				this.res = res;
+				this.err = err;
+				for(null; i < this._len; i += 1){
+					this._cbacks[i](res, err);
+				}
+				this._reset();
+			};
+			Promise.prototype.then = function(cback, ctx){
+				var func = jmvc_bind(cback,ctx);
+				if(this._completed){
+					func(this.res, this.err);
+				}else{
+					this._cbacks[this._len] = func;
+					this._len += 1;
+				}
+				return this;
+			};
+			// ty https://github.com/stackp/promisejs
+			jmvc_promise = {
+				create : Promise,
+				join : function(){},
+				chain : function(funcs, result, error){
+					var p = new Promise;
+					if (funcs.length === 0) {
+						p.done(result, error);
+					} else {
+						funcs[0](result, error).then(function(res, err) {
+							funcs.splice(0, 1);
+							jmvc_promise.chain(funcs, res, err).then(function(r, e) {
+								p.done(r, e);
+							});
+						});
+					}
+					return p;
+				}
+			};
+			/*
+function a1(){
+	var p = new JMVC.promise.create; 
+	var res = 0
+	for(var i = 0; i<10E3; i++){
+		res += i*2;
+	}
+	console.debug('inner '+ res);
+	p.done(res);
+	return p;
+}
+
+a1().then(function(r){console.debug('done '+ r);} );
+			*/
+		   
 			//
 			//
 			//
@@ -596,7 +704,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				// original content
 				this.ocontent = cnt || '';
 				this.content = cnt || '';
-				this.vars = {'baseurl' : $jmvc.vars.baseurl};
+				this.vars = {'baseurl' : $JMVC.vars.baseurl};
 			};
 			//
 			//
@@ -614,9 +722,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					}
 				}
 				// now jmvc parse vars
-				for (j in $jmvc.vars) {
-					if ($jmvc.vars.hasOwnProperty(j)) {
-						this.content = this.content.replace('$' + j + '$', $jmvc.vars[j]);
+				for (j in $JMVC.vars) {
+					if ($JMVC.vars.hasOwnProperty(j)) {
+						this.content = this.content.replace('$' + j + '$', $JMVC.vars[j]);
 					}
 				}
 				// allow chain
@@ -633,7 +741,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			};
 			//
 			View.prototype.set_from_url = function (vname, alt) {
-				this.set(String(vname), $jmvc.controllers[$jmvc.c].get(vname) || (alt || 'unset'));
+				this.set(String(vname), $JMVC.controllers[$JMVC.c].get(vname) || (alt || 'unset'));
 				// allow chain
 				return this;
 			};
@@ -641,7 +749,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			// render the view parsing for variable&view placeholders
 			View.prototype.render = function (pars) {
 				//call before render
-				$jmvc.events.startrender();
+				$JMVC.events.startrender();
 				//
 				var arg = pars || {},
 					// maybe a callback is passed
@@ -664,7 +772,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					resvar,
 					// a loop temporary variable
 					t;
-				// parse for other views or $jmvc.vars
+				// parse for other views or $JMVC.vars
 				cont = jmvc_parse(cont);
 				//
 				// look for / substitute  vars
@@ -682,15 +790,15 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				that.content = cont;
 				//
 				// books rendering in body or elsewhere, on load
-				$jmvc.events.bind(W, 'load', function () {
+				$JMVC.events.bind(W, 'load', function () {
 					//
 					var trg = (typeof target === 'string' && WD.getElementById(target)) ? WD.getElementById(target) : WD.body;
-					$jmvc.dom.html(trg, that.content);
-					$jmvc.vars.rendertime = (new Date()).getTime() - time_begin.getTime();
+					$JMVC.dom.html(trg, that.content);
+					$JMVC.vars.rendertime = (new Date()).getTime() - time_begin.getTime();
 					// may be a callback? 
 					if (cback) {cback.apply(this, !!argz ? argz : []); }
 					//trigger end of render
-					$jmvc.events.endrender();
+					$JMVC.events.endrender();
 				});
 				// allow chain
 				return this;
@@ -724,11 +832,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			
 			
 			
-			prototipize = function(el, obj){
-				for (var p in obj){
-					el.prototype[p] = obj[p];
-				}
-			};
+			
 			
 			//
 			//
@@ -738,9 +842,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			//			
 			// Dispatch url getting controller, action and parameters
 			//			
-			dispatched = (function dispatch() {
+			dispatched = (function () {
 				var	mid = {
-						url : WDL.protocol + '//' + WDL.hostname + WDL.pathname + WDL.search,
+						url : WDL.protocol + US + US + WDL.hostname + WDL.pathname + WDL.search,
 						proto : WDL.protocol,
 						host : WDL.hostname,
 						path : WDL.pathname,
@@ -749,7 +853,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					//url = mid,
 					//
 					// adjust extensions
-					els = mid.path.replace(new RegExp('\\.' + url_allowed_extensions.join('|\\.'), 'gm'), "").substr(1).split('/'),
+					els = mid.path.replace(new RegExp('\\.' + URL_ALLOWED_EXTENSIONS.join('|\\.'), 'gm'), "").substr(1).split(US),
 					controller = false,
 					action = false,
 					params = {},
@@ -765,8 +869,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				if (WDL.hostname === 'localhost') {
 					els.shift();
 				}
-				controller = els.shift() || jmvc_default.controller;
-				action = els.shift() || jmvc_default.action;
+				controller = els.shift() || JMVC_DEFAULT.controller;
+				action = els.shift() || JMVC_DEFAULT.action;
 				len = els.length;
 				//
 				// now if els has non zero size, these are extra path params
@@ -791,7 +895,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					controller : controller.replace(/\//g, ""),
 					action : action.replace(/\//g, ""),
 					params : params,
-					baseurl : WDL.protocol + '//' + WDL.hostname
+					baseurl : WDL.protocol + US + US + WDL.hostname
 				};
 				
 				ret.controller = jmvc_normalize(ret.controller);
@@ -805,79 +909,82 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			//			
 			// returnning literal
 			//			
-			$jmvc = {
-				c : dispatched.controller || jmvc_default.controller,
-				a : dispatched.action || jmvc_default.action,
+			$JMVC = {
+				W: W,
+				WD: WD,
+				c : dispatched.controller || JMVC_DEFAULT.controller,
+				a : dispatched.action || JMVC_DEFAULT.action,
 				p : dispatched.params || {},
 				controllers : {},
 				models : {},
 				views : {},
 				vars : {
 					baseurl:	dispatched.baseurl,
-					extensions : dispatched.baseurl+'/app/extensions',
-					devurl :	jmvc_dev_url,
-					produrl :	jmvc_prod_url,
-					version : jmvc_version,
-					review :  jmvc_review,
+					extensions : dispatched.baseurl + PATH[0], //'/app/extensions',
+					devurl :	DEV_URL,
+					produrl : PROD_URL,
+					version : JMVC_VERSION,
+					review :  JMVC_REVIEW,
 					last_modified : WD.lastModified,
 					rendertime : 0,
-					retina : window.devicePixelRatio > 1
+					retina : W.devicePixelRatio > 1
 				},
-				set :	jmvc_set,
-				del : jmvc_del,
-				require : jmvc_require,
 				extensions : {},
 				extensions_params : {},
-				//garbage collector
-				gc : function () {var i = 0; l = arguments.length; for (null; i < l; i += 1){arguments[i] = null; }},
-				purge : jmvc_purge,
-				//gco : function (o) {for (var p in o){if (o.hasOwnProperty(p)){o.p = null;}} o = null; },
 				//
-				hook : jmvc_hook,
-				checkhook : jmvc_check_hook,
-				//
-				render:	jmvc_render,
-				factory:	jmvc_factory_method,
-				extend : jmvc_extend,
-				makeNS : jmvc_makeNS,
-				checkNS : jmvc_checkNS,
 				modules : Modules,
-				//
-				prototipize : prototipize,
 				Event : Event,
+				promise : jmvc_promise,
 				//
-				parse : jmvc_parse,
-				//
-				jeval : jmvc_eval,
-				//
-				debug : jmvc_debug,
-				//
+				gc : function () {var i = 0; l = arguments.length; for (null; i < l; i += 1){arguments[i] = null; }},
 				getView : function (n) {return jmvc_factory_method('view', n); },
 				getModel : function (n, params) {return jmvc_factory_method('model', n, params); },
 				//getController :	function(n) {return jmvc_factory_method('controller', n); }
 				//
 				getNum : function(str){return parseInt(str,10);},
-				getFloat : function(str){return parseFloat(str,10);}
+				getFloat : function(str){return parseFloat(str,10);},
+				//
+				//
+				//
+				checkhook : jmvc_check_hook,
+				bind : jmvc_bind,
+				debug : jmvc_debug,
+				del : jmvc_del,
+				extend : jmvc_extend,
+				factory:	jmvc_factory_method,
+				hook : jmvc_hook,
+				jeval : jmvc_eval,
+				namespace :{make : jmvc_makeNS, check : jmvc_checkNS},
+				prototipize : jmvc_prototipize,
+				purge : jmvc_purge,
+				//gco : function (o) {for (var p in o){if (o.hasOwnProperty(p)){o.p = null;}} o = null; },
+				//
+				//
+				//
+				parse : jmvc_parse,
+				render:	jmvc_render,
+				require : jmvc_require,
+				set :	jmvc_set
 			};
 			//
 			//
-			// ok... spent some bytes to make it AMDfriendly...but is not the solution :D
-			//if (typeof define === "function" && define.amd && define.amd.JMVC) {define("JMVC", [], function () {return $jmvc; });}
+			// ok... spent some bytes to make it AMDfriendly
+			//if (typeof define === "function" && define.amd && define.amd.JMVC) {define("JMVC", [], function () {return $JMVC; });}
 			//
 			
 			//
-			// here we are $jmvc is DONE
+			// here we are $JMVC is DONE
 			//
 			//clean up
 			
-			$jmvc.gc(jmvc_dev_url,jmvc_prod_url,url_allowed_extensions,
-					jmvc_version,jmvc_review,dispatched,prototipize,
+			$JMVC.gc(DEV_URL, PROD_URL,URL_ALLOWED_EXTENSIONS,
+					JMVC_VERSION,JMVC_REVIEW,dispatched,jmvc_prototipize,
 					Controller,Model,View,Event,Modules,hooks,
-					jmvc_default,time_begin);
+					JMVC_DEFAULT,time_begin);
 			
 			//
 			//
-			return $jmvc;
+			return $JMVC;
 		}
 	)(),i,l;
 	//console.debug('JMVC');
@@ -966,7 +1073,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					ret = xhr[targetType];
 					//
 					//IE leak ?????
-					window.setTimeout(function(){
+					//window
+					W.setTimeout(function(){
 						JMVC.io.xhrcount--;
 						JMVC.purge(xhr);
 					}, 50);
@@ -1037,81 +1145,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	
 	
-	/*
-	
-	JMVC.io = {
-		count : 0,
-		/// requests pool 
-		x : [],
-		
-		//get : function(u, cback, p, sync) {
-		get : function(u, cback, sync, data, cache) {
-			JMVC.io.count ++;
-			var p = false;
-			if(typeof data == 'undefined')data = {};
-			if (!cache) {data.$C = JMVC.util.now(); }
-			data = JMVC.util.obj2qs(data).substr(1);
-			
-			var id = JMVC.io.x.length,
-				IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'],
-				// be synchronous, otherwise eval is late 
-				dosync = sync || false;
-			
-			try {
-				JMVC.io.x[id] = new XMLHttpRequest();
-			}catch (e) {
-				try{
-					for (var i = 0, len = IEfuckIds.length; i < len; i++) {
-						try{JMVC.io.x[id] = new ActiveXObject(IEfuckIds[i]); }catch(e) {} 
-					}
-				}catch (e) {}
-			}
-
-			JMVC.io.x[id].onreadystatechange=function() {
-				if( ( JMVC.io.x[id].readyState=="complete" || (JMVC.io.x[id].readyState==4 
-					//&& JMVC.io.x[id].status==200
-					)) && cback) {
-					cback(JMVC.io.x[id].responseText);
-				}
-				JMVC.io.count --;
-				return '';
-			};
-			if(p) {
-				try{
-					JMVC.io.x[id].open('POST',u,dosync);
-					JMVC.io.x[id].setRequestHeader('Content-type','application/x-www-form-urlencoded');
-					if (JMVC.io.x[id].overrideMimeType) {JMVC.io.x[id].setRequestHeader("Connection", "close"); }
-					JMVC.io.x[id].send(p);
-				}catch(e) {}
-			}else{
-				try{
-					JMVC.io.x[id].open('GET',u,dosync);
-					JMVC.io.x[id].send(null);
-				}catch(e) {}
-			}
-			try{
-				JMVC.io.count --;
-				return JMVC.io.x[id].responseText;
-			}catch(e){}
-		},
-		
-		getJson : function(u){
-			var r = JMVC.io.get(u);
-			return (W.JSON && W.JSON.parse) ? JSON.parse(r) : JMVC.jeval('(' + r + ')');
-		}
-		
-	};
-	*/
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	//
@@ -1125,9 +1158,19 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	 * #
 	 */
 	JMVC.util = {
-		denyframe : function () {if (window.top !== window.self) {window.top.location = JMVC.vars.baseurl; }},
+		//denyframe : function () {if (window.top !== window.self) {window.top.location = JMVC.vars.baseurl; }},
+		denyframe : function () {if (W.top !== W.self) {W.top.location = JMVC.vars.baseurl; }},
 		isSet : function (e) {return typeof e !== 'undefined'; },
 		defined : function (e) {return typeof e !== 'undefined'; },
+		coll2array : function(coll) {	
+			var i = 0,
+				a = [],
+				len = coll.length;
+			for (null; i < len; i++) {
+				a[i] = coll[i];
+			}
+			return a;
+		},
 		inArray : function (arr, myvar) {
 			var res = -1,
 				i = 0,
@@ -1159,10 +1202,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			return val;
 		},
 		rand : function (min, max) {return min +  ~~(Math.random() * (max - min + 1));},
-		replaceall : function (tpl, o, pre, post) {
-			var Op = pre || '%',
-				pO = post || '%',
-				reg = new RegExp(Op + '([A-z0-9]*)' + pO, 'g'),
+		replaceall : function (tpl, o, delim) {
+			var del = delim || '%',
+				reg = new RegExp(del + '([A-z0-9-_]*)' + del, 'g'),
 				str;
 			return tpl.replace(reg, function (str, $1) {
 				return o[$1];
@@ -1186,7 +1228,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			var ret = '', si;
 			for (i in o) {
 				if (o.hasOwnProperty(i)) {
-					ret += String((ret ? '&' : '?') + i + '=' + encodeURI(o[i]));
+					ret += String((ret ? '&' : '?') + i + '=' + encodeURIComponent(o[i]));
 				}
 			}
 			return ret;
@@ -1208,18 +1250,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			var n = document.location.href;
 			document.location.href = n;//do not cause wierd alert
 		},
-		now : function () {return (new Date()).getTime(); },
-		json2css : function (json) {
-			var out = '',
-				i;
-			for (i in json) {
-				if (json.hasOwnProperty(i)) {
-					out += i + '{' + json[i] + '}' + "\n";
-				}
-			}
-			return out;
-		},
-		array_clone : function (arr) {return arr.slice(0); },
+		now : function () {return +new Date; },
+		array_clone : function (arr) {return arr.concat(); },
 		range : function(start, end){
 			var ret = [];
 			while (end - start + 1) {
@@ -1476,14 +1508,17 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			}
 		},
 		delay : function (f, t) {
-			window.setTimeout(f, t);
+			//window.setTimeout(f, t);
+			W.setTimeout(f, t);
 		},
 		loadify : function (ms) {
 			JMVC.events.start(function () {
 				//otherwise some browser hangs (opera)
 				JMVC.events.delay(function(){
-					document.body.style.opacity = 0;
-					document.body.style.filter = 'alpha(opacity=0)';
+					//document.body.style.opacity = 0;
+					//document.body.style.filter = 'alpha(opacity=0)';
+					WD.body.style.opacity = 0;
+					WD.body.style.filter = 'alpha(opacity=0)';
 				}, 0);
 			});
 			JMVC.events.end(function () {
@@ -1491,9 +1526,12 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					step = 0.05,
 					top = 1;
 				while (i <= 1) {
-					window.setTimeout(function (j) {
-						document.body.style.opacity = j;
-						document.body.style.filter = 'alpha(opacity=' + (j*100) + ')';
+					//window.setTimeout(function (j) {
+					W.setTimeout(function (j) {
+						//document.body.style.opacity = j;
+						//document.body.style.filter = 'alpha(opacity=' + (j*100) + ')';
+						WD.body.style.opacity = j;
+						WD.body.style.filter = 'alpha(opacity=' + (j*100) + ')';
 					}, ms * i, i + step);
 					i += step;
 				}
@@ -1651,7 +1689,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if(JMVC.io.xhrcount === 0 ){
 			JMVC.render();
 		}else{
-			window.setTimeout(r, 5);
+			JMVC.debug('poll');
+			W.setTimeout(r, 5);
 		}
 	})();
-})(this);
+})(this.window || global);//
