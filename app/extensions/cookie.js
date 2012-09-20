@@ -1,8 +1,8 @@
 JMVC.extend('cookie', {	
-	cookie_nocookiesaround : false,
+	'cookie_nocookiesaround' : false,
 	//
 	//
-	set : function( name, value, expires, path, domain, secure ){
+	'set' : function( name, value, expires, path, domain, secure ){
 		this.cookie_nocookiesaround = false;
 		var today = new Date(),
 			expires_date = new Date(today.getTime() + (expires) );	
@@ -19,7 +19,7 @@ JMVC.extend('cookie', {
 		return true;
 	},
 	//
-	get : function (check_name) {
+	'get' : function (check_name) {
 		var a_all_cookies = document.cookie.split(';'),
 			a_temp_cookie = '',
 			cookie_name = '',
@@ -43,7 +43,7 @@ JMVC.extend('cookie', {
 		return b_cookie_found;
 	},
 	//
-	del : function( name, path, domain ) {
+	'del' : function( name, path, domain ) {
 		var ret = false;
 		if (this.get(name)) {
 			document.cookie = name + "=" + (path ? ";path=" + path : "") + (domain ? ";domain=" + domain : "") + ";expires=Thu, 01-Jan-1970 00:00:01 GMT";
@@ -52,7 +52,7 @@ JMVC.extend('cookie', {
 		return ret;
 	},
 	//
-	delall : function () {
+	'delall' : function () {
 		var thecookie = document.cookie.split(";"),
 			i = 0,
 			l = thecookie.length,
@@ -65,7 +65,7 @@ JMVC.extend('cookie', {
 		return true;
 	},
 	//
-	getall : function(){
+	'getall' : function(){
 		if(document.cookie === ''){
 			return [];
 		}
