@@ -205,7 +205,7 @@
 				}
 
 				// instance new view content or eval a model or controller
-				function jmvc_get(path, type, name, params) {
+				function jmvc_xhrget(path, type, name, params) {
 					//
 					var ret = false, o;
 					if (type === 'view' && typeof $JMVC.views[name] === 'function') {
@@ -278,7 +278,7 @@
 
 					if (!type) {return false; }
 					// ajax get script content and return it
-					return jmvc_get(path_absolute, type, name, params);
+					return jmvc_xhrget(path_absolute, type, name, params);
 				}
 
 				// render function
@@ -463,9 +463,12 @@
 					return cont;
 				}
 
-				// setter unsetter $JMVC vars
+				// setter getter unsetter $JMVC vars
 				function jmvc_set(name, content) {
 					$JMVC.vars[name] = content;
+				}
+				function jmvc_get(name) {
+					return $JMVC.vars[name];
 				}
 				function jmvc_del(name) {
 					if ($JMVC.vars[name]) {
@@ -923,6 +926,7 @@
 
 					'getNum' : function (str) {return parseInt(str, 10); },
 					'getFloat' : function (str) {return parseFloat(str, 10); },
+					'noop' : function(){return noop;},
 
 					'checkhook' : jmvc_check_hook,
 					'bind' : jmvc_bind,
@@ -930,6 +934,7 @@
 					'del' : jmvc_del,
 					'extend' : jmvc_extend,
 					'factory':	jmvc_factory_method,
+					'inherit' : jmvc_basic_inherit,
 					'hook' : jmvc_hook,
 					'jeval' : jmvc_eval,
 					'namespace' :{'make' : jmvc_makeNS, 'check' : jmvc_checkNS},
@@ -940,7 +945,8 @@
 					'parse' : jmvc_parse,
 					'render':	jmvc_render,
 					'require' : jmvc_require,
-					'set' :	jmvc_set
+					'set' :	jmvc_set,
+					'get' : jmvc_get
 				};
 
 				//
@@ -1524,6 +1530,21 @@
 			}
 			return targetElement;
 		},
+		'getCoord' : function (el, e) {
+			var x,
+				y;
+			if (e.pageX || e.pageY) { 
+			  x = e.pageX;
+			  y = e.pageY;
+			}
+			else { 
+			  x = e.clientX + JMVC.WD.body.scrollLeft + JMVC.WD.documentElement.scrollLeft; 
+			  y = e.clientY + JMVC.WD.body.scrollTop + JMVC.WD.documentElement.scrollTop; 
+			} 
+			x -= el.offsetLeft;
+			y -= el.offsetTop;
+			return [x, y];
+		},
 		'start' : function (f) {
 			this.Estart.push(f);
 		},
@@ -1683,6 +1704,11 @@
 			} else {
 				this.element.appendChild(newmeta);
 			}
+		},
+		//
+		'link' : function (rel, attrs) {
+			attrs.rel = rel;
+			JMVC.dom.add(JMVC.head.element, 'link', attrs);
 		},
 		//
 		element : WD.getElementsByTagName('head').item(0)
