@@ -1258,6 +1258,18 @@
 				}
 			}
 			return true;
+		},
+		'str2code' : function (str, pwd) {
+			var out = [],
+				i = 0,
+				l = str.length;
+			for (null; i < l; i += 1) {
+				out.push(str.charCodeAt(i));
+			}
+			return out;
+		},
+		'code2str' : function (code, pwd) {
+			return String.fromCharCode.apply(null, code);
 		}
 	};
 
@@ -1320,7 +1332,11 @@
 				}
 			}
 			if (typeof inner !== 'undefined') {
-				this.html(node, inner);
+				if(inner.nodeType == 1){
+					this.append(node, inner);
+				}else{
+					this.html(node, inner);
+				}
 			}
 			return node;
 		},
@@ -1517,6 +1533,7 @@
 			return this.bind(W, 'load', func);
 		},
 		'preventDefault' : function (e) {
+			e = e || W.event; 
 			if (e.preventDefault) {
 				e.preventDefault();
 			} else {
