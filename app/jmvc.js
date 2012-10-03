@@ -1,5 +1,5 @@
 /**
- * JMVC Javascript framework
+ * JMVC : Pure Javascript MVC framework
  * 
  * @version: 0.7
  * @date : 3-09-2012
@@ -36,29 +36,46 @@
 
 	// this is due !!! :D 
 	'use strict';
-
+	//
+	// window.document & window.document.location references
+	// usable through the whole script
 	var WD = W.document,
-
 		WDL = WD.location,
 
-		// export
+		/**
+		 * This is the main element that will contain
+		 * everything related to jmvc and is global
+		 */
 		JMVC = W.JMVC = (
-
+			
 			function () {
 
-				// returning object, will be JMVC
+				// returning object created in that function, will be JMVC
 				var $JMVC,
 
 					//url separator
 					US = '/',
 
+					/**
+					 * in some cases is useful to automatically distinguish between a
+					 * developing url and
+					 * production url
+					 * will be returned in a var container accessible from JMVC var
+					 */
 					DEV_URL = WDL.protocol + US + US + 'www.jmvc.dev',
-
 					PROD_URL = WDL.protocol + US + US + 'www.jmvc.org',
 
-					PATH = [US + 'app' + US + 'extensions' + US, US + 'app' + US + 'test' + US],
+					/**
+					 * two paths for
+					 * > extensions, used as basepath by JMVC.require
+					 * > test
+					 */
+					PATH = {
+						'ext'  : US + 'app' + US + 'extensions' + US,
+						'test' : US + 'app' + US + 'test' + US
+					},
 
-					// set here your crazy ones
+					// set here allowed extensions
 					URL_ALLOWED_EXTENSIONS = ['html', 'htm', 'jsp', 'php', 'js', 'jmvc', 'j', 'mvc', 'fg'],
 
 					JMVC_VERSION = 1.7,
@@ -70,7 +87,7 @@
 						'action' : 'index'
 					},
 
-					// dispather function
+					// dispather function result
 					dispatched,
 
 					// MVC objects constructors
@@ -99,6 +116,7 @@
 					W[String.fromCharCode(101, 118, 97, 108)](r);
 				}
 
+				//
 				// for basic dummy inheritance
 				// function jmvc_basic_inherit(Child, Parent) {Child.prototype = new Parent(); }
 				// true D.C.inheritance
@@ -255,14 +273,19 @@
 					// using namespace ?
 					var pieces = name.split('/'),
 						path = false,
-						path_absolute =  $JMVC.vars.baseurl + US + 'app' + US + type + 's/' + $JMVC.c_prepath;
-					//alert(path_absolute);
+						//path_absolute =  $JMVC.vars.baseurl + US + 'app' + US + type + 's/' + $JMVC.c_prepath;
+						path_absolute =  $JMVC.vars.baseurl + US + 'app' + US + type + 's/';
+					
 					if (pieces.length > 1) {
 						name = pieces.pop();
 						path = pieces.join(US);
 					}
+					//need to do this because of the special case when a c_prepath is used
+					if(type == 'controller'){
+						path_absolute += $JMVC.c_prepath;
+					}
 					path_absolute += (path ? path + US : "") + name;
-
+					//if(type === 'model')alert(path_absolute);
 					switch (type) {
 					case 'view':
 						path_absolute += '.html';
@@ -325,26 +348,25 @@
 					}
 				}
 
-				// this is the only external snippet embedded in $JMVC
 				function jmvc_tpl(cont) {
 					// MIT licence
 					// based on the work of John Resig
 					// thank you John
 					// http://ejohn.org/blog/javascript-micro-templating/
 					return (cont.match(/\<%/)) ?
-							(function (str) {
-								var fn = new Function('obj',
-									"var p=[]; p.push('" +
-									str.replace(/[\r\t\n]/g, " ")
-									.split("<%").join("\t")
-									.replace(/((^|%>)[^\t]*)'/g, "$1\r")
-									.replace(/\t=(.*?)%>/g, "',$1,'")
-									.split("\t").join("');")
-									.split("%>").join("p.push('")
-									.split("\r").join("\\'") + "');  return p.join('');"
-									);
-								return fn(str);
-							})(cont) : cont;
+						(function (str) {
+							var fn = new Function('obj',
+								"var p=[]; p.push('" +
+								str.replace(/[\r\t\n]/g, " ")
+								.split("<%").join("\t")
+								.replace(/((^|%>)[^\t]*)'/g, "$1\r")
+								.replace(/\t=(.*?)%>/g, "',$1,'")
+								.split("\t").join("');")
+								.split("%>").join("p.push('")
+								.split("\r").join("\\'") + "');  return p.join('');"
+								);
+							return fn(str);
+						})(cont) : cont;
 				}
 
 				// This function get a content and substitute jmvc.vars
@@ -481,13 +503,13 @@
 						return func.apply(ctx, arguments);
 					};
 				}
-				function jmvc_bind(func, ctx){
+				function jmvc_bind(func, ctx) {
 					// splice è distruttivo, tolgo i primi due, formali 
 					// quindi tengo tutti quelli che non sono nella firma
-					var args = Array.prototype.splice.call(arguments,0).splice(0,2);
-					return function(){        
-						func.apply(ctx || $JMVC, [].concat(args, Array.prototype.splice.call(arguments,0)));
-					}; 
+					var args = Array.prototype.splice.call(arguments, 0).splice(0, 2);
+					return function () {
+						func.apply(ctx || $JMVC, [].concat(args, Array.prototype.splice.call(arguments, 0)));
+					};
 				}
 				// require, 'test' is an exception, if passed then the path will be /app/test
 				function jmvc_require() {
@@ -497,12 +519,13 @@
 						isTest = false;
 					for (null; i < l; i += 1) {
 
-						//JMVC.debug(typeof arguments[i]);
 						if (typeof arguments[i] === 'string' && !$JMVC.extensions[arguments[i]]) {
 							curr += 1;
+							// if the extension is named "test"
+							// then the path is changed to PATH['test']
 							isTest = arguments[i] === 'test';
 							$JMVC.io.get(
-								PATH[+isTest] + arguments[i] + '.js',
+								PATH[isTest ? 'test' : 'ext'] + arguments[i] + '.js',
 								function (jres) {jmvc_eval(jres); }
 							);
 							$JMVC.extensions[arguments[i]] = arguments[i];
@@ -526,7 +549,7 @@
 									};
 								}
 							} catch (e) {
-								alert(e.message);
+								W.alert(e.message);
 							}
 						}
 					}
@@ -552,19 +575,21 @@
 				function jmvc_prototipize(el, obj) {
 					var  p;
 					for (p in obj) {
-						el.prototype[p] = obj[p];
+						if (obj.hasOwnProperty(p)) {
+							el.prototype[p] = obj[p];
+						}
 					}
 				}
 
 				// ninja :O
 				function jmvc_debug() {
 					try {
-						console.log.apply(console, arguments);
+						W.console.log.apply(W.console, arguments);
 					} catch (e1) {
 						try {
-							opera.postError.apply(opera, arguments);
+							W.opera.postError.apply(W.opera, arguments);
 						} catch (e2) {
-							alert(Array.prototype.join.call(arguments, " "));
+							W.alert(Array.prototype.join.call(arguments, " "));
 						}
 					}
 				}
@@ -619,7 +644,7 @@
 				};
 				// ty https://github.com/stackp/promisejs
 				jmvc_promise = {
-					'create' : function(){return new Promise();},
+					'create' : function () {return new Promise(); },
 					'join' : function () {},
 					'chain' : function () {}
 				};
@@ -644,7 +669,9 @@
 					}
 					if (typeof name === 'object') {
 						for (j in name) {
-							this.addRoutes(j, name[j]);
+							if (name.hasOwnProperty(j)) {
+								this.addRoutes(j, name[j]);
+							}
 						}
 					}
 				};
@@ -670,6 +697,8 @@
 				// ******
 				// MODEL
 				// ******
+				//
+				//
 				Model = function () {};
 				Model.prototype.vars = {};
 				Model.prototype.reset = function () {
@@ -889,7 +918,7 @@
 					return ret;
 				})();
 
-				//			
+				//	
 				// returnning literal
 				//			
 				$JMVC = {
@@ -905,7 +934,7 @@
 					'views' : {},
 					'vars' : {
 						'baseurl':	dispatched.baseurl,
-						'extensions' : dispatched.baseurl + PATH[0], //'/app/extensions',
+						'extensions' : dispatched.baseurl + PATH['ext'], //'/app/extensions',
 						'devurl' : DEV_URL,
 						'produrl' : PROD_URL,
 						'version' : JMVC_VERSION,
@@ -919,14 +948,14 @@
 					'modules' : Modules,
 					'Event' : Event,
 					'promise' : jmvc_promise,
-					'gc' : function () {var i = 0, l = arguments.length; for (null; i < l; i += 1) {arguments[i] = null; }},
+					'gc' : function () {var i = 0, a = arguments, l = a.length; for (null; i < l; i += 1) {a[i] = null; } },
 					'getView' : function (n) {return jmvc_factory_method('view', n); },
 					'getModel' : function (n, params) {return jmvc_factory_method('model', n, params); },
 					//getController :	function(n) {return jmvc_factory_method('controller', n); }
 
 					'getNum' : function (str) {return parseInt(str, 10); },
 					'getFloat' : function (str) {return parseFloat(str, 10); },
-					'noop' : function(){return noop;},
+					'noop' : function () {return noop; },
 
 					'checkhook' : jmvc_check_hook,
 					'bind' : jmvc_bind,
@@ -937,7 +966,7 @@
 					'inherit' : jmvc_basic_inherit,
 					'hook' : jmvc_hook,
 					'jeval' : jmvc_eval,
-					'namespace' :{'make' : jmvc_makeNS, 'check' : jmvc_checkNS},
+					'namespace' : {'make' : jmvc_makeNS, 'check' : jmvc_checkNS},
 					'prototipize' : jmvc_prototipize,
 					'purge' : jmvc_purge,
 					//gco : function (o) {for (var p in o){if (o.hasOwnProperty(p)){o.p = null;}} o = null; },
@@ -1088,9 +1117,9 @@
 			W.setTimeout(function () {if (!complete) {xhr.abort(); } }, timeout);
 
 			try {
-				return(targetType==='responseXML') ?  xhr[targetType].childNodes[0] : xhr[targetType];
+				return (targetType === 'responseXML') ? xhr[targetType].childNodes[0] : xhr[targetType];
 			} catch (e3) {}
-			
+
 			return false;
 		},
 
@@ -1106,7 +1135,7 @@
 			return (W.JSON && W.JSON.parse) ? JSON.parse(r) : JMVC.jeval('(' + r + ')');
 		},
 		'getXML' : function (uri, cback) {
-			return JMVC.io.ajcall(uri, {method : 'GET', sync : false, type : 'xml', cback : cback || function(){}});
+			return JMVC.io.ajcall(uri, {method : 'GET', sync : false, type : 'xml', cback : cback || function () {} });
 		}
 	};
 
@@ -1142,7 +1171,7 @@
 			return res;
 		},
 		'in_object' : function (obj, field) {return (typeof obj === 'object' && obj[field]); },
-		'isArray' : function (o) { return "" + o !== o && {}.toString.call(o) === "[object Array]"; },
+		'isArray' : function (o) {return String(o) !== o && {}.toString.call(o) === "[object Array]"; },
 		'isTypeOf' : function (el, type) {return typeof el === type;	},
 		'getType' : function (el) {return typeof el; },
 		'padme' : function (val, el, pos, lngt) {
@@ -1186,16 +1215,20 @@
 		'obj2css' : function (o) {
 			var ret = '', i, j;
 			for (i in o) {
-				ret += i + '{';
-				for (j in o[i]) {
-					ret += j + ':' + o[i][j] + ';';
+				if (o.hasOwnProperty(i)) {
+					ret += i + '{';
+					for (j in o[i]) {
+						if (o[i].hasOwnProperty(j)) {
+							ret += j + ':' + o[i][j] + ';';
+						}
+					}
+					ret += '} ';
 				}
-				ret += '} ';
 			}
 			return ret;
 		},
 		'obj2qs' : function (o) {
-			var ret = '', si;
+			var ret = '', i;
 			for (i in o) {
 				if (o.hasOwnProperty(i)) {
 					ret += String((ret ? '&' : '?') + i + '=' + encodeURIComponent(o[i]));
@@ -1211,7 +1244,6 @@
 				len = that.length;
 			for (null; i < len; i += 1) {
 				that[i] && (that[i] = fn.call(that, that[i]));
-				
 			}
 			return that;
 		},
@@ -1224,17 +1256,16 @@
 			}
 			return that;
 		},
-		
 		'reload' : function () {
 			var n = JMVC.WD.location.href;
 			WD.location.href = n;//do not cause wierd alert
 		},
-		'now' : function () {return +new Date; },
+		'now' : function () {return +new Date(); },
 		'array_clone' : function (arr) {return arr.concat(); },
 		'range' : function (start, end) {
 			var ret = [];
 			while (end - start + 1) {
-				ret.push((start += 1) -1 ); 
+				ret.push((start += 1) - 1);
 			}
 			return ret;
 		},
@@ -1322,7 +1353,7 @@
 		},
 		//prepend : function(where, what){var f = this;},
 		'create' : function (tag, attrs, inner) {
-			if (!tag) {alert('no tag'); return; }
+			if (!tag) {W.alert('no tag'); return; }
 			var node = WD.createElement(tag),
 				att;
 			attrs = attrs || {};
@@ -1332,16 +1363,16 @@
 				}
 			}
 			if (typeof inner !== 'undefined') {
-				if(inner.nodeType == 1){
+				if (inner.nodeType === 1) {
 					this.append(node, inner);
-				}else{
+				} else {
 					this.html(node, inner);
 				}
 			}
 			return node;
 		},
 		/* create and append */
-		
+
 		/**
 		 * Create an element into an existing one
 		 */
@@ -1373,7 +1404,7 @@
 				toArr = false,
 				ret = false;
 			//look for no word before something
-			a = a.match(/^(\W)?(.*)/);
+			a = a.match(/^(\W)?([A-z0-9-_]*)/);
 			switch (a[1]) {
 			case '#':
 				sel += 'ById';
@@ -1388,10 +1419,22 @@
 				break;
 			default:
 				return [];
-				break;
 			}
 			ret = (b || JMVC.WD)[sel](a[2]);
 			return toArr ? JMVC.util.coll2array(ret) : ret;
+		},
+		'findInnerByClass' : function(ctx, cname){
+			var a = [],
+				re = new RegExp('\\b' + cname + '\\b'),
+				els = ctx.getElementsByTagName("*"),
+				i = 0,
+				l = els.length;
+			for (null; i < l; i += 1) {
+				if (re.test(els[i].className)) {
+					a.push(els[i]);
+				}
+			}
+			return a;
 		},
 		//ha un attributo?
 		'hasAttribute' : function (el, name) {return el.getAttribute(name) !== null; },
@@ -1481,8 +1524,7 @@
 		'Estart' : [],
 		'Eend' : [],
 		'bind' : function (el, tipo, fn) {
-			if(el instanceof Array){
-				
+			if (el instanceof Array) {
 				JMVC.util.each(el, JMVC.events.bind, tipo, fn);
 				return;
 			}
@@ -1507,7 +1549,7 @@
 			JMVC.events.bindings[el][tipo] = null;
 		},
 		'one' : function (el, tipo, fn) {
-			if(el instanceof Array){
+			if (el instanceof Array) {
 				JMVC.util.each(el, JMVC.events.one, tipo, fn);
 				return;
 			}
@@ -1517,13 +1559,13 @@
 			};
 			JMVC.events.bind(el, tipo, newf);
 		},
-		'kill' : function(e){
-			if (!e){
+		'kill' : function (e) {
+			if (!e) {
 				e = W.event;
 				e.cancelBubble = true;
 				e.returnValue = false;
 			}
-			if (e.stopPropagation){
+			if (e.stopPropagation) {
 				e.stopPropagation();
 				e.preventDefault();
 			}
@@ -1533,7 +1575,7 @@
 			return this.bind(W, 'load', func);
 		},
 		'preventDefault' : function (e) {
-			e = e || W.event; 
+			e = e || W.event;
 			if (e.preventDefault) {
 				e.preventDefault();
 			} else {
@@ -1541,7 +1583,7 @@
 			}
 		},
 		'eventTarget' : function (e) {
-			var targetElement = (typeof e.target !== "undefined") ? e.target : e.srcElement; 
+			var targetElement = (typeof e.target !== "undefined") ? e.target : e.srcElement;
 			while (targetElement.nodeType == 3 && targetElement.parentNode != null) {
 				targetElement = targetElement.parentNode;
 			}
@@ -1550,14 +1592,13 @@
 		'getCoord' : function (el, e) {
 			var x,
 				y;
-			if (e.pageX || e.pageY) { 
-			  x = e.pageX;
-			  y = e.pageY;
+			if (e.pageX || e.pageY) {
+				x = e.pageX;
+				y = e.pageY;
+			} else {
+				x = e.clientX + JMVC.WD.body.scrollLeft + JMVC.WD.documentElement.scrollLeft;
+				y = e.clientY + JMVC.WD.body.scrollTop + JMVC.WD.documentElement.scrollTop;
 			}
-			else { 
-			  x = e.clientX + JMVC.WD.body.scrollLeft + JMVC.WD.documentElement.scrollLeft; 
-			  y = e.clientY + JMVC.WD.body.scrollTop + JMVC.WD.documentElement.scrollTop; 
-			} 
 			x -= el.offsetLeft;
 			y -= el.offsetTop;
 			return [x, y];
@@ -1583,8 +1624,17 @@
 			}
 		},
 		'delay' : function (f, t) {
-			//window.setTimeout(f, t);
 			W.setTimeout(f, t);
+		},
+		'scrollBy' : function (left, top) {
+			JMVC.events.delay(function () {
+				W.scrollBy(left, top);
+			}, 1);
+		},
+		'scrollTo' : function (left, top) {
+			JMVC.events.delay(function () {
+				W.scrollTo(left, top);
+			}, 1);
 		},
 		'loadify' : function (ms) {
 			JMVC.events.start(function () {
@@ -1609,7 +1659,7 @@
 					);
 					i += step;
 				}
-				WD.body.style.opacity = top + '';
+				WD.body.style.opacity = W.parseFloat(top, 10);
 				WD.body.style.filter = 'alpha(opacity=' + (top * 100) + ')';
 			});
 		}
@@ -1648,9 +1698,9 @@
 				}
 			} else {
 				script = explicit ?
-					JMVC.dom.create('script', {type : 'text/javascript'}, src)
+						JMVC.dom.create('script', {type : 'text/javascript'}, src)
 					:
-					JMVC.dom.create('script', {type : 'text/javascript', src : src}, ' ');
+							JMVC.dom.create('script', {type : 'text/javascript', src : src}, ' ');
 				head = this.element;
 				head.appendChild(script);
 			}
@@ -1767,3 +1817,115 @@
 		}
 	})();
 }(this.window || global);
+/**
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * What are You looking for ? 
+ * 
+ */
