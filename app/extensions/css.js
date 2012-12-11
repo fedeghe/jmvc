@@ -1,9 +1,14 @@
 JMVC.require('color', 'sniffer');
 JMVC.extend('css',{
-	style : function(el, prop, val) {
+	'style' : function(el, prop, val) {
 		
-		var prop_is_obj = (typeof prop === 'object' && typeof val === 'undefined');
-		if(!prop_is_obj && typeof val == 'undefined')return el.style[prop];
+		var prop_is_obj = (typeof prop === 'object' && typeof val === 'undefined'),
+			ret = false;
+		if(!prop_is_obj && typeof val == 'undefined'){
+			// opera may use currentStyle or getComputedStyle
+			ret = (el.currentStyle) ? el.currentStyle[this.css_propertymap[prop] || prop + ""] : el.style[prop]; 
+			return ret == '' || ret == 'auto' ? JMVC.css.getComputedStyle(el, prop) : ret;
+		}
 		
 		var newval;
 		
@@ -37,23 +42,29 @@ JMVC.extend('css',{
 		return this; 
 	},
 	
+	width:function(el){
+		return el.offsetWidth || JMVC.css.getComputedStyle(el ,'width');
+	},
 	
+	height:function(el){
+		return el.offsetHeight || JMVC.css.getComputedStyle(el ,'height');
+	},
 	
-	getComputedStyle : function(el, styleProperty){ 
+	'getComputedStyle' : function(el, styleProperty){ 
 		
 		if(JMVC.sniffer.browser.name == 'Opera'){
-			return  window.getComputedStyle(el, null).getPropertyValue(styleProperty);
+			return  JMVC.W.getComputedStyle(el, null).getPropertyValue(styleProperty);
 		}
 		var computedStyle = null;
 		if (typeof el.currentStyle != "undefined"){ 
 			computedStyle = el.currentStyle; 
 		}else{
-				computedStyle = document.defaultView.getComputedStyle(el, null);
+				computedStyle = JMVC.WD.defaultView.getComputedStyle(el, null);
 		}
 		return computedStyle[this.css_propertymap[styleProperty] || styleProperty]; 
 	},
-	css3_map : ['-o-transform','-moz-transform','-o-transform'],
-	css_propertymap : {
+	'css3_map' : ['-o-transform','-moz-transform','-o-transform'],
+	'css_propertymap' : {
 		
 		'background-attachment':'backgroundAttachment',
 		'background-color':'backgroundColor',
@@ -107,9 +118,19 @@ JMVC.extend('css',{
 		'z-index ':'zIndex',
 		'z-Index ':'zIndex'
 	},
-	reset : function(){
+	'reset' : function(){
 		var style = "/* http://meyerweb.com/eric/tools/css/reset/    v2.0 | 20110126   License: none (public domain)*/html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video {	margin: 0;	padding: 0;	border: 0;	font-size: 100%;	font: inherit;	vertical-align: baseline;}/* HTML5 display-role reset for older browsers */article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;}body {	line-height: 1;}ol, ul {	list-style: none;}blockquote, q {	quotes: none;}blockquote:before, blockquote:after,q:before, q:after {content: '';content: none;}table {border-collapse: collapse;border-spacing: 0;}"
 		JMVC.head.addstyle(style, true, true);
+	},
+	'json2css' : function (json) {
+		var out = '',
+			i;
+		for (i in json) {
+			if (json.hasOwnProperty(i)) {
+				out += i + '{' + json[i] + '}' + "\n";
+			}
+		}
+		return out;
 	}
 	
 });

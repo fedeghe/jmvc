@@ -4,7 +4,7 @@
 JMVC.extend('animator',{
 
 	//follow implicit path
-	follow_ipath : function( that, func, prange, options){
+	'follow_ipath' : function( that, func, prange, options){
 		
 		var _ani = {};
 		
@@ -170,7 +170,7 @@ JMVC.extend('animator',{
 	 **/
 	
 	//parametric version
-	follow_ppath : function(that, funcx, funcy, prange, options){
+	'follow_ppath' : function(that, funcx, funcy, prange, options){
 		
 		var _ani = {};
 		

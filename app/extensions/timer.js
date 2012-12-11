@@ -1,18 +1,18 @@
 JMVC.extend('timer',{
 	
-	create : function(options){
+	'create' : function(options){
 		
 		var time_formats = {
 			'en-us' :{
-				format : '%DD%, %MM% %D%, %YYYY% %H12% : %I% : %S% %APM%',
-				days : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturnday'],
-				months : ['January','February','March','April','May','June','July','August','September','October','November','December']
+				'format' : '%DD%, %MM% %D%, %YYYY% %H12% : %I% : %S% %APM%',
+				'days' : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturnday'],
+				'months' : ['January','February','March','April','May','June','July','August','September','October','November','December']
 			},
 			'it' :{
-				format : '%DD%, %D% %MM% %YYYY% %H24% : %I% : %S%',
+				'format' : '%DD%, %D% %MM% %YYYY% %H24% : %I% : %S%',
 				//format : '%H24% : %I% : %S% ~ %D% / %M% / %YY% %DD% %MM%',
-				days : ['Domenica','Lunedí','Martedí','Mercoledí','Giovedí','Venerdí','Sabato'],
-				months : ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'] 
+				'days' : ['Domenica','Lunedí','Martedí','Mercoledí','Giovedí','Venerdí','Sabato'],
+				'months' : ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'] 
 			}
 		};
 		
@@ -42,7 +42,7 @@ JMVC.extend('timer',{
 				DD = self.l.days[d.getDay()],
 				MM = self.l.months[M-1];
 
-			return JMVC.util.replaceall(self.format, {APM:APM,H12:H12,H24:H24, I:I, S:S, YY:YY, YYYY:YYYY, M:M, D:D, MM:MM, DD:DD}, '%', '%');
+			return JMVC.util.replaceall(self.format, {APM:APM,H12:H12,H24:H24, I:I, S:S, YY:YY, YYYY:YYYY, M:M, D:D, MM:MM, DD:DD});
 		};
 		function init(){
 			JMVC.dom.html(self.target, getTime());

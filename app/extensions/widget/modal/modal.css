@@ -1,0 +1,77 @@
+
+div.jmvc_modal_content_bg{
+	text-align:center;
+	z-index:100;
+	position:absolute;
+	top:0px;
+	left:0px;
+	opacity:0.8;
+}
+div.jmvc_modal_content{
+	z-index:200;
+	margin:0 auto;
+	border:2px solid #222;
+	background-color:white;
+	position:absolute;
+	top:10px;
+	bottom:10px;
+	color:black;
+	padding:1px;
+	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+}
+div.jmvc_modal_content.shadow{
+	-moz-box-shadow: 6px 6px 5px #555;
+    -webkit-box-shadow: 6px 6px 5px #555;
+    box-shadow: 6px 6px 5px #555;
+}
+div.jmvc_modal_content .topbar{
+	height:20px;
+	-moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
+	/*border:1px solid gray;*/
+	background-color:black;
+	color:white;
+	line-height:20px;
+	padding:0px 5px;
+}
+div.jmvc_modal_content .topbar .jmvc_modal_title{
+	float:left;
+	font-weight:bold;
+	letter-spacing:0.2em;
+	font-size:12px;
+	position:relative;
+	top:2px;
+}
+div.jmvc_modal_content .topbar .jmvc_modal_close{
+	float:right;
+	border:1px solid black;
+	line-height:12px;
+	padding:0px 2px;
+	margin:3px 0px;
+	text-align:center;
+	cursor:pointer;
+	background-color:white;
+	-moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    border-radius:2px;
+	font-weight:bold;
+	color:black
+}
+div.jmvc_modal_content .topbar .jmvc_modal_close:hover{
+	background-color:#eee;
+}
+div.jmvc_modal_content .given_content_container{
+	padding:10px;
+	overflow-y: auto;
+}
+
+.clearer{
+	display:none;
+	font-size:0px;
+	height:0px;
+	line-height:0px;
+	clear:both;
+}

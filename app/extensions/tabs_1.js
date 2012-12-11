@@ -20,7 +20,7 @@ JMVC.extend('tabs',{
 		this.tabs[label] = content;
 	},
 	render : function(idcontainer, idul, show){
-		JMVC.head.addstyle(JMVC.util.json2css(this.styles), true, true);
+		JMVC.head.addstyle(JMVC.css.json2css(this.styles), true, true);
 		var num2show = show || 0;
 		var ul = JMVC.dom.create('ul', {id:idul, 'class':'tablabels'});
 		var tabcontainer = JMVC.dom.create('div',{'class':'tabcontainer'});

@@ -1,0 +1,40 @@
+div.jmaps.outerdiv{
+	
+	
+	position : relative;
+	overflow : hidden;
+	border:1px solid black;
+	z-index : 200;
+	
+	
+	/*DEV*/
+	top:100px;
+	left:100px;
+	/*overflow: visible;*/
+	background-color:#999
+	/*DEV*/
+}
+div.jmaps.outerdiv div.jmaps.innerdiv {
+	
+	
+	position:relative;
+	overflow:visible;
+	z-index:100;
+	
+	/*DEV*/
+	background-color:#ddd;
+	/*opacity:.4*/
+	/*DEV*/	
+} 
+
+div.jmaps.outerdiv div.jmaps.innerdiv div.tile{
+	-moz-user-select:none;
+	position:absolute;
+	color: rand;
+	font-family: Verdana, sans-serif;
+	font-size:10px;
+	font-weight:bold;
+	line-height:20px;
+	text-align:center;
+	/*border:1px solid black*/
+}

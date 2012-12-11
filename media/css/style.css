@@ -1,9 +1,12 @@
 body{	
 	margin:0px;
-	font-family: Verdana,Arial,Helvetica,sans-serif;
+/*	font-family: Verdana,Arial,Helvetica,sans-serif;
+	"Lucida Console","Monaco",monospace*/
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 	font-size: 12px;
 	border-top:15px solid #aaa;
 	/* background-image: url($baseurl$/media/img/oy.png); */	
+	margin-bottom:20px;
 }
 div#cent{
 
@@ -17,7 +20,7 @@ div#cent{
 	background-repeat : repeat-x;
  */
 }
-div.pagewrap h1{font-size:16px;}
+div.pagewrap h1{font-size:16px;padding-bottom:40px}
 div.pagewrap h6{margin:0px;padding:0px;line-height:30px}
 div.pagewrap a{	
 	color:red;
@@ -26,6 +29,7 @@ div.pagewrap a{
 	font-weight:bold;
 	letter-spacing: 0px;
 	line-height:42px;
+	text-transform: lowercase;
 }
 div.pagewrap a:hover{
 	text-shadow:0px 0px 10px #fff;

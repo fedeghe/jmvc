@@ -1,0 +1,95 @@
+code.debug{
+    word-wrap: break-word;
+	white-space: pre;
+	font-family: "Lucida Console","Monaco",monospace;
+	display:block;
+	color:#33aa33;
+	background-color: #222;
+	border:1px dashed #555;
+	padding:5px;
+	margin:10px 0px;
+}
+code.debug ul{
+	list-style-type: none;
+	margin:0px;
+	margin-bottom:10px;
+	padding:10px;
+}
+code.debug ul li{
+	line-height:16px;
+}
+code.debug ul li span.nline{
+	width:30px;
+	display:inline-block;
+	color:white;
+	text-align:right;
+	margin-right:10px;
+}
+code.debug ul li:hover{
+	background-color:#333;
+	color:#0f0;
+}
+
+
+
+
+
+
+span.kw{color:#aaa; font-weight:bold;}
+span.func_kw{color:#ededed; font-weight:bolder; font-size:1.1em}
+span.funcname{ color:yellow; font-weight:bold;}
+span.funccall{color:#f62; font-weight:bold;}
+span.punct{color:cadetblue;}
+span.operator{ color:cadetblue;}
+span.parenth{color:white;}
+span.bool{color: #888; font-weight:bold;}
+span.str{color: #fede76; font-weight:bold;}
+span.comment{color: #555; font-style:italic; font-size:10px;}
+span.funcz{	color:#8f8;	font-weight:bold;}
+
+span.J{ color:#dadada; font-weight:bold;}
+span.M{ color:#f00; font-weight:bold;}
+span.V{ color:#0f0; font-weight:bold;}
+span.C{ color:#3F00FF; font-weight:bold;}
+
+
+/*
+alert  	frames  	outerHeight  
+all  	frameRate  	outerWidth  
+anchor  	function  	packages  
+anchors  	getClass  	pageXOffset  
+area  	hasOwnProperty  	pageYOffset  
+Array  	hidden  	parent  
+assign  	history  	parseFloat  
+blur  	image  	parseInt  
+button  	images  	password  
+checkbox  	Infinity  	pkcs11  
+clearInterval  	isFinite  	plugin  
+clearTimeout  	isNaN  	prompt  
+clientInformation  	isPrototypeOf  	propertyIsEnum  
+close  	java  	prototype  
+closed  	JavaArray  	radio  
+confirm  	JavaClass  	reset  
+constructor  	JavaObject  	screenX  
+crypto  	JavaPackage  	screenY  
+Date  	innerHeight  	scroll  
+decodeURI  	innerWidth  	secure  
+decodeURIComponent  	layer  	select  
+defaultStatus  	layers  	self  
+document  	length  	setInterval  
+element  	link  	setTimeout  
+elements  	location  	status  
+embed  	Math  	String  
+embeds  	mimeTypes  	submit  
+encodeURI  	name  	taint  
+encodeURIComponent  	NaN  	text  
+escape  	navigate  	textarea  
+eval  	navigator  	top  
+event  	Number  	toString  
+fileUpload  	Object  	undefined  
+focus  	offscreenBuffering  	unescape  
+form  	open  	untaint  
+forms  	opener  	valueOf  
+frame  	option  	window
+
+*/

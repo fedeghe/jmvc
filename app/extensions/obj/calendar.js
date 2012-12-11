@@ -1,16 +1,16 @@
 JMVC.extend('calendar',{
-	vars : {
+	'vars' : {
 		css_path : JMVC.vars.extensions + '/obj/styles',
 		today : new Date,
 		dINm : [31, false, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
 		days : ['D','L','M','M','G','V','S'],
 		months : []
 	},
-	init : function () {
+	'init' : function () {
 		//JMVC.debug(this.vars.css_path);
 		JMVC.head.addstyle(JMVC.calendar.vars.css_path + '/calendar.css');
 	},
-	create : function(options){
+	'create' : function(options){
 		var cal = JMVC.calendar,
 			self = this;
 			this.contour_before = {},
@@ -21,11 +21,11 @@ JMVC.extend('calendar',{
 			this.ends_with = (this.starts_with+6)%7,
 			this.row_tpl = '<tr>'+JMVC.util.str_repeat('<td class="cl%n%">%%n%%</td>', 7)+'</tr>';
 		return {
-			getDaysInMonth : function (m, y) {
+			'getDaysInMonth' : function (m, y) {
 				var bis = ( ( !(y % 100 ) && !( y % 400 ) ) || ( !( y % 4 ) && ( y % 100 ) ) );
 				return cal.vars.dINm[m] ? cal.vars.dINm[m] : (bis?29:28);
 			},
-			getMonthMap : function (m, y) {
+			'getMonthMap' : function (m, y) {
 				var d = new Date(),
 					first,
 					dim = this.getDaysInMonth(m, y),
@@ -39,7 +39,7 @@ JMVC.extend('calendar',{
 				do {self.currentMap[i] = (first ++) % 7;} while (i ++ < dim);
 				return self.currentMap;
 			},
-			getContour : function (m, y) {
+			'getContour' : function (m, y) {
 				var mdown = (m-1) % 12, mup = (m+1) % 12,
 					ydown = (mdown !== m) ? y -- : y, yup = (mup !== m) ? y ++ : y,
 					previousCount = this.getDaysInMonth(mdown, ydown),
@@ -66,13 +66,14 @@ JMVC.extend('calendar',{
 				return [self.contour_before, self.contour_after, self.row_tpl];
 
 			},
-			render : function(){
+			'render' : function(){
 				var mid = '<table class="cal"><tr>',
 					col = 0, i= self.starts_with, j = 0, l = cal.vars.days.length;
 				for(null; j<l;i=(i+1)%7, j++){
 					mid += '<th>'+cal.vars.days[i]+'</th>';
 				}
 				mid+='</tr>';
+				
 				//pre
 				for(i in self.contour_before){
 					mid += '<td class="pre">' + i + '</td>';

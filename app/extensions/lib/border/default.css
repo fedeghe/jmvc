@@ -1,0 +1,34 @@
+
+div.border.vert{
+	font-size:0px;
+	width:0px; 
+}
+div.border.oriz{
+	font-size:0px;
+	height:0px; 
+}
+
+.brel{
+	position:relative;
+}
+
+.babs{
+	position:absolute;
+}
+.bclear{
+	clear:both;
+	display:none;
+	font-size:0px;
+	height: 0px;
+	line-height:0px;
+}
+.fleft{
+	float:left;
+}
+.fright{
+	float:right;
+}
+.zerofsize{
+	font-size:0px;
+	border:0px;
+}

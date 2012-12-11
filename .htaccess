@@ -1,12 +1,25 @@
 # ###########################
-#      ___  ____     ______ 
+#      ___   ____     ______ 
 #     (_)  \/  \ \   / / ___|
 #     | | |\/| |\ \ / / |    
 #     | | |  | | \ V /| |___ 
-#   _/ |_|  |_|  \_/  \____|
-#  |__/    
+#    _/ |_|  |_|  \_/  \____|
+#   |__/    
 #
 # ###########################
+
+# pass the default character set
+AddDefaultCharset utf-8
+
+# disable the server signature
+ServerSignature Off
+
+<ifModule mod_env.c>
+	# set the server timezone
+	SetEnv TZ Europe/Rome
+</ifModule>
+# disable folde listing
+Options -Indexes
 
 <IfModule mod_rewrite.c>
 	RewriteEngine On
@@ -20,17 +33,27 @@
 	#	Page (if not a file/directory)
 	RewriteCond   %{REQUEST_FILENAME} !-d
 	RewriteCond   %{REQUEST_FILENAME} !-f
+	
 	#
 	RewriteRule ^.*$ index.html [PT,L]
 </IfModule>
 
 <ifmodule mod_deflate.c>
-   AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css application/x-javascript application/javascript
+   AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css text/javascript application/x-javascript application/javascript application/json
 </ifmodule>
 
-<filesMatch "\.(html|htm|js|css|jpeg|jpg|gif|png|ico)$">
-	FileETag None
-</filesMatch>
+#<filesMatch "\.(html|htm|js|css|jpeg|jpg|gif|png|ico)$">
+#	FileETag All
+#</filesMatch>
+
+FileETag MTime Size
+<ifmodule mod_expires.c>
+  <filesmatch "\.(html|htm|js|css|jpeg|jpg|gif|png|ico)$">
+       ExpiresActive on
+       ExpiresDefault "access plus 1 year"
+   </filesmatch>
+</ifmodule>
+
 	
 <ifModule mod_headers.c>
 	# year
@@ -40,12 +63,12 @@
 	</FilesMatch>
 	
 	#1 month
-	<FilesMatch "\.(js|css)$">
+	<FilesMatch "\.(js|css|json)$">
 		Header set Cache-Control "max-age=2592000, must-revalidate"
 	</FilesMatch>
 	
 	#2 hours
-	<FilesMatch "\.(html|htm|xml|txt|xsl)$">
+	<FilesMatch "\.(html|htm|xml|txt|xsl|xml)$">
 		Header set Cache-Control "max-age=7200, must-revalidate"
 	</FilesMatch>
 </ifModule>    

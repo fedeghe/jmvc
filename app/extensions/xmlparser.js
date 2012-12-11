@@ -1,48 +1,47 @@
-JMVC.extend('xmlparser',{							
-	load : function(txt){
-		var that = this;
+JMVC.extend('xmlparser', {
+	
+	// takes the contant of
+	// the xml to be parsed
+	//
+	'load' : function(txt){
+		var that = this,
+			xmlDoc,
+			parser;
 		
+		//clean up a bit
 		txt = txt.replace(/\n/g, "").replace(/[\t ]+\</g,"<").replace(/\>[\t ]+\</g,"").replace(/\>[\t ]+$/g, ">");
 
 		this.xmlDoc = false;
-		var xmlDoc, parser;
 		
-		if(window.DOMParser){
+		if (window.DOMParser) {
 			parser=new DOMParser();
-			xmlDoc=parser.parseFromString(txt,"text/xml");
-		}else{ // Internet Explorer
+			xmlDoc=parser.parseFromString(txt, "text/xml");
+		} else { // Internet Explorer
 			xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
 			xmlDoc.async=false;
 			xmlDoc.loadXML(txt);
 		}
 		this.xmlDoc = xmlDoc;
 		
-		
-		
-		this.nodeExtractor = function(t){return t;};
+		this.nodeExtractor = function (t) {return t; };
 		
 		this.pointerNode = false;
-				
-		this.extractor = function(f, reset_extractor){
 		
-		//	JMVC.debug('pointer node  is ', this.pointerNode);
 		
-			if(typeof f === 'number'){
-				return this.pointerNode.childNodes.length > f ? this.nodeExtractor(this.pointerNode.childNodes[f]) :false;
+		//set the extractor function or get the fTH node
+		this.extractor = function (f, reset_extractor) {
+			if (typeof f === 'number') {
+				return this.pointerNode.childNodes.length > f ? this.nodeExtractor(this.pointerNode.childNodes[f]) : false;
 			}
-			if(typeof f === 'function' && (!this.nodeExtractor || reset_extractor)){
+			if (typeof f === 'function' && (!this.nodeExtractor || reset_extractor)) {
 				this.nodeExtractor = f;
-				
 				this.pointerNode = this.xmlDoc.documentElement;
-				//JMVC.debug('pointer node  is ', this.pointerNode);
 				return true;	
 			}
 			return false;
 		};
-		
-		
-		
-		
+
+
 		this.extractall = function(){
 			var ret = [], len = this.pointerNode.childNodes.length, i=0;
 			while(len--){
@@ -84,13 +83,14 @@ JMVC.extend('xmlparser',{
 //			do children
 			if (xml.hasChildNodes()) {
 				for(var i = 0; i < xml.childNodes.length; i++) {
-					var item = xml.childNodes.item(i);
-					var nodeName = item.nodeName;
+					var item = xml.childNodes.item(i),
+						nodeName = item.nodeName,
+						old;
 					if (typeof(obj[nodeName]) == "undefined") {
 						obj[nodeName] = that.toJson(item);
 					} else {
 						if (typeof(obj[nodeName].length) == "undefined") {
-							var old = obj[nodeName];
+							old = obj[nodeName];
 							obj[nodeName] = [];
 							obj[nodeName].push(old);
 						}
@@ -99,26 +99,31 @@ JMVC.extend('xmlparser',{
 				}
 			}
 			return obj;
-			
 		}
-		
 	},
-	_text : function(node){
+	
+	
+	/**
+	 * 
+	 * 
+	 * SOME UTILITY FUNCTIONS
+	 */
+	'_text' : function(node){
 		return node.childNodes[0].nodeValue;
 	},
-	_attribute : function(node, attribute){
+	'_attribute' : function(node, attribute){
 		var r = node.attributes.getNamedItem(attribute);
 		if(r == null){return '';}
 		return r.nodeValue;
 	},
-	_tag : function(node, tag, n){
+	'_tag' : function(node, tag, n){
 		var nodes = node.getElementsByTagName(tag);
 		return n<nodes.length ? nodes[n] : false;
 	},
 	
 //	Thanks to the great David Walsh
 //	url : http://davidwalsh.name/convert-xml-json
-	toJson : function(xml){ 
+	'toJson' : function(xml){ 
 //		Create the return object
 		var obj = {};
 
@@ -141,13 +146,15 @@ JMVC.extend('xmlparser',{
 //		do children
 		if (xml.hasChildNodes()) {
 			for(var i = 0; i < xml.childNodes.length; i++) {
-				var item = xml.childNodes.item(i);
-				var nodeName = item.nodeName;
+				var item = xml.childNodes.item(i),
+					nodeName = item.nodeName,
+					old;
+
 				if (typeof(obj[nodeName]) == "undefined") {
 					obj[nodeName] = JMVC.xmlparser.toJson(item);
 				} else {
 					if (typeof(obj[nodeName].length) == "undefined") {
-						var old = obj[nodeName];
+						old = obj[nodeName];
 						obj[nodeName] = [];
 						obj[nodeName].push(old);
 					}

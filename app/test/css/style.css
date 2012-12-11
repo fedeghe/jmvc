@@ -1,16 +1,109 @@
 body{
 	font-size:12px;
-	font-family: Gill, Helvetica, sans-serif;
+/*	font-family: Gill, Helvetica, sans-serif;*/
+font-family:"Lucida Console","Monaco",monospace;
 	background-color:black;
 	color:white;
 }
 
+
+.fiveround{
+	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+}
+
+a{color:#faa; text-decoration:none;}
+a:hover{color:#fdd;}
+div.describe{
+	font-size:16px;
+	color:white;
+	margin : 10p 0px;
+	border:1px solid #555;
+	padding:10px;
+/*	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;*/
+	background-color: #222;
+	line-height:20px;
+	margin-bottom:10px;
+}
+
+
+/*
+div.describe code{
+	white-space: pre;
+	font-family: monospace;
+	display:block;
+	color:#55DD55;
+	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+	background-color: #444;
+	border:1px dashed #777;
+	padding:5px;
+	margin-top:5px;
+}
+*/
+
+
+div#panel{
+	margin : 0px;
+	padding:10px;
+	border-bottom:1px solid #0a0;
+/*	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;*/
+	background-color:#353;
+	color:white;
+	position:fixed;
+	top:-5px;
+	left:10px;
+	right:10px;
+}
+div#panel input.panelbutton{
+	border:1px solid white;
+/*	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;*/
+	background-color:black;
+	color:white;
+	font-weight:bold;
+	cursor:pointer;
+	height:26px;
+}
+div#panel input.panelbutton:hover{
+	background-color:#555;
+}
 div#bro{
 	font-weight:bold;
 	font-size:20px;
 	line-height:30px;
 	height:30px;
 	padding:10px 0px;
+}
+
+div#bro.ok{
+	color:#5d5;
+}
+div#bro.ko{
+	color:#d55;
+}
+div.hideSpec{
+	display:none;
+}
+span.more{
+	font-weight : bold;
+	cursor:pointer;
+	color:red;
+}
+span.more:hover{
+	color:white;
+}
+div.hideSpec pre{
+	background-color:black;
+	padding:5px;
+	border:1px solid #555;
 }
 div#summary{
 	font-weight:bold;
@@ -21,6 +114,7 @@ div#summary{
 div#results{
 	margin:5px;
 	padding:5px;
+	margin-top:40px;
 }
 div.passed, div.failed{
 	line-height:20px;
@@ -34,24 +128,47 @@ div.passed, div.failed{
 div strong.time{
 	padding-left:20px;
 }
+
+div.passed, div.failed, div.msg{
+	border:none 5px #000000;
+/*    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;*/
+}
+
 div.passed{
 	background-color:#131;
 	color:#5d5;
-	border:1px solid #333;
+	border:1px solid #575;
+	border-top:1px solid #5a5;
 	border-left:3px solid #5d5;
 	background-image: url(../images/accept.png);
 }
 div.failed{
 	background-color:#311;
 	color:#f00;
-	border:1px solid #f00;
+	border:1px solid #755;
+	border-top:1px solid #a55;
 	border-left:8px solid #f00;
 	background-image: url(../images/delete.png);
 	font-weight:bold;
 }
+
+div.msg{
+	color:#888;
+	letter-spacing: 1px;
+	line-height:20px;
+	/*height:20px;*/
+	margin:15px 0px 1px;
+	background-color:#333;
+	padding-left:10px;
+	border:1px solid #555;
+	border-top:1px solid #aaa;
+	border-left:3px solid #fff;
+}
 div#globalResult{
 	color:#fff;
-	font-size:30px;
+	font-size:20px;
 	padding:10px;
 	margin-top:10px;
 	padding-left:30px;
@@ -60,9 +177,19 @@ div#globalResult{
 }
 div#globalResult.passed{
 	background-color:#141;
-	border:10px solid #0f0;
+	border:3px solid #0f0;
 }
 div#globalResult.failed{
 	background-color:#411;
-	border:10px solid #f00;
+	border:3px solid #f00;
 }
+hr.pause{
+	height:40px;
+	color:#555;
+	background-color:#333;
+/*	-moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;*/
+}
+
+

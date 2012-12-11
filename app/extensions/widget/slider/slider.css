@@ -1,0 +1,67 @@
+.bar {
+    width : 200px;
+    height: 8px;
+    border: 1px solid black;
+    position:relative;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+/*	left:200px;
+	top:30px;*/
+	cursor:pointer;
+	overflow:visible;
+	background-color:#eee;
+}
+.innerbar{
+    background-color:#bbb;
+    height:8px;
+    position:absolute;
+    left:0px;
+    line-height:8px;
+}
+.arrow{
+    position:absolute;
+    width:11px;
+    height:19px;
+	top : -4px;
+    /*border:1px solid gray;*/
+    cursor:ew-resize;
+    text-align:center;
+    line-height:8px;
+    background-image: url($baseurl$/app/extensions/widget/slider/handler.png);
+    background-repeat:no-repeat;
+	background-position:0px 1px;
+	-moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
+/*                top:5px;*/
+}
+.arrow:hover{
+	color:white !important;
+}
+.arrow.up{
+	/*background-color:green;*/
+    z-index:10;
+	-moz-border-radius:2px;
+	-webkit-border-radius:2px;
+	border-radius:2px;
+	z-index:10;
+}
+.arrow.down{
+	/*background-color:red;*/
+	z-index:5;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	z-index:10;
+}
+.arrow.dragged{
+	/*background-color:black !important;*/
+	background-position:0px -1px;
+}

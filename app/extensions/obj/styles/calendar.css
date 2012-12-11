@@ -7,6 +7,9 @@ table.cal{
 	padding:0px;
 	table-layout: table;
 	cell-spacing:5px;
+	background-color:black;
+	font-family: Gill, Helvetica, sans-serif;
+	color:red;
 }
 td.calendar{
 	background-color : red;
@@ -19,11 +22,15 @@ table.cal td.pre, table.cal td.curr, table.cal td.after{
 	text-align: center;
 	border:1px solid black;
 	padding:5px;
-	
-	
+	background-color:#fff;
 }
-table.cal td:hover{
+table.cal td.pre, table.cal td.after{
+	background-color:#ddd;
+	color:#a00;
+}
+table.cal td.curr:hover{
 	color:#fff;
 	background-color: #000;
 	cursor:pointer;
+	font-weight:bold;
 }

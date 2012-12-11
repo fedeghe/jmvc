@@ -11,10 +11,9 @@ JMVC.events.end(function () {
 	//
 	do_ga = function () {
 		JMVC.head.addscript("{{analytics ua=`"+ua+"`}}", true, true);
-		//JMVC.head.addscript("JMVC.debug('analytics active!');", true, true);
 	};
 	//
-	//right domain
+	//right domain, only production
 	if (JMVC.vars.baseurl === JMVC.vars.produrl){
 		//ga é in QS e ha un valore 'true' o 'false''
 		var t =/(^true$|^false$)/i;

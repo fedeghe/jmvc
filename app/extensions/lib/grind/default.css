@@ -1,0 +1,94 @@
+
+body { 
+    width:700px;
+	margin:0 auto;
+	background-color:#888;
+	
+}
+
+#extralogo{
+	height:auto;
+}
+
+
+div.blocco{
+	background-color:fede76;
+	margin:5px;
+	border:1px dotted black;
+}
+
+
+.gbox{
+	/*float:left;*/
+	padding:none;
+	margin:0px;
+	border:none;
+}
+.gclear{
+    clear: both;
+    display: block;
+	zoom: 1;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+}
+.g50{width:50px;     background-color:#f7f7f7;}
+.g100{width:100px;     background-color:#e0e0e0;}
+.g150{width:150px;     background-color:#d7d7d7;}
+.g200{width:200px;     background-color:#d0d0d0;}
+.g250{width:250px;     background-color:#c7c7c7;}
+.g300{width:300px;     background-color:#c0c0c0;}
+.g350{width:350px;     background-color:#b7b7b7;}
+.g400{width:400px;     background-color:#b0b0b0;}
+.g450{width:450px;     background-color:#a7a7a7;}
+.g500{width:500px;     background-color:#a0a0a0;}
+.g550{width:550px;     background-color:#979797;}
+.g600{width:600px;     background-color:#909090;}
+.g650{width:650px;     background-color:#878787;}
+.g700{width:700px;}
+/*background-color:#808080;}*/
+.g750{width:750px;     background-color:#777777;}
+.g800{width:800px;     background-color:#707070;}
+.g850{width:850px;     background-color:#676767;}
+.g900{width:900px;     background-color:#606060;}
+.g950{width:950px;     background-color:#575757;}
+.g1000{width:1000px;     background-color:#505050;}
+.g1050{width:1050px;     background-color:royalblue;}
+.g1100{width:1100px;     background-color:sandybrown;}
+
+.p5{width:5%;     background-color:red;}
+.p10{width:10%;     background-color:pink;}
+.p15{width:15%;     background-color:navy;}
+.p20{width:20%;     background-color:gainsboro;}
+.p25{width:25%;     background-color:rosybrown;}
+.p30{width:30%;     background-color:aqua;}
+.p35{width:35%;     background-color:blueviolet;}
+.p40{width:40%;     background-color:cadetblue;}
+.p45{width:45%;     background-color:crimson;}
+.p50{width:50%;     background-color:darkorange;}
+.p55{width:55%;     background-color:fuchsia;}
+.p60{width:60%;     background-color:green;}
+.p65{width:65%;     background-color:hotpink;}
+.p70{width:70%;     background-color:indigo;}
+.p75{width:75%;     background-color:lawngreen;}
+.p80{width:80%;     background-color:moccasin;}
+.p85{width:85%;     background-color:navajowhite;}
+.p90{width:90%;     background-color:olive;}
+.p95{width:95%;     background-color:orchid;}
+.p100{width:100%;}
+/*background-color:palegreen;}*/
+
+.brd_left{
+	border-right:10px solid black;
+	border-top:10px solid white;
+	border-bottom:10px solid white;
+	width:0px;
+	height:50px;
+}
+.brd_right{
+	border-left:10px solid black;
+	border-top:10px solid white;
+	border-bottom:10px solid white;
+	width:0px;
+	height:50px;
+}
