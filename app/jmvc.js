@@ -1739,7 +1739,18 @@
 			return false;
 		},
 		'ready' : function (func) {
-			return this.bind(W, 'load', func);
+			//return this.bind(W, 'load', func);
+			var e = null;
+			if(WD.addEventListener){
+				e = WD.addEventListener('DOMContentLoaded', func, false);
+			}else if(W.addEventListener){
+				e = W.addEventListener('load', func, false )
+			}else if(WD.attachEvent){
+				e = WD.attachEvent("onreadystatechange", func);
+			}else if(W.attachEvent){
+				e = W.attachEvent("onload", func);
+			}
+			return e;
 		},
 		'preventDefault' : function (e) {
 			e = e || W.event;
