@@ -46,6 +46,7 @@
 		 *
 		 * global JMVC
 		 */
+		
 		JMVC = W.JMVC = (
 			function () {
 
@@ -773,6 +774,7 @@
 
 				// render the view parsing for variable&view placeholders
 				View.prototype.render = function (pars) {
+				
 					//call before render
 					$JMVC.events.startrender();
 
@@ -819,6 +821,7 @@
 					}
 
 					this.content = cont;
+
 
 					if(!$JMVC.loaded){
 						// books rendering in body or elsewhere, on load
@@ -901,7 +904,7 @@
 					if (WDL.hostname === 'localhost') {
 						els.shift();
 					}
-
+					
 					controller = els.shift() || JMVC_DEFAULT.controller;
 					//check extrapath for controller
 					if (!!controller.match(/_/)) {
@@ -936,7 +939,6 @@
 						'params' : params,
 						'baseurl' : WDL.protocol + US + US + WDL.hostname
 					};
-
 					//ret.controller = jmvc_normalize(ret.controller);
 					return ret;
 				})();
@@ -1982,33 +1984,34 @@
 	// polling ajax finishing
 	(function r() {
 		
-		
-		
-		if (JMVC.io.xhrcount === 0) {
-			//
-			// before rendering, load requested extensions (must be set in the
-			// Modules var and the file must be in the extensions folder)
-			if (JMVC.modules.length > 0) {
-				i = 0;
-				l = JMVC.modules.length;
-				for (null; i < l; i += 1) {
-					JMVC.require(JMVC.modules[i]);
-				}
+		//
+		// before rendering, load requested extensions (must be set in the
+		// Modules var and the file must be in the extensions folder)
+		if (JMVC.modules.length > 0) {
+			i = 0;
+			l = JMVC.modules.length;
+			for (null; i < l; i += 1) {
+				JMVC.require(JMVC.modules[i]);
 			}
-			
-			JMVC.render();
-			
-		} else {
-			JMVC.debug('poll');
-			W.setTimeout(r, 5);
 		}
 		
+		var pollmode = false; 
 		
-		
-		
-		
-		
-		
+		if (pollmode) {
+			if (JMVC.io.xhrcount === 0) {
+				JMVC.render();
+			} else {
+				JMVC.debug('poll');
+				W.setTimeout(r, 10);
+			}
+		} else {
+			JMVC.render();
+		}
 		
 	})();
+	
 }(this.window || global);
+
+window.onerror = function(errorMsg, url, lineNumber) {
+	alert("Uncaught error " + errorMsg + " in " + url + ", line " + lineNumber);
+};
