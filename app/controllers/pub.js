@@ -95,7 +95,8 @@ JMVC.controllers.pub = function () {
 					.listen('dblclick', function (e) {console.debug('2click', e); })
 					.bind();				
 			}).bind();
-
+			
+		// globalize
 		JMVC.globalize('xvents' , [xvents0]);
 
 		v.render(function () {
