@@ -95,18 +95,18 @@ JMVC.extend('tabs', {
 							'border:solid 1px #000000;-moz-border-radius-topleft: 5px;-moz-border-radius-topright:5px;-moz-border-radius-bottomleft:0px;-moz-border-radius-bottomright:0px;'+
 							'-webkit-border-top-left-radius:5px;-webkit-border-top-right-radius:5px;-webkit-border-bottom-left-radius:0px;-webkit-border-bottom-right-radius:0px;'+
 							'border-top-left-radius:5px;border-top-right-radius:5px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;',
-						'ul.tablabels_o li:hover':'background-color:white;',
+						'ul.tablabels_o li:hover':'background-color:#eee;',
 						'ul.tablabels_o li.sel':'border:1px solid black;border-bottom:none; background-color:white; z-index:10;position:relative;top:1px',
-						'div.tabcontainer_o' : border3 + 'line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;border:1px solid black;position:relative;top:-3px;z-index:5; padding:5px',
+						'div.tabcontainer_o' : border3 + 'line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;border:1px solid black;position:relative;top:-3px;z-index:5; padding:5px;background-color:white',
 
 						'ul.tablabels_v':'float:left;list-style:none;margin:0px;padding:0px;',
 						'ul.tablabels_v li':'display:block; text-align:right;line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;background-color:#ddd;padding:5px; cursor:pointer;margin-top:5px;'+
 								'border:solid 1px #000000;-moz-border-radius-topleft: 5px;-moz-border-radius-topright:0px;-moz-border-radius-bottomleft:5px;-moz-border-radius-bottomright:0px;'+
 								'-webkit-border-top-left-radius:5px;-webkit-border-top-right-radius:0px;-webkit-border-bottom-left-radius:5px;-webkit-border-bottom-right-radius:0px;'+
 								'border-top-left-radius:5px;border-top-right-radius:0px;border-bottom-left-radius:5px;border-bottom-right-radius:0px;',
-						'ul.tablabels_v li:hover':'background-color:white;',
+						'ul.tablabels_v li:hover':'background-color:#eee;',
 						'ul.tablabels_v li.sel':'border:1px solid black;border-right:none; background-color:white; z-index:10;position:relative;left:0px',
-						'div.tabcontainer_v' : border3 + 'min-height:' + realheight + 'px;overflow:hidden; position:relative;border:1px solid black;line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;border:1px solid black;left:-1px;z-index:5; padding:5px'
+						'div.tabcontainer_v' : border3 + 'min-height:' + realheight + 'px;overflow:hidden; position:relative;border:1px solid black;line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;border:1px solid black;left:-1px;z-index:5; padding:5px;background-color:white'
 					};
 				
 				

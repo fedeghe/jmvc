@@ -18,26 +18,30 @@ JMVC.extend('fx',{
 	},
 	
 	'animate' : function (el, prop, to, delta, cb) {
-		(
-			function () {
-				var from = JMVC.getNum(JMVC.css.style(el, prop)),
-					versus = from < to,
-					end = false,
-					t = JMVC.W.setInterval(
-					function(){
-						
-						if(versus && from < to){
+		(function () {
+			var from = JMVC.getNum(JMVC.css.style(el, prop)),
+				versus = from < to,
+				end = false,
+				t = JMVC.W.setInterval(
+					function () {
+						if (versus && from < to) {
 							from += delta;
 							end = from >= to;
+							if (from > to) {
+								from = to;
+							}
 						}
-						if(!versus && from > to){
+						if (!versus && from > to) {
 							from -= delta;
 							end = from <= to;
+							if (from < to) {
+								from = to;
+							}
 						} 
 						
 						JMVC.css.style(el, prop , from + 'px');
-						if(end){
-							if(cb){cb();}
+						if (end) {
+							cb && cb();
 							from = to;
 							JMVC.W.clearInterval(t);
 							//console.debug('cleared')
@@ -45,16 +49,17 @@ JMVC.extend('fx',{
 					},
 					25
 				);
-			}
-		)();
+		})();
 	},
 	
 	
 	'close' : function (el, prop, str, inc, cb) {
-		var timeout_me = function(){
+		var timeout_me = function () {
 			JMVC.W.setTimeout(
-				function(){
-					if(prop > 0)prop = prop - inc;
+				function () {
+					if (prop > 0) {
+						prop = prop - inc;
+					}
 					JMVC.css.style(el, str , prop + 'px');
 					
 					if (prop <= 0) {
@@ -78,11 +83,11 @@ JMVC.extend('fx',{
 						if (base < prop) { 
 							base = base + inc;
 						}
-						JMVC.css.style(el, str, base+'px');
-						if(base >= prop){
+						JMVC.css.style(el, str, base + 'px');
+						if (base >= prop) {
 							JMVC.css.style(el, str, prop + 'px');
-							if(cb){cb();}
-						}else{
+							cb && cb();
+						} else {
 							timeout_me();
 						}
 					}, 15
@@ -100,7 +105,7 @@ JMVC.extend('fx',{
 			marginTop = JMVC.getNum(JMVC.css.style(el, 'marginTop')),
 			marginBottom = JMVC.getNum(JMVC.css.style(el, 'marginBottom')),
 			self = JMVC.fx;
-		if(v && JMVC.util.isTypeOf(v, 'number')){
+		if (v && typeof v == 'number') {
 			self.speed = v;
 		}
 		JMVC.css.style(el, 'overflow', 'hidden');
@@ -132,7 +137,8 @@ JMVC.extend('fx',{
 			marginTop = 0,
 			marginBottom = 0,
 			self = JMVC.fx;
-		if(v && JMVC.util.isTypeOf(v, 'number')){
+
+		if (v && typeof v =='number') {
 			self.speed = v;
 		}
 		if (!target) {
@@ -184,7 +190,7 @@ JMVC.extend('fx',{
 		//JMVC.css.style(el, 'border','1px solid black');
 		var vis = JMVC.css.style(el, 'display'),
 			self = JMVC.fx;
-		if(v && JMVC.util.isTypeOf(v, 'number')){
+		if (v && JMVC.util.isTypeOf(v, 'number')) {
 			self.speed = v;
 		}
 		if (vis === 'none') {
@@ -195,22 +201,23 @@ JMVC.extend('fx',{
 	},
 	
 	
-	'fadeIn' : function(el){
+	'fadeIn' : function (el) {
 		var opacity = 0.0,
-			targets = {opacity:1};
-		JMVC.css.style(el,'opacity',0);	
+			targets = {opacity : 1};
+		JMVC.css.style(el, 'opacity', 0);
 		this.show(el);	
 		
-		var timeout_me = function(){
+		var timeout_me = function () {
 			var timeout_up = JMVC.W.setTimeout(
-				function(){
-					if(opacity < targets.opacity)opacity = parseFloat(opacity+0.05);
-					
+				function () {
+					if (opacity < targets.opacity) {
+						opacity = parseFloat(opacity + 0.05);
+					}
 					JMVC.css.style(el,'opacity',opacity);	
 
-					if(opacity >= targets.opacity){
+					if (opacity >= targets.opacity) {
 						JMVC.css.style(el, 'opacity',opacity);	
-					}else{
+					} else {
 						timeout_me();
 					}
 				},
@@ -221,20 +228,22 @@ JMVC.extend('fx',{
 		return this;
 		
 	},
-	'fadeOut' : function(el){
+	'fadeOut' : function (el) {
 		var opacity = JMVC.css.getComputedStyle(el, 'opacity');
 		this.nodes_sizes[el] = {opacity : 1};
 		
-		var timeout_me = function(){
+		var timeout_me = function () {
 			var timeout_up = JMVC.W.setTimeout(
-				function(){
-					if(opacity > 0)opacity = opacity-0.05;
+				function () {
+					if (opacity > 0) {
+						opacity = opacity - 0.05;
+					}
 					
 					JMVC.css.style(el,'opacity', opacity);
 
-					if(opacity <= 0){
-						JMVC.css.style(el,'opacity',0);	
-					}else{
+					if (opacity <= 0) {
+						JMVC.css.style(el, 'opacity', 0);
+					} else {
 						timeout_me();
 					}
 				},

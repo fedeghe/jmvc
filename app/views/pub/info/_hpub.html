@@ -1,0 +1,93 @@
+<div>
+	<h2>$label$</h2>
+	<p></p>
+	
+
+	<p>
+		Here is a summary about how this Observer is intended to work; through the API You'll specify:
+		<ul class="list">
+			<li>one or more root nodes meant to contain all the elements involved, ... and for each one of theese nodes:</li>
+			<li>two <i>data-</i> attributes names, one for <i>the action</i> and one for <i>parameters</i> (not mandatory if root is either the window element or the body)</li>
+			<li>one or more bindings between the DOM event type, the callback and the target action</li>
+		</ul>
+	</p>
+
+	<p>Nothing is better than an sample, suppose you have a markup like the following:</p>
+
+<[H[<body>
+	...
+	<div id="area1">
+		<input type="button" value="hei u" />
+		<span>over</span>
+		<!-- hei -->
+	</div>
+	...
+</body>]H]>
+
+	<p>As DOM is loaded, create a new element</p>
+
+<[H[// create a new element, and get a reference to a domnode
+var xe =  JMVC.xvents.create(),
+	node = $('#area1');
+//
+// declare that inside the node with id="area1" two names
+// will determine the binding, one for the action and one for parameter,
+// .. it will be clear in a moment
+xe.add(node, 'data-act', 'data-par')
+//
+// in the next line we declare that any element contained in the current
+// reference node with an attribute named 'data-act' valued 'alert'
+// will cause the callback to be executed;
+// the callback will receive one parameter that always contains the
+// event and what is contained in the 'data=par' named parameter
+.listen('click', function (p) {console.debug('click alert', p); }, 'alert');
+//
+// in the same fashion, we chain
+.listen('dblclick', function (p) {console.debug('dblclick', p); }, 'alert2')
+.listen('mouseover', function (p) {console.debug('over ', p); }, 'overout')
+.listen('mouseout', function (p) {console.debug('out ', p); }, 'overout')
+.listen('change', function (p) {console.debug(p.node.value); }, 'sel')
+.bind();
+//
+// for document events
+xe.add(window)
+.listen('load', function (e) {
+    console.debug('dom loaded');
+    xe.add(window.document)	
+        .listen('click', function (e) {console.debug('one click on window', e); })
+        .listen('click', function (e) {console.debug('... sure, on window', e); })
+        .listen('dblclick', function (e) {console.debug('2click', e); })
+        .bind();				
+});
+//
+// if needed a fourth boolean parameter is available to stop event bubbling (true value will stop it)
+xe.add($('#area2'), 'data-act2', 'data-par')
+    .listen('mousemove', function (p) {console.debug(p.event); }, 'getpos')
+    .listen('click', function (p) {console.debug(p.event); }, 'notify', true)
+    .bind();
+//]H]>
+</div>
+
+<div class="pros">
+	<h3>Pros</h3>
+	<div class="cnt">
+		heiiiiii
+	</div>
+</div>
+<div class="cons">
+	<h3>Cons</h3>
+	<div class="cnt">
+		<ul>
+			<li>one</li>
+			<li>two</li>
+		</ul>
+	</div>
+</div>
+<br class="clearer" />
+
+<p>
+	<strong>Sample here:</strong> <a href="$link$">$label$</a>
+</p>
+
+$end$
+

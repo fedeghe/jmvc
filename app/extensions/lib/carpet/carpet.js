@@ -5,8 +5,8 @@ JMVC.extend('carpet',{
 	},
 	'create' : function (container, w, h, s) {
 		var tileSize = {
-				width : 2<<6, //256
-				height : 2<<6 //256
+				width : 100, //256
+				height : 100 //256
 			},
 			that = this,
 			map = this,
@@ -195,9 +195,9 @@ JMVC.extend('carpet',{
 			 * adds a row/colum and removes the opposite
 			 * 
 			 */ 
-			this.add = function (where/*top,right,bottom,left*/) {
+			this.add = function (where /* top,right,bottom,left */) {
 				
-				function updateindex(name1, name2, index1, index2, incr1, incr2){
+				function updateindex(name1, name2, index1, index2, incr1, incr2) {
 					//update positions
 					this.actualNodes[name1][index1] += incr1;
 					this.actualNodes[name2][index1] += incr1;

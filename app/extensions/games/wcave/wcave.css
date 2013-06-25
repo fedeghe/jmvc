@@ -1,0 +1,108 @@
+*:not(input,textarea) {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+}
+body{
+	margin:0px;
+	padding:0px;
+	background-color:#000;
+	font-family: 'Freckle Face', Verdana;
+}
+div.err{
+	color:red;
+	margin:10px 0px;
+	font-size:30px;
+}
+div.cnt{
+	margin:0 auto;
+	text-align:center;
+}
+div.cnt div.panel{
+	position : absolute;
+	z-Index : 200;
+    border:solid 0px #00ff00;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px;
+	background-color: black;
+	font-family: 'Freckle Face', Verdana;
+	-moz-box-shadow: 0px 0px 15px #aaa;
+    -webkit-box-shadow: 0px 0px 15px #aaa;
+    box-shadow: 0px 0px 15px #aaa;
+	color:#0f0;
+	padding-bottom:10px;
+}
+div.cnt canvas {
+}
+div.cnt div.panel h1{
+	font-size:78px;
+	color:#0f0;
+	margin:15px 0px;
+}
+div.cnt div.panel h2{
+	font-size:45px;
+	color:#0f0;
+	margin:15px 0px;
+}
+div.cnt div.panel h1 sub{
+	font-size:18px;
+	padding:0px;
+	margin:0px;
+}
+div.cnt div.panel h3{
+	font-size:78px;
+	color:#0f0;
+	margin:15px 0px;
+}
+div.cnt div.panel p{
+	color:#fff;
+	font-size:30px;
+	padding:0px;
+	margin:0px;
+}
+div.cnt div.panel p span.rank{
+	color:#0f0;
+}
+div.cnt div.panel p span{
+	color:#0f0;
+}
+div.cnt div.panel input[type=button]{
+	cursor:pointer;
+	font-size:45px;
+	border:none;
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+	background-color: transparent;
+	color:#0f0;
+	text-shadow:0px 0px 3px #fff;
+	font-family:inherit;
+}
+div.cnt div.panel input[type=button]:hover{
+	color:#fff;
+	text-shadow:0px 0px 15px #0f0;
+}
+div.cnt div.panel ul li{
+	color:#888;
+	font-size:21px;
+}
+div.cnt div.panel ul li span.rgb1{color:#ff0000;}
+div.cnt div.panel ul li span.rgb2{color:#00ff00;}
+div.cnt div.panel ul li span.rgb3{color:#0000ff;}
+div.cnt div.panel ul li span.white{color:#ffffff;}
+div.cnt div.panel ul li span.ks{
+	color:#ccc;
+	font-style: italic;
+	padding:0px 1px;
+}
+div.cnt div.panel ul{
+	list-style-type: none;
+	padding:0px;
+	margin:0px;
+	margin:0 auto;
+}
+div.cnt div.panel label{
+	color:#fff;
+	font-size:30px;
+	padding-right:10px;
+}

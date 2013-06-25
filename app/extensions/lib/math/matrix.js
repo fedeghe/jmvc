@@ -6,7 +6,8 @@ JMVC.require(
 JMVC.extend('matrix', {
 	
 	'KKmatrix' : function () {
-		var _ = Array.prototype.splice.call(arguments[0], 0),
+		//var _ = Array.prototype.splice.call(arguments[0], 0),
+		var _ = Array.prototype.slice.call(arguments[0]),
 			len = _.length,
 			dim = JMVC.M.sqrt(len),
 			self = this;
@@ -178,7 +179,8 @@ JMVC.prototipize(JMVC.matrix.KKmatrix, {
 			}
 		}
 		return new JMVC.matrix.KKmatrix(_);
-	}, 
+	},
+
 	'isInvertible' : function () {
 		this.determinant = this.det();
 		if (this.determinant) {
@@ -186,6 +188,7 @@ JMVC.prototipize(JMVC.matrix.KKmatrix, {
 		}
 		return this.invertible;
 	},
+
 	'invert' : function () {
 		var _ = [],
 			d = this.dim,
@@ -199,7 +202,8 @@ JMVC.prototipize(JMVC.matrix.KKmatrix, {
 			}
 		}
 		return new JMVC.matrix.KKmatrix(_);
-	},		
+	},
+
 	'transpose' : function () {
 		var _ = [],
 			i = 0;
@@ -260,20 +264,6 @@ JMVC.matrix.unity(5).print()
 
 
 
-2 3 4 5
-5 3 6 8
-2 7 4 1
-2 3 7 9
-
-2 3 4 5
-5 3 6 8
-2 7 4 1
-0 0 0 4
-
-2 3 4 5
-5 3 6 8
-2 7 4 1
-2 3 7 5
 
 
 

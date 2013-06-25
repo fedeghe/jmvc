@@ -9,7 +9,7 @@ JMVC.extend('modal',{
 		title = title || '';
 		this.id++;
 		
-		JMVC.events.disable_scroll();
+		JMVC.events.disable_scroll(JMVC.WD.body);
 		
 		var scrData = JMVC.dim.getScreenData(),
 			bg,
@@ -68,9 +68,10 @@ JMVC.extend('modal',{
 		//JMVC.debug(this.id);
 	},
 	'close' : function (element) {
+
 		JMVC.events.unbind(element, 'click');
-		JMVC.dom.remove(JMVC.dom.find('.jmvc_modal_content')[0]);
-		JMVC.dom.remove(JMVC.dom.find('.jmvc_modal_content_bg')[0]);
+		JMVC.dom.remove(JMVC.dom.find('.jmvc_modal_content'));
+		JMVC.dom.remove(JMVC.dom.find('.jmvc_modal_content_bg'));
 		JMVC.events.enable_scroll();
 		
 	}

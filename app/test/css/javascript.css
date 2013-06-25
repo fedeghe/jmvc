@@ -17,6 +17,8 @@ code.debug ul{
 }
 code.debug ul li{
 	line-height:16px;
+	white-space:pre-wrap;
+	border:1px solid #222;
 }
 code.debug ul li span.nline{
 	width:30px;
@@ -24,10 +26,12 @@ code.debug ul li span.nline{
 	color:white;
 	text-align:right;
 	margin-right:10px;
+	
 }
 code.debug ul li:hover{
-	background-color:#333;
+	background-color:#000;
 	color:#0f0;
+	border:1px dotted #555;
 }
 
 

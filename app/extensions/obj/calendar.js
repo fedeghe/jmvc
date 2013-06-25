@@ -20,6 +20,7 @@ JMVC.extend('calendar',{
 			this.starts_with = 1,//lun
 			this.ends_with = (this.starts_with+6)%7,
 			this.row_tpl = '<tr>'+JMVC.util.str_repeat('<td class="cl%n%">%%n%%</td>', 7)+'</tr>';
+
 		return {
 			'getDaysInMonth' : function (m, y) {
 				var bis = ( ( !(y % 100 ) && !( y % 400 ) ) || ( !( y % 4 ) && ( y % 100 ) ) );

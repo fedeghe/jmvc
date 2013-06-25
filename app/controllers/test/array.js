@@ -7,7 +7,7 @@ JMVC.controllers.array = function() {
 		
 		JMVC.events.loadify(1000);
 		
-		this.render(false,function test(){
+		this.render(function test(){
 			"use strict";
 			
 			var s = [-3.33E30, -10.2, 1, 20, 30, 40, 50, 60, 70, 80, 90, 95.3, 110, 120, 130, 140, 300 ,1E4];
@@ -82,7 +82,7 @@ at the end there is an execution <a href="#times">time comparison</a>:');
 			pool(JMVC.array.fastNearest);
 			
 			var times = 5000,
-				n = s = 5000,
+				n = s = 10000,
 				rn = JMVC.util.rand(-s, s) + 0.3456,
 				a = [];
 			while(n--){a.push(JMVC.util.rand(-s, s));}

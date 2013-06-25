@@ -20,7 +20,7 @@
 		</function>
 		<function>
 			<signature name="extend">JMVC.extend(String section, Literal extension)</signature>
-			<description>Extends JMVC object with Your methods</description>
+			<description>Extends JMVC object with Your objects</description>
 			<params>
 				<param name="*section">	that parameter is needed to set the namespace under which Your functions will be added toJMVC, if You use `ajax` then all functions in the literal will be callable with JMVC.ajax.my_function(....)</param>
 				<param name="*extension">this object literal defines all the functions in your extension (JMVC is in that scope, so You can use it)</param>

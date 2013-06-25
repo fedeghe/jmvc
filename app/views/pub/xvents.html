@@ -1,0 +1,45 @@
+<style type="text/css">
+#area1{
+	background-color:#ff6600;
+	padding:10px;
+}
+#area2 div{
+	border:3px solid black;
+	width:300px;
+	height:50px;
+	background-color:blue;
+	margin-bottom:10px;
+}
+#innerarea{
+	margin-top:10px;
+}
+#sense{
+	margin-left:500px;
+}
+
+</style>
+<div id="area">
+	<div id="area1">
+		<input type="button" value="click me or over&out" data-act="alert|alert2|overout" data-par="{'name':'federico','surname':'ghedina'}" />
+		<input type="button" value="2click me or over&out" data-act="alert2|overout" data-par="{'action':'here`s a double click'}" />
+		
+		<select name="selection" data-act="sel">
+			<option value="v1">value1</option>
+			<option value="v2">value2</option>
+			<option value="v3">value3</option>
+		</select>
+	</div>
+	<hr>
+	<div id="area2">
+		<div id="sense" data-act2="getpos|notify">&nbsp;</div>
+	</div>
+
+	<input type="button" value="hello" data-act0="hello" data-par="{'name':'Federico'}" />
+	
+	<div id="innerarea">
+		<input type="button" value="hellosuper" data-act-inner="hellosuper" data-par-inner="{'lang':'javascript'}" />
+
+		<!-- try one in the innerarea -->
+	</div>
+</div>
+

@@ -1,4 +1,5 @@
 JMVC.controllers['404'] = function () {
+	"use strict";
 	this.msg = function () {		
 		var f0f = JMVC.factory('view', '404'),
 			d = new Date();
@@ -13,6 +14,7 @@ JMVC.controllers['404'] = function () {
 		f0f.set('url', document.location.href);
 		f0f.set('agent', window.navigator.userAgent);
 		f0f.render();
+
 		JMVC.head.title('404 PAGE NOT FOUND');
 		window.setTimeout(function () {document.location.href = '/'; }, 5000);
 	};

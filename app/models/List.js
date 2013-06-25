@@ -1,14 +1,18 @@
 JMVC.models.List = function () {
-	this._items = [].concat(arguments);
+	var a = Array.prototype.slice.call(arguments, 0);
+	this._items =  a.length ? a : [];
 	this._selectedIndex = -1;
 
 	this.itemAdded = new JMVC.Event(this);
 	this.itemRemoved = new JMVC.Event(this);
+	this.listModified = new JMVC.Event(this);
 	this.selectedIndexChanged = new JMVC.Event(this);
+	this.setBuildStrategy = function (f) {this.build = f; }
 };
 
 
 JMVC.prototipize(JMVC.models.List, {
+
 	getItems : function () {
 		return [].concat(this._items);
 	},
@@ -16,14 +20,17 @@ JMVC.prototipize(JMVC.models.List, {
 	addItem : function (item) {
 		this._items.push(item);
 		this.itemAdded.notify({item: item});
+		this.listModified.notify({item: item});
 	},
 
 	removeItemAt : function (index) {
 		var item = this._items[index];
 		this._items.splice(index, 1);
 		this.itemRemoved.notify({item: item});
-		if (index == this._selectedIndex)
+		this.listModified.notify({item: item});
+		if (index == this._selectedIndex) {
 			this.setSelectedIndex(-1);
+		}
 	},
 
 	getSelectedIndex : function () {
@@ -34,5 +41,8 @@ JMVC.prototipize(JMVC.models.List, {
 		var previousIndex = this._selectedIndex;
 		this._selectedIndex = index;
 		this.selectedIndexChanged.notify({previous: previousIndex});
+	},
+	build : function () {
+		JMVC.W.alert('No build strategy given');
 	}
 });

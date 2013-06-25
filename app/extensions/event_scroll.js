@@ -5,8 +5,11 @@ JMVC.extend('events', {
 	'vars' : {
 		cb : false
 	},
-	'disable_scroll' : function () {
+	'disable_scroll' : function (node) {
+		node = node || JMVC.WD.body; 
+		this.vars.overflow = node.style['overflow'];
 		JMVC.WD.body.style.overflow = 'hidden';
+		console.debug(this)
 		/*
 		if (JMVC.W.addEventListener) {
 			JMVC.W.addEventListener('DOMMouseScroll', JMVC.events.preventDefault, false);
@@ -24,12 +27,19 @@ JMVC.extend('events', {
 			}
 		};
 		*/
-	   JMVC.W.onmousewheel = JMVC.WD.onmousewheel = JMVC.events.preventDefault;
+	   //JMVC.W.onmousewheel = JMVC.WD.onmousewheel = JMVC.events.preventDefault;
 	},
-	'enable_scroll' : function () {
-		if(JMVC.events.vars.cb){
+	'enable_scroll' : function (node) {
+		node = node || JMVC.WD.body;
+		node.style['overflow'] = this.vars.overflow;
+		
+
+
+		/*
+		if (JMVC.events.vars.cb) {
 			JMVC.W.removeEventListener('DOMMouseScroll', JMVC.events.vars.cb, false);
-		}
+		}*/
+
 		/*
 		if (JMVC.W.removeEventListener) {
 			JMVC.W.removeEventListener('DOMMouseScroll', JMVC.events.preventDefault, false);
@@ -38,15 +48,18 @@ JMVC.extend('events', {
 			}
 		}
 		*/
-	   JMVC.W.onmousewheel = JMVC.WD.onmousewheel = JMVC.WD.onkeydown = null;
+	   //JMVC.W.onmousewheel = JMVC.WD.onmousewheel = JMVC.WD.onkeydown = null;
 		
-	   JMVC.WD.body.style.overflow = 'visible';
+	   //JMVC.WD.body.style.overflow = 'visible';
 	},
 	'onScroll' : function (el, cback) {
-		JMVC.events.vars.cb = function (e) {cback(e); JMVC.events.preventDefault; }
+		JMVC.events.vars.cb = function (e) {
+			cback(e);
+			//JMVC.events.preventDefault;
+		}
 		
 		JMVC.events.bind(el, 'mouseover', function (e) {
-			JMVC.events.disable_scroll();
+			//JMVC.events.disable_scroll();
 			
 			if (JMVC.W.addEventListener) {
 				JMVC.W.addEventListener('DOMMouseScroll', JMVC.events.vars.cb, false);
@@ -55,8 +68,8 @@ JMVC.extend('events', {
 			
 			JMVC.events.preventDefault(e);
 		});
-		JMVC.events.bind(el, 'mouseout',function(){
-			JMVC.events.enable_scroll();
+		JMVC.events.bind(el, 'mouseout', function () {
+			//JMVC.events.enable_scroll();
 		});
 		
 	}

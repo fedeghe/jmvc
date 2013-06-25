@@ -1,9 +1,22 @@
 JMVC.extend('date', {
+	'init' : function(){
+		JMVC.date.vars.END = (JMVC.date.vars.START + 6 ) % 7;
+	},
 	'vars' : {
 		'DAYMS' : 1E5 * 36 * 24,
 		'WEEKMS' : 1E5 * 36 * 24 * 7,
-		'START' : 1,
+		'START' : 0,
+		'END' : 0,
 		'START_ON_SUN' : true,
+		'DAYMAP' : [
+			'Sunday',
+			'Monday',
+			'Tuesday',
+			'Wednesday',
+			'Thursday',
+			'Friday',
+			'Saturnday'
+		],
 		'time_formats' : {
 			'en-us' :{
 				format : '%DD%, %MM% %D%, %YYYY% %H12% : %I% : %S% %APM%',
@@ -12,95 +25,103 @@ JMVC.extend('date', {
 			}
 		}
 	},
+	'setStart' : function(d){
+		JMVC.date.vars.START = d;
+		JMVC.date.vars.END = (JMVC.date.vars.START + 6 ) % 7;
+	},
 	
-	
-	
-	
-	
-	/**
-	 * 
-	 * 6012345 6012345 6012345
-	 * ....... ....... .......
-	 *  ###### #
-	 *  
-	 * #######     
-	 *              
-	 *      ## #####
-	 * dlmmgvs dlmmgvs dlmmgvs dlmmgvs dlmmgvs dlmmgvs
-	 * 
+	/*
+	 * Given a date returns the belonging week bounds,
+	 * standing on START and END of the week settings
 	 */
-	//
-	// http://stackoverflow.com/questions/6117814/get-week-of-year-in-javascript-like-in-php
-	'day2week' : function (d) {
-		//
-		//
-		"use strict";
-		var thatD = (d !== undefined && d instanceof Date) ? d : new Date(),
-			yearStart;
-		
-		if (JMVC.date.vars.START_ON_SUN) {
-			thatD = new Date(thatD.getFullYear(), thatD.getMonth(), thatD.getDate() +1 );
+	'weekBounds' : function (date) {
+		var thatD = JMVC.date.tools.ensureDate(date),
+			b1 = 0,
+			b2 = 0,
+			y = thatD.getFullYear(),
+			m = thatD.getMonth(),
+			d = thatD.getDate(),
+			wd1 = thatD.getDay(),
+			wd2 = wd1;
+		while(wd1 != JMVC.date.vars.START){
+			b1--;
+			wd1 = (wd1 - 1 + 7) % 7;
 		}
-
-		thatD.setHours(0, 0, 0, 0);
-		// Set to nearest Thursday: current date + 4 - current day number
-		// Make Sunday's day number 7
-		thatD.setDate(thatD.getDate() + 4 - (thatD.getDay() || 7));
-		// Get first day of year
-		yearStart = new Date(thatD.getFullYear(), 0, 1);
-		// Calculate full weeks to nearest Thursday
-		return Math.ceil((((thatD - yearStart) / JMVC.date.vars.DAYMS) + 1) / 7);
-	},
-	'week2range' : function (w, y) {
-		var thatY = JMVC.date.tools.ensureYear(y),
-			from,
-			to,
-			week_start = JMVC.date.vars.START_ON_SUN ? 0 : 1,
-
-			//get the first thrusday .... http://en.wikipedia.org/wiki/ISO_week_date#First_week .... ISO 8601
-			jan1 = new Date(thatY, 0, 1, 0),
-			djan1 = jan1.getDay(),
-			tmp = 1 + 4 - djan1,
-			FirstThursday = tmp > 0 ? tmp : tmp + 7,
-			from = JMVC.date.vars.START_ON_SUN ? -4 : -3,
-			to = JMVC.date.vars.START_ON_SUN ? 2 : 3,
-			//
-			//ok FirstThursday
-			//now get bounds, now add (w-1)*this.vars.WEEKMS
-			tmp = new Date(new Date(thatY, 0, FirstThursday + (w-1)*7, 0));// + (w-1) * this.vars.WEEKMS);
-		tmp.setHours(0, 0, 0, 0);
-		//
+		while(wd2 != JMVC.date.vars.END){
+			b2++;
+			wd2 = (wd2 + 1 + 7) % 7;
+		}
 		return {
-			'from' : new Date(tmp.getFullYear(), tmp.getMonth(), tmp.getDate() + from, 0, 0, 0, 0),
-			'to' : new Date(tmp.getFullYear(), tmp.getMonth(), tmp.getDate() + to , 0, 0, 0, 0)
-		};
+			'from' : new Date(y, m, d+b1, 0, 0, 0, 0),
+			'to' : new Date(y, m, d+b2, 0, 0, 0, 0)
+		}
 	},
-	'weekInYear' : function (y) {
-		var thatY = JMVC.date.tools.ensureYear(y);
-		
-		var jan1 = new Date(thatY, 0, 1, 0),
-			djan1 = jan1.getDay(),
-			tmp = 1 + 4 - djan1,
-			FirstThursday = tmp > 0 ? tmp : tmp + 7;
-		//the 4th of january is always on the first,
-		// so the 28 or december is always on the last week
-		return this.day2week(new Date(new Date(thatY, 0, FirstThursday -7, 0)));
-	},
-	/**
-	 *
+	
+	/* 
+	 * The 4th of each Year is always on the first week (ISO-8601)
 	 */
+	'firstW' : function (y) {	
+		var referenceDay = new Date(y, 0, 4, 0, 0, 0, 0);
+		return JMVC.date.weekBounds(referenceDay);	
+	},
+	
+	'lastW' : function (y) {
+		var referenceDay = new Date(y, 11, 28, 1, 0, 0, 0);
+		return JMVC.date.weekBounds(referenceDay);		
+	},
+	
+	'day2week' : function (date) {
+		var thatD = JMVC.date.tools.ensureDate(date),
+			thatY = thatD.getFullYear(),
+			firstWeek = JMVC.date.firstW(thatY),
+			firstWeekFirstDay = firstWeek.from,
+			weeksInPrevYear = JMVC.date.weekInYear(thatY-1),
+															//security bound hack +10 ms
+			mayret = Math.ceil((thatD - firstWeekFirstDay +10 )/JMVC.date.vars.WEEKMS);
+			
+		if(thatD < firstWeekFirstDay){
+			//console.debug('z')
+			return weeksInPrevYear;
+		}
+		return (mayret > weeksInPrevYear) ? 1 : mayret;
+	},
+	
+	
+	'week2range' : function (w, Ny) {
+		var thatW = w || 1,
+			thatY = JMVC.date.tools.ensureYear(Ny),
+			firstDayFirstWeek = JMVC.date.firstW(thatY).from,
+			y = firstDayFirstWeek.getFullYear(),
+			m = firstDayFirstWeek.getMonth(),
+			d = firstDayFirstWeek.getDate();
+		return JMVC.date.weekBounds(new Date(y, m, d + 7 * (thatW - 1), 0, 0, 0, 0));
+	},
+	
+	
+	'weekInYear' : function (y) {
+		var firstDay = new Date(y, 0, 4, 0, 0, 0, 0),
+			lastDay = new Date(y, 11, 28, 1, 0, 0, 0),
+			firstBounds = JMVC.date.weekBounds(firstDay),
+			lastBounds = JMVC.date.weekBounds(lastDay);
+			
+		//console.debug(lastBounds.to - firstBounds.from);
+		return Math.ceil((lastBounds.to - firstBounds.from) / JMVC.date.vars.WEEKMS);
+	},
 	'distance' : function (d1, d2, u) {
 		var t1 = (d1 instanceof Date) ? d1 : d1 instanceof Array ? new Date(d1[0], d1[1], d1[2]) : new Date(),
 			t2 = (d2 instanceof Date) ? d2 : d2 instanceof Array ? new Date(d2[0], d2[1], d2[2]) : new Date(),
-			unit = JMVC.util.isSet(u) ? 10 : this.vars.DAYMS;
+			unit = NYATT.util.isSet(u) ? 10 : this.vars.DAYMS;
 		t1.setHours(0, 0, 0, 0);
 		t2.setHours(0, 0, 0, 0);
 		return ~~((t2  - t1) / this.vars.DAYMS);			
 	},
-	//
+	
 	'tools' : {
 		'ensureYear' : function (y) {
 			return (y !== undefined && /^\d{4}$/.test(y) ) ? y : (new Date()).getFullYear();
+		},
+		'ensureDate' : function(date){
+			return (date !== undefined && date instanceof Date) ? date : new Date();
 		},
 		'checkDate' : function (y, m, d) {
 			var r = new Date(y, m, d);
@@ -154,6 +175,4 @@ JMVC.extend('date', {
 		}
 
 	}
-	
-	
 });

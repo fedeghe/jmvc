@@ -1,33 +1,39 @@
 JMVC.extend('xmlparser', {
-	
+
 	// takes the contant of
 	// the xml to be parsed
 	//
-	'load' : function(txt){
+	'load' : function (txt, or_is_xml) {
+
 		var that = this,
 			xmlDoc,
 			parser;
-		
-		//clean up a bit
-		txt = txt.replace(/\n/g, "").replace(/[\t ]+\</g,"<").replace(/\>[\t ]+\</g,"").replace(/\>[\t ]+$/g, ">");
 
-		this.xmlDoc = false;
-		
-		if (window.DOMParser) {
-			parser=new DOMParser();
-			xmlDoc=parser.parseFromString(txt, "text/xml");
-		} else { // Internet Explorer
-			xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
-			xmlDoc.async=false;
-			xmlDoc.loadXML(txt);
+		if (or_is_xml == undefined) {
+		//clean up a bit
+			txt = txt.replace(/\n/g, "").replace(/[\t ]+\</g,"<").replace(/\>[\t ]+\</g,"").replace(/\>[\t ]+$/g, ">");
+
+			this.xmlDoc = false;
+
+			if (JMVC.W.DOMParser) {
+				parser=new DOMParser();
+				xmlDoc = parser.parseFromString(txt, "text/xml");
+			} else { // IE
+				xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+				xmlDoc.async=false;
+				xmlDoc.loadXML(txt);
+			}
+			this.xmlDoc = xmlDoc;
+		} else {
+			this.xmlDoc = txt;
 		}
-		this.xmlDoc = xmlDoc;
+		
+		//JMVC.debug(that.xmlDoc)
+		
 		
 		this.nodeExtractor = function (t) {return t; };
-		
 		this.pointerNode = false;
-		
-		
+
 		//set the extractor function or get the fTH node
 		this.extractor = function (f, reset_extractor) {
 			if (typeof f === 'number') {
@@ -36,16 +42,20 @@ JMVC.extend('xmlparser', {
 			if (typeof f === 'function' && (!this.nodeExtractor || reset_extractor)) {
 				this.nodeExtractor = f;
 				this.pointerNode = this.xmlDoc.documentElement;
-				return true;	
+				return true;
 			}
 			return false;
 		};
 
 
-		this.extractall = function(){
-			var ret = [], len = this.pointerNode.childNodes.length, i=0;
-			while(len--){
-				ret.push(this.extractor(i++));
+		this.extractall = function () {
+			var ret = [],
+				len = this.pointerNode.childNodes.length,
+				i = 0;
+			while (len) {
+				len -= 1;
+				ret.push(this.extractor(i));
+				i += 1;
 			}
 			return ret;
 		};
@@ -86,7 +96,7 @@ JMVC.extend('xmlparser', {
 					var item = xml.childNodes.item(i),
 						nodeName = item.nodeName,
 						old;
-					if (typeof(obj[nodeName]) == "undefined") {
+					if (typeof obj[nodeName] == "undefined") {
 						obj[nodeName] = that.toJson(item);
 					} else {
 						if (typeof(obj[nodeName].length) == "undefined") {

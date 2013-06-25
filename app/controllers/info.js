@@ -4,8 +4,8 @@ JMVC.controllers.info = function () {
 	//
 	this.index = function () {
 		//
-		JMVC.events.loadify(1000);
-		JMVC.require('analytics', 'sniffer', 'dim');
+		JMVC.events.loadify(500);
+		JMVC.require('core/codeview/script', 'google/analytics', 'sniffer', 'dim', 'css');
 		var main  = JMVC.getView('info'),
 			readme = JMVC.getView('readme'),
 			features = JMVC.getView('features'),
@@ -13,8 +13,12 @@ JMVC.controllers.info = function () {
 			doc = JMVC.getModel('Doc'),
 			ret='',
 			h = '',
+			f,
+			k, k2, t,
+			len, l2,
 			tmp,
 			jsondoc = JMVC.io.getJson(JMVC.vars.baseurl + '/media/documentation.json');
+
 		JMVC.set('my_table_style', 'padding:2px; background-color:#ccc');
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/info.css', true);// parsed
 		//	
@@ -22,7 +26,10 @@ JMVC.controllers.info = function () {
 		// can be shorted to
 		main.set_from_url('nome', 'Guest');
 		//
-		features.set('fr', '<b style="font-size:26px;position:relative;top:0px;color:green;font-weight:bold">&#9758;</b>');
+		//
+		
+		//
+		features.set('fr', '<b class="index">&#9758;</b>');
 		//
 		//
 		//
@@ -31,22 +38,21 @@ JMVC.controllers.info = function () {
 		//
 		/* yeah, that`s pretty ugly, but You'll surely find a better way to do that,!...so, let me know please */
 		//JMVC.debug(jsondoc.doc.functions.length);
-		for(var k in jsondoc.doc.functions) {
+		for (k in jsondoc.doc.functions) {
 			ret += '<h3 class="apisection">' + jsondoc.doc.functions[k]['name'] + '</h3>';
 			//
-			var f = jsondoc.doc.functions[k]['functions'];
+			f = jsondoc.doc.functions[k]['functions'];
 
-			if(f.length){
-
-				for(var t=0, len = f.length; t<len; t++) {
+			if (f.length) {
+				for(t=0, len = f.length; t < len; t += 1) {
 					//adjust parameters
-					var h = '';
-					if(f[t]['params']){
-						if(! f[t]['params']['param'].length ) {
+					h = '';
+					if (f[t]['params']) {
+						if (!f[t]['params']['param'].length) {
 							h += '<label>' + f[t]['params']['param']['name']+'</label> : ' + f[t]['params']['param']['desc'];
-						}else{
-							if(f[t]['params']){
-								for(var k2 =0, l2 = f[t]['params']['param'].length; k2<l2; k2++) {
+						} else {
+							if (f[t]['params']) {
+								for (k2 =0, l2 = f[t]['params']['param'].length; k2 < l2; k2 += 1) {
 									h += '<label>'+f[t]['params']['param'][k2]['name']+'</label> : '+ f[t]['params']['param'][k2]['desc']+'<br />';
 								}
 							}
@@ -59,13 +65,13 @@ JMVC.controllers.info = function () {
 						doc.reset();
 					}
 				}
-			}else{
+			} else {
 				//adjust parameters
-				var h = '';
-				if(f['params']){
+				h = '';
+				if (f['params']) {
 
-					if(! f['params']['param'].length ) {
-						h += '<label>'+f['params']['param']['name']+'</label> : '+f['params']['param']['desc'];
+					if (!f['params']['param'].length ) {
+						h += '<label>' + f['params']['param']['name'] + '</label> : '+f['params']['param']['desc'];
 					}else{
 						for(var k2 =0, l2 =f['params']['param'].length; k2<l2; k2++) {
 							h += '<label>'+f['params']['param'][k2]['name']+'</label> : '+f['params']['param'][k2]['desc']+'<br />';
@@ -74,15 +80,12 @@ JMVC.controllers.info = function () {
 				}
 				doc.set('parameters',h,true);
 				doc.set(f,true);
-				doc.set('bg1', 'cl1_'+jsondoc.doc.functions[k]['name']);
-				doc.set('bg2', 'cl2_'+jsondoc.doc.functions[k]['name']);
+				doc.set('bg1', 'cl1_' + jsondoc.doc.functions[k]['name']);
+				doc.set('bg2', 'cl2_' + jsondoc.doc.functions[k]['name']);
 				ret += doc_tpl.reset().parse(doc).content;
 				doc.reset();
 			}
-			ret+='<p>$legend$</p>';
-			
-			
-			
+			ret += '<p>$legend$</p>';
 		}
 
 		readme.set('desc', ret);
@@ -91,12 +94,12 @@ JMVC.controllers.info = function () {
 		readme.set('last_modified', JMVC.vars.last_modified);
 		readme.set('legend', '<b>*</b> : mandatory parameter');
 
-		JMVC.require('trial');
-		JMVC.mac.titlesay();
+		//JMVC.require('trial');
+		//JMVC.mac.titlesay();
 
-		main.parse().render({cback:function(){
+		main.parse().render(function(){
 			JMVC.head.title('JMVC :: info');
-			JMVC.dom.html(JMVC.dom.find('#render_time'), JMVC.vars.rendertime+' ms'); 
-		}});
+			//JMVC.dom.html(JMVC.dom.find('#render_time'), JMVC.vars.rendertime+' ms'); 
+		});
 	};
 };

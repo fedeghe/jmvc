@@ -1,0 +1,34 @@
+.clearer{
+	clear: both;
+	display: block;
+	zoom: 1;
+	height: 0;
+	width: 0;
+	line-height: 0;
+	visibility: hidden;
+	overflow: hidden;
+}
+strong{
+	font-weight:bold !important;
+}
+i{
+	font-style: italic !important;
+}
+body{
+	max-width:100% !important;
+}
+
+@media screen {
+	img { 
+		width: auto !important; /* for ie 8 */
+	}
+}
+img {
+	max-width: 100% !important;
+	height: auto !important;
+}
+sup, sub{
+	font-size:0.7em;
+}
+sup{vertical-align: super;}
+sub{vertical-align: sub;}

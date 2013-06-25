@@ -6,6 +6,7 @@ div.jmvc_modal_content_bg{
 	top:0px;
 	left:0px;
 	opacity:0.8;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 }
 div.jmvc_modal_content{
 	z-index:200;
@@ -40,10 +41,10 @@ div.jmvc_modal_content .topbar{
 div.jmvc_modal_content .topbar .jmvc_modal_title{
 	float:left;
 	font-weight:bold;
-	letter-spacing:0.2em;
-	font-size:12px;
+	
 	position:relative;
 	top:2px;
+
 }
 div.jmvc_modal_content .topbar .jmvc_modal_close{
 	float:right;
@@ -58,13 +59,15 @@ div.jmvc_modal_content .topbar .jmvc_modal_close{
     -webkit-border-radius:2px;
     border-radius:2px;
 	font-weight:bold;
-	color:black
+	color:black;
+	font-size:12px;
+	font-family:"Verdana", sans-serif;
 }
 div.jmvc_modal_content .topbar .jmvc_modal_close:hover{
 	background-color:#eee;
 }
 div.jmvc_modal_content .given_content_container{
-	padding:10px;
+	padding:5px;
 	overflow-y: auto;
 }
 

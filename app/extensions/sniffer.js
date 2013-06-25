@@ -11,25 +11,53 @@ JMVC.extend('util', {
 JMVC.extend('sniffer', {
 	'init' : function () {
 		var bcheck = {
-				Firefox : "navigator.userAgent.match(/firefox\\\/([^\\\s]*)/i)",
-				Opera : "navigator.userAgent.match(/opera\\\/([^\\\s]*)/i)",
-				IE : "document.all && !(navigator.userAgent.match(/opera/i))",
-				Chrome : "navigator.userAgent.match(/chrome\\\/([^\\\s]*)/i)",
-				Safari : "navigator.userAgent.match(/safari\\\/([^\\\s]*)/i)",
-				iCab : "navigator.userAgent.match(/icab\\\/([^\\\s]*)/i)"
+				Firefox : function () {return navigator.userAgent.match(/firefox\/([^\s]*)/i); },
+				Opera : function () {return navigator.userAgent.match(/opera\/([^\s]*)/i); },
+				IE : function () {return document.all && !(navigator.userAgent.match(/opera/i)); },
+				Chrome : function () {return navigator.userAgent.match(/chrome\/([^\s]*)/i); },
+				Safari : function () {return navigator.userAgent.match(/safari\/([^\s]*)/i); },
+				iCab : function () {return navigator.userAgent.match(/icab\/([^\s]*)/i); }
 			},
 			ocheck = {
-				Android : 'navigator.platform.match(/android/i)',
-				MacOS : "navigator.appVersion.match(/mac/i)",
-				Win : "navigator.appVersion.match(/win/i)",
-				Linux : "navigator.userAgent.match(/linux/i)",
-				Unix : "navigator.appVersion.match(/x11/i)"
+				Android : function () {return navigator.platform.match(/android/i); },
+				MacOS : function () {return navigator.appVersion.match(/mac/i); },
+				Win : function () {return navigator.appVersion.match(/win/i); },
+				Linux : function () {return navigator.userAgent.match(/linux/i); },
+				Unix : function () {return navigator.appVersion.match(/x11/i); }
+			},
+			dcheck = {
+				iDevice : function () {return navigator.userAgent.match(/iPhone|iPad|iPod/i);}
 			},
 			bro,
 			os,
 			r;
+		JMVC.each(bcheck, function f(fn, nm) {
+			r = fn();
+			if (r) {
+				JMVC.sniffer.browser.name = nm;
+				JMVC.sniffer.browser.version = r[1];
+				f.break();
+
+			}
+		});
+		JMVC.each(ocheck, function f(fn, nm) {
+			r = fn();
+			if (r) {
+				JMVC.sniffer.os.name = nm;
+				f.break();
+			}
+		});
+		JMVC.each(dcheck, function f(fn, nm) {
+			r = fn();
+			if (r) {
+				JMVC.sniffer.device.name = nm;
+				f.break();
+			}
+		});
+
+		/*
 		for (bro in bcheck) {
-			r = eval(bcheck[bro]);
+			r = bcheck[bro]();
 			if (r){
 				JMVC.sniffer.browser.name = bro;
 				JMVC.sniffer.browser.version = r[1];
@@ -37,29 +65,30 @@ JMVC.extend('sniffer', {
 			}
 		}
 		for (os in ocheck) {
-			r = eval(ocheck[os]);
+			r = ocheck[os]();
 			if (r){
 				JMVC.sniffer.os.name = os;
 				break;
 			}
-		}		
+		}	
+		*/
 	},
 
 	
 	'features' : {
 		'tags' : {
-			'audio' : (function () {return !!document.createElement('audio').canPlayType; })(),
-			'audio_MP3' : (function () {var a = document.createElement('audio'); return !!(a.canPlayType('audio/mpeg;').replace(/no/, '')); })(),
-			'audio_VORBIS' : (function () {var a = document.createElement('audio'); return !!(a.canPlayType('audio/ogg; codecs="vorbis"').replace(/no/, '')); })(),
-			'audio_WAV' : (function () {var a = document.createElement('audio'); return !!(a.canPlayType('audio/wav; codecs="1"').replace(/no/, '')); })(),
-			'audio_AAC' : (function () {var a = document.createElement('audio'); return !!(a.canPlayType('audio/mp4; codecs="mp4a.40.2"').replace(/no/, '')); })(),
-			'canvas' : (function () {return !!document.createElement('canvas').getContext; })(),
-			'canvas_txtAPI' : (function () {var c = document.createElement('canvas'); return c.getContext && typeof c.getContext('2d').fillText == 'function'; })(),
-			'command' : (function () {return JMVC.util.propinel('type', 'command'); })(),
-			'datalist' : (function () {return JMVC.util.propinel('options', 'datalist'); })(),
-			'details' : (function () {return JMVC.util.propinel('open', 'details'); })(),
-			'device' : (function () {return JMVC.util.propinel('type', 'device'); })(),
-			'form_VALIDATION' : (function () {return JMVC.util.propinel('noValidate', 'form'); })(),
+			'audio' : !!JMVC.WD.createElement('audio').canPlayType,
+			'audio_MP3' : !!JMVC.WD.createElement('audio').canPlayType('audio/mpeg;').replace(/no/, ''),
+			'audio_VORBIS' : !!JMVC.WD.createElement('audio').canPlayType('audio/ogg; codecs="vorbis"').replace(/no/, ''),
+			'audio_WAV' : !!JMVC.WD.createElement('audio').canPlayType('audio/wav; codecs="1"').replace(/no/, ''),
+			'audio_AAC' : !!JMVC.WD.createElement('audio').canPlayType('audio/mp4; codecs="mp4a.40.2"').replace(/no/, ''),
+			'canvas' : !!JMVC.WD.createElement('canvas').getContext,
+			'canvas_txtAPI' : (function () {var c = JMVC.WD.createElement('canvas'); return c.getContext && typeof c.getContext('2d').fillText == 'function'; })(),
+			'command' : JMVC.util.propinel('type', 'command'),
+			'datalist' : JMVC.util.propinel('options', 'datalist'),
+			'details' : JMVC.util.propinel('open', 'details'),
+			'device' : JMVC.util.propinel('type', 'device'),
+			'form_VALIDATION' : JMVC.util.propinel('noValidate', 'form'),
 			'iframe_SANDBOX' : (function () {return JMVC.util.propinel('sandbox', 'iframe'); })(),
 			'iframe_SRCDOC' : (function () {return JMVC.util.propinel('srcdoc', 'iframe'); })(),
 			'input_AUTOFOCUS' : (function () {return JMVC.util.propinel('autofocus', 'input'); })(),
@@ -81,39 +110,44 @@ JMVC.extend('sniffer', {
 			'output' : (function () {return JMVC.util.propinel('value', 'output'); })(),
 			'progress' : (function () {return JMVC.util.propinel('value', 'progress'); })(),
 			'time' : (function () {return JMVC.util.propinel('valueAsDate', 'time'); })(),
-			'video' : (function () {return !!document.createElement('video').canPlayType; })(),
+			'video' : (function () {return !!JMVC.WD.createElement('video').canPlayType; })(),
 			'video_CAPTIONS' : (function () {return JMVC.util.propinel('track', 'track'); })(),
 			'video_POSTER' : (function () {return JMVC.util.propinel('poster', 'track'); })(),
-			'video_WEBm' : (function () {var v = document.createElement('video'); return !!(v.canPlayType && v.canPlayType('video/webm; codecs="vp8,vorbis"').replace(/no/, '')); })(),
-			'video_H264' : (function () {var v = document.createElement('video'); return !!(v.canPlayType && v.canPlayType('video/mp4; codecs="avc1.42E01E,mp4a.40.2"').replace(/no/, '')); })(),
-			'video_Theora' : (function () {var v = document.createElement('video'); return !!(v.canPlayType && v.canPlayType('video/ogg; codecs="theora,vorbis"').replace(/no/, '')); })()
+			'video_WEBm' : (function () {var v = JMVC.WD.createElement('video'); return !!(v.canPlayType && v.canPlayType('video/webm; codecs="vp8,vorbis"').replace(/no/, '')); })(),
+			'video_H264' : (function () {var v = JMVC.WD.createElement('video'); return !!(v.canPlayType && v.canPlayType('video/mp4; codecs="avc1.42E01E,mp4a.40.2"').replace(/no/, '')); })(),
+			'video_Theora' : (function () {var v = JMVC.WD.createElement('video'); return !!(v.canPlayType && v.canPlayType('video/ogg; codecs="theora,vorbis"').replace(/no/, '')); })()
 		},
 		'assets' : {
-			'contentEditable' : (function () {return JMVC.util.propinel('isContentEditable', 'span'); })(),
-			'crossDocMessaging' : (function () {return !!window.postMessage; })(),
-			'dragAndDrop' : (function () {return JMVC.util.propinel('draggable', 'span'); })(),
-			'fileAPI' : (function () {return typeof FileReader !== 'undefined'; })(),
-			'geolocation' : (function () {return !!navigator.geolocation; })(),
-			'history' : (function () {return !!(window.history && window.history.pushState && window.history.popState); })(),
-			'localStorage' : (function () {return ('localStorage' in window) && window['localStorage'] !== null; })(),
-			'microdata' : (function () {return !!document.getItems; })(),
-			'offline' : (function () {return !!window.appicationCache; })(),
-			'serverEvents' : (function () {return typeof EventSource !== 'undefined'; })(),
-			'sessionStorage' : (function () {try {return ('sessionStorage' in window) && window['sessionStorage'] !== null; } catch (e) {return false; }})(),
-			'svg' : (function () {return !!(document.creatElementNS && document.createElementNS('http://www.w3.org/2000/svg','svg').createSVGRect); })(),
-			'svg_TEXT_HTML' : (function () { var e = document.createElement('div'); e.innerHTML = '<svg></svg>'; return !!(window.SVGSVGElement && e.firstChild instanceof window.SVGSVGElement); })(),
-			'webSimpleDB' : (function () {return !!window.indexedDB; })(),
-			'webSockets' : (function () {return !!window.WebSocket; })(),
-			'webSQLDatabase' : (function () {return !!window.openDatabase; })(),
-			'webWorkers' : (function () {return !!window.Worker; })(),
-			'undo' : (function () {return typeof UndoManager !== 'undefined'; })()
+			'battery' : 'battery' in JMVC.W.navigator || 'mozBattery' in JMVC.W.navigator,
+			'contentEditable' : JMVC.util.propinel('isContentEditable', 'span'),
+			'crossDocMessaging' : !!JMVC.W.postMessage,
+			'dragAndDrop' : JMVC.util.propinel('draggable', 'span'),
+			'fileAPI' : typeof FileReader !== 'undefined',
+			'geolocation' : !!JMVC.W.navigator.geolocation,
+			'history' : !!(JMVC.W.history && JMVC.W.history.pushState && JMVC.W.history.popState),
+			'localStorage' : ('localStorage' in JMVC.W) && JMVC.W['localStorage'] !== null,
+			'microdata' : !!JMVC.WD.getItems,
+			'offline' : !!JMVC.W.appicationCache,
+			'serverEvents' : typeof EventSource !== 'undefined',
+			'sessionStorage' : ('sessionStorage' in JMVC.W) && JMVC.W['sessionStorage'] !== null,
+			'svg' : !!(JMVC.WD.creatElementNS && JMVC.WD.createElementNS('http://www.w3.org/2000/svg','svg').createSVGRect),
+			'svg_TEXT_HTML' : (function () { var e = JMVC.WD.createElement('div'); e.innerHTML = '<svg></svg>'; return !!(JMVC.W.SVGSVGElement && e.firstChild instanceof JMVC.W.SVGSVGElement); })(),
+			'webSimpleDB' : !!JMVC.W.indexedDB,
+			'webSockets' : !!JMVC.W.WebSocket,
+			'webSQLDatabase' : !!JMVC.W.openDatabase,
+			'webWorkers' : !!JMVC.W.Worker,
+			'undo' : typeof UndoManager !== 'undefined'
 		}
+
 	},
 	'browser' : {
 		'name' : 'not found',
-		'version': 'not found'
+		'version' : 'not found'
 	},
-	'os':{
+	'os' : {
+		'name' : 'not found'
+	},
+	'device' : {
 		'name' : 'not found'
 	}
 });

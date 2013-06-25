@@ -3,38 +3,27 @@ JMVC.extend('deque', {
 	
 	'create' : function () {
 		"use strict";
-		var that = this;
+		var that = this,
 		
+			Node = function (/** element */el, /** Node */ p, /** Node */ n) {
+				this.element = el;
+				this.prev = p || null ;
+				this.next = n || null;
+			};
+			
+		Node.prototype.setElement = function (el) {this.element = el; };
+		Node.prototype.getElement = function () {return this.element; };
 		
-		
-		var Node = function(/** element */el, /** Node */ p, /** Node */ n){
-			this.element = el;
-			this.prev = p || null ;
-			this.next = n || null;
-		};
-		Node.prototype.setElement = function(el){this.element = el;};
-		Node.prototype.getElement = function(){return this.element;}
-		
-		Node.prototype.setNext = function(el){this.next = el;};
-		Node.prototype.getNext = function(){return this.next;}
-		Node.prototype.setPrev = function(el){this.prev = el;};
-		Node.prototype.getPrev = function(){return this.prev;}
-		
+		Node.prototype.setNext = function (el) {this.next = el; };
+		Node.prototype.getNext = function () {return this.next; }
+		Node.prototype.setPrev = function (el) {this.prev = el; };
+		Node.prototype.getPrev = function () {return this.prev; };
 		
 		this.size = 0;
 		this.header = new Node();
 		this.trailer = new Node();
 		this.trailer.setPrev(this.header);
 		this.header.setNext(this.trailer);
-		
-		/*
-		 * 
-		#header
-		first
-		
-		last
-		#trailer
-		*/
 	   
 		return {
 			'insertFirst' : function(o){
@@ -94,7 +83,6 @@ JMVC.extend('deque', {
 				}
 				var n = that.header.getNext();
 				while(n.element != undefined){
-					JMVC.debug(n.element);
 					n = n.getNext();
 				}
 				return ;

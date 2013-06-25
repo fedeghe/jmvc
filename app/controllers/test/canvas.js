@@ -1,10 +1,10 @@
-JMVC.require('canvas','test');
+JMVC.require('canvas', 'test');
 		
-JMVC.controllers.canvas = function() {
+JMVC.controllers.canvas = function () {
 	
-	this.index = function(s){
+	this.index = function (s) {
 		
-		this.render(false,function test(){
+		this.render(false, function test () {
 			"use strict";
 			
 			JMVC.test.initialize(true);
@@ -20,7 +20,7 @@ JMVC.controllers.canvas = function() {
 			c.set('radius', 200);
 			
 			cnv.grad_linear(
-				0,0,100,500,
+				0,0,300,500,
 				[{perc: 0, color:"#aaf"},{perc: 0.3, color:"#fff"},{perc: 0.3, color:"#afa"},{perc: .5, color:"#fff"},{perc: 0.5, color:"#afa"},{perc: 1, color:"#fff"}],
 				0,0,300,500
 			).grad_radial(
@@ -43,20 +43,15 @@ JMVC.controllers.canvas = function() {
 				var c = cnv.getCoord(e);
 				s1.oregon.x = c[0] - sdim.w/2;
 				s1.oregon.y = c[1] - sdim.h/2;
-				cnv.redraw();
-				cnv.render();
+				//cnv.redraw();
+				//cnv.render();
 				s1.draw();
 				
-				c = null;
+				//c = null;
 				
 			});
 			
-			
 			window.cnv = cnv;
-			
-			
-			//c3.set('radius', 200);
-			//c3.draw();
 			
 			JMVC.test.finishAll();
 		});

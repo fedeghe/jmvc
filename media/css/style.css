@@ -3,7 +3,7 @@ body{
 /*	font-family: Verdana,Arial,Helvetica,sans-serif;
 	"Lucida Console","Monaco",monospace*/
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
-	font-size: 12px;
+	font-size: 16px;
 	border-top:15px solid #aaa;
 	/* background-image: url($baseurl$/media/img/oy.png); */	
 	margin-bottom:20px;
@@ -20,16 +20,16 @@ div#cent{
 	background-repeat : repeat-x;
  */
 }
-div.pagewrap h1{font-size:16px;padding-bottom:40px}
+
+div.pagewrap h1{padding-bottom:40px;line-height:24px;text-shadow:0px 0px 8px #fff;}
 div.pagewrap h6{margin:0px;padding:0px;line-height:30px}
 div.pagewrap a{	
 	color:red;
 	text-decoration:none;
-	font-size:16px;
+
 	font-weight:bold;
 	letter-spacing: 0px;
 	line-height:42px;
-	text-transform: lowercase;
 }
 div.pagewrap a:hover{
 	text-shadow:0px 0px 10px #fff;
@@ -42,7 +42,8 @@ div.pagewrap a:hover{
 	margin:0 auto;
 	margin-top:80px;
 	margin-bottom:40px;
-	width:476px;
+	/*width:476px;*/
+	
 }
 
 
@@ -66,6 +67,21 @@ div.pagewrap{
 }
 
 h1.tryme{
-	padding-bottom:20px;
+	padding-bottom: 20px;
 }
 
+
+
+
+
+
+
+/*****/
+/*
+body.mini {
+	font-size: 20px;
+}
+body.mini h1 {
+	display: none;
+}
+*/

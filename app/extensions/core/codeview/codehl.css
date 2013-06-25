@@ -1,0 +1,72 @@
+code{
+	display:block !important;
+	background-color:#444 !important;
+	color:#0f0 !important;
+	padding:5px !important;
+	white-space: pre !important;
+	border:1px dashed #fff !important;
+	border-left: 5px solid #000 !important;
+	margin: 5px 0px !important;
+	line-height:20px !important;
+	font-family:Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif !important;
+
+	-moz-border-radius-topright:8px;
+	-moz-border-radius-bottomright:8px;
+	-webkit-border-top-right-radius:8px;
+	-webkit-border-bottom-right-radius:8px;
+	border-top-right-radius:8px;
+	border-bottom-right-radius:8px;
+}
+pre{
+	overflow: auto !important;
+	width:auto !important;
+}
+code::selection {
+	background: #000; /* Safari */
+	color:#fff;
+}
+code::-moz-selection {
+	background: #000; /* FireFox */
+	color:#fff;
+}
+
+
+
+ul.code{
+	
+	margin: 10px 0px;
+	border:2px solid #0f0;
+	border-left: 5px solid #0b0;
+	-moz-border-radius-topright:8px;
+	-moz-border-radius-bottomright:8px;
+	-webkit-border-top-right-radius:8px;
+	-webkit-border-bottom-right-radius:8px;
+	border-top-right-radius:8px;
+	border-bottom-right-radius:8px;
+	
+	color:#0b0;
+	background-color:#222;
+
+}
+ul.code li.line{
+	line-height:20px;
+	height:20px;
+	border:none;
+}
+ul.code li.line:hover{
+	color:#0f0;
+}
+ul.code li.line span.ln{
+	display:inline-block;
+	width:20px;
+	background-color:#000;
+	color:#fff;
+	padding-left:5px;
+	margin-right:5px;
+}
+ul.code li.line span.fn{color:#afa;}
+ul.code li.line span.str{color:#aaa;}
+ul.code li.line span.comm{color:#999;}
+
+
+

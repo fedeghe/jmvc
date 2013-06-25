@@ -1,15 +1,14 @@
-JMVC.controllers.test = function() {
+JMVC.controllers.test = function () {
 	
 	/* test a route */ 
-	this.addRoutes( {
+	this.addRoutes({
 		'swiss' : 'flag',
 		f : 'flag'
 	});
 
-	this.index = function(){
+	this.index = function () {
 		
-		JMVC.require('analytics');
-	
+		JMVC.require('google/analytics', 'responsive/basic');
 		JMVC.events.loadify(500);
 	
 		//JMVC.require('widget/slider/slider');
@@ -18,70 +17,82 @@ JMVC.controllers.test = function() {
 			bu = JMVC.vars.baseurl,
 			v = JMVC.getView('vacuum'),
 			links = {
-				'Model':'test/model',
-				'Controller':'test/controller',
-				'View':'test/view',
-				'Tabs':'tabs/one/i_say/Hello%20my%20Guest',
-				'Some fun':'test/flag',
-				'Logo':'test/logo',
-				'Google':'google.jmvc',
-				'Observer':'test/observer.jmvc',
-				'Sheduler':'test/scheduler.jmvc',
-				'Effects':'test/fx.jmvc',
-				'Key':'test_key',
-				'* strict':'test_strict',
-				'* obj/bucket':'test_bucket',
-				'* obj/deque':'test_deque',
-				'* obj/date':'test_date',
-				'canvas ext using 2d lib':'test_canvas',
-				'* lib/array':'test_array',
-				'* JMVC.util.inArrayRich':'test_arrayOp',
-				'* lib/crypt':'test_crypt',
-				'modal':'test_modal',
-				'widget':'test_widget'
+				'Model' : 'test/model',
+				'Controller' : 'test/controller',
+				'View' : 'test/view',
+				'Tabs' : 'tabs/one/i_say/Hello%20my%20Guest',
+				'Some fun' : 'test/flag',
+				'Logo' : 'test/logo',
+				'Google' : 'google.jmvc',
+				'Observer' : 'test/observer.jmvc',
+				'Sheduler' : 'test/scheduler.jmvc',
+				'Effects' : 'test/fx.jmvc',
+				'Key' : 'test_key',
+				'* strict' : 'test_strict',
+				'* obj/bucket' : 'test_bucket',
+				'* obj/deque' : 'test_deque',
+				'* obj/date' : 'test_date',
+				'canvas ext using 2d lib' : 'test_canvas',
+				'* lib/array' : 'test_array',
+				'* JMVC.util.inArrayRich' : 'test_arrayOp',
+				'* lib/crypt' : 'test_crypt',
+				'modal' : 'test_modal',
+				'widget' : 'test_widget',
+				'cubic' : 'cubic',
+				'map_animator' : '?map=true',
+				'carpet' : 'carpet'
 			},
 			style = {
-				'body':{
-					'background-color':'#fff',
-					'color':'#000'
+				'body' : {
+					'background-color' : '#fff',
+					'color' : '#000'
 				},
 				'ul' : {
-					'list-style-type':'none',
-					'padding':'0px',
-					'margin':'0px',
-					'border':'0px'
+					'list-style-type' : 'none',
+					'padding' : '0px',
+					'margin' : '0px',
+					'border' : '0px'
 				},
 				'a' : {
-					'color':'#AAA',
-					'padding-left':'1px',
-					'text-decoration':'none',
-					'line-height':'20px'
+					'color' : '#AAA',
+					'padding-left' : '1px',
+					'text-decoration' : 'none',
+					'line-height' : '20px'
 				},
 				'a:hover' : {
-					'color':'red'
+					'color' : 'red'
 				}
 			},
 			tpl = '<li><a href="%base_url%/%path%">$index$ %label%</a></li>',
-			out='';
+			out = '',
+			i;
 
 		
-		for(var i in links){
-			out += JMVC.util.replaceall(tpl,{'base_url':bu,'path':links[i],'label':i});
+		for (i in links) {
+			out += JMVC.util.replaceall(tpl, {'base_url' : bu, 'path' : links[i], 'label' : i});
 		}	
 			
-		content+='<ul>'+out+'</ul>';
+		content += '<ul>' + out + '</ul>';
 		//
 		content += '<br /><b>* real test</b>';
+		
+		
+		
 
-		JMVC.head.addstyle(JMVC.util.obj2css(style),true,true);
+		JMVC.head.addstyle(JMVC.util.obj2css(style), true, true);
 		
 		v.set({
 			'id' : 'content',
-			'style':'font-family:Verdana, sans-serif; font-size:12px;',
+			'style' : 'font-family:Verdana, sans-serif; font-size:12px;',
 			'content' : content,
 			'index' : '&#9826;'
 		});
-		v.render();
+		v.render(/*{cback : function () {
+			// JMVC.require('affix');	
+			// JMVC.affix.add({html:'<h4>Content</h4>', init : 200, min : 100, style:'height:800px;background-color:red;padding:10px;right:100px;border:1px solid black'});
+		}}*/);
+		
+		
 		/*
 		v.render({cback : function(){
 			var slider = new JMVC.Slider(JMVC.dom.find('#bar') );
@@ -92,11 +103,10 @@ JMVC.controllers.test = function() {
 
 
 	// test a VIEW	
-	this.view = function() {
+	this.view = function () {
 		var v = JMVC.getView('test'),
-			v1= JMVC.factory('view','test1'),
-			v2= JMVC.factory('view','test2');
-			
+			v1= JMVC.factory('view', 'test1'),
+			v2= JMVC.factory('view', 'test2');
 		v1.set('result', 'ok1');
 		v2.set('result', 'ok2');
 		v2.set('result2', 'ok2bis');
@@ -109,22 +119,27 @@ JMVC.controllers.test = function() {
 	this.model = function() {
 		var _p1 = JMVC.getModel('xxx/Persona'),
 			_p2 = JMVC.getModel('Persona2'),
-			_p3 = JMVC.getModel('Persona2'),tpl,v, al = '';
+			_p3 = JMVC.getModel('Persona2'),
+			tpl,
+			al = '',
+			v = JMVC.getView('vacuum');
 
 		//get model instance
 		//_p1.set('cognome','Ghedina').set('n',1);
-		_p1.set({'cognome':'Ghedina', 'n':1});//.set('cognome','Spaceman',true);
-		_p2.set('cognome','Ghedi').set('n',2);
-		_p3.set('cognome','Ghe').set('n',3);
+		_p1.set({'cognome' : 'Ghedina', 'n' : 1});//.set('cognome','Spaceman',true);
+		_p2.set('cognome', 'Ghedi').set('n', 2);
+		_p3.set('cognome', 'Ghe').set('n', 3);
 		
-		console.debug(_p1);
+		//	console.debug(_p1);
 		tpl = 'Modello n°%n%: %nome% %cognome%<br />';
 		al += tpl.replace('%n%', _p1.get('n')).replace('%nome%', _p1.name).replace('%cognome%', _p1.get('cognome'));
 		al += tpl.replace('%n%', _p2.get('n')).replace('%nome%', _p2.name).replace('%cognome%', _p2.get('cognome'));
 		al += tpl.replace('%n%', _p3.get('n')).replace('%nome%', _p3.name).replace('%cognome%', _p3.get('cognome'));
 		
-		var v = JMVC.getView('vacuum');
+		
 		v.set('content', al);
+		//console.debug(v);
+		//v.set('id', 'nerd');
 		v.set('style', 'padding:5px; border:5px solid red; font-size:12px; width:280px; background-color:white; color:green; font-weight:bold; font-family:verdana, sans-serif');
 		v.render();
 	};
@@ -262,9 +277,9 @@ JMVC.controllers.test = function() {
 		v.render({cback:function(){
 			var newlogo = document.getElementById('extralogo');
 			var j = new JMVC.graf.letter('j', 22, 40),
-				m = new JMVC.graf.letter('m',22,110),
-				v = new JMVC.graf.letter('v',22, 260),
-				c = new JMVC.graf.letter('c',22, 320);
+				m = new JMVC.graf.letter('m', 22, 110),
+				v = new JMVC.graf.letter('v', 22, 260),
+				c = new JMVC.graf.letter('c', 22, 320);
 
 			j.line(0,4, 22,4, 2);
 			j.line(0,4, 0,26, 2);
@@ -385,9 +400,14 @@ JMVC.controllers.test = function() {
 						hint : JMVC.xmlparser._attribute(node.childNodes[3], 'hint')
 					}
 				};
+				/*
 				for(var j = 0, l= node.childNodes[2].childNodes.length; j<l; j++){
 					ret.params[  JMVC.xmlparser._attribute(node.childNodes[2].childNodes[j], 'name')  ]  =  JMVC.xmlparser._text(node.childNodes[2].childNodes[j]);					
 				}
+				*/
+				JMVC.each(node.childNodes[2].childNodes, function (el, i) {
+					ret.params[  JMVC.xmlparser._attribute(el, 'name')]  =  JMVC.xmlparser._text(el);					
+				});
 				return ret;
 			});
 			parser.pointer(parser.xmlDoc.getElementsByTagName('dom')[0]);
@@ -416,80 +436,109 @@ JMVC.controllers.test = function() {
 	this.scheduler = function () {
 		JMVC.require('scheduler');
 		var s = new JMVC.scheduler.create();
-		s.add({every : 3000}, function (d) {JMVC.debug(d);} );
+		s.add({every : 3000}, function (d) {JMVC.debug(d); });
 		//console.debug(s);
 	};
 	
 	
-	this.observer = function(){
-		var list = JMVC.getModel('List',['federico']);
-		list.addItem({num:'1'});
+	this.observer = function () {
+		JMVC.require('core/codeview/html');
+		var list = JMVC.getModel('List', ['Item0', 'Item1', 'Item2', 'Item3']),
+			v = JMVC.getView('vacuum'),
+			explain = 'Use buttons to add/remove items to the list (constructed with some elements)<br />' +
+				'<[H[' +
+					'var list = JMVC.getModel(\'List\', [\'Item0\', \'Item1\', \'Item2\', \'Item3\']);' +
+				']H]>';
+		
+		
 		//JMVC.debug(list.getItems());
-		var v = JMVC.getView('vacuum');
-		v.set({style:'background-color:red',id:'prova'});
-		v.set('content','hello u');
+		v.set({style : 'background-color:red; color:white;padding:10px;margin-bottom:10px;', id : 'prova'});
+		v.set('content', explain);
 		//JMVC.debug(v);
 		
+		list.setBuildStrategy(function (ul) {
+			JMVC.dom.empty(ul);
+			JMVC.each(list.getItems(), function (el, i) {
+				JMVC.dom.append(ul, JMVC.dom.create('li', {}, i + ' : ' + el));
+			});
+		});
 		
 		v.render({
-			cback:function(){
-				var butt_plus = JMVC.dom.add(JMVC.dom.body(), 'input', {type:'button',value:'+',id:'butt_plus'});
-				var butt_minus = JMVC.dom.add(JMVC.dom.body(), 'input', {type:'button',value:'-',id:'butt_minus'});
-				var ulist = JMVC.dom.add(JMVC.dom.body(), 'ul', {style:'list-style-type:none;padding:10px;border:1px solid gray;width:200px;background-color:#eee;',id:'mylist'});
-				JMVC.events.bind(butt_plus, 'click', function(){
-					var item = prompt('Item to add');
-					list.addItem(item);
+			cback : function () {
+				var butt_plus = JMVC.dom.add(JMVC.dom.body(), 'input', {type : 'button', value : '+', id : 'butt_plus'}),
+					butt_minus = JMVC.dom.add(JMVC.dom.body(), 'input', {type : 'button', value : '-', id : 'butt_minus'}),
+					ulist = JMVC.dom.add(JMVC.dom.body(), 'ul', {style : 'list-style-type:none;padding:10px;border:1px solid gray;width:200px;background-color:#eee;', id : 'mylist'}),
+					item,
+					render;
+
+				JMVC.events.bind(butt_plus, 'click', function () {
+					item = prompt('Item to add');
+					if (item !== null && item !== '') {
+						list.addItem(item);
+					}
 				});
-				list.itemAdded.attach(function(){
-					alert('added an item');
-					//JMVC.debug(list.getItems());
+				JMVC.events.bind(butt_minus, 'click', function () {
+					item = prompt('Item index to be removed');
+					if (item !== null && item !== '' && !isNaN(item)) {
+						list.removeItemAt(item);
+					} else {
+						alert('Noitem with index ' + item);
+					}
 				});
-				list.itemAdded.attach(function(){
-					alert('yessss .... an item has been added.... ');
-				});
+
+				//or simply
+				list.listModified.attach(function () {list.build(ulist); });
+
+				//first time build
+				list.build(ulist);
 			}
 		});
 		
 		
 	}
 	
-	this.fx = function(){
-		JMVC.require('fx','animator', 'obj/calendar', 'timer');
+	this.fx = function () {
+		JMVC.require('fx', 'animator', 'obj/calendar', 'timer');
+		//
 		var v = JMVC.getView('vacuum');
-		v.set({style:'background-color:red',id:'prova'});
-		v.set('content','hello u');
+		v.set({style : 'background-color:red', id : 'prova'});
+		v.set('content', 'hello u');
 		v.render({
-			cback:function(){
-				JMVC.dom.add(JMVC.dom.body(), 'span', {id:'bull'}, '&bull;');
-				var trg = JMVC.dom.add(JMVC.dom.body(), 'div', {id:'timer'});
-				var cal = JMVC.dom.add(JMVC.dom.body(), 'div', {id:'cal'});
-				
-				
+			cback : function () {
+				JMVC.dom.add(JMVC.dom.body(), 'span', {id : 'bull'}, '&bull;');
+				var trg = JMVC.dom.add(JMVC.dom.body(), 'div', {id : 'timer'}),
+					cal = JMVC.dom.add(JMVC.dom.body(), 'div', {id : 'cal'}),
+					calInst;
+
 				JMVC.css.style(cal, {
-					border : '5px solid gray',
-					padding: '10px',
-					margin: '20px',
+					'border' : '5px solid gray',
+					'padding' : '10px',
+					'margin' : '20px',
 					'background-color' : 'pink'
 				});
 				
-				var c = new JMVC.calendar.create();
-				c.getMonthMap(7,2012);
-				c.getContour(7,2012);
-				JMVC.dom.html(cal,c.render());
+				calInst = new JMVC.calendar.create();
+				calInst.getMonthMap(7, 2012);
+				calInst.getContour(7, 2012);
+				
+				JMVC.dom.html(cal, calInst.render());
 				
 				new JMVC.timer.create({target : trg});
 				
-				//JMVC.fx.hide(JMVC.dom.find('prova'));
 				JMVC.fx.fadeIn(JMVC.dom.find('#prova'));
-
 				JMVC.animator.follow_ipath(
 					JMVC.dom.find('#bull'),
-					function(i){return Math.abs(20*Math.cos(i/10));},
-					{from:0,to:400},
-					{step:2,mode:'back'}
+					function (i) {return Math.abs(20 * Math.cos(i / 10)); },
+					{from : 0, to : 400},
+					{step : 2, mode : 'back'}
 				);
 			}
 		});
 	}
+
+
+
+
+
 	
 };

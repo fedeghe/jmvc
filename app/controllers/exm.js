@@ -1,16 +1,21 @@
-JMVC.controllers.exm = function(){
-	this.index = function(){
+JMVC.controllers.exm = function () {
+	"use strict";
+	this.index = function () {
 		JMVC.events.loadify(1000);
 		JMVC.require('plotter', 'obj/bucket');
 		var M = Math,
-			that = this;
-		var v = JMVC.getView('vacuum');
+			that = this,
+			v = JMVC.getView('vacuum');
 		
-		v.set({'style':'font-family:verdana;margin:0 auto;width:215px;height:112px;margin-top:80px;position:relative','content':'&nbsp;','id':'extralogo'});
+		v.set({
+			'style' : 'font-family:verdana;margin:0 auto;width:215px;height:112px;margin-top:80px;position:relative',
+			'content' : '&nbsp;',
+			'id' : 'extralogo'
+		});
 		
-		JMVC.head.addstyle(JMVC.vars.baseurl+'/media/css/logoexm.css', true,false);
+		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/logoexm.css', true, false);
 		
-		v.render({cback:function(){
+		v.render(function(){
 			var newlogo = document.getElementById('extralogo');
 			var e = new JMVC.graf.letter('e', 8, 0),
 				x = new JMVC.graf.letter('x',8,71),
@@ -58,7 +63,7 @@ JMVC.controllers.exm = function(){
 
 			},T2);
 			
-		}});
+		});
 	};
 	
 }

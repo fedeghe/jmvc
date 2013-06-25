@@ -6,7 +6,7 @@
 				"functions":[
 					{
 						"func":"JMVC.extend(String section, Literal extension)",
-						"description":"Extends JMVC object with Your methods",
+						"description":"Extends JMVC object with Your objects",
 						"params":{
 							"param":[
 								{

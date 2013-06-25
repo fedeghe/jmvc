@@ -5,7 +5,7 @@ JMVC.controllers.google = function () {
 		JMVC.events.loadify(1000);
 		JMVC.require('plotter', 'obj/bucket');
 		JMVC.head.meta("generator", "jmvc resident in your machine");
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/logoogle.css', true);
+		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/logoogle.css');
 		//
 		var M = Math,
 			v = JMVC.getView('vacuum'),
@@ -13,7 +13,7 @@ JMVC.controllers.google = function () {
 		//
 		v.set({'style' : 'font-family:verdana;margin:0 auto;width:285px;height:105px;margin-top:80px;position:relative', 'content' : '&nbsp;', 'id' : 'extralogo'});
 		//
-		v.render({cback : function () {
+		v.render(function () {
 			var newlogo = document.getElementById('extralogo'),
 				G = new JMVC.graf.letter('G', 22, 37),
 				o1 = new JMVC.graf.letter('o1', 48, 97),
@@ -152,6 +152,19 @@ JMVC.controllers.google = function () {
 				}, T2);
 			}
 			//
-		}});
+			//
+			//
+			//
+			//
+			//
+			//
+			//
+			// SEARCH
+			//
+			var enable_search = true;
+			if (enable_search) {
+				
+			}
+		});
 	};
 }

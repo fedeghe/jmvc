@@ -39,7 +39,7 @@ JMVC.extend('border', {
 			//    \-------\
 			case left <= 0 && right <= 0 :
 				left_style = 'width:'+(width/2)+'px;left:'+left+'px;top:0px;border-left:'+(-left)+'px solid transparent;border-top:'+brdsize+'px solid '+color+';';
-				right_style = 'width:'+(width/2 + right)+'px;top:0px;right:'+(-left)+'px;border-right:'+(-right)+'px solid transparent;border-bottom:'+brdsize+'px solid '+color+';';
+				right_style = 'width:'+(width/2 + right)+'px;top:-'+brdsize+'px;right:0px;border-right:'+(-right)+'px solid transparent;border-bottom:'+brdsize+'px solid '+color+';';
 			break;
 		}		
 		dleft = JMVC.dom.create('div', {'style':left_style, 'class':'fleft zerofsize brel'}, '&nbsp;');
@@ -54,7 +54,7 @@ JMVC.extend('border', {
 			brdsize = height,
 			left_style, right_style;
 			
-		node = JMVC.dom.create('div', {'class':'babs', 'style': 'bottom:-'+brdsize+'px'});
+		node = JMVC.dom.create('div', {'class':'babs', 'style': 'bottom:-'+2*brdsize+'px'});
 		switch(true){
 			//    /-------\
 			case left >= 0 && right <= 0 :
@@ -64,13 +64,13 @@ JMVC.extend('border', {
 			//    /-------/
 			case left >= 0 && right >= 0 :
 				left_style = 'width:'+(width/2 - left)+'px;left:0px;top:0px;border-left:'+left+'px solid transparent;border-top:'+brdsize+'px solid '+color+';';
-				right_style = 'width:'+(width/2)+'px;right:0px;top:0px;border-right:'+(right)+'px solid transparent;border-bottom:'+brdsize+'px solid '+color+';';
+				right_style = 'width:'+(width/2)+'px;right:-'+right+'px;top:-'+brdsize+'px;border-right:'+(right)+'px solid transparent;border-bottom:'+brdsize+'px solid '+color+';';
 				
 			break;
 			//    \-------\
 			case left <= 0 && right <= 0 :
 				left_style = 'width:'+(width/2)+'px;left:'+left+'px;top:0px;border-left:'+(-left)+'px solid transparent;border-bottom:'+brdsize+'px solid '+color+';';				
-				right_style = 'width:'+(width/2 + right)+'px;top:0px;right:'+(-left)+'px;border-right:'+(-right)+'px solid transparent;border-top:'+brdsize+'px solid '+color+';';				
+				right_style = 'width:'+(width/2 + right)+'px;top:-'+brdsize+'px;right:0px;border-right:'+(-right)+'px solid transparent;border-top:'+brdsize+'px solid '+color+';';				
 			break;
 		}		
 		dleft = JMVC.dom.create('div', {'style':left_style, 'class':'fleft zerofsize brel'}, '&nbsp;');

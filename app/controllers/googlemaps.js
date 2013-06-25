@@ -3,32 +3,36 @@ JMVC.controllers.googlemaps = function () {
 	this.index = function () {
 		//
 		JMVC.events.loadify(1000);
-		JMVC.require('google_maps','dim');
+		JMVC.require('google/gmap','dim');
 		JMVC.head.meta("generator", "jmvc resident in your machine");
+		JMVC.head.title('Google maps');
 		var v = JMVC.getView('vacuum'),
 			that = this,
 			dims,
 			mapid,
 			b;
 
-		v.set({'style' : 'font-family:verdana;margin:0 auto;width:285px;height:105px;margin-top:80px;position:relative', 'content' : '&nbsp;', 'id' : 'extralogo'});
+		v.set({
+			'style' : 'font-family:verdana;margin:0 auto;width:285px;height:105px;margin-top:80px;position:relative',
+			'content' : '&nbsp;',
+			'id' : 'extralogo'
+		});
 
-		v.render({cback : function () {
-			JMVC.require('gmap');
-				dims = JMVC.dim.getViewportSize();
-				mapid = 'map';
-				b = JMVC.dom.body();
-				JMVC.dom.append(b, JMVC.dom.create('div', {id : mapid, style : 'position:absolute;z-index:1;top:0px;left:0px;width:' + dims.width + 'px;height:' + dims.height + 'px'}));
-				//
+		v.render(function () {
+			dims = JMVC.dim.getViewportSize();
+			mapid = 'map';
+			b = JMVC.dom.body();
 			
-				
-				JMVC.gmap.initialize(function () {
-					
-					//console.debug(dims);
-					
+			JMVC.dom.append(b, JMVC.dom.create('div', {id : mapid, style : 'position:absolute;z-index:1;top:0px;left:0px;width:' + dims.width + 'px;height:' + dims.height + 'px'}));
+			//
+		
+			
+			JMVC.gmap.initialize(
+				function () {
+
 					JMVC.gmap.mapme('via Maggio 18, Lugano, Svizzera', function(latlng){
 						
-						var mapDiv = JMVC.dom.find('#'+mapid),
+						var mapDiv = JMVC.dom.find('#' + mapid),
 							map = new google.maps.Map(mapDiv, {
 								center : new google.maps.LatLng(latlng.lat(), latlng.lng()),
 								zoom : 6,
@@ -54,7 +58,8 @@ JMVC.controllers.googlemaps = function () {
 						//var cl = new google.maps.weather.CloudLayer();
 						//cl.setMap(map);
 						
-						JMVC.gmap.marker(map, [47.366923, 8.543597], '<h1>Yeahhh</h1>');
+						JMVC.gmap.marker(map, [47.366923, 8.543597], '<h1>Zürich</h1>');
+						//JMVC.gmap.marker(map, 'via Maggio 18, Lugano, Svizzera', '<h1>Yeahhh</h1>');
 						
 					});
 					
@@ -65,6 +70,7 @@ JMVC.controllers.googlemaps = function () {
 					sensor : false
 				}
 			);
-		}});
+			///////////////////////
+		});
 	};
 }

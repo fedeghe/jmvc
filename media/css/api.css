@@ -1,0 +1,143 @@
+body{
+	/*font-family: Verdana, "MS Trebuchet", sans-serif;*/
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	font-size:16px;
+	background-color:#C4DDED;
+	width:900px;
+	margin:0 auto;
+	margin-top:10px;
+	background-image: url($baseurl$/media/img/oy.png);
+} 
+p{
+	padding-bottom:10px;
+	padding-top:0px;
+	margin:0px;
+	text-align:left;
+}
+label{
+	font-weight:bold;
+}
+label.lab{
+	font-weight:normal;
+}
+
+
+
+
+.cl1_Controller{
+	background-color: #CCF;
+}
+.cl2_Controller{
+	background-color: #FFF;
+}
+.cl1_View{
+	background-color: #CFC;
+}
+.cl2_View{
+	background-color: #FFF;
+}
+.cl1_Model{
+	background-color: #FCC;
+}
+.cl2_Model{
+	background-color: #FFF;
+}
+.cl1_Dom{
+	background-color: #9CF;
+}
+.cl2_Dom{
+	background-color: #FFF;
+}
+.cl1_Events{
+	background-color: #FCF;
+}
+.cl2_Events{
+	background-color: #FFF;
+}
+.cl1_Head{
+	background-color: #FC9;
+}
+.cl2_Head{
+	background-color: #FFF;
+}
+.cl1_JMVC{
+	background-color: #FFC;	
+}
+.cl2_JMVC{
+	background-color: #FFF;
+}
+h3{
+	padding-top:15px;
+	padding-bottom:5px;
+	margin:0px;
+}
+h3.apisection{
+	padding-top:15px;
+	padding-bottom:5px;
+	margin:0px;
+	text-decoration:underline;
+	color:red;
+}
+div#guest{
+	padding-top: 20px;
+	padding-bottom:20px;
+	font-size:20px;
+}
+tr{
+	margin-top:10px;
+}
+tr > td {
+	padding-bottom:8px;
+	height:0px;
+	line-height:18px;
+	font-size:16px;
+} 
+tr > td.first {
+	text-align:right;
+	padding-right:5px;
+	color:#222;
+	font-weight:bold;
+} 
+tr.dline td{
+	font-size:16px;
+}
+hr{
+	height:5px;
+	border:1px solid #ccc;
+	background-color:white;
+}
+a{
+	color:#888;
+	text-decoration:none;
+}
+a:hover{
+	color:#a00;
+}
+ul{
+	margin:0px;
+	padding:0px;
+	list-style-type:circle;
+}
+ul li{
+	margin:0px;
+	padding:0px;
+	padding-left:5px;
+	margin-left:15px;
+}
+div#centerinfo{
+	background-color: white;
+	padding:30px;
+}
+.tablecontainer{
+	padding:5px;
+	margin-bottom:20px;
+}
+.apitable{
+	$my_table_style$
+}
+div#footer{
+	height:40px;
+}
+p.footer{
+	text-align:center
+}

@@ -29,6 +29,9 @@ JMVC.controllers.arrayOp = function() {
 				afunc
 			];
 			
+
+			console.debug(JSON.stringify(arr));
+
 			
 			JMVC.test.initialize(true);
 			
@@ -72,7 +75,9 @@ var arr = [\n\
 			JMVC.test.testValue("f(arr, [1,[1,[1,[1,3]]]]) = -1", function(){return JMVC.util.inArrayRich(arr, [1,[1,[1,[1,3]]]]);}, -1);
 			JMVC.test.testValue("f(arr, 'hei YOU') = -1", function(){return JMVC.util.inArrayRich(arr, 'hei YOU');}, -1);
 			JMVC.test.testValue("f(arr, {\"o\" : \"s\", 'd':[1,2,3,4]}) = -1", function(){return JMVC.util.inArrayRich(arr, {"o" : "s", 'd':[1,2,3,4]});}, -1);
-			JMVC.test.testValue("f(arr, {\"o\" : \"e\", 'd':[1,2,3]}) = -1", function(){return JMVC.util.inArrayRich(arr, {"o" : "e", 'd':[1,2,3,4]});}, -1);
+			//JMVC.test.testValue("f(arr, {\"o\" : \"e\", 'd':[1,2,3]}) = -1", function(){return JMVC.util.inArrayRich(arr, {"o" : "e", 'd':[1,2,3,4]});}, -1);
+
+			JMVC.test.testValue("f(arr, {}) = 8", function(){return JMVC.util.inArrayRich(arr, {});}, 8);
 			
 			//JMVC.test.describe('<a name="times"></a><h1>Times comparison</h1>here the 4 functions are executed '+times+' times with the same random array sized '+ s + ' with elements between -1E6 and 1E6');
 			

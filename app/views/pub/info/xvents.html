@@ -1,0 +1,154 @@
+<div>
+	<h2>$label$</h2>
+	
+	
+	<h4>Observer, publish/subscribe... and events?</h4>
+	<p>The observer pattern lets an object called subject to mantain a list of objects (subscribers) to be notified as far as something relevant changes 
+		in the subject on his state. It sound pretty agnostic, so to use it on a webpage, there is some more code that the one needed to simply implement
+		the pattern: we need to bind with the events caugth by the user browser, in the most comfortable and mantainable way.<br />
+		Let's make some steps back into never enough ancient times when the event binding was done in various unattractive ways:
+	</p>
+
+	<ul class="pres">
+		<li>inline code, really deadly, and still used:
+			<[H[<input type="button" onclick="alert('clicked');" value="Click me" />]H]>
+			or similar, but a minimum less unmantainable
+<[H[<script type="text/javascript">
+	function alertme() {
+		alert('clicked');
+	}
+</script>
+<input type="button" onclick="alertme" value="Click me" />]H]>
+		</li>
+		<li>via script binding<[H[<input type="button" id="mybutton" value="Click me" />
+<script type="text/javascript">
+	document.getElementById('mybutton').addEventListener('click', function (e) {
+		console.debug('clicked', e);
+	});
+	// please ignore crossbrowser issues here
+</script>]H]></li>
+	</ul>
+	<p>After fixing some minimal crossbrowser problems you'll be able to do whatever almost anything your page needs.</p>
+	<p>Using code like that is not so bad, You can make a some step further, organizing callbacks in a namespace and using an object literal to map events, nodes and callbacks obtaining
+		something that seem to be mantainable... but as far as the application need to scale over and over You'll realize that it's not that good.
+	</p>
+	<br />
+	<h4>Publish / subscribe</h4>
+	<p>A great popular solution, that can be found in almost any framework, is the pub/sub. A unique object is responsible to keep opened a channel where 
+		any object can publish data (keyed by a `topic` string) and any object can declare to be interested in one or more topics; as far as the published
+		topic matches one that the listener object has subscribed for, it gain access to related data.
+	</p>
+
+	<hr/>
+	...here comes xvents
+	<hr/>
+	
+	<p>The main advantage is that on a interactive page You will <strong>no more</strong> have poorly mantainable code like the following one:
+<[H[$('#login').bind('click', function (){ ... your callback code ... } );
+$('#getinfo').bind('click', function (){ ... your callback code ... } );
+$('#share').bind('click', function (){ ... your callback code ... } );]H]>
+	</p>
+	
+
+	<p>...but <u>on a webpage</u> how can that be whitout taking into account browser events? ... there is no way to ignore em, obviously</p>
+
+	<p>
+		This is a distorsion of the observer pattern that works basically like that:
+	</p>
+	<ul class="list">
+		<li>choose an existing DOM node and get a reference for it (root)</li>
+		<li>specify two <i>data-</i> attributes names, one for <i>the action</i> and one for <i>parameters</i> (not mandatory if the root is either the window element or the body)</li>
+		<li>bind an event to a function that will be fired only if the action attribute on the node matches the right value</li>
+	</ul>
+	
+
+	<p>As usual a sample will clarify, given the following html fragment:</p>
+<[H[<body>
+		...
+		<div id="area1">
+			<input type="button" value="click me or over&out" data-act="alert|alert2|overout" data-par="{'name':'federico','surname':'ghedina'}" />
+			<input type="button" value="2click me or over&out" data-act="alert2|overout" data-par="{'action':'here`s a double click'}" />
+			<select name="selection" data-act="sel">
+				<option value="v1">value1</option>
+				<option value="v2">value2</option>
+				<option value="v3">value3</option>
+			</select>
+		</div>
+		<hr>
+		<div id="area2">
+			<div id="sense" data-act2="getpos|notify" data-par="">&nbsp;</div>
+		</div>
+		<input type="button" value="hello" data-act0="hello" data-par="{'name':'Federico'}" />
+		<div id="innerarea">
+			<input type="button" value="hellosuper" data-act-inner="hellosuper" data-par-inner="{'lang':'javascript'}" />
+			<!-- try one in the innerarea -->
+		</div>
+		...
+</body>]H]>
+
+	<p>As DOM is loaded, create a new element</p>
+
+<[H[// create a new element, and get a reference to a domnode
+var xe =  JMVC.xvents.create(),
+		node = $('#area1');
+//
+// declare that inside the node with id="area1" two names
+// will determine the binding, one for the action and one for parameter,
+// .. it will be clear in a moment
+xe.add(node, 'data-act', 'data-par')
+//
+// in the next line we declare that any element contained in the current
+// reference node with an attribute named 'data-act' valued 'alert'
+// will cause the callback to be executed;
+// the callback will receive one parameter that always contains the
+// event and what is contained in the 'data=par' named parameter
+		.listen('click', function (p) {console.debug('click alert', p); }, 'alert');
+//
+// in the same fashion, we chain
+		.listen('dblclick', function (p) {console.debug('dblclick', p); }, 'alert2')
+		.listen('mouseover', function (p) {console.debug('over ', p); }, 'overout')
+		.listen('mouseout', function (p) {console.debug('out ', p); }, 'overout')
+		.listen('change', function (p) {console.debug(p.node.value); }, 'sel')
+		.bind();
+//
+// for document events
+xe.add(window).listen('load', function (e) {
+		console.debug('dom loaded');
+		xe.add(window.document)	
+			.listen('click', function (e) {console.debug('one click on window', e); })
+			.listen('click', function (e) {console.debug('... sure, on window', e); })
+			.listen('dblclick', function (e) {console.debug('2click', e); })
+			.bind();
+});
+//
+// if needed a fourth boolean parameter is available to stop event bubbling (true value will stop it)
+xe.add($('#area2'), 'data-act2', 'data-par')
+		.listen('mousemove', function (p) {console.debug(p.event); }, 'getpos')
+		.listen('click', function (p) {console.debug(p.event); }, 'notify', true)
+		.bind();
+//]H]>
+</div>
+
+<div class="pros">
+	<h3>Pros</h3>
+	<div class="cnt">
+		heiiiiii
+	</div>
+</div>
+<div class="cons">
+	<h3>Cons</h3>
+	<div class="cnt">
+		<ul>
+			<li>one</li>
+			<li>two</li>
+		</ul>
+	</div>
+</div>
+<br class="clearer" />
+
+<p>
+	<strong>Sample here:</strong> <a href="$link$">$label$</a>
+</p>
+
+$end$
+

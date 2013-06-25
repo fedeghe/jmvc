@@ -1,11 +1,10 @@
 JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/widget/slider/slider.css', true);
 
-JMVC.widget.Slider = function (node) {
+JMVC.widget.Slider = function (node, w) {
 	var that = this;
 	this.node = node;
 	this.node.className = 'bar';
-
-	this.width = 200;//node.clientWidth;
+	this.width = w || 200; //node.clientWidth; // 200 ???
 	this.cursor_max = false;
     this.cursor_min = false;
 	this.step = false;
@@ -19,31 +18,55 @@ JMVC.widget.Slider = function (node) {
 	this._listening = false;
 	this.map = {}; // real -> virt
 };
+
 JMVC.widget.Slider.prototype.onChange = function (f) {
 	this.change = f;
+	this.change.call(this, this.getValue());
 };
 JMVC.widget.Slider.prototype.setStep = function (s) {
 	this.step = s;
 	this.ticks = [];
+	this.map = {};
 	// get virtual step array
 	var virt = [], n = 0, i = 0, l = 0;
 	while (n < this.virtual_bounds[1]) {
 		n =  this.virtual_bounds[0] + l * this.step;
 		virt.push(n) ;
-		l++;
+		l += 1;
 	}
 	// now translate to real (now i is virt.length)
 	// doing that let calls of the inverse real2virt returning exactly wanted values
-	for(null; i < l; i += 1){
+	for (null; i < l; i += 1) {
 		this.ticks.push(this.virt2real(virt[i]));	
-	}
-	//make map
-	for(i = 0; i < l; i += 1){
+		//make map
 		this.map[this.ticks[i]] = virt[i];	
 	}
-	
-	
 };
+
+JMVC.widget.Slider.prototype.reset = function (bounds, top, down, step) {
+	var topvirt,
+		downvirt;
+
+	this.virtual_bounds = bounds;
+	this.virtual_length = bounds[1] - bounds[0];
+
+	topvirt = this.virt2real(top);
+	
+	this.innerbar.style.right = this.width - topvirt - this.cursor_width_middle + 'px';
+	this.cursor_max.style.left = topvirt + 'px';
+
+	if (down) {
+		downvirt = this.virt2real(down);
+		this.innerbar.style.left = downvirt + this.cursor_width - this.cursor_width_middle + 'px';
+		this.cursor_min.style.left = downvirt + 'px';
+	}
+	if (step) {
+		this.setStep(step);
+	} else {
+		this.step = false;
+	}
+	this.change && this.change(this.getValue());
+}
 
 JMVC.widget.Slider.prototype.nearest = function (v, steps) {
 	var len = steps.length,
@@ -69,23 +92,20 @@ JMVC.widget.Slider.prototype.nearest = function (v, steps) {
 }
 
 
-JMVC.widget.Slider.prototype.init = function(bounds, top, down, step){
+JMVC.widget.Slider.prototype.init = function (bounds, top, down, step) {
 	
 	this.virtual_bounds = bounds;
 	this.virtual_length = bounds[1] - bounds[0];
 
-	
 	function switchzindex (el) {
-		if (el == that.cursor_max){
+		if (el == that.cursor_max) {
 			that.cursor_min.style.zIndex =  100;
-			that.cursor_max.style.zIndex =  200;
-			
-		} else if (el == that.cursor_min){ 
+			that.cursor_max.style.zIndex =  200;			
+		} else if (el == that.cursor_min) { 
 			that.cursor_min.style.zIndex =  200;
 			that.cursor_max.style.zIndex =  100;
 		}
 	}
-	
 	
 	var that = this,
 		tmp,
@@ -94,25 +114,21 @@ JMVC.widget.Slider.prototype.init = function(bounds, top, down, step){
 			initElement: function (element) {
 				JMVC.events.bind(element, 'mousedown', dnd.startDragMouse);
 				JMVC.events.bind(element, 'touchstart', dnd.startDragTouch);
-				//dnd.addEventSimple(element,'touchstart', dnd.startDragTouch);
-				//
-				// element.onmousedown = dnd.startDragMouse;
-				// element.style.display = 'block';
 			},
 			unbind : function (element) {
 				dnd.removeEventSimple(element,'mousedown',dnd.startDragMouse);
 				dnd.removeEventSimple(element,'touchstart',dnd.startDragTouch);
 			},
+			
 			startDragMouse: function (e) {
 				var evt = e || window.event;
 				dnd.startDrag(this);
 				dnd.initialMouseX = evt.clientX;
 				dnd.addEventSimple(document,'mousemove',dnd.dragMouse);
 				dnd.addEventSimple(document,'mouseup',dnd.releaseElement);
-				//dnd.addEventSimple(document,'touchmove',dnd.dragTouch);
-				//dnd.addEventSimple(document,'touchend',dnd.releaseElement);
 				return false;
 			},
+			
 			startDragTouch: function (e) {
 				dnd.killEvent(e);
 				var evt = e || window.event,
@@ -120,27 +136,24 @@ JMVC.widget.Slider.prototype.init = function(bounds, top, down, step){
 				dnd.startDrag(el);
 				var touches = JMVC.events.touch(evt);
 				dnd.initialMouseX = touches[0].x;
-				
-				//dnd.addEventSimple(document,'touchmove',dnd.dragTouch);
-				//dnd.addEventSimple(document,'touchend',dnd.releaseElement);
 				JMVC.events.bind(el,'touchmove',dnd.dragTouch);
 				JMVC.events.bind(el,'touchend',dnd.releaseElement);
 				return false;
 			},
+
 			startDrag: function (obj) {
-				
 				if (dnd.draggedObject){
 				    dnd.releaseElement();
 				}
 				dnd.startX = obj.offsetLeft;
-				
 				dnd.draggedObject = obj;
 				obj.className += ' dragged';
-				
 			},
+
 			dragTouch : function(e){
 				dnd.dragMouse(e,true);
 			},
+
 			dragMouse: function (e, touch) {
 				dnd.killEvent(e);
 				var evt = e || window.event,
@@ -149,7 +162,6 @@ JMVC.widget.Slider.prototype.init = function(bounds, top, down, step){
 					
 				if (dnd.draggedObject) {
 					if(touch) {
-						
 						touches = JMVC.events.touch(e);
 						dX = touches[0].x - dnd.initialMouseX;
 					} else {
@@ -176,6 +188,7 @@ JMVC.widget.Slider.prototype.init = function(bounds, top, down, step){
 				}
 				return false;
 			},
+
 			setPosition: function (l, obj) {
 				if (that.cursor_min) {
 					switch (obj) {
@@ -203,30 +216,29 @@ JMVC.widget.Slider.prototype.init = function(bounds, top, down, step){
 				if(obj.className.match(/\sdown/)){
 				    innerbar.style.left = l + that.cursor_width -that.cursor_width_middle + 'px';
 				}
-				
-				if(that.change)that.change(that.getValue());
+				that.change && that.change(that.getValue());
 				
 			},
-			releaseElement: function() {
-				//console.debug('up');
-				//that.afterChange();
+
+			releaseElement: function () {
 				dnd.removeEventSimple(document, 'mousemove', dnd.dragMouse);
 				dnd.removeEventSimple(document, 'mouseup', dnd.releaseElement);
 				dnd.removeEventSimple(document, 'touchmove', dnd.dragTouch);
-				
 				dnd.draggedObject.className = dnd.draggedObject.className.replace(/\sdragged/, '');
 				dnd.draggedObject = null;
 			},
-			addEventSimple : function(obj, evt, fn) {
+
+			addEventSimple : function (obj, evt, fn) {
 				if (obj.addEventListener) {
 				    obj.addEventListener(evt,fn,false);
-				}else if (obj.attachEvent){
+				}else if (obj.attachEvent) {
 				    obj.attachEvent('on'+evt,fn);
 				} else {
-					obj['on' + evt] = function () {fn.call(obj, window.event);};
+					obj['on' + evt] = function () {fn.call(obj, window.event); };
 				}   
 			},
-			removeEventSimple : function(obj,evt,fn) {
+
+			removeEventSimple : function (obj,evt,fn) {
 				if (obj.removeEventListener) {
 				    obj.removeEventListener(evt, fn, false);
 				}else if (obj.detachEvent) {
@@ -249,51 +261,6 @@ JMVC.widget.Slider.prototype.init = function(bounds, top, down, step){
 			}
 		};
 	
-	//innerbar
-	var innerbar = document.createElement('div');
-	innerbar.className = 'innerbar';
-	//this.cursor_max.innerHTML = '&bull;';
-	this.node.appendChild(innerbar);
-
-	// max cursor
-	this.cursor_max = document.createElement('div');
-	this.cursor_max.className = 'arrow up';
-	this.node.appendChild(this.cursor_max);
-		
-	//this.cursor_width = this.cursor_max.clientWidth;
-	//this.cursor_width_middle = ~~(this.cursor_width >> 1);
-
-	var	topvirt = this.virt2real(top);
-	innerbar.style.right = this.width - topvirt - this.cursor_width_middle + 'px';
-	this.cursor_max.style.left = topvirt + 'px';
-	//dnd.initElement(this.cursor_max);
-
-	this.max = this.width - this.cursor_width_middle;
-	this.min  = this.cursor_width_middle;
-	
-    //min maybe
-    if (down != undefined && down !== false) {
-		this.cursor_min = document.createElement('div');
-		this.cursor_min.className = 'arrow down';
-		this.node.appendChild(this.cursor_min);
-	
-		var downvirt = this.virt2real(down);
-		innerbar.style.left = downvirt + this.cursor_width - this.cursor_width_middle + 'px';
-		this.cursor_min.style.left = downvirt + 'px';	
-    	//dnd.initElement(this.cursor_min);
-    }
-	
-	
-	
-	
-	
-	
-	//setStep if requested
-	if (step != undefined) {
-		this.setStep(step);
-	}
-	
-	
 	/* FUNCTIONS BINDED TO EVENTS */
 	function manageClick(e) {
 		var t = e.target,
@@ -304,7 +271,8 @@ JMVC.widget.Slider.prototype.init = function(bounds, top, down, step){
 			val = false,
 			node = false,
 			mean = 0;
-		if (t === that.cursor_min || t === that.cursor_max) {return false;}
+		
+		if (t === that.cursor_min || t === that.cursor_max) {return false; }
 		//if the outer bar is hit we are outside the interval
 		if (t == that.node) {
 			// before the cursor
@@ -338,14 +306,10 @@ JMVC.widget.Slider.prototype.init = function(bounds, top, down, step){
 			//min max bound
 			if(val > that.max - that.cursor_width) val = that.max - that.cursor_width_middle -1;
 			if(val < that.min) val = that.min - that.cursor_width_middle;
-			
+			//set  it
 			dnd.setPosition(val, node);
-			
-			
-			//that.afterChange();
 		}
 	}
-	
 	
 	//cmin mousemove
 	function node_mousemove(e) {
@@ -369,12 +333,12 @@ JMVC.widget.Slider.prototype.init = function(bounds, top, down, step){
 		switchzindex(that.cursor_max);
 	}
 	
-	
 	/**
 	 * SET / UNSET LISTENERS
 	 */
 	function addListeners() {
 		that.node.style.cursor = 'pointer';
+		that.node.style.opacity = 1;
 		if(that.cursor_min){
 			that.cursor_min.style.cursor = 'ew-resize';
 		}
@@ -396,11 +360,12 @@ JMVC.widget.Slider.prototype.init = function(bounds, top, down, step){
 			dnd.addEventSimple(that.cursor_min, 'mouseenter', cmin_mouseenter);
 			dnd.addEventSimple(that.cursor_max, 'mouseenter', cmax_mouseenter);
 		}
-		
-		
 	}
+
 	function removeListeners() {
 		that.node.style.cursor = 'default';
+		that.node.style.opacity = 0.5;
+
 		if(that.cursor_min){
 			that.cursor_min.style.cursor = 'default';
 		}
@@ -423,7 +388,7 @@ JMVC.widget.Slider.prototype.init = function(bounds, top, down, step){
 			dnd.removeEventSimple(that.cursor_max, 'mouseenter', cmax_mouseenter);
 		}
 	}
-	
+
 	this.setListening =  function (/* boolean */ b) {
         if (b && !this._listening) {
 			addListeners();
@@ -432,36 +397,96 @@ JMVC.widget.Slider.prototype.init = function(bounds, top, down, step){
         }
     };
 
+	//innerbar
+	var innerbar = this.innerbar = document.createElement('div'),
+		topvirt,
+		downvirt;
 
+	innerbar.className = 'innerbar';
+
+	//clean up
+	this.node.innerHTML = '';
+	this.node.style.width = this.width + 'px';
+
+	this.node.appendChild(innerbar);
+
+	// max cursor
+	this.cursor_max = document.createElement('div');
+	this.cursor_max.className = 'arrow up';
+	this.node.appendChild(this.cursor_max);
+
+	topvirt = this.virt2real(top);
+	this.innerbar.style.right = this.width - topvirt - this.cursor_width_middle + 'px';
+	this.cursor_max.style.left = topvirt + 'px';
+
+	this.max = this.width - this.cursor_width_middle;
+	this.min  = this.cursor_width_middle;
+	
+    //min maybe
+    if (down != undefined && down !== false) {
+		this.cursor_min = document.createElement('div');
+		this.cursor_min.className = 'arrow down';
+		this.node.appendChild(this.cursor_min);
+	
+		downvirt = this.virt2real(down);
+		this.innerbar.style.left = downvirt + this.cursor_width - this.cursor_width_middle + 'px';
+		this.cursor_min.style.left = downvirt + 'px';
+    }
+	
+	//setStep if requested
+	if (step != undefined) {
+		this.setStep(step);
+	}
 }
 
-JMVC.widget.Slider.prototype.getValue = function () {
-	//console.debug(this.step)
+JMVC.widget.Slider.prototype.getValue = function () { 
 	return this.step ? 
 	{
-		'down' : this.map[this.nearest(this.cursor_min ? parseInt(this.cursor_min.style.left, 10)  : 0, this.ticks)],
+		'down' : this.cursor_min ? this.map[this.nearest(parseInt(this.cursor_min.style.left, 10) , this.ticks)] : false,
 		'up' : this.map[this.nearest(parseInt(this.cursor_max.style.left, 10)  , this.ticks)]
-	}
-	:
-	{
-		
-		'down' : this.real2virt(this.cursor_min ? parseInt(this.cursor_min.style.left, 10)  : 0),
+	} : {
+		'down' : this.cursor_min ? this.real2virt( parseInt(this.cursor_min.style.left, 10) ) : false,
 		'up' : this.real2virt(parseInt(this.cursor_max.style.left, 10)  )
 	};
 }
 
+JMVC.widget.Slider.prototype.setValue  = function (top, down) {
+	if (top < down) {
+		return false;
+	}
+	var	topvirt = this.virt2real(top);
+	this.innerbar.style.right = this.width - topvirt - this.cursor_width_middle + 'px';
+	this.cursor_max.style.left = topvirt + 'px';
+	this.max = this.width - this.cursor_width_middle;
+	
+    //min maybe
+    if (down != undefined && down !== false) {
+		this.min  = this.cursor_width_middle;	
+		var downvirt = this.virt2real(down);
+		this.innerbar.style.left = downvirt + this.cursor_width - this.cursor_width_middle + 'px';
+		this.cursor_min.style.left = downvirt + 'px';
+    }
+    this.change && this.change(this.getValue());
+};
+
 JMVC.widget.Slider.prototype.real2virt= function (v) {
-	if (v < 0) {return this.virtual_bounds[0];}
-	if (v > this.width) {return this.virtual_bounds[1];}
+	if (v < 0) {
+		return this.virtual_bounds[0];
+	}
+	if (v > this.width) {
+		return this.virtual_bounds[1];
+	}
 	v = v  / (this.width - this.cursor_width);
 	return Math.round(this.virtual_bounds[0] + v * this.virtual_length); 
 };
 
 JMVC.widget.Slider.prototype.virt2real = function (v) {
-	if(v < this.virtual_bounds[0])return 0;
-	if(v > this.virtual_bounds[1])return this.width - this.cursor_width;
+	if (v < this.virtual_bounds[0]){
+		return 0;
+	}
+	if (v > this.virtual_bounds[1]) {
+		return this.width - this.cursor_width;
+	}
 	v = (v - this.virtual_bounds[0]) / this.virtual_length;
 	return Math.round( v * (this.width - this.cursor_width));
 };
-
-

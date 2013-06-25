@@ -13,7 +13,7 @@ JMVC.controllers.gmaps = function () {
 
 		v.set({'style' : 'font-family:verdana;margin:0 auto;width:285px;height:105px;margin-top:80px;position:relative', 'content' : '&nbsp;', 'id' : 'extralogo'});
 
-		v.render({cback : function () {
+		v.render(function () {
 			JMVC.require('gmap');
 				dims = JMVC.dim.getViewportSize();
 				mapid = 'map';
@@ -65,6 +65,6 @@ JMVC.controllers.gmaps = function () {
 					sensor : false
 				}
 			);
-		}});
+		});
 	};
 }

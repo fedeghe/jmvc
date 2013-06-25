@@ -53,7 +53,7 @@ JMVC.extend('test', {
 			l,
 			i = 1;
 		for(l in lines){
-			out += JMVC.util.replaceall(outline, {nline : i, line : JMVC.shl.parse(lines[l])});
+			out += JMVC.util.replaceall(outline, {nline : i, line : JMVC.shl.parse(lines[l]) || ' '}, '%', '%');
 			i += 1;
 		}
 		JMVC.dom.add(JMVC.test.vars.banner, 'code', {'class':'debug fiveround'}, '<ul>' + out + '</ul>');
@@ -229,10 +229,9 @@ JMVC.extend('test', {
 				panel = JMVC.dom.add(JMVC.test.vars.banner, 'div', {id : 'panel', 'class' : 'fiveround'});
 				togglebutton = JMVC.dom.add(panel, 'input', {'id':'togglespec','type':'button','class':'panelbutton fiveround', 'value' : 'Toggle `more`'});
 				JMVC.events.bind(togglebutton, 'click', function(){
-					JMVC.util.each(JMVC.dom.find('.more'),function(i){i.click();} );
+					JMVC.each(JMVC.dom.find('.more'),function(i){i.click();} );
 					togglespec_visibility = !togglespec_visibility;
 				});
-				//JMVC.util.each(JMVC.dom.find('.more'),function(i){i.click();} );
 			}
 		}
 	},

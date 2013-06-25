@@ -1,4 +1,9 @@
 JMVC.extend('cookie', {
+
+	'initCheck' : function () {
+		return JMVC.W.navigator.cookieEnabled;
+	},
+
 	'cookie_nocookiesaround' : false,
 
 	/**
@@ -111,15 +116,22 @@ JMVC.extend('cookie', {
 	 * 
 	 */
 	'getall' : function () {
-
 		"use strict";
-
 		if (JMVC.WD.cookie === '') {
 			return [];
 		}
 
-		var c = JMVC.WD.cookie.split(';');
-
-		return this.cookie_nocookiesaround ? [] : JMVC.util.each(c, function (i) {var t = i.split('='); return {name : t[0], value : t[1]}; });
+		return this.cookie_nocookiesaround ?
+			[]
+			:
+			JMVC.each(
+				JMVC.WD.cookie.split(';'),
+				function (i) {
+					var t = i.split('=');
+					return {name : t[0], value : t[1]};
+				}
+			);
 	}
 });
+
+

@@ -1,0 +1,51 @@
+/* 
+    Document   : console
+    Created on : 14-nov-2012, 21.52.06
+    Author     : fedeghe
+    Description:
+        Purpose of the stylesheet follows.
+*/
+div.jmvc_console {
+	position : absolute;
+	background-color : white;
+	color : black;
+	font-size : 10px;
+	left:20px;
+	top:20px;
+	right:20px;
+	bottom:20px;
+	z-index:200;
+}
+div.jmvc_console span.close{
+	
+}
+div.jmvc_console div.jmvc_console_head{
+	background-color:black;
+}	
+div.jmvc_console div.jmvc_console_edit{
+	background-color:#aaa;
+	overflow-y: hidden;
+}
+div.jmvc_console div.jmvc_console_edit_html{
+	width:33%;
+	float:left;
+}
+div.jmvc_console div.jmvc_console_edit_js{
+	width:33%;
+	float:left;
+}
+div.jmvc_console div.jmvc_console_edit_css{
+	width:33%;
+	float:left;
+}
+div.jmvc_console div.jmvc_console_edit textarea{
+	line-height:20px;
+	padding:3px;
+	height:100%;
+	overflow:hidden;
+	overflow-y: scroll;	
+	width:100%;
+}
+div.jmvc_console div.jmvc_console_foot{
+	background-color:blue;
+}	

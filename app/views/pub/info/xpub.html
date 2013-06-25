@@ -1,0 +1,71 @@
+<div>
+	<h2>$label$</h2>
+	<p></p>
+	
+
+	<p>
+		Here is a summary about how this Observer is intended to work; through the API You'll specify:
+		<ul class="list">
+			<li>one or more root nodes meant to contain all the elements involved, ... and for each one of theese nodes:</li>
+			<li>two <i>data-</i> attributes names, one for <i>the action</i> and one for <i>parameters</i> (not mandatory if root is either the window element or the body)</li>
+			<li>one or more bindings between the DOM event type, the callback and the target action</li>
+		</ul>
+	</p>
+
+	<p>Nothing is better than an sample, suppose you have a markup like the following:</p>
+
+<[H[<body>
+	...
+	<div id="area1">
+		<input type="button" value="hei u" />
+		<span>over</span>
+		<!-- hei -->
+	</div>
+	...
+</body>]H]>
+
+	<p>As DOM is loaded, create a new element</p>
+
+<[H[// create a new element, and get a reference to a domnode
+var xpub =  JMVC.xpub.create();
+xpub.add(JMVC.dom.find('#area1'), 'area1')
+	.notify('click', 'topicx')
+	.notify('mouseover', 'topicy')
+	.listen('topicx', function (e) {console.debug('clikkkkk', e); })
+	.listen('topicy',  function (e) {console.debug(e); })
+	.bind();
+
+xpub.add(JMVC.dom.find('#sense'))
+	.notify('mousemove', 'topicmove')
+	.notify('mouseover', 'entermove')
+	.notify('mouseout', 'exitmove')
+	.listen('topicmove', function (e) {console.debug('moving around: ', e); })
+	.listen('entermove', function (e) {console.debug('ENTER: ', e); })
+	.listen('exitmove', function (e) {console.debug('EXIT: ', e); })
+	.bind();
+//]H]>
+</div>
+
+<div class="pros">
+	<h3>Pros</h3>
+	<div class="cnt">
+		heiiiiii
+	</div>
+</div>
+<div class="cons">
+	<h3>Cons</h3>
+	<div class="cnt">
+		<ul>
+			<li>one</li>
+			<li>two</li>
+		</ul>
+	</div>
+</div>
+<br class="clearer" />
+
+<p>
+	<strong>Sample here:</strong> <a href="$link$">$label$</a>
+</p>
+
+$end$
+

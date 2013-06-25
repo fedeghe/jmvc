@@ -1,7 +1,8 @@
 JMVC.extend('vector', {
 	'Kvector' : function(){
 		var that = this; 
-		this._ = Array.prototype.splice.call(arguments[0], 0);
+		//this._ = Array.prototype.splice.call(arguments[0], 0);
+		this._ = Array.prototype.slice.call(arguments[0]);
 		this.dim = this._.length;
 		
 		this.lenght = ( function () {
@@ -28,7 +29,7 @@ JMVC.prototipize(JMVC.vector.Kvector, {
 	
 	'map' : function (fn) {
 		var that = this;
-		JMVC.util.each(this._, function (el) {return fn(el); });
+		JMVC.each(this._, function (el) {return fn(el); });
 	},	
 	
 	/**

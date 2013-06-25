@@ -8,12 +8,15 @@ body{
 	background-image: url($baseurl$/media/img/oy.png);
 	border-left: 5px solid #aaa;
     border-right: 5px solid #555;
+    
+
 } 
 p{
 	padding-bottom:10px;
 	padding-top:0px;
 	margin:0px;
 	text-align:left;
+	line-height:22px;
 }
 label{
 	font-weight:bold;
@@ -22,6 +25,20 @@ label.lab{
 	font-weight:normal;
 }
 
+
+b, h3{
+	font-weight:bold;
+}
+b.index{
+	font-size:36px;
+	position:relative;
+	top:0px;
+	color:green;
+	font-weight:bold;
+	position:relative;
+	top:8px;
+	padding-right:10px;
+}
 
 
 

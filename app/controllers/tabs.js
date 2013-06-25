@@ -1,10 +1,26 @@
 JMVC.controllers.tabs = function () {
 	this.one = function () {
-		JMVC.require('tabs', 'sniffer');
+		JMVC.require('responsive/basic','tabs', 'sniffer');
+
 		var index = JMVC.getView('index'),
 			tab = new JMVC.tabs.tab('v'),
-			tab2 = new JMVC.tabs.tab('o'),
+			tab2 = new JMVC.tabs.tab('v'),
 			ids;
+
+		JMVC.responsive.onChange(
+			function (w) {
+				if (w < 800) {
+					//JMVC.dom.addClass(JMVC.WD.body, 'mini');
+					JMVC.responsive.allow('mobi')
+				} else {
+					//JMVC.dom.removeClass(JMVC.WD.body, 'mini');
+					JMVC.responsive.allow('dskt')
+				} 
+
+			}
+		);
+		
+
 		index.set_from_url('i_say', 'No one');
 		//
 		tab.add('Basic', 'Contenuto di prova1<br/><br/><br/><br/><br/><br/>kk');

@@ -108,7 +108,7 @@ class friendlyze{
 	
 	public static function set_path($path){
 		if(substr($path, 0, 1) == '/'){
-			die('It seems you are looking for trouble, but I`been mecriful this time !!!'.self::$br);
+			die('It seems you are looking for trouble, but I`been merciful this time !!!'.self::$br);
 			exit;
 		}
 		if(!is_dir(realpath(dirname(__FILE__).'/'.$path))){
