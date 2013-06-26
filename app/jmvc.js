@@ -1,8 +1,8 @@
 /**
  * JMVC : Pure Javascript MVC framework
  * 
- * @version: 1.9.1
- * @date : 08-05-2013
+ * @version: 1.9.2
+ * @date : 26-06-2013
  * @copyright (c) 2012, Federico Ghedina <fedeghe@gmail.com>
  * @author Federico Ghedina
  *
@@ -36,9 +36,9 @@
 
 
 /**
- * [ description]
- * @param  {[type]} W [description]
- * @return {[type]}   [description]
+ * main auto exec function
+ * @param  window (through this ref)
+ * @return undefined
  */
 !function (W) {
 	'use strict';
@@ -49,37 +49,42 @@
 	 */
 	var WD = W.document,
 		WDL = WD.location,	// reference for current location
-		i,// counter
-		j,// 	"
-		l,//	"
+		i,					// some counters
+		j,					//
+		l,					//
 
 		/**
-		 * global JMVC object
+		 * JMVC object, globalized
 		 */
 		JMVC = W.JMVC = (
 
 			/**
-			 * [ description]
-			 * @return {[type]} [description]
+			 * this function returns the JMVC object after doing some stuff
+			 * @return {object literal} $JMVC inner object 
 			 */
 			function () {
 
-				// returning object created in that function, will be JMVC
+				// returning object created in that function, here $JMVC will be JMVC
 				var $JMVC,
 					JMVC_VERSION = 1.9,
-					JMVC_REVIEW = 4,
+					JMVC_REVIEW = 2,
 					JMVC_PACKED = false,
 
-					//inner jmvc object
+					/**
+					 * inner jmvc literal, will contain almost all the functions used to 
+					 * compose the $JMVC object and thus the returning JMVC
+					 * @type {Object}
+					 */
 					jmvc = {},
 
 					// url separator
 					US = '/',
+
 					/**
 					* in some cases is useful to automatically distinguish between a
 					* developing url and
 					* production url
-					* will be returned in a var container accessible from JMVC var
+					* will be returned in a var container accessible from the JMVC object
 					*/
 					DEV_URL = WDL.protocol + US + US + 'www.jmvc.dev',
 					PROD_URL = WDL.protocol + US + US + 'www.jmvc.org',
@@ -88,9 +93,19 @@
 					 * two paths for
 					 * > extensions, used as basepath by JMVC.require
 					 * > test
+					 * > langs
 					 */
 					PATH = {
+						/**
+						 * extensions path, used as base path in the JMVC.require function
+						 * @type string
+						 */
 						ext  : US + 'app' + US + 'extensions' + US,
+
+						/**
+						 * test suite path, 
+						 * @type string
+						 */
 						test : US + 'app' + US + 'test' + US,
 						lang : US + 'app' + US + 'i18n' + US
 					},
@@ -3348,7 +3363,7 @@
 		}
 	)();
 	
-}(this.window || global);
+}(this);
 
 
 
