@@ -15,7 +15,17 @@ JMVC.controllers.index = function () {
 			, 'google/gmap'
 		);
 		
-		
+		JMVC.responsive.onChange(
+			function (w) {
+				if (w < 800) {
+					//JMVC.dom.addClass(JMVC.WD.body, 'mini');
+					JMVC.responsive.allow('mobi')
+				} else {
+					//JMVC.dom.removeClass(JMVC.WD.body, 'mini');
+					JMVC.responsive.allow('dskt')
+				}
+			}
+		);
 		
 		// preload logo
 		JMVC.dom.preloadImage(JMVC.vars.baseurl + "/media/img/jmvc_m1.png"
@@ -67,18 +77,7 @@ JMVC.controllers.index = function () {
 			function () {
 
 
-				JMVC.responsive.onChange(
-					function (w) {
-						if (w < 800) {
-							//JMVC.dom.addClass(JMVC.WD.body, 'mini');
-							JMVC.responsive.allow('mobi')
-						} else {
-							//JMVC.dom.removeClass(JMVC.WD.body, 'mini');
-							JMVC.responsive.allow('dskt')
-						} 
 
-					}
-				);
 
 				
 				JMVC.head.lastmodified();
