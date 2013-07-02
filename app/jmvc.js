@@ -98,54 +98,94 @@
 					PATH = {
 						/**
 						 * extensions path, used as base path in the JMVC.require function
-						 * @type string
+						 * @type {string}
 						 */
 						ext  : US + 'app' + US + 'extensions' + US,
 
 						/**
-						 * test suite path, 
-						 * @type string
+						 * test suite path, every controller matching "test_foocontroller"
+						 *      ////// TODO : will automatically load the test suite and
+						 *  
+						 * foocontroller.js will be 
+						 * searched into the /app/controller/test directory
+						 * to use test suite a require('test') is needed until TODO is done
+						 * @type {string}
 						 */
 						test : US + 'app' + US + 'test' + US,
+
+						/**
+						 * path for lang files, loaded with the JMVC.lang function
+						 * @type {string}
+						 */
 						lang : US + 'app' + US + 'i18n' + US
 					},
 
-					// set here allowed extensions
-					URL_ALLOWED_EXTENSIONS = ['html', 'htm', 'jsp', 'php', 'js', 'jmvc', 'j', 'mvc', 'fg'],
+					/**
+					 * all these extensions can be used just after the action
+					 * @type {Array}
+					 */
+					URL_ALLOWED_EXTENSIONS = ['html', 'htm', 'jsp', 'php', 'js', 'jmvc', 'j', 'mvc', 'do', 'asp'],
 
+					/**
+					 * default values for controller & action
+					 * @type {Object}
+					 */
 					JMVC_DEFAULT = {
 						controller : 'index',
 						action : 'index'
 					},
 
 					// dispather function result
+					/**
+					 * here will be stored relevant results returned from the dispather function
+					 * used to parse the current url
+					 */
 					dispatched,
 
-					// MVC objects constructors
+					/**
+					 * MVC basic constructors
+					 */
 					Controller,
 					Model,
 					View,
 					Interface,
 
-					//main parser
+					/**
+					 * the parser object, used for replacing all available placeholders
+					 * (views, views variables, chunks, snippets)
+					 */
 					Parser,
 
-					// for Observer and Promise
+					/**
+					 * two useful constructors 
+					 */
 					Event,
 					Promise,
-					//jmvc_promise,
 
-					// modules to load always, none
+					/**
+					 * in case some modules need to be always loaded here's the place to set them
+					 * @type {Array}
+					 */
 					Modules = ['google/analytics', 'cookie'],
 
-					// hooks
+					/**
+					 * hooks literal used to execute callbacks as far as some relevant event are fired
+					 * starting fron the request and ending with the document rendering end
+					 * @type {Object}
+					 */
 					hooks = {},
 
-					//loaded lang files
+					/**
+					 * a literal to store loaded lang files
+					 * @type {Object}
+					 */
 					langs = {},
 
-					// get initial time
+					// store starting time, that's not truly the starting time but 
+					// it's really next to the real value
 					time_begin = +new Date(),
+
+					//alias of undefined
 					undef = 'undefined',
 					noop = function () {},
 					getmode = 'ajax'; // script or ajax
@@ -154,7 +194,7 @@
 				jmvc = {
 					/**
 					 * globalize many variables, by default do not override existing ones,
-					 * but using the as second parameter it does
+					 * but using a truly value as second parameter it does
 					 * @param  Object o    the literal containing all the elements to be published
 					 * @param  {[type]} hard [description]
 					 * @return void
@@ -172,8 +212,7 @@
 					 * @return void
 					 */
 					"eval" : function (r) {
-						//W[String.fromCharCode(101, 118, 97, 108)](r);
-						W.eval(r);
+						W['ev' + 'al'](r);
 					},
 
 
@@ -193,7 +232,6 @@
 						T.prototype = Parent.prototype;
 						Child.prototype = new T();
 						Child.prototype.constructor = Child;
-						//
 						Child.superClass = Parent.prototype;
 						Child.baseConstructor = Parent;
 					},
@@ -214,7 +252,7 @@
 					},
 
 					/**
-					 * Basic function for extend 
+					 * Basic function for extending and object
 					 * @param  {[type]} label [description]
 					 * @param  {[type]} obj   [description]
 					 * @param  {[type]} reqs  [description]
@@ -233,8 +271,7 @@
 						(function (t, o) {
 							var j;
 							for (j in o) {
-								// $JMVC won`t let You override; do NOT check with hasOwnProperty ???
-								if (o.hasOwnProperty(j) && typeof t[j] === 'undefined') {
+								if (o.hasOwnProperty(j) && typeof t[j] === undef) {
 									t[j] = o[j];
 								}
 							}
@@ -246,7 +283,6 @@
 							//and delete
 							delete trg.init;
 						}
-					
 					},
 
 					/**
@@ -263,7 +299,6 @@
 								dyn = f.apply(null, [dyn]);
 							});
 						}
-						
 						return dyn;
 					},
 
@@ -476,7 +511,6 @@
 						var i = 0,
 							l = arguments.length,
 							curr = -1,
-							isTest = false,
 							path,
 							head = JMVC.WD.getElementsByTagName('head').item(0),
 							s;
@@ -487,8 +521,7 @@
 								curr += 1;
 								// if the extension is named "test"
 								// then the path is changed to PATH['test']
-								isTest = arguments[i] === 'test';
-								path = PATH[isTest ? 'test' : 'ext'] + arguments[i] + '.js';
+								path = PATH[arguments[i] === 'test' ? 'test' : 'ext'] + arguments[i] + '.js';
 								switch (getmode) {
 								case 'ajax':
 									$JMVC.io.get(path, function (jres) {
@@ -573,7 +606,7 @@
 						"make" : function (str, obj, ctx) {
 							var chr = '.',
 								els = str.split(chr),
-								u = 'undefined',
+								u = undef,
 								ret;
 
 							(typeof ctx === u) && (ctx = W);
@@ -1429,16 +1462,23 @@
 						src,
 						len = 0;
 
-					//
+					//maybe is the case to load testsuite
+					if (els[0].match(/test_/)) {
+						Modules.push('test');
+					}
+
 					if (WDL.hostname === 'localhost') {
 						els.shift();
 					}
+
 					controller = els.shift() || JMVC_DEFAULT.controller;
+					
 					//check extrapath for controller
 					if (!!controller.match(/_/)) {
 						controller_prepath_parts = controller.split('_');
 						controller = controller_prepath_parts.pop();
 						controller_prepath = controller_prepath_parts.join(US) + US;
+
 					}
 					action = els.shift() || JMVC_DEFAULT.action;
 					len = els.length;
