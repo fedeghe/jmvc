@@ -1,4 +1,4 @@
-JMVC.require('test');
+
 JMVC.controllers.strict = function() {
 
 	this.index = function(){

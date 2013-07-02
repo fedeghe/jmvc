@@ -1,4 +1,4 @@
-JMVC.require('key','test');
+JMVC.require('key');
 		
 JMVC.controllers.key = function() {
 	

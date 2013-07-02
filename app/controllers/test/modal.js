@@ -2,7 +2,7 @@ JMVC.controllers.modal = function() {
 
 	this.index = function(){
 
-		JMVC.require('widget/modal/modal', 'event_scroll','test');
+		JMVC.require('widget/modal/modal', 'event_scroll');
 
 		JMVC.events.loadify(1000);
 

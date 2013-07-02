@@ -3,7 +3,7 @@ JMVC.controllers.array = function() {
 	this.index = function(){
 		
 		
-		JMVC.require('lib/array','test');
+		JMVC.require('lib/array');
 		
 		JMVC.events.loadify(1000);
 		

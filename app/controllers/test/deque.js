@@ -3,7 +3,7 @@ JMVC.controllers.deque = function() {
 	this.index = function(){
 		'use strict';
 		
-		JMVC.require('obj/deque','test');
+		JMVC.require('obj/deque');
 		
 		var d1 = new JMVC.deque.create(),
 			d2 = new JMVC.deque.create();

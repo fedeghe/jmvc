@@ -4,7 +4,7 @@ JMVC.controllers.crypt = function() {
 		
 		
 		
-		JMVC.require('lib/crypt', 'lib/utf8', 'test');
+		JMVC.require('lib/crypt', 'lib/utf8');
 		
 		
 		this.render(false,function test(){
