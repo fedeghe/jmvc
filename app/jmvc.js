@@ -1620,9 +1620,10 @@
 					 * @return {[type]} [description]
 					 */
 					console : function(){
-						if(! ('console' in $JMVC.extensions)){
+						if(! ('core/console/console' in $JMVC.extensions)){
 							$JMVC.require('core/console/console');
 						}
+						JMVC.console.toggle();
 					}
 				};
 
