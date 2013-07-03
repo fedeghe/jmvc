@@ -259,14 +259,17 @@
 					 * @return {[type]}       [description]
 					 */
 					"extend" : function (label, obj, reqs) {
-						var trg = jmvc.ns.make('JMVC.' + label),
-							proceed = true;
 
+						// ensures that the target namespace exists 
+						var trg = jmvc.ns.make('JMVC.' + label);
+
+						// and set a flag, that can be switched off as far as
+						// if the object passed has a initCheck function
+						// the extension will take place only if the initCheck
+						// return truly value
 						if (typeof obj.initCheck === 'function') {
-							proceed = obj.initCheck.call($JMVC);
+							if (!!!(obj.initCheck.call($JMVC))) {return false; }
 						}
-
-						if (!proceed) {return false; }
 
 						(function (t, o) {
 							var j;
@@ -293,7 +296,8 @@
 					 */
 					"check_hook" : function (hookname, param) {
 						var orig = param,
-							dyn = param[0];
+							dyn = param[0] || false;
+
 						if (hooks[hookname]) {
 							jmvc.each(hooks[hookname], function (f) {
 								dyn = f.apply(null, [dyn]);
@@ -398,7 +402,7 @@
 
 						path_absolute += (path ? path + US : "") + name;
 
-						//if(type === 'model')alert(path_absolute);
+						
 						switch (type) {
 							case 'view':
 								path_absolute += '.html';
@@ -882,7 +886,10 @@
 							orig, // original content of {{}} stored for final replacement
 							register, // to store inner variables found in the placeholder
 							go_ahead = true; //flag
-							
+						
+						if (!!!content) {
+							return '';
+						}
 
 						while (i < limit) {
 							i += 1;
@@ -1144,6 +1151,7 @@
 				 * @return {[type]}         [description]
 				 */
 				Controller.prototype.render = function (content, cback) {
+
 					///allow only cback 
 					if (typeof content === 'function') {
 						cback = content;
@@ -1151,6 +1159,7 @@
 					}
 					var tmp_v = new View(content);
 					tmp_v.render(typeof cback === 'function' ? {cback : cback} : null);
+					//tmp_v.render(typeof cback === 'function' ? {cback : cback} : null);
 					return this;
 				};
 
@@ -1198,8 +1207,10 @@
 				 */
 				View = function (cnt) {
 					// original content
+					
 					this.ocontent = cnt || '';
 					this.content = cnt || '';
+
 					this.vars = {'baseurl' : $JMVC.vars.baseurl};
 				};
 
@@ -1215,17 +1226,19 @@
 				 */
 				View.prototype.parse = function (obj) {
 					var j;
-					if (obj) {
-						for (j in obj.vars) {
-							if (obj.vars.hasOwnProperty(j)) {
-								this.content = this.content.replace('$' + j + '$', obj.get(j));
+					if (!!this.content) {
+						if (obj) {
+							for (j in obj.vars) {
+								if (obj.vars.hasOwnProperty(j)) {
+									this.content = this.content.replace('$' + j + '$', obj.get(j));
+								}
 							}
 						}
-					}
-					// now jmvc parse vars
-					for (j in $JMVC.vars) {
-						if ($JMVC.vars.hasOwnProperty(j)) {
-							this.content = this.content.replace('$' + j + '$', $JMVC.vars[j]);
+						// now jmvc parse vars
+						for (j in $JMVC.vars) {
+							if ($JMVC.vars.hasOwnProperty(j)) {
+								this.content = this.content.replace('$' + j + '$', $JMVC.vars[j]);
+							}
 						}
 					}
 					// allow chain
@@ -1315,11 +1328,12 @@
 					
 
 					//let pars be the callback function
-					if (typeof pars == 'function') {
-						cback = pars
+					if (typeof pars === 'function') {
+						cback = pars;
 					}
 
 					// parse for other views or $JMVC.vars
+					
 					cont = Parser.parse(cont);
 					
 					// look for / substitute  vars
@@ -1349,7 +1363,8 @@
 							$JMVC.vars.rendertime = +new Date() - time_begin;
 							
 
-							that.content = jmvc.check_hook('onBeforeRender', [that.content]);
+							that.content = jmvc.check_hook('onBeforeRender', [that.content]) || that.content;
+
 							//
 							$JMVC.dom.html(trg, that.content);
 							//
@@ -1377,7 +1392,6 @@
 					}
 					// allow chain
 					// 
-					
 					
 					
 					return this;
@@ -2690,7 +2704,7 @@
 							JMVC.dom.empty(el);
 							JMVC.dom.append(el, html);
 						} else {
-							el.innerHTML = String(html);
+							el.innerHTML = html + '';
 						}
 						
 					} catch (e) {}
