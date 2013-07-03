@@ -174,3 +174,4 @@ console.debug(out);
 .p90{width:90%;     background-color:olive;}
 .p95{width:95%;     background-color:orchid;}
 .p100{width:100%;}
+.bcenter{margin:0 auto;}
