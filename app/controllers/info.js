@@ -99,7 +99,6 @@ JMVC.controllers.info = function () {
 
 		main.parse().render(function(){
 			JMVC.head.title('JMVC :: info');
-			//JMVC.dom.html(JMVC.dom.find('#render_time'), JMVC.vars.rendertime+' ms'); 
 		});
 	};
 };
