@@ -6,15 +6,18 @@ JMVC.controllers.api = function () {
 	// index action
 	this.index = function () {
 
+		JMVC.require('xmlparser');
 
 		JMVC.events.loadify(500);
 
 		var main  = JMVC.getView('vacuum'),
-			doc_tpl = JMVC.getView('doctpl'),
+			doc_tpl = JMVC.getView('api/doctpl'),
 			//readme = JMVC.getView('readme'),
 			//features = JMVC.getView('features'),
-			doc_model = JMVC.getModel('Doc');
+			func_model = JMVC.getModel('api/function'),
+			field_model = JMVC.getModel('api/field');
 		
+
 
 		main.set('id', 'desc')
 
@@ -27,7 +30,7 @@ JMVC.controllers.api = function () {
 		
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/api.css', true);// parsed
 		
-		JMVC.require('xmlparser');
+		
 		var tab_ext = new JMVC.tabs.tab('o'),
 			tabs_inner = {};
 			
@@ -62,20 +65,24 @@ JMVC.controllers.api = function () {
 			});
 			
 			
-			add_all = function(section, strsection){
+			add_all = function (section, strsection) {
 				
 				var params = '',
 					i = 0,
 					t = 0,
 					len = 0;
 				
+
+
 				//more functions =>array of function objects
-				if(JMVC.util.isArray(section['function'])){
+				if (JMVC.util.isArray(section['function'])) {
 					for (i in section['function']) {
 						//prepare content
-						doc_model.reset();
-						doc_model.set('func', section['function'][i].signature['#text']);
-						doc_model.set('description', section['function'][i].description['#text']);
+						func_model.reset();
+						func_model.set('func', section['function'][i].signature['#text']);
+						func_model.set('description', section['function'][i].description['#text']);
+						// func_model.set('bg1', 'bg1');
+						// func_model.set('bg2', 'bg2');
 						
 						//reset params
 						params = '';
@@ -89,39 +96,40 @@ JMVC.controllers.api = function () {
 						}
 
 
-						doc_model.set('parameters', params);
-						doc_model.set('returns', section['function'][i].returns['#text']);
+						func_model.set('parameters', params);
+						func_model.set('returns', section['function'][i].returns['#text']);
 						tabs_inner[strsection].add(
 							section['function'][i].signature['@attributes'].name,
-							doc_tpl.reset().parse(doc_model).content
+							doc_tpl.reset().parse(func_model).content
 						);
 					}
 					
 				//one function => one function object
 				} else if (JMVC.util.isObject(section['function'])) {
 					//prepare content
-						doc_model.reset();
-						doc_model.set('func', section['function'].signature['#text']);
-						doc_model.set('description', section['function'].description['#text']);
-						
-						//reset params
-						params ='';
+					func_model.reset();
+					func_model.set('func', section['function'].signature['#text']);
+					func_model.set('description', section['function'].description['#text']);
+					
+					//reset params
+					params ='';
 
-						if (JMVC.util.isArray(section['function'].params.param)) {
-							for(t = 0, len = section['function'].params.param.length; t < len; t += 1) {
-								params += '<label>' + section['function'].params.param[t]['@attributes'].name + '</label> : ' + section['function'].params.param[t]['#text'] + '<br />';
-							}
-						} else {
-							params += '<label>' + section['function'].params.param['@attributes'].name + '</label> : ' + section['function'].params.param['#text'] + '<br />';
+					if (JMVC.util.isArray(section['function'].params.param)) {
+						for(t = 0, len = section['function'].params.param.length; t < len; t += 1) {
+							params += '<label>' + section['function'].params.param[t]['@attributes'].name + '</label> : ' + section['function'].params.param[t]['#text'] + '<br />';
 						}
+					} else {
+						params += '<label>' + section['function'].params.param['@attributes'].name + '</label> : ' + section['function'].params.param['#text'] + '<br />';
+					}
 
-						doc_model.set('parameters', params);
-						doc_model.set('returns', section['function'].returns['#text']);
-						tabs_inner[strsection].add(
-							section['function'].signature['@attributes'].name,
-							doc_tpl.reset().parse(doc_model).content
-						);
+					func_model.set('parameters', params);
+					func_model.set('returns', section['function'].returns['#text']);
+					tabs_inner[strsection].add(
+						section['function'].signature['@attributes'].name,
+						doc_tpl.reset().parse(func_model).content
+					);
 				}
+
 			};
 			
 			JMVC.each(['jmvc', 'model', 'view', 'controller', 'dom', 'events', 'head', 'util', 'io'], function (t) {
@@ -134,7 +142,7 @@ JMVC.controllers.api = function () {
 			
 			main.set_from_url('nome', 'Guest');	
 			
-		}, true);
+		}, false);
 		
 		
 		
@@ -142,7 +150,7 @@ JMVC.controllers.api = function () {
 		
 		main.render(function () {
 			var i = tab_ext.render('desc', 'ulidONE');
-
+			
 			JMVC.events.delay(function () {
 				tabs_inner['jmvc'].render(i[0], 'ulidTWO');
 				tabs_inner['model'].render(i[1], 'ulidTWO');
@@ -153,7 +161,7 @@ JMVC.controllers.api = function () {
 				tabs_inner['head'].render(i[6], 'ulidTWO');
 				tabs_inner['util'].render(i[7], 'ulidTWO');
 				tabs_inner['io'].render(i[8], 'ulidTWO');
-			}, 10);
+			}, 100);
 
 		});
 		
@@ -162,6 +170,9 @@ JMVC.controllers.api = function () {
 	};
 	
 	
+
+
+
 	
 	this.trial = function () {
 		//load api xml
