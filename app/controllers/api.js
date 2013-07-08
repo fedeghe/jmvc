@@ -6,7 +6,7 @@ JMVC.controllers.api = function () {
 	// index action
 	this.index = function () {
 
-		JMVC.require('xmlparser');
+		JMVC.require('core/codeview/script','xmlparser', 'responsive/basic');
 
 		JMVC.events.loadify(500);
 
@@ -76,6 +76,7 @@ JMVC.controllers.api = function () {
 
 				//more functions =>array of function objects
 				if (JMVC.util.isArray(section['function'])) {
+
 					for (i in section['function']) {
 						//prepare content
 						func_model.reset();
@@ -145,11 +146,12 @@ JMVC.controllers.api = function () {
 		}, false);
 		
 		
-		
+		main.set('content', '<p style="color:#fff">Rendering time: <strong>[[JMVC.vars.rendertime]]</strong> ms</p>');
 		
 		
 		main.render(function () {
 			var i = tab_ext.render('desc', 'ulidONE');
+			//console.debug(i)
 			
 			JMVC.events.delay(function () {
 				tabs_inner['jmvc'].render(i[0], 'ulidTWO');
@@ -161,7 +163,7 @@ JMVC.controllers.api = function () {
 				tabs_inner['head'].render(i[6], 'ulidTWO');
 				tabs_inner['util'].render(i[7], 'ulidTWO');
 				tabs_inner['io'].render(i[8], 'ulidTWO');
-			}, 100);
+			}, 0);
 
 		});
 		
