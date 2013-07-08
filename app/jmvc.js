@@ -1230,14 +1230,14 @@
 						if (obj) {
 							for (j in obj.vars) {
 								if (obj.vars.hasOwnProperty(j)) {
-									this.content = this.content.replace('$' + j + '$', obj.get(j));
+									this.content = this.content.replace(new RegExp("\\$" + j + "\\$", 'g'), obj.get(j));
 								}
 							}
 						}
 						// now jmvc parse vars
 						for (j in $JMVC.vars) {
 							if ($JMVC.vars.hasOwnProperty(j)) {
-								this.content = this.content.replace('$' + j + '$', $JMVC.vars[j]);
+								this.content = this.content.replace(new RegExp("\\$" + j + "\\$", 'gm'), $JMVC.vars[j]);
 							}
 						}
 					}
