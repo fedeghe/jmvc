@@ -479,18 +479,22 @@
 
 
 
+					//@DOC
 					// setter getter unsetter $JMVC vars
 					"set" : function (name, content) {
 						$JMVC.vars[name] = content;
+						return $JMVC;
 					},
 
+					//@DOC
 					"get" : function (name) {
-						return $JMVC.vars[name] || '';
+						return $JMVC.vars[name] || false;
 					},
 
+					//@DOC
 					"del" : function (name) {
 						$JMVC.vars[name] && (delete $JMVC.vars[name]);
-						//$JMVC.vars[name] && ($JMVC.vars[name] = null);
+						return $JMVC;
 					},
 
 					//lambda function2context binding
@@ -1157,9 +1161,10 @@
 						cback = content;
 						content = false;
 					}
+					
 					var tmp_v = new View(content);
+
 					tmp_v.render(typeof cback === 'function' ? {cback : cback} : null);
-					//tmp_v.render(typeof cback === 'function' ? {cback : cback} : null);
 					return this;
 				};
 
@@ -1557,6 +1562,8 @@
 					widget : {},
 					extensions : {},
 					extensions_params : {},
+					i18n : {},
+
 					modules : Modules,
 					Event : Event,
 					globalize : jmvc.globalize,
@@ -1572,8 +1579,8 @@
 					expose : jmvc.expose,
 					factory:	jmvc.factory_method,
 					inherit : jmvc.basic_inherit,
-					makeNS : jmvc.ns.make,
-					checkNS : jmvc.ns.check,
+					make_ns : jmvc.ns.make,
+					check_ns : jmvc.ns.check,
 					hook : jmvc.hook,
 					hooks : hooks,
 					jeval : jmvc.eval,
@@ -1583,10 +1590,10 @@
 					render:	jmvc.render,
 					require : jmvc.require,
 					lang : jmvc.lang,
-					i18n : {},
-					set : jmvc.set,
-					get : jmvc.get,
-					del : jmvc.del,
+					
+					set : jmvc.set,//@@@@@@@@@@@@@@@@@@@@@@
+					get : jmvc.get,//@@@@@@@@@@@@@@@@@@@@@@
+					del : jmvc.del,//@@@@@@@@@@@@@@@@@@@@@@
 					htmlspecialchars : jmvc.htmlspecialchars,
 
 					gc : function () {var i = 0, a = arguments, l = a.length; for (null; i < l; i += 1) {a[i] = null; } },
@@ -3016,6 +3023,12 @@
 		 * @return {[type]}      [description]
 		 */
 		'ready' : function (func) {
+			// if some event are booked when the dom is
+			// already loaded execute immediately
+			if (JMVC.loaded) {
+				func.call();
+				return;
+			}
 			//return this.bind(W, 'load', func);
 			var e = null;
 			if(WD.addEventListener){
