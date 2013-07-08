@@ -5,12 +5,14 @@ JMVC.controllers.info = function () {
 	this.index = function () {
 		//
 		JMVC.events.loadify(500);
-		JMVC.require('core/codeview/script', 'google/analytics', 'sniffer', 'dim', 'css');
+		JMVC.require(
+			'core/codeview/script',
+			'google/analytics', 'sniffer', 'dim', 'css');
 		var main  = JMVC.getView('info'),
 			readme = JMVC.getView('readme'),
 			features = JMVC.getView('features'),
-			doc_tpl = JMVC.getView('doctpl'),
-			doc = JMVC.getModel('Doc'),
+			doc_tpl = JMVC.getView('api/doctpl'),
+			doc = JMVC.getModel('api/function'),
 			ret='',
 			h = '',
 			f,

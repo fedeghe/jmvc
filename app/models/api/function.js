@@ -1,4 +1,4 @@
-JMVC.models.Doc = function() {
+JMVC.models['function'] = function() {
 	this.func = '';
 	this.description = '';
 	this.parameters = '';
