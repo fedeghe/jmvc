@@ -10,8 +10,8 @@ JMVC.controllers.grind = function () {
 			{
 				"target" : '#extralogo',
 				"attrs" : {"id" : "head"},
-				"style" : {"backgroundColor" : "red"},
-				"class" : "round12 rounddown"
+				"style" : {"backgroundColor" : "red", "marginTop":"5px"},
+				"class" : "round12 roundup"
 			},
 			{
 				"target" : '#extralogo',
@@ -62,8 +62,8 @@ JMVC.controllers.grind = function () {
 				"attrs" : {"id" : "prova5"},
 				//"class" : "g700",
 				"inner" : [
-					{"attrs" : {"id" : "brd1"}, "class" : "p25", "float" : "right"},
-					{"attrs" : {"id" : "brd2"},"class" : "p25", "float" : "left", "style" : {"backgroundColor" : "none"}},
+					{"attrs" : {"id" : "brd1"}, "class" : "p25 round12 roundbottomright", "float" : "right"},
+					{"attrs" : {"id" : "brd2"},"class" : "p25 round12 roundbottomleft", "float" : "left", "style" : {"backgroundColor" : "none"}},
 					{"attrs" : {"id" : "brd3"},"class" : "p30", "float" : "right"},
 					//{"attrs" : {"id" : "brd4"}, "class":"p25", "float":"right"},
 					"clearer"
