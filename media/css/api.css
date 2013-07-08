@@ -113,6 +113,7 @@ a{
 a:hover{
 	color:#a00;
 }
+/*
 ul{
 	margin:0px;
 	padding:0px;
@@ -123,7 +124,7 @@ ul li{
 	padding:0px;
 	padding-left:5px;
 	margin-left:15px;
-}
+}*/
 div#centerinfo{
 	background-color: white;
 	padding:30px;
@@ -140,4 +141,10 @@ div#footer{
 }
 p.footer{
 	text-align:center
+}
+.bg1{
+	background-color: red;
+}
+.bg2{
+	background-color: blue;
 }

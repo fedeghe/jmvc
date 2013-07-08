@@ -1,16 +1,18 @@
 JMVC.extend('grind', {
 	
 	init : function () {
+		"use strict";
 		JMVC.head.addstyle(JMVC.vars.extensions + 'lib/grind/grind.css');
 	},
 	
 	render : function (conf, bodyClass) {
+		"use strict";
 		bodyClass && JMVC.dom.addClass(document.body, bodyClass);
 		this._render(conf);
 	},
 
-	_render : function render(conf, t, trg){
-		
+	_render : function render(conf, t, trg) {
+		"use strict";
 		var j = ~~t,
 			i,
 			c = conf[j],
@@ -26,6 +28,8 @@ JMVC.extend('grind', {
 			c = {"class":"clearer"};
 			cnt = false;
 		}
+		c.tag && (tag = c.tag);
+
 		s = document.createElement(tag);
 		s.className =  (!!(c['class']) ? c['class'] : '') + (tag !== 'br' ? ' gbox' : '') ;
 		
@@ -37,7 +41,7 @@ JMVC.extend('grind', {
 				s.setAttribute(i, c['attrs'][i]);
 			}
 		}
-		if (c["style"] != undefined && tag !== 'br') {
+		if (c["style"] !== undefined && tag !== 'br') {
 			for (i in c['style']) {
 				s.style[i] = c['style'][i];
 			}

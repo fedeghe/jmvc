@@ -49,3 +49,8 @@ div.jmvc_console div.jmvc_console_edit textarea{
 div.jmvc_console div.jmvc_console_foot{
 	background-color:blue;
 }	
+div.jmvc_console .innerbox{
+	border:1px solid black;
+	margin:1px;
+	padding:2px;
+}

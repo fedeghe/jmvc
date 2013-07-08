@@ -2,13 +2,48 @@
 <api>
 	<jmvc>
 		<function>
-			<signature name="add">JMVC.add(String name, String value)</signature>
-			<description>Adds a variable that You can use anywhere</description>
+			<signature name="bind">JMVC.bind(String name)</signature>
+			<description>Retrieves a variable from the global JMVC scope</description>
 			<params>
-				<param name="*name">the name of the new variable, use it typing &#36;thename&#36;</param>
-				<param name="*value">the value of the variable</param>
+				<param name="*name">the name of the new variable to be removed</param>
 			</params>
-			<returns>void (undefined)</returns>
+			<returns>the variable reference or value</returns>
+		</function>
+		
+		<function>
+			<signature name="check_hook">JMVC.bind(String name)</signature>
+			<description>Retrieves a variable from the global JMVC scope</description>
+			<params>
+				<param name="*name">the name of the new variable to be removed</param>
+			</params>
+			<returns>the variable reference or value</returns>
+		</function>
+
+		<function>
+			<signature name="check_ns">JMVC.bind(String name)</signature>
+			<description>Retrieves a variable from the global JMVC scope</description>
+			<params>
+				<param name="*name">the name of the new variable to be removed</param>
+			</params>
+			<returns>the variable reference or value</returns>
+		</function>
+
+		<function>
+			<signature name="console">JMVC.bind(String name)</signature>
+			<description>Retrieves a variable from the global JMVC scope</description>
+			<params>
+				<param name="*name">the name of the new variable to be removed</param>
+			</params>
+			<returns>the variable reference or value</returns>
+		</function>
+
+		<function>
+			<signature name="debug">JMVC.bind(String name)</signature>
+			<description>Retrieves a variable from the global JMVC scope</description>
+			<params>
+				<param name="*name">the name of the new variable to be removed</param>
+			</params>
+			<returns>the variable reference or value</returns>
 		</function>
 		<function>
 			<signature name="del">JMVC.del(String name)</signature>
@@ -18,6 +53,59 @@
 			</params>
 			<returns>void (undefined)</returns>
 		</function>
+		<function>
+			<signature name="each">JMVC.del(String name)</signature>
+			<description>Removes a variable from the global JMVC scope</description>
+			<params>
+				<param name="*name">the name of the new variable to be removed</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="Event"></signature>
+			<description></description>
+			<params>
+				<param name="*name"></param>
+			</params>
+			<returns></returns>
+		</function>
+		<function>
+			<signature name="expose"></signature>
+			<description></description>
+			<params>
+				<param name="*name"></param>
+			</params>
+			<returns></returns>
+		</function>
+
+		
+
+		
+		<function>
+			<signature name="set">JMVC.set(String name, String value)</signature>
+			<description>Adds a variable that You can use anywhere</description>
+			<params>
+				<param name="*name">the name of the new variable, use it typing &#36;thename&#36;</param>
+				<param name="*value">the value of the variable</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		
+		<function>
+			<signature name="get">JMVC.get(String name)</signature>
+			<description>Retrieves a variable from the global JMVC scope</description>
+			<params>
+				<param name="*name">the name of the new variable to be removed</param>
+			</params>
+			<returns>the variable reference or value</returns>
+		</function>
+		
+
+
+
+
+
+
 		<function>
 			<signature name="extend">JMVC.extend(String section, Literal extension)</signature>
 			<description>Extends JMVC object with Your objects</description>
@@ -60,7 +148,18 @@
 			</params>
 			<returns>void (undefined)</returns>
 		</function>
+
+		<param>
+			<name>W</name>
+			<type>reference</type>
+			<description>JMVC.W is a reference to th current window object</description>
+		</param>
 	</jmvc>	
+
+
+
+
+
 	<model>	
 		<function>
 			<signature name="set">set(String varname, Mixed value)</signature>
