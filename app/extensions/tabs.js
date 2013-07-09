@@ -37,6 +37,17 @@ JMVC.extend('tabs', {
 				return str.split('').join('<br />');
 			}
 			
+			function fixheight () {
+				var tc = JMVC.dom.find('.tabcontainer_v');
+				JMVC.each(tc, function(el, i){
+					var p = JMVC.dom.parent(el),
+						ul = JMVC.dom.find('ul', p),
+						h = JMVC.css.height(ul);
+					console.debug(ul, h)
+						
+					JMVC.css.style(el, 'height', h + 'px');
+				});
+			}
 			
 			
 			var num2show = show || 0,
@@ -142,21 +153,11 @@ JMVC.extend('tabs', {
 				
 				JMVC.head.addstyle(JMVC.css.json2css(styles), true, true);
 				
+
 			});
-
-			JMVC.events.delay(
-				function (){
-					//fix content height, will be executed immediately cause dom
-					//now is ready
-					JMVC.each(JMVC.dom.find('.tabcontainer_v'), function(el, i){
-						var p = JMVC.dom.parent(el),
-							ul = JMVC.dom.find('ul', p),
-							h = JMVC.css.height(ul);
-						JMVC.css.style(el, 'height', h + 'px');
-					});
-				},0
-			);
-
+			
+			
+			
 			
 			//set bindings
 			for(var i =0, l= that.elements['li'].length; i<l; i++){
@@ -175,8 +176,14 @@ JMVC.extend('tabs', {
 
 					JMVC.dom.switchClass(target, 'unsel', 'sel');
 
+				
+					//fix content height
+					fixheight();
+
+
 				});
 			}
+			JMVC.events.ready(function () {fixheight(); });
 
 			return ids2return;
 		};
