@@ -2,22 +2,17 @@ JMVC.require('tabs');
 
 JMVC.controllers.api = function () {
 	"use strict";
-	//
-	// index action
+
 	this.index = function () {
-
 		JMVC.require('core/codeview/script','xmlparser', 'responsive/basic');
-
 		JMVC.events.loadify(500);
 
 		var main  = JMVC.getView('vacuum'),
 			doc_tpl = JMVC.getView('api/doctpl'),
-			//readme = JMVC.getView('readme'),
-			//features = JMVC.getView('features'),
 			func_model = JMVC.getModel('api/function'),
-			field_model = JMVC.getModel('api/field');
-		
-
+			field_model = JMVC.getModel('api/field'),
+			tab_ext = new JMVC.tabs.tab('o'),
+			tabs_inner = {};
 
 		main.set('id', 'desc')
 
@@ -26,23 +21,13 @@ JMVC.controllers.api = function () {
 		//in the same way set fr
 		//features.set('fr', '<b style="font-size:26px;position:relative;top:0px;color:green;font-weight:bold">&#9758;</b>');
 		//
-		
-		
+
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/api.css', true);// parsed
-		
-		
-		var tab_ext = new JMVC.tabs.tab('o'),
-			tabs_inner = {};
-			
-			
-			
+
 		JMVC.io.get(JMVC.vars.baseurl + '/media/documentation.xml', function (doc) {
-		//JMVC.io.getXML(JMVC.vars.baseurl+'/media/documentation.xml', function(doc){
-			
 			//get a parser
 			var parser = new JMVC.xmlparser.load(doc),
 				add_all;
-			//var parser = new JMVC.xmlparser.load(doc, true);
 			
 			// define the extractor function
 			parser.extractor(function (node) {
@@ -64,16 +49,11 @@ JMVC.controllers.api = function () {
 				return ret;
 			});
 			
-			
 			add_all = function (section, strsection) {
 				
 				var params = '',
-					i = 0,
-					t = 0,
-					len = 0;
+					i = 0, t = 0, len = 0;
 				
-
-
 				//more functions =>array of function objects
 				if (JMVC.util.isArray(section['function'])) {
 
@@ -134,8 +114,9 @@ JMVC.controllers.api = function () {
 			};
 			
 			JMVC.each(['jmvc', 'model', 'view', 'controller', 'dom', 'events', 'head', 'util', 'io'], function (t) {
+				var y;
 				parser.pointer(parser.xmlDoc.getElementsByTagName(t)[0]);
-				var y = JMVC.xmlparser.toJson(parser.pointer());
+				y = JMVC.xmlparser.toJson(parser.pointer());
 				tabs_inner[t] = new JMVC.tabs.tab('v');
 				tab_ext.add(t, '');
 				add_all(y, t);
@@ -145,13 +126,10 @@ JMVC.controllers.api = function () {
 			
 		}, false);
 		
-		
 		main.set('content', '<p style="color:#fff">Rendering time: <strong>[[JMVC.vars.rendertime]]</strong> ms</p>');
-		
 		
 		main.render(function () {
 			var i = tab_ext.render('desc', 'ulidONE');
-			//console.debug(i)
 			
 			JMVC.events.delay(function () {
 				tabs_inner['jmvc'].render(i[0], 'ulidTWO');
@@ -165,30 +143,7 @@ JMVC.controllers.api = function () {
 				tabs_inner['io'].render(i[8], 'ulidTWO');
 			}, 0);
 
-		});
-		
-		
-		
+		});	
 	};
 	
-	
-
-
-
-	
-	this.trial = function () {
-		//load api xml
-		
-		//this.render('hello');
-		
-		JMVC.require('xmlparser');
-		JMVC.io.getXML(JMVC.vars.baseurl + '/media/documentation.xml', function (content) {
-			JMVC.debug(content.getElementsByTagName("jmvc"));
-			JMVC.debug (content);
-			// TODO UHHHHHHHHHHHHHH
-			//var t = JMVC.xmlparser.toJson(content);
-			//console.debug(t);
-		});
-		
-	}
 }
