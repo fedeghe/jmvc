@@ -58,6 +58,13 @@ JMVC.extend('css', {
 		}
 		return this; 
 	},
+
+	show : function (el) {
+		JMVC.css.style(el, 'display', 'block');
+	}, 
+	hide : function (el) {
+		JMVC.css.style(el, 'display', 'none');
+	}, 
 	
 	'width' : function (el) {
 		return el.offsetWidth || JMVC.css.getComputedStyle(el ,'width');
