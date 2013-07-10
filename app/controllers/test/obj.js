@@ -52,10 +52,10 @@ JMVC.controllers.obj = function() {
 					'	o14 = '+JSON.stringify(o14)+';');
 			
 			
-			JMVC.test.testValue("objCompare(o0,o1) = false", function(){return JMVC.util.objCompare(o0, o1);}, false);
+			JMVC.test.testValue("objCompare(o0,o1) = false", function(){return JMVC.object.objCompare(o0, o1);}, false);
 			//JMVC.test.testValue("oCompare(bigBF, bigBF2) = true", function(){return JMVC.util.oCompare(bigBF, bigBF2);}, true);
 				
-			JMVC.test.testTime('JMVC.util.objCompare', JMVC.util.objCompare, 100, [o13, o14]);
+			JMVC.test.testTime('JMVC.object.objCompare', JMVC.object.objCompare, 100, [o13, o14]);
 			
 			
 			/*

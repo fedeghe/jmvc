@@ -35,7 +35,7 @@ JMVC.extend('css', {
 					newval = JMVC.color.getRandomColor();
 					prop[k] =  prop[k].replace(/rand/, newval);
 				}
-				if (JMVC.util.inArray(this.css3_map, k) + 1) {
+				if (JMVC.array.inArray(this.css3_map, k) + 1) {
 					el.style.cssText += ';' + k + ' : ' + prop[k];
 				} else {
 					el.style[this.css_propertymap[k] || k + ""] = prop[k];
@@ -47,12 +47,12 @@ JMVC.extend('css', {
 				newval = JMVC.color.getRandomColor();
 				val =  val.replace(/rand/, newval);
 			}
-			if (JMVC.util.inArray( this.css3_map, prop) + 1) {
+			if (JMVC.array.inArray( this.css3_map, prop) + 1) {
 				el.style.cssText += ';' + prop + ' : ' + val;
 			} else {
 				el.style[this.css_propertymap[prop] || prop + ""] = val;
 				if (prop == 'opacity') {
-					el.style['filter'] = 'alpha(opacity = ' + (~~(100 * JMVC.getFloat(val))) + ')';
+					el.style['filter'] = 'alpha(opacity = ' + (~~(100 * JMVC.num.getFloat(val))) + ')';
 				}//ie
 			}
 		}

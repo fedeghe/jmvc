@@ -143,6 +143,8 @@ JMVC.controllers.api = function () {
 				tabs_inner['io'].render(i[8], 'ulidTWO');
 			}, 0);
 
+			tab_ext.end();
+
 			
 
 

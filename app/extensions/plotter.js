@@ -91,7 +91,7 @@ JMVC.extend('graf', {
 				JMVC.each(positions, function (el) {
 					tmp = JMVC.dom.create('span', {
 						'class' : 'point ' + letter,
-						'style' : JMVC.util.replaceall('top:%top%px;left:%left%px', {top : ~~ (el[0] + top) * scale, left : ~~(el[1] + left) * scale})
+						'style' : JMVC.string.replaceall('top:%top%px;left:%left%px', {top : ~~ (el[0] + top) * scale, left : ~~(el[1] + left) * scale})
 					}, character);
 					JMVC.dom.append(node, tmp);
 				});

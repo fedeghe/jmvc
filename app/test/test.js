@@ -55,7 +55,7 @@ JMVC.extend('test', {
 			l,
 			i = 1;
 		for (l in lines) {
-			out += JMVC.util.replaceall(outline, {nline : i, line : JMVC.shl.parse(lines[l]) || ' '}, '%', '%');
+			out += JMVC.string.replaceall(outline, {nline : i, line : JMVC.shl.parse(lines[l]) || ' '}, '%', '%');
 			i += 1;
 		}
 		JMVC.dom.add(JMVC.test.vars.banner, 'code', {'class' : 'debug fiveround'}, '<ul>' + out + '</ul>');
@@ -93,7 +93,7 @@ JMVC.extend('test', {
 			break;
 		default :break;
 		}
-		return [JMVC.test.vars.debug_id, JMVC.util.replaceall(tpl, pars)];
+		return [JMVC.test.vars.debug_id, JMVC.string.replaceall(tpl, pars)];
 		
 	},
 

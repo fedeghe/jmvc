@@ -98,8 +98,44 @@ JMVC.extend('tabs', {
 			}
 
 			//add an end event to inject a css that take care of vertical dimensions for min-height of tabs
+
+			
+			
+			
+			
+			//set bindings
+			for(var i =0, l= that.elements['li'].length; i<l; i++){
+				JMVC.events.bind(that.elements['li'][i], 'click', function(e){
+
+					//hide all tabs
+					hideall();
+
+					var target = JMVC.events.eventTarget(e),
+						//show tab
+						id_orig = JMVC.dom.attr(target, 'id'),
+						id_tab2show = id_orig.replace('jvmc_tb','jvmc_cont');
+
+					//JMVC.css.style(JMVC.dom.find('#'+id_tab2show), 'display', 'block');
+					JMVC.css.show(JMVC.dom.find('#'+id_tab2show));
+
+					JMVC.dom.switchClass(target, 'unsel', 'sel');
+
+				
+					//fix content height
+					fixheight();
+
+
+				});
+			}
+			JMVC.events.ready(function () {fixheight(); });
+
+			return ids2return;
+		};
+		
+
+		this.end = function () {
 			JMVC.events.end(function () {
-				var realheight = parseInt(JMVC.css.getComputedStyle(  JMVC.dom.find('#' + ul_id), 'height'), 10) * 3,
+				var border3 = '-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;',
 					colors = {
 						oriz : {
 							base : '#aaa',
@@ -145,7 +181,7 @@ JMVC.extend('tabs', {
 								'border-top-left-radius:' + sizes.vert.round + 'px;border-top-right-radius:0px;border-bottom-left-radius:' + sizes.vert.round + 'px;border-bottom-right-radius:0px;',
 						'ul.tablabels_v li:hover':'color:' + colors.vert.texthover + ';background-color:' + colors.vert.hover + ';',
 						'ul.tablabels_v li.sel':'color:' + colors.vert.textselected + ';border:' + sizes.vert.border + 'px solid ' + colors.vert.border + ';border-right:none; background-color:' + colors.vert.selected + '; z-index:10;position:relative;left:1px',
-						'div.tabcontainer_v' : 'color:' + colors.vert.textcontent +';background-color:' + colors.vert.containerbg +';' + border3 + 'min-height:' + realheight + 'px;overflow:hidden; position:relative;line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;border:' + sizes.vert.border + 'px solid ' + colors.vert.border + ';left:-1px;z-index:5; padding:5px;'
+						'div.tabcontainer_v' : 'color:' + colors.vert.textcontent +';background-color:' + colors.vert.containerbg +';' + border3 + 'min-height:250px;overflow:hidden; position:relative;line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;border:' + sizes.vert.border + 'px solid ' + colors.vert.border + ';left:-1px;z-index:5; padding:5px;'
 					};
 				
 				
@@ -155,39 +191,7 @@ JMVC.extend('tabs', {
 				
 
 			});
-			
-			
-			
-			
-			//set bindings
-			for(var i =0, l= that.elements['li'].length; i<l; i++){
-				JMVC.events.bind(that.elements['li'][i], 'click', function(e){
-
-					//hide all tabs
-					hideall();
-
-					var target = JMVC.events.eventTarget(e),
-						//show tab
-						id_orig = JMVC.dom.attr(target, 'id'),
-						id_tab2show = id_orig.replace('jvmc_tb','jvmc_cont');
-
-					//JMVC.css.style(JMVC.dom.find('#'+id_tab2show), 'display', 'block');
-					JMVC.css.show(JMVC.dom.find('#'+id_tab2show));
-
-					JMVC.dom.switchClass(target, 'unsel', 'sel');
-
-				
-					//fix content height
-					fixheight();
-
-
-				});
-			}
-			JMVC.events.ready(function () {fixheight(); });
-
-			return ids2return;
 		};
-		
 		
 	}
 });

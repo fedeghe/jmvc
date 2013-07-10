@@ -67,8 +67,8 @@ JMVC.extend('snow', {
 		}
 		function move(e) {
 			var el = e.node,
-				top = JMVC.getFloat(JMVC.css.style(el, 'top')),
-				left = JMVC.getFloat(JMVC.css.style(el ,'left'));
+				top = JMVC.num.getFloat(JMVC.css.style(el, 'top')),
+				left = JMVC.num.getFloat(JMVC.css.style(el ,'left'));
 			
 			if(top > bodysize[1]-60){
 				top = 0;

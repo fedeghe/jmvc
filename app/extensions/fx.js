@@ -19,7 +19,7 @@ JMVC.extend('fx',{
 	
 	'animate' : function (el, prop, to, delta, cb) {
 		(function () {
-			var from = JMVC.getNum(JMVC.css.style(el, prop)),
+			var from = JMVC.num.getNum(JMVC.css.style(el, prop)),
 				versus = from < to,
 				end = false,
 				t = JMVC.W.setInterval(
@@ -99,11 +99,11 @@ JMVC.extend('fx',{
 	// used to remember sizes
 	'nodes_sizes' : {},
 	'slideUp' : function (el, v) {
-		var height = JMVC.getNum(JMVC.css.style(el, 'height')),
-			paddingTop = JMVC.getNum(JMVC.css.style(el, 'paddingTop')),
-			paddingBottom = JMVC.getNum(JMVC.css.style(el, 'paddingBottom')),
-			marginTop = JMVC.getNum(JMVC.css.style(el, 'marginTop')),
-			marginBottom = JMVC.getNum(JMVC.css.style(el, 'marginBottom')),
+		var height = JMVC.num.getNum(JMVC.css.style(el, 'height')),
+			paddingTop = JMVC.num.getNum(JMVC.css.style(el, 'paddingTop')),
+			paddingBottom = JMVC.num.getNum(JMVC.css.style(el, 'paddingBottom')),
+			marginTop = JMVC.num.getNum(JMVC.css.style(el, 'marginTop')),
+			marginBottom = JMVC.num.getNum(JMVC.css.style(el, 'marginBottom')),
 			self = JMVC.fx;
 		if (v && typeof v == 'number') {
 			self.speed = v;
@@ -145,11 +145,11 @@ JMVC.extend('fx',{
 			
 			
 			//self.show(el);
-			height = JMVC.getNum(JMVC.css.style(el, 'height'));
-			paddingTop = JMVC.getNum(JMVC.css.style(el, 'paddingTop'));
-			paddingBottom = JMVC.getNum(JMVC.css.style(el, 'paddingBottom'));
-			marginTop = JMVC.getNum(JMVC.css.style(el, 'marginTop'));
-			marginBottom = JMVC.getNum(JMVC.css.style(el, 'marginBottom'));
+			height = JMVC.num.getNum(JMVC.css.style(el, 'height'));
+			paddingTop = JMVC.num.getNum(JMVC.css.style(el, 'paddingTop'));
+			paddingBottom = JMVC.num.getNum(JMVC.css.style(el, 'paddingBottom'));
+			marginTop = JMVC.num.getNum(JMVC.css.style(el, 'marginTop'));
+			marginBottom = JMVC.num.getNum(JMVC.css.style(el, 'marginBottom'));
 			
 			this.nodes_sizes[el] = {
 				height : isNaN(height) ? 0 : height,

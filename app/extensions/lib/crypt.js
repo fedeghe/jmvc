@@ -1,8 +1,8 @@
 JMVC.extend('security', {
 	'seed' : 3,
 	'crypt' : function (msg, pwd) {
-		var code_msg = JMVC.util.str2code(escape(msg)),
-			code_pwd = JMVC.util.str2code(pwd),
+		var code_msg = JMVC.string.str2code(escape(msg)),
+			code_pwd = JMVC.string.str2code(pwd),
 			cout = [],
 			lm = code_msg.length,
 			lp = code_pwd.length,
@@ -15,12 +15,12 @@ JMVC.extend('security', {
 			i += 1;
 			j = (j + 1) % lp;
 		}
-		return JMVC.util.code2str(cout);
+		return JMVC.string.code2str(cout);
 		
 	},
 	'decrypt' : function (cmsg, pwd) {
-		var code_cmsg = JMVC.util.str2code(cmsg),
-			code_pwd = JMVC.util.str2code(pwd),
+		var code_cmsg = JMVC.string.str2code(cmsg),
+			code_pwd = JMVC.string.str2code(pwd),
 			out = [],
 			lm = code_cmsg.length,
 			lp = code_pwd.length,
@@ -34,7 +34,7 @@ JMVC.extend('security', {
 			i += 1;
 			j = (j + 1) % lp;
 		}
-		return unescape(JMVC.util.code2str(out));
+		return unescape(JMVC.string.code2str(out));
 	},
 	//http://en.wikipedia.org/wiki/Data_URI_scheme#Web_browser_support
 	

@@ -33,9 +33,9 @@ JMVC.extend('color', {
 			g = parseInt(arr_rgb[1], 10);
 			b = parseInt(arr_rgb[2], 10);
 		}
-		return '#' + JMVC.util.padme(r.toString(16), 0, 'pre') +
-			JMVC.util.padme(g.toString(16), 0, 'pre') +
-			JMVC.util.padme(b.toString(16), 0, 'pre');
+		return '#' + JMVC.string.padme(r.toString(16), 0, 'pre') +
+			JMVC.string.padme(g.toString(16), 0, 'pre') +
+			JMVC.string.padme(b.toString(16), 0, 'pre');
 	},
 //	conversion formula from
 //	http://local.wasp.uwa.edu.au/~pbourke/texture_colour/convert/
@@ -114,7 +114,7 @@ JMVC.extend('color', {
 		for (i = 0; i < num; i += 1) {
 			for (j in components) {
 				operator = (parseInt(components1[j], 10) < parseInt(components2[j], 10)) ? '+' : '-';
-				components[j] = JMVC.util.padme(
+				components[j] = JMVC.string.padme(
 					JMVC.util.int2hex(signs[operator](parseInt(components1[j], 10) , steps[j] * i)),
 					0,
 					'pre'

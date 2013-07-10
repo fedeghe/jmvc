@@ -44,7 +44,7 @@ JMVC.prototipize(JMVC.vector.Kvector, {
 		var res = 0,
 			i = 0;
 		for (null; i < vec.dim; i += 1) {
-			res += JMVC.num(vec._[i] * this._[i]);
+			res += JMVC.num.num(vec._[i] * this._[i]);
 		}
 		return res;
 	},
@@ -56,7 +56,7 @@ JMVC.prototipize(JMVC.vector.Kvector, {
 	'scalP' : function (a) {
 		var newV = [];
 		for(var i = 0; i < this.dim; i += 1){
-			newV.push(JMVC.num(this._[i] * a));
+			newV.push(JMVC.num.num(this._[i] * a));
 		}
 		return new JMVC.vector.Kvector(newV);
 	},
@@ -74,9 +74,9 @@ JMVC.prototipize(JMVC.vector.Kvector, {
 		var c = this._,
 			v = vec._;		
 		return new JMVC.vector.Kvector([
-			JMVC.num(c[1] * v[2] - c[2] * v[1]),
-			JMVC.num(-c[0] * v[2] + v[0] * c[2]),
-			JMVC.num(c[0] * v[1] - v[0] * c[1])
+			JMVC.num.num(c[1] * v[2] - c[2] * v[1]),
+			JMVC.num.num(-c[0] * v[2] + v[0] * c[2]),
+			JMVC.num.num(c[0] * v[1] - v[0] * c[1])
 		]); 
 	},
 	'sum' : function (v, sign) {

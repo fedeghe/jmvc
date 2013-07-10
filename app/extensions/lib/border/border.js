@@ -188,7 +188,7 @@ JMVC.extend('border', {
 			'div',
 			{
 				"class":"border oriz",
-				"style" : JMVC.util.replaceall(
+				"style" : JMVC.string.replaceall(
 					"border-left : %brdBG%; border-bottom:%brdFG%; border-right:%brdBG%;width:%w%px;",
 					{"brdFG" : size + 'px solid '+color, "brdBG" : size + 'px solid '+bgcolor, "w" : w}
 				)
@@ -201,7 +201,7 @@ JMVC.extend('border', {
 			'div',
 			{
 				"class":"border vert",
-				"style" : JMVC.util.replaceall(
+				"style" : JMVC.string.replaceall(
 					"border-left : %brdFG%; border-top:%brdBG%; border-bottom:%brdBG%;height:%h%px; float:right;",
 					{"brdFG" : size + 'px solid '+color, "brdBG" : size + 'px solid '+bgcolor, "h" : h}
 				)
@@ -214,7 +214,7 @@ JMVC.extend('border', {
 			'div',
 			{
 				"class":"border oriz",
-				"style" : JMVC.util.replaceall(
+				"style" : JMVC.string.replaceall(
 					"border-left : %brdBG%; border-top:%brdFG%; border-right:%brdBG%;width:%w%px;",
 					{"brdFG" : size + 'px solid '+color, "brdBG" : size + 'px solid '+bgcolor, "w" : w}
 				)
@@ -227,7 +227,7 @@ JMVC.extend('border', {
 			'div',
 			{
 				"class":"border vert",
-				"style" : JMVC.util.replaceall(
+				"style" : JMVC.string.replaceall(
 					"border-right : %brdFG%; border-top:%brdBG%; border-bottom:%brdBG%;height:%h%px; float:left;",
 					{"brdFG" : size + 'px solid '+color, "brdBG" : size + 'px solid '+bgcolor, "h" : h}
 				)

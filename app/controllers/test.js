@@ -69,7 +69,7 @@ JMVC.controllers.test = function () {
 
 		
 		for (i in links) {
-			out += JMVC.util.replaceall(tpl, {'base_url' : bu, 'path' : links[i], 'label' : i});
+			out += JMVC.string.replaceall(tpl, {'base_url' : bu, 'path' : links[i], 'label' : i});
 		}	
 			
 		content += '<ul>' + out + '</ul>';
@@ -79,7 +79,7 @@ JMVC.controllers.test = function () {
 		
 		
 
-		JMVC.head.addstyle(JMVC.util.obj2css(style), true, true);
+		JMVC.head.addstyle(JMVC.object.obj2css(style), true, true);
 		
 		v.set({
 			'id' : 'content',
@@ -208,7 +208,7 @@ JMVC.controllers.test = function () {
 				tmp = JMVC.dom.create('div',{'style':'width:'+basesize+'px; height:'+basesize+'px;', 'class':'box'},'&nbsp;');
 				JMVC.dom.append(f, tmp);
 				tmp.style.backgroundColor = (basesize > els_top[i]) ?
-					((JMVC.util.inArray([10,16,17,18,24], i)>=0)? 'white':'red')
+					((JMVC.array.inArray([10,16,17,18,24], i)>=0)? 'white':'red')
 					:
 					JMVC.color.getRandomColor(true);
 				if(j%7 == 0) {

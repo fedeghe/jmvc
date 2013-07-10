@@ -24,7 +24,7 @@ JMVC.extend('snow', {
 		if(target == "body"){
 			body_dim = JMVC.dim.getViewportSize();
 		}else{
-			body_dim = new Array(JMVC.getNum(JMVC.css.width(target)), JMVC.getNum(JMVC.css.height(target)));
+			body_dim = new Array(JMVC.num.getNum(JMVC.css.width(target)), JMVC.num.getNum(JMVC.css.height(target)));
 		}
 		console.debug(body_dim)
 

@@ -24,7 +24,7 @@ JMVC.hook({'onBeforeRender' : function(cnt){
 					var code = '',
 					  self = this;
 					JMVC.each(self.lines, function (el, i) {
-					    var y = JMVC.util.replaceall(self.linetpl, {
+					    var y = JMVC.string.replaceall(self.linetpl, {
 							'lineclass' : 'line',
 							'ln' : i + '',
 							'linecode' : el

@@ -33,6 +33,6 @@ JMVC.extend('util',{
 			b = parseInt(arr_rgb[2],10);
 			//	alert(r+' '+g+' '+b);
 		}
-		return '#'+JMVC.util.padme(r.toString(16),0,'pre')+JMVC.util.padme(g.toString(16),0,'pre')+JMVC.util.padme(b.toString(16),0,'pre');
+		return '#'+JMVC.string.padme(r.toString(16),0,'pre')+JMVC.string.padme(g.toString(16),0,'pre')+JMVC.string.padme(b.toString(16),0,'pre');
 	}
 });

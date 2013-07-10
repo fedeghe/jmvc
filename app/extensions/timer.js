@@ -42,7 +42,7 @@ JMVC.extend('timer',{
 				DD = self.l.days[d.getDay()],
 				MM = self.l.months[M-1];
 
-			return JMVC.util.replaceall(self.format, {APM:APM,H12:H12,H24:H24, I:I, S:S, YY:YY, YYYY:YYYY, M:M, D:D, MM:MM, DD:DD});
+			return JMVC.string.replaceall(self.format, {APM:APM,H12:H12,H24:H24, I:I, S:S, YY:YY, YYYY:YYYY, M:M, D:D, MM:MM, DD:DD});
 		};
 		function init(){
 			JMVC.dom.html(self.target, getTime());

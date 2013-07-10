@@ -171,7 +171,7 @@ JMVC.extend('date', {
 				YY = (YYYY + '').substr(1),
 				DD = l.days[d.getDay()],
 				MM = l.months[M - 1];		
-			return  JMVC.util.replaceall(format, {APM:APM,H12:H12,H24:H24, I:I, S:S, YY:YY, YYYY:YYYY, M:M, D:D, M2:M2, D2:D2, MM:MM, DD:DD}, '%', '%');
+			return  JMVC.string.replaceall(format, {APM:APM,H12:H12,H24:H24, I:I, S:S, YY:YY, YYYY:YYYY, M:M, D:D, M2:M2, D2:D2, MM:MM, DD:DD}, '%', '%');
 		}
 
 	}

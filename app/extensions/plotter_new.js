@@ -83,7 +83,7 @@ JMVC.extend('graf', {
 				for(null; i < l; i += 1){
 					tmp = JMVC.dom.create('span', {
 						'class' : 'point ' + letter,
-						'style' : JMVC.util.replaceall('top:%top%px;left:%left%px', {top : ~~ (positions[i][0] + top), left : ~~(positions[i][1] + left)})
+						'style' : JMVC.string.replaceall('top:%top%px;left:%left%px', {top : ~~ (positions[i][0] + top), left : ~~(positions[i][1] + left)})
 					}, character);
 					JMVC.dom.append(node, tmp);
 				}

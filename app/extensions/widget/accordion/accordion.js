@@ -39,7 +39,7 @@ JMVC.widget.Accordion.prototype.render = function (container, open_index, rem) {
 	viewtmp = open_index;
 
 	if (rem) {
-		cookie_val = JMVC.getNum(JMVC.cookie.get(cookie_rem_name));
+		cookie_val = JMVC.num.getNum(JMVC.cookie.get(cookie_rem_name));
 		open_index = cookie_val >= 0 ? cookie_val : open_index;
 	}
 

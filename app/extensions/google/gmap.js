@@ -10,8 +10,8 @@ JMVC.extend('gmap', {
 		JMVC.util.extend(params, options);
 		
 		//JMVC.head.addscript('https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=cb');
-		JMVC.head.addscript('https://maps.google.com/maps/api/js' + JMVC.util.obj2qs(params));
-		//console.debug('http://maps.google.com/maps/api/js' + JMVC.util.obj2qs(params));
+		JMVC.head.addscript('https://maps.google.com/maps/api/js' + JMVC.object.obj2qs(params));
+		//console.debug('http://maps.google.com/maps/api/js' + JMVC.object.obj2qs(params));
 	},
 	
 	'mapme' : function (address, cback) {

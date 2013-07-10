@@ -21,51 +21,20 @@ label.lab{
 	font-weight:normal;
 }
 
-
-
-
-.cl1_Controller{
-	background-color: #CCF;
-}
-.cl2_Controller{
-	background-color: #FFF;
-}
-.cl1_View{
-	background-color: #CFC;
-}
-.cl2_View{
-	background-color: #FFF;
-}
-.cl1_Model{
-	background-color: #FCC;
-}
-.cl2_Model{
-	background-color: #FFF;
-}
-.cl1_Dom{
-	background-color: #9CF;
-}
-.cl2_Dom{
-	background-color: #FFF;
-}
-.cl1_Events{
-	background-color: #FCF;
-}
-.cl2_Events{
-	background-color: #FFF;
-}
-.cl1_Head{
-	background-color: #FC9;
-}
-.cl2_Head{
-	background-color: #FFF;
-}
-.cl1_JMVC{
-	background-color: #FFC;	
-}
-.cl2_JMVC{
-	background-color: #FFF;
-}
+.cl1_Controller{background-color: #CCF;}
+.cl2_Controller{background-color: #FFF;}
+.cl1_View{background-color: #CFC;}
+.cl2_View{background-color: #FFF;}
+.cl1_Model{background-color: #FCC;}
+.cl2_Model{background-color: #FFF;}
+.cl1_Dom{background-color: #9CF;}
+.cl2_Dom{background-color: #FFF;}
+.cl1_Events{background-color: #FCF;}
+.cl2_Events{background-color: #FFF;}
+.cl1_Head{background-color: #FC9;}
+.cl2_Head{background-color: #FFF;}
+.cl1_JMVC{background-color: #FFC;}
+.cl2_JMVC{background-color: #FFF;}
 h3{
 	padding-top:1em;
 	padding-bottom:0.5em;
@@ -136,15 +105,7 @@ div#centerinfo{
 .apitable{
 	$my_table_style$
 }
-div#footer{
-	height:40px;
-}
-p.footer{
-	text-align:center
-}
-.bg1{
-	background-color: red;
-}
-.bg2{
-	background-color: blue;
-}
+div#footer{height:40px;}
+p.footer{text-align:center}
+.bg1{background-color: red;}
+.bg2{background-color: blue;}
