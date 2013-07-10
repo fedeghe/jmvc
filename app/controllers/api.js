@@ -113,7 +113,7 @@ JMVC.controllers.api = function () {
 
 			};
 			
-			JMVC.each(['jmvc', 'model', 'view', 'controller', 'dom', 'events', 'head', 'util', 'io'], function (t) {
+			JMVC.each(['jmvc', 'model', 'view', 'controller', 'dom', 'events', 'head', 'io', 'array', 'object', 'string', 'util'], function (t) {
 				var y;
 				parser.pointer(parser.xmlDoc.getElementsByTagName(t)[0]);
 				y = JMVC.xmlparser.toJson(parser.pointer());
@@ -139,8 +139,12 @@ JMVC.controllers.api = function () {
 				tabs_inner['dom'].render(i[4], 'ulidTWO');
 				tabs_inner['events'].render(i[5], 'ulidTWO');
 				tabs_inner['head'].render(i[6], 'ulidTWO');
-				tabs_inner['util'].render(i[7], 'ulidTWO');
-				tabs_inner['io'].render(i[8], 'ulidTWO');
+				tabs_inner['io'].render(i[7], 'ulidTWO');
+				tabs_inner['array'].render(i[8], 'ulidTWO');
+				tabs_inner['object'].render(i[9], 'ulidTWO');
+				tabs_inner['string'].render(i[10], 'ulidTWO');
+				tabs_inner['util'].render(i[11], 'ulidTWO');
+				
 			}, 0);
 
 			tab_ext.end();

@@ -539,6 +539,24 @@
                             }
                         }
                     },
+                    "implement" : function (o, interf, s) {
+                        var i = 0,
+                            l = interf.length,
+                            strict = true;
+                        if (typeof s !== undefined) {strict = s; }
+                        for (null; i < l; i += 1) {
+                            if (
+                                !(
+                                    (o.prototype && o.prototype[interf[i]] && typeof o.prototype[interf[i]] === 'function')
+                                    ||
+                                    (!strict && (o[interf[i]] && typeof o[interf[i]] === 'function'))
+                                )
+                            ) {
+                                return false;
+                            }
+                        }
+                        return true;
+                    },
 
                     "globalize" : function (obj, name) {
                         JMVC.W[name] = obj;
@@ -1571,6 +1589,7 @@
                     getModel : function (n, params) {return jmvc.factory_method('model', n, params); },
                     loadInterfaces : function (n, params) {return jmvc.factory_method('interface', n, params); },
 
+                    implement : jmvc.implement,
                     //getController :   function(n) {return jmvc.factory_method('controller', n); }
 
                     // getNum : function (str) {return parseInt(str, 10); },
@@ -1978,31 +1997,7 @@
             return strict ? (d >= start && d <= end) : (d > start && d < end);
         },
 
-        /**
-         * [ description]
-         * @param  {[type]} o      [description]
-         * @param  {[type]} interf [description]
-         * @param  {[type]} s      [description]
-         * @return {[type]}        [description]
-         */
-        'implement' : function (o, interf, s) {
-            var i = 0,
-                l = interf.length,
-                strict = true;
-            if (typeof s !== undefined) {strict = s; }
-            for (null; i < l; i += 1) {
-                if (
-                    !(
-                        (o.prototype && o.prototype[interf[i]] && typeof o.prototype[interf[i]] === 'function')
-                        ||
-                        (!strict && (o[interf[i]] && typeof o[interf[i]] === 'function'))
-                    )
-                ) {
-                    return false;
-                }
-            }
-            return true;
-        },
+        
 
         
 
@@ -3016,23 +3011,38 @@
          */
         'denyiXrame' : function () {if (W.top !== W.self) {W.top.location = JMVC.vars.baseurl; }},
 
+        
+        
+
+        
+
+        
+
         /**
          * [ description]
-         * @return {[type]} [description]
+         * @param  {[type]} d [description]
+         * @return {[type]}   [description]
          */
-        'reload' : function () {
-            var n = JMVC.WD.location.href;
-            WD.location.href = n;//do not cause wierd alert
+        'lastmodified' : function (d) {
+            // <meta http-equiv="last-modified" content="Thu, 03 Jan 2013 14:56:54 +0000" />
+            var meta = this.element.getElementsByTagName('meta'),
+                newmeta = JMVC.dom.create('meta', {'http-equiv' : 'last-modified', content : (d || new Date()).toString()}),
+                len = meta.length;
+            if (len) {
+                JMVC.dom.insertAfter(newmeta, meta.item(len - 1));
+            } else {
+                this.element.appendChild(newmeta);
+            }
         },
         /**
          * [ description]
-         * @param  {[type]} t [description]
-         * @return {[type]}   [description]
+         * @param  {[type]} rel   [description]
+         * @param  {[type]} attrs [description]
+         * @return {[type]}       [description]
          */
-        'title' : function (t) {
-            if (!t) {return WD.title; }
-            WD.title = t;
-            return true;
+        'link' : function (rel, attrs) {
+            attrs.rel = rel;
+            JMVC.dom.add(JMVC.head.element, 'link', attrs);
         },
 
         /**
@@ -3052,33 +3062,23 @@
                 this.element.appendChild(newmeta);
             }
         },
-
         /**
          * [ description]
-         * @param  {[type]} rel   [description]
-         * @param  {[type]} attrs [description]
-         * @return {[type]}       [description]
+         * @return {[type]} [description]
          */
-        'link' : function (rel, attrs) {
-            attrs.rel = rel;
-            JMVC.dom.add(JMVC.head.element, 'link', attrs);
+        'reload' : function () {
+            var n = JMVC.WD.location.href;
+            WD.location.href = n;//do not cause wierd alert
         },
-
         /**
          * [ description]
-         * @param  {[type]} d [description]
+         * @param  {[type]} t [description]
          * @return {[type]}   [description]
          */
-        'lastmodified' : function (d) {
-            // <meta http-equiv="last-modified" content="Thu, 03 Jan 2013 14:56:54 +0000" />
-            var meta = this.element.getElementsByTagName('meta'),
-                newmeta = JMVC.dom.create('meta', {'http-equiv' : 'last-modified', content : (d || new Date()).toString()}),
-                len = meta.length;
-            if (len) {
-                JMVC.dom.insertAfter(newmeta, meta.item(len - 1));
-            } else {
-                this.element.appendChild(newmeta);
-            }
+        'title' : function (t) {
+            if (!t) {return WD.title; }
+            WD.title = t;
+            return true;
         }
         
     };
@@ -3275,6 +3275,10 @@
             return t.reverse().join('');
         }
     };
+
+
+
+
     JMVC.object = {
         /**
          * Clones an object

@@ -28,12 +28,12 @@ JMVC.controllers.implement = function() {
 			
 			JMVC.test.testValue(
 				'Persona implement ["parla", "wc, "mangia"]',
-				function () {return JMVC.util.implement(Persona, ['parla', 'wc', 'mangia']);},
+				function () {return JMVC.implement(Persona, ['parla', 'wc', 'mangia']);},
 				true
 			);
 			JMVC.test.testValue(
 				'Persona do not implement ["parlaw", "wc, "mangia"]',
-				function () {return JMVC.util.implement(Persona, ['parlaw', 'wc', 'mangia']);},
+				function () {return JMVC.implement(Persona, ['parlaw', 'wc', 'mangia']);},
 				false
 			);
 			
