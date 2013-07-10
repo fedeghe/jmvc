@@ -43,7 +43,7 @@ JMVC.extend('tabs', {
 					var p = JMVC.dom.parent(el),
 						ul = JMVC.dom.find('ul', p),
 						h = JMVC.css.height(ul);
-					console.debug(ul, h)
+					
 						
 					JMVC.css.style(el, 'height', h + 'px');
 				});
