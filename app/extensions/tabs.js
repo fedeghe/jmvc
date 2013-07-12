@@ -126,14 +126,13 @@ JMVC.extend('tabs', {
 	'fixheight' : function () {
 		
 		var tc = JMVC.dom.find('.tabcontainer_v');
-		console.debug(tc)
+	
 		JMVC.each(tc, function(el, i){
 			var ulid = JMVC.dom.attr(el, 'data-ul'),
 				ul = JMVC.dom.find('#' + ulid),
 				
 				h = ~~(JMVC.css.height(ul));
 			if (h) {
-				console.debug(el, h)
 				JMVC.css.style(el, 'minHeight', h + 'px');
 			}
 		});
