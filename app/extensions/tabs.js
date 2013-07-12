@@ -6,7 +6,6 @@ JMVC.extend('tabs', {
 
 	'init' : function () {},
 
-
 	'tab' : function (mode, vertlabel) {
 		JMVC.tabs.counter += 1;
 		var bid = '_' + JMVC.tabs.counter,
@@ -37,23 +36,13 @@ JMVC.extend('tabs', {
 				return str.split('').join('<br />');
 			}
 			
-			function fixheight () {
-				var tc = JMVC.dom.find('.tabcontainer_v');
-				JMVC.each(tc, function(el, i){
-					var p = JMVC.dom.parent(el),
-						ul = JMVC.dom.find('ul', p),
-						h = JMVC.css.height(ul);
-					
-						
-					JMVC.css.style(el, 'height', h + 'px');
-				});
-			}
+			
 			
 			
 			var num2show = show || 0,
 				ul_id = idul + bid,
 				ul = JMVC.dom.create('ul', {id : ul_id, 'class' : 'tablabels_' + direction}),
-				tabcontainer = JMVC.dom.create('div', {'class' : 'tabcontainer_' + direction}),
+				tabcontainer = JMVC.dom.create('div', {'class' : 'tabcontainer_' + direction, 'data-ul' : ul_id}),
 				i = 0,
 				li,
 				div,
@@ -122,76 +111,91 @@ JMVC.extend('tabs', {
 
 				
 					//fix content height
-					fixheight();
+					
 
 
 				});
 			}
-			JMVC.events.ready(function () {fixheight(); });
+			
 
+			JMVC.tabs.fixheight();
 			return ids2return;
 		};
 		
-
-		this.end = function () {
-			JMVC.events.end(function () {
-				var border3 = '-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;',
-					colors = {
-						oriz : {
-							base : '#aaa',
-							selected : '#fff',
-							hover : '#ddd',
-							border : '#888',
-							text : '#000',
-							textselected : '#000',
-							texthover : '#000',
-							containerbg : '#fff',
-							textcontent : '#000' 
-						},
-						vert : {
-							base : '#aaa',
-							selected : '#fff',
-							hover : '#ddd',
-							border : '#888',
-							text : '#000',
-							textselected : '#000',
-							texthover : '#000',
-							containerbg : '#fff',
-							textcontent : '#000' 
-						}
-					},
-					sizes = {
-						oriz : {border : 2, round : 5},
-						vert : {border : 2, round : 5}
-					}
-					styles = {
-						'ul.tablabels_o':'overflow:hidden; list-style:none;margin:0px;padding:0px;',
-						'ul.tablabels_o li':'color:' + colors.oriz.text + ';float:left; line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;background-color:' + colors.oriz.base + ';padding:5px; cursor:pointer;margin-left:5px;'+
-							'border:solid ' + sizes.oriz.border + 'px ' + colors.oriz.border + ';-moz-border-radius-topleft: ' + sizes.oriz.round + 'px;-moz-border-radius-topright:' + sizes.oriz.round + 'px;-moz-border-radius-bottomleft:0px;-moz-border-radius-bottomright:0px;'+
-							'-webkit-border-top-left-radius:' + sizes.oriz.round + 'px;-webkit-border-top-right-radius:' + sizes.oriz.round + 'px;-webkit-border-bottom-left-radius:0px;-webkit-border-bottom-right-radius:0px;'+
-							'border-top-left-radius:' + sizes.oriz.round + 'px;border-top-right-radius:' + sizes.oriz.round + 'px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;',
-						'ul.tablabels_o li:hover':'color:' + colors.oriz.texthover + ';background-color:' + colors.oriz.hover + ';',
-						'ul.tablabels_o li.sel':'color:' + colors.oriz.textselected + ';border:' + sizes.oriz.border + 'px solid ' + colors.oriz.border + ';border-bottom:none; background-color:' + colors.oriz.selected + '; z-index:10;position:relative;bottom:-1px; ',
-						'div.tabcontainer_o' : 'color:' + colors.oriz.textcontent +';background-color:' + colors.oriz.containerbg +';' + border3 + 'line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;border:' + sizes.oriz.border + 'px solid ' + colors.oriz.border + ';position:relative;top:-3px;z-index:5;padding:5px;',
-						///////////////////////////////////////////////////////////////////////
-						'ul.tablabels_v':'color:' + colors.vert.text + ';float:left;list-style:none;margin:0px;padding:0px;',
-						'ul.tablabels_v li':'display:block; text-align:right;line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;background-color:' + colors.vert.base + ';padding:5px; cursor:pointer;margin-top:5px;left:' + sizes.vert.round + 'px;padding-right:' + 2 * sizes.vert.round + 'px;position:relative;' +
-								'border:solid ' + sizes.vert.border + 'px ' + colors.vert.border + ';-moz-border-radius-topleft: ' + sizes.vert.round + 'px;-moz-border-radius-topright:0px;-moz-border-radius-bottomleft:' + sizes.vert.round + 'px;-moz-border-radius-bottomright:0px;'+
-								'-webkit-border-top-left-radius:' + sizes.vert.round + 'px;-webkit-border-top-right-radius:0px;-webkit-border-bottom-left-radius:' + sizes.vert.round + 'px;-webkit-border-bottom-right-radius:0px;'+
-								'border-top-left-radius:' + sizes.vert.round + 'px;border-top-right-radius:0px;border-bottom-left-radius:' + sizes.vert.round + 'px;border-bottom-right-radius:0px;',
-						'ul.tablabels_v li:hover':'color:' + colors.vert.texthover + ';background-color:' + colors.vert.hover + ';',
-						'ul.tablabels_v li.sel':'color:' + colors.vert.textselected + ';border:' + sizes.vert.border + 'px solid ' + colors.vert.border + ';border-right:none; background-color:' + colors.vert.selected + '; z-index:10;position:relative;left:1px',
-						'div.tabcontainer_v' : 'color:' + colors.vert.textcontent +';background-color:' + colors.vert.containerbg +';' + border3 + 'min-height:250px;overflow:hidden; position:relative;line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;border:' + sizes.vert.border + 'px solid ' + colors.vert.border + ';left:-1px;z-index:5; padding:5px;'
-					};
-				
-				
-				
-				
-				JMVC.head.addstyle(JMVC.css.json2css(styles), true, true);
-				
-
-			});
-		};
+	},
+	'fixheight' : function () {
 		
+		var tc = JMVC.dom.find('.tabcontainer_v');
+		console.debug(tc)
+		JMVC.each(tc, function(el, i){
+			var ulid = JMVC.dom.attr(el, 'data-ul'),
+				ul = JMVC.dom.find('#' + ulid),
+				
+				h = ~~(JMVC.css.height(ul));
+			if (h) {
+				console.debug(el, h)
+				JMVC.css.style(el, 'minHeight', h + 'px');
+			}
+		});
+	},
+	'end' : function () {
+		
+		JMVC.events.end(function () {
+			var border3 = '-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;',
+				colors = {
+					oriz : {
+						base : '#aaa',
+						selected : '#fff',
+						hover : '#ddd',
+						border : '#888',
+						text : '#000',
+						textselected : '#000',
+						texthover : '#000',
+						containerbg : '#fff',
+						textcontent : '#000' 
+					},
+					vert : {
+						base : '#aaa',
+						selected : '#fff',
+						hover : '#ddd',
+						border : '#888',
+						text : '#000',
+						textselected : '#000',
+						texthover : '#000',
+						containerbg : '#fff',
+						textcontent : '#000' 
+					}
+				},
+				sizes = {
+					oriz : {border : 2, round : 5},
+					vert : {border : 2, round : 5}
+				}
+				styles = {
+					'ul.tablabels_o':'overflow:hidden; list-style:none;margin:0px;padding:0px;',
+					'ul.tablabels_o li':'color:' + colors.oriz.text + ';float:left; line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;background-color:' + colors.oriz.base + ';padding:5px; cursor:pointer;margin-left:5px;'+
+						'border:solid ' + sizes.oriz.border + 'px ' + colors.oriz.border + ';-moz-border-radius-topleft: ' + sizes.oriz.round + 'px;-moz-border-radius-topright:' + sizes.oriz.round + 'px;-moz-border-radius-bottomleft:0px;-moz-border-radius-bottomright:0px;'+
+						'-webkit-border-top-left-radius:' + sizes.oriz.round + 'px;-webkit-border-top-right-radius:' + sizes.oriz.round + 'px;-webkit-border-bottom-left-radius:0px;-webkit-border-bottom-right-radius:0px;'+
+						'border-top-left-radius:' + sizes.oriz.round + 'px;border-top-right-radius:' + sizes.oriz.round + 'px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;',
+					'ul.tablabels_o li:hover':'color:' + colors.oriz.texthover + ';background-color:' + colors.oriz.hover + ';',
+					'ul.tablabels_o li.sel':'color:' + colors.oriz.textselected + ';border:' + sizes.oriz.border + 'px solid ' + colors.oriz.border + ';border-bottom:none; background-color:' + colors.oriz.selected + '; z-index:10;position:relative;bottom:-1px; ',
+					'div.tabcontainer_o' : 'color:' + colors.oriz.textcontent +';background-color:' + colors.oriz.containerbg +';' + border3 + 'line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;border:' + sizes.oriz.border + 'px solid ' + colors.oriz.border + ';position:relative;top:-3px;z-index:5;padding:5px;',
+					///////////////////////////////////////////////////////////////////////
+					'ul.tablabels_v':'color:' + colors.vert.text + ';float:left;list-style:none;margin:0px;padding:0px;',
+					'ul.tablabels_v li':'display:block; text-align:right;line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;background-color:' + colors.vert.base + ';padding:5px; cursor:pointer;margin-top:5px;left:' + sizes.vert.round + 'px;padding-right:' + 2 * sizes.vert.round + 'px;position:relative;' +
+							'border:solid ' + sizes.vert.border + 'px ' + colors.vert.border + ';-moz-border-radius-topleft: ' + sizes.vert.round + 'px;-moz-border-radius-topright:0px;-moz-border-radius-bottomleft:' + sizes.vert.round + 'px;-moz-border-radius-bottomright:0px;'+
+							'-webkit-border-top-left-radius:' + sizes.vert.round + 'px;-webkit-border-top-right-radius:0px;-webkit-border-bottom-left-radius:' + sizes.vert.round + 'px;-webkit-border-bottom-right-radius:0px;'+
+							'border-top-left-radius:' + sizes.vert.round + 'px;border-top-right-radius:0px;border-bottom-left-radius:' + sizes.vert.round + 'px;border-bottom-right-radius:0px;',
+					'ul.tablabels_v li:hover':'color:' + colors.vert.texthover + ';background-color:' + colors.vert.hover + ';',
+					'ul.tablabels_v li.sel':'color:' + colors.vert.textselected + ';border:' + sizes.vert.border + 'px solid ' + colors.vert.border + ';border-right:none; background-color:' + colors.vert.selected + '; z-index:10;position:relative;left:1px',
+					'div.tabcontainer_v' : 'color:' + colors.vert.textcontent +';background-color:' + colors.vert.containerbg +';' + border3 + 'min-height:250px;overflow:hidden; position:relative;line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;border:' + sizes.vert.border + 'px solid ' + colors.vert.border + ';left:-1px;z-index:5; padding:5px;'
+				};
+			
+			
+			
+			
+			JMVC.head.addstyle(JMVC.css.json2css(styles), true, true);
+			
+			
+		});
 	}
 });
