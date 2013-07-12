@@ -147,11 +147,7 @@ JMVC.controllers.api = function () {
 				
 			}, 0);
 
-			tab_ext.end();
-
-			
-
-
+			JMVC.tabs.end();
 
 		});	
 	};
