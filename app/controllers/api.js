@@ -70,7 +70,7 @@ JMVC.controllers.api = function () {
 						
 						//reset params
 						params = '';
-						sample = '';
+						sample = 'no sample code';
 
 						if (JMVC.util.isArray(section['function'][i].params.param)) {
 							for (t=0, len = section['function'][i].params.param.length; t < len; t += 1) {
@@ -103,7 +103,7 @@ JMVC.controllers.api = function () {
 					
 					//reset params
 					params ='';
-					sample = '';
+					sample = 'no sample code';
 
 					if (JMVC.util.isArray(section['function'].params.param)) {
 						for(t = 0, len = section['function'].params.param.length; t < len; t += 1) {
