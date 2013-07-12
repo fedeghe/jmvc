@@ -4,14 +4,23 @@ JMVC.controllers.carpet = function () {
 	this.index = function () {
 
 		// get lib & view 
-		JMVC.require('lib/carpet/carpet');
+		JMVC.require('lib/carpet/carpet', 'dim');
+
+
 
 		var index = JMVC.getView('zero'),
-			jmap = false;
+			jmap = false,
+			dims = JMVC.dim.getViewportSize(),
+			Ww = dims.width,
+			Wh = dims.height;
+
+		//top = left = 100 from default css
 		
 		index.render(function(){
 
-			jmap = JMVC.carpet.create(JMVC.dom.body(), 800, 300, 3);
+
+
+			jmap = JMVC.carpet.create(JMVC.dom.body(), Ww-200, Wh-200, 3);
 
 			if (JMVC.p.debug == 'true') {		
 				jmap.beforeAdd(function (i) {console.debug('adding ID: '+i); });
