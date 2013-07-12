@@ -188,6 +188,11 @@
                     //alias of undefined
                     undef = 'undefined',
                     //noop = function () {},
+
+                    // getmode used in the require function
+                    // ajax   : use xhr to get the source and evals
+                    // script : creates a script tag with the right url to the source
+                    // note : seems like script mode load faster but
                     getmode = 'ajax'; // script or ajax
 
 
