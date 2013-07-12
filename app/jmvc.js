@@ -2493,6 +2493,10 @@
             return i;
         },
 
+        'childs' : function (node) {
+            return node.childNodes;
+        },
+
         /**
          * [ description]
          * @param  {[type]} node [description]
