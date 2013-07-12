@@ -38,8 +38,10 @@ JMVC.controllers.info = function () {
 		//
 		//
 		//
-		/* yeah, that`s pretty ugly, but You'll surely find a better way to do that,!...so, let me know please */
-		//JMVC.debug(jsondoc.doc.functions.length);
+		/* yeah, that`s pretty ugly*/
+
+		//OLD MODE
+		/*
 		for (k in jsondoc.doc.functions) {
 			ret += '<h3 class="apisection">' + jsondoc.doc.functions[k]['name'] + '</h3>';
 			//
@@ -89,8 +91,11 @@ JMVC.controllers.info = function () {
 			}
 			ret += '<p>$legend$</p>';
 		}
-
 		readme.set('desc', ret);
+		*/
+		readme.set('desc', 'Check out the complete Api <a href="' + JMVC.vars.baseurl + '/api">here</a>');
+
+		
 		readme.set('version', JMVC.vars.version);
 		readme.set('review', JMVC.vars.review);
 		readme.set('last_modified', JMVC.vars.last_modified);
