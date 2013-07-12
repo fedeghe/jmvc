@@ -34,6 +34,7 @@ JMVC.controllers.api = function () {
 				var ret = {
 						signature: JMVC.xmlparser._text(node.childNodes[0]),
 						description:JMVC.xmlparser._text(node.childNodes[1]),
+						sample:JMVC.xmlparser._text(node.childNodes[4]),
 						params : {},
 						returns : {
 							type : JMVC.xmlparser._text(node.childNodes[3]),
@@ -52,6 +53,7 @@ JMVC.controllers.api = function () {
 			add_all = function (section, strsection) {
 				
 				var params = '',
+					sample = false,
 					i = 0, t = 0, len = 0;
 				
 				//more functions =>array of function objects
@@ -62,11 +64,13 @@ JMVC.controllers.api = function () {
 						func_model.reset();
 						func_model.set('func', section['function'][i].signature['#text']);
 						func_model.set('description', section['function'][i].description['#text']);
+						
 						// func_model.set('bg1', 'bg1');
 						// func_model.set('bg2', 'bg2');
 						
 						//reset params
 						params = '';
+						sample = '';
 
 						if (JMVC.util.isArray(section['function'][i].params.param)) {
 							for (t=0, len = section['function'][i].params.param.length; t < len; t += 1) {
@@ -75,9 +79,14 @@ JMVC.controllers.api = function () {
 						} else {
 							params += '<label>' + section['function'][i].params.param['@attributes'].name + '</label> : ' + section['function'][i].params.param['#text'] + '<br />';
 						}
+						if (section['function'][i].sample) {
+							sample = '<pre class="code">' + section['function'][i].sample['#text'] + '</pre>';
+						}
+
 
 
 						func_model.set('parameters', params);
+						!!sample && func_model.set('sample', sample);
 						func_model.set('returns', section['function'][i].returns['#text']);
 						tabs_inner[strsection].add(
 							section['function'][i].signature['@attributes'].name,
@@ -94,6 +103,7 @@ JMVC.controllers.api = function () {
 					
 					//reset params
 					params ='';
+					sample = '';
 
 					if (JMVC.util.isArray(section['function'].params.param)) {
 						for(t = 0, len = section['function'].params.param.length; t < len; t += 1) {
@@ -102,8 +112,15 @@ JMVC.controllers.api = function () {
 					} else {
 						params += '<label>' + section['function'].params.param['@attributes'].name + '</label> : ' + section['function'].params.param['#text'] + '<br />';
 					}
+					if (section['function'].sample) {
+							sample = '<pre class="code">' + section['function'].sample['#text'] + '</pre>';
+						}
 
 					func_model.set('parameters', params);
+					
+
+
+					!!sample && func_model.set('sample', sample);
 					func_model.set('returns', section['function'].returns['#text']);
 					tabs_inner[strsection].add(
 						section['function'].signature['@attributes'].name,
@@ -113,7 +130,7 @@ JMVC.controllers.api = function () {
 
 			};
 			
-			JMVC.each(['jmvc', 'model', 'view', 'controller', 'dom', 'events', 'head', 'io', 'array', 'object', 'string', 'util'], function (t) {
+			JMVC.each(['jmvc', 'model', 'view', 'controller', 'dom', 'events', 'head', 'io', 'array', 'object', 'string', 'util', 'num'], function (t) {
 				var y;
 				parser.pointer(parser.xmlDoc.getElementsByTagName(t)[0]);
 				y = JMVC.xmlparser.toJson(parser.pointer());
@@ -144,6 +161,7 @@ JMVC.controllers.api = function () {
 				tabs_inner['object'].render(i[9], 'ulidTWO');
 				tabs_inner['string'].render(i[10], 'ulidTWO');
 				tabs_inner['util'].render(i[11], 'ulidTWO');
+				tabs_inner['num'].render(i[12], 'ulidTWO');
 				
 			}, 0);
 
