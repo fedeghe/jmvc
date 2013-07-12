@@ -8,10 +8,10 @@ div.jmaps.outerdiv{
 	
 	
 	/*DEV*/
-	top:200px;
-	left:200px;
-	overflow: visible;
-	/*overflow:hidden;*/
+	top:100px;
+	left:100px;
+	overflow: hidden;
+	/*overflow:visible;*/
 	background-color:#999
 	/*DEV*/
 }
@@ -20,11 +20,12 @@ div.jmaps.outerdiv div.jmaps.innerdiv {
 	
 	position:relative;
 	overflow:visible;
+	/*overflow:hidden;*/
 	z-index:100;
 	
 	/*DEV*/
 	background-color:#ddd;
-	opacity:0.6
+	/*opacity:0.6*/
 
 	/*DEV*/	
 } 
