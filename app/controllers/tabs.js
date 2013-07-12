@@ -1,5 +1,4 @@
 JMVC.controllers.tabs = function () {
-
 	this.one = function () {
 		JMVC.require('responsive/basic','tabs', 'sniffer');
 
@@ -32,11 +31,11 @@ JMVC.controllers.tabs = function () {
 		tab2.add('Param view', '{{sv goal=`mygoal`}}');
 		tab2.add('Prova Flag', '<iframe width="100%" height="600px" frameborder="0" src="' + JMVC.vars.baseurl + '/test/flag"></iframe> ');
 		//
-		index.render(function () {
+		index.render({cback : function () {
 			ids = tab.render('cent', 'ciccio');
 			JMVC.dom.add(JMVC.dom.find('#cent'), 'br', {'style' : 'line-height:30px'});
 			tab2.render(ids[2], 'ciccio2');
-			JMVC.tabs.end();
-		});
+			
+		}});
 	};
 }

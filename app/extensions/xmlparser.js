@@ -30,21 +30,16 @@ JMVC.extend('xmlparser', {
 		
 		//JMVC.debug(that.xmlDoc)
 		
-
 		
 		this.nodeExtractor = function (t) {return t; };
 		this.pointerNode = false;
 
 		//set the extractor function or get the fTH node
 		this.extractor = function (f, reset_extractor) {
-			//console.debug(this, arguments, typeof f === 'function')	
-
 			if (typeof f === 'number') {
-				
 				return this.pointerNode.childNodes.length > f ? this.nodeExtractor(this.pointerNode.childNodes[f]) : false;
 			}
 			if (typeof f === 'function' && (!this.nodeExtractor || reset_extractor)) {
-				
 				this.nodeExtractor = f;
 				this.pointerNode = this.xmlDoc.documentElement;
 				return true;
@@ -97,7 +92,6 @@ JMVC.extend('xmlparser', {
 
 //			do children
 			if (xml.hasChildNodes()) {
-
 				for(var i = 0; i < xml.childNodes.length; i++) {
 					var item = xml.childNodes.item(i),
 						nodeName = item.nodeName,
@@ -161,7 +155,6 @@ JMVC.extend('xmlparser', {
 		
 //		do children
 		if (xml.hasChildNodes()) {
-
 			for(var i = 0; i < xml.childNodes.length; i++) {
 				var item = xml.childNodes.item(i),
 					nodeName = item.nodeName,

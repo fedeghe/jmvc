@@ -1,7 +1,5 @@
-/*
- * ------------------------------------
+/**
  * JMVC : Pure Javascript MVC framework
- * ------------------------------------
  * 
  * @version: 1.9.2
  * @date : 26-06-2013
@@ -83,8 +81,9 @@
                     US = '/',
 
                     /**
-                    * in some cases will be useful to distinguish between
-                    * developing url & production url
+                    * in some cases is useful to automatically distinguish between a
+                    * developing url and
+                    * production url
                     * will be returned in a var container accessible from the JMVC object
                     */
                     DEV_URL = WDL.protocol + US + US + 'www.jmvc.dev',
@@ -358,7 +357,10 @@
                                         ret = o;
                                         break;
                                     case 'interface':
-                                        !JMVC.interfaces[name] && jmvc.jeval(res);
+                                        if (!JMVC.interfaces[name]) {
+                                            jmvc.jeval(res);
+                                            //JMVC.interfaces[name] = new Interface(JMVC.interfaces[name]);
+                                        }
                                         break;
                                     }
                                 },
@@ -3396,14 +3398,14 @@
 
     };
     JMVC.num = {
-        'getNum' : function (str) {return parseInt(str, 10); },
-        'getFloat' : function (str) {return parseFloat(str, 10); },
-        'pFloat' : function (f) {return 1 * f; },
-        'pInt' : function (i) {return i >> 0; },
-        'mRound' : function (n) {return (n + 0.5) >> 0; },
-        'mFloor' : function (n) {(n > 0 ? n : n + 1) >> 0; },
-        'mCeil' : function (n) {return (n + (n > 0 && !!(n % 1))) >> 0; },
-        'num': function (n) {return parseFloat(n.toFixed(10), 10); },
+        getNum : function (str) {return parseInt(str, 10); },
+        getFloat : function (str) {return parseFloat(str, 10); },
+        pFloat : function (f) {return 1 * f; },
+        pInt : function (i) {return i >> 0; },
+        mRound : function (n) {return (n + 0.5) >> 0; },
+        mFloor : function (n) {(n > 0 ? n : n + 1) >> 0; },
+        mCeil : function (n) {return (n + (n > 0 && !!(n % 1))) >> 0; },
+        num : function (n) {return parseFloat(n.toFixed(10), 10); },
     };
     
     //
