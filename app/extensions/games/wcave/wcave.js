@@ -207,7 +207,7 @@ JMVC.head.addstyle('http://fonts.googleapis.com/css?family=Freckle+Face');
 			// radius for point pills, perc @ cnv.width
 			ppillsSize : 0.015,
 
-			theme : 'matrix2',
+			theme : 'matrix',
 
 			// the tunnel height will shrink until it satisfies
 			// tunnel_height >= stopHeightDecay * obstacleSize
