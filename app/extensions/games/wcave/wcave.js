@@ -207,7 +207,7 @@ JMVC.head.addstyle('http://fonts.googleapis.com/css?family=Freckle+Face');
 			// radius for point pills, perc @ cnv.width
 			ppillsSize : 0.015,
 
-			theme : 'matrix',
+			theme : 'matrix2',
 
 			// the tunnel height will shrink until it satisfies
 			// tunnel_height >= stopHeightDecay * obstacleSize
@@ -259,6 +259,20 @@ JMVC.head.addstyle('http://fonts.googleapis.com/css?family=Freckle+Face');
 					feverHead : ['#FF0000', '#00FF00', '#0000FF'],
 					feverBonus : ['#FF0000', '#00FF00', '#0000FF'],
 					ppills : ['#FF0000', '#00FF00', '#0000FF']
+				},
+				matrix2 : {
+					worm : ['#ffff00', '#330000'],
+					//the background, the gradient is created with all the colors specified
+					bg : ['#0000ff', '#ffff00',  '#fede76'],
+					freezebg : ['#555555', '#333333'],
+					//freezebg : ['#FF0000', '#00FF00', '#0000FF'],
+					tunnel : '#555555',
+					obstacles : '#ffffff',
+					//ppills : '#ff0000',
+					hpills : '#00ff00',
+					feverHead : ['#FFFF00', '#0fFFf0', '#ff00FF'],
+					feverBonus : ['#FF0000', '#00FF00', '#0000FF'],
+					ppills : ['#0000', '#ffFF00', '#ffffFF']
 				}
 			},
 
