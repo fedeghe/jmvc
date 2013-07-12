@@ -67,11 +67,12 @@ JMVC.extend('css', {
 	}, 
 	
 	'width' : function (el) {
-		return el.offsetWidth || JMVC.css.getComputedStyle(el ,'width');
+		return el.offsetWidth || el.scrollWidth || JMVC.css.getComputedStyle(el ,'width');
 	},
 	
 	'height' : function (el) {
-		return el.offsetHeight || JMVC.css.getComputedStyle(el ,'height');
+
+		return el.offsetHeight || el.scrollHeight || JMVC.css.getComputedStyle(el ,'height');
 	},
 	
 	'getComputedStyle' : function (el, styleProperty) { 
