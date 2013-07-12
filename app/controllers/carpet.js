@@ -20,7 +20,7 @@ JMVC.controllers.carpet = function () {
 
 
 
-			jmap = JMVC.carpet.create(JMVC.dom.body(), Ww-200, Wh-200, 3);
+			jmap = JMVC.carpet.create(JMVC.dom.body(), Ww-10, Wh-10, 3);
 
 			if (JMVC.p.debug == 'true') {		
 				jmap.beforeAdd(function (i) {console.debug('adding ID: '+i); });
