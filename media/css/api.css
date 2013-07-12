@@ -109,3 +109,13 @@ div#footer{height:40px;}
 p.footer{text-align:center}
 .bg1{background-color: red;}
 .bg2{background-color: blue;}
+pre.code{
+	border-left:3px solid #aaa;
+	border-right:3px solid #aaa;
+	background-color:#333;
+	color:#0f0;
+	padding:0.5em;
+	line-height:1.5em;
+	font-family: monospace;
+	font-size:14px;
+}
