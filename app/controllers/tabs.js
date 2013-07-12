@@ -1,11 +1,12 @@
 JMVC.controllers.tabs = function () {
-	this.one = function () {
-		JMVC.require('responsive/basic','tabs', 'sniffer');
+	this.one = this.index = function () {
+		JMVC.require('responsive/basic','tabs', 'sniffer', 'core/i18n');
 
 		var index = JMVC.getView('index'),
 			tab = new JMVC.tabs.tab('v'),
 			tab2 = new JMVC.tabs.tab('v'),
 			ids;
+		JMVC.lang('jp', 'en');
 
 		JMVC.responsive.onChange(
 			function (w) {
@@ -15,8 +16,7 @@ JMVC.controllers.tabs = function () {
 				} else {
 					//JMVC.dom.removeClass(JMVC.WD.body, 'mini');
 					JMVC.responsive.allow('dskt')
-				} 
-
+				}
 			}
 		);
 		
@@ -35,7 +35,7 @@ JMVC.controllers.tabs = function () {
 			ids = tab.render('cent', 'ciccio');
 			JMVC.dom.add(JMVC.dom.find('#cent'), 'br', {'style' : 'line-height:30px'});
 			tab2.render(ids[2], 'ciccio2');
-			
+			JMVC.tabs.end();
 		}});
 	};
 }
