@@ -111,7 +111,7 @@ JMVC.extend('tabs', {
 
 				
 					//fix content height
-					
+					JMVC.tabs.fixheight();
 
 
 				});
