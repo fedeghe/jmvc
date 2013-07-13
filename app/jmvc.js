@@ -642,8 +642,8 @@
                         },
 
                         /**
-                         * [ description]
-                         * @param  {[type]} ns  [description]
+                         * check if a namespace already exists
+                         * @param  {[type]} ns  namesoace dot glued
                          * @param  {[type]} ctx [description]
                          * @return {[type]}     [description]
                          */
@@ -1565,7 +1565,7 @@
 
                     parselang : jmvc.parselang,
 
-                    checkhook : jmvc.check_hook,
+                    //checkhook : jmvc.check_hook,
                     bind : jmvc.bind,
                     debug : jmvc.debug,
                     extend : jmvc.extend,
