@@ -434,6 +434,7 @@
                     "render" : function (cback) {
                         var ctrl, i;
 
+
                         // "import" the controller (eval ajax code)
                         $JMVC.factory('controller', $JMVC.c);
 
@@ -456,9 +457,10 @@
                                     ctrl.set(i, decodeURI($JMVC.p[i]));
                                 }
                             }
+
                             // call action
-                            if (ctrl[$JMVC.a] && typeof ctrl[$JMVC.a] === 'function') {
-                                ctrl[$JMVC.a]();
+                            if (ctrl['action_' + $JMVC.a] && typeof ctrl['action_' + $JMVC.a] === 'function') {
+                                ctrl['action_' + $JMVC.a]();
                             } else {
                                 if ($JMVC.a.toLowerCase() !== JMVC_DEFAULT.action) {
                                     WDL.href = US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a;
@@ -1852,6 +1854,38 @@
 
         /**
          * [ description]
+         * @param  {[type]} d      [description]
+         * @param  {[type]} start  [description]
+         * @param  {[type]} end    [description]
+         * @param  {[type]} strict [description]
+         * @return {[type]}        [description]
+         */
+        'between' : function (d, start, end, strict) {
+            return strict ? (d >= start && d <= end) : (d > start && d < end);
+        },
+
+       
+
+        
+
+        
+        /**
+         * [ description]
+         * @param  {[type]} e [description]
+         * @return {[type]}   [description]
+         */
+        'defined' : function (e) {return typeof e !== 'undefined'; },
+
+        /**
+         * [ description]
+         * @param  {[type]} d [description]
+         * @return {[type]}   [description]
+         */
+        'deg2rad' : function (d) {return JMVC.M.PI * d / 180; },
+
+
+        /**
+         * [ description]
          * @param  {[type]} obj [description]
          * @param  {[type]} ext [description]
          * @return {[type]}     [description]
@@ -1865,146 +1899,6 @@
             }
         },
 
-       
-
-        
-
-        /**
-         * [ description]
-         * @param  {[type]} e [description]
-         * @return {[type]}   [description]
-         */
-        'isSet' : function (e) {return typeof e !== 'undefined'; },
-
-        /**
-         * [ description]
-         * @param  {[type]} e [description]
-         * @return {[type]}   [description]
-         */
-        'defined' : function (e) {return typeof e !== 'undefined'; },
-
-        
-
-        /**
-         * [ description]
-         * @param  {[type]} o [description]
-         * @return {[type]}   [description]
-         */
-        'isArray' : function (o) {
-            var y = Array.isArray && Array.isArray(o), t1, t2;
-            if (y) {return true; }
-            t1 = String(o) !== o;
-            t2 = {}.toString.call(o).match(/\[object\sArray\]/);
-            return t1 && !!(t2 && t2.length);
-        },
-
-        /**
-         * [ description]
-         * @param  {[type]} o [description]
-         * @return {[type]}   [description]
-         */
-        'isObject' : function (o) {
-            var t1 = String(o) !== o,
-                t2 = {}.toString.call(o).match(/\[object\sObject\]/);
-            return t1 && !!(t2 && t2.length);
-        },
-
-        /**
-         * [ description]
-         * @param  {[type]} el   [description]
-         * @param  {[type]} type [description]
-         * @return {[type]}      [description]
-         */
-        'isTypeOf' : function (el, type) {return typeof el === type; },
-
-        
-        //http://stackoverflow.com/questions/7390426/better-way-to-get-type-of-a-javascript-variable
-        /**
-         * [ description]
-         * @param  {[type]} o [description]
-         * @return {[type]}   [description]
-         */
-        'getType' : function (o) {
-            return ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
-        },
-
-        
-
-        /**
-         * [ description]
-         * @param  {[type]} min  [description]
-         * @param  {[type]} max) {return      min + ~~(JMVC.M.random() * (max - min + 1) [description]
-         * @return {[type]}      [description]
-         */
-        'rand' : function (min, max) {return min + ~~(JMVC.M.random() * (max - min + 1)); },
-
-        
-
-        
-
-        
-        /**
-         * [ description]
-         * @param  {[type]} r [description]
-         * @return {[type]}   [description]
-         */
-        'rad2deg' : function (r) {return 180 * r / JMVC.M.PI; },
-
-        /**
-         * [ description]
-         * @param  {[type]} d [description]
-         * @return {[type]}   [description]
-         */
-        'deg2rad' : function (d) {return JMVC.M.PI * d / 180; },
-
-        /**
-         * [ description]
-         * @param  {[type]} o    [description]
-         * @param  {[type]} func [description]
-         * @return {[type]}      [description]
-         */
-        //'each' : function (o, func) {return JMVC.each(o, func); },
-
-        
-
-        /**
-         * [ description]
-         * @param  {[type]} ) {return      +new Date( [description]
-         * @return {[type]}   [description]
-         */
-        'now' : function () {return +new Date(); },
-
-        
-
-        /**
-         * [ description]
-         * @param  {[type]} start [description]
-         * @param  {[type]} end   [description]
-         * @return {[type]}       [description]
-         */
-        'range' : function (start, end) {
-            var ret = [];
-            while (end - start + 1) {
-                ret.push((start += 1) - 1);
-            }
-            return ret;
-        },
-
-        /**
-         * [ description]
-         * @param  {[type]} d      [description]
-         * @param  {[type]} start  [description]
-         * @param  {[type]} end    [description]
-         * @param  {[type]} strict [description]
-         * @return {[type]}        [description]
-         */
-        'between' : function (d, start, end, strict) {
-            return strict ? (d >= start && d <= end) : (d > start && d < end);
-        },
-
-        
-
-        
 
         /**
          * [ description]
@@ -2031,7 +1925,15 @@
             return parameters;
         },
 
-        
+        //http://stackoverflow.com/questions/7390426/better-way-to-get-type-of-a-javascript-variable
+        /**
+         * [ description]
+         * @param  {[type]} o [description]
+         * @return {[type]}   [description]
+         */
+        'getType' : function (o) {
+            return ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
+        },
 
         /**
          * [ description]
@@ -2049,7 +1951,90 @@
          */
         'int2hex' : function (i) {
             return parseInt(i, 10).toString(16);
+        },
+
+        /**
+         * [ description]
+         * @param  {[type]} o [description]
+         * @return {[type]}   [description]
+         */
+        'isArray' : function (o) {
+            var y = Array.isArray && Array.isArray(o), t1, t2;
+            if (y) {return true; }
+            t1 = String(o) !== o;
+            t2 = {}.toString.call(o).match(/\[object\sArray\]/);
+            return t1 && !!(t2 && t2.length);
+        },
+
+        /**
+         * [ description]
+         * @param  {[type]} o [description]
+         * @return {[type]}   [description]
+         */
+        'isObject' : function (o) {
+            var t1 = String(o) !== o,
+                t2 = {}.toString.call(o).match(/\[object\sObject\]/);
+            return t1 && !!(t2 && t2.length);
+        },
+
+
+        /**
+         * [ description]
+         * @param  {[type]} e [description]
+         * @return {[type]}   [description]
+         */
+        'isSet' : function (e) {return typeof e !== 'undefined'; },
+
+
+        /**
+         * [ description]
+         * @param  {[type]} el   [description]
+         * @param  {[type]} type [description]
+         * @return {[type]}      [description]
+         */
+        'isTypeOf' : function (el, type) {return typeof el === type; },
+
+        
+        /**
+         * [ description]
+         * @param  {[type]} ) {return      +new Date( [description]
+         * @return {[type]}   [description]
+         */
+        'now' : function () {return +new Date(); },
+
+
+
+        /**
+         * [ description]
+         * @param  {[type]} min  [description]
+         * @param  {[type]} max) {return      min + ~~(JMVC.M.random() * (max - min + 1) [description]
+         * @return {[type]}      [description]
+         */
+        'rand' : function (min, max) {return min + ~~(JMVC.M.random() * (max - min + 1)); },
+
+        
+        /**
+         * [ description]
+         * @param  {[type]} r [description]
+         * @return {[type]}   [description]
+         */
+        'rad2deg' : function (r) {return 180 * r / JMVC.M.PI; },
+
+
+        /**
+         * [ description]
+         * @param  {[type]} start [description]
+         * @param  {[type]} end   [description]
+         * @return {[type]}       [description]
+         */
+        'range' : function (start, end) {
+            var ret = [];
+            while (end - start + 1) {
+                ret.push((start += 1) - 1);
+            }
+            return ret;
         }
+
     };
 
 
@@ -2059,13 +2044,32 @@
      * @type {Object}
      */
     JMVC.dom = {
+        /**
+         * [ description]
+         * @param  {[type]} where [description]
+         * @param  {[type]} tag   [description]
+         * @param  {[type]} attrs [description]
+         * @param  {[type]} inner [description]
+         * @return {[type]}       [description]
+         */
+        'add' : function (where, tag, attrs, inner) {
+            var n = this.create(tag, attrs, inner);
+            this.append(where, n);
+            return n;
+        },
 
         /**
          * [ description]
-         * @return {[type]} [description]
+         * @param  {[type]} elem        [description]
+         * @param  {[type]} addingClass [description]
+         * @return {[type]}             [description]
          */
-        'body' : function () {
-            return WD.body;
+        'addClass' : function (elem, addingClass) {
+            var cls = !!(elem.className) ? elem.className.split(' ') : [];
+            if (JMVC.array.inArray(cls, addingClass) < 0) {
+                cls.push(addingClass);
+                elem.className = cls.join(' ');
+            }
         },
 
         /**
@@ -2083,20 +2087,6 @@
                 where.appendChild(what);
             }
             return where;
-        },
-
-        /**
-         * [ description]
-         * @param  {[type]} elem        [description]
-         * @param  {[type]} addingClass [description]
-         * @return {[type]}             [description]
-         */
-        'addClass' : function (elem, addingClass) {
-            var cls = !!(elem.className) ? elem.className.split(' ') : [];
-            if (JMVC.array.inArray(cls, addingClass) < 0) {
-                cls.push(addingClass);
-                elem.className = cls.join(' ');
-            }
         },
 
         /**
@@ -2152,6 +2142,18 @@
                 elem = result;
             }
             return elem;
+        },
+
+        /**
+         * [ description]
+         * @return {[type]} [description]
+         */
+        'body' : function () {
+            return WD.body;
+        },
+
+        'childs' : function (node) {
+            return node.childNodes;
         },
 
         /**
@@ -2212,20 +2214,6 @@
 
         /**
          * [ description]
-         * @param  {[type]} where [description]
-         * @param  {[type]} tag   [description]
-         * @param  {[type]} attrs [description]
-         * @param  {[type]} inner [description]
-         * @return {[type]}       [description]
-         */
-        'add' : function (where, tag, attrs, inner) {
-            var n = this.create(tag, attrs, inner);
-            this.append(where, n);
-            return n;
-        },
-
-        /**
-         * [ description]
          * @param  {[type]} el [description]
          * @return {[type]}    [description]
          */
@@ -2273,8 +2261,6 @@
             return (ret instanceof Array && ret.length == 1) ? ret[0] : ret;
         },
 
-
-
         'find2' : function (a, b) {
             if (a.nodeType === 1) {return a; }
             var sel = "getElement",
@@ -2293,7 +2279,6 @@
             ret = toArr ? JMVC.array.coll2array(ret) : ret;
             return ret instanceof Array ?  (ret.length == 1 ? ret[0] :  ret) : ret;
         },
-
 
         /**
          * [ description]
@@ -2389,20 +2374,33 @@
             return t.trim();
         },
 
-        //thx to http://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
-        //for the following 2 mthds
-        //Returns true if it is a DOM node
+        
+
+
         /**
          * [ description]
-         * @param  {[type]} o [description]
-         * @return {[type]}   [description]
+         * @param  {[type]} node          [description]
+         * @param  {[type]} referenceNode [description]
+         * @return {[type]}               [description]
          */
-        'isNode' : function (o) {
-            return (
-                typeof Node === "object" ? o instanceof Node : 
-                o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName==="string"
-            );
+        'insertAfter' : function (node, referenceNode) {
+            var p = referenceNode.parentNode;
+            p.insertBefore(node, referenceNode.nextSibling);
+            return node;
         },
+        /**
+         * [ description]
+         * @param  {[type]} node          [description]
+         * @param  {[type]} referenceNode [description]
+         * @return {[type]}               [description]
+         */
+        'insertBefore' : function (node, referenceNode) {
+            var p = referenceNode.parentNode;
+            p.insertBefore(node, referenceNode);
+            return node;
+        },
+
+        
 
         //Returns true if it is a DOM element    
         /**
@@ -2418,29 +2416,33 @@
                     o && typeof o === "object" && o.nodeType === 1 && typeof o.nodeName==="string"
             );
         },
-        
+
+        //thx to http://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
+        //for the following 2 mthds
+        //Returns true if it is a DOM node
         /**
          * [ description]
-         * @param  {[type]} node          [description]
-         * @param  {[type]} referenceNode [description]
-         * @return {[type]}               [description]
+         * @param  {[type]} o [description]
+         * @return {[type]}   [description]
          */
-        'insertBefore' : function (node, referenceNode) {
-            var p = referenceNode.parentNode;
-            p.insertBefore(node, referenceNode);
-            return node;
+        'isNode' : function (o) {
+            return (
+                typeof Node === "object" ? o instanceof Node : 
+                o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName==="string"
+            );
         },
 
         /**
          * [ description]
-         * @param  {[type]} node          [description]
-         * @param  {[type]} referenceNode [description]
-         * @return {[type]}               [description]
+         * @param  {[type]} node [description]
+         * @return {[type]}      [description]
          */
-        'insertAfter' : function (node, referenceNode) {
-            var p = referenceNode.parentNode;
-            p.insertBefore(node, referenceNode.nextSibling);
-            return node;
+        'nodeTypeString' : function (node) {
+            var types = [
+                'ELEMENT_NODE', 'ATTRIBUTE_NODE', 'TEXT_NODE', 'CDATA_SECTION_NODE', 'ENTITY_REFERENCE_NODE',
+                'ENTITY_NODE', 'PROCESSING_INSTRUCTION_NODE', 'COMMENT_NODE', 'DOCUMENT_NODE', 'DOCUMENT_TYPE_NODE',
+                'DOCUMENT_FRAGMENT_NODE', 'NOTATION_NODE'];
+            return types[node.nodeType - 1];
         },
 
         /**
@@ -2475,19 +2477,6 @@
 
         /**
          * [ description]
-         * @param  {[type]} node [description]
-         * @return {[type]}      [description]
-         */
-        'nodeTypeString' : function (node) {
-            var types = [
-                'ELEMENT_NODE', 'ATTRIBUTE_NODE', 'TEXT_NODE', 'CDATA_SECTION_NODE', 'ENTITY_REFERENCE_NODE',
-                'ENTITY_NODE', 'PROCESSING_INSTRUCTION_NODE', 'COMMENT_NODE', 'DOCUMENT_NODE', 'DOCUMENT_TYPE_NODE',
-                'DOCUMENT_FRAGMENT_NODE', 'NOTATION_NODE'];
-            return types[node.nodeType - 1];
-        },
-
-        /**
-         * [ description]
          * @param  {[type]} src [description]
          * @return {[type]}     [description]
          */
@@ -2496,10 +2485,6 @@
             typeof fn === 'function' && (i.onload = fn(i));
             i.src = src;
             return i;
-        },
-
-        'childs' : function (node) {
-            return node.childNodes;
         },
 
         /**
@@ -3167,6 +3152,44 @@
     JMVC.string = {
         /**
          * [ description]
+         * @param  {[type]} code [description]
+         * @param  {[type]} pwd  [description]
+         * @return {[type]}      [description]
+         */
+        'code2str' : function (code, pwd) {
+            return String.fromCharCode.apply(null, code);
+        },
+
+         /**
+         * [ description]
+         * @param  {[type]} html [description]
+         * @return {[type]}      [description]
+         */
+        'htmlEntities' : function (html) {
+            return html
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/&(?![\w\#]+;)/g, '&amp;');
+        },
+
+        /**
+         * [ description]
+         * @param  {[type]} s){return s.replace(/^\s+/g [description]
+         * @param  {[type]} ''         [description]
+         * @return {[type]}            [description]
+         */
+        'ltrim' : function (s) {return s.replace(/^\s+/g, ''); },
+
+
+        'multireplace' : function (cnt, o) {
+            JMVC.each(o, function (el, rx) {
+                cnt = cnt.replace(rx, el);
+            });
+            return cnt;
+        },
+
+        /**
+         * [ description]
          * @param  {[type]} val  [description]
          * @param  {[type]} el   [description]
          * @param  {[type]} pos  [description]
@@ -3187,54 +3210,7 @@
             }
             return val;
         },
-        /**
-         * [ description]
-         * @param  {[type]} s){return s.replace(/^\s+|\s+$/g [description]
-         * @param  {[type]} ''         [description]
-         * @return {[type]}            [description]
-         */
-        'trim' : function (s) {return s.replace(/^\s+|\s+$/g, ''); },
-
-        /**
-         * [ description]
-         * @param  {[type]} s){return s.replace(/^\s+/g [description]
-         * @param  {[type]} ''         [description]
-         * @return {[type]}            [description]
-         */
-        'ltrim' : function (s) {return s.replace(/^\s+/g, ''); },
-
-        /**
-         * [ description]
-         * @param  {[type]} s){return s.replace(/\s+$/g [description]
-         * @param  {[type]} ''         [description]
-         * @return {[type]}            [description]
-         */
-        'rtrim' : function (s) {return s.replace(/\s+$/g, ''); },
-        /**
-         * [ description]
-         * @param  {[type]} str [description]
-         * @param  {[type]} pwd [description]
-         * @return {[type]}     [description]
-         */
-        'str2code' : function (str, pwd) {
-            var out = [],
-                i = 0,
-                l = str.length;
-            for (null; i < l; i += 1) {
-                out.push(str.charCodeAt(i));
-            }
-            return out;
-        },
-
-        /**
-         * [ description]
-         * @param  {[type]} code [description]
-         * @param  {[type]} pwd  [description]
-         * @return {[type]}      [description]
-         */
-        'code2str' : function (code, pwd) {
-            return String.fromCharCode.apply(null, code);
-        },
+        
         /** 
          * [ description]
          * @param  {string} tpl      the template
@@ -3253,24 +3229,32 @@
                 return (typeof o === 'function' ? o($1) : o[$1]) || fback || dD + $1 + Dd;
             });
         },
-
-
-        'multireplace' : function (cnt, o) {
-            JMVC.each(o, function (el, rx) {
-                cnt = cnt.replace(rx, el);
-            });
-            return cnt;
-        },
-         /**
+        
+        /**
          * [ description]
-         * @param  {[type]} html [description]
-         * @return {[type]}      [description]
+         * @param  {[type]} s){return s.replace(/\s+$/g [description]
+         * @param  {[type]} ''         [description]
+         * @return {[type]}            [description]
          */
-        'htmlEntities' : function (html) {
-            return html
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/&(?![\w\#]+;)/g, '&amp;');
+        'rtrim' : function (s) {return s.replace(/\s+$/g, ''); },
+
+
+
+
+        /**
+         * [ description]
+         * @param  {[type]} str [description]
+         * @param  {[type]} pwd [description]
+         * @return {[type]}     [description]
+         */
+        'str2code' : function (str, pwd) {
+            var out = [],
+                i = 0,
+                l = str.length;
+            for (null; i < l; i += 1) {
+                out.push(str.charCodeAt(i));
+            }
+            return out;
         },
         /**
          * [ description]
@@ -3282,7 +3266,22 @@
             var t = [];
             while (n-=1) {t.push(str.replace(/\%n\%/g, n)); }
             return t.reverse().join('');
-        }
+        },
+
+        /**
+         * [ description]
+         * @param  {[type]} s){return s.replace(/^\s+|\s+$/g [description]
+         * @param  {[type]} ''         [description]
+         * @return {[type]}            [description]
+         */
+        'trim' : function (s) {return s.replace(/^\s+|\s+$/g, ''); }
+
+        
+        
+
+
+        
+        
     };
 
 
