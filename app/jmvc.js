@@ -3007,8 +3007,21 @@
 
         
         
-
-        
+        /**
+         * [ description]
+         * @param  {[type]} cnt  [description]
+         * @param  {[type]} act  [description]
+         * @param  {[type]} prms [description]
+         * @return {[type]}      [description]
+         */
+        'goto' : function (cnt, act, prms) {
+            var path = [];
+            cnt && path.push(cnt);
+            act && path.push(act);
+            prms && path.push(prms);
+            
+            WD.location.href = JMVC.vars.baseurl + JMVC.US + path.join(JMVC.US);
+        },
 
         
 
