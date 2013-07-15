@@ -1,6 +1,6 @@
 JMVC.controllers.modal = function() {
 
-	this.index = function(){
+	this.action_index = function(){
 
 		JMVC.require('widget/modal/modal', 'event_scroll');
 

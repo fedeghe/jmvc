@@ -1,6 +1,6 @@
 JMVC.controllers.svg = function () {
 	//
-	this.index = function () {
+	this.action_index = function () {
 		//
 		JMVC.events.loadify(50);
 		JMVC.require('lib/svg','dim');

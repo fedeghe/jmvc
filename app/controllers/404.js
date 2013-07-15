@@ -1,6 +1,6 @@
 JMVC.controllers['404'] = function () {
 	"use strict";
-	this.msg = function () {		
+	this.action_msg = function () {		
 		var f0f = JMVC.factory('view', '404'),
 			d = new Date();
 		//	
@@ -11,8 +11,8 @@ JMVC.controllers['404'] = function () {
 			f0f.set('msg', 'controller `' + this.get('cnt') + '` not found');
 		}
 		f0f.set('date', d.getFullYear() + '/' + d.getMonth() + '/' + d.getDay() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds());
-		f0f.set('url', document.location.href);
-		f0f.set('agent', window.navigator.userAgent);
+		f0f.set('url', JMVC.WD.referrer);
+		f0f.set('agent', JMVC.W.navigator.userAgent);
 		f0f.render();
 
 		JMVC.head.title('404 PAGE NOT FOUND');

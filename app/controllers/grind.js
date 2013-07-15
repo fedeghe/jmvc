@@ -1,7 +1,7 @@
 JMVC.require('lib/border/border', 'widget/snow');
 JMVC.controllers.grind = function () {
 
-	this.index = function () {
+	this.action_index = function () {
 		JMVC.events.loadify(500);
 		JMVC.require('lib/grind/grind','dim');
 		JMVC.head.meta("generator", "jmvc resident in your machine");

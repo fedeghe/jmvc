@@ -1,6 +1,6 @@
 JMVC.controllers.obj = function() {
 
-	this.index = function(){
+	this.action_index = function(){
 		
 		
 		

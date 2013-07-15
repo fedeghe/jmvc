@@ -3,7 +3,7 @@ JMVC.require('tabs');
 JMVC.controllers.api = function () {
 	"use strict";
 
-	this.index = function () {
+	this.action_index = function () {
 		JMVC.require('core/codeview/script','xmlparser', 'responsive/basic');
 		JMVC.events.loadify(500);
 
@@ -70,7 +70,7 @@ JMVC.controllers.api = function () {
 						
 						//reset params
 						params = '';
-						sample = 'no sample code';
+						sample = 'no sample code given yet';
 
 						if (JMVC.util.isArray(section['function'][i].params.param)) {
 							for (t=0, len = section['function'][i].params.param.length; t < len; t += 1) {
@@ -130,7 +130,7 @@ JMVC.controllers.api = function () {
 
 			};
 			
-			JMVC.each(['jmvc', 'model', 'view', 'controller', 'dom', 'events', 'head', 'io', 'array', 'object', 'string', 'util', 'num'], function (t) {
+			JMVC.each(['jmvc', 'model', 'view', 'controller', 'dom', 'events', 'head', 'io', 'array', 'object', 'string', 'util'/*, 'num'*/], function (t) {
 				var y;
 				parser.pointer(parser.xmlDoc.getElementsByTagName(t)[0]);
 				y = JMVC.xmlparser.toJson(parser.pointer());
@@ -146,7 +146,9 @@ JMVC.controllers.api = function () {
 		main.set('content', '<p style="color:#fff">Rendering time: <strong>[[JMVC.vars.rendertime]]</strong> ms</p>');
 		
 		main.render(function () {
+
 			var i = tab_ext.render('desc', 'ulidONE');
+			JMVC.head.title('JMVC API');
 			
 			JMVC.events.delay(function () {
 				tabs_inner['jmvc'].render(i[0], 'ulidTWO');
@@ -161,7 +163,7 @@ JMVC.controllers.api = function () {
 				tabs_inner['object'].render(i[9], 'ulidTWO');
 				tabs_inner['string'].render(i[10], 'ulidTWO');
 				tabs_inner['util'].render(i[11], 'ulidTWO');
-				tabs_inner['num'].render(i[12], 'ulidTWO');
+				//tabs_inner['num'].render(i[12], 'ulidTWO');
 				
 			}, 0);
 

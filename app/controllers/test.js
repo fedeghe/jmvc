@@ -6,7 +6,7 @@ JMVC.controllers.test = function () {
 		f : 'flag'
 	});
 
-	this.index = function () {
+	this.action_index = function () {
 		
 		JMVC.require('google/analytics', 'responsive/basic');
 		JMVC.events.loadify(500);
@@ -103,7 +103,7 @@ JMVC.controllers.test = function () {
 
 
 	// test a VIEW	
-	this.view = function () {
+	this.action_view = function () {
 		var v = JMVC.getView('test'),
 			v1= JMVC.factory('view', 'test1'),
 			v2= JMVC.factory('view', 'test2');
@@ -116,7 +116,7 @@ JMVC.controllers.test = function () {
 	
 	
 	// test some MODELs
-	this.model = function() {
+	this.action_model = function() {
 		var _p1 = JMVC.getModel('xxx/Persona'),
 			_p2 = JMVC.getModel('Persona2'),
 			_p3 = JMVC.getModel('Persona2'),
@@ -144,7 +144,7 @@ JMVC.controllers.test = function () {
 		v.render();
 	};
 
-	this.modelviewparse = function() {
+	this.action_modelviewparse = function() {
 		var p = JMVC.getModel('Persona'),
 			v = JMVC.getView('parse');
 		p.set('name', 'Fredrich');
@@ -152,18 +152,18 @@ JMVC.controllers.test = function () {
 	};
 
 	// test a CONTROLLER
-	this.controller = function() {
+	this.action_controller = function() {
 		this.set('nome','Federico');
 		alert(this.get('nome'));
 	};
-	this.controller2 = function() {
+	this.action_controller2 = function() {
 		this.set('nome','Federico2');
 		alert(this.get('nome'));
 	};
 	
 	
 	// just to celebrate a good start
-	this.flag = function() {
+	this.action_flag = function() {
 		// color extension is needed
 		JMVC.require('color');
 		
@@ -240,7 +240,7 @@ JMVC.controllers.test = function () {
 		
 	};
 	
-	this.direct = function() {
+	this.action_direct = function() {
 		JMVC.head.title('Swiss beat');
 		JMVC.head.addstyle(JMVC.vars.baseurl+'/media/css/flag.css');
 		this.render(
@@ -251,7 +251,7 @@ JMVC.controllers.test = function () {
 		);
 	}
 	
-	this.viewplus = function() {
+	this.action_viewplus = function() {
 		JMVC.head.title('Hello');
 		JMVC.getView('superview');
 		var _v = JMVC.getView('sv');
@@ -264,7 +264,7 @@ JMVC.controllers.test = function () {
 	
 	
 
-	this.logo = function(){
+	this.action_logo = function(){
 		JMVC.events.loadify(1000);
 		JMVC.require('plotter', 'obj/bucket');
 		var M = Math;
@@ -363,7 +363,7 @@ JMVC.controllers.test = function () {
 		//JMVC.util.denyXframe();
 	};
 	
-	this.xmlparser = function(){
+	this.action_xmlparser = function(){
 		JMVC.require('xmlparser');
 		
 		var d = new JMVC.xmlparser.load('<?xml version="1.0" encoding="UTF-8" ?><root><el><name sex="M">federico</name><surname>ghedina</surname><struct><a>A</a><b>B</b></struct></el><el><name>federico2</name><surname>ghedina2</surname></el></root>'),
@@ -383,7 +383,7 @@ JMVC.controllers.test = function () {
 		//JMVC.yes.prova();
 	};
 	
-	this.docs = function(){
+	this.action_docs = function(){
 		JMVC.require('xmlparser');
 		JMVC.io.get(JMVC.vars.baseurl+'/media/documentation.xml',function(doc){
 			
@@ -433,7 +433,7 @@ JMVC.controllers.test = function () {
 		},true);	
 	};
 	
-	this.scheduler = function () {
+	this.action_scheduler = function () {
 		JMVC.require('scheduler');
 		var s = new JMVC.scheduler.create();
 		s.add({every : 3000}, function (d) {JMVC.debug(d); });
@@ -441,7 +441,7 @@ JMVC.controllers.test = function () {
 	};
 	
 	
-	this.observer = function () {
+	this.action_observer = function () {
 		JMVC.require('core/codeview/html');
 		var list = JMVC.getModel('List', ['Item0', 'Item1', 'Item2', 'Item3']),
 			v = JMVC.getView('vacuum'),
@@ -497,7 +497,7 @@ JMVC.controllers.test = function () {
 		
 	}
 	
-	this.fx = function () {
+	this.action_fx = function () {
 		JMVC.require('fx', 'animator', 'obj/calendar', 'timer');
 		//
 		var v = JMVC.getView('vacuum');

@@ -2,7 +2,7 @@ JMVC.require('test');
 		
 JMVC.controllers.implement = function() {
 
-	this.index = function(){
+	this.action_index = function(){
 				
 		this.render(false,function test(){
 			"use strict";

@@ -1,6 +1,6 @@
 JMVC.controllers.google = function () {
 	//
-	this.index = function () {
+	this.action_index = function () {
 		//
 		JMVC.events.loadify(1000);
 		JMVC.require('plotter', 'obj/bucket');

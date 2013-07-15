@@ -1,6 +1,6 @@
 JMVC.controllers.deque = function() {
 
-	this.index = function(){
+	this.action_index = function(){
 		'use strict';
 		
 		JMVC.require('obj/deque');

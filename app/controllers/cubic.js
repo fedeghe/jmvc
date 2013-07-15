@@ -2,7 +2,7 @@ JMVC.require('lib/border/border', 'widget/snow/snow', 'css', 'dim');
 
 JMVC.controllers.cubic = function () {
 	"use strict";
-	this.index = function () {
+	this.action_index = function () {
 		JMVC.events.loadify(500);
 		JMVC.head.addstyle(
 			'body{background-color:#222; color:white;}'+

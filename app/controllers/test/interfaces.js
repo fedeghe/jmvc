@@ -1,6 +1,6 @@
 JMVC.controllers.interfaces = function() {
 
-	this.index = function(){
+	this.action_index = function(){
 		JMVC.loadInterfaces('loader');
 		var t1 = function () {
 			this.load = function (x) {console.debug(x)};

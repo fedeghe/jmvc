@@ -1,18 +1,18 @@
 JMVC.require('obj/date');
 		
 JMVC.controllers.date = function() {
-	this.i = function(){
+	this.action_i = function(){
 		JMVC.date.week2range(1,2009);
 	};
 	
-	this.sunday = function(){
+	this.action_sunday = function(){
 		this.index(true);
 	}
-	this.monday =  function(){
+	this.action_monday =  function(){
 		this.index(false);
 	}
 	
-	this.index = function(sunday){
+	this.action_index = function(sunday){
 		sunday = !!sunday;
 		this.render(false,function test(){
 			"use strict";
@@ -136,7 +136,7 @@ JMVC.controllers.date = function() {
 	};
 
 
-	this.day2week = function(){
+	this.action_day2week = function(){
 		
 		
 		this.render(false,function test(){

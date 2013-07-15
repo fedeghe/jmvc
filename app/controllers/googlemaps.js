@@ -1,6 +1,6 @@
 JMVC.controllers.googlemaps = function () {
 	//
-	this.index = function () {
+	this.action_index = function () {
 		//
 		JMVC.events.loadify(1000);
 		JMVC.require('google/gmap','dim');

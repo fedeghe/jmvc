@@ -1,6 +1,6 @@
 JMVC.controllers.pub = function () {
 
-	this.index = function () {
+	this.action_index = function () {
 
 		JMVC.require(
 			'core/codeview/codehl',
@@ -74,7 +74,7 @@ JMVC.controllers.pub = function () {
 
 
 
-	this.xvents = function () {
+	this.action_xvents = function () {
 
 		JMVC.events.loadify(500);
 
@@ -128,7 +128,7 @@ JMVC.controllers.pub = function () {
 	};
 
 
-	this.xpub = function () {
+	this.action_xpub = function () {
 
 		JMVC.events.loadify(500);
 
@@ -161,7 +161,7 @@ JMVC.controllers.pub = function () {
 
 
 
-	this.zpub = function () {
+	this.action_zpub = function () {
 
 		JMVC.events.loadify(500);
 		JMVC.require('pub/zpub');

@@ -1,6 +1,6 @@
 JMVC.controllers.arrayOp = function() {
 
-	this.index = function(){
+	this.action_index = function(){
 		
 		
 		
@@ -29,7 +29,7 @@ JMVC.controllers.arrayOp = function() {
 			];
 			
 
-			console.debug(JSON.stringify(arr));
+			
 
 			
 			JMVC.test.initialize(true);

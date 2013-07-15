@@ -1,6 +1,6 @@
 JMVC.controllers.index = function () {
 
-	this.index = function () {
+	this.action_index = function () {
 		JMVC.require(
 			'obj/date'
 			, 'core/i18n'
@@ -219,7 +219,7 @@ JMVC.controllers.index = function () {
 		);
 	};
 	
-	this.video = function () {
+	this.action_video = function () {
 		JMVC.require('html5');
 		var index = JMVC.getView('index'),
 			video = JMVC.html5.video({w : 240, h : 180, uri : 'http://techslides.com/demos/sample-videos/small.ogv', autoplay : 'autoplay', controls : true}),
@@ -235,7 +235,7 @@ JMVC.controllers.index = function () {
 
 
 
-	this.index2 = function () {
+	this.action_index2 = function () {
 		var index = JMVC.getView('index'),
 			hello = JMVC.getView('hello'),
 			n;
@@ -278,11 +278,11 @@ JMVC.controllers.index = function () {
 	//
 	//
 	//
-	this.index3 = function () {
+	this.action_index3 = function () {
 		//directly render some code
 		this.render('<b>yupeeee</b>');
 	};
-	this.codes = function () {
+	this.action_codes = function () {
 		if (confirm('That may hang your browser! ...continue?')) {
 			var content = '',
 				i = 10;
@@ -294,7 +294,7 @@ JMVC.controllers.index = function () {
 			this.render(':D');
 		}
 	};
-	this.ascii = function () {
+	this.action_ascii = function () {
 		var content = '', i =0;
 		for (null; i < 256; i += 1) {
 			content += '"' + i +'" : "'+ String.fromCharCode(i) + '",<br />';

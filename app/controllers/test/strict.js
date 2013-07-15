@@ -1,7 +1,7 @@
 
 JMVC.controllers.strict = function() {
 
-	this.index = function(){
+	this.action_index = function(){
 
 		this.render(false,function(){
 		

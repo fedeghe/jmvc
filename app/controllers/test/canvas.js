@@ -2,7 +2,7 @@ JMVC.require('canvas', 'test');
 		
 JMVC.controllers.canvas = function () {
 	
-	this.index = function (s) {
+	this.action_index = function (s) {
 		
 		this.render(false, function test () {
 			"use strict";

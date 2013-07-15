@@ -1,5 +1,5 @@
 JMVC.controllers.snow = function () {
-	this.index = function () {
+	this.action_index = function () {
 		
 		JMVC.require('obj/date', 'widget/snow/snow');
 		

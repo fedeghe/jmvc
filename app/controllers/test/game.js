@@ -1,6 +1,6 @@
 JMVC.controllers.game = function() {
 
-	this.index = function(){
+	this.action_index = function(){
 
 		JMVC.require('lib/game');
 		

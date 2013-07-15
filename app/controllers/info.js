@@ -2,7 +2,7 @@ JMVC.controllers.info = function () {
 	//
 	//
 	//
-	this.index = function () {
+	this.action_index = function () {
 		//
 		JMVC.events.loadify(500);
 		JMVC.require(
@@ -93,7 +93,7 @@ JMVC.controllers.info = function () {
 		}
 		readme.set('desc', ret);
 		*/
-		readme.set('desc', 'Check out the complete Api <a href="' + JMVC.vars.baseurl + '/api">here</a>');
+		readme.set('desc', 'Check out the complete Api <a href="' + JMVC.vars.baseurl + '/api.jmvc">here</a>');
 
 		
 		readme.set('version', JMVC.vars.version);

@@ -1,6 +1,6 @@
 JMVC.controllers.crypt = function() {
 
-	this.index = function(){
+	this.action_index = function(){
 		
 		
 		

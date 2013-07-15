@@ -1,6 +1,6 @@
 JMVC.controllers.array = function() {
 
-	this.index = function(){
+	this.action_index = function(){
 		
 		
 		JMVC.require('lib/array');

@@ -1,6 +1,6 @@
 JMVC.controllers.exm = function () {
 	"use strict";
-	this.index = function () {
+	this.action_index = function () {
 		JMVC.events.loadify(1000);
 		JMVC.require('plotter', 'obj/bucket');
 		var M = Math,

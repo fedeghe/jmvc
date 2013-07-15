@@ -1,7 +1,7 @@
 JMVC.controllers.carpet = function () {
 	"use strict";
 	//default action
-	this.index = function () {
+	this.action_index = function () {
 
 		// get lib & view 
 		JMVC.require('lib/carpet/carpet', 'dim');

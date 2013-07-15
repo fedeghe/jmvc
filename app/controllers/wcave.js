@@ -1,5 +1,5 @@
 JMVC.controllers.wcave = function () {
-	this.index = function () {	
+	this.action_index = function () {	
 		
 		JMVC.require('games/wcave/wcave');
 		
