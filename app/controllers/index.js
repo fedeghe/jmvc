@@ -59,14 +59,8 @@ JMVC.controllers.index = function () {
 		//
 		
 		
-		//JMVC.events.ready(function (){console.debug('DOM loaded');});
-		
-		
-		
 		index.parse().render(
 			function () {
-
-
 				JMVC.responsive.onChange(
 					function (w) {
 						if (w < 800) {
@@ -79,35 +73,44 @@ JMVC.controllers.index = function () {
 					}
 				);
 
-				
 				JMVC.head.lastmodified();
 				var el = document.getElementById('cent'),
-					link,
-					downlink,
+					links,
+					linkmore,
+					sourcelink,
+					apilink,
 					logo,
 					newlogo,
 					dims,
 					mapid,
 					b;
+
+				links = JMVC.dom.create('h2');
+
 				//
-				link = JMVC.dom.create('a', {href : JMVC.vars.baseurl + '/info.jmvc', title : 'get more info'}, JMVC.parselang('&laquo; [L[more]] &raquo;'));
+				morelink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/info.jmvc', title : 'get more info'}, JMVC.parselang('[L[more]]'));
+				apilink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/api.asp', title : 'basic documentation'}, JMVC.parselang('[L[api]]'));
+				sourcelink = JMVC.dom.create('a', {'class' : 'homelinks', href : 'https://github.com/fedeghe/jmvc', title : 'get code from github!', target : '_blank'}, JMVC.parselang('[L[source]]'));
 				
-				//JMVC.mobile.topHide();
 				
-				JMVC.events.bind(link, 'click', function () {this.blur();});
-				JMVC.dom.append(el, link);
-				//
-				//
-				//
-				JMVC.dom.add(el, 'br');
-				//
-				//view rendertime in title
-				//JMVC.head.title('TTR: '+JMVC.vars.rendertime+' ms');
-				//
-				downlink = JMVC.dom.create('a', {href : 'https://github.com/fedeghe/jmvc', title : 'get code from github!', target : '_blank'}, JMVC.parselang('&laquo; [L[source]] &raquo;'));
-				JMVC.events.bind(downlink, 'click', function () {this.blur(); });
-				//
-				JMVC.dom.append(el, downlink);
+				JMVC.mobile.topHide();
+				
+				
+				JMVC.dom.append(links,  morelink);
+				JMVC.dom.append(links,  apilink);
+				JMVC.dom.append(links,  sourcelink);
+				
+
+
+				JMVC.dom.append(el, links);
+
+
+
+				JMVC.events.bind(morelink, 'click', function () {this.blur();});
+				JMVC.events.bind(apilink, 'click', function () {this.blur(); });
+				JMVC.events.bind(sourcelink, 'click', function () {this.blur(); });
+				
+
 				//see the pool
 				//JMVC.debug(JMVC.io.x);
 				logo = JMVC.dom.find('#extralogo');
