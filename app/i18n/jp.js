@@ -7,5 +7,6 @@ JMVC.i18n.jp = {
 	'more':'もっと',
 	'source':'ソース',
 	'desktop' : 'デスクトップ',
-	'mobile':'携帯電話'
+	'mobile':'携帯電話',
+	'api' : 'ミツバチ'
 };
