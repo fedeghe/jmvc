@@ -71,7 +71,22 @@ h1.tryme{
 }
 
 
-
+a.homelinks{
+	border:1px solid #fff;
+	padding:5px;
+	margin:3px;
+	display:inline-block;
+	zoom:1;
+	text-align:center;
+	*display:inline;
+}
+a.homelinks:hover{
+	border:1px solid #eee;
+	background-color:#fafafa;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+}
 
 
 

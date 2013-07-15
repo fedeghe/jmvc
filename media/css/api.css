@@ -52,13 +52,11 @@ div#guest{
 	padding-bottom:2em;
 	/*font-size:20px;*/
 }
-tr{
-	margin-top:1em;
-}
+tr{}
 tr > td {
-	padding-bottom:0.5em;
+	padding-bottom:0.8em;
 	height:0px;
-	/*line-height:18px;*/
+	line-height:2em;
 	/*font-size:16px;*/
 } 
 tr > td.first {
@@ -105,15 +103,26 @@ div#centerinfo{
 .apitable{
 	$my_table_style$
 }
+span.signature{
+	color:#0f0;
+	font-size:1.5em;
+	background-color:#333;
+	letter-spacing: 0.1em;
+	padding:5px;
+	font-family: monospace;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+}
 div#footer{height:40px;}
 p.footer{text-align:center}
 .bg1{background-color: red;}
 .bg2{background-color: blue;}
 pre.code{
-	border-left:3px solid #aaa;
-	border-right:3px solid #aaa;
-	background-color:#333;
-	color:#0f0;
+	border-left:3px solid #0f0;
+	border-right:3px solid #0a0;
+	background-color:#666;
+	color:#fff;
 	padding:0.5em;
 	line-height:1.5em;
 	font-family: monospace;
