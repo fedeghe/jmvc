@@ -20,7 +20,7 @@ JMVC.extend('responsive', {
 		/**
 		 * on dom ready trigger onchange passing current window width
 		 */
-		JMVC.events.ready(function(){
+		JMVC.events.end(function(){
 			JMVC.responsive._change(JMVC.W.outerWidth || JMVC.W.innerWidth);
 		});
 	},
