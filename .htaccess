@@ -30,6 +30,9 @@ Options -Indexes
 	#	per modelli, viste e controller e storage
 	RewriteRule ^(app|media)(.*)?$ - [L]
 
+	#for WS
+	RewriteRule ^sub.php?$ - [L]
+
 	#	Page (if not a file/directory)
 	RewriteCond   %{REQUEST_FILENAME} !-d
 	RewriteCond   %{REQUEST_FILENAME} !-f
