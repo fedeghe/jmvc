@@ -29,7 +29,6 @@ div.pagewrap a{
 
 	font-weight:bold;
 	letter-spacing: 0px;
-	line-height:42px;
 }
 div.pagewrap a:hover{
 	text-shadow:0px 0px 10px #fff;
@@ -73,7 +72,7 @@ h1.tryme{
 
 a.homelinks{
 	border:1px solid #fff;
-	padding:5px;
+	padding:10px;
 	margin:3px;
 	display:inline-block;
 	zoom:1;
