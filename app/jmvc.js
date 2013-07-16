@@ -863,14 +863,13 @@
                      * @return {[type]}         [description]
                      */
                     parse : function (content) {
-
                         // hook
                         var cont = content, // the view content
                             RX = {
                                 'patt' : "{{(.[^\\}]*)}}", // for hunting view placeholders
                                 'pattpar' : "\\s(.[A-z]*)=`(.[^/`]*)`", // for getting explicit params passed within view placeholders
                                 'pattvar' : "\\$(.[^\\$\\s}]*)\\$", // for variables
-                                'viewname' : "^(.[A-z]*)\\s" // for getting only the viewname
+                                'viewname' : "^(.[A-z_\/]*)\\s" // for getting only the viewname
                             },
                             res, // results of view hunt 
                             //resvar, // variables found ##unused
@@ -889,11 +888,11 @@
                         if (!!!content) {
                             return '';
                         }
-
+                        
                         while (i < limit) {
                             i += 1;
                             res = new RegExp(RX.patt, 'gm').exec(cont);
-
+                            
                             if (res) {
                                 viewname = orig = res[1];
                                 register = false;
@@ -962,8 +961,11 @@
                                 }
                                 // now the whole view
                                 cont = cont.replace('{{' + orig + '}}', myview.content);
+                            } else {
+                                i = limit;
                             }
                         }
+                        
                         // now $JMVC.vars parse
                         for (j in $JMVC.vars) {
                             if ($JMVC.vars.hasOwnProperty(j)) {
@@ -1334,7 +1336,7 @@
 
                     // parse for other views or $JMVC.vars
                     
-                    cont = Parser.parse(cont);
+                    //cont = Parser.parse(cont);
                     
                     // look for / substitute  vars
                     // in the view (these belongs to the view)
@@ -1347,6 +1349,7 @@
                             cont = cont.replace('$' + resvar[1] + '$', t);
                         }
                     }
+                    cont = Parser.parse(cont);
                     
                     this.content = cont;
 
@@ -1848,10 +1851,6 @@
      */
     JMVC.util = {
 
-        
-        
-        
-
         /**
          * [ description]
          * @param  {[type]} d      [description]
@@ -1944,6 +1943,9 @@
             return parseInt(hex, 16);
         },
 
+
+        
+
         /**
          * [ description]
          * @param  {[type]} i [description]
@@ -2033,6 +2035,15 @@
                 ret.push((start += 1) - 1);
             }
             return ret;
+        },
+
+
+        'uniqueID' : new function () {
+            var baseid = 'jmvcID_',
+                count = 0;
+            this.toString = function (){
+                return baseid + count++;
+            }
         }
 
     };
@@ -3418,6 +3429,11 @@
         },
 
     };
+    JMVC.match = {
+        email : function (str) {
+            return !!str.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/);
+        }
+    }
     JMVC.num = {
         getNum : function (str) {return parseInt(str, 10); },
         getFloat : function (str) {return parseFloat(str, 10); },
