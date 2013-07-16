@@ -4,11 +4,12 @@ JMVC.controllers.api = function () {
 	"use strict";
 
 	this.action_index = function () {
-		JMVC.require('core/codeview/script','xmlparser', 'responsive/basic');
+		JMVC.require('core/codeview/script','xmlparser', 'responsive/basic', 'widget/countdown/countdown');
 		JMVC.events.loadify(500);
 
 		var main  = JMVC.getView('vacuum'),
 			doc_tpl = JMVC.getView('api/doctpl'),
+			apintro = JMVC.getView('api/apintro'),
 			func_model = JMVC.getModel('api/function'),
 			field_model = JMVC.getModel('api/field'),
 			tab_ext = new JMVC.tabs.tab('o'),
@@ -143,12 +144,17 @@ JMVC.controllers.api = function () {
 			
 		}, false);
 		
-		main.set('content', '<p style="color:#fff">Rendering time: <strong>[[JMVC.vars.rendertime]]</strong> ms</p>');
+		apintro.set('postmessage', 'Thank You');
+		main.set('content', '{{apintro}}<p style="color:#fff">Rendering time: <strong>[[JMVC.vars.rendertime]]</strong> ms</p>');
+		//main.set('content', '{{apintro postmessage=`hello`}}<p style="color:#fff">Rendering time: <strong>[[JMVC.vars.rendertime]]</strong> ms</p>');
 		
-		main.render(function () {
+		main.parse().render(function () {
 
 			var i = tab_ext.render('desc', 'ulidONE');
 			JMVC.head.title('JMVC API');
+
+			
+			JMVC.widget.countdown.start('#countdown', new Date(2013, 6, 17, 1, 29,20));
 			
 			JMVC.events.delay(function () {
 				tabs_inner['jmvc'].render(i[0], 'ulidTWO');
