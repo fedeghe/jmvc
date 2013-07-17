@@ -60,6 +60,7 @@ var loaded_extensions = JMVC.check_ns('extensions', JMVC),&#10;
 console.debug(loaded_extensions, loadedExtensions, foo);
 			</sample>
 			<status>incomplete</status>
+			<testlink>test</testlink>
 		</function>
 
 		<function>
@@ -71,6 +72,7 @@ console.debug(loaded_extensions, loadedExtensions, foo);
 			<returns>void (undefined)</returns>
 			<sample>JMVC.console();</sample>
 			<status>testing</status>
+			<testlink>test</testlink>
 		</function>
 
 		<function>
