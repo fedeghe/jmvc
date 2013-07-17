@@ -161,5 +161,8 @@ caption div.testlink a{
 }
 caption.testing div.testlink a:hover{
 	color: red;
+}
+caption.testing div.testlink a{
 	font-weight:bold;
+	color: #900;
 }
