@@ -1,10 +1,21 @@
 /**
- * JMVC : Pure Javascript MVC framework
+ *
+ *          _/  _/      _/  _/      _/    _/_/_/
+ *         _/  _/_/  _/_/  _/      _/  _/
+ *        _/  _/  _/  _/  _/      _/  _/
+ * _/    _/  _/      _/    _/  _/    _/
+ *  _/_/    _/      _/      _/        _/_/_/
+ *
  * 
- * @version: 1.9.2
- * @date : 26-06-2013
- * @copyright (c) 2012, Federico Ghedina <fedeghe@gmail.com>
- * @author Federico Ghedina
+ *       A pure Javascript MVC framework
+ *
+ *
+ * 
+ * @version: 1.9.3
+ * @date : 17-07-2013
+ * @copyright (c) 2013, Federico Ghedina <fedeghe@gmail.com>
+ * @author : Federico Ghedina
+ * @url : http://www.jmvc.org
  *
  * 
  * All rights reserved.
@@ -31,13 +42,13 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
- * 
  */
 
 
 /**
  * main auto exec function
  * @param  window (through this ref)
+ * @pseudoparam undefined
  * @return undefined
  */
 !function (W, undefined) {
@@ -67,7 +78,7 @@
                 // returning object created in that function, here $JMVC will be JMVC
                 var $JMVC,
                     JMVC_VERSION = 1.9,
-                    JMVC_REVIEW = 2,
+                    JMVC_REVIEW = 3,
                     JMVC_PACKED = false,
 
                     /**
@@ -550,7 +561,7 @@
                         var i = 0,
                             l = interf.length,
                             strict = true;
-                        if (typeof s !== undefined) {strict = s; }
+                        if (typeof s !== 'undefined') {strict = s; }
                         for (null; i < l; i += 1) {
                             if (
                                 !(
@@ -828,9 +839,14 @@
                 }
                 */
                 ////
-
-
-
+/*
+     _/_/_/      _/_/_/  _/  _/_/    _/_/_/    _/_/    _/  _/_/   
+    _/    _/  _/    _/  _/_/      _/_/      _/_/_/_/  _/_/        
+   _/    _/  _/    _/  _/            _/_/  _/        _/           
+  _/_/_/      _/_/_/  _/        _/_/_/      _/_/_/  _/            
+ _/                                                               
+_/  
+*/
                 Parser = {
                     /**
                      * [tpl description]
@@ -1067,7 +1083,25 @@
                     return this;
                 };
                 
+/*
 
+
+
+
+
+
+
+
+
+
+
+    _/              _/                              _/_/                               
+       _/_/_/    _/_/_/_/    _/_/    _/  _/_/    _/        _/_/_/    _/_/_/    _/_/    
+  _/  _/    _/    _/      _/_/_/_/  _/_/      _/_/_/_/  _/    _/  _/        _/_/_/_/   
+ _/  _/    _/    _/      _/        _/          _/      _/    _/  _/        _/          
+_/  _/    _/      _/_/    _/_/_/  _/          _/        _/_/_/    _/_/_/    _/_/_/     
+                                                                                      
+ */
                 Interface = function (f) {
                     this.mthds = f;
                 };
@@ -1092,10 +1126,25 @@
                 };
                 
 
-                //
-                // ***********
-                // CONTROLLER 
-                // ***********
+/*
+
+
+
+
+
+
+
+
+
+
+
+                                   _/                          _/  _/                      
+    _/_/_/    _/_/    _/_/_/    _/_/_/_/  _/  _/_/    _/_/    _/  _/    _/_/    _/  _/_/   
+ _/        _/    _/  _/    _/    _/      _/_/      _/    _/  _/  _/  _/_/_/_/  _/_/        
+_/        _/    _/  _/    _/    _/      _/        _/    _/  _/  _/  _/        _/           
+ _/_/_/    _/_/    _/    _/      _/_/  _/          _/_/    _/  _/    _/_/_/  _/            
+                                                                                  
+ */
                 // 
                 // parent controller
                 Controller = function () {};
@@ -1174,10 +1223,26 @@
                     return this;
                 };
 
-                //
-                // ******
-                // MODEL
-                // ******
+
+
+
+
+/*
+
+
+
+
+
+
+
+
+
+                                    _/            _/   
+   _/_/_/  _/_/      _/_/      _/_/_/    _/_/    _/    
+  _/    _/    _/  _/    _/  _/    _/  _/_/_/_/  _/     
+ _/    _/    _/  _/    _/  _/    _/  _/        _/      
+_/    _/    _/    _/_/      _/_/_/    _/_/_/  _/
+ */
                 //
                 //
                 Model = function () {};
@@ -1197,10 +1262,31 @@
                  */
                 Model.prototype.constructor = 'model';
 
-                //
-                // ********
-                // * VIEW *
-                // ********
+
+
+
+
+
+
+
+
+/*
+
+
+
+
+
+
+
+
+              _/                                
+ _/      _/        _/_/    _/      _/      _/   
+_/      _/  _/  _/_/_/_/  _/      _/      _/    
+ _/  _/    _/  _/          _/  _/  _/  _/       
+  _/      _/    _/_/_/      _/      _/          
+
+
+ */
                 // 
                 // directly instantiated assinging content
                 /**
@@ -1232,14 +1318,14 @@
                         if (obj) {
                             for (j in obj.vars) {
                                 if (obj.vars.hasOwnProperty(j)) {
-                                    this.content = this.content.replace(new RegExp("\\$" + j + "\\$", 'g'), obj.get(j));
+                                    this.content = this.content.replace(new RegExp("\\$" + j + "\\$", 'g'), obj.get(j) || '');
                                 }
                             }
                         }
                         // now jmvc parse vars
                         for (j in $JMVC.vars) {
                             if ($JMVC.vars.hasOwnProperty(j)) {
-                                this.content = this.content.replace(new RegExp("\\$" + j + "\\$", 'gm'), $JMVC.vars[j]);
+                                this.content = this.content.replace(new RegExp("\\$" + j + "\\$", 'gm'), $JMVC.vars[j] || '');
                             }
                         }
                     }
@@ -1555,7 +1641,13 @@
                         review :  JMVC_REVIEW,
                         last_modified : WD.lastModified,
                         rendertime : 0,
-                        retina : W.devicePixelRatio > 1
+                        retina : W.devicePixelRatio > 1,
+                        randcolor : new function () {
+                            var wsafearr = ['00', '33', '66', '99', 'CC', 'FF'];
+                            this.toString = function () {
+                                return '#' + wsafearr[JMVC.util.rand(0, 5)] + wsafearr[JMVC.util.rand(0, 5)] + wsafearr[JMVC.util.rand(0, 5)];
+                            };
+                        }
                     },
                     widget : {},
                     extensions : {},
@@ -2038,11 +2130,10 @@
         },
 
 
-        'uniqueID' : new function () {
-            var baseid = 'jmvcID_',
-                count = 0;
-            this.toString = function (){
-                return baseid + count++;
+        'uniqueid' : new function () {
+            var count = +new Date;
+            this.toString = function () {
+                return 'JMVCID' + ++count;
             }
         }
 
