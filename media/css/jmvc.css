@@ -44,3 +44,9 @@ sup{
 sub{
 	vertical-align: sub;
 }
+.floatl{
+	float:left;
+}
+.floatr{
+	float:right;
+}

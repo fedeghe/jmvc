@@ -4,4 +4,6 @@ JMVC.models['function'] = function() {
 	this.parameters = '';
 	this.returns = '';
 	this.sample = false;
+	this.status = false;
+	this.testlink = false;
 };

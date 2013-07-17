@@ -140,3 +140,22 @@ p.intro{
 	border-bottom:1px dotted #aa0;
 	margin-bottom:10px;
 }
+caption {
+	color:white;
+	padding:10px;
+	text-align:left;
+}
+caption.complete{background-color: green;}
+caption.incomplete{background-color: red;}
+caption.testing{background-color: yellow; color:gray;}
+caption.undefined{background-color: gray;}
+caption span.testlink{
+	text-align:right;
+}
+caption div.testlink a:hover{
+	color: white;
+}
+caption div.testlink a{
+	color:#ddd;
+	text-decoration:underline;
+}

@@ -1,78 +1,134 @@
 <?xml version="1.0"?>
 <api>
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#############################################
+
+                                                
+         _/  _/      _/  _/      _/    _/_/_/   
+        _/  _/_/  _/_/  _/      _/  _/          
+       _/  _/  _/  _/  _/      _/  _/           
+_/    _/  _/      _/    _/  _/    _/            
+ _/_/    _/      _/      _/        _/_/_/       
+
+#############################################
+-->
 	<jmvc>
 		<function>
-			<signature name="bind">JMVC.bind(String name)</signature>
+			<signature name="bind">JMVC.bind(Function func, Object ctx)</signature>
 			<description>Retrieves a variable from the global JMVC scope</description>
 			<params>
 				<param name="*name">the name of the new variable to be removed</param>
 			</params>
-			<returns>the variable reference or value</returns>
+			<returns>the binded function</returns>
+			<sample>&#10;
+var y = {type:'t'},&#10;
+	t = JMVC.bind(function(){console.debug(this.type);}, y);&#10;
+t();&#10;</sample>
+			<status>complete</status>
+			<testlink>test_array</testlink>
 		</function>
 		
 		<function>
-			<signature name="check_hook">JMVC.bind(String name)</signature>
-			<description>Retrieves a variable from the global JMVC scope</description>
+			<signature name="check_ns">JMVC.check_ns(ns, ctx)</signature>
+			<description>Check if a namspace already exists</description>
 			<params>
-				<param name="*name">the name of the new variable to be removed</param>
+				<param name="*ns">The namespace to check</param>
+				<param name="ctx" default="Window">The root namespace (defaul)</param>
 			</params>
-			<returns>the variable reference or value</returns>
+			<returns>the existing namespace or false</returns>
+			<sample>&#10;
+var loaded_extensions = JMVC.check_ns('extensions', JMVC),&#10;
+	// or&#10; 
+	loadedExtensions =  JMVC.check_ns('JMVC.extensions'),&#10;
+	foo = JMVC.check_ns('foo', JMVC); //false&#10;
+console.debug(loaded_extensions, loadedExtensions, foo);
+			</sample>
+			<status>incomplete</status>
 		</function>
 
 		<function>
-			<signature name="check_ns">JMVC.check_ns(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
+			<signature name="console">JMVC.console()</signature>
+			<description>Toggles html+css+js+preview console</description>
 			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
+				<param name="">this function needs no parameters</param>
 			</params>
 			<returns>void (undefined)</returns>
+			<sample>JMVC.console();</sample>
+			<status>testing</status>
 		</function>
 
 		<function>
-			<signature name="console">JMVC.bind(String name)</signature>
-			<description>Retrieves a variable from the global JMVC scope</description>
+			<signature name="debug">JMVC.debug(String name)</signature>
+			<description>Debugs on console any element passed, degades until alert</description>
 			<params>
-				<param name="*name">the name of the new variable to be removed</param>
+				<param name="...">all parameters to be debugged</param>
 			</params>
 			<returns>the variable reference or value</returns>
-		</function>
-
-		<function>
-			<signature name="debug">JMVC.bind(String name)</signature>
-			<description>Retrieves a variable from the global JMVC scope</description>
-			<params>
-				<param name="*name">the name of the new variable to be removed</param>
-			</params>
-			<returns>the variable reference or value</returns>
+			<sample>&#10;
+var arr = [1,2,3,4,5],&#10; 
+	obj =  {name : "Federico", surname : "Ghedina", say : "WAT"},&#10;
+	foo = function (){alert('foo'); };&#10;
+console.debug(arr, obj, foo);
+</sample>
 		</function>
 		<function>
 			<signature name="del">JMVC.del(String name)</signature>
-			<description>Removes a variable from the global JMVC scope</description>
+			<description>Removes a variable from the global JMVC register</description>
 			<params>
 				<param name="*name">the name of the new variable to be removed</param>
 			</params>
-			<returns>void (undefined)</returns>
+			<returns>JMVC</returns>
+
 		</function>
 		<function>
-			<signature name="each">JMVC.del(String name)</signature>
-			<description>Removes a variable from the global JMVC scope</description>
+			<signature name="each">JMVC.each(obj, fn)</signature>
+			<description>Loop over an object literal or Array, the callback at each cycle will receive the object and his index. As far as the callback has a name, the two `continue` and `break` function are available</description>
 			<params>
-				<param name="*name">the name of the new variable to be removed</param>
+				<param name="*obj">the object to loop Object literal or Array</param>
+				<param name="*fn">the loop callback</param>
 			</params>
 			<returns>void (undefined)</returns>
+			<sample>&#10;
+var obj = {name:'Federico', surname : 'Ghedina', says : 'wat'},&#10;
+	arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],&#10;
+	objAfter = JMVC.each(obj, function (el, i) {&#10;
+		console.debug(i, el);&#10;
+	}),&#10;
+	arrAfter = JMVC.each(arr, function f(el, i) {&#10;
+		if (i % 2) { //will skip odd indexed elements&#10;
+			f.continue();&#10;
+		}&#10;
+		return i;&#10;
+	});&#10;
+console.debug(obj, objAfter);&#10;
+console.debug(arr, arrAfter);&#10;</sample>
 		</function>
 		<function>
-			<signature name="Event"></signature>
-			<description></description>
+			<signature name="Event">JMVC.Event()</signature>
+			<description>Event is a special constructor to get </description>
 			<params>
 				<param name="*name"></param>
 			</params>
 			<returns></returns>
 		</function>
 		<function>
-			<signature name="expose"></signature>
+			<signature name="expose">JMVC.expose()</signature>
 			<description></description>
 			<params>
 				<param name="*name"></param>
@@ -114,14 +170,6 @@
 			<returns>the model instance</returns>
 		</function>
 		<function>
-			<signature name="getNum">JMVC.get(String name)</signature>
-			<description>Retrieves a variable from the global JMVC scope</description>
-			<params>
-				<param name="*name">the name of the new variable to be removed</param>
-			</params>
-			<returns>the variable reference or value</returns>
-		</function>
-		<function>
 			<signature name="getView">JMVC.getView(String name)</signature>
 			<description>Gets a view instance, even on a subfolder</description>
 			<params>
@@ -154,6 +202,14 @@
 			<returns>the view instance</returns>
 		</function>
 		<function>
+			<signature name="implement">JMVC.implement(String name)</signature>
+			<description>Gets a model instance, even on a subfolder</description>
+			<params>
+				<param name="*name">the name of the model</param>
+			</params>
+			<returns>the model instance</returns>
+		</function>
+		<function>
 			<signature name="inherit">JMVC.getModel(String name)</signature>
 			<description>Gets a model instance, even on a subfolder</description>
 			<params>
@@ -178,6 +234,14 @@
 			<returns>the view instance</returns>
 		</function>
 		<function>
+			<signature name="lang">JMVC.lang(String name)</signature>
+			<description>Gets a model instance, even on a subfolder</description>
+			<params>
+				<param name="*name">the name of the model</param>
+			</params>
+			<returns>the model instance</returns>
+		</function>
+		<function>
 			<signature name="loadinterfaces">JMVC.getModel(String name)</signature>
 			<description>Gets a model instance, even on a subfolder</description>
 			<params>
@@ -196,30 +260,6 @@
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
-			<signature name="mCeil">JMVC.getView(String name)</signature>
-			<description>Gets a view instance, even on a subfolder</description>
-			<params>
-				<param name="*name">the name of the new view</param>
-			</params>
-			<returns>the view instance</returns>
-		</function>
-		<function>
-			<signature name="mFloor">JMVC.getModel(String name)</signature>
-			<description>Gets a model instance, even on a subfolder</description>
-			<params>
-				<param name="*name">the name of the model</param>
-			</params>
-			<returns>the model instance</returns>
-		</function>
-		<function>
-			<signature name="mRound">JMVC.get(String name)</signature>
-			<description>Retrieves a variable from the global JMVC scope</description>
-			<params>
-				<param name="*name">the name of the new variable to be removed</param>
-			</params>
-			<returns>the variable reference or value</returns>
-		</function>
-		<function>
 			<signature name="noop">JMVC.getView(String name)</signature>
 			<description>Gets a view instance, even on a subfolder</description>
 			<params>
@@ -228,36 +268,12 @@
 			<returns>the view instance</returns>
 		</function>
 		<function>
-			<signature name="num">JMVC.getModel(String name)</signature>
-			<description>Gets a model instance, even on a subfolder</description>
-			<params>
-				<param name="*name">the name of the model</param>
-			</params>
-			<returns>the model instance</returns>
-		</function>
-		<function>
 			<signature name="parselang">JMVC.get(String name)</signature>
 			<description>Retrieves a variable from the global JMVC scope</description>
 			<params>
 				<param name="*name">the name of the new variable to be removed</param>
 			</params>
 			<returns>the variable reference or value</returns>
-		</function>
-		<function>
-			<signature name="pFloat">JMVC.getView(String name)</signature>
-			<description>Gets a view instance, even on a subfolder</description>
-			<params>
-				<param name="*name">the name of the new view</param>
-			</params>
-			<returns>the view instance</returns>
-		</function>
-		<function>
-			<signature name="pInt">JMVC.getModel(String name)</signature>
-			<description>Gets a model instance, even on a subfolder</description>
-			<params>
-				<param name="*name">the name of the model</param>
-			</params>
-			<returns>the model instance</returns>
 		</function>
 		<function>
 			<signature name="promise">JMVC.get(String name)</signature>
@@ -301,7 +317,6 @@
 			</params>
 			<returns>void (undefined)</returns>
 		</function>
-		
 		<function>
 			<signature name="set">JMVC.set(String name, String value)</signature>
 			<description>Adds a variable that You can use anywhere</description>
@@ -320,15 +335,44 @@
 	</jmvc>	
 
 
+<!--
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    _/            _/   
+   _/_/_/  _/_/      _/_/      _/_/_/    _/_/    _/    
+  _/    _/    _/  _/    _/  _/    _/  _/_/_/_/  _/     
+ _/    _/    _/  _/    _/  _/    _/  _/        _/      
+_/    _/    _/    _/_/      _/_/_/    _/_/_/  _/       
+
+#####################################################
+-->
 	<model>	
 		<function>
-			<signature name="del">del(String varname)</signature>
-			<description>If exists deletes a variable from the Model registry.</description>
+			<signature name="del">firma(String varname, ...)</signature>
+			<description>here is the description</description>
 			<params>
-				<param name="*varname">the name of the variable to be deleted</param>
+				<param name="*varname">explanation for that variable</param>
 			</params>
 			<returns>void (undefined)</returns>
 		</function>
@@ -363,7 +407,35 @@
 
 
 
+<!--
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	                                                
+	              _/                                
+	 _/      _/        _/_/    _/      _/      _/   
+	_/      _/  _/  _/_/_/_/  _/      _/      _/    
+	 _/  _/    _/  _/          _/  _/  _/  _/       
+	  _/      _/    _/_/_/      _/      _/          
+	                                                
+##################################################
+-->
 	<view>
 		<function>
 			<signature name="del">del(String varname)</signature>
@@ -425,9 +497,34 @@
 			<returns>the View instance (to access the content use .content attribute)</returns>
 		</function>
 	</view>
+<!--
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                   _/                          _/  _/    
+    _/_/_/    _/_/    _/_/_/    _/_/_/_/  _/  _/_/    _/_/    _/  _/       _/_/    _/  _/_/
+ _/        _/    _/  _/    _/    _/      _/_/      _/    _/  _/  _/     _/_/_/_/  _/_/
+_/        _/    _/  _/    _/    _/      _/        _/    _/  _/  _/     _/        _/
+ _/_/_/    _/_/    _/    _/      _/_/  _/          _/_/    _/  _/       _/_/_/  _/
+
+##########################################################################################
+-->
 	<controller>
 		<function>
 			<signature name="set">set(String varname, Mixed value)</signature>
@@ -492,17 +589,45 @@
 	</controller>
 
 
+<!--
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	         _/                           
+	    _/_/_/    _/_/    _/_/_/  _/_/    
+	 _/    _/  _/    _/  _/    _/    _/   
+	_/    _/  _/    _/  _/    _/    _/    
+	 _/_/_/    _/_/    _/    _/    _/     
+
+#######################################
+-->
 	<dom>
-		<function>
-			<signature name="append">JMVC.dom.append(Element where, Element what)</signature>
-			<description>appends an DOM node inside another one</description>
-			<params>
-				<param name="*where">DOM target node</param>
-				<param name="*what">DOM node to append</param>
-			</params>
-			<returns>void (undefined)</returns>
-		</function>
+
 		<function>
 			<signature name="add">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
 			<description>this is a shortcut that merges create+append</description>
@@ -514,14 +639,24 @@
 			</params>
 			<returns>void (undefined)</returns>
 		</function>
+
 		<function>
-			<signature name="addClass">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
+			<signature name="addClass">JMVC.dom.addClass(Element where, String tag, Literal attrs, String inner)</signature>
 			<description>this is a shortcut that merges create+append</description>
 			<params>
 				<param name="*where">dom element target</param>
 				<param name="*tag">tag to be created</param>
 				<param name="attrs">object literal for attributes</param>
 				<param name="inner">html content</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="append">JMVC.dom.append(Element where, Element what)</signature>
+			<description>appends an DOM node inside another one</description>
+			<params>
+				<param name="*where">DOM target node</param>
+				<param name="*what">DOM node to append</param>
 			</params>
 			<returns>void (undefined)</returns>
 		</function>
@@ -537,7 +672,7 @@
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
-			<signature name="clone">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
+			<signature name="body">JMVC.dom.body()</signature>
 			<description>this is a shortcut that merges create+append</description>
 			<params>
 				<param name="*where">dom element target</param>
@@ -548,7 +683,40 @@
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
-			<signature name="create">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
+			<signature name="childs">JMVC.dom.childs(Element where, String tag, Literal attrs, String inner)</signature>
+			<description>this is a shortcut that merges create+append</description>
+			<params>
+				<param name="*where">dom element target</param>
+				<param name="*tag">tag to be created</param>
+				<param name="attrs">object literal for attributes</param>
+				<param name="inner">html content</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="clone">JMVC.dom.clone(Element where, String tag, Literal attrs, String inner)</signature>
+			<description>this is a shortcut that merges create+append</description>
+			<params>
+				<param name="*where">dom element target</param>
+				<param name="*tag">tag to be created</param>
+				<param name="attrs">object literal for attributes</param>
+				<param name="inner">html content</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="create">JMVC.dom.create(Element where, String tag, Literal attrs, String inner)</signature>
+			<description>this is a shortcut that merges create+append</description>
+			<params>
+				<param name="*where">dom element target</param>
+				<param name="*tag">tag to be created</param>
+				<param name="attrs">object literal for attributes</param>
+				<param name="inner">html content</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="createText">JMVC.dom.cretaText(Element where, String tag, Literal attrs, String inner)</signature>
 			<description>this is a shortcut that merges create+append</description>
 			<params>
 				<param name="*where">dom element target</param>
@@ -570,7 +738,7 @@
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
-			<signature name="createText">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
+			<signature name="empty">JMVC.dom.empty(Element where, String tag, Literal attrs, String inner)</signature>
 			<description>this is a shortcut that merges create+append</description>
 			<params>
 				<param name="*where">dom element target</param>
@@ -581,7 +749,7 @@
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
-			<signature name="body">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
+			<signature name="find">JMVC.dom.find(Element where, String tag, Literal attrs, String inner)</signature>
 			<description>this is a shortcut that merges create+append</description>
 			<params>
 				<param name="*where">dom element target</param>
@@ -592,7 +760,7 @@
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
-			<signature name="create">JMVC.dom.create(String tag, Literal attrs,String inner)</signature>
+			<signature name="findInnerByClass">JMVC.dom.findInnerByClass(String tag, Literal attrs,String inner)</signature>
 			<description>creates a DOM node.</description>
 			<params>
 				<param name="*tag">tag to be created</param>
@@ -602,7 +770,23 @@
 			<returns>the brand new node</returns>
 		</function>
 		<function>
-			<signature name="find">JMVC.dom.find(String selector)</signature>
+			<signature name="findByAttribute">JMVC.dom.findByAttribute(String selector)</signature>
+			<description>Finds a node by id (#id) a class (.class) or a tag (tag).</description>
+			<params>
+				<param name="*selector">the selector</param>
+			</params>
+			<returns>the found node or false</returns>
+		</function>
+		<function>
+			<signature name="hasAttribute">JMVC.dom.hasAttribute(String selector)</signature>
+			<description>Finds a node by id (#id) a class (.class) or a tag (tag).</description>
+			<params>
+				<param name="*selector">the selector</param>
+			</params>
+			<returns>the found node or false</returns>
+		</function>
+		<function>
+			<signature name="hasClass">JMVC.dom.hasClass(String selector)</signature>
 			<description>Finds a node by id (#id) a class (.class) or a tag (tag).</description>
 			<params>
 				<param name="*selector">the selector</param>
@@ -619,6 +803,15 @@
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
+			<signature name="insertAfter">JMVC.dom.insertAfter(Element newNode, Element referenceNode)</signature>
+			<description>inserts a sibling node after another one</description>
+			<params>
+				<param name="*newNode">the brand new node</param>
+				<param name="*referenceNode">the existing node where postpend the sibling</param>
+			</params>
+			<returns>the brand new node</returns>
+		</function>
+		<function>
 			<signature name="insertBefore">JMVC.dom.insertBefore(Element newNode, Element referenceNode)</signature>
 			<description>inserts a sibling node before another one</description>
 			<params>
@@ -628,11 +821,29 @@
 			<returns>the brand new node</returns>
 		</function>
 		<function>
-			<signature name="insertAfter">JMVC.dom.insertAfter(Element newNode, Element referenceNode)</signature>
-			<description>inserts a sibling node after another one</description>
+			<signature name="isElement">JMVC.dom.isElement(Element newNode, Element referenceNode)</signature>
+			<description>inserts a sibling node before another one</description>
 			<params>
 				<param name="*newNode">the brand new node</param>
-				<param name="*referenceNode">the existing node where postpend the sibling</param>
+				<param name="*referenceNode">the existing node where prepend the sibling</param>
+			</params>
+			<returns>the brand new node</returns>
+		</function>
+		<function>
+			<signature name="isNode">JMVC.dom.isNode(Element newNode, Element referenceNode)</signature>
+			<description>inserts a sibling node before another one</description>
+			<params>
+				<param name="*newNode">the brand new node</param>
+				<param name="*referenceNode">the existing node where prepend the sibling</param>
+			</params>
+			<returns>the brand new node</returns>
+		</function>
+		<function>
+			<signature name="nodeTypeString">JMVC.dom.nodeTypeString(Element newNode, Element referenceNode)</signature>
+			<description>inserts a sibling node before another one</description>
+			<params>
+				<param name="*newNode">the brand new node</param>
+				<param name="*referenceNode">the existing node where prepend the sibling</param>
 			</params>
 			<returns>the brand new node</returns>
 		</function>
@@ -646,11 +857,120 @@
 			</params>
 			<returns>the brand new node</returns>
 		</function>
+		<function>
+			<signature name="preloadImage">JMVC.dom.preloadImage(Element node, int  num [, Array types ])</signature>
+			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+			<params>
+				<param name="node">The parent where search n-th child</param>
+				<param name="num">Starting from 0 the number of the child needed</param>
+				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+			</params>
+			<returns>the brand new node</returns>
+		</function>
+		<function>
+			<signature name="parent">JMVC.dom.parent(Element node, int  num [, Array types ])</signature>
+			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+			<params>
+				<param name="node">The parent where search n-th child</param>
+				<param name="num">Starting from 0 the number of the child needed</param>
+				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+			</params>
+			<returns>the brand new node</returns>
+		</function>
+		<function>
+			<signature name="prepend">JMVC.dom.prepend(Element node, int  num [, Array types ])</signature>
+			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+			<params>
+				<param name="node">The parent where search n-th child</param>
+				<param name="num">Starting from 0 the number of the child needed</param>
+				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+			</params>
+			<returns>the brand new node</returns>
+		</function>
+		<function>
+			<signature name="remove">JMVC.dom.remove(Element node, int  num [, Array types ])</signature>
+			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+			<params>
+				<param name="node">The parent where search n-th child</param>
+				<param name="num">Starting from 0 the number of the child needed</param>
+				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+			</params>
+			<returns>the brand new node</returns>
+		</function>
+		<function>
+			<signature name="removeAttribute">JMVC.dom.removeAttribute(Element node, int  num [, Array types ])</signature>
+			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+			<params>
+				<param name="node">The parent where search n-th child</param>
+				<param name="num">Starting from 0 the number of the child needed</param>
+				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+			</params>
+			<returns>the brand new node</returns>
+		</function>
+		<function>
+			<signature name="removeClass">JMVC.dom.removeClass(Element node, int  num [, Array types ])</signature>
+			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+			<params>
+				<param name="node">The parent where search n-th child</param>
+				<param name="num">Starting from 0 the number of the child needed</param>
+				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+			</params>
+			<returns>the brand new node</returns>
+		</function>
+		<function>
+			<signature name="switchClass">JMVC.dom.switchClass(Element node, int  num [, Array types ])</signature>
+			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+			<params>
+				<param name="node">The parent where search n-th child</param>
+				<param name="num">Starting from 0 the number of the child needed</param>
+				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+			</params>
+			<returns>the brand new node</returns>
+		</function>
+		<function>
+			<signature name="val">JMVC.dom.val(Element node, int  num [, Array types ])</signature>
+			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+			<params>
+				<param name="node">The parent where search n-th child</param>
+				<param name="num">Starting from 0 the number of the child needed</param>
+				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+			</params>
+			<returns>the brand new node</returns>
+		</function>
 	</dom>
+<!--
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                               _/                
+    _/_/    _/      _/    _/_/    _/_/_/    _/_/_/_/    _/_/_/   
+ _/_/_/_/  _/      _/  _/_/_/_/  _/    _/    _/      _/_/        
+_/          _/  _/    _/        _/    _/    _/          _/_/     
+ _/_/_/      _/        _/_/_/  _/    _/      _/_/  _/_/_/        
+
+###############################################################  
+-->
 	<events>
 		<function>
 			<signature name="bind">JMVC.events.bind(Element el, String type, Javascript function fun)</signature>
@@ -663,16 +983,87 @@
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
-			<signature name="unbind">JMVC.events.unbind(Element el, String type)</signature>
-			<description>unbinds an existing binding</description>
+			<signature name="delay">JMVC.events.delay(Element el, String type, Javascript function fun)</signature>
+			<description>binds a callback to an event fired from an element</description>
 			<params>
-				<param name="*el">dom element target</param>
+				<param name="el*">dom element target</param>
 				<param name="*type">the event string</param>
+				<param name="*func">Javascript function callback</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="end">JMVC.events.end(Element el, String type, Javascript function fun)</signature>
+			<description>binds a callback to an event fired from an element</description>
+			<params>
+				<param name="el*">dom element target</param>
+				<param name="*type">the event string</param>
+				<param name="*func">Javascript function callback</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="endrender">JMVC.events.endrender(Element el, String type, Javascript function fun)</signature>
+			<description>binds a callback to an event fired from an element</description>
+			<params>
+				<param name="el*">dom element target</param>
+				<param name="*type">the event string</param>
+				<param name="*func">Javascript function callback</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="eventTarget">JMVC.events.eventTarget(Element el, String type, Javascript function fun)</signature>
+			<description>binds a callback to an event fired from an element</description>
+			<params>
+				<param name="el*">dom element target</param>
+				<param name="*type">the event string</param>
+				<param name="*func">Javascript function callback</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="getCoord">JMVC.events.getCoord(Element el, String type, Javascript function fun)</signature>
+			<description>binds a callback to an event fired from an element</description>
+			<params>
+				<param name="el*">dom element target</param>
+				<param name="*type">the event string</param>
+				<param name="*func">Javascript function callback</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="kill">JMVC.events.kill(Element el, String type, Javascript function fun)</signature>
+			<description>binds a callback to an event fired from an element</description>
+			<params>
+				<param name="el*">dom element target</param>
+				<param name="*type">the event string</param>
+				<param name="*func">Javascript function callback</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="loadify">JMVC.events.loadify(Element el, String type, Javascript function fun)</signature>
+			<description>binds a callback to an event fired from an element</description>
+			<params>
+				<param name="el*">dom element target</param>
+				<param name="*type">the event string</param>
+				<param name="*func">Javascript function callback</param>
 			</params>
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
 			<signature name="one">JMVC.events.one(Element el, String type, Javascript function fun)</signature>
+			<description>binds only once a callback to an event fired from an element</description>
+			<params>
+				<param name="el*">dom element target</param>
+				<param name="*type">the event string</param>
+				<param name="*func">Javascript function callback</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="preventDefault">JMVC.events.preventDefault(Element el, String type, Javascript function fun)</signature>
 			<description>binds only once a callback to an event fired from an element</description>
 			<params>
 				<param name="el*">dom element target</param>
@@ -689,7 +1080,98 @@
 			</params>
 			<returns></returns>
 		</function>
+		<function>
+			<signature name="start">JMVC.events.start(Javascript function func)</signature>
+			<description>binds a callback to document load event</description>
+			<params>
+				<param name="*func">Javascript function callback</param>
+			</params>
+			<returns></returns>
+		</function>
+		<function>
+			<signature name="scrollBy">JMVC.events.scrollBy(Javascript function func)</signature>
+			<description>binds a callback to document load event</description>
+			<params>
+				<param name="*func">Javascript function callback</param>
+			</params>
+			<returns></returns>
+		</function>
+		<function>
+			<signature name="scrollTo">JMVC.events.scrollTo(Javascript function func)</signature>
+			<description>binds a callback to document load event</description>
+			<params>
+				<param name="*func">Javascript function callback</param>
+			</params>
+			<returns></returns>
+		</function>
+		<function>
+			<signature name="startrender">JMVC.events.startrender(Javascript function func)</signature>
+			<description>binds a callback to document load event</description>
+			<params>
+				<param name="*func">Javascript function callback</param>
+			</params>
+			<returns></returns>
+		</function>
+		<function>
+			<signature name="touch">JMVC.events.touch(Javascript function func)</signature>
+			<description>binds a callback to document load event</description>
+			<params>
+				<param name="*func">Javascript function callback</param>
+			</params>
+			<returns></returns>
+		</function>
+		<function>
+			<signature name="unbind">JMVC.events.unbind(Element el, String type)</signature>
+			<description>unbinds an existing binding</description>
+			<params>
+				<param name="*el">dom element target</param>
+				<param name="*type">the event string</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
 	</events>
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	                                             
+    _/                                  _/
+   _/_/_/      _/_/      _/_/_/    _/_/_/
+  _/    _/  _/_/_/_/  _/    _/  _/    _/
+ _/    _/  _/        _/    _/  _/    _/
+_/    _/    _/_/_/    _/_/_/    _/_/_/
+
+###############################################	                                             
+-->
 	<head>
 		<function>
 			<signature name="addscript">JMVC.head.addscript(String src, Boolean parse, Boolean explicit)</signature>
@@ -712,12 +1194,44 @@
 			<returns>void (undefined)</returns>
 		</function>
 		<function>
-			<signature name="title">JMVC.head.title(String title)</signature>
-			<description>Gets/sets document title</description>
+			<signature name="denyiXrame">JMVC.head.denyiXrame(String src, Boolean parse, Boolean explicit)</signature>
+			<description>Add a stylesheet in the head section</description>
 			<params>
-				<param name="title">The string You want to be set as document title</param>
+				<param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>
+				<param name="parse">set true if You mean to use JMVC.vars variables placeholders in the stylesheet</param>
+				<param name="explicit">set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
 			</params>
-			<returns>the title if no param is passed</returns>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="goto">JMVC.head.goto(String cnt, String act, String prms)</signature>
+			<description>Add a stylesheet in the head section</description>
+			<params>
+				<param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>
+				<param name="parse">set true if You mean to use JMVC.vars variables placeholders in the stylesheet</param>
+				<param name="explicit">set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="lastmodified">JMVC.head.lastmodified(String src, Boolean parse, Boolean explicit)</signature>
+			<description>Add a stylesheet in the head section</description>
+			<params>
+				<param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>
+				<param name="parse">set true if You mean to use JMVC.vars variables placeholders in the stylesheet</param>
+				<param name="explicit">set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="link">JMVC.head.link(String src, Boolean parse, Boolean explicit)</signature>
+			<description>Add a stylesheet in the head section</description>
+			<params>
+				<param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>
+				<param name="parse">set true if You mean to use JMVC.vars variables placeholders in the stylesheet</param>
+				<param name="explicit">set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
+			</params>
+			<returns>void (undefined)</returns>
 		</function>
 		<function>
 			<signature name="meta">JMVC.head.meta(String name, String value)</signature>
@@ -728,154 +1242,61 @@
 			</params>
 			<returns>void (undefined)</returns>
 		</function>
+		<function>
+			<signature name="reload">JMVC.head.reload(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="title">JMVC.head.title(String title)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="title">The string You want to be set as document title</param>
+			</params>
+			<returns>the title if no param is passed</returns>
+		</function>
 	</head>
 
 
 
+<!--
 
-	<util>
-		<!--
-		OBJECT
-		'clone'
-		'objCompare' 
-		'in_object'
-		'obj2attr'
-        'obj2css'
-        'obj2qs'
-		<function>
-			<signature name="extend">JMVC.util.extend(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-		</function>
 
-		ARRAY
-		'array_clone'
-		'coll2array'
-		'inArray'
-        'inArrayRich'
-		
-		HEAD
-		'denyiXrame'
-		'reload'
 
-		UTIL
-        'between'
-        'defined'
-        'deg2rad'
-        'getType'
-        'isArray'
-        'isObject'
-        'isSet'
-        'isTypeOf'
-        'rad2deg'
-        'rand'
-        'now'
-        'range'
-        'implement'
-        'getParameters'
-        'hex2int'
-        'int2hex'
 
-		STRING
-		'padme'
-		'trim'
-        'ltrim'
-        'rtrim'
-		'str2code'
-        'code2str'
-        'replaceall'
-        'htmlEntities'
-        'str_repeat'
-        'multireplace'
-        
-		-->
-		
-		<function>
-			<signature name="htmlEntities">JMVC.string.htmlEntities(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-		</function>
-		<function>
-			<signature name="isSet">JMVC.util.isSet(var variable)</signature>
-			<description>Checks if a variable is defined</description>
-			<params>
-				<param name="variable">The variable to check</param>
-			</params>
-			<returns>Boolean</returns>
-		</function>
-		<function>
-			<signature name="isArray">JMVC.util.isArray(var variable)</signature>
-			<description>Checks if a variable is an Array</description>
-			<params>
-				<param name="variable">The variable to check</param>
-			</params>
-			<returns>Boolean</returns>
-		</function>
-		<function>
-			<signature name="inArray">JMVC.array.inArray(Array arr, var myvar)</signature>
-			<description>Checks if an Array contains a variable</description>
-			<params>
-				<param name="arr">The array to search in</param>
-				<param name="myvar">The variale to find</param>
-			</params>
-			<returns>Boolean</returns>
-		</function>
-		<function>
-			<signature name="isTypeOf">JMVC.util.isTypeOf(var myvar, String type)</signature>
-			<description>Checks if a variable is of a type</description>
-			<params>
-				<param name="myvar">The varbiale to check</param>
-				<param name="type">The type to match</param>
-			</params>
-			<returns>Boolean</returns>
-		</function>
-		<function>
-			<signature name="getType">JMVC.util.getType(var myvar)</signature>
-			<description>Gets the type of a variable</description>
-			<params>
-				<param name="myvar">The target variable</param>
-			</params>
-			<returns hint="The type of the variable">String</returns>
-		</function>
-		<function>
-			<signature name="rand">JMVC.util.rand(int n1, int n2)</signature>
-			<description>Returns a pseudo-random value in [n1, n2]</description>
-			<params>
-				<param name="*n1">The minimum value</param>
-				<param name="*n2">The maximum value</param>
-			</params>
-			<returns>int</returns>
-		</function>
-		<function>
-			<signature name="replaceall">JMVC.string.replaceall(String tpl , Literal o, String pre, String post)</signature>
-			<description>Replace many placeholders in a string</description>
-			<params>
-				<param name="*tpl">The template where placeholders must be replaced</param>
-				<param name="*o">A literal containing as keys the placeholders inner value (%inner_value%) and as values the strings that must be used</param>
-				<param name="pre" default="%">The string that precede the placeholder inner_value </param>
-				<param name="post" default="%">The string that follows the inner_value</param>
-			</params>
-			<returns>The template with all values replaced</returns>
-		</function>
-		<function>
-			<signature name="denyframe">JMVC.util.denyframe()</signature>
-			<description>Replace many placeholders in a string</description>
-			<params>
-				<param name="no params">this function needs no parameters</param>
-			</params>
-			<returns>void (undefined)</returns>
-		</function>
-	</util>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	    _/           
+	         _/_/    
+	  _/  _/    _/   
+	 _/  _/    _/    
+	_/    _/_/     
+
+###################
+-->
 	<io>
 		<function>
 			<signature name="post">JMVC.io.post(String uri, function cback, boolean sync, Object data, boolean cache)</signature>
@@ -916,4 +1337,536 @@
 			<returns>The evaluated object or false</returns>
 		</function>
 	</io>
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          
+	                _/                _/                      
+	     _/_/_/  _/_/_/_/  _/  _/_/      _/_/_/      _/_/_/   
+	  _/_/        _/      _/_/      _/  _/    _/  _/    _/    
+	     _/_/    _/      _/        _/  _/    _/  _/    _/     
+	_/_/_/        _/_/  _/        _/  _/    _/    _/_/_/      
+	                                                 _/       
+	                                            _/_/
+############################################################
+-->
+	<string>
+		<function>
+			<signature name="code2str">JMVC.string.code2str(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="htmlEntities">JMVC.string.htmlEntities(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="ltrim">JMVC.string.ltrim(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="multireplace">JMVC.string.multireplace(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="padme">JMVC.string.padme(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="replaceall">JMVC.string.replaceall(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="rtrim">JMVC.string.rtrim(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="str2code">JMVC.string.str2code(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="str_repeat">JMVC.string.str_repeat(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="trim">JMVC.string.trim(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+	</string>
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                         
+	             _/        _/                        _/      
+	    _/_/    _/_/_/          _/_/      _/_/_/  _/_/_/_/   
+	 _/    _/  _/    _/  _/  _/_/_/_/  _/          _/        
+	_/    _/  _/    _/  _/  _/        _/          _/         
+	 _/_/    _/_/_/    _/    _/_/_/    _/_/_/      _/_/      
+	                  _/                                     
+	               _/                                       
+
+############################################################
+-->
+	<object>
+		<function>
+			<signature name="clone">JMVC.object.clone(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="objCompare">JMVC.object.objCompare(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="objJCompare">JMVC.object.objJCompare(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="in_object">JMVC.object.in_object(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="obj2attr">JMVC.object.obj2attr(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="obj2css">JMVC.object.obj2css(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="obj2qs">JMVC.object.obj2qs(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+	</object>
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	                                                     
+	    _/_/_/  _/  _/_/  _/  _/_/    _/_/_/  _/    _/   
+	 _/    _/  _/_/      _/_/      _/    _/  _/    _/    
+	_/    _/  _/        _/        _/    _/  _/    _/     
+	 _/_/_/  _/        _/          _/_/_/    _/_/_/      
+	                                            _/       
+	                                       _/_/
+
+######################################################
+-->
+	<array>
+		<function>
+			<signature name="array_clone">JMVC.head.array_clone(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="coll2array">JMVC.head.coll2array(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="in_array">JMVC.head.in_array(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="inArrayRich">JMVC.head.inArrayRich(String name, String value)</signature>
+			<description>Gets/sets document title</description>
+			<params>
+				<param name="name">The name of the meta You want to add</param>
+				<param name="value">The value of the meta You want to add</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+	</array>
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	     
+
+	               _/      _/  _/   
+	  _/    _/  _/_/_/_/      _/    
+	 _/    _/    _/      _/  _/     
+	_/    _/    _/      _/  _/      
+	 _/_/_/      _/_/  _/  _/     
+
+##################################
+-->
+	<util>
+		<function>
+			<signature name="between">JMVC.util.between(str, obj, ctx)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="defined">JMVC.util.defined(str, obj, ctx)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="deg2rad">JMVC.util.deg2rad(str, obj, ctx)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="extend">JMVC.util.extend(str, obj, ctx)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="getParameters">JMVC.util.getParameters(str, obj, ctx)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="getType">JMVC.util.getType(str, obj, ctx)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="hex2int">JMVC.util.hex2int(str, obj, ctx)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="int2hex">JMVC.util.int2hex(str, obj, ctx)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="isArray">JMVC.util.isArray(str, obj, ctx)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="extend">JMVC.util.extend(str, obj, ctx)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="isObject">JMVC.util.isObject(str, obj, ctx)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="isSet">JMVC.util.isSet(str, obj, ctx)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="isTypeOf">JMVC.util.isTypeOf(str, obj, ctx)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="now">JMVC.util.now(str, obj, ctx)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="rad2deg">JMVC.util.rad2deg(str, obj, ctx)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+		<function>
+			<signature name="range">JMVC.util.range(str, obj, ctx)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
+	</util>
+	<!--
+	<num>
+
+		getNum : function (str) {return parseInt(str, 10); },
+        getFloat : function (str) {return parseFloat(str, 10); },
+        pFloat : function (f) {return 1 * f; },
+        pInt : function (i) {return i >> 0; },
+        mRound : function (n) {return (n + 0.5) >> 0; },
+        mFloor : function (n) {(n > 0 ? n : n + 1) >> 0; },
+        mCeil : function (n) {return (n + (n > 0 && !!(n % 1))) >> 0; },
+        num : function (n) {return parseFloat(n.toFixed(10), 10); },
+		<function>
+			<signature name="post">JMVC.num.getNum(String num)</signature>
+			<description>ParseInt a string (base 10)</description>
+			<params>
+				<param name="*num">The string to be parsed</param>
+			</params>
+			<returns hint="the response">An integer or NaN</returns>
+		</function>
+		<function>
+			<signature name="sss">JMVC.io.post(String uri, function cback, boolean sync, Object data, boolean cache)</signature>
+			<description>Performs an ajax post call</description>
+			<params>
+				<param name="*uri">The resource to get</param>
+				<param name="*cback">The function that will receive the response and will consume it</param>
+				<param name="p" default="false">If true method will be POST</param>
+				<param name="sync">If true the call will be synchronous</param>
+			</params>
+			<returns hint="the response">String</returns>
+		</function>
+	</num>
+	-->
 </api>	

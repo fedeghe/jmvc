@@ -23,7 +23,7 @@ JMVC.controllers.api = function () {
 		//features.set('fr', '<b style="font-size:26px;position:relative;top:0px;color:green;font-weight:bold">&#9758;</b>');
 		//
 
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/api.css', true);// parsed
+		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/api.css', true, false);// parsed
 
 		JMVC.io.get(JMVC.vars.baseurl + '/media/documentation.xml', function (doc) {
 			//get a parser
@@ -33,9 +33,11 @@ JMVC.controllers.api = function () {
 			// define the extractor function
 			parser.extractor(function (node) {
 				var ret = {
-						signature: JMVC.xmlparser._text(node.childNodes[0]),
-						description:JMVC.xmlparser._text(node.childNodes[1]),
-						sample:JMVC.xmlparser._text(node.childNodes[4]),
+						signature : JMVC.xmlparser._text(node.childNodes[0]),
+						description : JMVC.xmlparser._text(node.childNodes[1]),
+						sample : JMVC.xmlparser._text(node.childNodes[4]),
+						status : JMVC.xmlparser._text(node.childNodes[5]),
+						testlink : JMVC.xmlparser._text(node.childNodes[6]),
 						params : {},
 						returns : {
 							type : JMVC.xmlparser._text(node.childNodes[3]),
@@ -55,6 +57,7 @@ JMVC.controllers.api = function () {
 				
 				var params = '',
 					sample = false,
+					testlink = false,
 					i = 0, t = 0, len = 0;
 				
 				//more functions =>array of function objects
@@ -65,12 +68,16 @@ JMVC.controllers.api = function () {
 						func_model.reset();
 						func_model.set('func', section['function'][i].signature['#text']);
 						func_model.set('description', section['function'][i].description['#text']);
+						func_model.set('status', section['function'][i].status ? section['function'][i].status['#text'] : 'undefined');
+						
+						
 						
 						// func_model.set('bg1', 'bg1');
 						// func_model.set('bg2', 'bg2');
 						
 						//reset params
 						params = '';
+						testlink = section['function'][i].testlink ? section['function'][i].testlink['#text'] : false;
 						sample = 'no sample code given yet';
 
 						if (JMVC.util.isArray(section['function'][i].params.param)) {
@@ -83,7 +90,9 @@ JMVC.controllers.api = function () {
 						if (section['function'][i].sample) {
 							sample = '<pre class="code">' + section['function'][i].sample['#text'] + '</pre>';
 						}
-
+						
+						func_model.set('testlink', testlink ? '<a href="' + JMVC.vars.baseurl + JMVC.US + testlink + '">test</a>' : false);
+						
 
 
 						func_model.set('parameters', params);
@@ -101,10 +110,13 @@ JMVC.controllers.api = function () {
 					func_model.reset();
 					func_model.set('func', section['function'].signature['#text']);
 					func_model.set('description', section['function'].description['#text']);
+					func_model.set('status', section['function'].status ? section['function'].status['#text'] : 'undefined');
+					
 					
 					//reset params
 					params ='';
 					sample = 'no sample code';
+					testlink = section['function'].testlink ? section['function'].testlink['#text'] : false;
 
 					if (JMVC.util.isArray(section['function'].params.param)) {
 						for(t = 0, len = section['function'].params.param.length; t < len; t += 1) {
@@ -114,8 +126,12 @@ JMVC.controllers.api = function () {
 						params += '<label>' + section['function'].params.param['@attributes'].name + '</label> : ' + section['function'].params.param['#text'] + '<br />';
 					}
 					if (section['function'].sample) {
-							sample = '<pre class="code">' + section['function'].sample['#text'] + '</pre>';
-						}
+						sample = '<pre class="code">' + section['function'].sample['#text'] + '</pre>';
+					}
+					
+					func_model.set('testlink', testlink ? '<a href="' + JMVC.vars.baseurl + JMVC.US + testlink + '">test</a>' : false);
+					
+
 
 					func_model.set('parameters', params);
 					
@@ -154,7 +170,7 @@ JMVC.controllers.api = function () {
 			JMVC.head.title('JMVC API');
 
 			
-			JMVC.widget.countdown.start('#countdown', new Date(2013, 6, 17, 1, 29,20));
+			JMVC.widget.countdown.start('#countdown', new Date(2013, 7, 30));
 			
 			JMVC.events.delay(function () {
 				tabs_inner['jmvc'].render(i[0], 'ulidTWO');
