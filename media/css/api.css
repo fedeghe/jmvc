@@ -159,3 +159,6 @@ caption div.testlink a{
 	color:#ddd;
 	text-decoration:underline;
 }
+caption.testing div.testlink a:hover{
+	color:black;
+}
