@@ -21,8 +21,8 @@ div#cent{
  */
 }
 
-div.pagewrap h1{padding-bottom:40px;line-height:24px;text-shadow:0px 0px 8px #fff;}
-div.pagewrap h6{margin:0px;padding:0px;line-height:30px}
+div.pagewrap h1{padding-bottom:40px;text-shadow:0px 0px 8px #fff;}
+div.pagewrap h6{margin:0px;padding:0px;}
 div.pagewrap a{	
 	color:red;
 	text-decoration:none;
@@ -72,7 +72,7 @@ h1.tryme{
 
 a.homelinks{
 	border:1px solid #fff;
-	padding:10px;
+	padding:0px 10px;
 	margin:3px;
 	display:inline-block;
 	zoom:1;

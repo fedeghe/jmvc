@@ -99,7 +99,7 @@ h3.apisection{
 div#guest{
 	padding-top: 20px;
 	padding-bottom:20px;
-	font-size:20px;
+	font-size:36px;
 }
 tr{
 	margin-top:10px;
@@ -158,4 +158,8 @@ div#footer{
 }
 p.footer{
 	text-align:center
+}
+span.desc{
+	display:block;
+	line-height:22px;
 }
