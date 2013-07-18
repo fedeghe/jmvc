@@ -85,7 +85,7 @@ JMVC.controllers.index = function () {
 					mapid,
 					b;
 
-				links = JMVC.dom.create('h2');
+				links = JMVC.dom.create('h1');
 
 				//
 				morelink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/info.jmvc', title : 'get more info'}, JMVC.parselang('[L[more]]'));
