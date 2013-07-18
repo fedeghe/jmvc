@@ -172,6 +172,7 @@
                      */
                     Event,
                     Promise,
+                    Errors,
 
                     /**
                      * in case some modules need to be always loaded here's the place to set them
@@ -207,6 +208,30 @@
                     getmode = 'ajax'; // script or ajax
 
 
+
+
+
+
+
+
+                /**
+                *
+                *
+                *
+                *
+                *
+                *
+                *
+                *
+                * 
+                *
+                *             _/  _/      _/  _/      _/    _/_/_/      _/                                          
+                *            _/  _/_/  _/_/  _/      _/  _/                _/_/_/    _/_/_/      _/_/    _/  _/_/   
+                *           _/  _/  _/  _/  _/      _/  _/            _/  _/    _/  _/    _/  _/_/_/_/  _/_/        
+                *    _/    _/  _/      _/    _/  _/    _/            _/  _/    _/  _/    _/  _/        _/           
+                *     _/_/    _/      _/      _/        _/_/_/      _/  _/    _/  _/    _/    _/_/_/  _/
+                *     
+                **/
                 jmvc = {
                     /**
                      * globalize many variables, by default do not override existing ones,
@@ -233,10 +258,7 @@
                     },
 
 
-                    //
-                    // for basic dummy inheritance
-                    // function jmvc_basic_inherit(Child, Parent) {Child.prototype = new Parent(); }
-                    //
+
                     //  true D.C.inheritance
                     /**
                      * [ description]
@@ -244,14 +266,19 @@
                      * @param  {[type]} Parent [description]
                      * @return {[type]}        [description]
                      */
-                    "basic_inherit" : function (Child, Parent) {
-                        //function T() {}
+                    "inherit" : function (Child, Parent) {
                         var T = new Function();
                         T.prototype = Parent.prototype;
                         Child.prototype = new T();
                         Child.prototype.constructor = Child;
                         Child.superClass = Parent.prototype;
                         Child.baseConstructor = Parent;
+                    },
+
+                    "multi_inherit" : function (Childs, Parent) {
+                        jmvc.each(Childs, function (el){
+                            jmvc.inherit(el, Parent);
+                        });
                     },
 
 
@@ -360,7 +387,7 @@
                                         // res = res.replace(/(\/\/.*)/g, '');
                                         // WARNING : removes only inlines;
                                         jmvc.jeval(res);
-                                        jmvc.basic_inherit($JMVC[type + 's'][name], Controller);
+                                        jmvc.inherit($JMVC[type + 's'][name], Controller);
                                         break;
                                     case 'model':
                                         jmvc.jeval(res);
@@ -388,7 +415,6 @@
                     },
 
                     /**
-                     * type can be only 'view' or 'model'
                      * @param  {[type]} type   [description]
                      * @param  {[type]} name   [description]
                      * @param  {[type]} params [description]
@@ -425,16 +451,14 @@
                             path_absolute += '.interfaces.js';
                             break;
                         default:
-                            type = false;
+                            return false;
                             break;
                         }
-                        //console.debug(path_absolute)
-                        if (!type) {return false; }
+
                         // ajax get script content and return it
-
-                        ret = jmvc.xhrget(path_absolute, type, name, params);
-
-                        return ret;
+                        return jmvc.xhrget(path_absolute, type, name, params);
+                        //ret = jmvc.xhrget(path_absolute, type, name, params);
+                        //return ret;
                     },
 
                     /**
@@ -453,7 +477,7 @@
                         if ($JMVC.controllers[$JMVC.c]) {
 
                             // grant basic ineritance from parent Controller
-                            jmvc.basic_inherit($JMVC.controllers[$JMVC.c], Controller);
+                            jmvc.inherit($JMVC.controllers[$JMVC.c], Controller);
                             // make an instance
                             ctrl = new $JMVC.controllers[$JMVC.c]();
                             // store it
@@ -705,8 +729,14 @@
                      * @param  {[type]} obj [description]
                      * @return {[type]}     [description]
                      */
-                    "prototipize" : function (el, obj) {
-                        var  p;
+                    "prototipize" : function prt(el, obj) {
+                        var  p, i = 0, l;
+                        if (el instanceof Array) {
+                            for (l = el.length; i < l; i += 1) {
+                                prt(el[i], obj);
+                            }
+                        }
+                        
                         for (p in obj) {
                             if (obj.hasOwnProperty(p)) {
                                 el.prototype[p] = obj[p];
@@ -1082,6 +1112,22 @@ _/
                     }
                     return this;
                 };
+
+
+
+
+                Errors = {
+                    'BadParams' : function (msg) {
+                        this.name = 'BadParams';
+                        this.msg = msg || "";
+                    },
+                    'BadName' : function (msg) {
+                        this.name = 'BadName';
+                        this.msg = msg || "";
+                    }
+
+                };
+                jmvc.multi_inherit(Errors, Error);
                 
 /*
 
@@ -1539,7 +1585,16 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
 
 
 
-                //          
+                // 
+                //
+                //             _/  _/                                  _/                _/                            
+                //        _/_/_/        _/_/_/  _/_/_/      _/_/_/  _/_/_/_/    _/_/_/  _/_/_/      _/_/    _/  _/_/   
+                //     _/    _/  _/  _/_/      _/    _/  _/    _/    _/      _/        _/    _/  _/_/_/_/  _/_/        
+                //    _/    _/  _/      _/_/  _/    _/  _/    _/    _/      _/        _/    _/  _/        _/           
+                //     _/_/_/  _/  _/_/_/    _/_/_/      _/_/_/      _/_/    _/_/_/  _/    _/    _/_/_/  _/            
+                //                          _/                                                                         
+                //                         _/                                      
+                //
                 // Dispatch url getting controller, action and parameters
                 //          
                 dispatched = (function () {
@@ -1614,8 +1669,43 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
                     return ret;
                 })();
 
-                //  
-                // returning literal
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //
+                //             _/_/    _/    _/  _/_/_/_/_/            _/  _/      _/  _/      _/    _/_/_/   
+                //          _/    _/  _/    _/      _/                _/  _/_/  _/_/  _/      _/  _/          
+                //         _/    _/  _/    _/      _/                _/  _/  _/  _/  _/      _/  _/           
+                //        _/    _/  _/    _/      _/          _/    _/  _/      _/    _/  _/    _/            
+                //         _/_/      _/_/        _/            _/_/    _/      _/      _/        _/_/_/ 
                 //          
                 $JMVC = {
                     loaded : false,
@@ -1656,6 +1746,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
 
                     modules : Modules,
                     Event : Event,
+                    Errors : Errors,
                     globalize : jmvc.globalize,
                     'interface' : Interface,
                     promise : jmvc.promise,
@@ -1668,7 +1759,8 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
                     extend : jmvc.extend,
                     expose : jmvc.expose,
                     factory:    jmvc.factory_method,
-                    inherit : jmvc.basic_inherit,
+                    inherit : jmvc.inherit,
+                    multinherit : jmvc.multi_inherit,
                     make_ns : jmvc.ns.make,
                     check_ns : jmvc.ns.check,
                     hook : jmvc.hook,
@@ -1751,14 +1843,88 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
         )();
     
 
-    // now enhanche JMVC with some basic utility functions;
-    // big part of all these functions are necessary and cannot be moved to Modules
+
+
+
+
+    /**
+    * now enhanche JMVC with some basic utility functions;
+    * all these functions are necessary and cannot be moved to Modules
+    **/
     //
-    /******************
-     * #
-     * #  AJAX
-     * #
-     */
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //########################################################################################################
+    //
+    //      _/          _/  _/_/_/  _/_/_/    _/_/_/_/  _/_/_/                _/_/_/_/  _/      _/  _/_/_/_/_/   
+    //     _/          _/    _/    _/    _/  _/        _/    _/              _/          _/  _/        _/        
+    //    _/    _/    _/    _/    _/_/_/    _/_/_/    _/    _/  _/_/_/_/_/  _/_/_/        _/          _/         
+    //     _/  _/  _/      _/    _/    _/  _/        _/    _/              _/          _/  _/        _/          
+    //      _/  _/      _/_/_/  _/    _/  _/_/_/_/  _/_/_/                _/_/_/_/  _/      _/      _/  
+    //
+    //########################################################################################################
+    //
+    // JMVC.io
+    //   " .util
+    //   " .dom
+    //   " .events
+    //   " .head
+    //   " .array
+    //   " .string
+    //   " .object
+    // 
+    // 
+    // 
+    // 
+    /**
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    * 
+    * 
+    *        _/           
+    *             _/_/    
+    *      _/  _/    _/   
+    *     _/  _/    _/    
+    *    _/    _/_/       
+    *             
+    *
+    * [io description]
+    * @type {Object}
+    * 
+    **/
     JMVC.io = {
 
         'xhrcount' : 0,
@@ -1937,10 +2103,36 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
     };
 
     
+
     /**
-     * [util description]
-     * @type {Object}
-     */
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    * 
+    *
+    *                   _/      _/  _/   
+    *      _/    _/  _/_/_/_/      _/    
+    *     _/    _/    _/      _/  _/     
+    *    _/    _/    _/      _/  _/      
+    *     _/_/_/      _/_/  _/  _/   
+    *
+    *
+    * [util description]
+    * @type {Object}
+    *
+    **/
     JMVC.util = {
 
         /**
@@ -2142,9 +2334,34 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
 
 
     /**
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     * 
+     *           _/                           
+     *      _/_/_/    _/_/    _/_/_/  _/_/    
+     *   _/    _/  _/    _/  _/    _/    _/   
+     *  _/    _/  _/    _/  _/    _/    _/    
+     *   _/_/_/    _/_/    _/    _/    _/
+     *
+     * 
      * [dom description]
      * @type {Object}
-     */
+     * 
+     **/
     JMVC.dom = {
         /**
          * [ description]
@@ -2476,9 +2693,6 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
             return t.trim();
         },
 
-        
-
-
         /**
          * [ description]
          * @param  {[type]} node          [description]
@@ -2490,6 +2704,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
             p.insertBefore(node, referenceNode.nextSibling);
             return node;
         },
+
         /**
          * [ description]
          * @param  {[type]} node          [description]
@@ -2608,7 +2823,6 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
             return what;
         },
 
-
         /**
          * [ description]
          * @param  {[type]} el [description]
@@ -2686,9 +2900,24 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
     };
 
     /**
-     * [events description]
-     * @type {Object}
-     */
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    * 
+    * 
+    *                                                    _/                
+    *        _/_/    _/      _/    _/_/    _/_/_/    _/_/_/_/    _/_/_/   
+    *     _/_/_/_/  _/      _/  _/_/_/_/  _/    _/    _/      _/_/        
+    *    _/          _/  _/    _/        _/    _/    _/          _/_/     
+    *     _/_/_/      _/        _/_/_/  _/    _/      _/_/  _/_/_/ 
+    * [events description]
+    * @type {Object}
+    * 
+    **/
     JMVC.events = {
         'bindings' : {},
         'onedone' : false,
@@ -2981,9 +3210,31 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
     };
 
     /**
-     * [head description]
-     * @type {Object}
-     */
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    * 
+    *        _/                                  _/   
+    *       _/_/_/      _/_/      _/_/_/    _/_/_/    
+    *      _/    _/  _/_/_/_/  _/    _/  _/    _/     
+    *     _/    _/  _/        _/    _/  _/    _/      
+    *    _/    _/    _/_/_/    _/_/_/    _/_/_/
+    *
+    * 
+    * [head description]
+    * @type {Object}
+    * 
+    **/
     JMVC.head = {
         /**
          * 
@@ -3100,14 +3351,15 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
             }
             return style;
         },
+
         /**
          * [ description]
          * @param  {[type]} ) {if          (W.top !== W.self [description]
          * @return {[type]}   [description]
          */
-        'denyiXrame' : function () {if (W.top !== W.self) {W.top.location = JMVC.vars.baseurl; }},
-
-        
+        'denyiXrame' : function () {
+            return W.top !== W.self &&  (W.top.location = JMVC.vars.baseurl);
+        },
         
         /**
          * [ description]
@@ -3125,8 +3377,6 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
             WD.location.href = JMVC.vars.baseurl + JMVC.US + path.join(JMVC.US);
         },
 
-        
-
         /**
          * [ description]
          * @param  {[type]} d [description]
@@ -3143,6 +3393,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
                 this.element.appendChild(newmeta);
             }
         },
+
         /**
          * [ description]
          * @param  {[type]} rel   [description]
@@ -3171,6 +3422,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
                 this.element.appendChild(newmeta);
             }
         },
+
         /**
          * [ description]
          * @return {[type]} [description]
@@ -3179,6 +3431,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
             var n = JMVC.WD.location.href;
             WD.location.href = n;//do not cause wierd alert
         },
+
         /**
          * [ description]
          * @param  {[type]} t [description]
@@ -3189,17 +3442,41 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
             WD.title = t;
             return true;
         }
-        
     };
 
-
+    /**
+    *
+    *
+    *
+    *
+    *
+    * 
+    *
+    *
+    *
+    *
+    *
+    * 
+    *        _/_/_/  _/  _/_/  _/  _/_/    _/_/_/  _/    _/   
+    *     _/    _/  _/_/      _/_/      _/    _/  _/    _/    
+    *    _/    _/  _/        _/        _/    _/  _/    _/     
+    *     _/_/_/  _/        _/          _/_/_/    _/_/_/      
+    *                                                _/       
+    *                                           _/_/          
+    * [array description]
+    * @type {Object}
+    * 
+    **/
     JMVC.array = {
         /**
          * [ description]
          * @param  {[type]} arr) {return      arr.concat( [description]
          * @return {[type]}      [description]
          */
-        'array_clone' : function (arr) {return arr.concat(); },
+        'array_clone' : function (arr) {
+            return arr.concat();
+        },
+
         /**
          * [ description]
          * @param  {[type]} coll [description]
@@ -3214,6 +3491,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
             }
             return a;
         },
+
         /**
          * [ description]
          * @param  {[type]} arr   [description]
@@ -3240,6 +3518,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
             return -1;
             
         },
+
         /**
          * [ description]
          * @param  {[type]} arr [description]
@@ -3264,6 +3543,34 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
             return -1;
         }
     };
+
+
+
+
+/**
+*
+*
+*
+*
+*
+*
+*
+*
+*
+* 
+*                    _/                _/                      
+*         _/_/_/  _/_/_/_/  _/  _/_/      _/_/_/      _/_/_/   
+*      _/_/        _/      _/_/      _/  _/    _/  _/    _/    
+*         _/_/    _/      _/        _/  _/    _/  _/    _/     
+*    _/_/_/        _/_/  _/        _/  _/    _/    _/_/_/      
+*                                                     _/       
+*                                                _/_/ 
+*
+* 
+* [string description]
+* @type {Object}
+* 
+**/
     JMVC.string = {
         /**
          * [ description]
@@ -3293,8 +3600,9 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
          * @param  {[type]} ''         [description]
          * @return {[type]}            [description]
          */
-        'ltrim' : function (s) {return s.replace(/^\s+/g, ''); },
-
+        'ltrim' : function (s) {
+            return s.replace(/^\s+/g, '');
+        },
 
         'multireplace' : function (cnt, o) {
             JMVC.each(o, function (el, rx) {
@@ -3351,10 +3659,9 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
          * @param  {[type]} ''         [description]
          * @return {[type]}            [description]
          */
-        'rtrim' : function (s) {return s.replace(/\s+$/g, ''); },
-
-
-
+        'rtrim' : function (s) {
+            return s.replace(/\s+$/g, '');
+        },
 
         /**
          * [ description]
@@ -3371,6 +3678,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
             }
             return out;
         },
+
         /**
          * [ description]
          * @param  {[type]} str [description]
@@ -3389,19 +3697,41 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
          * @param  {[type]} ''         [description]
          * @return {[type]}            [description]
          */
-        'trim' : function (s) {return s.replace(/^\s+|\s+$/g, ''); }
-
-        
-        
-
-
-        
-        
+        'trim' : function (s) {
+            return s.replace(/^\s+|\s+$/g, '');
+        }
     };
 
 
 
 
+
+
+
+
+
+/**
+*
+*
+*
+*
+*
+*
+* 
+*
+*                 _/        _/                        _/      
+*        _/_/    _/_/_/          _/_/      _/_/_/  _/_/_/_/   
+*     _/    _/  _/    _/  _/  _/_/_/_/  _/          _/        
+*    _/    _/  _/    _/  _/  _/        _/          _/         
+*     _/_/    _/_/_/    _/    _/_/_/    _/_/_/      _/_/      
+*                      _/                                     
+*                   _/
+*
+* 
+* [object description]
+* @type {Object}
+* 
+**/
     JMVC.object = {
         /**
          * Clones an object
@@ -3424,6 +3754,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
             }
             return temp;
         },
+
         /**
          * [ description]
          * @param  {[type]} obj1 [description]
@@ -3460,13 +3791,16 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
             "use strict";
             return JSON.stringify(obj1) === JSON.stringify(obj2);
         },
+
         /**
          * [ description]
          * @param  {[type]} obj    [description]
          * @param  {[type]} field) {return      (typeof obj === 'object' && obj[field] [description]
          * @return {[type]}        [description]
          */
-        'in_object' : function (obj, field) {return (typeof obj === 'object' && obj[field]); },
+        'in_object' : function (obj, field) {
+            return (typeof obj === 'object' && obj[field]);
+        },
 
         /**
          * [ description]
@@ -3517,14 +3851,15 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
                 }
             }
             return ret;
-        },
-
+        }
     };
+
     JMVC.match = {
         email : function (str) {
             return !!str.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/);
         }
     }
+
     JMVC.num = {
         getNum : function (str) {return parseInt(str, 10); },
         getFloat : function (str) {return parseFloat(str, 10); },
@@ -3539,8 +3874,30 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
     //
     //
     //
-    //  ###  hooray ... RENDER
-    // polling ajax finishing
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //        _/_/_/    _/_/_/_/  _/      _/  _/_/_/    _/_/_/_/  _/_/_/    
+    //       _/    _/  _/        _/_/    _/  _/    _/  _/        _/    _/   
+    //      _/_/_/    _/_/_/    _/  _/  _/  _/    _/  _/_/_/    _/_/_/      
+    //     _/    _/  _/        _/    _/_/  _/    _/  _/        _/    _/     
+    //    _/    _/  _/_/_/_/  _/      _/  _/_/_/    _/_/_/_/  _/    _/ 
+    //
     (
         /**
          * [r description]
@@ -3569,3 +3926,59 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
 JMVC.W.onerror = function(errorMsg, url, lineNumber) {
     alert("Uncaught error " + errorMsg + " in " + url + ", lines " + lineNumber);
 };
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// WTF?
+// 
