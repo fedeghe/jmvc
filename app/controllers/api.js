@@ -31,6 +31,7 @@ JMVC.controllers.api = function () {
 				add_all;
 			
 			// define the extractor function
+			/*
 			parser.extractor(function (node) {
 				var ret = {
 						signature : JMVC.xmlparser._text(node.childNodes[0]),
@@ -52,12 +53,13 @@ JMVC.controllers.api = function () {
 				}
 				return ret;
 			});
-			
+			*/
 			add_all = function (section, strsection) {
 				
 				var params = '',
 					sample = false,
 					testlink = false,
+					default_param_val = false,
 					i = 0, t = 0, len = 0;
 				
 				//more functions =>array of function objects
@@ -72,17 +74,26 @@ JMVC.controllers.api = function () {
 						
 						
 						
-						// func_model.set('bg1', 'bg1');
-						// func_model.set('bg2', 'bg2');
+						//func_model.set('bg1', 'bg1');
+						//func_model.set('bg2', 'bg2');
 						
 						//reset params
 						params = '';
+						default_param_val = false;
 						testlink = section['function'][i].testlink ? section['function'][i].testlink['#text'] : false;
 						sample = 'no sample code given yet';
 
 						if (JMVC.util.isArray(section['function'][i].params.param)) {
 							for (t=0, len = section['function'][i].params.param.length; t < len; t += 1) {
-								params += '<label>' + section['function'][i].params.param[t]['@attributes'].name + '</label> : ' + section['function'][i].params.param[t]['#text'] + '<br />';
+								section['function'][i].params.param[t]['@attributes'].default && (default_param_val = section['function'][i].params.param[t]['@attributes'].default);
+
+								params += '<label>' +
+									section['function'][i].params.param[t]['@attributes'].name +
+									'</label> : ' +
+									section['function'][i].params.param[t]['#text'] +
+									(default_param_val ? '&nbsp;(default: ' + default_param_val + ')' : '') +
+								'<br />';
+								default_param_val = false;
 							}
 						} else {
 							params += '<label>' + section['function'][i].params.param['@attributes'].name + '</label> : ' + section['function'][i].params.param['#text'] + '<br />';
