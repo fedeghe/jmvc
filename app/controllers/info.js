@@ -12,7 +12,9 @@ JMVC.controllers.info = function () {
 			readme = JMVC.getView('readme'),
 			features = JMVC.getView('features'),
 			doc_tpl = JMVC.getView('api/doctpl'),
+			api_spec = JMVC.getView('api/api_spec'),
 			doc = JMVC.getModel('api/function'),
+			namer = JMVC.getModel('Namer'),
 			ret='',
 			h = '',
 			f,
@@ -26,7 +28,7 @@ JMVC.controllers.info = function () {
 		//	
 		//main.set('nome', this.get('nome') || 'Guest');	
 		// can be shorted to
-		main.set_from_url('nome', 'Guest');
+		main.set_from_url('nome', namer.pickaname());
 		//
 		//
 		
@@ -93,7 +95,8 @@ JMVC.controllers.info = function () {
 		}
 		readme.set('desc', ret);
 		*/
-		readme.set('desc', 'Check out the complete Api <a href="' + JMVC.vars.baseurl + '/api.jmvc">here</a>');
+		readme.set('desc', '{{api_spec}}');
+		readme.set('githublink', 'https://github.com/fedeghe/jmvc');
 
 		
 		readme.set('version', JMVC.vars.version);
