@@ -20,8 +20,8 @@ JMVC.controllers.carpet = function () {
 		index.render(function(){
 
 
-
-			jmap = JMVC.carpet.create(JMVC.dom.body(), Ww-10, Wh-10, 3);
+			// cssmargin5 * sides2 +border1 
+			jmap = JMVC.carpet.create(JMVC.dom.body(), Ww-11, Wh-11, 3);
 
 			if (JMVC.p.debug == 'true') {		
 				jmap.beforeAdd(function (i) {console.debug('adding ID: '+i); });
@@ -33,7 +33,7 @@ JMVC.controllers.carpet = function () {
 			jmap.enableSpeed(4.2);
 			
 			//console.dir(jmap.carpet.actualNodes);
-			//carpet.move(1,1)
+			//jmap.move(-10,1)
 			//console.dir(jmap.carpet.actualNodes);
 		});
 
