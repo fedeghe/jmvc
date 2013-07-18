@@ -2,7 +2,10 @@ JMVC.require('color', 'sniffer');
 JMVC.extend('css', {
 
 	'init' : function () {
+		/*
+		if not loaded in the index.html can be loaded calling
 		JMVC.css.reset();
+		*/
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/jmvc.css');
 	},
 
