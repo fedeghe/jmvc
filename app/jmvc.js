@@ -1005,6 +1005,7 @@ _/
                                         myview.content = myview.content.replace('$' + tmp1[1] + '$', myview.get(tmp1[1]));
                                     }
                                 }
+                                myview.content = myview.content.replace('\'', '&#39;');
                                 // now the whole view
                                 cont = cont.replace('{{' + orig + '}}', myview.content);
                             } else {
