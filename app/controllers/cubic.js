@@ -1,4 +1,4 @@
-JMVC.require('lib/border/border', 'widget/snow/snow', 'css', 'dim');
+JMVC.require('core/lib/border', 'widget/snow/snow', 'core/css', 'core/dim');
 
 JMVC.controllers.cubic = function () {
 	"use strict";

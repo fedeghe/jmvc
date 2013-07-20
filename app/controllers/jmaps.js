@@ -4,7 +4,7 @@ JMVC.controllers.jmaps = function () {
 	this.action_index = function () {
 
 		// get lib & view 
-		JMVC.require('lib/jmap/jmap');
+		JMVC.require('core/lib/jmap');
 		var index = JMVC.getView('zero'),
 			jmap = false;
 		

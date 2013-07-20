@@ -1,6 +1,6 @@
 JMVC.controllers.tabs = function () {
 	this.action_one = this.index = function () {
-		JMVC.require('responsive/basic','tabs', 'sniffer', 'core/i18n');
+		JMVC.require('core/responsive/basic', 'widget/tabs', 'core/sniffer', 'core/i18n');
 
 		var index = JMVC.getView('index'),
 			tab = new JMVC.tabs.tab('v'),

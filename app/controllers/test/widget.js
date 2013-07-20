@@ -3,10 +3,10 @@ JMVC.controllers.widget = function () {
 		//
 		JMVC.events.loadify(1000);
 		JMVC.require(
-			'widget/modal/modal',
-			'widget/slider/slider',
-			'widget/accordion/accordion', 
-			'form',
+			'widget/modal',
+			'widget/slider',
+			'widget/accordion', 
+			'core/form',
 			'event_scroll'
 		);
 		JMVC.head.meta("generator", "JMVC widget");
@@ -140,15 +140,6 @@ JMVC.controllers.widget = function () {
 
 
 
-
-			/*
-			JMVC.require('hpub');
-			var a1 = JMVC.hpub.create().add(JMVC.dom.find('#waccord'), 'data-act', 'data-par');
-			a1.listen('click', 'azionex', function(){console.debug('action : ', arguments);});
-			a1.listen('mouseover', 'azionex', function(){console.debug('action o : ', arguments);});
-			a1.bind();
-			
-			 */
 			
 		}});
 	};

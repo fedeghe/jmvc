@@ -2,7 +2,7 @@ JMVC.controllers.exm = function () {
 	"use strict";
 	this.action_index = function () {
 		JMVC.events.loadify(1000);
-		JMVC.require('plotter', 'obj/bucket');
+		JMVC.require('plotter', 'core/obj/bucket');
 		var M = Math,
 			that = this,
 			v = JMVC.getView('vacuum');

@@ -1,10 +1,10 @@
-JMVC.require('tabs');
+JMVC.require('widget/tabs');
 
 JMVC.controllers.api = function () {
 	"use strict";
 
 	this.action_index = function () {
-		JMVC.require('core/codeview/script','xmlparser', 'responsive/basic', 'widget/countdown/countdown');
+		JMVC.require('core/codeview/script','core/xmlparser', 'core/responsive/basic', 'widget/countdown');
 		JMVC.events.loadify(500);
 
 		var main  = JMVC.getView('vacuum'),

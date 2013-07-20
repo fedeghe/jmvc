@@ -1,24 +1,25 @@
 JMVC.controllers.index = function () {
-
+	
 	this.action_index = function () {
 		JMVC.require(
-			'obj/date'
+			'core/obj/date'
 			, 'core/i18n'
-			,'responsive/basic'
-			, 'mobile'
-			, 'color'
-			, 'css'
-			, 'dim'
-			, 'cookie'
-			, 'google/analytics'
-			, 'fx'
-			, 'google/gmap'
+			, 'core/responsive/basic'
+			, 'core/mobile'
+			, 'core/color'
+			, 'core/css'
+			, 'core/dim'
+			, 'core/cookie'
+			, 'vendors/google/analytics'
+			, 'core/fx'
+			, 'vendors/google/gmap'
+			, 'widget/lang'
 		);
 		
 		
 		
 		// preload logo
-		JMVC.dom.preloadImage(JMVC.vars.baseurl + "/media/img/jmvc_m1.png"
+		JMVC.dom.preloadImage(JMVC.vars.baseurl + "/media/img/jmvc_m1.svg"
 			//, function (i){console.debug(i, 'loaded')}
 		);
 
@@ -51,7 +52,7 @@ JMVC.controllers.index = function () {
 		//
 		// u can namespace views in folders
 		//var index = JMVC.getView('xxx/index');
-		var index = JMVC.getView('index'),
+		var index = JMVC.getView('home/index'),
 			n = this.get('name') || 'Federico';
 		//
 		index.set('nome', n);
@@ -61,6 +62,9 @@ JMVC.controllers.index = function () {
 		
 		index.parse().render(
 			function () {
+
+				JMVC.widget.langs.create(JMVC.dom.find('#topbar'));
+
 				JMVC.responsive.onChange(
 					function (w) {
 						if (w < 800) {
@@ -114,7 +118,7 @@ JMVC.controllers.index = function () {
 				//see the pool
 				//JMVC.debug(JMVC.io.x);
 				logo = JMVC.dom.find('#extralogo');
-				newlogo = JMVC.dom.create('img', {src : JMVC.vars.baseurl + '/media/img/jmvc_m1.png'});
+				newlogo = JMVC.dom.create('img', {src : JMVC.vars.baseurl + '/media/img/jmvc_m1.svg'});
 				//
 				//
 				JMVC.dom.append(logo, newlogo);
@@ -128,7 +132,7 @@ JMVC.controllers.index = function () {
 				
 				if (JMVC.p.map && JMVC.p.map == 'true') {
 				
-					JMVC.require('google/gmap');
+					JMVC.require('vendors/google/gmap');
 					dims = JMVC.dim.getViewportSize();
 					mapid = 'map';
 					b = JMVC.dom.body();
@@ -223,7 +227,7 @@ JMVC.controllers.index = function () {
 	};
 	
 	this.action_video = function () {
-		JMVC.require('html5');
+		JMVC.require('core/html5');
 		var index = JMVC.getView('index'),
 			video = JMVC.html5.video({w : 240, h : 180, uri : 'http://techslides.com/demos/sample-videos/small.ogv', autoplay : 'autoplay', controls : true}),
 			progress = JMVC.html5.progress(35);

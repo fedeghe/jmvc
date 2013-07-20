@@ -3,7 +3,7 @@ JMVC.controllers.form = function () {
 		
 		JMVC.events.loadify(500);
 		
-		JMVC.require('fvalidation');
+		JMVC.require('core/fvalidation');
 		
 		
 		var index = JMVC.getView('form');

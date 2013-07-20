@@ -1,5 +1,5 @@
 JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/core/console/console.css', true);
-JMVC.require('css', 'dim', 'lib/grind/grind');
+JMVC.require('core/css', 'core/dim', 'core/lib/grind');
 JMVC.extend('console', {
 	'init' : function () {
 		JMVC.head.meta("generator", "jmvc resident in your machine");

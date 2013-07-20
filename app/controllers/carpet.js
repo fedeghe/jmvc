@@ -4,7 +4,7 @@ JMVC.controllers.carpet = function () {
 	this.action_index = function () {
 
 		// get lib & view 
-		JMVC.require('lib/carpet/carpet', 'dim');
+		JMVC.require('core/lib/carpet', 'core/dim');
 
 		JMVC.head.title('Carpet');
 

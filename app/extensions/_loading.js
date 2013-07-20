@@ -1,6 +1,6 @@
 JMVC.extend('loading',{
 	init : function(){
-		JMVC.require('screen');
+		JMVC.require('core/screen');
 		
 		var size = JMVC.screen.getViewportSize();
 		

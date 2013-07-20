@@ -78,7 +78,7 @@ JMVC.controllers.Test = function() {
 	// just to celebrate a good start
 	this.flag = function() {
 		// color extension is needed
-		this.require('color');
+		this.require('core/color');
 		
 		JMVC.head.title('CH beat');
 		JMVC.head.addstyle(JMVC.vars.baseurl+'/media/css/flag.css');

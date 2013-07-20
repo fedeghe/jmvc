@@ -1,5 +1,5 @@
 JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/widget/console/console.css', true);
-//JMVC.require('css', 'dim');
+
 JMVC.extend('console', {
 	'init' : function () {
 		//get some page dimensions

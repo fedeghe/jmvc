@@ -8,10 +8,10 @@ JMVC.controllers.test = function () {
 
 	this.action_index = function () {
 		
-		JMVC.require('google/analytics', 'responsive/basic');
+		JMVC.require('vendors/google/analytics', 'core/responsive/basic');
 		JMVC.events.loadify(500);
 	
-		//JMVC.require('widget/slider/slider');
+		//JMVC.require('widget/slider');
 		
 		var content = '<h3>TESTS</h3>',//<div id="bar"></div>',
 			bu = JMVC.vars.baseurl,
@@ -165,7 +165,7 @@ JMVC.controllers.test = function () {
 	// just to celebrate a good start
 	this.action_flag = function() {
 		// color extension is needed
-		JMVC.require('color');
+		JMVC.require('core/color');
 		
 		JMVC.head.title('CH beat');
 		JMVC.head.addstyle(JMVC.vars.baseurl+'/media/css/flag.css');
@@ -266,7 +266,7 @@ JMVC.controllers.test = function () {
 
 	this.action_logo = function(){
 		JMVC.events.loadify(1000);
-		JMVC.require('plotter', 'obj/bucket');
+		JMVC.require('plotter', 'core/obj/bucket');
 		var M = Math;
 		var v = JMVC.getView('vacuum');
 		
@@ -364,7 +364,7 @@ JMVC.controllers.test = function () {
 	};
 	
 	this.action_xmlparser = function(){
-		JMVC.require('xmlparser');
+		JMVC.require('core/xmlparser');
 		
 		var d = new JMVC.xmlparser.load('<?xml version="1.0" encoding="UTF-8" ?><root><el><name sex="M">federico</name><surname>ghedina</surname><struct><a>A</a><b>B</b></struct></el><el><name>federico2</name><surname>ghedina2</surname></el></root>'),
 			t=false;
@@ -384,7 +384,7 @@ JMVC.controllers.test = function () {
 	};
 	
 	this.action_docs = function(){
-		JMVC.require('xmlparser');
+		JMVC.require('core/xmlparser');
 		JMVC.io.get(JMVC.vars.baseurl+'/media/documentation.xml',function(doc){
 			
 			var parser = new JMVC.xmlparser.load(doc);
@@ -498,7 +498,7 @@ JMVC.controllers.test = function () {
 	}
 	
 	this.action_fx = function () {
-		JMVC.require('fx', 'animator', 'obj/calendar', 'timer');
+		JMVC.require('core/fx', 'animator', 'core/obj/calendar', 'timer');
 		//
 		var v = JMVC.getView('vacuum');
 		v.set({style : 'background-color:red', id : 'prova'});

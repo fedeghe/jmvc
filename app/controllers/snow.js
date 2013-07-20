@@ -1,7 +1,7 @@
 JMVC.controllers.snow = function () {
 	this.action_index = function () {
 		
-		JMVC.require('obj/date', 'widget/snow/snow');
+		JMVC.require('core/obj/date', 'widget/snow/snow');
 		
 		//preload logo
 		JMVC.dom.preloadImage(JMVC.vars.baseurl + "/media/img/jmvc_m1.png");
@@ -11,7 +11,7 @@ JMVC.controllers.snow = function () {
 		// edit title
 		JMVC.head.title('JMVC');
 		//
-		JMVC.require('mobile', 'color', 'css', 'dim', 'cookie', 'google/analytics', 'fx', 'google/gmap');
+		JMVC.require('core/mobile', 'core/color', 'core/css', 'core/dim', 'core/cookie', 'vendors/google/analytics', 'core/fx', 'vendors/google/gmap');
 		
 		
 		
@@ -95,7 +95,7 @@ JMVC.controllers.snow = function () {
 				
 				
 				/*
-				JMVC.require('google/gmap');
+				JMVC.require('vendors/google/gmap');
 				dims = JMVC.dim.getViewportSize();
 				mapid = 'map';
 				b = JMVC.dom.body();

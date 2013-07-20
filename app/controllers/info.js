@@ -7,7 +7,11 @@ JMVC.controllers.info = function () {
 		JMVC.events.loadify(500);
 		JMVC.require(
 			'core/codeview/script',
-			'google/analytics', 'sniffer', 'dim', 'css');
+			'vendors/google/analytics',
+			'core/sniffer',
+			'core/dim',
+			'core/css'
+		);
 		var main  = JMVC.getView('info'),
 			readme = JMVC.getView('readme'),
 			features = JMVC.getView('features'),

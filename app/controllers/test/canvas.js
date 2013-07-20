@@ -1,4 +1,4 @@
-JMVC.require('canvas', 'test');
+JMVC.require('canvas');
 		
 JMVC.controllers.canvas = function () {
 	

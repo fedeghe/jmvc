@@ -1,4 +1,3 @@
-JMVC.require('test');
 		
 JMVC.controllers.implement = function() {
 

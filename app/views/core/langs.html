@@ -1,0 +1,9 @@
+<span class="langs">
+<%
+JMVC.each(JMVC.i18n, function (e, i) {
+	%>
+	<a href="$baseurl$/?lang=<%=i%>"><img src="$baseurl$/media/img/flags/<%=i%>.gif"></a> 
+	<%
+});
+%>
+</span>

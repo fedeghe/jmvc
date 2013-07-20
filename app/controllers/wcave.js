@@ -1,7 +1,7 @@
 JMVC.controllers.wcave = function () {
 	this.action_index = function () {	
 		
-		JMVC.require('games/wcave/wcave');
+		JMVC.require('games/wcave');
 		
 		JMVC.events.loadify(500);
 
