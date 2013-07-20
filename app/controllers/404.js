@@ -1,8 +1,9 @@
 JMVC.controllers['404'] = function () {
 	"use strict";
 	this.action_msg = function () {		
-		var f0f = JMVC.factory('view', '404'),
+		var f0f = JMVC.getView('core/404'),
 			d = new Date();
+		JMVC.head.addstyle(JMVC.vars.baseurl + JMVC.US + 'media' + JMVC.US + 'css' + JMVC.US + 'core' + JMVC.US + 'jmvc.css');
 		//	
 		if (this.get('act')) { 
 			f0f.set('msg', 'action `' + this.get('act') + '` not found');
