@@ -851,11 +851,11 @@
                             lang = true,
                             tmp,
                             limit = 100000,
-                            cookie_lang = $JMVC.p.lang || $JMVC.cookie.get('lang') || defaultlang;
+                            def_lang = $JMVC.p.lang || $JMVC.cookie.get('lang') || defaultlang;
                         if ($JMVC.p.lang) {
                             $JMVC.cookie.set('lang', $JMVC.p.lang);
                         }
-                        JMVC.vars.currentlang = cookie_lang;
+                        JMVC.vars.currentlang = def_lang;
 
                         $JMVC.i18n || ($JMVC.i18n = {});
 
@@ -865,7 +865,7 @@
                             tmp = '';
                             
                             if (!!lang) {
-                                !lang[2] && (lang[2] = cookie_lang || currentlang || defaultlang);
+                                !lang[2] && (lang[2] = def_lang || currentlang || defaultlang);
                                 
                                 tmp = lang[2] && $JMVC.i18n[lang[2]] && $JMVC.i18n[lang[2]][lang[1]] ? $JMVC.i18n[lang[2]][lang[1]] : lang[1];
                                 cnt = cnt.replace(lang[0], tmp);
@@ -3881,7 +3881,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
         email : function (str) {
             return !!str.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/);
         }
-    }
+    };
 
     JMVC.num = {
         getNum : function (str) {return parseInt(str, 10); },
