@@ -122,7 +122,7 @@
                          * to use test suite a require('test') is needed until TODO is done
                          * @type {string}
                          */
-                        test : US + 'app' + US + 'test' + US,
+                        test : US + 'app' + US + 'testsuite' + US,
 
                         /**
                          * path for lang files, loaded with the JMVC.lang function
@@ -178,7 +178,7 @@
                      * in case some modules need to be always loaded here's the place to set them
                      * @type {Array}
                      */
-                    Modules = ['google/analytics', 'cookie'],
+                    Modules = ['vendors/google/analytics', 'core/cookie'],
 
                     /**
                      * hooks literal used to execute callbacks as far as some relevant event are fired
@@ -192,6 +192,8 @@
                      * @type {Object}
                      */
                     langs = {},
+                    defaultlang = 'en',
+                    currentlang = defaultlang,
 
                     // store starting time, that's not truly the starting time but 
                     // it's really next to the real value
@@ -555,6 +557,9 @@
                             l = arguments.length,
                             //curr = -1,
                             path,
+                            extNS,
+                            extNSlength,
+                            extname = '',
                             head = JMVC.WD.getElementsByTagName('head').item(0),
                             s;
 
@@ -564,7 +569,20 @@
                                 //curr += 1;
                                 // if the extension is named "test"
                                 // then the path is changed to PATH['test']
-                                path = PATH[arguments[i] === 'test' ? 'test' : 'ext'] + arguments[i] + '.js';
+                                /*
+                                path = PATH[arguments[i] === 'test' ? 'test' :  'ext'] + arguments[i] + US + 'jmvc_ext.js';
+
+                                if(arguments[i] === 'test') {
+                                    path = PATH['test'] + 'jmvc_ext.js';
+
+                                } else {
+                                    path = PATH['ext'] + arguments[i] + US + 'jmvc_ext.js';
+                                }*/
+                                extNS = arguments[i].split(US);
+                                extNSlength = extNS.length;
+                                extname = extNS[extNSlength - 1];
+                                path = (arguments[i] === 'testsuite' ? PATH['test'] : PATH['ext'] + arguments[i] + US) + extname +  '.js';
+
                                 switch (getmode) {
                                 case 'ajax':
                                     $JMVC.io.get(path, function (jres) {
@@ -577,6 +595,8 @@
                                     head.appendChild(s);
                                     break;
                                 }
+                                
+                                //.path = basepath;
                                 $JMVC.extensions[arguments[i]] = arguments[i];
                             }
                         }
@@ -826,20 +846,18 @@
                     },
 
                     "parselang" : function (cnt) {
+                        
                         var RXlng = "\\[L\\[([\\S\\s]*?)\\]([A-z]*?)\\]",
                             lang = true,
-                            defaultlang = 'en',
                             tmp,
                             limit = 100000,
                             cookie_lang = $JMVC.p.lang || $JMVC.cookie.get('lang');
                         if ($JMVC.p.lang) {
                             $JMVC.cookie.set('lang', $JMVC.p.lang);
                         }
-
-                        //console.debug(cookie_lang);
+                        JMVC.vars.currentlang = cookie_lang;
 
                         $JMVC.i18n || ($JMVC.i18n = {});
-
 
                         // check for [[js code]], es. [[JMVC.vars.baseurl]] will be rendered as the value of baseurl
                         while (limit) {
@@ -847,7 +865,7 @@
                             tmp = '';
                             
                             if (!!lang) {
-                                !lang[2] && (lang[2] = cookie_lang || defaultlang);
+                                !lang[2] && (lang[2] = cookie_lang || currentlang || defaultlang);
                                 
                                 tmp = lang[2] && $JMVC.i18n[lang[2]] && $JMVC.i18n[lang[2]][lang[1]] ? $JMVC.i18n[lang[2]][lang[1]] : lang[1];
                                 cnt = cnt.replace(lang[0], tmp);
@@ -1005,7 +1023,7 @@ _/
                                         myview.content = myview.content.replace('$' + tmp1[1] + '$', myview.get(tmp1[1]));
                                     }
                                 }
-                                myview.content = myview.content.replace('\'', '&#39;');
+                                
                                 // now the whole view
                                 cont = cont.replace('{{' + orig + '}}', myview.content);
                             } else {
@@ -1014,11 +1032,13 @@ _/
                         }
                         
                         // now $JMVC.vars parse
+                        
                         for (j in $JMVC.vars) {
                             if ($JMVC.vars.hasOwnProperty(j)) {
                                 cont = cont.replace(new RegExp("\\$" + j + "\\$", 'g'), $JMVC.vars[j]);
                             }
                         }
+                        
                         // use script on template function
                         cont = Parser.tpl(cont);
                         jmvc.check_hook('onAfterParse', [cont]);
@@ -1623,7 +1643,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
 
                     //maybe is the case to load testsuite
                     if (els[0].match(/test_/)) {
-                        Modules.push('test');
+                        Modules.push('testsuite');
                     }
 
                     if (WDL.hostname === 'localhost') {
@@ -1658,6 +1678,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
                             if (!params[lab_val[0]]) {params[lab_val[0]] = lab_val[1]; }
                         }
                     }
+                    
 
                     ret = {
                         'controller' : controller.replace(/\//g, ""),
@@ -1738,7 +1759,8 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
                             this.toString = function () {
                                 return '#' + wsafearr[JMVC.util.rand(0, 5)] + wsafearr[JMVC.util.rand(0, 5)] + wsafearr[JMVC.util.rand(0, 5)];
                             };
-                        }
+                        },
+                        currentlang : currentlang
                     },
                     widget : {},
                     extensions : {},
@@ -1811,8 +1833,8 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
                      * @return {[type]} [description]
                      */
                     console : function(){
-                        if(! ('core/console/console' in $JMVC.extensions)){
-                            $JMVC.require('core/console/console');
+                        if(! ('core/console' in $JMVC.extensions)){
+                            $JMVC.require('core/console');
                         }
                         JMVC.console.toggle();
                     }
@@ -3907,16 +3929,15 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
         function () {
             //
             // before rendering, load requested extensions (must be set in the
-            // Modules var and the file must be in the extensions folder)
+            // Modules var and the path/jmvc_ext.js file must be in the extensions folder)
             l = JMVC.modules.length;
             if (l > 0) {
                 i = 0;
                 for (null; i < l; i += 1) {
                     JMVC.require(JMVC.modules[i]);  
                 }
-            }
+            }            
             JMVC.render();
-            //JMVC.loaded = true;
         }
     )();
     
