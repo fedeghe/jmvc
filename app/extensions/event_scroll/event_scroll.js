@@ -9,7 +9,6 @@ JMVC.extend('events', {
 		node = node || JMVC.WD.body; 
 		this.vars.overflow = node.style['overflow'];
 		JMVC.WD.body.style.overflow = 'hidden';
-		console.debug(this)
 		/*
 		if (JMVC.W.addEventListener) {
 			JMVC.W.addEventListener('DOMMouseScroll', JMVC.events.preventDefault, false);

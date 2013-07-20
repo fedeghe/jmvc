@@ -1,6 +1,6 @@
 JMVC.extend('calendar',{
 	'vars' : {
-		css_path : JMVC.vars.extensions + '/obj/styles',
+		css_path : JMVC.vars.extensions + 'core/obj/calendar',
 		today : new Date,
 		dINm : [31, false, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
 		days : ['D','L','M','M','G','V','S'],

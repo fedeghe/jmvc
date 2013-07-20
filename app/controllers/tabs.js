@@ -2,7 +2,7 @@ JMVC.controllers.tabs = function () {
 	this.action_one = this.index = function () {
 		JMVC.require('core/responsive/basic', 'widget/tabs', 'core/sniffer', 'core/i18n');
 
-		var index = JMVC.getView('index'),
+		var index = JMVC.getView('home/index'),
 			tab = new JMVC.tabs.tab('v'),
 			tab2 = new JMVC.tabs.tab('v'),
 			ids;

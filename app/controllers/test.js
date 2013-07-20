@@ -370,16 +370,16 @@ JMVC.controllers.test = function () {
 			t=false;
 		d.extractor(function(node){return {name:JMVC.xmlparser._text(node.childNodes[0]), surname : JMVC.xmlparser._text(node.childNodes[1]), sex : JMVC.xmlparser._attribute(node.childNodes[0],'sex')}});
 		t = d.extractor(0);
-		JMVC.debug(t);
-		JMVC.debug(d.xmlDoc.getElementsByTagName('struct')[0]);
+		
+		
 		
 		d.extractor(function(node){JMVC.debug(2, node);return {a:JMVC.xmlparser._text(node)};},true);
 		d.pointer(d.xmlDoc.getElementsByTagName('struct')[0]);
 		
 		t = d.extractor(0);
-		JMVC.debug(t);
+		
 		t = d.extractor(1);
-		JMVC.debug(t);
+		
 		//JMVC.yes.prova();
 	};
 	
@@ -413,8 +413,7 @@ JMVC.controllers.test = function () {
 			parser.pointer(parser.xmlDoc.getElementsByTagName('dom')[0]);
 				
 			
-			JMVC.debug(parser.root());
-			JMVC.debug(JMVC.xmlparser.toJson(parser.root()));
+			
 		
 		
 		
@@ -442,7 +441,7 @@ JMVC.controllers.test = function () {
 	
 	
 	this.action_observer = function () {
-		JMVC.require('core/codeview/html');
+		JMVC.require('core/codeview/codehl');
 		var list = JMVC.getModel('List', ['Item0', 'Item1', 'Item2', 'Item3']),
 			v = JMVC.getView('vacuum'),
 			explain = 'Use buttons to add/remove items to the list (constructed with some elements)<br />' +
