@@ -6,7 +6,7 @@ JMVC.models.Namer = function () {
 		'Leon',
 		'Jack', 'Javier', 'Joe',
 		'Mohammed',
-		'Samena','Sue'
+		'Sam','Sue'
 	];
 	this.pickaname = function() {
 		return this.names[JMVC.util.rand(0, this.names.length - 1)];
