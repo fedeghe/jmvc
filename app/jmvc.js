@@ -851,7 +851,7 @@
                             lang = true,
                             tmp,
                             limit = 100000,
-                            cookie_lang = $JMVC.p.lang || $JMVC.cookie.get('lang');
+                            cookie_lang = $JMVC.p.lang || $JMVC.cookie.get('lang') || defaultlang;
                         if ($JMVC.p.lang) {
                             $JMVC.cookie.set('lang', $JMVC.p.lang);
                         }
