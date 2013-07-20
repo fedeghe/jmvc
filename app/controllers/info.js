@@ -12,20 +12,24 @@ JMVC.controllers.info = function () {
 			'core/dim',
 			'core/css'
 		);
-		var main  = JMVC.getView('info'),
-			readme = JMVC.getView('readme'),
-			features = JMVC.getView('features'),
+		var main  = JMVC.getView('home/info'),
+			readme = JMVC.getView('home/readme'),
+			features = JMVC.getView('home/features'),
 			doc_tpl = JMVC.getView('api/doctpl'),
 			api_spec = JMVC.getView('api/api_spec'),
 			doc = JMVC.getModel('api/function'),
 			namer = JMVC.getModel('Namer'),
 			ret='',
 			h = '',
+			fr = '<b class="index">&#9758;</b>',
 			f,
 			k, k2, t,
 			len, l2,
 			tmp,
 			jsondoc = JMVC.io.getJson(JMVC.vars.baseurl + '/media/documentation.json');
+
+
+		
 
 		JMVC.set('my_table_style', 'padding:2px; background-color:#ccc');
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/info.css', true);// parsed
@@ -37,7 +41,7 @@ JMVC.controllers.info = function () {
 		//
 		
 		//
-		features.set('fr', '<b class="index">&#9758;</b>');
+		features.set('fr', fr);
 		//
 		//
 		//

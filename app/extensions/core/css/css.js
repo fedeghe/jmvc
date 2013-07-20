@@ -6,7 +6,7 @@ JMVC.extend('css', {
 		if not loaded in the index.html can be loaded calling
 		JMVC.css.reset();
 		*/
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/jmvc.css');
+		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/core/jmvc.css');
 	},
 
 	'_mappedStyles' : {/* id : node */},

@@ -38,6 +38,8 @@ b.index{
 	position:relative;
 	top:8px;
 	padding-right:10px;
+	height:20px;
+	line-height:20px;
 }
 
 
@@ -134,13 +136,11 @@ a:hover{
 ul{
 	margin:0px;
 	padding:0px;
-	list-style-type:circle;
+	list-style-type:none;
 }
 ul li{
 	margin:0px;
 	padding:0px;
-	padding-left:5px;
-	margin-left:15px;
 }
 div#centerinfo{
 	background-color: white;
@@ -163,3 +163,16 @@ span.desc{
 	display:block;
 	line-height:22px;
 }
+ul.features p.feature{
+	margin-left: 30px;
+    margin-top: -20px;
+    padding:0px;
+}
+ul.inner{
+	margin-left:30px;
+	list-style-type: disc;
+}
+ul.inner li{
+	line-height:22px;
+}
+

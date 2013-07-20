@@ -1,0 +1,85 @@
+<ul class="features">
+	<li>$fr$
+		<p class="feature">One global variable.</p>
+	</li>
+	<li>$fr$
+		<p class="feature">Supports all alive browsers.</p>
+	</li>
+	<li>$fr$
+		<p class="feature">Includes many useful utilities: ajax, dom manipulation, event binding, etc...</p>
+	</li>
+	<li>$fr$
+		<p class="feature">Load views and models (synchronous ajax requests, otherwise model eval could be late) from a controller.</p>
+	</li>
+	<li>$fr$
+		<p class="feature">Default `index` controller and action (configurable).</p>
+	</li>
+	<li>$fr$
+		<p class="feature">Easily add aliases to actions</p>
+	</li>
+	<li>$fr$
+		<p class="feature">Each view, model or controller has his own hash as private registry to contain variables.</p>
+	</li>
+	<li>$fr$
+		<p class="feature">
+			In views you can write special variable placeholders for other views or for view`s variable:
+			<ul class="inner">
+				<li><strong>&#36;myvar&#36;</strong> for substitute a variable that you set to the View instance through the <strong>set</strong> method</li>
+				<li><strong>&#123;&#123;my_view&#125;&#125;</strong> for loading the content of my_view in place of that</li>
+				<li><strong>&#123;&#123;my_view name=`Federico` surname=`Ghedina`&#125;&#125;</strong> as previous but
+					here You can add on the fly variables to my_view, use &#36;name&#36; and &#36;surname&#36; in it,
+					and find them replaced at render time.
+				</li>
+			</ul>
+		</p>
+	</li>
+	<li>$fr$
+		<p class="feature">Dinamically load other scripts and stylesheets.</p>
+	</li>
+	<li>$fr$
+		<p class="feature">The content produced by default affects the content of the body, but You can choose to affect
+	the content of any node which can be found calling the tiny minimal selection engine.</p>
+	</li>
+	<li>
+		$fr$
+		<p class="feature">Edit the head using JMVC.head methods (or your scripts).</p>
+	</li>
+	<li>$fr$
+		<p class="feature">
+			Files sizes:
+			<ul class="inner">
+				<li>11.5 KB jmvc.min.js (gzipped and packed version, base62 encode, shrinked variables)</li>
+				<li>24.6 KB jmvc.js (gzipped, development version, fully commented)</li>
+			</ul>
+		</p>
+	</li>
+	<li>$fr$
+		<p class="feature">Optimize modules dependencies using the <b>JMVC.require</b> function.</p>
+	</li>
+	<li>$fr$
+		<p class="feature">Automatic extra parameters extraction from url.</p>
+	</li>
+	<li>$fr$
+		<p class="feature">Add action routes in the controller (see test controller).</p>
+	</li>
+	<li>$fr$
+		<p class="feature">Easily extend the JMVC object with your code (see any extension).</p>
+	</li>
+	<li>$fr$
+		<p class="feature">Allow <b>any</b> extension You prefer</p>
+	</li>
+	<li>$fr$
+		<p class="feature">Handles 404 Status for requests not matching a route rendering an error view and redirecting after three seconds to the default route</p>
+	</li>
+	<li>$fr$
+		<p class="feature">Easily add callbacks to some predefined hooks :onBeforeRender, onAfterRender, onBeforeParse, onAfterParse (i18n works thanks to a hook)</p>
+	</li>
+	<li>$fr$
+		<p class="feature">Use placeholders even in js and css to substitute your own variables or the special
+			preset variable <strong>&#36;baseurl&#36;</strong> (this can be useful for absolute path to images, or for chunks of style rules shared among more selectors)
+			or <strong>&#36;rendertime&#36;</strong> (just to have an idea of the whole time spent from dispatching to page render)</p>
+	</li>
+	<li>$fr$
+		<p class="feature">And Much MORE ...</p>
+	</li>
+</ul>
