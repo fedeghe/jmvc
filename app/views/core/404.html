@@ -1,0 +1,24 @@
+<style type="text/css">
+body{
+	font-family: Verdana, sans-serif;
+	padding:20px;
+}
+#err404{
+	padding:5px;
+}
+#err404 p{
+	line-height:28px;
+}
+span.red{color:red;}
+</style>
+<div id="err404">
+	<img src="$baseurl$/media/img/jmvc_m2.svg" />
+	<p align="center">
+		<h1>Error 404 : Page Not Found</h2>
+	</p>
+	<p><strong>When</strong> : $date$</p>
+	<p><strong>Requested url</strong> : $url$</p>
+	<p><strong>User agent</strong> : $agent$</p>
+	<p><strong>JMVC says</strong> : <span class="red">$msg$</span></p>
+	<p>The requested page was not found. In a few seconds, you will be redirected to the <a href="[[JMVC.vars.baseurl]]">Home page</a>.</p>
+</div>
