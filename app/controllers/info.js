@@ -6,11 +6,12 @@ JMVC.controllers.info = function () {
 		//
 		JMVC.events.loadify(500);
 		JMVC.require(
-			'core/codeview/script',
-			'vendors/google/analytics',
-			'core/sniffer',
-			'core/dim',
-			'core/css'
+			'core/codeview/script'
+			,'vendors/google/analytics'
+			,'core/sniffer'
+			,'core/mobile'
+			,'core/dim'
+			,'core/css'
 		);
 		var main  = JMVC.getView('home/info'),
 			readme = JMVC.getView('home/readme'),
@@ -116,6 +117,7 @@ JMVC.controllers.info = function () {
 		//JMVC.mac.titlesay();
 
 		main.parse().render(function(){
+			JMVC.mobile.topHide();
 			JMVC.head.title('JMVC :: info');
 		});
 	};

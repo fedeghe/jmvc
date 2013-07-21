@@ -62,7 +62,7 @@ JMVC.controllers.index = function () {
 		
 		index.parse().render(
 			function () {
-
+				JMVC.mobile.topHide();
 				JMVC.widget.langs.create(JMVC.dom.find('#topbar'));
 
 				JMVC.responsive.onChange(
@@ -97,7 +97,7 @@ JMVC.controllers.index = function () {
 				sourcelink = JMVC.dom.create('a', {'class' : 'homelinks', href : 'https://github.com/fedeghe/jmvc', title : 'get code from github!', target : '_blank'}, JMVC.parselang('[L[source]]'));
 				
 				
-				JMVC.mobile.topHide();
+				//JMVC.mobile.topHide();
 				
 				
 				JMVC.dom.append(links,  morelink);

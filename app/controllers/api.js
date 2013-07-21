@@ -1,10 +1,15 @@
-JMVC.require('widget/tabs');
-
 JMVC.controllers.api = function () {
 	"use strict";
 
 	this.action_index = function () {
-		JMVC.require('core/codeview/script','core/xmlparser', 'core/responsive/basic', 'widget/countdown');
+		JMVC.require(
+			'widget/tabs'
+			,'core/codeview/script'
+			,'core/xmlparser'
+			,'core/mobile'
+			,'core/responsive/basic'
+			,'widget/countdown'
+		);
 		JMVC.events.loadify(500);
 
 		var main  = JMVC.getView('vacuum'),
@@ -176,10 +181,9 @@ JMVC.controllers.api = function () {
 		//main.set('content', '{{apintro postmessage=`hello`}}<p style="color:#fff">Rendering time: <strong>[[JMVC.vars.rendertime]]</strong> ms</p>');
 		
 		main.parse().render(function () {
-
 			var i = tab_ext.render('desc', 'ulidONE');
 			JMVC.head.title('JMVC API');
-
+			JMVC.mobile.topHide();
 			
 			JMVC.widget.countdown.start('#countdown', new Date(2013, 7, 30));
 			
