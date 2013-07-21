@@ -166,6 +166,7 @@ span.desc{
 ul.features p.feature{
 	margin-left: 30px;
     margin-top: -20px;
+    margin-bottom:10px;
     padding:0px;
 }
 ul.inner{
