@@ -11,8 +11,8 @@
  *
  *
  * 
- * @version: 1.9.3
- * @date : 17-07-2013
+ * @version: 2.1
+ * @date : 21-07-2013
  * @copyright (c) 2013, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina
  * @url : http://www.jmvc.org
@@ -77,8 +77,8 @@
 
                 // returning object created in that function, here $JMVC will be JMVC
                 var $JMVC,
-                    JMVC_VERSION = 1.9,
-                    JMVC_REVIEW = 3,
+                    JMVC_VERSION = 2,
+                    JMVC_REVIEW = 1,
                     JMVC_PACKED = false,
 
                     /**
@@ -607,7 +607,7 @@
                                 extNS = arguments[i].split(US);
                                 extNSlength = extNS.length;
                                 extname = extNS[extNSlength - 1];
-                                path = (arguments[i] === 'testsuite' ? PATH['test'] : PATH['ext'] + arguments[i] + US) + extname +  '.js';
+                                path = JMVC.vars.baseurl + (arguments[i] === 'testsuite' ? PATH['test'] : PATH['ext'] + arguments[i] + US) + extname +  '.js';
 
                                 switch (getmode) {
                                 case 'ajax':
@@ -661,7 +661,7 @@
 
                         while (i < l) {
                             if (!langs[lng[i]]) {
-                                $JMVC.io.get(PATH.lang + lng[i] + '.js', function (ln) {
+                                $JMVC.io.get(JMVC.vars.baseurl + PATH.lang + lng[i] + '.js', function (ln) {
                                     jmvc.jeval(ln);
                                 },  false);
                                 langs[lng[i]] = true;
@@ -1171,6 +1171,18 @@ _/
                     'BadName' : function (msg) {
                         this.name = 'BadName';
                         this.msg = msg || "";
+                    },
+                    'BadImplement' : function (msg) {
+                        this.name = 'BadImplement';
+                        this.msg = msg || "";  
+                    },
+                    'ControllerNotFound' : function (msg) {
+                        this.name = 'ControllerNotFound';
+                        this.msg = msg || "";  
+                    },
+                    'ActionNotFound' : function (msg) {
+                        this.name = 'ActionNotFound';
+                        this.msg = msg || "";  
                     }
 
                 };
@@ -1664,7 +1676,10 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
                         ret,
                         i,
                         src,
-                        len = 0;
+                        len = 0,
+                        baseurl = WDL.protocol + US + US + WDL.hostname;
+
+
 
                     //maybe is the case to load testsuite
                     if (els[0].match(/test_/)) {
@@ -1710,7 +1725,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
                         'controller_prepath' : controller_prepath,
                         'action' : action.replace(/\//g, ""),
                         'params' : params,
-                        'baseurl' : WDL.protocol + US + US + WDL.hostname
+                        'baseurl' : baseurl
                     };
                     //ret.controller = jmvc_normalize(ret.controller);
                     return ret;
