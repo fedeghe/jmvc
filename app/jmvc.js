@@ -495,14 +495,40 @@
                                 }
                             }
 
+                            //before?
+                            // global before
+                            if (ctrl.before && typeof ctrl.before === 'function') {
+                                ctrl.before();
+                            }
+                            // action before
+                            if (ctrl['before_' + $JMVC.a] && typeof ctrl['before_' + $JMVC.a] === 'function') {
+                                ctrl['before_' + $JMVC.a]();
+                            }
+
+
+                            // NOW    
                             // call action
                             if (ctrl['action_' + $JMVC.a] && typeof ctrl['action_' + $JMVC.a] === 'function') {
                                 ctrl['action_' + $JMVC.a]();
                             } else {
                                 if ($JMVC.a.toLowerCase() !== JMVC_DEFAULT.action) {
                                     WDL.href = US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a;
+                                    return false;
                                 }
                             }
+
+                            //after?
+                            // action after
+                            if (ctrl['after_' + $JMVC.a] && typeof ctrl['after_' + $JMVC.a] === 'function') {
+                                ctrl['after_' + $JMVC.a]();
+                            }
+                            // global after
+                            if (ctrl.after && typeof ctrl.after === 'function') {
+                                ctrl.after();
+                            }
+
+
+
                         } else {
                             if ($JMVC.c.toLowerCase() !== JMVC_DEFAULT.controller) {
                                 WDL.href = US + '404' + US + 'msg' + US + 'cnt' + US + $JMVC.c;
@@ -1627,7 +1653,6 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
                             'hash' : WDL.search
                         },
 
-                        //
                         // adjust extensions
                         els = mid.path.replace(new RegExp('\\.' + URL_ALLOWED_EXTENSIONS.join('|\\.'), 'gm'), "").substr(1).split(US),
                         controller = false,
