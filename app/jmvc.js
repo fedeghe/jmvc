@@ -131,6 +131,13 @@
                         lang : US + 'app' + US + 'i18n' + US
                     },
 
+                    JMVC_EXT = {
+                        controller : '.js',
+                        model : '.js',
+                        view : '.html',
+                        'interface' : '.interface.html'
+                    },
+
                     /**
                      * all these extensions can be used just after the action
                      * @type {Array}
@@ -364,7 +371,6 @@
                         //
                         var ret = false, o;
                         if (type === 'view' && typeof $JMVC.views[name] === 'function') {
-
                             ret = $JMVC.views[name];
 
                         } else if (type === 'model' && typeof $JMVC.models[name] === 'function') {
@@ -380,8 +386,12 @@
                                 function cback(res) {
                                     switch (type) {
                                     case 'view':
-                                        $JMVC.views[name] = new View(res);
+                                        
+
+                                        $JMVC.views[name] = (function () {return new View(res);})();
                                         ret =  $JMVC.views[name];
+                                        
+                                        
                                         break;
                                     case 'controller':
                                         // res = res.replace(/^(\s*)\/\/(.*)[\n]/g, '/*$1*/')
@@ -443,14 +453,10 @@
 
                         switch (type) {
                         case 'view':
-                            path_absolute += '.html';
-                            break;
                         case 'model':
                         case 'controller':
-                            path_absolute += '.js';
-                            break;
                         case 'interface':
-                            path_absolute += '.interfaces.js';
+                            path_absolute += JMVC_EXT[type];
                             break;
                         default:
                             return false;
@@ -458,9 +464,9 @@
                         }
 
                         // ajax get script content and return it
-                        return jmvc.xhrget(path_absolute, type, name, params);
-                        //ret = jmvc.xhrget(path_absolute, type, name, params);
-                        //return ret;
+                        
+                        ret = jmvc.xhrget(path_absolute, type, name, params);
+                        return ret;
                     },
 
                     /**
@@ -2996,8 +3002,8 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
          */
         'bind' : function (el, tipo, fn) {
             if (el instanceof Array) {
-                JMVC.each(el, JMVC.events.bind, tipo, fn);
-                return;
+                JMVC.each(el, function (r, i){JMVC.events.bind(r, tipo, fn); });
+                return ;
             }
             var f = function (e) {fn.call(el, e || W.event); };
             if (W.addEventListener) {
