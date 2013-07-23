@@ -31,11 +31,20 @@ JMVC.extend('xvents',{
 			this.map = {};
 			this.binded = false;
 			this.listening = true;
-
+			
+			/**
+			 * [ description]
+			 * @param  {[type]} eventType [description]
+			 * @param  {[type]} func      [description]
+			 * @param  {[type]} action    [description]
+			 * @param  {[type]} bubble    [description]
+			 * @return {[type]}           [description]
+			 */
 			this.listen = function (eventType, func, action, bubble) {
 
 				this.map[eventType] || (this.map[eventType] = action ? {} : []);
 
+				// bubbles 
 				func['bubble'] = !!bubble;
 
 				if (!!action) {
