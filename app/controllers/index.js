@@ -92,17 +92,16 @@ JMVC.controllers.index = function () {
 				links = JMVC.dom.create('h1');
 
 				//
-				morelink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/info.jmvc', title : 'get more info'}, JMVC.parselang('[L[more]]'));
 				apilink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/api.jmvc', title : 'basic documentation'}, JMVC.parselang('[L[api]]'));
+				morelink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/info.jmvc', title : 'get more info'}, JMVC.parselang('[L[more]]'));
 				sourcelink = JMVC.dom.create('a', {'class' : 'homelinks', href : 'https://github.com/fedeghe/jmvc', title : 'get code from github!', target : '_blank'}, JMVC.parselang('[L[source]]'));
 				
 				
 				//JMVC.mobile.topHide();
 				
 				
-				JMVC.dom.append(links,  morelink);
-				JMVC.dom.append(links,  apilink);
-				JMVC.dom.append(links,  sourcelink);
+				
+				JMVC.dom.append(links,  [morelink, apilink, sourcelink]);
 				
 
 
@@ -110,9 +109,7 @@ JMVC.controllers.index = function () {
 
 
 
-				JMVC.events.bind(morelink, 'click', function () {this.blur();});
-				JMVC.events.bind(apilink, 'click', function () {this.blur(); });
-				JMVC.events.bind(sourcelink, 'click', function () {this.blur(); });
+				JMVC.events.bind([morelink, apilink, sourcelink], 'click', function () {this.blur(); });
 				
 
 				//see the pool
