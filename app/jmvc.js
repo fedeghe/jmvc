@@ -388,9 +388,8 @@
                                     case 'view':
                                         
 
-                                        $JMVC.views[name] = (function () {return new View(res);})();
+                                        $JMVC.views[name] = new View(res);
                                         ret =  $JMVC.views[name];
-                                        
                                         
                                         break;
                                     case 'controller':
@@ -579,7 +578,7 @@
                         // quindi tengo tutti quelli che non sono nella firma
                         var args = Array.prototype.slice.call(arguments, 2);
                         return function () {
-                            func.apply(ctx || $JMVC, [].concat(args, Array.prototype.slice.call(arguments)));
+                            return func.apply(ctx || $JMVC, [].concat(args, Array.prototype.slice.call(arguments)));
                         };
                     },
 
@@ -856,7 +855,7 @@
                                 }
                                 return ret;
                             }
-                        }[type]() : false;
+                        }[type]() : func(o);
                     },
                     /*
                     JMVC.each([1,2,3,4,5,6,7,8,9,10], function f(e) {
@@ -1646,6 +1645,16 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
                 };
                 //////////////////////
                 
+                View.prototype.clone  = function (name) {
+                    var ret = false; 
+                    if (typeof name !== 'undefined') {
+                        $JMVC.views[name] = new View(this.ocontent);
+                        ret = $JMVC.views[name];
+                    } else {
+                        ret = new View(this.ocontest);
+                    }
+                    return ret;
+                };
 
 
 
