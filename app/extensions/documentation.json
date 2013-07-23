@@ -1,0 +1,7 @@
+{
+	core : {
+		css : 'path to the extension xml or json',
+		color : 'path to the extension xml or json',
+		
+	}
+}
