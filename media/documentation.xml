@@ -34,7 +34,7 @@ var y = {type:'t'},&#10;
     t = JMVC.bind(function(){console.debug(this.type);}, y);&#10;
 t();&#10;</sample>
 			<status>complete</status>
-			<testlink>test_array</testlink>
+			<testlink>test_api_jmvc_bind</testlink>
 		</function>
 		
 		<function>
@@ -432,6 +432,14 @@ _/    _/    _/    _/_/      _/_/_/    _/_/_/  _/
 ##################################################
 -->
 	<view>
+		<function>
+			<signature name="clone">clone(String varname)</signature>
+			<description>If exists deletes a variable from the View registry.</description>
+			<params>
+				<param name="*varname">the name of the variable to be deleted</param>
+			</params>
+			<returns>void (undefined)</returns>
+		</function>
 		<function>
 			<signature name="del">del(String varname)</signature>
 			<description>If exists deletes a variable from the View registry.</description>
