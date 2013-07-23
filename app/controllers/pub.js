@@ -5,13 +5,12 @@ JMVC.controllers.pub = function () {
 		JMVC.require(
 			'core/codeview/codehl',
 			'core/codeview/script',
-			'pub/xvents',
+			'core/pub/xvents',
 			'core/css'
 		);
 
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/pub.css');
 		JMVC.head.addstyle('http://fonts.googleapis.com/css?family=Freckle+Face');
-
 		JMVC.head.title('Observers');
 
 		JMVC.events.loadify(500);
