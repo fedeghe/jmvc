@@ -137,10 +137,11 @@ JMVC.controllers.google = function () {
 					window.setTimeout(
 						function (t1) {
 							a.item(t1).style.color = 'white';
-							a.item(t1).style.fontSize = '6px';
+							a.item(t1).style.fontSize = '8px';
 							window.setTimeout(
-								function (t2) {a.item(t2).style.color = c;
-									//a.item(t2).style.fontSize = s;
+								function (t2) {
+									a.item(t2).style.color = c;
+									a.item(t2).style.fontSize = '5px';
 								}, T1, t1
 							);
 						},0, trg
@@ -150,6 +151,7 @@ JMVC.controllers.google = function () {
 						i = i ? i : 1;
 					}
 				}, T2);
+
 			}
 			//
 			//
@@ -163,7 +165,7 @@ JMVC.controllers.google = function () {
 			//
 			var enable_search = true;
 			if (enable_search) {
-				
+				///////wwwwaaaaaaattttttt
 			}
 		});
 	};
