@@ -135,7 +135,7 @@
                         controller : '.js',
                         model : '.js',
                         view : '.html',
-                        'interface' : '.interface.html'
+                        'interface' : '.interface.js'
                     },
 
                     /**
