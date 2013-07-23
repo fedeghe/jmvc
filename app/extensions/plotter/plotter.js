@@ -15,7 +15,8 @@ JMVC.extend('graf', {
 				var i = 0,
 					x,
 					y,
-					iarr = [], l;
+					iarr = [],
+					l;
 				while (howmany) {
 					x = radiusx * Math.cos(radfrom + i * radstep);
 					y = radiusy * Math.sin(radfrom + i * radstep);
@@ -24,7 +25,6 @@ JMVC.extend('graf', {
 					howmany -= 1;
 				}
 
-			
 				if (rad) {
 					JMVC.each(iarr, function (elem ,indx) {
 						x = elem[0];
@@ -37,11 +37,9 @@ JMVC.extend('graf', {
 					elem[0] = elem[0] + centerx;
 					elem[1] = elem[1] + centery;
 				});
-
-
 				that.arr = that.arr.concat(iarr);
 			},
-			'beizer' : function (x1,y1, x2,y2, x3,y3, x4,y4, hm) {
+			'beizer' : function (x1, y1,  x2, y2,  x3, y3,  x4, y4,  hm) {
 				var B1 = function (t) {return t * t * t; },
 					B2 = function (t) {return 3 * t * t * (1 - t); },
 					B3 = function (t) {return 3 * t * (1 - t) * (1 - t); },
@@ -50,10 +48,10 @@ JMVC.extend('graf', {
 					step = 1 / (hm || 10);
 				
 				for (null; percent <= 1; percent += step) {
-					var point = [];
-					point[0] = x1 * B1(percent) + x2 * B2(percent) + x3 * B3(percent) + x4 * B4(percent);
-					point[1] = y1 * B1(percent) + y2 * B2(percent) + y3 * B3(percent) + y4 * B4(percent);
-					that.arr.push(point);
+					that.arr.push([
+						x1 * B1(percent) + x2 * B2(percent) + x3 * B3(percent) + x4 * B4(percent),
+						y1 * B1(percent) + y2 * B2(percent) + y3 * B3(percent) + y4 * B4(percent)
+					]);
 				}
 			},
 			'addline' : function (x1, y1, x2, y2, howmany) {
@@ -71,11 +69,6 @@ JMVC.extend('graf', {
 				that.arr.push([x2, y2]);
 			},
 			'plot' : function (node, positions, character, top, left) {
-				//JMVC.debug(that.arr);
-				/*var l;
-				for (l in positions) {
-					JMVC.graf.plotarr(node, positions[l], l, character, top, left);
-				}*/
 				JMVC.each(positions, function (el, i) {
 					JMVC.gra.plotarr(node, el, i, character, top, left);
 				});
@@ -84,15 +77,19 @@ JMVC.extend('graf', {
 				var i = 0,
 					l = positions.length,
 					tmp;
-				if (typeof scale == 'undefined') {
-					scale = 1;
-				}
+				typeof scale == 'undefined' && (scale = 1);
 				
 				JMVC.each(positions, function (el) {
 					tmp = JMVC.dom.create('span', {
-						'class' : 'point ' + letter,
-						'style' : JMVC.string.replaceall('top:%top%px;left:%left%px', {top : ~~ (el[0] + top) * scale, left : ~~(el[1] + left) * scale})
-					}, character);
+							'class' : 'point ' + letter,
+							'style' : JMVC.string.replaceall(
+								'top:%top%px;left:%left%px',
+								{
+									top : ~~ (el[0] + top) * scale,
+									left : ~~(el[1] + left) * scale
+								}
+							)
+						}, character);
 					JMVC.dom.append(node, tmp);
 				});
 			},
