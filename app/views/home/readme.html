@@ -23,7 +23,7 @@
 </p>
 <h2>Requirements</h2>
 <p>At the moment, JMVC relies completely on  <a href="http://www.apache.org/" target="_blank" title="http://www.apache.org/">Apache webserver</a> with rewrite module enabled.
-	In fact the single page entry point is granted by an <i>.htaccess</i> file.
+	In fact the single page entry point is granted by an <i>.htaccess</i> file. With IIS can be used in place of the <i>.htaccess</i> file a <i>.webconfig</i>, but I do not want to know anything about IIS.
 </p>
 <h2>Get started</h2>
 <p>Get the source <a href="$githublink$">here</a>, create a simple virtual host, and start playing around. Note that the code <strong>is exactly this site</strong>. To clean all just remove everything within the
@@ -40,20 +40,20 @@
 	I strongly recommend to keep all files, look at the code, starting from controllers, and clean up at when You feel ready to dive in.
 </p>
 
-<h2>How it works</h2>
+<h2>How it works... distilled</h2>
 <p>JMVC relies on a single entry page, the <i>index.html</i>, thanks to a minimal <i>.htaccess</i> file.
 	In that page the main script looks at the requested url and the result of this operation is that JMVC knows which controller must be loaded, wich action must be called
 	and what parameters have been passed. This phase is called <strong>dispatching</strong>.<br />
 	Once the controller is loaded, with a synchronous xhr call, the action function is executed, and within that function at least a view is supposed to be
 	rendered in the document body (or eslewhere).
-	<br /></p>
+</p>
 <!--
-<h2>What it up to You?<sub>or what JMVC doesn`t and never will</sub></h2>
+<h2>What`s up to You?<sub>or what JMVC does not and never will</sub></h2>
 <p>JMVC will never:
 	<ul class="inner">
-		<li>Stress your hosting</li>
-		<li>Save data permanently</li>
-		<li>Ignore a </li>
+		<li>Understand your thoughts and write down code</li>
+		<li>Refuse Your help or be unhappy to have any feedback, indeed it would be really appreciated.</li>
+		<li>Be server side</li>
 	</ul>
 </p>
 -->
