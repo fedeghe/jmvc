@@ -6,11 +6,41 @@ JMVC.controllers.test = function () {
 		f : 'flag'
 	});
 
+
+
+	
+	this.before = function () {
+		this.startController = +new Date;
+	}
+
+	this.before_index = this.before_flag = function () {
+		this.startAction = +new Date;
+	}
+
+	this.after_index = this.after_flag =  function () {
+		this.endAction = +new Date;
+	}
+
+	this.after = function () {
+		this.endController = +new Date;
+		JMVC.debug('Controller Time: ' + ((this.endController - this.startController) || 0));
+		JMVC.debug('Action Time: ' + ((this.endAction - this.startAction) || 0));
+	}
+
+
 	this.action_index = function () {
 		
 		JMVC.require('vendors/google/analytics', 'core/responsive/basic');
 		JMVC.events.loadify(500);
-	
+		
+
+		JMVC.dom.preloadImage(JMVC.vars.baseurl + "/media/img/jmvc_m1.svg");
+
+		var newlogo = JMVC.dom.create('img', {src : JMVC.vars.baseurl + '/media/img/jmvc_m1.svg'});
+		//
+		//
+		
+
 		//JMVC.require('widget/slider');
 		
 		var content = '<h3>TESTS</h3>',//<div id="bar"></div>',
@@ -45,7 +75,9 @@ JMVC.controllers.test = function () {
 			style = {
 				'body' : {
 					'background-color' : '#fff',
-					'color' : '#000'
+					'color' : '#000',
+					'padding' : '10px 30px',
+					'border-left' : '50px solid gray'
 				},
 				'ul' : {
 					'list-style-type' : 'none',
@@ -87,10 +119,14 @@ JMVC.controllers.test = function () {
 			'content' : content,
 			'index' : '&#9826;'
 		});
-		v.render(/*{cback : function () {
+		v.render(
+			function () {
+				//JMVC.dom.append(JMVC.dom.body(), newlogo);
+			}
+		/*function () {
 			// JMVC.require('affix');	
 			// JMVC.affix.add({html:'<h4>Content</h4>', init : 200, min : 100, style:'height:800px;background-color:red;padding:10px;right:100px;border:1px solid black'});
-		}}*/);
+		}*/);
 		
 		
 		/*
@@ -106,10 +142,17 @@ JMVC.controllers.test = function () {
 	this.action_view = function () {
 		var v = JMVC.getView('test'),
 			v1= JMVC.factory('view', 'test1'),
-			v2= JMVC.factory('view', 'test2');
+			v2= JMVC.factory('view', 'test2'),
+			v3= v2.clone('test3');
+
 		v1.set('result', 'ok1');
 		v2.set('result', 'ok2');
 		v2.set('result2', 'ok2bis');
+
+		v3.set('result', 'ok3');
+		v3.set('result2', 'ok3bis');
+
+
 		v.render();
 	};
 	
@@ -118,7 +161,7 @@ JMVC.controllers.test = function () {
 	// test some MODELs
 	this.action_model = function() {
 		var _p1 = JMVC.getModel('xxx/Persona'),
-			_p2 = JMVC.getModel('Persona2'),
+			_p2 = JMVC.getModel('Persona'),
 			_p3 = JMVC.getModel('Persona2'),
 			tpl,
 			al = '',
@@ -168,6 +211,7 @@ JMVC.controllers.test = function () {
 		JMVC.require('core/color');
 		
 		JMVC.head.title('CH beat');
+
 		JMVC.head.addstyle(JMVC.vars.baseurl+'/media/css/flag.css');
 
 		var v = JMVC.getView('flag'),
@@ -193,22 +237,22 @@ JMVC.controllers.test = function () {
 				boxes = [],
 				tmp, i, j, l,
 				fact,
-				opac = Math.sqrt(basesize/(box_size*top_fact));
+				opac = Math.sqrt(basesize / (box_size * top_fact));
 			f.style.width = (basesize * 7.5) + 'px'; // damnIE
 			f.style.height = (basesize * 5.5) + 'px';// damnIE
 			f.style.margin = '0 auto';
 			f.style.zoom = 1;// damnIE
 			f.style.opacity = opac;
-			f.style['-ms-filter'] ="progid:DXImageTransform.Microsoft.Alpha(Opacity="+(~~(100*opac))+")"; // damnIE
-			f.style.filter = "alpha(opacity="+(~~(100*opac))+")";// damnIE
-			f.style.marginTop = (basesize)+'px';
-			j=0;
-			for(i=0, l=5*7; i<l; i++) {
-				j++;					
-				tmp = JMVC.dom.create('div',{'style':'width:'+basesize+'px; height:'+basesize+'px;', 'class':'box'},'&nbsp;');
+			f.style['-ms-filter'] = "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + (~~(100 * opac)) + ")"; // damnIE
+			f.style.filter = "alpha(opacity=" + (~~(100 * opac)) + ")";// damnIE
+			f.style.marginTop = basesize + 'px';
+			j = 0;
+			for (i = 0, l = 5 * 7; i < l; i += 1) {
+				j += 1;					
+				tmp = JMVC.dom.create('div', {'style' : 'width:' + basesize + 'px; height:' + basesize + 'px;', 'class' : 'box'}, '&nbsp;');
 				JMVC.dom.append(f, tmp);
 				tmp.style.backgroundColor = (basesize > els_top[i]) ?
-					((JMVC.array.inArray([10,16,17,18,24], i)>=0)? 'white':'red')
+					((JMVC.array.inArray([10,16,17,18,24], i) >= 0) ? 'white' : 'red')
 					:
 					JMVC.color.getRandomColor(true);
 				if(j%7 == 0) {
@@ -217,20 +261,20 @@ JMVC.controllers.test = function () {
 				}
 			}
 
-			if(basesize>box_size*top_fact) {				
-				mode='shrink';
+			if (basesize > box_size * top_fact) {				
+				mode = 'shrink';
 				recall();
 			}
-			if(basesize<box_size) {
-				mode='grow';					
+			if (basesize < box_size) {
+				mode = 'grow';					
 				recall();
 			}				
-			fact = (mode == 'grow')?factor:-factor;
+			fact = (mode == 'grow') ? factor : -factor;
 			
 			window.setTimeout(
-				function() {
+				function () {
 					f.innerHTML = '';
-					back(basesize+fact);
+					back(basesize + fact);
 				},
 				25
 			);
@@ -240,24 +284,23 @@ JMVC.controllers.test = function () {
 		
 	};
 	
-	this.action_direct = function() {
+	this.action_direct = function () {
 		JMVC.head.title('Swiss beat');
-		JMVC.head.addstyle(JMVC.vars.baseurl+'/media/css/flag.css');
+		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/flag.css');
 		this.render(
 			'<b style="color:green">hello</b>',
-			function() {
+			function () {
 				JMVC.debug('simple callback on render!');
 			}
 		);
 	}
 	
-	this.action_viewplus = function() {
+	this.action_viewplus = function () {
 		JMVC.head.title('Hello');
 		JMVC.getView('superview');
 		var _v = JMVC.getView('sv');
 		_v.set('hello', ', I said hellooooooo !!!');
 		_v.render();
-		
 	};
 	
 	
@@ -267,16 +310,20 @@ JMVC.controllers.test = function () {
 	this.action_logo = function(){
 		JMVC.events.loadify(1000);
 		JMVC.require('plotter', 'core/obj/bucket');
-		var M = Math;
-		var v = JMVC.getView('vacuum');
+		var M = Math,
+			v = JMVC.getView('vacuum');
 		
-		v.set({'style':'font-family:verdana;margin:0 auto;width:450px;height:150px;margin-top:80px;position:relative','content':'&nbsp;','id':'extralogo'});
+		v.set({
+			'style' : 'font-family:verdana;margin:0 auto;width:450px;height:150px;margin-top:80px;position:relative',
+			'content' : '&nbsp;',
+			'id' : 'extralogo'
+		});
 		
 		JMVC.head.addstyle(JMVC.vars.baseurl+'/media/css/logo.css');
 		
-		v.render({cback:function(){
-			var newlogo = document.getElementById('extralogo');
-			var j = new JMVC.graf.letter('j', 22, 40),
+		v.render({cback : function () {
+			var newlogo = document.getElementById('extralogo'),
+				j = new JMVC.graf.letter('j', 22, 40),
 				m = new JMVC.graf.letter('m', 22, 110),
 				v = new JMVC.graf.letter('v', 22, 260),
 				c = new JMVC.graf.letter('c', 22, 320);
@@ -289,19 +336,19 @@ JMVC.controllers.test = function () {
 			j.line(0,36,30,36, 3);
 			j.line(0,56,30,56, 3);
 			j.line(87,0,107,1, 2);
-			j.arc(38,-16, 72,72,  -M.PI/26	, M.PI/2, 12);
-			j.arc(38,-16, 52,52,  -M.PI/20	, M.PI/2	, 9);
-			//j.rotate(Math.PI/3);
+			j.arc(38,-16, 72,72,  -M.PI / 26	, M.PI / 2, 12);
+			j.arc(38,-16, 52,52,  -M.PI / 20	, M.PI / 2	, 9);
+
 			j.plot(newlogo);
 
 			m.line(0,0, 0,24, 2);
 			m.line(0,0, 60,0, 7);
 			m.line(0,24, 60,24, 7);
 			m.line(60,0, 60,24, 2);
-			m.arc(60,34, 53,53, -M.PI/20	, -M.PI	, 11	);
-			m.arc(60,34, 30,30, -M.PI/10	, -M.PI	, 6	);
-			m.arc(60,84, 53,53, -M.PI/20	, -JMVC.util.deg2rad(163)	, 12	);
-			m.arc(60,84, 30,30, -M.PI/12	, -M.PI	, 7	);
+			m.arc(60,34, 53,53, -M.PI / 20	, -M.PI	, 11);
+			m.arc(60,34, 30,30, -M.PI / 10	, -M.PI	, 6);
+			m.arc(60,84, 53,53, -M.PI / 20	, -JMVC.util.deg2rad(163), 12);
+			m.arc(60,84, 30,30, -M.PI / 12	, -M.PI	, 7);
 			m.line(60,64, 60,87, 2);
 			m.line(60,114, 60,137, 2);
 			m.plot(newlogo);
@@ -309,8 +356,8 @@ JMVC.controllers.test = function () {
 			v.line(0,45,0,69, 2);
 			v.line(0,45, 45,45, 4);
 			v.line(0,69, 45,69, 4);
-			v.arc(45,23, 22,22, -M.PI/8	, M.PI/2	, 3	);
-			v.arc(45,23, 46,46, -M.PI/18	, M.PI/2	, 8	);
+			v.arc(45,23, 22,22, -M.PI / 8	, M.PI / 2	, 3);
+			v.arc(45,23, 46,46, -M.PI / 18	, M.PI / 2	, 8);
 			v.line(60,38, 88, 38, 2);
 			v.line(60,28, 88,28, 2);
 			v.line(60,0, 88,28, 3);
@@ -318,62 +365,77 @@ JMVC.controllers.test = function () {
 			v.line(60,28, 48,12, 1);
 			v.plot(newlogo);
 
-			c.line(0,80,22,80,2);
-			c.line(0,80,0,58,2);
-			c.line(22, 80,22,58,2);
-			c.arc(36,58, 12,12, -M.PI/6	, M.PI*3/2	, 3	);
-			c.arc(36,58, 36,36, -M.PI/14	, M.PI*3/2	, 7	);
-			c.line(44,22,51,22,0);
-			c.line(44,46,51,46,0);
-			c.line(58,22,58,46,2);
-			c.line(66,22,66,66,5);
-			c.line(66,66,88,66,2);
-			c.line(88,44,88,66,2);
-			c.arc(66,44, 22,22, -M.PI/8		, 0	, 4	);
+			c.line(0,80, 22,80, 2);
+			c.line(0,80, 0,58, 2);
+			c.line(22,80, 22,58, 2);
+			c.arc(36,58, 12,12, -M.PI / 6	, M.PI * 3 / 2	, 3);
+			c.arc(36,58, 36,36, -M.PI / 14	, M.PI * 3 / 2	, 7);
+			c.line(44,22, 51,22, 0);
+			c.line(44,46, 51,46, 0);
+			c.line(58,22, 58,46, 2);
+			c.line(66,22, 66,66, 5);
+			c.line(66,66, 88,66, 2);
+			c.line(88,44, 88,66, 2);
+			c.arc(66,44, 22,22, -M.PI / 8, 0, 4);
 			c.plot(newlogo);
 
-			var a = newlogo.childNodes;
-			var i = 0;
-			
-			var T1=20, T2 =10;
-			
-			var bucket = new JMVC.bucket.create(JMVC.util.range(0,a.length-1));
-			
-			var t = window.setInterval(function(){
-				//var trg = JMVC.util.rand(1,a.length-1);
-				if(!bucket.hasMore()){bucket.recover();}
-				var trg =  bucket.next() || 1;
-				try{var c = a[trg].style.color;}catch(e){JMVC.debug(trg);}
-
-				window.setTimeout(
-					function(t1){
-						a[t1].style.color = 'white';
-						a[t1].style.fontSize = '8px';
-						window.setTimeout(
-							function(t2){a[t2].style.color = c;},T1, t1
-						);
-					},0, trg
-				);
-
-			},T2);
-			
+			var a = newlogo.childNodes,
+				i = 0,
+				T1=20, T2 =10,
+				bucket = new JMVC.bucket.create(JMVC.util.range(0, a.length - 1)),
+				t = window.setInterval(function(){
+					//var trg = JMVC.util.rand(1,a.length-1);
+					if (!bucket.hasMore()) {
+						bucket.recover();
+					}
+					var trg =  bucket.next() || 1;
+					try {
+						var c = a[trg].style.color;
+					}catch(e){
+						JMVC.debug(trg);
+					}
+					window.setTimeout(
+						function (t1) {
+							a[t1].style.color = 'white';
+							a[t1].style.fontSize = '8px';
+							window.setTimeout(
+								function (t2) {
+									a[t2].style.color = c;
+								}, T1, t1
+							);
+						},0, trg
+					);
+				}, T2);
 		}});
 		//
 		// if enabled will not allow that logo to be se in a frame or iframe
 		//JMVC.util.denyXframe();
 	};
 	
-	this.action_xmlparser = function(){
+	this.action_xmlparser = function () {
 		JMVC.require('core/xmlparser');
 		
 		var d = new JMVC.xmlparser.load('<?xml version="1.0" encoding="UTF-8" ?><root><el><name sex="M">federico</name><surname>ghedina</surname><struct><a>A</a><b>B</b></struct></el><el><name>federico2</name><surname>ghedina2</surname></el></root>'),
-			t=false;
-		d.extractor(function(node){return {name:JMVC.xmlparser._text(node.childNodes[0]), surname : JMVC.xmlparser._text(node.childNodes[1]), sex : JMVC.xmlparser._attribute(node.childNodes[0],'sex')}});
+			t = false;
+		d.extractor(function (node) {
+			return {
+				name : JMVC.xmlparser._text(node.childNodes[0]),
+				surname : JMVC.xmlparser._text(node.childNodes[1]),
+				sex : JMVC.xmlparser._attribute(node.childNodes[0],'sex')
+			}
+		});
 		t = d.extractor(0);
 		
 		
-		
-		d.extractor(function(node){JMVC.debug(2, node);return {a:JMVC.xmlparser._text(node)};},true);
+		d.extractor(
+			function (node) {
+				JMVC.debug(2, node);
+				return {
+					a : JMVC.xmlparser._text(node)
+				};
+			},
+			true
+		);
 		d.pointer(d.xmlDoc.getElementsByTagName('struct')[0]);
 		
 		t = d.extractor(0);
@@ -383,41 +445,46 @@ JMVC.controllers.test = function () {
 		//JMVC.yes.prova();
 	};
 	
-	this.action_docs = function(){
+	this.action_docs = function () {
 		JMVC.require('core/xmlparser');
-		JMVC.io.get(JMVC.vars.baseurl+'/media/documentation.xml',function(doc){
-			
-			var parser = new JMVC.xmlparser.load(doc);
 
-			parser.extractor(function(node){
-				//JMVC.debug('node is ',node);
-				var ret = {
-					signature: JMVC.xmlparser._text(node.childNodes[0]),
-					description:JMVC.xmlparser._text(node.childNodes[1]),
-					params : {},
-					returns : {
-						type : JMVC.xmlparser._text(node.childNodes[3]),
-						hint : JMVC.xmlparser._attribute(node.childNodes[3], 'hint')
+		JMVC.io.get(
+
+			JMVC.vars.baseurl + '/media/documentation.xml',
+
+			function (doc) {
+				var parser = new JMVC.xmlparser.load(doc);
+
+				parser.extractor(function (node) {
+					//JMVC.debug('node is ',node);
+					var ret = {
+						signature : JMVC.xmlparser._text(node.childNodes[0]),
+						description : JMVC.xmlparser._text(node.childNodes[1]),
+						params : {},
+						returns : {
+							type : JMVC.xmlparser._text(node.childNodes[3]),
+							hint : JMVC.xmlparser._attribute(node.childNodes[3], 'hint')
+						}
+					};
+					/*
+					for(var j = 0, l= node.childNodes[2].childNodes.length; j<l; j++){
+						ret.params[  JMVC.xmlparser._attribute(node.childNodes[2].childNodes[j], 'name')  ]  =  JMVC.xmlparser._text(node.childNodes[2].childNodes[j]);					
 					}
-				};
-				/*
-				for(var j = 0, l= node.childNodes[2].childNodes.length; j<l; j++){
-					ret.params[  JMVC.xmlparser._attribute(node.childNodes[2].childNodes[j], 'name')  ]  =  JMVC.xmlparser._text(node.childNodes[2].childNodes[j]);					
-				}
-				*/
-				JMVC.each(node.childNodes[2].childNodes, function (el, i) {
-					ret.params[  JMVC.xmlparser._attribute(el, 'name')]  =  JMVC.xmlparser._text(el);					
+					*/
+					JMVC.each(node.childNodes[2].childNodes, function (el, i) {
+						ret.params[JMVC.xmlparser._attribute(el, 'name')] = JMVC.xmlparser._text(el);					
+					});
+					return ret;
 				});
-				return ret;
-			});
-			parser.pointer(parser.xmlDoc.getElementsByTagName('dom')[0]);
+				parser.pointer(parser.xmlDoc.getElementsByTagName('dom')[0]);
+
 				
 			
 			
 		
 		
 		
-		//	JMVC.debug(JMVC.xmlparser.toJson(parser.xmlDoc.getElementsByTagName('dom')[0] ));
+			//	JMVC.debug(JMVC.xmlparser.toJson(parser.xmlDoc.getElementsByTagName('dom')[0] ));
 			
 			
 			//var r = parser.extractor(0);
@@ -429,7 +496,9 @@ JMVC.controllers.test = function () {
 			//r = parser.extractor(0);
 			
 			//JMVC.debug(r);
-		},true);	
+			},
+			true
+		);
 	};
 	
 	this.action_scheduler = function () {
@@ -447,7 +516,8 @@ JMVC.controllers.test = function () {
 			explain = 'Use buttons to add/remove items to the list (constructed with some elements)<br />' +
 				'<[H[' +
 					'var list = JMVC.getModel(\'List\', [\'Item0\', \'Item1\', \'Item2\', \'Item3\']);' +
-				']H]>';
+				']H]>',
+			B = JMVC.dom.body();
 		
 		
 		//JMVC.debug(list.getItems());
@@ -464,9 +534,9 @@ JMVC.controllers.test = function () {
 		
 		v.render({
 			cback : function () {
-				var butt_plus = JMVC.dom.add(JMVC.dom.body(), 'input', {type : 'button', value : '+', id : 'butt_plus'}),
-					butt_minus = JMVC.dom.add(JMVC.dom.body(), 'input', {type : 'button', value : '-', id : 'butt_minus'}),
-					ulist = JMVC.dom.add(JMVC.dom.body(), 'ul', {style : 'list-style-type:none;padding:10px;border:1px solid gray;width:200px;background-color:#eee;', id : 'mylist'}),
+				var butt_plus = JMVC.dom.add(B, 'input', {type : 'button', value : '+', id : 'butt_plus'}),
+					butt_minus = JMVC.dom.add(B, 'input', {type : 'button', value : '-', id : 'butt_minus'}),
+					ulist = JMVC.dom.add(B, 'ul', {style : 'list-style-type:none;padding:10px;border:1px solid gray;width:200px;background-color:#eee;', id : 'mylist'}),
 					item,
 					render;
 
@@ -499,14 +569,16 @@ JMVC.controllers.test = function () {
 	this.action_fx = function () {
 		JMVC.require('core/fx', 'animator', 'core/obj/calendar', 'timer');
 		//
-		var v = JMVC.getView('vacuum');
+		var v = JMVC.getView('vacuum'),
+			B = JMVC.dom.body();
 		v.set({style : 'background-color:red', id : 'prova'});
 		v.set('content', 'hello u');
 		v.render({
 			cback : function () {
-				JMVC.dom.add(JMVC.dom.body(), 'span', {id : 'bull'}, '&bull;');
-				var trg = JMVC.dom.add(JMVC.dom.body(), 'div', {id : 'timer'}),
-					cal = JMVC.dom.add(JMVC.dom.body(), 'div', {id : 'cal'}),
+				JMVC.dom.add(B, 'span', {id : 'bull'}, '&bull;');
+
+				var trg = JMVC.dom.add(B, 'div', {id : 'timer'}),
+					cal = JMVC.dom.add(B, 'div', {id : 'cal'}),
 					calInst;
 
 				JMVC.css.style(cal, {
@@ -517,14 +589,15 @@ JMVC.controllers.test = function () {
 				});
 				
 				calInst = new JMVC.calendar.create();
-				calInst.getMonthMap(7, 2012);
-				calInst.getContour(7, 2012);
+				calInst.getMonthMap(6, 2013);
+				calInst.getContour(6, 2013);
 				
 				JMVC.dom.html(cal, calInst.render());
 				
 				new JMVC.timer.create({target : trg});
 				
 				JMVC.fx.fadeIn(JMVC.dom.find('#prova'));
+
 				JMVC.animator.follow_ipath(
 					JMVC.dom.find('#bull'),
 					function (i) {return Math.abs(20 * Math.cos(i / 10)); },
