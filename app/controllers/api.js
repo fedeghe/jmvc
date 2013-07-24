@@ -28,7 +28,7 @@ JMVC.controllers.api = function () {
 		//features.set('fr', '<b style="font-size:26px;position:relative;top:0px;color:green;font-weight:bold">&#9758;</b>');
 		//
 
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/api.css', true, false);// parsed
+		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/core/api.css', true, false);// parsed
 
 		JMVC.io.get(JMVC.vars.baseurl + '/media/documentation.xml', function (doc) {
 			//get a parser
