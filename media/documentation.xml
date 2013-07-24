@@ -21,21 +21,7 @@ _/    _/  _/      _/    _/  _/    _/
 #############################################
 -->
 	<jmvc>
-		<function>
-			<signature name="bind">JMVC.bind(Function func, Object obj)</signature>
-			<description>Retrieves a variable from the global JMVC scope</description>
-			<params>
-				<param name="*func">the function that must be binded to the object</param>
-				<param name="*obj">the object where the function must be binded</param>
-			</params>
-			<returns>the function binded</returns>
-			<sample>&#10;	
-var y = {type:'t'},&#10;
-    t = JMVC.bind(function(){console.debug(this.type);}, y);&#10;
-t();&#10;</sample>
-			<status>complete</status>
-			<testlink>test_api_jmvc_bind</testlink>
-		</function>
+
 		
 		<function>
 			<signature name="check_ns">JMVC.check_ns(String ns [,Object ctx])</signature>
@@ -91,6 +77,25 @@ JMVC.debug(arr, obj, foo);
 			<returns>JMVC</returns>
 
 		</function>
+
+		
+		<function>
+			<signature name="delegate">JMVC.delegate(Function func, Object obj)</signature>
+			<description>Get a function with a delegated context</description>
+			<params>
+				<param name="*func">the function that must be binded to the object</param>
+				<param name="*obj">the object where the function must be binded</param>
+			</params>
+			<returns>the function binded</returns>
+			<sample>&#10;	
+var y = {type:'t'},&#10;
+    t = JMVC.delegate(function(){console.debug(this.type);}, y);&#10;
+t();&#10;</sample>
+			<status>complete</status>
+			<testlink>test_api_jmvc_delegate</testlink>
+		</function>
+
+
 		<function>
 			<signature name="each">JMVC.each(obj, fn)</signature>
 			<description>Loop over an object literal or Array, the callback at each cycle will receive the object and his index. As far as the callback has a name, the two `continue` and `break` function are available</description>
