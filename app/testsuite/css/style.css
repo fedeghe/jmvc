@@ -79,7 +79,6 @@ div#bro{
 	font-weight:bold;
 	font-size:20px;
 	line-height:30px;
-	height:30px;
 	padding:10px 0px;
 }
 
@@ -113,7 +112,7 @@ div#summary{
 }
 div#results{
 	margin:5px;
-	padding:5px;
+	padding:5px 10px;
 	margin-top:40px;
 }
 div.passed, div.failed{
@@ -134,6 +133,7 @@ div.passed, div.failed, div.msg{
 /*    -moz-border-radius:5px;
     -webkit-border-radius:5px;
     border-radius:5px;*/
+    margin-bottom : 35px;
 }
 
 div.passed{
@@ -165,6 +165,7 @@ div.msg{
 	border:1px solid #555;
 	border-top:1px solid #aaa;
 	border-left:3px solid #fff;
+
 }
 div#globalResult{
 	color:#fff;

@@ -12,7 +12,7 @@ code.debug{
 code.debug ul{
 	list-style-type: none;
 	margin:0px;
-	margin-bottom:10px;
+	/*margin-bottom:10px;*/
 	padding:10px;
 }
 code.debug ul li{
