@@ -1,7 +1,7 @@
 JMVC.controllers.delegate = function() {
 	this.action_index = function(){
 		
-		JMVC.events.loadify(1000);
+		JMVC.events.loadify(500);
 		
 		this.render(function test(){
 			"use strict";
@@ -11,9 +11,9 @@ JMVC.controllers.delegate = function() {
 			JMVC.test.startAll();
 
 
-			JMVC.test.describe('Various objects are binded with a function, and expected results are checked.');
+			JMVC.test.describe('Here some functions will be delegated to various object');
 
-
+			JMVC.test.message('Delegation to an object literal');
 			var o = {
 					name : 'objectFoo',
 					makes : 'noise'
@@ -29,32 +29,28 @@ JMVC.controllers.delegate = function() {
 
 
 
-
+			JMVC.test.message('Delegation to an object built from a one time constructor');
 			var Cnt = new function () {
 					this.name = 'content';
 					this.say = function () {return 'hello ' + this.name + ' here'; }
 				},
 				f2 = function (n) {this.name = n; },
-				of2 = JMVC.delegate(f2, Cnt);
+				of2 = JMVC.delegate(f2, Cnt),
+				changedName = of2('jmvc');
 
 			JMVC.test.code('var Cnt = new function () {\n' +
 				'        this.name = "content";\n' +
 				'        this.say = function () {return "hello " + this.name + " here"; };\n' +
 				'    },\n'+
 				'    f = function (n) {this.name = n;}\n' +
-				'    of2 = JMVC.delegate(f, Cnt);');
-			JMVC.test.testValue("of2('jmvc'); Cnt.name;", function(){of2('jmvc'); return Cnt.name; }, 'jmvc');
+				'    of2 = JMVC.delegate(f, Cnt),\n' + 
+				'    of2("jmvc");');
+			JMVC.test.testValue("Cnt.name;", function(){return Cnt.name; }, 'jmvc');
 			
 
 
-			var f3 = function (){ return this.vars;},
-				of3 = JMVC.delegate(f3);
-			JMVC.test.code('var f = function () {return this.vars; },\n' +
-				'    of3 = JMVC.delegate(f); // no object, default JMVC' );
-			JMVC.test.testValue("of3();", function(){return of3(); }, JMVC.vars);
-
 			
-			JMVC.test.message('Now try to bind a function to an array');
+			JMVC.test.message('Now try to delegate a function to an array');
 			var a = [0, 1, 2, 3, 4, 5, 6, 7],
 				oa = JMVC.delegate(function () {return this.length; }, a);
 			JMVC.test.code('var a = [0, 1, 2, 3, 4, 5, 6, 7],\n' +
@@ -63,22 +59,26 @@ JMVC.controllers.delegate = function() {
 			
 
 
-			JMVC.test.message('Now try to bind a function to a function');
+			JMVC.test.message('Now try to delegate a function to another function');
 			var f = function foofunction () {return 10; },
-				ofunc = JMVC.delegate(function () {return this.name; }, f);
+				ofunc = JMVC.delegate(function () {return this.name; }, f),
+				name = ofunc();
 			JMVC.test.code('var f = function foofunction () {return 10; },\n' +
-				'    ofunc = JMVC.delegate(function (){return this.name; }, f);' );
-			JMVC.test.testValue("ofunc();", function(){return ofunc(); }, 'foofunction');
+				'    ofunc = JMVC.delegate(function (){return this.name; }, f),\n'+
+				'    name = ofunc();' );
+			JMVC.test.testValue("ofunc();", function(){return name; }, 'foofunction');
 
 
 
-			JMVC.test.message('Now try to bind a function to a constructor, in particular we try to get a factory_method for the object');
+			JMVC.test.message('Now try to delegate a function to a constructor (factory method)');
 			var fc = function Foofunction () {this.x = 10; },
-				oc = JMVC.delegate(function () {return new this(); }, fc);
+				oc = JMVC.delegate(function () {return new this(); }, fc),
+				factoryObject = oc();
+
 			JMVC.test.code('var fc = function Foofunction () {this.x = 10; },\n' +
-				'    oc = JMVC.delegate(function () {return new this(); }, fc);\n'+
-				'                                       // crazy !!!, but works' );
-			JMVC.test.testValue("oc().x;", function(){return oc().x; }, 10);
+				'    oc = JMVC.delegate(function () {return new this(); }, fc),\n'+
+				'    factoryObject = oc();');
+			JMVC.test.testValue("factoryObject.x;", function(){return factoryObject.x; }, 10);
 			
 
 
