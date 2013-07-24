@@ -45,33 +45,25 @@ JMVC.extend('sniffer', {
 			if (r) {
 				JMVC.sniffer.os.name = nm;
 				f.break();
+			} else {
+				JMVC.sniffer.os.name = navigator.platform;
 			}
 		});
 		JMVC.each(dcheck, function f(fn, nm) {
 			r = fn();
 			if (r) {
 				JMVC.sniffer.device.name = nm;
+				switch (nm) {
+					case 'iPad' :
+						if (JMVC.W.screen.availWidth === 768 && JMVC.W.screen.availHeight === 1004) {
+							nm = 'iPadMini';
+						}
+					break;
+					default:break;
+				}
 				f.break();
 			}
 		});
-
-		/*
-		for (bro in bcheck) {
-			r = bcheck[bro]();
-			if (r){
-				JMVC.sniffer.browser.name = bro;
-				JMVC.sniffer.browser.version = r[1];
-				break;
-			}
-		}
-		for (os in ocheck) {
-			r = ocheck[os]();
-			if (r){
-				JMVC.sniffer.os.name = os;
-				break;
-			}
-		}	
-		*/
 	},
 
 	
