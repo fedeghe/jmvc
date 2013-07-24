@@ -573,9 +573,7 @@
                         };
                     },
 
-                    "bind" : function (func, ctx) {
-                        // splice noIE8, slice è distruttivo, tolgo i primi due, formali 
-                        // quindi tengo tutti quelli che non sono nella firma
+                    "delegate" : function (func, ctx) {
                         var args = Array.prototype.slice.call(arguments, 2);
                         return function () {
                             return func.apply(ctx || $JMVC, [].concat(args, Array.prototype.slice.call(arguments)));
@@ -1832,8 +1830,9 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
                     parselang : jmvc.parselang,
 
                     //checkhook : jmvc.check_hook,
-                    bind : jmvc.bind,
+                    
                     debug : jmvc.debug,
+                    delegate : jmvc.delegate,
                     extend : jmvc.extend,
                     expose : jmvc.expose,
                     factory:    jmvc.factory_method,
@@ -2025,8 +2024,11 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
             } catch (e1) {
                 for (null; i < len; i += 1) {
                     try {
-                        xhr = new W.ActiveXObject(IEfuckIds[i]);
-                    } catch (e2) {JMVC.debug('No way to initialize hxr'); }
+                        xhr = new ActiveXObject(IEfuckIds[i]);
+                    } catch (e2) {continue; }
+                }
+                if (!xhr) {
+                    JMVC.debug('No way to initialize hxr');
                 }
             }
             JMVC.gc(IEfuckIds, i, len);
@@ -2655,7 +2657,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
             ret = (b || JMVC.WD)[sel](a[2]);
             ret = toArr ? JMVC.array.coll2array(ret) : ret;
             
-            return (ret instanceof Array && ret.length == 1) ? ret[0] : ret;
+            return ((ret instanceof Array) && ret.length == 1) ? ret[0] : ret;
         },
 
         'find2' : function (a, b) {
@@ -3946,7 +3948,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
         mRound : function (n) {return (n + 0.5) >> 0; },
         mFloor : function (n) {(n > 0 ? n : n + 1) >> 0; },
         mCeil : function (n) {return (n + (n > 0 && !!(n % 1))) >> 0; },
-        num : function (n) {return parseFloat(n.toFixed(10), 10); },
+        num : function (n) {return parseFloat(n.toFixed(10), 10); }
     };
     
     //
