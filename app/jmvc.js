@@ -755,21 +755,10 @@
                      * @return {[type]}   [description]
                      */
                     "purge" : function (o) {
-                        var a = o.attributes, i, l, n;
-                        if (a) {
-                            for (i = 0, l = a.length; i < l; i += 1) {
-                                n = a[i].name;
-                                if (typeof o[n] === 'function') {
-                                    o[n] = null;
-                                }
-                            }
-                        }
-                        a = o.childNodes;
-                        if (a) {
-                            for (i = 0, l = a.length; i < l; i += 1) {
-                                jmvc.purge(o.childNodes[i]);
-                            }
-                        }
+                        o && jmvc.each(o, function (el, i) {
+                            o[i] = null;
+                            delete o[i];
+                        });
                     },
 
                     /**
