@@ -177,7 +177,7 @@ JMVC.controllers.api = function () {
 		}, false);
 		
 		apintro.set('postmessage', 'Thank You');
-		main.set('content', '{{apintro}}<p style="color:#fff">Rendering time: <strong>[[JMVC.vars.rendertime]]</strong> ms</p>');
+		main.set('content', '{{apintro}}<p class="rendertime">Rendering time: <strong>[[JMVC.vars.rendertime]]</strong> ms</p>');
 		//main.set('content', '{{apintro postmessage=`hello`}}<p style="color:#fff">Rendering time: <strong>[[JMVC.vars.rendertime]]</strong> ms</p>');
 		
 		main.parse().render(function () {

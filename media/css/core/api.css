@@ -2,11 +2,10 @@ body{
 	/*font-family: Verdana, "MS Trebuchet", sans-serif;*/
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 	font-size:14px;
-	background-color:#C4DDED;
 	width:900px;
 	margin:0 auto;
 	margin-top:1em;
-	background-image: url($baseurl$/media/img/oy.png);
+	/*background-image: url($baseurl$/media/img/oy.png);*/
 } 
 p{
 	padding-bottom:10px;
@@ -139,13 +138,16 @@ h1.intro{
 	font-size:40px;
 	line-height:45px;
 	padding:10px 0px;
-	color:yellow;
+	color:green;
 }
 p.intro{
-	color:#aa0;
+	
 	line-height:15px;
 	border-bottom:1px dotted #aa0;
 	margin-bottom:10px;
+}
+p.rendertime{
+	color:blue;
 }
 caption {
 	color:white;
