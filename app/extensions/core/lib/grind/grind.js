@@ -2,9 +2,13 @@ JMVC.extend('grind', {
 	
 	init : function () {
 		"use strict";
-		JMVC.head.addstyle(JMVC.vars.extensions + 'lib/grind/grind.css');
+		JMVC.head.addstyle(JMVC.vars.extensions + 'core/lib/grind/grind.css');
 	},
 	
+	colorize : function () {
+		JMVC.head.addstyle(JMVC.vars.extensions + 'core/lib/grind/color.css');	
+	},
+
 	render : function (conf, bodyClass) {
 		"use strict";
 		bodyClass && JMVC.dom.addClass(document.body, bodyClass);
