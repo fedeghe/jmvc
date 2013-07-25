@@ -10,10 +10,7 @@ div.jmvc_console {
 	background-color : white;
 	color : black;
 	font-size : 10px;
-	left:20px;
-	top:20px;
-	right:20px;
-	bottom:20px;
+	padding:10px;
 	z-index:200;
 }
 div.jmvc_console span.close{
@@ -53,4 +50,5 @@ div.jmvc_console .innerbox{
 	border:1px solid black;
 	margin:1px;
 	padding:2px;
+	height:$height$px;
 }
