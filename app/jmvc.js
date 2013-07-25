@@ -551,6 +551,12 @@
                     //@DOC
                     // setter getter unsetter $JMVC vars
                     "set" : function (name, content) {
+                        if (JMVC.util.isObject(name)) {
+                            JMVC.each(name, function (el, i) {
+                                $JMVC.set(i, el);
+                            });
+                            return $JMVC;
+                        }
                         $JMVC.vars[name] = content;
                         return $JMVC;
                     },
