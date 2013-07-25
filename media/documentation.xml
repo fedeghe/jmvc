@@ -49,8 +49,7 @@ var loaded_extensions = JMVC.check_ns('extensions', JMVC),&#10;
 			</params>
 			<returns>void (undefined)</returns>
 			<sample>JMVC.console();</sample>
-			<status>testing</status>
-			<testlink>test</testlink>
+
 		</function>
 
 		<function>
