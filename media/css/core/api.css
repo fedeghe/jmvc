@@ -121,8 +121,8 @@ p.footer{text-align:center}
 pre.code{
 	border-left:3px solid #0f0;
 	border-right:3px solid #0a0;
-	background-color:#666;
-	color:#fff;
+	background-color:#555;
+	color:#0f0;
 	padding:0.5em;
 	line-height:1.5em;
 	font-family: monospace;
