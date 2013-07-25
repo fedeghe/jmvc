@@ -1,8 +1,8 @@
 
 JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/wcave.css');
 
-JMVC.head.addstyle('http://fonts.googleapis.com/css?family=Freckle+Face');
 
+JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css', true);
 
 
 /**

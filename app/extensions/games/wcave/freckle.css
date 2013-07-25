@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'Freckle Face';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Freckle Face'), local('FreckleFace-Regular'), url($baseurl$/app/extensions/games/wcave/freckle.woff) format('woff');
+}
