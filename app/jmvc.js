@@ -828,8 +828,8 @@
                                 for (i in o) {
                                     func.$continue = false;
                                     x = func.call(o, o[i], i);
-                                    if (func.$continue) {continue; }
-                                    if (func.$break) {break; }
+                                    if(func.$continue) {continue;}
+                                    if (func.$break) {break;}
                                     ret[i] = x;
                                 }
                                 return ret;
@@ -842,8 +842,8 @@
                                 for (null; i < l; i += 1) {
                                     func.$continue = false;
                                     x = func.call(o, o[i], i);
-                                    if (func.$continue) {continue; }
-                                    if (func.$break) {break; }
+                                    if(func.$continue) {continue;}
+                                    if (func.$break) {break;}
                                     ret.push(x);
                                 }
                                 return ret;
@@ -3573,25 +3573,10 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
          * @param  {[type]} myvar [description]
          * @return {[type]}       [description]
          */
-        'inArray' : function (arr, myvar) {
-            var r = -1;
-            JMVC.each(arr, function f(e, i) {
-                if (e === myvar) {
-                    r = i;
-                    f['break']();
-                }
-            });
-            return r;
-            
-            var i = 0,
-                len = arr.length;
-            for (null; i < len; i += 1) {
-                if (myvar === arr[i]) {
-                    return i;
-                }
-            }
-            return -1;
-            
+        'inArray' : function (arr, mvar) {
+            var i = arr.length;
+            while (i-- && arr[i] !== mvar);
+            return i;
         },
 
         /**
@@ -3650,10 +3635,9 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
         /**
          * [ description]
          * @param  {[type]} code [description]
-         * @param  {[type]} pwd  [description]
          * @return {[type]}      [description]
          */
-        'code2str' : function (code, pwd) {
+        'code2str' : function (code) {
             return String.fromCharCode.apply(null, code);
         },
 
@@ -3675,9 +3659,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
          * @param  {[type]} ''         [description]
          * @return {[type]}            [description]
          */
-        'ltrim' : function (s) {
-            return s.replace(/^\s+/g, '');
-        },
+        'ltrim' : function (s) {return s.replace(/^\s+/g, ''); },
 
         'multireplace' : function (cnt, o) {
             JMVC.each(o, function (el, rx) {
@@ -3734,9 +3716,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
          * @param  {[type]} ''         [description]
          * @return {[type]}            [description]
          */
-        'rtrim' : function (s) {
-            return s.replace(/\s+$/g, '');
-        },
+        'rtrim' : function (s) {return s.replace(/\s+$/g, ''); },
 
         /**
          * [ description]
@@ -3744,12 +3724,13 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
          * @param  {[type]} pwd [description]
          * @return {[type]}     [description]
          */
-        'str2code' : function (str, pwd) {
+        'str2code' : function (str) {
             var out = [],
                 i = 0,
                 l = str.length;
-            for (null; i < l; i += 1) {
+            while (i < l) {
                 out.push(str.charCodeAt(i));
+                ++ i;   
             }
             return out;
         },
@@ -3762,7 +3743,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
          */
         'str_repeat' : function (str, n) {
             var t = [];
-            while (n-=1) {t.push(str.replace(/\%n\%/g, n)); }
+            while (n -= 1) {t.push(str.replace(/\%n\%/g, n)); }
             return t.reverse().join('');
         },
 
@@ -3772,9 +3753,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
          * @param  {[type]} ''         [description]
          * @return {[type]}            [description]
          */
-        'trim' : function (s) {
-            return s.replace(/^\s+|\s+$/g, '');
-        }
+        'trim' : function (s) {return s.replace(/^\s+|\s+$/g, ''); }
     };
 
 
