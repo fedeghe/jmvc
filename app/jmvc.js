@@ -11,8 +11,8 @@
  *
  *
  * 
- * @version: 2.1
- * @date : 21-07-2013
+ * @version: 2.2
+ * @date : 30-07-2013
  * @copyright (c) 2013, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina
  * @url : http://www.jmvc.org
@@ -78,7 +78,7 @@
                 // returning object created in that function, here $JMVC will be JMVC
                 var $JMVC,
                     JMVC_VERSION = 2,
-                    JMVC_REVIEW = 1,
+                    JMVC_REVIEW = 2,
                     JMVC_PACKED = false,
 
                     /**
@@ -156,7 +156,8 @@
                     // dispather function result
                     /**
                      * here will be stored relevant results returned from the dispather function
-                     * used to parse the current url
+                     * used to parse the current url for getting all is needed to now how to get
+                     * the right response
                      */
                     dispatched,
 
@@ -175,7 +176,7 @@
                     Parser,
 
                     /**
-                     * two useful constructors 
+                     * some useful constructors 
                      */
                     Event,
                     Promise,
@@ -204,9 +205,9 @@
 
                     // store starting time, that's not truly the starting time but 
                     // it's really next to the real value
-                    time_begin = +new Date(),
+                    time_begin = +new Date,
 
-                    //alias of undefined
+                    //undefined string
                     undef = 'undefined',
                     //noop = function () {},
 
@@ -215,11 +216,6 @@
                     // script : creates a script tag with the right url to the source
                     // note : seems like script mode load faster but
                     getmode = 'ajax'; // script or ajax
-
-
-
-
-
 
 
 
@@ -284,6 +280,12 @@
                         Child.baseConstructor = Parent;
                     },
 
+                    /**
+                     * [ description]
+                     * @param  {[type]} Childs [description]
+                     * @param  {[type]} Parent [description]
+                     * @return {[type]}        [description]
+                     */
                     "multi_inherit" : function (Childs, Parent) {
                         jmvc.each(Childs, function (el){
                             jmvc.inherit(el, Parent);
@@ -437,31 +439,27 @@
                             path = false,
                             //path_absolute =  $JMVC.vars.baseurl + US + 'app' + US + type + 's/' + $JMVC.c_prepath;
                             path_absolute =  $JMVC.vars.baseurl + US + 'app' + US + type + 's/',
+                            t = type,
                             ret;
 
                         if (pieces.length > 1) {
                             name = pieces.pop();
                             path = pieces.join(US);
                         }
+
                         //need to do this because of the special case when a c_prepath is used
                         if (type === 'controller') {
                             path_absolute += $JMVC.c_prepath;
                         }
-
                         path_absolute += (path ? path + US : "") + name;
-
-                        switch (type) {
-                        case 'view':
-                        case 'model':
-                        case 'controller':
-                        case 'interface':
-                            path_absolute += JMVC_EXT[type];
-                            break;
-                        default:
+                        
+                        t = t.match(/(view|model|controller|interface)/);
+                        
+                        if (!t || t[0] !== type) {
                             return false;
-                            break;
                         }
-
+                        path_absolute += JMVC_EXT[type];
+                        
                         // ajax get script content and return it
                         
                         ret = jmvc.xhrget(path_absolute, type, name, params);
@@ -493,7 +491,8 @@
                             if (ctrl.jmvc_routes) {
                                 $JMVC.a = ctrl.jmvc_routes[$JMVC.a] || $JMVC.a;
                             }
-                            // parameters are set to controller
+
+                            // parameters are set as variables of the controller
                             for (i in $JMVC.p) {
                                 if ($JMVC.p.hasOwnProperty(i)) {
                                     ctrl.set(i, decodeURI($JMVC.p[i]));
@@ -502,10 +501,9 @@
 
                             //before?
                             // global before
-                            if (ctrl.before && typeof ctrl.before === 'function') {
-                                ctrl.before();
-                            }
-                            // action before
+                            ctrl.before && typeof ctrl.before === 'function' && (ctrl.before());
+
+                            // action before?
                             if (ctrl['before_' + $JMVC.a] && typeof ctrl['before_' + $JMVC.a] === 'function') {
                                 ctrl['before_' + $JMVC.a]();
                             }
@@ -523,11 +521,11 @@
                             }
 
                             //after?
-                            // action after
+                            // action after?
                             if (ctrl['after_' + $JMVC.a] && typeof ctrl['after_' + $JMVC.a] === 'function') {
                                 ctrl['after_' + $JMVC.a]();
                             }
-                            // global after
+                            // global after?
                             if (ctrl.after && typeof ctrl.after === 'function') {
                                 ctrl.after();
                             }
@@ -814,22 +812,21 @@
                     },
 
                     "each" : function (o, func) {
-                        var i, l, ret,/* t,*/ type;
+                        var i, l, ret, type;
                         type = ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
                         func.$break = false;
                         func.$continue = false;
                         func['break'] = func.exit = function () {func.$break = true; };
                         func['continue'] = func.skip = function () {func.$continue = true; };
-                        //alert(type);
+
                         return type.match(/(array|object)/) ? {
                             'object' : function () {
                                 var x;
                                 ret = {};
                                 for (i in o) {
-                                    func.$continue = false;
                                     x = func.call(o, o[i], i);
-                                    if(func.$continue) {continue;}
-                                    if (func.$break) {break;}
+                                    if (func.$continue) {func.$continue = false; continue; }
+                                    if (func.$break) {break; }
                                     ret[i] = x;
                                 }
                                 return ret;
@@ -840,9 +837,8 @@
                                 l = o.length;
                                 ret = [];
                                 for (null; i < l; i += 1) {
-                                    func.$continue = false;
                                     x = func.call(o, o[i], i);
-                                    if(func.$continue) {continue;}
+                                    if (func.$continue) {func.$continue = false; continue; }
                                     if (func.$break) {break;}
                                     ret.push(x);
                                 }
@@ -850,14 +846,6 @@
                             }
                         }[type]() : func(o);
                     },
-                    /*
-                    JMVC.each([1,2,3,4,5,6,7,8,9,10], function f(e) {
-                        if (e % 2 == 0) {
-                            f.skip();
-                        }
-                        return e;
-                    });
-                     */
 
                     // ty https://github.com/stackp/promisejs
                     /**
@@ -904,21 +892,18 @@
                     }
                 };
 
-                // ensure ucfirst controller name
+                
+
+
+
                 /*
-                function jmvc_normalize(n) {
-                    return n.charAt(0).toUpperCase() + n.substr(1).toLowerCase();
-                }
+                     _/_/_/      _/_/_/  _/  _/_/    _/_/_/    _/_/    _/  _/_/   
+                    _/    _/  _/    _/  _/_/      _/_/      _/_/_/_/  _/_/        
+                   _/    _/  _/    _/  _/            _/_/  _/        _/           
+                  _/_/_/      _/_/_/  _/        _/_/_/      _/_/_/  _/            
+                 _/                                                               
+                _/  
                 */
-                ////
-/*
-     _/_/_/      _/_/_/  _/  _/_/    _/_/_/    _/_/    _/  _/_/   
-    _/    _/  _/    _/  _/_/      _/_/      _/_/_/_/  _/_/        
-   _/    _/  _/    _/  _/            _/_/  _/        _/           
-  _/_/_/      _/_/_/  _/        _/_/_/      _/_/_/  _/            
- _/                                                               
-_/  
-*/
                 Parser = {
                     /**
                      * [tpl description]
@@ -1186,25 +1171,18 @@ _/
                 };
                 jmvc.multi_inherit(Errors, Error);
                 
-/*
 
 
 
 
-
-
-
-
-
-
-
-    _/              _/                              _/_/                               
-       _/_/_/    _/_/_/_/    _/_/    _/  _/_/    _/        _/_/_/    _/_/_/    _/_/    
-  _/  _/    _/    _/      _/_/_/_/  _/_/      _/_/_/_/  _/    _/  _/        _/_/_/_/   
- _/  _/    _/    _/      _/        _/          _/      _/    _/  _/        _/          
-_/  _/    _/      _/_/    _/_/_/  _/          _/        _/_/_/    _/_/_/    _/_/_/     
-                                                                                      
- */
+                /*
+                    _/              _/                              _/_/                               
+                       _/_/_/    _/_/_/_/    _/_/    _/  _/_/    _/        _/_/_/    _/_/_/    _/_/    
+                  _/  _/    _/    _/      _/_/_/_/  _/_/      _/_/_/_/  _/    _/  _/        _/_/_/_/   
+                 _/  _/    _/    _/      _/        _/          _/      _/    _/  _/        _/          
+                _/  _/    _/      _/_/    _/_/_/  _/          _/        _/_/_/    _/_/_/    _/_/_/     
+                                                                                                      
+                 */
                 Interface = function (f) {
                     this.mthds = f;
                 };
@@ -1229,25 +1207,14 @@ _/  _/    _/      _/_/    _/_/_/  _/          _/        _/_/_/    _/_/_/    _/_/
                 };
                 
 
-/*
-
-
-
-
-
-
-
-
-
-
-
-                                   _/                          _/  _/                      
-    _/_/_/    _/_/    _/_/_/    _/_/_/_/  _/  _/_/    _/_/    _/  _/    _/_/    _/  _/_/   
- _/        _/    _/  _/    _/    _/      _/_/      _/    _/  _/  _/  _/_/_/_/  _/_/        
-_/        _/    _/  _/    _/    _/      _/        _/    _/  _/  _/  _/        _/           
- _/_/_/    _/_/    _/    _/      _/_/  _/          _/_/    _/  _/    _/_/_/  _/            
-                                                                                  
- */
+                /*
+                                                   _/                          _/  _/                      
+                    _/_/_/    _/_/    _/_/_/    _/_/_/_/  _/  _/_/    _/_/    _/  _/    _/_/    _/  _/_/   
+                 _/        _/    _/  _/    _/    _/      _/_/      _/    _/  _/  _/  _/_/_/_/  _/_/        
+                _/        _/    _/  _/    _/    _/      _/        _/    _/  _/  _/  _/        _/           
+                 _/_/_/    _/_/    _/    _/      _/_/  _/          _/_/    _/  _/    _/_/_/  _/            
+                                                                                                  
+                 */
                 // 
                 // parent controller
                 Controller = function () {};
@@ -1330,22 +1297,13 @@ _/        _/    _/  _/    _/    _/      _/        _/    _/  _/  _/  _/        _/
 
 
 
-/*
-
-
-
-
-
-
-
-
-
-                                    _/            _/   
-   _/_/_/  _/_/      _/_/      _/_/_/    _/_/    _/    
-  _/    _/    _/  _/    _/  _/    _/  _/_/_/_/  _/     
- _/    _/    _/  _/    _/  _/    _/  _/        _/      
-_/    _/    _/    _/_/      _/_/_/    _/_/_/  _/
- */
+                /*
+                                                    _/            _/   
+                   _/_/_/  _/_/      _/_/      _/_/_/    _/_/    _/    
+                  _/    _/    _/  _/    _/  _/    _/  _/_/_/_/  _/     
+                 _/    _/    _/  _/    _/  _/    _/  _/        _/      
+                _/    _/    _/    _/_/      _/_/_/    _/_/_/  _/
+                 */
                 //
                 //
                 Model = function () {};
@@ -1373,23 +1331,15 @@ _/    _/    _/    _/_/      _/_/_/    _/_/_/  _/
 
 
 
-/*
+                /*
 
+                              _/                                
+                 _/      _/        _/_/    _/      _/      _/   
+                _/      _/  _/  _/_/_/_/  _/      _/      _/    
+                 _/  _/    _/  _/          _/  _/  _/  _/       
+                  _/      _/    _/_/_/      _/      _/
 
-
-
-
-
-
-
-              _/                                
- _/      _/        _/_/    _/      _/      _/   
-_/      _/  _/  _/_/_/_/  _/      _/      _/    
- _/  _/    _/  _/          _/  _/  _/  _/       
-  _/      _/    _/_/_/      _/      _/          
-
-
- */
+                */
                 // 
                 // directly instantiated assinging content
                 /**
@@ -1776,6 +1726,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
                 //         _/    _/  _/    _/      _/                _/  _/  _/  _/  _/      _/  _/           
                 //        _/    _/  _/    _/      _/          _/    _/  _/      _/    _/  _/    _/            
                 //         _/_/      _/_/        _/            _/_/    _/      _/      _/        _/_/_/ 
+                //
                 //          
                 $JMVC = {
                     loaded : false,
@@ -1926,30 +1877,6 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
     //
     //
     //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
     //########################################################################################################
     //
     //      _/          _/  _/_/_/  _/_/_/    _/_/_/_/  _/_/_/                _/_/_/_/  _/      _/  _/_/_/_/_/   
@@ -1969,13 +1896,7 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
     //   " .string
     //   " .object
     // 
-    // 
-    // 
-    // 
     /**
-    *
-    *
-    *
     *
     *
     *
@@ -3466,6 +3387,15 @@ _/      _/  _/  _/_/_/_/  _/      _/      _/
                 JMVC.dom.insertAfter(newmeta, meta.item(len - 1));
             } else {
                 this.element.appendChild(newmeta);
+            }
+        },
+
+        'lib' : function (l) {
+            var libs = {
+                'jquery' : 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js'
+            }
+            if (l in libs){
+                JMVC.head.addscript(libs[l]);
             }
         },
 
