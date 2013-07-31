@@ -811,6 +811,13 @@
                             .replace(/'/g, "&#039;");
                     },
 
+                    /**
+                     * Every each implementation is really bad compared to a native loop,
+                     * so, if possible , do not use that function.
+                     * @param  {[type]} o    [description]
+                     * @param  {[type]} func [description]
+                     * @return {[type]}      [description]
+                     */
                     "each" : function (o, func) {
                         var i, l, ret, type;
                         type = ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
@@ -818,6 +825,8 @@
                         func.$continue = false;
                         func['break'] = func.exit = function () {func.$break = true; };
                         func['continue'] = func.skip = function () {func.$continue = true; };
+
+
 
                         return type.match(/(array|object)/) ? {
                             'object' : function () {
@@ -836,7 +845,7 @@
                                 i = 0;
                                 l = o.length;
                                 ret = [];
-                                for (null; i < l; i += 1) {
+                                for (null; i < l; i++) {
                                     x = func.call(o, o[i], i);
                                     if (func.$continue) {func.$continue = false; continue; }
                                     if (func.$break) {break;}
@@ -2395,9 +2404,9 @@
          */
         'append' : function (where, what) {
             if (JMVC.util.isArray(what)) {
-                JMVC.each(what, function (e) {
-                    where.appendChild(e);
-                });
+                for (var i = 0, l = what.length; i < l; i++) {
+                    where.appendChild(what[i]);
+                }
             } else {
                 where.appendChild(what);
             }
@@ -2834,9 +2843,9 @@
                 el = JMVC.dom.find(el);
             }
             if(JMVC.util.isArray(el)){
-                JMVC.each(el, function(e){
-                    JMVC.dom.remove(e);
-                });
+                for (var i  = 0, l = el.length; i < l; i++) {
+                    JMVC.dom.remove(el[i]);
+                }
                 return;
             }
             parent = el.parentNode;
@@ -2929,7 +2938,9 @@
          */
         'bind' : function (el, tipo, fn) {
             if (el instanceof Array) {
-                JMVC.each(el, function (r, i){JMVC.events.bind(r, tipo, fn); });
+                for (var i =0, l = el.length; i < l; i++) {
+                    JMVC.events.bind(el[i], tipo, fn);
+                }
                 return ;
             }
             var f = function (e) {fn.call(el, e || W.event); };
@@ -2969,7 +2980,9 @@
          */
         'one' : function (el, tipo, fn) {
             if (el instanceof Array) {
-                JMVC.each(el, JMVC.events.one, tipo, fn);
+                for (var i = 0, l = el.length; i < l; i ++) {
+                    JMVC.events.one(el[i], tipo, fn);
+                }
                 return;
             }
             var newf = function (e) {
