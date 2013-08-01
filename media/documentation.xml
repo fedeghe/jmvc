@@ -115,6 +115,8 @@ var obj = {name:'Federico', surname : 'Ghedina', says : 'wat'},&#10;
 	});&#10;
 console.debug(obj, objAfter);&#10;
 console.debug(arr, arrAfter);&#10;</sample>
+			<status>testing</status>
+			<testlink>test_api_jmvc_each</testlink>>
 		</function>
 		<function>
 			<signature name="Event">JMVC.Event()</signature>
