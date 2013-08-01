@@ -857,13 +857,6 @@
                         }[type]() : func(o);
                     },
 
-                    /*
-
-                     -======================================-
-                      ty https://github.com/stackp/promisejs
-                     -======================================-
-
-                    */ 
                     "promise" : {
                         'create' : function () {return new Promise(); },
                         'join' : function () {},
@@ -1116,6 +1109,11 @@
                 };
 
 
+                /*
+                 -======================================-
+                  ty https://github.com/stackp/promisejs
+                 -======================================-
+                */
                 /**
                  * [Promise description]
                  */
