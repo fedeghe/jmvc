@@ -667,11 +667,9 @@
                             l = lng.length;
 
                         while (i < l) {
-                            if (!langs[lng[i]]) {
-                                $JMVC.io.get(JMVC.vars.baseurl + PATH.lang + lng[i] + '.js', function (ln) {
-                                    jmvc.jeval(ln);
-                                },  false);
-                                langs[lng[i]] = true;
+                            if (!JMVC.i18n[lng[i]]) {
+                                JMVC.i18n[lng[i]] = true;
+                                //langs[lng[i]] = true;
                             }
                             i += 1;
                         }
@@ -825,9 +823,12 @@
                         func.$continue = false;
                         func['break'] = func.exit = function () {func.$break = true; };
                         func['continue'] = func.skip = function () {func.$continue = true; };
-
-
-
+                        
+                        /*
+                        *
+                        * 
+                        * A switch is much slower
+                        */
                         return type.match(/(array|object)/) ? {
                             'object' : function () {
                                 var x;
@@ -856,10 +857,13 @@
                         }[type]() : func(o);
                     },
 
-                    // ty https://github.com/stackp/promisejs
-                    /**
-                     * 
-                     */
+                    /*
+
+                     -======================================-
+                      ty https://github.com/stackp/promisejs
+                     -======================================-
+
+                    */ 
                     "promise" : {
                         'create' : function () {return new Promise(); },
                         'join' : function () {},
@@ -867,18 +871,27 @@
                     },
 
                     "parselang" : function (cnt) {
-                        
-                        var RXlng = "\\[L\\[([\\S\\s]*?)\\]([A-z]*?)\\]",
-                            lang = true,
-                            tmp,
-                            limit = 100000,
-                            def_lang = $JMVC.p.lang || $JMVC.cookie.get('lang') || defaultlang;
+
                         if ($JMVC.p.lang) {
                             $JMVC.cookie.set('lang', $JMVC.p.lang);
                         }
+
+                        
+                        var RXlng = "\\[L\\[([\\S\\s]*?)\\]\\]",
+                            lang = true,
+                            tmp,
+                            limit = 100000,
+                            def_lang = $JMVC.cookie.get('lang') || defaultlang;
+                        
                         JMVC.vars.currentlang = def_lang;
 
-                        $JMVC.i18n || ($JMVC.i18n = {});
+                        $JMVC.lang(JMVC.vars.currentlang);
+
+                        if (JMVC.i18n[JMVC.vars.currentlang] === true) {
+                            $JMVC.io.get(JMVC.vars.baseurl + PATH.lang + JMVC.vars.currentlang + '.js', function (ln) {
+                                jmvc.jeval(ln);
+                            },  false);
+                        }
 
                         // check for [[js code]], es. [[JMVC.vars.baseurl]] will be rendered as the value of baseurl
                         while (limit) {
@@ -886,9 +899,7 @@
                             tmp = '';
                             
                             if (!!lang) {
-                                !lang[2] && (lang[2] = def_lang || currentlang || defaultlang);
-                                
-                                tmp = lang[2] && $JMVC.i18n[lang[2]] && $JMVC.i18n[lang[2]][lang[1]] ? $JMVC.i18n[lang[2]][lang[1]] : lang[1];
+                                tmp = $JMVC.i18n[JMVC.vars.currentlang] && $JMVC.i18n[JMVC.vars.currentlang][lang[1]] ? $JMVC.i18n[JMVC.vars.currentlang][lang[1]] : lang[1];
                                 cnt = cnt.replace(lang[0], tmp);
 
                             } else {
