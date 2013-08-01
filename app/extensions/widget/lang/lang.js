@@ -1,6 +1,6 @@
 JMVC.extend('widget.langs', {
 	init : function () {
-
+		JMVC.head.addstyle(JMVC.vars.baseurl + JMVC.US + 'app' + JMVC.US + 'extensions' + JMVC.US + 'widget' + JMVC.US + 'lang' + JMVC.US + 'lang.css');
 	},
 	create : function (cnt) {
 		var mkp = JMVC.dom.create('ul', {'class' : 'lang'}),
