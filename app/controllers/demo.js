@@ -1,4 +1,4 @@
-JMVC.controllers.test = function () {
+JMVC.controllers.demo = function () {
 	
 	/* test a route */ 
 	this.addRoutes({
@@ -47,16 +47,16 @@ JMVC.controllers.test = function () {
 			bu = JMVC.vars.baseurl,
 			v = JMVC.getView('vacuum'),
 			links = {
-				'Model' : 'test/model',
-				'Controller' : 'test/controller',
-				'View' : 'test/view',
+				'Model' : 'demo/model',
+				'Controller' : 'demo/controller',
+				'View' : 'demo/view',
 				'Tabs' : 'tabs/one/i_say/Hello%20my%20Guest',
-				'Some fun' : 'test/flag',
-				'Logo' : 'test/logo',
+				'Some fun' : 'demo/flag',
+				'Logo' : 'demo/logo',
 				'Google' : 'google.jmvc',
-				'Observer' : 'test/observer.jmvc',
-				'Sheduler' : 'test/scheduler.jmvc',
-				'Effects' : 'test/fx.jmvc',
+				'Observer' : 'demo/observer.jmvc',
+				'Sheduler' : 'demo/scheduler.jmvc',
+				'Effects' : 'demo/fx.jmvc',
 				'Key' : 'test_key',
 				'* strict' : 'test_strict',
 				'* obj/bucket' : 'test_bucket',
