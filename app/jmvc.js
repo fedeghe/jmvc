@@ -78,7 +78,7 @@
                 // returning object created in that function, here $JMVC will be JMVC
                 var $JMVC,
                     JMVC_VERSION = 2,
-                    JMVC_REVIEW = 2,
+                    JMVC_REVIEW = 7,
                     JMVC_PACKED = false,
 
                     /**
@@ -238,19 +238,7 @@
                 *     
                 **/
                 jmvc = {
-                    /**
-                     * globalize many variables, by default do not override existing ones,
-                     * but using a truly value as second parameter it does
-                     * @param  Object o    the literal containing all the elements to be published
-                     * @param  {[type]} hard [description]
-                     * @return void
-                     */
-                    "expose" : function (o, hard) {
-                        hard = !!hard;
-                        $JMVC.each(o, function (el, i) {
-                            W[i] = hard ? el : W[i] || el;
-                        });
-                    },
+
 
                     /**
                      * eval function wrap
@@ -807,6 +795,14 @@
                             .replace(/>/g, "&gt;")
                             .replace(/"/g, "&quot;")
                             .replace(/'/g, "&#039;");
+                    },
+                    "htmlspecialchars_decode" : function (html) {
+                        return html
+                            .replace(/&amp;/g, "&")
+                            .replace(/&lt;/g, "<")
+                            .replace(/&gt;/g, ">")
+                            .replace(/&quot;/g, '"')
+                            .replace(/&#039;/g, "'");
                     },
 
                     /**
@@ -1787,8 +1783,7 @@
                     modules : Modules,
                     Event : Event,
                     Errors : Errors,
-                    globalize : jmvc.globalize,
-                    'interface' : Interface,
+                    Interface : Interface,
                     promise : jmvc.promise,
 
                     parselang : jmvc.parselang,
@@ -1798,7 +1793,6 @@
                     debug : jmvc.debug,
                     delegate : jmvc.delegate,
                     extend : jmvc.extend,
-                    expose : jmvc.expose,
                     factory:    jmvc.factory_method,
                     inherit : jmvc.inherit,
                     multinherit : jmvc.multi_inherit,
@@ -1818,6 +1812,7 @@
                     get : jmvc.get,//@@@@@@@@@@@@@@@@@@@@@@
                     del : jmvc.del,//@@@@@@@@@@@@@@@@@@@@@@
                     htmlspecialchars : jmvc.htmlspecialchars,
+                    htmlspecialchars_decode : jmvc.htmlspecialchars_decode,
 
                     gc : function () {var i = 0, a = arguments, l = a.length; for (null; i < l; i += 1) {a[i] = null; } },
                     getView : function (n) {return jmvc.factory_method('view', n); },
