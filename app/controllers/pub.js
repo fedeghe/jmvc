@@ -96,8 +96,7 @@ JMVC.controllers.pub = function () {
 			}).bind();
 			
 		// globalize
-		JMVC.globalize('xvents' , [xvents0]);
-
+		JMVC.W.xvents = [xvents0]
 		v.render(function () {
 
 			xvents1.add(JMVC.dom.find('#area1'), 'data-act', 'data-par')
