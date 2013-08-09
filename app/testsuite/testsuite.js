@@ -67,7 +67,7 @@ JMVC.extend('test', {
 		if (JMVC.test.vars.mode == JMVC.test.vars.CONSOLE_MODE) {
 			JMVC.debug("MSG: " + msg);
 		} else {
-			JMVC.dom.add(JMVC.test.vars.banner, 'div', {'class' : 'msg'}, msg);
+			JMVC.dom.add(JMVC.test.vars.banner, 'div', {'class' : 'msg fiveround'}, msg);
 		}
 	},
 
