@@ -1,6 +1,7 @@
 JMVC.controllers.index = function () {
-	
+	this.action_none = function () {};
 	this.action_index = function () {
+		var nowh = (new Date()).getHours();
 		JMVC.require(
 			'core/obj/date'
 			, 'core/i18n'
@@ -12,7 +13,7 @@ JMVC.controllers.index = function () {
 			, 'core/cookie'
 			, 'vendors/google/analytics'
 			, 'core/fx'
-			, 'vendors/google/gmap'
+			//, 'vendors/google/gmap'
 			, 'widget/lang'
 		);
 		
@@ -30,10 +31,11 @@ JMVC.controllers.index = function () {
 		JMVC.head.title('JMVC');
 
 		//
+		//JMVC.set('bgcolor', nowh > 20 ? '#333' : 'white');
 
 		
 		// load two lang files
-		JMVC.lang('jp', 'en', 'it');
+		JMVC.lang('en', 'jp', 'it');
 		
 		//
 		JMVC.head.link('icon', {type : "image/vnd.microsoft.icon", href : JMVC.vars.baseurl + "/media/favicon.ico"});
