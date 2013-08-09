@@ -17,9 +17,7 @@ JMVC.widget.Accordion.prototype.addElement = function (title, content) {
 	});
 };
 JMVC.widget.Accordion.prototype.removeElement = function (n) {
-	if (this.els[n]) {
-		this.els.splice(n, 1);
-	}
+	this.els[n] && this.els.splice(n, 1);
 };
 
 JMVC.widget.Accordion.prototype.render = function (container, open_index, rem) {
@@ -35,7 +33,9 @@ JMVC.widget.Accordion.prototype.render = function (container, open_index, rem) {
 		li,
 		i,
 		len;
+
 	open_index = open_index || 0;
+
 	viewtmp = open_index;
 
 	if (rem) {
