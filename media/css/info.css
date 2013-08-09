@@ -2,15 +2,22 @@ body{
 	/*font-family: Verdana, "MS Trebuchet", sans-serif;*/
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 	font-size:16px;
-	background-color:#C4DDED;
+	
 	width:900px;
 	margin:0 auto;
-	background-image: url($baseurl$/media/img/oy.png);
+	/*background-image: url($baseurl$/media/img/oy.png);
+	background-color:#C4DDED;
 	border-left: 5px solid #aaa;
-    border-right: 5px solid #555;
-    
+    border-right: 5px solid #555;*/
+
+    margin-top:10px;
 
 } 
+div#centerinfo{
+	background-color: white;
+
+	padding:30px;
+}
 p{
 	padding-bottom:10px;
 	padding-top:0px;
@@ -142,10 +149,7 @@ ul li{
 	margin:0px;
 	padding:0px;
 }
-div#centerinfo{
-	background-color: white;
-	padding:30px;
-}
+
 .tablecontainer{
 	padding:5px;
 	margin-bottom:20px;
@@ -172,6 +176,7 @@ ul.features p.feature{
 ul.inner{
 	margin-left:30px;
 	list-style-type: disc;
+	margin-bottom:10px;
 }
 ul.inner li{
 	line-height:22px;

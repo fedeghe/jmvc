@@ -1,71 +1,66 @@
-<hr />
-<% if(true){ %> <h5>Tpl engine active</h5> <% } %>
-<div style="text-align:center;margin:40px 0px;">
-	<a href="$baseurl$" style="display:block">
-		<img width="476" height="136"  src="$baseurl$/media/img/jmvc_m1.svg" />
-	</a>
+<div>
+	<div class="floatl" style="text-align:center;">
+		<a href="$baseurl$" style="display:block">
+			<img width="476" height="136"  src="$baseurl$/media/img/jmvc_m1.svg" />
+		</a>
+	</div>
+	<div class="floatr">
+		<span class="desc"><b>Description</b>: pure javascript mvc framework</span>
+		<span class="desc"><b>Contact</b>: <a href="mailto:fedeghe@gmail.com">fedeghe@gmail.com</a></span>
+		<span class="desc"><b>Version</b>: $version$ (rev. $review$)</span>
+		<span class="desc"><b>Last modified</b>: $last_modified$</span>
+		<span class="desc"><b>Render time</b>: <span id="render_time">[[JMVC.vars.rendertime]] ms</span></span>
+	</div>
 </div>
-<span class="desc"><b>Description</b>: pure javascript mvc framework</span>
-<span class="desc"><b>Contact</b>: <a href="mailto:fedeghe@gmail.com">fedeghe@gmail.com</a></span>
-<span class="desc"><b>Version</b>: $version$ (rev. $review$)</span>
-<span class="desc"><b>Last modified</b>: $last_modified$</span>
-<span class="desc"><b>Render time</b>: <span id="render_time">[[JMVC.vars.rendertime]] ms</span></span>
-<hr>
+<br class="clearer" />
+
 <h2>Description</h2>
-<p>JMVC implements the MVC pseudo-pattern using <i>only</i> pure <a href="http://www.vanilla-js.com" target="_blank">vanilla javascript</a>. You can write down your Controllers with your actions.
-	Within the action you can load one or more of your Models, get data from server using asynchronous xhr calls, load one or more Views and 
-	at the end render the View tree, populated with data retrieved.</p>
-	<p>Any page under the jmvc.org domain relies on JMVC, even the 404 page.
-		JMVC provides a buch of popular <i>and less popular</i> features within a clean namespace of libraries, allowing to make ajax calls,
-	inspect, traverse and edit the DOM tree, manage events, and exposing useful functions on javascript objects.</p>
-	<p>Moreover, it gives You a heap of OOP optimized functions, to speed up any suitable work an turn it into an <strong>extremely funny</strong> experience.<br />
-	But there`s even more: the repository is filled of extensions which provides many useful ready to use objects and widgets (some of wich are still under development).
-</p>
+<p>JMVC implements the MVC pseudo-pattern using <i>only</i> pure <a href="http://www.vanilla-js.com" target="_blank">vanilla javascript</a>.
+	You can write down your Controllers with your actions. Within the action you can load one or more of your Models, get data from server using asynchronous xhr calls,
+	load one or more Views and at the end render the View tree, populated with data retrieved.</p>
+<p>Any page under the jmvc.org domain relies on JMVC, even the 404 page. JMVC provides a buch of popular <i>and less popular</i> features within a clean namespace of libraries,
+	allowing to make ajax calls, inspect, traverse and edit the DOM tree, manage events, and exposing useful functions on javascript objects.</p>
+<p>Moreover, it gives You a heap of OOP optimized functions and constructors, to speed up any suitable work an turn it into an <i>extremely funny</i> experience.<br />
+	The repository is filled out of extensions which provides many useful ready to use objects and widgets (some of wich are still under development).</p>
+
 <h2>Requirements</h2>
 <p>At the moment, JMVC relies completely on  <a href="http://www.apache.org/" target="_blank" title="http://www.apache.org/">Apache webserver</a> with rewrite module enabled.
-	In fact the single page entry point is granted by an <i>.htaccess</i> file. With IIS can be used in place of the <i>.htaccess</i> file a <i>.webconfig</i>, but I do not want to know anything about IIS.
-</p>
+	In fact the single page entry point is granted by an <i>.htaccess</i> file. With IIS a <i>.webconfig</i> file can be used to get the same work done.<br />
+	So at least are needed</p>
+<ul class="inner">
+	<li>A web server with a rewrite mechanism</li>
+	<li>A text editor</li>
+	<li>A browser (no IE for the moment)</li>
+</ul>
+
 <h2>Get started</h2>
-<p>Get the source <a href="$githublink$">here</a>, create a simple virtual host, and start playing around. Note that the code <strong>is exactly this site</strong>. To clean all just remove everything within the
-	<ul class="inner">
-		<li>app/models/ folder</li>
-		<li>app/i18n/ folder</li>
-		<li>app/views/ folder <strong>BUT the <i>app/views/core/</i> folder</strong></li>
-		<li>app/controllers/ folder <strong>BUT the <i>app/controllers/404.js</i> controller</strong></li>
-		<li>app/media/ folder <strong>BUT the <i>app/media/core/</i> folder</strong></li>
-	</ul>
-</p>
+<p>Get the source <a href="$githublink$">here</a>, create a simple virtual host, and start playing around. Note that the code <strong>is exactly this site</strong>. To clean all just remove everything within the</p>
+<ul class="inner">
+	<li>app/models/ folder</li>
+	<li>app/i18n/ folder</li>
+	<li>app/views/ folder <strong>BUT the <i>app/views/core/</i> folder</strong></li>
+	<li>app/controllers/ folder <strong>BUT the <i>app/controllers/404.js</i> controller</strong></li>
+	<li>app/media/ folder <strong>BUT the <i>app/media/core/</i> folder</strong></li>
+</ul>
 <p>
 	Now provide at least an <i>index</i> controller with a <i>action_index</i> function within and visit your virtual host root.<br/>
 	I strongly recommend to keep all files, look at the code, starting from controllers, and clean up at when You feel ready to dive in.
 </p>
 
-<h2>How it works... distilled</h2>
+
+<h2>How JMVC works, distilled</h2>
 <p>JMVC relies on a single entry page, the <i>index.html</i>, thanks to a minimal <i>.htaccess</i> file.
 	In that page the main script looks at the requested url and the result of this operation is that JMVC knows which controller must be loaded, wich action must be called
-	and what parameters have been passed. This phase is called <strong>dispatching</strong>.<br />
-	Once the controller is loaded, with a synchronous xhr call, the action function is executed, and within that function at least a view is supposed to be
+	and what parameters have been passed (<i>dispatching</i>).<br />
+	Once the <i>Controller</i> is loaded, with a synchronous xhr call, the action function is executed, and within that function at least a view is supposed to be
 	rendered in the document body (or eslewhere).
 </p>
-<!--
-<h2>What`s up to You?<sub>or what JMVC does not and never will</sub></h2>
-<p>JMVC will never:
-	<ul class="inner">
-		<li>Understand your thoughts and write down code</li>
-		<li>Refuse Your help or be unhappy to have any feedback, indeed it would be really appreciated.</li>
-		<li>Be server side</li>
-	</ul>
-</p>
--->
-<h2>Features</h2>
-{{features}}
 
+{{features}}
 
 <h2>Url structure</h2>
 <p>Supposing we`re using virtual host http://www.jmvc.dev , a location will be something like the following:</p>
-<p>
-	<span style="color:red">http://www.jmvc.dev</span>/<span style="color:green">Cnt</span>/<span style="color:blue">Act</span>/<span style="color:#f0f">n1/v1/n2/v2/n3</span><span style="color:#63c">?v4=Fede&v5=ghe</span>
-</p>
+<p><span style="color:red">http://www.jmvc.dev</span>/<span style="color:green">Cnt</span>/<span style="color:blue">Act</span>/<span style="color:#f0f">n1/v1/n2/v2/n3</span><span style="color:#63c">?v4=Fede&v5=ghe</span></p>
 <ul class="inner">
 	<li><label class="lab" style="color:red">proto+domain</label> : http://www.jmvc.dev</li>
 	<li><label class="lab" style="color:green">controller</label> : Cnt</li>
@@ -73,24 +68,15 @@
 	<li><label class="lab" style="color:#f0f">extra parameters</label> : n1/v1/n2/v2/n3</li>
 	<li><label class="lab" style="color:#63c">querystring</label> : ?v4=Fede&v5=ghe</li>
 </ul>
-<br />
+
 <p>All parameters (including those ones coming from querystring) will be automatically loaded into the current controller register, meaning that any view rendered from it can use 
 	the placeholders to show their value.
 </p>
-<p><b>HINT</b>: parameters are meant to be even, in the controller You will be able
-      to access and use 2 variables: n1="v1" and n2="v2"; the third
+<p><b>HINT</b>: parameters are meant to be even, in the controller You will be able to access and use 2 variables: n1="v1" and n2="v2"; the third
       one will be ignored because unvalued.</p>
 
-<h2>Ready?</h2>
-<p>The fastest way to try it out is to create a virtual host and start writing your controllers, models and views.</p>
-<h2>Looking for samples</h2>
-<p>This site relies <strong>completely</strong> on JVMC and the whole code can be found on <a href="$githublink$" target="_blank">GitHub</a>.<p>
-
-
+<h2>Looking for samples?</h2>
+<p>This site relies <strong>completely</strong> on JVMC and the whole code can be found on <a href="$githublink$" target="_blank">GitHub</a>.</p>
 
 <h2>API</h2>
-$desc$
-
-
-
-<hr />
+$api$

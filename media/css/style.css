@@ -43,14 +43,12 @@ div.pagewrap a:hover{
 	margin-bottom:40px;
 	padding-left: 10px;
     padding-right: 10px;
-	/*width:476px;*/
-	
 }
 
 
 img.bg {
 	/* Set rules to fill background */
-		align:center;
+	align:center;
 	
 	/* Set up proportionate scaling */
 	width: 50%;
@@ -73,7 +71,7 @@ h1.tryme{
 
 
 a.homelinks{
-	border:1px solid transparent;
+	border:2px solid transparent;
 	padding:0px 10px;
 	margin:3px;
 	display:inline-block;
@@ -82,7 +80,7 @@ a.homelinks{
 	*display:inline;
 }
 a.homelinks:hover{
-	border:1px solid #eee;
+	border:2px solid #eee;
 	background-color:#fafafa;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
