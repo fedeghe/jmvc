@@ -44,14 +44,12 @@ JMVC.extend('fx',{
 							cb && cb();
 							from = to;
 							JMVC.W.clearInterval(t);
-							//console.debug('cleared')
 						}
 					},
 					25
 				);
 		})();
 	},
-	
 	
 	'close' : function (el, prop, str, inc, cb) {
 		var timeout_me = function () {
@@ -74,6 +72,7 @@ JMVC.extend('fx',{
 		};
 		timeout_me();
 	},
+
 	'open' : function (el, prop, str, inc, cb) {
 		var self = this,
 			base = 0,
@@ -122,12 +121,11 @@ JMVC.extend('fx',{
 		self.close(el, paddingBottom, 'paddingBottom',  paddingBottom/self.speed);
 		self.close(el, marginTop, 'marginTop',  marginTop/self.speed);
 		self.close(el, marginBottom, 'marginBottom',  marginBottom/self.speed);
-		
 		self.close(el, height, 'height',  height/self.speed, function(){self.hide(el); });
-		//self.animate(el, 'height', 0, self.speed, function(){self.hide(el); });
 		
 		return this;
 	},
+
 	'slideDown' : function (el, v) {
 		
 		var target = this.nodes_sizes[el],
@@ -143,8 +141,6 @@ JMVC.extend('fx',{
 		}
 		if (!target) {
 			
-			
-			//self.show(el);
 			height = JMVC.num.getNum(JMVC.css.style(el, 'height'));
 			paddingTop = JMVC.num.getNum(JMVC.css.style(el, 'paddingTop'));
 			paddingBottom = JMVC.num.getNum(JMVC.css.style(el, 'paddingBottom'));
@@ -164,15 +160,12 @@ JMVC.extend('fx',{
 			JMVC.css.style(el, 'paddingBottom', '0px');
 			JMVC.css.style(el, 'marginTop', '0px');
 			JMVC.css.style(el, 'marginBottom', '0px');
-			
-			//self.hide(el);
 		}
 		height = target['height'];
 		paddingTop = target['paddingTop'];
 		paddingBottom = target['paddingBottom'];
 		marginTop = target['marginTop'];
 		marginBottom = target['marginBottom'];
-			
 		
 		self.show(el);
 		
@@ -180,19 +173,19 @@ JMVC.extend('fx',{
 		self.open(el, paddingTop, 'paddingTop', paddingTop/self.speed);
 		self.open(el, marginBottom, 'marginBottom',marginBottom/ self.speed);
 		self.open(el, paddingBottom, 'paddingBottom', paddingBottom/self.speed);
-		//console.debug(height)
+		
 		self.open(el, height, 'height', height/self.speed);
-		//self.animate(el, 'height', height, self.speed);
 		return this;
 	},
+
 	'slideToggle' : function (el, v) {
-		
-		//JMVC.css.style(el, 'border','1px solid black');
 		var vis = JMVC.css.style(el, 'display'),
 			self = JMVC.fx;
+
 		if (v && JMVC.util.isTypeOf(v, 'number')) {
 			self.speed = v;
 		}
+
 		if (vis === 'none') {
 			self.slideDown(el);
 		} else {
@@ -200,11 +193,11 @@ JMVC.extend('fx',{
 		}
 	},
 	
-	
 	'fadeIn' : function (el) {
 		var opacity = 0.0,
 			targets = {opacity : 1};
 		JMVC.css.style(el, 'opacity', 0);
+
 		this.show(el);	
 		
 		var timeout_me = function () {
@@ -228,6 +221,7 @@ JMVC.extend('fx',{
 		return this;
 		
 	},
+
 	'fadeOut' : function (el) {
 		var opacity = JMVC.css.getComputedStyle(el, 'opacity');
 		this.nodes_sizes[el] = {opacity : 1};
@@ -252,8 +246,5 @@ JMVC.extend('fx',{
 		};
 		timeout_me();
 		return this;
-	}
-	
-	
-		
+	}	
 });
