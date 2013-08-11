@@ -9,10 +9,10 @@ JMVC.extend('animator', {
 		var ani = {},
 			parent,
 			move;
-		ani.timeout = JMVC.object.in_object(options, 'timeout') ? options.timeout : 25;
-		ani.mode = JMVC.object.in_object(options, 'mode') ? options.mode : 'repeat';
-		ani.step = JMVC.object.in_object(options, 'step') ? JMVC.num.getFloat(options.step) : 1;
-		ani.range = JMVC.util.defined(prange) ? prange : {from : 0, to : 300};
+		ani.timeout = JMVC.object.inObject(options, 'timeout') ? options.timeout : 25;
+		ani.mode = JMVC.object.inObject(options, 'mode') ? options.mode : 'repeat';
+		ani.step = JMVC.object.inObject(options, 'step') ? JMVC.num.getFloat(options.step) : 1;
+		ani.range = prange ? prange : {from : 0, to : 300};
 		ani.next = function () {};
 		ani.operators = {
 				'+' : function (a) {return a + ani.step; },
@@ -108,13 +108,13 @@ JMVC.extend('animator', {
 			//save initial font-size
 			fsize = JMVC.num.getNum(JMVC.css.getComputedStyle('font-size'));
 		
-		ani.timeout = JMVC.object.in_object(options, 'timeout') ? options.timeout : 25;
-		ani.mode = JMVC.object.in_object(options, 'mode') ? options.mode : 'repeat';
-		ani.threeD = JMVC.object.in_object(options, 'threeD') ? options.threeD : false;
+		ani.timeout = JMVC.object.inObject(options, 'timeout') ? options.timeout : 25;
+		ani.mode = JMVC.object.inObject(options, 'mode') ? options.mode : 'repeat';
+		ani.threeD = JMVC.object.inObject(options, 'threeD') ? options.threeD : false;
 		ani.range = (
-				JMVC.util.defined(prange) && JMVC.object.in_object(prange, 'from')
+				prange && JMVC.object.inObject(prange, 'from')
 				&&
-				JMVC.object.in_object(prange, 'to')
+				JMVC.object.inObject(prange, 'to')
 			) ?
 			prange : {from : 0, to : 10000};
 		ani.next = function () {};

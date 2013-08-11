@@ -1,6 +1,6 @@
 
 // be sure to have the correct namespace
-JMVC.make_ns('JMVC.widget');
+JMVC.ns.make('JMVC.widget');
 
 // create the widget
 JMVC.extend('widget.countdown', {

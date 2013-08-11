@@ -17,8 +17,9 @@ JMVC.controllers.api = function () {
 			apintro = JMVC.getView('api/apintro'),
 			func_model = JMVC.getModel('api/function'),
 			field_model = JMVC.getModel('api/field'),
-			tab_ext = new JMVC.tabs.tab('o'),
-			tabs_inner = {};
+			tab_ext = new JMVC.tabs.tab('v'),
+			tabs_inner = {},
+			sections = ['jmvc', 'constructors', 'ns',  'model', 'view', 'controller', 'dom', 'events', 'head', 'io', 'array', 'object', 'string', 'util'/*, 'num'*/];
 
 		main.set('id', 'desc')
 
@@ -164,8 +165,10 @@ JMVC.controllers.api = function () {
 				}
 
 			};
+
 			
-			JMVC.each(['jmvc', 'model', 'view', 'controller', 'dom', 'events', 'head', 'io', 'array', 'object', 'string', 'util'/*, 'num'*/], function (t) {
+			
+			JMVC.each(sections, function (t) {
 				var y;
 				parser.pointer(parser.xmlDoc.getElementsByTagName(t)[0]);
 				y = JMVC.xmlparser.toJson(parser.pointer());
@@ -174,7 +177,7 @@ JMVC.controllers.api = function () {
 				add_all(y, t);
 			});
 			
-			main.set_from_url('nome', 'Guest');	
+			main.setFromUrl('nome', 'Guest');	
 			
 		}, false);
 		
@@ -190,20 +193,25 @@ JMVC.controllers.api = function () {
 			JMVC.widget.countdown.start('#countdown', new Date(2013, 7, 30));
 			
 			JMVC.events.delay(function () {
+				for (var j = 0, l = sections.length;  j < l; j++) {
+					tabs_inner[sections[j]].render(i[j], 'ulidTWO');
+				}
+				/*
 				tabs_inner['jmvc'].render(i[0], 'ulidTWO');
-				tabs_inner['model'].render(i[1], 'ulidTWO');
-				tabs_inner['view'].render(i[2], 'ulidTWO');
-				tabs_inner['controller'].render(i[3], 'ulidTWO');
-				tabs_inner['dom'].render(i[4], 'ulidTWO');
-				tabs_inner['events'].render(i[5], 'ulidTWO');
-				tabs_inner['head'].render(i[6], 'ulidTWO');
-				tabs_inner['io'].render(i[7], 'ulidTWO');
-				tabs_inner['array'].render(i[8], 'ulidTWO');
-				tabs_inner['object'].render(i[9], 'ulidTWO');
-				tabs_inner['string'].render(i[10], 'ulidTWO');
-				tabs_inner['util'].render(i[11], 'ulidTWO');
+				tabs_inner['constructors'].render(i[1], 'ulidTWO');
+				tabs_inner['model'].render(i[2], 'ulidTWO');
+				tabs_inner['view'].render(i[3], 'ulidTWO');
+				tabs_inner['controller'].render(i[4], 'ulidTWO');
+				tabs_inner['dom'].render(i[5], 'ulidTWO');
+				tabs_inner['events'].render(i[6], 'ulidTWO');
+				tabs_inner['head'].render(i[7], 'ulidTWO');
+				tabs_inner['io'].render(i[8], 'ulidTWO');
+				tabs_inner['array'].render(i[9], 'ulidTWO');
+				tabs_inner['object'].render(i[10], 'ulidTWO');
+				tabs_inner['string'].render(i[11], 'ulidTWO');
+				tabs_inner['util'].render(i[12], 'ulidTWO');
 				//tabs_inner['num'].render(i[12], 'ulidTWO');
-				
+				*/
 			}, 0);
 
 			JMVC.tabs.end();

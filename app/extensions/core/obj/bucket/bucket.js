@@ -7,10 +7,10 @@ JMVC.extend('bucket', {
 		var that = this;
 		arr = arr || [];
 
-		this.arr = JMVC.array.array_clone(arr);
+		this.arr = JMVC.array.arrayClone(arr);
 		this.r = false,
 		this.l = arr.length,
-		this.fix = JMVC.array.array_clone(this.arr);
+		this.fix = JMVC.array.arrayClone(this.arr);
 
 		return {
 			'next' : function () {
@@ -21,14 +21,14 @@ JMVC.extend('bucket', {
 			},
 			'recover' : function () {
 				that.l = that.fix.length;
-				that.arr = JMVC.array.array_clone(that.fix);
+				that.arr = JMVC.array.arrayClone(that.fix);
 			},
 			'size' : function () {return that.l; },
 			'fill' : function (arr) {
-				that.arr = JMVC.array.array_clone(arr);
+				that.arr = JMVC.array.arrayClone(arr);
 				that.r = false;
 				that.l = arr.length;
-				that.fix = JMVC.array.array_clone(that.arr);
+				that.fix = JMVC.array.arrayClone(that.arr);
 			},
 			'empty' : function () {
 				that.arr = [];

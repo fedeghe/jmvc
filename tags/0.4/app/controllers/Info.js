@@ -18,7 +18,7 @@ JMVC.controllers.Info = function() {
 		
 		//main.set('nome', this.get('nome') || 'Guest');
 		// can be shorted to
-		main.set_from_url('nome', 'Guest');
+		main.setFromUrl('nome', 'Guest');
 		
 		features.set('fr', '<b style="font-size:26px;position:relative;top:0px;color:green;font-weight:bold">&#9758;</b>');
 		

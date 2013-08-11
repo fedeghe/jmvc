@@ -124,7 +124,7 @@
 			<returns>the View instance</returns>
 		</function>
 		<function>
-			<func>set_from_url(String vname, String alt)</func>
+			<func>setFromUrl(String vname, String alt)</func>
 			<description>All extra parameters are automatically added into the Controller register, so if You plan to use one of these values in a view You should do something like:
 				myview.set('myvar', this.get('myvar')); and manage fallback values; that function do that for You 
 			</description>

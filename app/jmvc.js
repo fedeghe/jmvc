@@ -1415,21 +1415,21 @@
                 };
 
                 /**
-                 * [set_from_url description]
+                 * [setFromUrl description]
                  * @param {[type]} vname [description]
                  * @param {[type]} alt   [description]
                  */
-                View.prototype.set_from_url = function (vname, alt) {
+                View.prototype.setFromUrl = function (vname, alt) {
                     this.set(String(vname), $JMVC.controllers[$JMVC.c].get(vname) || (alt || 'unset'));
                     // allow chain
                     return this;
                 };
                 /*
-                 * [get_from_url description]
+                 * [getFromUrl description]
                  * @param {[type]} vname [description]
                  * @param {[type]} alt   [description]
                  */
-                View.prototype.get_from_url = function (vname) {
+                View.prototype.getFromUrl = function (vname) {
                     return $JMVC.controllers[$JMVC.c].get(vname) || false;
                 };
 
@@ -1445,7 +1445,7 @@
                     
 
                     //call before render
-                    $JMVC.events.startrender();
+                    $JMVC.events.startRender();
 
                     var arg = pars || {},
                         //
@@ -1532,7 +1532,7 @@
                             // may be a callback? 
                             cback && cback.apply(this, !!argz ? argz : []);
                             //trigger end of render
-                            $JMVC.events.endrender();
+                            $JMVC.events.endRender();
 
 
 
@@ -1796,8 +1796,10 @@
                     factory:    jmvc.factory_method,
                     inherit : jmvc.inherit,
                     multinherit : jmvc.multi_inherit,
-                    make_ns : jmvc.ns.make,
-                    check_ns : jmvc.ns.check,
+
+                    //check, make
+                    ns : jmvc.ns,
+
                     hook : jmvc.hook,
                     hooks : hooks,
                     jeval : jmvc.jeval,
@@ -2143,31 +2145,6 @@
     *
     **/
     JMVC.util = {
-
-        /**
-         * [ description]
-         * @param  {[type]} d      [description]
-         * @param  {[type]} start  [description]
-         * @param  {[type]} end    [description]
-         * @param  {[type]} strict [description]
-         * @return {[type]}        [description]
-         */
-        'between' : function (d, start, end, strict) {
-            return strict ? (d >= start && d <= end) : (d > start && d < end);
-        },
-
-       
-
-        
-
-        
-        /**
-         * [ description]
-         * @param  {[type]} e [description]
-         * @return {[type]}   [description]
-         */
-        'defined' : function (e) {return typeof e !== 'undefined'; },
-
         /**
          * [ description]
          * @param  {[type]} d [description]
@@ -3110,7 +3087,7 @@
          * [ description]
          * @return {[type]} [description]
          */
-        'startrender' : function () {
+        'startRender' : function () {
             var i = 0,
                 l = this.Estart.length;
             for (null; i < l; i += 1) {
@@ -3122,7 +3099,7 @@
          * [ description]
          * @return {[type]} [description]
          */
-        'endrender' : function () {
+        'endRender' : function () {
             var i = 0,
                 l = this.Eend.length;
             for (null; i < l; i += 1) {
@@ -3495,7 +3472,7 @@
          * @param  {[type]} arr) {return      arr.concat( [description]
          * @return {[type]}      [description]
          */
-        'array_clone' : function (arr) {
+        'arrayClone' : function (arr) {
             return arr.concat();
         },
 
@@ -3688,7 +3665,7 @@
          * @param  {[type]} n   [description]
          * @return {[type]}     [description]
          */
-        'str_repeat' : function (str, n) {
+        'strRepeat' : function (str, n) {
             var t = [];
             while (n -= 1) {t.push(str.replace(/\%n\%/g, n)); }
             return t.reverse().join('');
@@ -3799,7 +3776,7 @@
          * @param  {[type]} field) {return      (typeof obj === 'object' && obj[field] [description]
          * @return {[type]}        [description]
          */
-        'in_object' : function (obj, field) {
+        'inObject' : function (obj, field) {
             return (typeof obj === 'object' && obj[field]);
         },
 

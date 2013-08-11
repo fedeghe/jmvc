@@ -3,14 +3,6 @@
 <!--
 
 
-
-
-
-
-
-
-#############################################
-
                                                 
          _/  _/      _/  _/      _/    _/_/_/   
         _/  _/_/  _/_/  _/      _/  _/          
@@ -18,29 +10,10 @@
 _/    _/  _/      _/    _/  _/    _/            
  _/_/    _/      _/      _/        _/_/_/       
 
-#############################################
+
 -->
+
 	<jmvc>
-
-		
-		<function>
-			<signature name="check_ns">JMVC.check_ns(String ns [,Object ctx])</signature>
-			<description>Returns a namespace if exists</description>
-			<params>
-				<param name="*ns">The namespace to check, a String dot glued</param>
-				<param name="ctx" default="Window">The root namespace</param>
-			</params>
-			<returns>namespace || false</returns>
-			<sample>&#10;
-var loaded_extensions = JMVC.check_ns('extensions', JMVC),&#10;
-	// or&#10; 
-	loadedExtensions =  JMVC.check_ns('JMVC.extensions'),&#10;
-	foo = JMVC.check_ns('foo', JMVC); //false
-			</sample>
-			<status>complete</status>
-			<testlink>test_api_jmvc_checkns</testlink>
-		</function>
-
 		<function>
 			<signature name="console">JMVC.console()</signature>
 			<description>Toggles html+css+js+preview console</description>
@@ -124,36 +97,7 @@ console.debug(arr, arrAfter);&#10;</sample>
 			<status>testing</status>
 			<testlink>test_api_jmvc_each</testlink>>
 		</function>
-		<function>
-			<signature name="Event">JMVC.Event(sender)</signature>
-			<description>Event is a special constructor to get an Event object with an attach and notify method</description>
-			<params>
-				<param name="*sender">The sender object</param>
-			</params>
-			<returns>the breand new object</returns>
-			<sample>&#10;
-var list = {&#10;
-    els : [],&#10;
-    addedItem : new JMVC.Event(list),&#10;
-    deletedItem : new JMVC.Event(list),&#10;
-    add : function (s) {&#10;
-        this.els.push(s) &amp;&amp;&#10;
-        this.addedItem.notify({item : s});&#10;
-    },&#10;
-    del : function (i) {&#10;
-        this.els.splice(i, 1) &amp;&amp;&#10;
-        this.deletedItem.notify({index : i});&#10;
-    }&#10;
-};&#10;
-list.addedItem.attach(function () {console.debug(arguments)});&#10;
-list.deletedItem.attach(function () {console.debug(arguments)});&#10;
-list.add('a');&#10;
-list.add('b');&#10;
-list.add('c');&#10;
-list.del(1);&#10;
-list.els;	</sample>
-			<status>incomplete</status>
-		</function>
+
 		<function>
 			<signature name="extend">JMVC.extend(String section, Literal extension)</signature>
 			<description>Extends JMVC object with Your objects</description>
@@ -243,7 +187,7 @@ JMVC.del('a');
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="interface">JMVC.get(String name)</signature>
+			<signature name="Interface">JMVC.get(String name)</signature>
 			<description>Retrieves a variable from the global JMVC scope</description>
 			<params>
 				<param name="*name">the name of the new variable to be removed</param>
@@ -278,17 +222,7 @@ JMVC.del('a');
 			<returns>the model instance</returns>
 			<status>incomplete</status>
 		</function>
-		<function>
-			<signature name="make_ns">JMVC.make_ns(str, obj, ctx)</signature>
-			<description>Creates a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
+		
 		<function>
 			<signature name="parselang">JMVC.get(String name)</signature>
 			<description>Retrieves a variable from the global JMVC scope</description>
@@ -367,6 +301,134 @@ JMVC.del('a');
 			<description>JMVC.W is a reference to th current window object</description>
 		</param>
 	</jmvc>	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+                                             _/                                      _/                                    
+    _/_/_/    _/_/    _/_/_/      _/_/_/  _/_/_/_/  _/  _/_/  _/    _/    _/_/_/  _/_/_/_/    _/_/    _/  _/_/    _/_/_/   
+ _/        _/    _/  _/    _/  _/_/        _/      _/_/      _/    _/  _/          _/      _/    _/  _/_/      _/_/        
+_/        _/    _/  _/    _/      _/_/    _/      _/        _/    _/  _/          _/      _/    _/  _/            _/_/     
+ _/_/_/    _/_/    _/    _/  _/_/_/        _/_/  _/          _/_/_/    _/_/_/      _/_/    _/_/    _/        _/_/_/
+ 
+-->
+	<constructors>
+		<function>
+			<signature name="Interface">JMVC.set(String name, String value)</signature>
+			<description>Adds a variable that You can use anywhere</description>
+			<params>
+				<param name="*name">the name of the new variable, use it typing &#36;thename&#36;</param>
+				<param name="*value">the value of the variable</param>
+			</params>
+			<returns>void (undefined)</returns>
+			<status>incomplete</status>
+		</function>
+		<function>
+			<signature name="Event">JMVC.Event(sender)</signature>
+			<description>Event is a special constructor to get an Event object with an attach and notify method</description>
+			<params>
+				<param name="*sender">The sender object</param>
+			</params>
+			<returns>the breand new object</returns>
+			<sample>&#10;
+var list = {&#10;
+    els : [],&#10;
+    addedItem : new JMVC.Event(list),&#10;
+    deletedItem : new JMVC.Event(list),&#10;
+    add : function (s) {&#10;
+        this.els.push(s) &amp;&amp;&#10;
+        this.addedItem.notify({item : s});&#10;
+    },&#10;
+    del : function (i) {&#10;
+        this.els.splice(i, 1) &amp;&amp;&#10;
+        this.deletedItem.notify({index : i});&#10;
+    }&#10;
+};&#10;
+list.addedItem.attach(function () {console.debug(arguments)});&#10;
+list.deletedItem.attach(function () {console.debug(arguments)});&#10;
+list.add('a');&#10;
+list.add('b');&#10;
+list.add('c');&#10;
+list.del(1);&#10;
+list.els;	</sample>
+			<status>incomplete</status>
+		</function>
+	</constructors>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+   _/_/_/      _/_/_/   
+  _/    _/  _/_/        
+ _/    _/      _/_/     
+_/    _/  _/_/_/        
+                 
+-->
+	<ns>
+		<function>
+			<signature name="check">JMVC.ns.check(String ns [,Object ctx])</signature>
+			<description>Returns a namespace if exists</description>
+			<params>
+				<param name="*ns">The namespace to check, a String dot glued</param>
+				<param name="ctx" default="Window">The root namespace</param>
+			</params>
+			<returns>namespace || false</returns>
+			<sample>&#10;
+var loaded_extensions = JMVC.ns.check('extensions', JMVC),&#10;
+	// or&#10; 
+	loadedExtensions =  JMVC.ns.check('JMVC.extensions'),&#10;
+	foo = JMVC.ns.check('foo', JMVC); //false
+			</sample>
+			<status>complete</status>
+			<testlink>test_api_jmvc_checkns</testlink>
+		</function>
+		<function>
+			<signature name="make">JMVC.ns.make(str, obj, ctx)</signature>
+			<description>Creates a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+			<status>incomplete</status>
+		</function>
+	</ns>
 
 
 <!--
@@ -503,7 +565,7 @@ _/    _/    _/    _/_/      _/_/_/    _/_/_/  _/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="get_from_url">parse(Model object)</signature>
+			<signature name="getFromUrl">parse(Model object)</signature>
 			<description>If the view has some &#36;var&#36; placeholders within and these variables are stored in a model instance with the right names, that method get values from model instance and uses them in the placeholders content substitution.</description>
 			<params>
 				<param name="object">Is a Model instance which should contain variables that the view will render through placeholders substitution.</param>
@@ -542,7 +604,7 @@ _/    _/    _/    _/_/      _/_/_/    _/_/_/  _/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="set_from_url">parse(Model object)</signature>
+			<signature name="setFromUrl">parse(Model object)</signature>
 			<description>If the view has some &#36;var&#36; placeholders within and these variables are stored in a model instance with the right names, that method get values from model instance and uses them in the placeholders content substitution.</description>
 			<params>
 				<param name="object">Is a Model instance which should contain variables that the view will render through placeholders substitution.</param>
@@ -1065,7 +1127,7 @@ _/          _/  _/    _/        _/    _/    _/          _/_/
 -->
 	<events>
 		<function>
-			<signature name="bind">JMVC.events.bind(Element el, String type, Javascript function fun)</signature>
+			<signature name="bind">JMVC.events.bind(Element el, String type, Javascript function func)</signature>
 			<description>binds a callback to an event fired from an element</description>
 			<params>
 				<param name="el*">dom element target</param>
@@ -1076,67 +1138,60 @@ _/          _/  _/    _/        _/    _/    _/          _/_/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="delay">JMVC.events.delay(Element el, String type, Javascript function fun)</signature>
-			<description>binds a callback to an event fired from an element</description>
+			<signature name="delay">JMVC.events.delay(Javascript function func, Integer ms)</signature>
+			<description>Delay the execution of a function</description>
 			<params>
-				<param name="el*">dom element target</param>
-				<param name="*type">the event string</param>
+				<param name="*func">Javascript function to be called</param>
+				<param name="*ms">Milliseconds to delayed call</param>
+			</params>
+			<returns>void (undefined)</returns>
+			<status>incomplete</status>
+		</function>
+		<function>
+			<signature name="end">JMVC.events.end(Javascript function func)</signature>
+			<description>add a function to the end render queue</description>
+			<params>
 				<param name="*func">Javascript function callback</param>
 			</params>
 			<returns>void (undefined)</returns>
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="end">JMVC.events.end(Element el, String type, Javascript function fun)</signature>
-			<description>binds a callback to an event fired from an element</description>
+			<signature name="endRender">JMVC.events.endrender()</signature>
+			<description>executes the end render queue</description>
 			<params>
-				<param name="el*">dom element target</param>
-				<param name="*type">the event string</param>
-				<param name="*func">Javascript function callback</param>
+				<param name="">no params</param>
 			</params>
 			<returns>void (undefined)</returns>
 			<status>incomplete</status>
 		</function>
+
 		<function>
-			<signature name="endrender">JMVC.events.endrender(Element el, String type, Javascript function fun)</signature>
-			<description>binds a callback to an event fired from an element</description>
+			<signature name="eventTarget">JMVC.events.eventTarget(Event e)</signature>
+			<description>given an event sholud retrieve the original target for that event</description>
 			<params>
-				<param name="el*">dom element target</param>
-				<param name="*type">the event string</param>
-				<param name="*func">Javascript function callback</param>
+				<param name="*e">the event</param>
 			</params>
-			<returns>void (undefined)</returns>
+			<returns>DOM Element</returns>
 			<status>incomplete</status>
 		</function>
+
 		<function>
-			<signature name="eventTarget">JMVC.events.eventTarget(Element el, String type, Javascript function fun)</signature>
-			<description>binds a callback to an event fired from an element</description>
+			<signature name="getCoord">JMVC.events.getCoord(Element el, Event e)</signature>
+			<description>given an element and a event, try to get event firing coordinates relative to the element</description>
 			<params>
-				<param name="el*">dom element target</param>
-				<param name="*type">the event string</param>
-				<param name="*func">Javascript function callback</param>
+				<param name="*el">dom element target</param>
+				<param name="*e">the event</param>
 			</params>
-			<returns>void (undefined)</returns>
+			<returns>Array [x, y]</returns>
 			<status>incomplete</status>
 		</function>
+
 		<function>
-			<signature name="getCoord">JMVC.events.getCoord(Element el, String type, Javascript function fun)</signature>
-			<description>binds a callback to an event fired from an element</description>
+			<signature name="kill">JMVC.events.kill(Event e)</signature>
+			<description>kills an event</description>
 			<params>
-				<param name="el*">dom element target</param>
-				<param name="*type">the event string</param>
-				<param name="*func">Javascript function callback</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="kill">JMVC.events.kill(Element el, String type, Javascript function fun)</signature>
-			<description>binds a callback to an event fired from an element</description>
-			<params>
-				<param name="el*">dom element target</param>
-				<param name="*type">the event string</param>
-				<param name="*func">Javascript function callback</param>
+				<param name="*e">the event</param>
 			</params>
 			<returns>void (undefined)</returns>
 			<status>incomplete</status>
@@ -1211,7 +1266,7 @@ _/          _/  _/    _/        _/    _/    _/          _/_/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="startrender">JMVC.events.startrender(Javascript function func)</signature>
+			<signature name="startRender">JMVC.events.startrender(Javascript function func)</signature>
 			<description>binds a callback to document load event</description>
 			<params>
 				<param name="*func">Javascript function callback</param>
@@ -1583,7 +1638,7 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="str_repeat">JMVC.string.str_repeat(String name, String value)</signature>
+			<signature name="strRepeat">JMVC.string.strRepeat(String name, String value)</signature>
 			<description>Gets/sets document title</description>
 			<params>
 				<param name="name">The name of the meta You want to add</param>
@@ -1665,7 +1720,7 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="in_object">JMVC.object.in_object(String name, String value)</signature>
+			<signature name="inObject">JMVC.object.inObject(String name, String value)</signature>
 			<description>Gets/sets document title</description>
 			<params>
 				<param name="name">The name of the meta You want to add</param>
@@ -1742,7 +1797,7 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 -->
 	<array>
 		<function>
-			<signature name="array_clone">JMVC.array.array_clone(String name, String value)</signature>
+			<signature name="arrayClone">JMVC.array.arrayClone(String name, String value)</signature>
 			<description>Gets/sets document title</description>
 			<params>
 				<param name="name">The name of the meta You want to add</param>
@@ -1766,7 +1821,7 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="in_array">JMVC.array.in_array(String name, String value)</signature>
+			<signature name="inArray">JMVC.array.inArray(String name, String value)</signature>
 			<description>Gets/sets document title</description>
 			<params>
 				<param name="name">The name of the meta You want to add</param>
@@ -1825,28 +1880,6 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 ##################################
 -->
 	<util>
-		<function>
-			<signature name="between">JMVC.util.between(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="defined">JMVC.util.defined(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
 		<function>
 			<signature name="deg2rad">JMVC.util.deg2rad(str, obj, ctx)</signature>
 			<description>Check a namspace</description>

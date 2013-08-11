@@ -63,14 +63,14 @@ JMVC.controllers.checkns = function() {
 					}
 			    };
 			
-			JMVC.test.testValue("JMVC.check_ns('extensions.dom.find', ns)();", function(){return JMVC.check_ns('extensions.dom.find', ns)();}, 'ns.extensions.dom.find');
-			JMVC.test.testValue("JMVC.check_ns('vars.name', ns);", function(){return JMVC.check_ns('vars.name', ns);}, 'jmvc');
-			JMVC.test.testValue("JMVC.check_ns('vars.data.calendars', ns).toString();", function(){return JMVC.check_ns('vars.data.calendars', ns).toString();}, '1,2,3');
-			JMVC.test.testValue("JSON.stringify(JMVC.check_ns('vars.data', ns));", function(){return JSON.stringify(JMVC.check_ns('vars.data', ns));}, '{"cities":{"names":{"properties":"no properties"}},"calendars":[1,2,3]}');
-			JMVC.test.testValue("JMVC.check_ns('vars.data.calendars.1', ns);", function(){return JMVC.check_ns('vars.data.calendars.1', ns);}, 2);
+			JMVC.test.testValue("JMVC.ns.check('extensions.dom.find', ns)();", function(){return JMVC.ns.check('extensions.dom.find', ns)();}, 'ns.extensions.dom.find');
+			JMVC.test.testValue("JMVC.ns.check('vars.name', ns);", function(){return JMVC.ns.check('vars.name', ns);}, 'jmvc');
+			JMVC.test.testValue("JMVC.ns.check('vars.data.calendars', ns).toString();", function(){return JMVC.ns.check('vars.data.calendars', ns).toString();}, '1,2,3');
+			JMVC.test.testValue("JSON.stringify(JMVC.ns.check('vars.data', ns));", function(){return JSON.stringify(JMVC.ns.check('vars.data', ns));}, '{"cities":{"names":{"properties":"no properties"}},"calendars":[1,2,3]}');
+			JMVC.test.testValue("JMVC.ns.check('vars.data.calendars.1', ns);", function(){return JMVC.ns.check('vars.data.calendars.1', ns);}, 2);
 			JMVC.test.message('Now check some unexistent ns');
-			JMVC.test.testValue("JMVC.check_ns('vars.foo', ns);", function(){return JMVC.check_ns('vars.foo', ns);}, false);
-			JMVC.test.testValue("JMVC.check_ns('vars.data.calendars.10', ns);", function(){return JMVC.check_ns('vars.data.calendars.10', ns);}, false);
+			JMVC.test.testValue("JMVC.ns.check('vars.foo', ns);", function(){return JMVC.ns.check('vars.foo', ns);}, false);
+			JMVC.test.testValue("JMVC.ns.check('vars.data.calendars.10', ns);", function(){return JMVC.ns.check('vars.data.calendars.10', ns);}, false);
 
 			JMVC.test.finishAll();			
 			
