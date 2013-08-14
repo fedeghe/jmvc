@@ -51,88 +51,12 @@ b.index{
 
 
 
-.cl1_Controller{
-	background-color: #CCF;
-}
-.cl2_Controller{
-	background-color: #FFF;
-}
-.cl1_View{
-	background-color: #CFC;
-}
-.cl2_View{
-	background-color: #FFF;
-}
-.cl1_Model{
-	background-color: #FCC;
-}
-.cl2_Model{
-	background-color: #FFF;
-}
-.cl1_Dom{
-	background-color: #9CF;
-}
-.cl2_Dom{
-	background-color: #FFF;
-}
-.cl1_Events{
-	background-color: #FCF;
-}
-.cl2_Events{
-	background-color: #FFF;
-}
-.cl1_Head{
-	background-color: #FC9;
-}
-.cl2_Head{
-	background-color: #FFF;
-}
-.cl1_JMVC{
-	background-color: #FFC;	
-}
-.cl2_JMVC{
-	background-color: #FFF;
-}
 h3{
 	padding-top:15px;
 	padding-bottom:5px;
 	margin:0px;
 }
-h3.apisection{
-	padding-top:15px;
-	padding-bottom:5px;
-	margin:0px;
-	text-decoration:underline;
-	color:red;
-}
-div#guest{
-	padding-top: 20px;
-	padding-bottom:20px;
-	font-size:36px;
-}
-tr{
-	margin-top:10px;
-}
-tr > td {
-	padding-bottom:8px;
-	height:0px;
-	line-height:18px;
-	font-size:16px;
-} 
-tr > td.first {
-	text-align:right;
-	padding-right:5px;
-	color:#222;
-	font-weight:bold;
-} 
-tr.dline td{
-	font-size:16px;
-}
-hr{
-	height:5px;
-	border:1px solid #ccc;
-	background-color:white;
-}
+
 a{
 	color:#888;
 	text-decoration:none;
@@ -150,13 +74,6 @@ ul li{
 	padding:0px;
 }
 
-.tablecontainer{
-	padding:5px;
-	margin-bottom:20px;
-}
-.apitable{
-	$my_table_style$
-}
 div#footer{
 	height:40px;
 }
@@ -168,7 +85,7 @@ span.desc{
 	line-height:22px;
 }
 ul.features p.feature{
-	margin-left: 30px;
+	margin-left: 40px;
     margin-top: -20px;
     margin-bottom:10px;
     padding:0px;
