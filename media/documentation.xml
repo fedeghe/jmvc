@@ -109,13 +109,14 @@ console.debug(arr, arrAfter);&#10;</sample>
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="factory">JMVC.extend(String section, Literal extension)</signature>
+			<signature name="factory">JMVC.factory(String type, String name[, params[, ...]])</signature>
 			<description>Extends JMVC object with Your objects</description>
 			<params>
-				<param name="*section">	that parameter is needed to set the namespace under which Your functions will be added toJMVC, if You use `ajax` then all functions in the literal will be callable with JMVC.ajax.my_function(....)</param>
-				<param name="*extension">this object literal defines all the functions in your extension (JMVC is in that scope, so You can use it)</param>
+				<param name="*type">specify the kind of object should be returned, accepted values area 'view', 'model', 'controller' and 'interface'</param>
+				<param name="*name">the name for the object, that will be used in the xhr path</param>
+				<param name="params">all parameters since the third on, will be used from the factory method in the constructor call</param>
 			</params>
-			<returns>void (undefined)</returns>
+			<returns>the requested instance, or false</returns>
 			<status>incomplete</status>
 		</function>
 		<function>
@@ -133,12 +134,12 @@ JMVC.del('a');
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="getModel">JMVC.getModel(String name)</signature>
-			<description>Gets a model instance, even on a subfolder</description>
+			<signature name="getModel">JMVC.getModel(String name [, params[, ...])</signature>
+			<description>This is a shortcut call for the factory, with the first parameter preset to 'model'</description>
 			<params>
-				<param name="*name">the name of the model</param>
+				<param name="*name">the name of the model that should be returned, even on a subfolder</param>
 			</params>
-			<returns>the model instance</returns>
+			<returns>the model instance, or false</returns>
 			<status>incomplete</status>
 		</function>
 		<function>
@@ -222,7 +223,34 @@ JMVC.del('a');
 			<returns>the model instance</returns>
 			<status>incomplete</status>
 		</function>
-		
+		<function>
+			<signature name="nsCheck">JMVC.nsCheck(String ns [,Object ctx])</signature>
+			<description>Returns a namespace if exists</description>
+			<params>
+				<param name="*ns">The namespace to check, a String dot glued</param>
+				<param name="ctx" default="Window">The root namespace</param>
+			</params>
+			<returns>namespace || false</returns>
+			<sample>&#10;
+var loaded_extensions = JMVC.nsCheck('extensions', JMVC),&#10;
+	// or&#10; 
+	loadedExtensions =  JMVC.nsCheck('JMVC.extensions'),&#10;
+	foo = JMVC.nsCheck('foo', JMVC); //false
+			</sample>
+			<status>complete</status>
+			<testlink>test_api_jmvc_checkns</testlink>
+		</function>
+		<function>
+			<signature name="nsMake">JMVC.nsMake(str, obj, ctx)</signature>
+			<description>Creates a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>void (undefined)</returns>
+			<status>incomplete</status>
+		</function>
 		<function>
 			<signature name="parselang">JMVC.get(String name)</signature>
 			<description>Retrieves a variable from the global JMVC scope</description>
@@ -230,6 +258,15 @@ JMVC.del('a');
 				<param name="*name">the name of the new variable to be removed</param>
 			</params>
 			<returns>the variable reference or value</returns>
+			<status>incomplete</status>
+		</function>
+		<function>
+			<signature name="preload">JMVC.preload(String url)</signature>
+			<description>Appends a 1px square iframe to the body, loading the specified url (from the same origin), and removes it as far as the content is loaded</description>
+			<params>
+				<param name="*url">the url that must be loaded</param>
+			</params>
+			<returns>void (undefined)</returns>
 			<status>incomplete</status>
 		</function>
 		<function>
@@ -391,44 +428,6 @@ list.els;	</sample>
 
 
 
-<!--
-
-   _/_/_/      _/_/_/   
-  _/    _/  _/_/        
- _/    _/      _/_/     
-_/    _/  _/_/_/        
-                 
--->
-	<ns>
-		<function>
-			<signature name="check">JMVC.ns.check(String ns [,Object ctx])</signature>
-			<description>Returns a namespace if exists</description>
-			<params>
-				<param name="*ns">The namespace to check, a String dot glued</param>
-				<param name="ctx" default="Window">The root namespace</param>
-			</params>
-			<returns>namespace || false</returns>
-			<sample>&#10;
-var loaded_extensions = JMVC.ns.check('extensions', JMVC),&#10;
-	// or&#10; 
-	loadedExtensions =  JMVC.ns.check('JMVC.extensions'),&#10;
-	foo = JMVC.ns.check('foo', JMVC); //false
-			</sample>
-			<status>complete</status>
-			<testlink>test_api_jmvc_checkns</testlink>
-		</function>
-		<function>
-			<signature name="make">JMVC.ns.make(str, obj, ctx)</signature>
-			<description>Creates a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-	</ns>
 
 
 <!--
@@ -2012,6 +2011,7 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 			<returns>void (undefined)</returns>
 			<status>incomplete</status>
 		</function>
+		
 		<function>
 			<signature name="rad2deg">JMVC.util.rad2deg(str, obj, ctx)</signature>
 			<description>Check a namspace</description>
@@ -2067,4 +2067,39 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 		</function>
 	</num>
 	-->
+
+
+	<!--
+	                                _/                _/       
+	   _/_/_/  _/_/      _/_/_/  _/_/_/_/    _/_/_/  _/_/_/    
+	  _/    _/    _/  _/    _/    _/      _/        _/    _/   
+	 _/    _/    _/  _/    _/    _/      _/        _/    _/    
+	_/    _/    _/    _/_/_/      _/_/    _/_/_/  _/    _/ 
+	-->
+	<match>
+		<function>
+			<signature name="email">JMVC.match.email(String email)</signature>
+			<description>Check if a the passed string represents a valid email</description>
+			<params>
+				<param name="email*">The string email that must be checked</param>
+			</params>
+			<returns>boolean</returns>
+			<sample>var t = JMVC.match.email('fedeghe@gmail.com');</sample>
+			<status>incomplete</status>
+			<testlink></testlink>
+			
+		</function>
+		<function>
+			<signature name="url">JMVC.match.url(String url)</signature>
+			<description>Check if a the passed string represents a valid url</description>
+			<params>
+				<param name="url*">The string url that must be checked</param>
+			</params>
+			<returns>boolean</returns>
+			<sample>var t = JMVC.match.url('http://www.jmvc.org?map=true');</sample>
+			<status>incomplete</status>
+			<testlink></testlink>
+			
+		</function>
+	</match>
 </api>	
