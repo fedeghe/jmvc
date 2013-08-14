@@ -9,6 +9,7 @@ JMVC.controllers.api = function () {
 			,'core/mobile'
 			,'core/responsive/basic'
 			,'widget/countdown'
+			,'vendors/github/forkme'
 		);
 		JMVC.events.loadify(500);
 
@@ -17,9 +18,9 @@ JMVC.controllers.api = function () {
 			apintro = JMVC.getView('api/apintro'),
 			func_model = JMVC.getModel('api/function'),
 			field_model = JMVC.getModel('api/field'),
-			tab_ext = new JMVC.tabs.tab('v'),
+			tab_ext = new JMVC.tabs.tab(/*'o'*/),
 			tabs_inner = {},
-			sections = ['jmvc', 'constructors', 'ns',  'model', 'view', 'controller', 'dom', 'events', 'head', 'io', 'array', 'object', 'string', 'util'/*, 'num'*/];
+			sections = ['jmvc', 'constructors', 'model', 'view', 'controller', 'dom', 'events', 'head', 'io', 'array', 'object', 'string', 'util', 'match'/*, 'num'*/];
 
 		main.set('id', 'desc')
 
@@ -189,6 +190,8 @@ JMVC.controllers.api = function () {
 			var i = tab_ext.render('desc', 'ulidONE');
 			JMVC.head.title('JMVC API');
 			JMVC.mobile.topHide();
+
+			JMVC.github.forkme('fedeghe');
 			
 			JMVC.widget.countdown.start('#countdown', new Date(2013, 7, 30));
 			
