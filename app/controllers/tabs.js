@@ -21,7 +21,7 @@ JMVC.controllers.tabs = function () {
 		);
 		
 
-		index.set_from_url('i_say', 'No one');
+		index.setFromUrl('i_say', 'No one');
 		//
 		tab.add('Basic', 'Contenuto di prova1<br/><br/><br/><br/><br/><br/>kk');
 		tab.add('Logo', '<iframe width="100%" height="300px" frameborder="0" src="' + JMVC.vars.baseurl + '/demo/logo"></iframe> ');
