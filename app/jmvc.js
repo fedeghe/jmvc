@@ -175,6 +175,8 @@
                      */
                     Parser,
 
+                    
+
                     /**
                      * some useful constructors 
                      */
@@ -187,6 +189,14 @@
                      * @type {Array}
                      */
                     Modules = ['vendors/google/analytics', 'core/cookie'],
+
+
+
+                    /**
+                     * preloader
+                     */
+                    preload,
+
 
                     /**
                      * hooks literal used to execute callbacks as far as some relevant event are fired
@@ -390,6 +400,7 @@
                                         jmvc.jeval(res);
                                         jmvc.inherit($JMVC[type + 's'][name], Controller);
                                         break;
+
                                     case 'model':
                                         jmvc.jeval(res);
                                         jmvc.model_inherit($JMVC[type + 's'][name]);
@@ -1147,7 +1158,7 @@
                  * @return {[type]}       [description]
                  */
                 Promise.prototype.then = function (cback, ctx) {
-                    var func = jmvc.bind(cback, ctx);
+                    var func = jmvc.delegate(cback, ctx);
                     if (this.completed) {
                         func(this.res, this.err);
                     } else {
@@ -1155,6 +1166,33 @@
                         this.len += 1;
                     }
                     return this;
+                };
+
+
+
+
+                //                                     _/                            _/   
+                //      _/_/_/    _/  _/_/    _/_/    _/    _/_/      _/_/_/    _/_/_/    
+                //     _/    _/  _/_/      _/_/_/_/  _/  _/    _/  _/    _/  _/    _/     
+                //    _/    _/  _/        _/        _/  _/    _/  _/    _/  _/    _/      
+                //   _/_/_/    _/          _/_/_/  _/    _/_/      _/_/_/    _/_/_/       
+                //  _/                                                                    
+                // _/                                
+                preload = function (url) {
+                    W.setTimeout(function () {
+                        //make 1*1 iframe and load url
+                        var p = new Promise(),
+                            ifr = null,
+                            cleanup = function (i) {JMVC.dom.remove(i); };
+                        p.then(cleanup);
+                        (function (pr){
+                            ifr = JMVC.dom.add(JMVC.dom.body(), 'iframe', {src : url, width : 1, height : 1});
+                            ifr.contentWindow.onload = function () {
+                                JMVC.debug('preloaded ' + url);
+                                pr.done(ifr);
+                            };
+                        })(p);
+                    }, 0);
                 };
 
 
@@ -1616,6 +1654,8 @@
 
 
 
+
+
                 // 
                 //
                 //             _/  _/                                  _/                _/                            
@@ -1781,6 +1821,8 @@
                     i18n : {},
 
                     modules : Modules,
+                    nsCheck : jmvc.ns.check,
+                    nsMake : jmvc.ns.make,
                     Event : Event,
                     Errors : Errors,
                     Interface : Interface,
@@ -1797,8 +1839,8 @@
                     inherit : jmvc.inherit,
                     multinherit : jmvc.multi_inherit,
 
-                    //check, make
-                    ns : jmvc.ns,
+                    preload : preload,
+
 
                     hook : jmvc.hook,
                     hooks : hooks,
@@ -3835,6 +3877,9 @@
     JMVC.match = {
         email : function (str) {
             return !!str.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/);
+        },
+        url : function (str) {
+            return /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(str);
         }
     };
 
