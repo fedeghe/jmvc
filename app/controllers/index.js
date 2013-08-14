@@ -13,8 +13,8 @@ JMVC.controllers.index = function () {
 			, 'core/cookie'
 			, 'vendors/google/analytics'
 			, 'core/fx'
-			//, 'vendors/google/gmap'
 			, 'widget/lang'
+			, 'vendors/github/forkme'
 		);
 		
 		
@@ -35,7 +35,7 @@ JMVC.controllers.index = function () {
 
 		
 		// load two lang files
-		JMVC.lang('en', 'jp', 'it');
+		JMVC.lang('en', 'de', 'jp', 'it');
 		
 		//
 		JMVC.head.link('icon', {type : "image/vnd.microsoft.icon", href : JMVC.vars.baseurl + "/media/favicon.ico"});
@@ -64,6 +64,11 @@ JMVC.controllers.index = function () {
 		
 		index.parse().render(
 			function () {
+				//JMVC.preload(JMVC.vars.baseurl + '/info');
+				//JMVC.preload(JMVC.vars.baseurl + '/api');
+
+				JMVC.github.forkme('fedeghe');
+
 				JMVC.mobile.topHide();
 				JMVC.widget.langs.create(JMVC.dom.find('#topbar'));
 
@@ -80,6 +85,7 @@ JMVC.controllers.index = function () {
 				);
 
 				JMVC.head.lastmodified();
+
 				var el = document.getElementById('cent'),
 					links,
 					linkmore,

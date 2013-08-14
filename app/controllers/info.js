@@ -1,9 +1,5 @@
 JMVC.controllers.info = function () {
-	//
-	//
-	//
 	this.action_index = function () {
-		//
 		JMVC.events.loadify(500);
 		JMVC.require(
 			'core/codeview/script'
@@ -12,6 +8,7 @@ JMVC.controllers.info = function () {
 			,'core/mobile'
 			,'core/dim'
 			,'core/css'
+			,'vendors/github/forkme'
 		);
 		var main  = JMVC.getView('home/info'),
 			readme = JMVC.getView('home/readme'),
@@ -21,23 +18,18 @@ JMVC.controllers.info = function () {
 			doc = JMVC.getModel('api/function'),
 			ret='',
 			h = '',
-			fr = '<b class="index">&#9758;</b>',
 			f,
 			k, k2, t,
 			len, l2,
 			tmp;
 
-
-		
-
-		JMVC.set('my_table_style', 'padding:2px; background-color:#ccc');
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/info.css', true);// parsed
 
 		//favicon
 		JMVC.head.link('icon', {type : "image/vnd.microsoft.icon", href : JMVC.vars.baseurl + "/media/favicon.ico"});
 
 		features.set({
-			'fr' : fr,
+			'fr' : '<b class="index">&#9758;</b>',
 			'clearer' : '<br class="clearer" />'
 		});
 
@@ -50,10 +42,8 @@ JMVC.controllers.info = function () {
 			'legend': '<b>*</b> : mandatory parameter'
 		});
 
-		//JMVC.require('trial');
-		//JMVC.mac.titlesay();
-
 		main.parse().render(function(){
+			JMVC.github.forkme('fedeghe');
 			JMVC.mobile.topHide();
 			JMVC.head.title('JMVC :: info');
 		});
