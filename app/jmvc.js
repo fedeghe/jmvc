@@ -77,7 +77,7 @@
 
                 // returning object created in that function, here $JMVC will be JMVC
                 var $JMVC,
-                    JMVC_VERSION = 2,
+                    JMVC_VERSION = 2.2,
                     JMVC_REVIEW = 7,
                     JMVC_PACKED = false,
 
