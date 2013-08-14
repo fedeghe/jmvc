@@ -28,7 +28,11 @@ JMVC.extend('test', {
 	//
 	'init' : function () {
 		'use strict';
-		JMVC.require('core/sniffer', 'core/fx', 'core/lib/shl');
+		JMVC.require(
+			'core/sniffer'
+			,'core/fx'
+			,'core/lib/shl'
+		);
 	},
 
 	'initialize' : function (outcode) {
@@ -256,6 +260,8 @@ JMVC.extend('test', {
 			JMVC.debug(result);
 			JMVC.debug(wholeResString);
 		}
+
+		JMVC.head.link('icon', {type : "image/vnd.microsoft.icon", href : JMVC.vars.baseurl + "/media/favicon.ico"});
 	},
 	'pause' : function () {
 		'use strict';
