@@ -89,9 +89,14 @@ a.homelinks:hover{
 
 
 div#topbar{
-	background-color:#ddd;
-	height:20px;
-	border-bottom:1px solid #888;
+	/*
+	background-color:#777;
+	-moz-box-shadow:0px 0px 5px #000000;
+    -webkit-box-shadow:0px 0px 5px #000000;
+    box-shadow:0px 0px 5px #000000;
+	border-bottom:2px solid #aaa;
+	
+	height:25px;*/
 }
 
 
