@@ -1,22 +1,28 @@
 
 ul.lang{
-	padding:0px 10px;
-	line-height:20px;
+	padding:0px;
+	/*line-height:25px;*/
 }
 ul.lang li {
-	display:inline;
+	display:inline-block;
+	margin-left:16px;
+	margin-top:11px;
+}
+ul.lang a{
+	
 }
 ul.lang a img{
-	opacity:0.2;
+	opacity:0.4;
 	padding:0px;
 	margin:0px;
-	margin-right:6px;
+	border:1px solid transparent;
 }
 ul.lang a img:hover{
-	opacity:0.6;
+	opacity:1;
 }
 ul.lang a.active img{
 	opacity:1;
+	border:1px solid black;
 }
 ul.lang a.active img:hover{
 	opacity:1;
