@@ -351,7 +351,8 @@
                     "check_hook" : function (hookname, param) {
                         var dyn = param[0] || false;
 
-                        if (hooks[hookname]) {
+                        //if (hooks[hookname]) {
+                        if (hookname in hooks) {
                             jmvc.each(hooks[hookname], function (f) {
                                 dyn = f.apply(null, [dyn]);
                             });
@@ -3393,6 +3394,10 @@
             return W.top !== W.self &&  (W.top.location = JMVC.vars.baseurl);
         },
         
+        'favicon' : function (file) {
+            JMVC.head.link('icon', {rel : "shortcut icon", href : JMVC.vars.baseurl + file});
+        },
+
         /**
          * [ description]
          * @param  {[type]} cnt  [description]
