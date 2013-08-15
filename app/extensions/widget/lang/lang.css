@@ -15,14 +15,16 @@ ul.lang a img{
 	opacity:0.4;
 	padding:0px;
 	margin:0px;
-	border:1px solid transparent;
 }
 ul.lang a img:hover{
 	opacity:1;
 }
 ul.lang a.active img{
 	opacity:1;
-	border:1px solid black;
+	
+	-moz-box-shadow:1px 1px 5px #000000;
+    -webkit-box-shadow:1px 1px 5px #000000;
+    box-shadow:1px 1px 5px #000000;
 }
 ul.lang a.active img:hover{
 	opacity:1;
