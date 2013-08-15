@@ -5,15 +5,13 @@ JMVC.controllers.date = function() {
 		JMVC.date.week2range(1,2009);
 	};
 	
-	this.action_sunday = function(){
-		this.index(true);
-	}
-	this.action_monday =  function(){
-		this.index(false);
-	}
-	
-	this.action_index = function(sunday){
-		sunday = !!sunday;
+
+	this.action_index = function(){
+		sunday = false;
+		if ('day' in JMVC.p) {
+			sunday = JMVC.p.day == 'sunday';
+		}
+
 		this.render(false,function test(){
 			"use strict";
 			
@@ -31,7 +29,7 @@ JMVC.controllers.date = function() {
 			
 			JMVC.test.describe('The test is done telling the date extension to consider <u>'+JMVC.date.vars.time_formats['en-us'].days[~~!!JMVC.date.vars.START]+'</u>'+
 				' as the first day of the week.'+'<br/>'+
-				'Test with <a href="'+JMVC.vars.baseurl+'/test_date/'+trg+'">'+trg+'</a> as first day');
+				'Test with <a href="'+JMVC.vars.baseurl+'/test_date?day='+trg+'">'+trg+'</a> as first day');
 			
 			
 			JMVC.test.message('sat');
