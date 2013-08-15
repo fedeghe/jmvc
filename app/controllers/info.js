@@ -26,7 +26,7 @@ JMVC.controllers.info = function () {
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/info.css', true);// parsed
 
 		//favicon
-		JMVC.head.link('icon', {type : "image/vnd.microsoft.icon", href : JMVC.vars.baseurl + "/media/favicon.ico"});
+		JMVC.head.favicon("/media/favicon.ico");
 
 		features.set({
 			'fr' : '<b class="index">&#9758;</b>',

@@ -32,7 +32,7 @@ JMVC.controllers.api = function () {
 
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/core/api.css', true, false);// parsed
 		//favicon
-		JMVC.head.link('icon', {type : "image/vnd.microsoft.icon", href : JMVC.vars.baseurl + "/media/favicon.ico"});
+		JMVC.head.favicon("/media/favicon.ico");
 		
 		JMVC.io.get(JMVC.vars.baseurl + '/media/documentation.xml', function (doc) {
 			//get a parser

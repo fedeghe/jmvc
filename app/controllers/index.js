@@ -38,7 +38,8 @@ JMVC.controllers.index = function () {
 		JMVC.lang('en', 'de', 'jp', 'it');
 		
 		//
-		JMVC.head.link('icon', {type : "image/vnd.microsoft.icon", href : JMVC.vars.baseurl + "/media/favicon.ico"});
+		JMVC.head.favicon("/media/favicon.ico");
+
 
 		//
 		// JMVC.head.addscript(JMVC.vars.baseurl+"/media/js/plus_one.js");
