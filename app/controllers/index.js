@@ -88,38 +88,22 @@ JMVC.controllers.index = function () {
 				JMVC.head.lastmodified();
 
 				var el = document.getElementById('cent'),
-					links,
-					linkmore,
-					sourcelink,
-					apilink,
+					links = JMVC.dom.create('h1'),
+					morelink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/info.jmvc', title : 'get more info'}, JMVC.parselang('[L[more]]')),
+					sourcelink = JMVC.dom.create('a', {'class' : 'homelinks', href : 'https://github.com/fedeghe/jmvc', title : 'get code from github!', target : '_blank'}, JMVC.parselang('[L[source]]')),
+					apilink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/api.jmvc', title : 'basic documentation'}, JMVC.parselang('[L[api]]')),
 					logo,
 					newlogo,
 					dims,
 					mapid,
 					b;
 
-				links = JMVC.dom.create('h1');
-
 				//
-				apilink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/api.jmvc', title : 'basic documentation'}, JMVC.parselang('[L[api]]'));
-				morelink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/info.jmvc', title : 'get more info'}, JMVC.parselang('[L[more]]'));
-				sourcelink = JMVC.dom.create('a', {'class' : 'homelinks', href : 'https://github.com/fedeghe/jmvc', title : 'get code from github!', target : '_blank'}, JMVC.parselang('[L[source]]'));
-				
-				
-				//JMVC.mobile.topHide();
-				
-				
 				
 				JMVC.dom.append(links,  [morelink, apilink, sourcelink]);
-				
-
-
 				JMVC.dom.append(el, links);
 
-
-
 				JMVC.events.bind([morelink, apilink, sourcelink], 'click', function () {this.blur(); });
-				
 
 				//see the pool
 				//JMVC.debug(JMVC.io.x);

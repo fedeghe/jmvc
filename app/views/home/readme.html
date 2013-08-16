@@ -1,20 +1,35 @@
 <div>
+	<!--
 	<div class="floatl" style="text-align:center;">
 		<a href="$baseurl$" style="display:block">
-			<img width="476" height="136"  src="$baseurl$/media/img/jmvc_m1.svg" />
+			<img src="$baseurl$/media/img/jmvc_m1.svg" />
 		</a>
 	</div>
 	<div class="floatr">
 		<span class="desc"><b>Description</b>: pure javascript mvc framework</span>
-		<span class="desc"><b>Contact</b>: <a href="mailto:fedeghe@gmail.com">fedeghe@gmail.com</a></span>
+		<span class="desc"><b>Contact</b>: <a href="mailto:info@jmvc.org">info@jmvc.org</a></span>
 		<span class="desc"><b>Version</b>: $version$ (rev. $review$)</span>
-		<span class="desc"><b>Last modified</b>: $last_modified$</span>
+		<span class="desc"><b>Last modified</b>: $last_modified$ ($gmt$)</span>
 		<span class="desc"><b>Render time</b>: <span id="render_time">[[JMVC.vars.rendertime]] ms</span></span>
 	</div>
+	-->
+		
+			<a href="$baseurl$">
+				<img src="$baseurl$/media/img/jmvc_m1.svg" style="align:left"/>
+			</a>
+		
+		<p class="floatr dev_dskt">
+			{{info_intro}}
+		</p>
+		<p class="dev_mobi">
+			{{info_intro}}
+		</p>
+		
+
 </div>
 <br class="clearer" />
 
-<h2>Description</h2>
+<h2>Introduction</h2>
 <p>JMVC implements the MVC pseudo-pattern using <i>only</i> pure <a href="http://www.vanilla-js.com" target="_blank">vanilla javascript</a>.
 	You can write down your Controllers with your actions. Within the action you can load one or more of your Models, get data from server using asynchronous xhr calls,
 	load one or more Views and at the end render the View tree, populated with data retrieved.</p>

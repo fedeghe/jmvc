@@ -3,7 +3,7 @@ body{
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 	font-size:16px;
 	
-	width:900px;
+	width:960px;
 	margin:0 auto;
 	/*background-image: url($baseurl$/media/img/oy.png);
 	background-color:#C4DDED;
@@ -81,7 +81,7 @@ p.footer{
 	text-align:center
 }
 span.desc{
-	display:block;
+	/*display:block;*/
 	line-height:22px;
 }
 ul.features p.feature{
