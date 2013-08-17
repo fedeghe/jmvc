@@ -405,6 +405,7 @@
                                     case 'model':
                                         jmvc.jeval(res);
                                         jmvc.model_inherit($JMVC[type + 's'][name]);
+                                        
                                         o = new $JMVC.models[name]();
                                         if (params) {
                                             $JMVC.models[name].apply(o, params);
@@ -561,7 +562,7 @@
 
                     //@DOC
                     "get" : function (name) {
-                        return $JMVC.vars[name] || false;
+                        return $JMVC.vars[name] || undefined;
                     },
 
                     //@DOC
@@ -1200,6 +1201,10 @@
 
 
                 Errors = {
+                    'Network' : function (msg) {
+                        this.name = 'Network';
+                        this.msg = msg || "";
+                    },
                     'BadParams' : function (msg) {
                         this.name = 'BadParams';
                         this.msg = msg || "";
