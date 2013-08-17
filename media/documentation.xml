@@ -27,7 +27,7 @@ _/    _/  _/      _/    _/  _/    _/
 
 		<function>
 			<signature name="debug">JMVC.debug(String name)</signature>
-			<description>Debugs on console any element passed, degading to the alert</description>
+			<description>Debugs on console any element passed, degrading to the alert</description>
 			<params>
 				<param name="...">all parameters to be debugged</param>
 			</params>
@@ -47,8 +47,7 @@ JMVC.debug(arr, obj, foo);
 				<param name="*name">the name of the new variable to be removed</param>
 			</params>
 			<returns>JMVC</returns>
-			<sample>&#10;
-JMVC.set('a', 10);&#10;
+			<sample>JMVC.set('a', 10);&#10;
 var t = JMVC.get('a');&#10;
 JMVC.del('a');
 			</sample>
@@ -102,54 +101,70 @@ console.debug(arr, arrAfter);&#10;</sample>
 			<signature name="extend">JMVC.extend(String section, Literal extension)</signature>
 			<description>Extends JMVC object with Your objects</description>
 			<params>
-				<param name="*section">	that parameter is needed to set the namespace under which Your functions will be added toJMVC, if You use `ajax` then all functions in the literal will be callable with JMVC.ajax.my_function(....)</param>
+				<param name="*section">	that parameter is needed to set the namespace under which Your functions will be added toJMVC; valid values are `foo` or even `foo1.foo2.foo3`</param>
 				<param name="*extension">this object literal defines all the functions in your extension (JMVC is in that scope, so You can use it)</param>
 			</params>
 			<returns>void (undefined)</returns>
 			<status>incomplete</status>
+			<sample>JMVC.extend('fooWidget', {&#10;
+	// if specified, will lock the extension&#10;
+	// for any value returned but true&#10;
+	initCheck : function () {&#10;
+		return true;&#10;
+	},&#10;
+	// if specified, will be executed immediately&#10;
+	init : function () {&#10;
+		console.debug('init fooWidget');&#10;
+	},&#10;
+	// ... specify your methods&#10;
+	start : function () { alert('doing foo'); }&#10;
+	// ...&#10;
+});&#10;
+JMVC.fooWidget.start();
+			</sample>
 		</function>
 		<function>
-			<signature name="factory">JMVC.factory(String type, String name[, params[, ...]])</signature>
-			<description>Extends JMVC object with Your objects</description>
+			<signature name="factory">JMVC.factory(String type, String name[, Array params])</signature>
+			<description>Get a Model, View or Interface</description>
 			<params>
 				<param name="*type">specify the kind of object should be returned, accepted values area 'view', 'model', 'controller' and 'interface'</param>
 				<param name="*name">the name for the object, that will be used in the xhr path</param>
-				<param name="params">all parameters since the third on, will be used from the factory method in the constructor call</param>
+				<param name="params">all parameters for the object constructor call</param>
 			</params>
 			<returns>the requested instance, or false</returns>
 			<status>incomplete</status>
+			<sample>var me = JMVC.factory('model', 'Persona', ['Federico', 35]);&#10;me.hello();</sample>
 		</function>
 		<function>
 			<signature name="get">JMVC.get(String name)</signature>
 			<description>Retrieves a variable from the global JMVC scope</description>
 			<params>
-				<param name="*name">the name of the new variable to be removed</param>
+				<param name="*name">the name of the new variable to be retrieved</param>
 			</params>
-			<returns>the variable reference or value</returns>
-			<sample>&#10;
-JMVC.set('a', 10);&#10;
-var t = JMVC.get('a');&#10;
-JMVC.del('a');
-			</sample>
+			<returns>the variable reference or value if found, or undefined</returns>
+			<sample>JMVC.set('a', 10);&#10;console.debug(JMVC.get('a'));</sample>
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="getModel">JMVC.getModel(String name [, params[, ...])</signature>
+			<signature name="getModel">JMVC.getModel(String name [, Array params])</signature>
 			<description>This is a shortcut call for the factory, with the first parameter preset to 'model'</description>
 			<params>
 				<param name="*name">the name of the model that should be returned, even on a subfolder</param>
+				<param name="params">all parameters for the object constructor call</param>
 			</params>
 			<returns>the model instance, or false</returns>
 			<status>incomplete</status>
+			<sample>var me = JMVC.getModel('Persona', ['Federico', 35]);&#10;me.hello();</sample>
 		</function>
 		<function>
 			<signature name="getView">JMVC.getView(String name)</signature>
-			<description>Gets a view instance, even on a subfolder</description>
+			<description>This is a shortcut call for the factory, with the first parameter preset to 'view'</description>
 			<params>
 				<param name="*name">the name of the new view</param>
 			</params>
-			<returns>the view instance</returns>
+			<returns>the view instance of false</returns>
 			<status>incomplete</status>
+			<sample>var me = JMVC.getView('foot');&#10;console.debug(me.content);</sample>
 		</function>
 		<function>
 			<signature name="hook">JMVC.get(String name)</signature>
@@ -298,7 +313,7 @@ var loaded_extensions = JMVC.nsCheck('extensions', JMVC),&#10;
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="render">JMVC.prototipize(Constructor func, Enanching Literal)</signature>
+			<signature name="render">JMVC.render(Constructor func, Enanching Literal)</signature>
 			<description>Allows to add properties and methods to the prototype of a constructor</description>
 			<params>
 				<param name="*unc">the constructor to be enanched</param>
