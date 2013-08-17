@@ -41,9 +41,13 @@ JMVC.extend('tabs', {
 			
 			var num2show = show || 0,
 				ul_id = idul + bid,
+				anchorName = JMVC.util.uniqueid + '',
+				anchor = JMVC.dom.create('a', {name : anchorName}),
 				ul = JMVC.dom.create('ul', {id : ul_id, 'class' : 'tablabels_' + direction}),
 				tabcontainer = JMVC.dom.create('div', {'class' : 'tabcontainer_' + direction, 'data-ul' : ul_id}),
 				i = 0,
+				j = 0,
+				l = 0,
 				li,
 				div,
 				ids2return = [],
@@ -51,7 +55,7 @@ JMVC.extend('tabs', {
 				border3 = '-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;',
 				container = JMVC.dom.find('#' + idcontainer);
 
-			for(var j in that.tabs){
+			for(j in that.tabs){
 				var mayhide = (i !== num2show) ? 'none' : 'block',
 					liclass = (i !== num2show) ? 'unsel' : 'sel',
 					id = 'jvmc_cont' + i + bid;
@@ -81,8 +85,8 @@ JMVC.extend('tabs', {
 			if (direction == 'v') {
 				this.els2render.push(clearer);
 			}
-
-			for (var i = 0, l = that.els2render.length; i < l; i += 1) {
+			JMVC.dom.append(container, anchor);
+			for (i = 0, l = that.els2render.length; i < l; i += 1) {
 				JMVC.dom.append(container, that.els2render[i]);
 			}
 
@@ -93,8 +97,11 @@ JMVC.extend('tabs', {
 			
 			
 			//set bindings
-			for(var i =0, l= that.elements['li'].length; i<l; i++){
+			for(i = 0, l = that.elements['li'].length; i < l; i += 1){
 				JMVC.events.bind(that.elements['li'][i], 'click', function(e){
+
+					document.location.hash = anchorName;
+					console.debug(anchorName)
 
 					//hide all tabs
 					hideall();
@@ -102,10 +109,10 @@ JMVC.extend('tabs', {
 					var target = JMVC.events.eventTarget(e),
 						//show tab
 						id_orig = JMVC.dom.attr(target, 'id'),
-						id_tab2show = id_orig.replace('jvmc_tb','jvmc_cont');
+						id_tab2show = id_orig.replace('jvmc_tb', 'jvmc_cont');
 
 					//JMVC.css.style(JMVC.dom.find('#'+id_tab2show), 'display', 'block');
-					JMVC.css.show(JMVC.dom.find('#'+id_tab2show));
+					JMVC.css.show(JMVC.dom.find('#' + id_tab2show));
 
 					JMVC.dom.switchClass(target, 'unsel', 'sel');
 
@@ -127,10 +134,9 @@ JMVC.extend('tabs', {
 		
 		var tc = JMVC.dom.find('.tabcontainer_v');
 	
-		JMVC.each(tc, function(el, i){
+		JMVC.each(tc, function (el, i) {
 			var ulid = JMVC.dom.attr(el, 'data-ul'),
 				ul = JMVC.dom.find('#' + ulid),
-				
 				h = ~~(JMVC.css.height(ul));
 			if (h) {
 				JMVC.css.style(el, 'minHeight', h + 'px');
@@ -189,12 +195,7 @@ JMVC.extend('tabs', {
 					'div.tabcontainer_v' : 'color:' + colors.vert.textcontent +';background-color:' + colors.vert.containerbg +';' + border3 + 'min-height:250px;overflow:hidden; position:relative;line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;border:' + sizes.vert.border + 'px solid ' + colors.vert.border + ';left:-1px;z-index:5; padding:5px;'
 				};
 			
-			
-			
-			
-			JMVC.head.addstyle(JMVC.css.json2css(styles), true, true);
-			
-			
+			JMVC.head.addstyle(JMVC.css.json2css(styles), true, true);			
 		});
 	}
 });
