@@ -348,13 +348,15 @@
                      * @param  {[type]} param    [description]
                      * @return {[type]}          [description]
                      */
-                    "check_hook" : function (hookname, param) {
-                        var dyn = param[0] || false;
+                    "hook_check" : function (hookname, param) {
+                        //var dyn = param[0] || false;
+                        var dyn = param || false;
 
                         //if (hooks[hookname]) {
                         if (hookname in hooks) {
                             jmvc.each(hooks[hookname], function (f) {
-                                dyn = f.apply(null, [dyn]);
+                                //dyn = f.apply(null, [dyn]);
+                                dyn = f.apply(null, dyn);
                             });
                         }
                         return dyn;
@@ -394,10 +396,6 @@
                                         
                                         break;
                                     case 'controller':
-                                        // res = res.replace(/^(\s*)\/\/(.*)[\n]/g, '/*$1*/')
-                                        // res = res.replace(/(\/\*.*\*\/)/gm, '');
-                                        // res = res.replace(/(\/\/.*)/g, '');
-                                        // WARNING : removes only inlines;
                                         jmvc.jeval(res);
                                         jmvc.inherit($JMVC[type + 's'][name], Controller);
                                         break;
@@ -874,11 +872,6 @@
 
                     "parselang" : function (cnt) {
 
-                        if ($JMVC.p.lang) {
-                            $JMVC.cookie.set('lang', $JMVC.p.lang);
-                        }
-
-                        
                         var RXlng = "\\[L\\[([\\S\\s]*?)\\]\\]",
                             lang = true,
                             tmp,
@@ -983,6 +976,8 @@
                         if (!!!content) {
                             return '';
                         }
+                        //beforeParse hook
+                        jmvc.hook_check('onBeforeParse', [cont]);
                         
                         while (i < limit) {
                             i += 1;
@@ -1072,7 +1067,9 @@
                         
                         // use script on template function
                         cont = Parser.tpl(cont);
-                        jmvc.check_hook('onAfterParse', [cont]);
+
+                        //afterParse hook
+                        jmvc.hook_check('onAfterParse', [cont]);
                         return cont;
                     }
                 };
@@ -1486,8 +1483,6 @@
                  */
                 View.prototype.render = function (pars) {
                     
-                    
-
                     //call before render
                     $JMVC.events.startRender();
 
@@ -1563,12 +1558,12 @@
                             $JMVC.vars.rendertime = +new Date() - time_begin;
                             
 
-                            that.content = jmvc.check_hook('onBeforeRender', [that.content]) || that.content;
+                            that.content = jmvc.hook_check('onBeforeRender', [that.content]) || that.content;
 
                             //
                             $JMVC.dom.html(trg, that.content);
                             //
-                            jmvc.check_hook('onAfterRender', [that.content]);
+                            jmvc.hook_check('onAfterRender', [that.content]);
 
                             
                             
@@ -1836,7 +1831,7 @@
 
                     parselang : jmvc.parselang,
 
-                    //checkhook : jmvc.check_hook,
+                    hookCheck : jmvc.hook_check,
                     
                     debug : jmvc.debug,
                     delegate : jmvc.delegate,
@@ -2357,7 +2352,7 @@
 
 
         'uniqueid' : new function () {
-            var count = +new Date;
+            var count = 0;
             this.toString = function () {
                 return 'JMVCID' + ++count;
             }
@@ -3946,7 +3941,10 @@
                 for (null; i < l; i += 1) {
                     JMVC.require(JMVC.modules[i]);  
                 }
-            }            
+            }
+            if (JMVC.p.lang) {
+                JMVC.cookie.set('lang', JMVC.p.lang);
+            }       
             JMVC.render();
         }
     )();
