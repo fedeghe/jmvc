@@ -348,9 +348,9 @@
                      * @param  {[type]} param    [description]
                      * @return {[type]}          [description]
                      */
-                    "hook_check" : function (hookname, param) {
+                    "hook_check" : function (hookname, params) {
                         //var dyn = param[0] || false;
-                        var dyn = param || false;
+                        var dyn = params instanceof Array ? params : false;
 
                         //if (hooks[hookname]) {
                         if (hookname in hooks) {
