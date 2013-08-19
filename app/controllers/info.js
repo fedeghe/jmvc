@@ -16,35 +16,63 @@ JMVC.controllers.info = function () {
 			features = JMVC.getView('home/features'),
 			doc_tpl = JMVC.getView('api/doctpl'),
 			info_intro = JMVC.getView('home/info_intro'),
-			apioutro = JMVC.getView('api/apioutro'),
+			infoutro = JMVC.getView('home/infoutro'),
 			doc = JMVC.getModel('api/function'),
+			backtotop = '<a href="#top">go to top &uparrow;</a>',
 			ret='',
+			toplinks = [],
+			_toplinks = {
+				intro : "Introduction",
+				req : "Requirements",
+				started : "Get started",
+				howiw : "How it works",
+				features : "Features",
+				urlstruc : "Url structure",
+				samples : "Samples",
+				api : "Api",
+				coredoc : "Core doc",
+				extdoc : "Extension doc",
+				testsuite : "Test suite",
+				why : "Why"
+			},
 			h = '',
 			f,
 			k, k2, t,
 			len, l2,
 			tmp;
 
+		for (t in _toplinks) {
+			toplinks.push('<a href="#' + t + '" class="round4">' + _toplinks[t] + '</a>');
+		}
+
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/info.css', true);// parsed
 
 		//favicon
 		JMVC.head.favicon("/media/favicon.ico");
 
+
 		features.set({
 			'fr' : '<b class="index">&#9758;</b>',
-			'clearer' : '<br class="clearer" />'
+			'clearer' : '<br class="clearer" />',
+			'backtotop' : backtotop
 		});
 
 		readme.set({
-			'api': '{{apioutro}}',
+			'api': '{{infoutro}}',
 			'githublink' : 'https://github.com/fedeghe/jmvc',
-			'legend': '<b>*</b> : mandatory parameter'
+			'legend': '<b>*</b> : mandatory parameter',
+			'backtotop' : backtotop,
+			'toplinks' : toplinks.join(' ~ ')
 		});
 		info_intro.set({
 			'review' : JMVC.vars.review,
 			'version' : JMVC.vars.version,
 			'last_modified' : JMVC.vars.last_modified,
 			'gmt' : 'GMT+' + -(new Date().getTimezoneOffset() / 60),
+			'backtotop' : backtotop
+		});
+		infoutro.set({
+			'backtotop' : backtotop
 		});
 
 		main.parse().render(function(){
