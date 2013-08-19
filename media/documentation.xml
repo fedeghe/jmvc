@@ -408,7 +408,7 @@ _/        _/    _/  _/    _/      _/_/    _/      _/        _/    _/  _/        
 -->
 	<constructors>
 		<function>
-			<signature name="Interface">JMVC.set(String name, String value)</signature>
+			<signature name="Interface">JMVC.Interface(String name, String value)</signature>
 			<description>Adds a variable that You can use anywhere</description>
 			<params>
 				<param name="*name">the name of the new variable, use it typing &#36;thename&#36;</param>
@@ -1431,6 +1431,16 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 			</params>
 			<returns>void (undefined)</returns>
 			<status>incomplete</status>
+		</function>
+		<function>
+			<signature name="lib">JMVC.head.lib(String lib)</signature>
+			<description>Loads an external library</description>
+			<params>
+				<param name="lib">Library name, now only 'jquery' is available (use CDN)</param>
+			</params>
+			<returns>void (undefined)</returns>
+			<status>incomplete</status>
+			<sample>JMVC.head.lib('jquery');</sample>
 		</function>
 		<function>
 			<signature name="link">JMVC.head.link(String src, Boolean parse, Boolean explicit)</signature>
