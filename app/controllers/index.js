@@ -35,7 +35,8 @@ JMVC.controllers.index = function () {
 
 		
 		// load two lang files
-		JMVC.lang('en', 'de', 'jp', 'it');
+		//
+		JMVC.lang.apply(null, JMVC.util.getParameters('jmvc.js').langs || ['en', 'de', 'jp', 'it']);
 		
 		//
 		JMVC.head.favicon("/media/favicon.ico");
