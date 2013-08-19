@@ -280,14 +280,14 @@
 
                     /**
                      * [ description]
-                     * @param  {[type]} Childs [description]
+                     * @param  {obejct literal} Childs [description]
                      * @param  {[type]} Parent [description]
                      * @return {[type]}        [description]
                      */
                     "multi_inherit" : function (Childs, Parent) {
-                        jmvc.each(Childs, function (el){
-                            jmvc.inherit(el, Parent);
-                        });
+                        for (var i in Childs) {
+                            jmvc.inherit(Childs[i], Parent);
+                        }
                     },
 
 
@@ -349,15 +349,12 @@
                      * @return {[type]}          [description]
                      */
                     "hook_check" : function (hookname, params) {
-                        //var dyn = param[0] || false;
-                        var dyn = params instanceof Array ? params : false;
-
-                        //if (hooks[hookname]) {
+                        var dyn = params instanceof Array ? params : false,
+                            i;
                         if (hookname in hooks) {
-                            jmvc.each(hooks[hookname], function (f) {
-                                //dyn = f.apply(null, [dyn]);
-                                dyn = f.apply(null, dyn);
-                            });
+                            for (i in hooks[hookname]) {
+                                dyn = hooks[hookname][i].apply(null, dyn);
+                            }
                         }
                         return dyn;
                     },
@@ -549,9 +546,10 @@
                     // setter getter unsetter $JMVC vars
                     "set" : function (name, content) {
                         if (JMVC.util.isObject(name)) {
-                            JMVC.each(name, function (el, i) {
-                                $JMVC.set(i, el);
-                            });
+
+                            for (var i in name) {
+                                $JMVC.set(i, name[i]);
+                            }
                             return $JMVC;
                         }
                         $JMVC.vars[name] = content;
@@ -756,10 +754,9 @@
                      * @return {[type]}   [description]
                      */
                     "purge" : function (o) {
-                        o && jmvc.each(o, function (el, i) {
-                            o[i] = null;
-                            delete o[i];
-                        });
+                        if (!o) {return; }
+                        o = {};
+                        o = null;
                     },
 
                     /**
@@ -828,40 +825,32 @@
                         type = ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
                         func.$break = false;
                         func.$continue = false;
-                        func['break'] = func.exit = function () {func.$break = true; };
-                        func['continue'] = func.skip = function () {func.$continue = true; };
+                        func['break'] = /*func.exit = */function () {func.$break = true; };
+                        func['continue'] = /*func.skip = */function () {func.$continue = true; };
                         
-                        /*
-                        *
-                        * 
-                        * A switch is much slower
-                        */
-                        return type.match(/(array|object)/) ? {
-                            'object' : function () {
-                                var x;
-                                ret = {};
-                                for (i in o) {
-                                    x = func.call(o, o[i], i);
+                        if (type === 'array') {
+                            ret = [];
+                            i = 0;
+                            l = o.length;
+                            for (null; i < l; i++) {
+                                if (func.$continue) {func.$continue = false; continue; }
+                                if (func.$break) {break;}
+                                //ret.push(func.call(o, o[i], i));
+                                ret[i] = func.call(o, o[i], i);
+                            }
+                        } else if (type === 'object') {
+                            ret = {};
+                            for (i in o) {
+                                if (o.hasOwnProperty(i)) {
                                     if (func.$continue) {func.$continue = false; continue; }
                                     if (func.$break) {break; }
-                                    ret[i] = x;
+                                    (function (j) {ret[j] = func.call(o, o[j], j); })(i);
                                 }
-                                return ret;
-                            },
-                            'array' : function () {
-                                var x;
-                                i = 0;
-                                l = o.length;
-                                ret = [];
-                                for (null; i < l; i++) {
-                                    x = func.call(o, o[i], i);
-                                    if (func.$continue) {func.$continue = false; continue; }
-                                    if (func.$break) {break;}
-                                    ret.push(x);
-                                }
-                                return ret;
                             }
-                        }[type]() : func(o);
+                        } else {
+                            ret = func(o);
+                        }
+                        return ret;
                     },
 
                     "promise" : {
@@ -1238,22 +1227,23 @@
                 _/  _/    _/      _/_/    _/_/_/  _/          _/        _/_/_/    _/_/_/    _/_/_/     
                                                                                                       
                  */
-                Interface = function (f) {
+                
+                Interface = function (/** Array */ f) {
                     this.mthds = f;
                 };
-                Interface.prototype.addMethod = function (mthd) {
+                Interface.prototype.addMethod = function (/** String */ mthd) {
                     this.mthds[mthd.name] || (this.mthds[mthd.name] = mthd);
                 };
-                Interface.prototype.removeMethod = function (mthd) {
+                Interface.prototype.removeMethod = function (/** String */ mthd) {
                     this.mthds[mthd] && (delete this.mthds[mthd]);
                 };
-                Interface.prototype.check = function (o) {
+                Interface.prototype.check = function (/** ObjLiteral */ o) {
                     var m,
                         i = 0,
                         l = this.mthds.length,
                         obj = new o();
-                    for(m in this.mthds){
-                        if(typeof obj[this.mthds[m]] !== 'function'){
+                    for (m in this.mthds) {
+                        if (typeof obj[this.mthds[m]] !== 'function') {
                             return false;
                         }
                     }
@@ -1335,7 +1325,7 @@
                     
                     var tmp_v = new View(content);
 
-                    tmp_v.render(typeof cback === 'function' ? {cback : cback} : null);
+                    tmp_v.render(cback && typeof cback === 'function' ? {cback : cback} : null);
                     return this;
                 };
 
@@ -1461,7 +1451,7 @@
                  * @param {[type]} alt   [description]
                  */
                 View.prototype.setFromUrl = function (vname, alt) {
-                    this.set(String(vname), $JMVC.controllers[$JMVC.c].get(vname) || (alt || 'unset'));
+                    this.set(String(vname), $JMVC.controllers[$JMVC.c].get(vname) || alt || 'unset');
                     // allow chain
                     return this;
                 };
@@ -1547,6 +1537,7 @@
 
 
                     if(!$JMVC.loaded){
+
                         // books rendering in body or elsewhere, on load
                         $JMVC.events.bind(W, 'load', function () {
                             
@@ -1557,24 +1548,19 @@
 
                             $JMVC.vars.rendertime = +new Date() - time_begin;
                             
-
+                            // before render
                             that.content = jmvc.hook_check('onBeforeRender', [that.content]) || that.content;
 
-                            //
+                            // render
                             $JMVC.dom.html(trg, that.content);
-                            //
+
+                            // after render
                             jmvc.hook_check('onAfterRender', [that.content]);
 
-                            
-                            
-
                             // may be a callback? 
-                            cback && cback.apply(this, !!argz ? argz : []);
-                            //trigger end of render
+                            cback && cback.apply(this, argz || []);
+                            //trigger end of render queue
                             $JMVC.events.endRender();
-
-
-
                         });
                     // yet loaded
                     //happend after load... so can render a view from a render cback 
@@ -2218,7 +2204,7 @@
          * @return {[type]}            [description]
          */
         'getParameters' : function (scriptname) {
-            var scripts = WD.getElementsByTagName("script"),
+            var scripts = JMVC.array.coll2array(JMVC.WD.getElementsByTagName("script")),
                 cs = null,
                 src = "",
                 pattern = scriptname,
@@ -2226,6 +2212,7 @@
                 parameters = false,
                 i = 0,
                 l = scripts.length;
+
             for(null; i < l; i += 1){
                 cs = scripts[i];
                 src = cs.src;
@@ -3434,10 +3421,9 @@
         'lib' : function (l) {
             var libs = {
                 'jquery' : 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js'
-            }
-            if (l in libs){
-                JMVC.head.addscript(libs[l]);
-            }
+            };
+            (l in libs) && JMVC.head.addscript(libs[l]);
+            
         },
 
         /**
@@ -3632,10 +3618,10 @@
          */
         'ltrim' : function (s) {return s.replace(/^\s+/g, ''); },
 
-        'multireplace' : function (cnt, o) {
-            JMVC.each(o, function (el, rx) {
-                cnt = cnt.replace(rx, el);
-            });
+        'multireplace' : function (cnt, o, i) {
+            for (i in o) {
+                cnt = cnt.replace(o[i], i);
+            }
             return cnt;
         },
 
@@ -3647,8 +3633,8 @@
          * @param  {[type]} lngt [description]
          * @return {[type]}      [description]
          */
-        'padme' : function (val, el, pos, lngt) {
-            var len = lngt || 2;
+        'padme' : function (val, el, pos, len) {
+            len = len || 2;
             while ((String(val)).length < len) {
                 switch (pos) {
                 case 'pre':
