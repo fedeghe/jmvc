@@ -98,4 +98,11 @@ ul.inner{
 ul.inner li{
 	line-height:22px;
 }
-
+div.toplinks a{
+	line-height:22px;
+	padding:5px;
+	white-space:nowrap;
+}
+div.toplinks a:hover{
+	background-color:#eee;
+}
