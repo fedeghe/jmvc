@@ -754,7 +754,6 @@
                      * @return {[type]}   [description]
                      */
                     "purge" : function (o) {
-                        if (!o) {return; }
                         o = {};
                         o = null;
                     },
@@ -1473,8 +1472,7 @@
                  */
                 View.prototype.render = function (pars) {
                     
-                    //call before render
-                    $JMVC.events.startRender();
+                    
 
                     var arg = pars || {},
                         //
@@ -1541,6 +1539,9 @@
                         // books rendering in body or elsewhere, on load
                         $JMVC.events.bind(W, 'load', function () {
                             
+                            //call before render
+                            $JMVC.events.startRender();
+
                             $JMVC.loaded = true;
                             may_trg = target ? $JMVC.dom.find(target) : false;
                             trg = may_trg || WD.body;
