@@ -78,7 +78,7 @@
                 // returning object created in that function, here $JMVC will be JMVC
                 var $JMVC,
                     JMVC_VERSION = 2.2,
-                    JMVC_REVIEW = 7,
+                    JMVC_REVIEW = 8,
                     JMVC_PACKED = false,
 
                     /**
@@ -256,7 +256,6 @@
                      * @return void
                      */
                     "jeval" : function (r) {
-                        //W['ev' + 'al'](r);
                         (new Function(r))();
                     },
 
@@ -323,6 +322,7 @@
                         // return truly value
                         if (typeof obj.initCheck === 'function') {
                             if (!obj.initCheck.call($JMVC)) {return false; }
+                            trg.initCheck = null;
                         }
 
                         (function (t, o) {
@@ -338,7 +338,7 @@
                         if (typeof trg.init === 'function') {
                             trg.init.call($JMVC);
                             //and delete
-                            delete trg.init;
+                            trg.init = null;
                         }
                     },
 
@@ -369,16 +369,15 @@
                      */
                     "xhrget" : function (path, type, name, params) {
                         //
-                        var ret = false, o;
+                        var ret = false,
+                            o;
                         if (type === 'view' && typeof $JMVC.views[name] === 'function') {
                             ret = $JMVC.views[name];
-
                         } else if (type === 'model' && typeof $JMVC.models[name] === 'function') {
-
                             o = new $JMVC.models[name]();
+                            params && $JMVC.models[name].apply(o, params);
                             o.vars = {};
                             ret = o;
-
                         } else {
 
                             $JMVC.io.get(
@@ -386,12 +385,10 @@
                                 function cback(res) {
                                     switch (type) {
                                     case 'view':
-                                        
-
                                         $JMVC.views[name] = new View(res);
                                         ret =  $JMVC.views[name];
-                                        
                                         break;
+
                                     case 'controller':
                                         jmvc.jeval(res);
                                         jmvc.inherit($JMVC[type + 's'][name], Controller);
@@ -400,26 +397,20 @@
                                     case 'model':
                                         jmvc.jeval(res);
                                         jmvc.model_inherit($JMVC[type + 's'][name]);
-                                        
                                         o = new $JMVC.models[name]();
-                                        if (params) {
-                                            $JMVC.models[name].apply(o, params);
-                                        }
+                                        params && $JMVC.models[name].apply(o, params);
                                         o.vars = {};
                                         ret = o;
                                         break;
+
                                     case 'interface':
-                                        if (!JMVC.interfaces[name]) {
-                                            jmvc.jeval(res);
-                                            //JMVC.interfaces[name] = new Interface(JMVC.interfaces[name]);
-                                        }
+                                        !(name in JMVC.interfaces) && jmvc.jeval(res);
                                         break;
                                     }
                                 },
                                 false //sync
                             );
                         }
-
                         return ret;
                     },
 
@@ -433,7 +424,6 @@
                         // using namespace ?
                         var pieces = name.split('/'),
                             path = false,
-                            //path_absolute =  $JMVC.vars.baseurl + US + 'app' + US + type + 's/' + $JMVC.c_prepath;
                             path_absolute =  $JMVC.vars.baseurl + US + 'app' + US + type + 's/',
                             t = type,
                             ret;
@@ -444,9 +434,8 @@
                         }
 
                         //need to do this because of the special case when a c_prepath is used
-                        if (type === 'controller') {
-                            path_absolute += $JMVC.c_prepath;
-                        }
+                        type === 'controller' && (path_absolute += $JMVC.c_prepath);
+
                         path_absolute += (path ? path + US : "") + name;
                         
                         t = t.match(/(view|model|controller|interface)/);
@@ -457,7 +446,6 @@
                         path_absolute += JMVC_EXT[type];
                         
                         // ajax get script content and return it
-                        
                         ret = jmvc.xhrget(path_absolute, type, name, params);
                         return ret;
                     },
@@ -468,14 +456,14 @@
                      * @return {[type]}       [description]
                      */
                     "render" : function (cback) {
-                        var ctrl, i;
-
+                        var ctrl,
+                            i;
 
                         // "import" the controller (eval ajax code)
                         $JMVC.factory('controller', $JMVC.c);
 
                         // if the constructor has been evalued correctly
-                        if ($JMVC.controllers[$JMVC.c]) {
+                        if ($JMVC.c in $JMVC.controllers) {
 
                             // grant basic ineritance from parent Controller
                             jmvc.inherit($JMVC.controllers[$JMVC.c], Controller);
@@ -483,55 +471,54 @@
                             ctrl = new $JMVC.controllers[$JMVC.c]();
                             // store it
                             $JMVC.controllers[$JMVC.c] = ctrl;
+
                             // manage routes
-                            if (ctrl.jmvc_routes) {
+                            if ('jmvc_routes' in ctrl) {
                                 $JMVC.a = ctrl.jmvc_routes[$JMVC.a] || $JMVC.a;
                             }
 
                             // parameters are set as variables of the controller
                             for (i in $JMVC.p) {
-                                if ($JMVC.p.hasOwnProperty(i)) {
-                                    ctrl.set(i, decodeURI($JMVC.p[i]));
-                                }
+                                $JMVC.p.hasOwnProperty(i) && ctrl.set(i, decodeURI($JMVC.p[i]));
                             }
 
-                            //before?
-                            // global before
-                            ctrl.before && typeof ctrl.before === 'function' && (ctrl.before());
-
-                            // action before?
-                            if (ctrl['before_' + $JMVC.a] && typeof ctrl['before_' + $JMVC.a] === 'function') {
-                                ctrl['before_' + $JMVC.a]();
-                            }
-
+                            // BEFORE HOOKS?
+                            // 
+                            // @global hook
+                            'before' in ctrl
+                            && typeof ctrl.before === 'function'
+                            && ctrl.before();
+                            //
+                            // @action hook
+                            'before_' + $JMVC.a in ctrl
+                            && typeof ctrl['before_' + $JMVC.a] === 'function'
+                            && ctrl['before_' + $JMVC.a]();
 
                             // NOW    
+                            // 
                             // call action
-                            if (ctrl['action_' + $JMVC.a] && typeof ctrl['action_' + $JMVC.a] === 'function') {
-                                ctrl['action_' + $JMVC.a]();
-                            } else {
-                                if ($JMVC.a.toLowerCase() !== JMVC_DEFAULT.action) {
-                                    WDL.href = US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a;
-                                    return false;
-                                }
-                            }
+                            ('action_' + $JMVC.a in ctrl && typeof ctrl['action_' + $JMVC.a] === 'function') ?
+                                ctrl['action_' + $JMVC.a]()
+                                :
+                                $JMVC.a.toLowerCase() !== JMVC_DEFAULT.action
+                                && WDL.replace(US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a);
 
-                            //after?
-                            // action after?
-                            if (ctrl['after_' + $JMVC.a] && typeof ctrl['after_' + $JMVC.a] === 'function') {
-                                ctrl['after_' + $JMVC.a]();
-                            }
-                            // global after?
-                            if (ctrl.after && typeof ctrl.after === 'function') {
-                                ctrl.after();
-                            }
-
-
-
+                            
+                            // AFTER HOOKS?
+                            //
+                            // @action hook
+                            'after_' + $JMVC.a in ctrl
+                            && typeof ctrl['after_' + $JMVC.a] === 'function'
+                            && ctrl['after_' + $JMVC.a]();
+                            //
+                            // @global hook
+                            'after' in ctrl
+                            && typeof ctrl.after === 'function'
+                            && ctrl.after();
+                            
                         } else {
-                            if ($JMVC.c.toLowerCase() !== JMVC_DEFAULT.controller) {
-                                WDL.href = US + '404' + US + 'msg' + US + 'cnt' + US + $JMVC.c;
-                            }
+                            $JMVC.c.toLowerCase() !== JMVC_DEFAULT.controller
+                            && WDL.replace(US + '404' + US + 'msg' + US + 'cnt' + US + $JMVC.c);
                         }
                         if (cback && typeof cback === 'function') {
                             cback.call($JMVC);
@@ -542,8 +529,13 @@
 
 
 
-                    //@DOC
                     // setter getter unsetter $JMVC vars
+                    /**
+                     * [description]
+                     * @param  {[type]} name    [description]
+                     * @param  {[type]} content [description]
+                     * @return {[type]}         [description]
+                     */
                     "set" : function (name, content) {
                         if (JMVC.util.isObject(name)) {
 
@@ -556,24 +548,44 @@
                         return $JMVC;
                     },
 
-                    //@DOC
+                    /**
+                     * [description]
+                     * @param  {[type]} name [description]
+                     * @return {[type]}      [description]
+                     */
                     "get" : function (name) {
                         return $JMVC.vars[name] || undefined;
                     },
 
-                    //@DOC
+                    /**
+                     * [description]
+                     * @param  {[type]} name [description]
+                     * @return {[type]}      [description]
+                     */
                     "del" : function (name) {
                         $JMVC.vars[name] && (delete $JMVC.vars[name]);
                         return $JMVC;
                     },
 
                     //lambda function2context binding
+                    /**
+                     * [description]
+                     * @param  {[type]} func [description]
+                     * @param  {[type]} ctx  [description]
+                     * @return {[type]}      [description]
+                     */
                     "bind_old" : function (func, ctx) {
                         return function () {
                             return func.apply(ctx, arguments);
                         };
                     },
 
+                    /**
+                     * [description]
+                     * @param  {[type]} func [description]
+                     * @param  {[type]} ctx  [description]
+                     * @return {[type]}      [description]
+                     */
                     "delegate" : function (func, ctx) {
                         var args = Array.prototype.slice.call(arguments, 2);
                         return function () {
@@ -582,6 +594,10 @@
                     },
 
                     // require, 'test' is an exception, if passed then the path will be /app/test
+                    /**
+                     * [description]
+                     * @return {[type]} [description]
+                     */
                     "require" : function () {
                         var i = 0,
                             l = arguments.length,
@@ -594,25 +610,11 @@
                             s;
 
                         for (null; i < l; i += 1) {
-
                             if (typeof arguments[i] === 'string' && !$JMVC.extensions[arguments[i]]) {
-                                //curr += 1;
-                                // if the extension is named "test"
-                                // then the path is changed to PATH['test']
-                                /*
-                                path = PATH[arguments[i] === 'test' ? 'test' :  'ext'] + arguments[i] + US + 'jmvc_ext.js';
-
-                                if(arguments[i] === 'test') {
-                                    path = PATH['test'] + 'jmvc_ext.js';
-
-                                } else {
-                                    path = PATH['ext'] + arguments[i] + US + 'jmvc_ext.js';
-                                }*/
                                 extNS = arguments[i].split(US);
                                 extNSlength = extNS.length;
                                 extname = extNS[extNSlength - 1];
                                 path = JMVC.vars.baseurl + (arguments[i] === 'testsuite' ? PATH['test'] : PATH['ext'] + arguments[i] + US) + extname +  '.js';
-
                                 switch (getmode) {
                                 case 'ajax':
                                     $JMVC.io.get(path, function (jres) {
@@ -631,6 +633,14 @@
                             }
                         }
                     },
+
+                    /**
+                     * [description]
+                     * @param  {[type]} o      [description]
+                     * @param  {[type]} interf [description]
+                     * @param  {[type]} s      [description]
+                     * @return {[type]}        [description]
+                     */
                     "implement" : function (o, interf, s) {
                         var i = 0,
                             l = interf.length,
@@ -662,7 +672,6 @@
                         var lng = Array.prototype.slice.call(arguments, 0),
                             i = 0,
                             l = lng.length;
-
                         while (i < l) {
                             if (!JMVC.i18n[lng[i]]) {
                                 JMVC.i18n[lng[i]] = true;
@@ -733,7 +742,7 @@
                          * @return {[type]}     [description]
                          */
                         "check" : function (ns, ctx) {
-                            var els = ns.split('.'),
+                            var els = ns.split(/\.|\//),
                                 i = 0,
                                 l = els.length;
                             ctx = (ctx !== undefined) ? ctx : W;
@@ -1882,7 +1891,20 @@
                             $JMVC.require('core/console');
                         }
                         JMVC.console.toggle();
+                    },
+                    xdoc : function(ext){
+                        if(! ('core/xdoc' in $JMVC.extensions)){
+                            $JMVC.require('core/xdoc');
+                        }
+                        JMVC.xdoc.toggle(ext);
+                    },
+                    loading : function (intperc, msg) {
+                        try {
+                            document.getElementById('JMVCloading').style.width =  ~~intperc + '%';
+                            msg && (document.getElementById('JMVCloadingmessage').innerHTML = msg);
+                        } catch(e) {}
                     }
+
                 };
 
                 //
@@ -2647,12 +2669,15 @@
             var ret = [],
                 whole = [],
                 val,
-                tof = value == undefined;
-            root = root || JMVC.WD.body;
-            whole = root.all ? root.all : root.getElementsByTagName('*');
+                tof = (value == undefined),
+                isRootArray = root instanceof Array;
+            
+            root = isRootArray ? root : root || JMVC.WD.body;
+            whole = isRootArray ? root : root.all ? root.all : root.getElementsByTagName('*');
     
             for(var i = whole.length; i--; ) {
                 val = whole[i].getAttribute(attr);
+            
                 if (typeof val == "string" && (tof || val == value)) {
                   ret.push(whole[i]);
                 }
@@ -3410,21 +3435,28 @@
         'lastmodified' : function (d) {
             // <meta http-equiv="last-modified" content="Thu, 03 Jan 2013 14:56:54 +0000" />
             var meta = this.element.getElementsByTagName('meta'),
-                newmeta = JMVC.dom.create('meta', {'http-equiv' : 'last-modified', content : (d || new Date()).toString()}),
+                newmeta = JMVC.dom.create(
+                    'meta', {
+                        'http-equiv' : 'last-modified',
+                        'content' : (d || JMVC.vars.last_modified || new Date()).toString()
+                    }
+                ),
                 len = meta.length;
+            len ? JMVC.dom.insertAfter(newmeta, meta.item(len - 1)) : this.element.appendChild(newmeta);
+            /*
             if (len) {
                 JMVC.dom.insertAfter(newmeta, meta.item(len - 1));
             } else {
                 this.element.appendChild(newmeta);
-            }
+            }*/
         },
 
         'lib' : function (l) {
             var libs = {
-                'jquery' : 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js'
+                'jquery' : 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js',
+                'jsapi' : 'https://www.google.com/jsapi'
             };
             (l in libs) && JMVC.head.addscript(libs[l]);
-            
         },
 
         /**
@@ -3444,16 +3476,33 @@
          * @param  {[type]} value [description]
          * @return {[type]}       [description]
          */
-        'meta' : function (name, value) {
+        'meta' : function (name, value, rewrite) {
+            
+            //exit if rewrite is not set and the meta name already exists
+            rewrite = !!rewrite;
+            var metas = this.metas(),
+                maybeExisting = JMVC.dom.findByAttribute('name', name, metas),
+                exists = maybeExisting.length;
+            
+            if (!rewrite && exists) {
+                return false;
+            }
+
+            rewrite && exists && JMVC.dom.remove(maybeExisting[0]);
+
             //get last meta if exists
             var meta = this.element.getElementsByTagName('meta'),
-                newmeta = JMVC.dom.create('meta', {name : name, content : value}),
+                newmeta = JMVC.dom.create('meta', {'name' : name, 'content' : value}),
                 len = meta.length;
-            if (len) {
-                JMVC.dom.insertAfter(newmeta, meta.item(len - 1));
-            } else {
-                this.element.appendChild(newmeta);
-            }
+            len ? JMVC.dom.insertAfter(newmeta, meta.item(len - 1)) : this.element.appendChild(newmeta);
+        },
+
+        /**
+         * return all document meta tags
+         * @return {[type]} [description]
+         */
+        'metas' : function () {
+            return Array.prototype.slice.call(this.element.getElementsByTagName('meta'));
         },
 
         /**
