@@ -256,12 +256,22 @@
                      * @return void
                      */
                     "jeval" : function (r) {
-                        (new Function(r))();
+                        //r = r.replace(/(\/\/.*\n)/gm, '');
+                        try{
+
+                        return (new Function(r))();
+                    }catch(e){
+                        //console.log(r);
+                        
+                    }
+                        //window.eval(r);
+                        //ret =  ('execScript' in window) ? window.execScript('(' + r + ')','') : eval(r);
+                        //return ret;
                     },
 
 
 
-                    //  true D.C.inheritance
+                    
                     /**
                      * [ description]
                      * @param  {[type]} Child  [description]
@@ -641,19 +651,16 @@
                      * @param  {[type]} s      [description]
                      * @return {[type]}        [description]
                      */
-                    "implement" : function (o, interf, s) {
+                    "implement" : function (o, interf) {
                         var i = 0,
-                            l = interf.length,
-                            strict = true;
-                        if (typeof s !== 'undefined') {strict = s; }
+                            l = interf.length;
+
                         for (null; i < l; i += 1) {
-                            if (
-                                !(
-                                    (o.prototype && o.prototype[interf[i]] && typeof o.prototype[interf[i]] === 'function')
-                                    ||
-                                    (!strict && (o[interf[i]] && typeof o[interf[i]] === 'function'))
-                                )
-                            ) {
+                            if (!(
+                                (o.prototype && interf[i] in o.prototype && typeof o.prototype[interf[i]] === 'function')
+                                ||
+                                (interf[i] in o && typeof o[interf[i]] === 'function')
+                            )) {
                                 return false;
                             }
                         }
@@ -1892,14 +1899,47 @@
                         }
                         JMVC.console.toggle();
                     },
+                    /**
+                     * [xdoc description]
+                     * @param  {[type]} ext [description]
+                     * @return {[type]}     [description]
+                     */
                     xdoc : function(ext){
-                        if(! ('core/xdoc' in $JMVC.extensions)){
-                            $JMVC.require('core/xdoc');
+
+                        if (!('elements' in JMVC.xdoc)) {
+                            JMVC.xdoc.elements = {};
+                        }
+                        !('core/xdoc' in $JMVC.extensions) && $JMVC.require('core/xdoc');
+                        if (!(ext in JMVC.xdoc.elements)) {
+                            try {
+                                JMVC.io.ajcall(
+                                    JMVC.vars.baseurl + '/app/extensions/' + ext + '/xdoc.xml', {
+                                        method : 'GET',
+                                        type : 'xml',
+                                        cback : function (doc) {
+                                            JMVC.xdoc.elements[ext] = doc;
+                                            console.debug('doc : ' + doc)
+                                        },
+                                        error : function (e) {alert('errore'); }
+
+                                    }
+                                );/*
+                                JMVC.io.get(
+                                    JMVC.vars.baseurl + '/app/extensions/' + ext + '/xdoc.xml',
+                                    function (doc) {
+                                        JMVC.xdoc.elements[ext] = doc;
+                                        console.debug('doc : ' + doc)
+                                    },
+                                    false, {}, false,
+                                    function (e) {alert('errore'); }
+                                );*/
+                            } catch (e){}
                         }
                         JMVC.xdoc.toggle(ext);
                     },
                     loading : function (intperc, msg) {
                         try {
+                            document.getElementById('JMVCisloading').style.display = 'block';
                             document.getElementById('JMVCloading').style.width =  ~~intperc + '%';
                             msg && (document.getElementById('JMVCloadingmessage').innerHTML = msg);
                         } catch(e) {}
@@ -1934,6 +1974,113 @@
     
 
 
+
+
+
+
+
+
+
+    JMVC.ajax = {
+        count : 0,
+        types : {
+            'xml' : 'text/xml',
+            'html' : 'text/html',
+            'json' : 'application/json'
+        },
+        getReq : function () {
+            var xhr,
+                IEfuckIds = ['Msxml2.XMLHTTP', 'Msxml3.XMLHTTP', 'Microsoft.XMLHTTP'],
+                i = 0,
+                len = IEfuckIds.length;
+            try {
+                xhr = new W.XMLHttpRequest();
+            } catch (e1) {
+                for (null; i < len; i += 1) {
+                    try {
+                        xhr = new ActiveXObject(IEfuckIds[i]);
+                    } catch (e2) {continue; }
+                }
+                !xhr && JMVC.debug('No way to initialize hxr');
+            }
+            JMVC.gc(IEfuckIds, i, len);
+            JMVC.ajax.count += 1;
+            return xhr;
+        },
+        call : function (options) {
+            var xhr = {
+                req : JMVC.ajax.getReq(),
+                uri : options && options.uri,
+                method : options && 'method' in options ? options.method : 'POST',
+                cback : options && 'cback' in options ? options.cback : function () {} ,
+                cb_opened : options && 'opened' in options ? options.opened : function () {},
+                cb_loading : options && 'loading' in options ? options.loading : function () {},
+                cb_error : options && 'error' in options ? options.error : function () {},
+                cb_abort : options && 'abort' in options ? options.abort : function () {},
+                sync : options && options.sync,
+                data : options && options.data || false,
+                type : (options && options.type) || JMVC.ajax.types.html,
+                cache : (options && options.cache !== undefined) ? options.cache : true,
+                targetType : options.type === 'xml' ?  'responseXML' : 'responseText',
+                timeout : options && options.timeout || 3000,
+                complete : false,
+                res : false,
+                ret : false,
+                state : false
+            };
+            xhr.req.onerror = function () {xhr.cb_error && xhr.cb_error.apply(null, arguments); };
+            xhr.req.onabort = function () {xhr.cb_abort && xhr.cb_abort.apply(null, arguments); };
+            xhr.req.onreadystatechange = function () {
+                if (xhr.req.readyState == 1) {
+                    switch (xhr.method) {
+                        case 'POST':
+                            try {
+                                xhr.req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                                xhr.req.send(xhr.data || true);
+                            } catch (e1) {}
+                        break;
+                        case 'GET':
+                            try {
+                                xhr.req.setRequestHeader("Accept", JMVC.ajax.types[xhr.type] + "; charset=utf-8");
+                                xhr.req.send(null);
+                            } catch (e2) {}
+                        break;
+                    }
+                } else if (xhr.req.readyState == 2) {
+                    console.debug('2');
+                } else if (xhr.req.readyState == 3) {
+                    console.debug('3');
+                } else if (xhr.req.readyState == 4) {
+
+                    if(xhr.req.status !== 200){
+                        xhr.req.onerror();
+                        xhr.complete = true;
+                        return;
+                    }
+
+                    xhr.complete = true;
+                    
+                    xhr.ret = xhr.type == 'json' ? new Function("return " + xhr.req[xhr.targetType])() : xhr.req[xhr.targetType];
+
+                    //cback
+                    xhr.cback && (function (r) {xhr.cback(r); })(xhr.ret);
+                    
+                    //IE leak ?????
+                    W.setTimeout(function () {
+                        JMVC.ajax.count -= 1;
+                        JMVC.purge(xhr.req);
+                    }, 50);
+
+                    return xhr.ret;
+                }
+            };
+            xhr.req.open(xhr.method, (xhr.method === 'GET') ? (xhr.uri + ((xhr.data) ? '?' + xhr.data : "")) : xhr.uri, xhr.sync);
+        },
+        post : function () {},
+        get : function () {},
+        getJson : function () {},
+        getXML : function () {}
+    };
 
 
 
@@ -2031,7 +2178,7 @@
                 cb_opened = (options && options.opened) || function () {},
                 cb_loading = (options && options.loading) || function () {},
                 cb_error = (options && options.error) || function () {},
-                cb_abort = (options && options.error) || function () {},
+                cb_abort = (options && options.abort) || function () {},
                 sync = options && options.sync,
                 data = (options && options.data) || {},
                 type = (options && options.type) || 'text/html',
@@ -2048,9 +2195,18 @@
             data = JMVC.object.obj2qs(data).substr(1);
 
             xhr.onreadystatechange = function () {
+                //console.dir(xhr)
                 var tmp;
+
                 if (state === xhr.readyState) {return false; }
                 state = xhr.readyState;
+
+/*
+                if(xhr.readyState !== 4 && xhr.readyState !== 'complete' && xhr.status !== 200){
+                    //cb_error();
+                    complete = true;
+                }
+ */
                 //JMVC.debug('called '+uri + ' ('+xhr.readyState+')');
                 if (xhr.readyState === "complete" || (xhr.readyState === 4 && xhr.status === 200)) {
                     complete = true;
@@ -2062,17 +2218,18 @@
                     ret = xhr[targetType];
 
                     //IE leak ?????
-                    //window
                     W.setTimeout(function () {
                         JMVC.io.xhrcount -= 1;
-                        JMVC.purge(xhr);
+                        //JMVC.purge(xhr);
                     }, 50);
 
                     return ret;
                 } else if (xhr.readyState === 3) {
-                    cb_loading();
+                    //loading data
+                    cb_loading(xhr);
                 } else if (xhr.readyState === 2) {
-                    cb_opened();
+                    //headers received
+                    cb_opened(xhr);
                 } else if (xhr.readyState === 1) {
                     switch (method) {
                     case 'POST':
@@ -2132,8 +2289,8 @@
          * @param  {[type]} cache [description]
          * @return {[type]}       [description]
          */
-        'get' : function (uri, cback, sync, data, cache) {
-            return JMVC.io.ajcall(uri, {cback : cback, method : 'GET', sync : sync, data : data, cache : cache});
+        'get' : function (uri, cback, sync, data, cache, err) {
+            return JMVC.io.ajcall(uri, {cback : cback, method : 'GET', sync : sync, data : data, cache : cache, error : err});
         },
 
         /**
@@ -3093,7 +3250,12 @@
          * @return {[type]}   [description]
          */
         'eventTarget' : function (e) {
-            var targetElement = (typeof e.target !== "undefined") ? e.target : e.srcElement;
+            
+            e = e ? e : JMVC.W.event;
+            var targetElement = e.currentTarget || (typeof e.target !== "undefined") ? e.target : e.srcElement;
+            if (!targetElement) {
+                return false;
+            }
             while (targetElement.nodeType == 3 && targetElement.parentNode != null) {
                 targetElement = targetElement.parentNode;
             }
@@ -3217,17 +3379,16 @@
                     to;
                 while (i <= top) {
                     to = W.setTimeout(
-                        function (j) {
-                            WD.body.style.opacity = j;
-                            WD.body.style.filter = 'alpha(opacity=' + (j * 100) + ')';
-                            if (j > top) {
+                        function () {
+                            WD.body.style.opacity = i;
+                            WD.body.style.filter = 'alpha(opacity=' + (i * 100) + ')';
+                            if (i > top) {
                                 WD.body.style.opacity = 1;
                                 WD.body.style.filter = 'alpha(opacity=' + 100 + ')';
                                 W.clearTimeout(to);
                             }
                         },
-                        ms * i,
-                        i + step
+                        ms * i
                     );
                     i += step;
                 }
@@ -3502,7 +3663,7 @@
          * @return {[type]} [description]
          */
         'metas' : function () {
-            return Array.prototype.slice.call(this.element.getElementsByTagName('meta'));
+            return JMVC.array.coll2array(JMVC.WD.getElementsByTagName('meta'));
         },
 
         /**
