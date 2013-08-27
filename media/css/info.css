@@ -40,7 +40,7 @@ b.index{
 	font-size:36px;
 	position:relative;
 	top:0px;
-	color:green;
+	color:#0A0;
 	font-weight:bold;
 	position:relative;
 	top:8px;
@@ -62,7 +62,7 @@ a{
 	text-decoration:none;
 }
 a:hover{
-	color:#a00;
+	color:#0A0;
 }
 ul{
 	margin:0px;
@@ -99,7 +99,7 @@ ul.inner li{
 	line-height:22px;
 }
 div.toplinks a{
-	line-height:22px;
+	line-height:32px;
 	padding:5px;
 	white-space:nowrap;
 }
