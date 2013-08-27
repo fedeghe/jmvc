@@ -1,6 +1,7 @@
 JMVC.controllers.info = function () {
 	this.action_index = function () {
 		JMVC.events.loadify(500);
+		
 		JMVC.require(
 			'core/codeview/script'
 			,'core/responsive/basic'
@@ -11,15 +12,16 @@ JMVC.controllers.info = function () {
 			,'core/css'
 			,'vendors/github/forkme'
 		);
-		var main  = JMVC.getView('home/info'),
-			readme = JMVC.getView('home/readme'),
-			features = JMVC.getView('home/features'),
+		JMVC.loading(20, 'loaded extensions');
+		var main  = JMVC.getView('info/info'),
+			readme = JMVC.getView('info/readme'),
+			features = JMVC.getView('info/features'),
 			doc_tpl = JMVC.getView('api/doctpl'),
-			info_intro = JMVC.getView('home/info_intro'),
-			infoutro = JMVC.getView('home/infoutro'),
+			info_intro = JMVC.getView('info/info_intro'),
+			infoutro = JMVC.getView('info/info_outro'),
 			doc = JMVC.getModel('api/function'),
 			backtotop = '<a href="#top">go to top &uparrow;</a>',
-			ret='',
+			ret = '',
 			toplinks = [],
 			_toplinks = {
 				intro : "Introduction",
@@ -40,6 +42,7 @@ JMVC.controllers.info = function () {
 			k, k2, t,
 			len, l2,
 			tmp;
+		JMVC.loading(40, 'loaded views');
 
 		for (t in _toplinks) {
 			toplinks.push('<a href="#' + t + '" class="round4">' + _toplinks[t] + '</a>');
@@ -47,9 +50,7 @@ JMVC.controllers.info = function () {
 
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/info.css', true);// parsed
 
-		//favicon
 		JMVC.head.favicon("/media/favicon.ico");
-
 
 		features.set({
 			'fr' : '<b class="index">&#9758;</b>',
@@ -58,7 +59,7 @@ JMVC.controllers.info = function () {
 		});
 
 		readme.set({
-			'api': '{{infoutro}}',
+			'api': '{{info_outro}}',
 			'githublink' : 'https://github.com/fedeghe/jmvc',
 			'legend': '<b>*</b> : mandatory parameter',
 			'backtotop' : backtotop,
@@ -74,6 +75,7 @@ JMVC.controllers.info = function () {
 		infoutro.set({
 			'backtotop' : backtotop
 		});
+		JMVC.loading(80, 'rendering tree');
 
 		main.parse().render(function(){
 
@@ -82,10 +84,10 @@ JMVC.controllers.info = function () {
 			JMVC.responsive.onChange(
 					function (w) {
 						if (w < 960) {
-							//JMVC.dom.addClass(JMVC.WD.body, 'mini');
+							/*JMVC.dom.addClass(JMVC.WD.body, 'mini'); */
 							JMVC.responsive.allow('mobi')
 						} else {
-							//JMVC.dom.removeClass(JMVC.WD.body, 'mini');
+							/* JMVC.dom.removeClass(JMVC.WD.body, 'mini'); */
 							JMVC.responsive.allow('dskt')
 						}
 					}
