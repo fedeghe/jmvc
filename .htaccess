@@ -8,6 +8,9 @@
 #
 #################################################
 
+
+
+
 # pass the default character set
 AddDefaultCharset utf-8
 
@@ -59,6 +62,9 @@ FileETag MTime Size
 
 	
 <ifModule mod_headers.c>
+	#CORS
+	Header set Access-Control-Allow-Origin "*"
+
 	# year
 	<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|swf|mp3|mp4)$">
 		Header set Cache-Control "max-age=31104000, must-revalidate"
