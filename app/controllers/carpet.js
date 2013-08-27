@@ -1,9 +1,9 @@
 JMVC.controllers.carpet = function () {
 	"use strict";
-	//default action
+	/* default action */
 	this.action_index = function (f) {
 
-		// get lib & view 
+		/* get lib & view */
 		JMVC.require('core/lib/carpet', 'core/dim');
 
 		JMVC.head.title('Carpet');
@@ -16,7 +16,7 @@ JMVC.controllers.carpet = function () {
 			Wh = dims.height,
 			that = this;
 
-		//top = left = 100 from default css
+		/* top = left = 100 from default css */
 			
 		
 
@@ -24,7 +24,7 @@ JMVC.controllers.carpet = function () {
 		index.render(function(){
 
 
-			// cssmargin5 * sides2 +border1 
+			/* cssmargin5 * sides2 +border1 */
 			jmap = JMVC.carpet.create(JMVC.dom.body(), Ww-11, Wh-11, 3);
 
 			that.set('jmap', jmap);
@@ -35,12 +35,14 @@ JMVC.controllers.carpet = function () {
 				jmap.beforeRemove(function (i) {console.debug('removing ID: '+i); });
 				jmap.afterRemove(function (i) {console.debug('removed ID: '+i); });
 			}
-			//carpet.toggleDir('oriz', false);
+			/* carpet.toggleDir('oriz', false); */
 			jmap.enableSpeed(4.2);
 			
-			//console.dir(jmap.carpet.actualNodes);
-			//jmap.move(-10,1)
-			//console.dir(jmap.carpet.actualNodes);
+			/*
+			console.dir(jmap.carpet.actualNodes);
+			jmap.move(-10,1)
+			console.dir(jmap.carpet.actualNodes);
+			*/
 			f && f();
 		});
 

@@ -1,4 +1,5 @@
-JMVC.extend('graf', {
+JMVC.extend('plotter', {
+	
 	'letter' : function (letter, top, left, character) {
 		
 		var mod,

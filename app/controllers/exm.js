@@ -17,9 +17,9 @@ JMVC.controllers.exm = function () {
 		
 		v.render(function(){
 			var newlogo = document.getElementById('extralogo');
-			var e = new JMVC.graf.letter('e', 8, 0),
-				x = new JMVC.graf.letter('x',8,71),
-				m = new JMVC.graf.letter('m',22, 260);
+			var e = new JMVC.plotter.letter('e', 8, 0),
+				x = new JMVC.plotter.letter('x',8,71),
+				m = new JMVC.plotter.letter('m',22, 260);
 			e.line(0, 14, 0, 65, 10);
 			e.line(10, 14, 10, 65, 10);
 			e.line(59, 14, 59, 65, 10);
@@ -41,7 +41,7 @@ JMVC.controllers.exm = function () {
 					var trg = i;
 				} else {
 					if (!bucket.hasMore()) {bucket.recover(); }
-					trg =  bucket.next() || 1;//i;//JMVC.util.rand(1,a.length-1);
+					trg =  bucket.next() || 1;/*i; JMVC.util.rand(1,a.length-1); */
 				}
 				
 				

@@ -42,7 +42,7 @@ JMVC.extend('carpet',{
 					'left' : left,
 					'top' : top,
 					//DEV
-					'color' : JMVC.color.getRandomColor(true)
+					'color' : JMVC.core.color.getRandomColor(true)
 				}
 			}
 			//
@@ -216,7 +216,7 @@ JMVC.extend('carpet',{
 						if (beforeAdd) {beforeAdd(tmpID); }
 						addTile(map.innermap, {
 							id : tmpID,
-							color : JMVC.color.getRandomColor(true),//'#0f0',
+							color : JMVC.core.color.getRandomColor(true),//'#0f0',
 							left : this.actualNodes[addActualNode][0] + (versus=='left' ?  sign*i*tileSize.width : 0),
 							top : this.actualNodes[addActualNode][1] + (versus=='top' ?  sign*i*tileSize.height : 0),
 							content : (this.actualNodes[addActualNode][2]+ (addIon==2 ? i : 0)) + ',' + (this.actualNodes[addActualNode][3]+ (addIon==3 ? i : 0))

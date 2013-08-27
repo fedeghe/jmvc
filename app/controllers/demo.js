@@ -37,13 +37,10 @@ JMVC.controllers.demo = function () {
 		JMVC.dom.preloadImage(JMVC.vars.baseurl + "/media/img/jmvc_m1.svg");
 
 		var newlogo = JMVC.dom.create('img', {src : JMVC.vars.baseurl + '/media/img/jmvc_m1.svg'});
-		//
-		//
-		
 
-		//JMVC.require('widget/slider');
+		/* JMVC.require('widget/slider'); */
 		
-		var content = '<h3>TESTS</h3>',//<div id="bar"></div>',
+		var content = '<h3>TESTS</h3>',
 			bu = JMVC.vars.baseurl,
 			v = JMVC.getView('vacuum'),
 			links = {
@@ -122,7 +119,7 @@ JMVC.controllers.demo = function () {
 		});
 		v.render(
 			function () {
-				//JMVC.dom.append(JMVC.dom.body(), newlogo);
+				/* JMVC.dom.append(JMVC.dom.body(), newlogo); */
 			}
 		/*function () {
 			// JMVC.require('affix');	
@@ -139,7 +136,7 @@ JMVC.controllers.demo = function () {
 	};
 
 
-	// test a VIEW	
+	/* test a VIEW*/
 	this.action_view = function () {
 		var v = JMVC.getView('test'),
 			v1= JMVC.factory('view', 'test1'),
@@ -159,7 +156,7 @@ JMVC.controllers.demo = function () {
 	
 	
 	
-	// test some MODELs
+	/* test some MODELs */
 	this.action_model = function() {
 		var _p1 = JMVC.getModel('xxx/Persona'),
 			_p2 = JMVC.getModel('Persona'),
@@ -168,13 +165,15 @@ JMVC.controllers.demo = function () {
 			al = '',
 			v = JMVC.getView('vacuum');
 
-		//get model instance
-		//_p1.set('cognome','Ghedina').set('n',1);
-		_p1.set({'cognome' : 'Ghedina', 'n' : 1});//.set('cognome','Spaceman',true);
+		/*
+		get model instance
+		_p1.set('cognome','Ghedina').set('n',1);
+		*/
+		_p1.set({'cognome' : 'Ghedina', 'n' : 1});/*.set('cognome','Spaceman',true); */
 		_p2.set('cognome', 'Ghedi').set('n', 2);
 		_p3.set('cognome', 'Ghe').set('n', 3);
 		
-		//	console.debug(_p1);
+		/*	console.debug(_p1); */
 		tpl = 'Modello n°%n%: %nome% %cognome%<br />';
 		al += tpl.replace('%n%', _p1.get('n')).replace('%nome%', _p1.name).replace('%cognome%', _p1.get('cognome'));
 		al += tpl.replace('%n%', _p2.get('n')).replace('%nome%', _p2.name).replace('%cognome%', _p2.get('cognome'));
@@ -182,8 +181,10 @@ JMVC.controllers.demo = function () {
 		
 		
 		v.set('content', al);
-		//console.debug(v);
-		//v.set('id', 'nerd');
+		/*
+		console.debug(v);
+		v.set('id', 'nerd');
+		*/
 		v.set('style', 'padding:5px; border:5px solid red; font-size:12px; width:280px; background-color:white; color:green; font-weight:bold; font-family:verdana, sans-serif');
 		v.render();
 	};
@@ -195,7 +196,7 @@ JMVC.controllers.demo = function () {
 		v.parse(p).render();
 	};
 
-	// test a CONTROLLER
+	/* test a CONTROLLER */
 	this.action_controller = function() {
 		this.set('nome','Federico');
 		alert(this.get('nome'));
@@ -206,9 +207,9 @@ JMVC.controllers.demo = function () {
 	};
 	
 	
-	// just to celebrate a good start
+	/* just to celebrate a good start */
 	this.action_flag = function() {
-		// color extension is needed
+		/* color extension is needed */
 		JMVC.require('core/color');
 		
 		JMVC.head.title('CH beat');
@@ -239,13 +240,13 @@ JMVC.controllers.demo = function () {
 				tmp, i, j, l,
 				fact,
 				opac = Math.sqrt(basesize / (box_size * top_fact));
-			f.style.width = (basesize * 7.5) + 'px'; // damnIE
-			f.style.height = (basesize * 5.5) + 'px';// damnIE
+			f.style.width = (basesize * 7.5) + 'px';
+			f.style.height = (basesize * 5.5) + 'px';
 			f.style.margin = '0 auto';
-			f.style.zoom = 1;// damnIE
+			f.style.zoom = 1;
 			f.style.opacity = opac;
-			f.style['-ms-filter'] = "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + (~~(100 * opac)) + ")"; // damnIE
-			f.style.filter = "alpha(opacity=" + (~~(100 * opac)) + ")";// damnIE
+			f.style['-ms-filter'] = "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + (~~(100 * opac)) + ")";
+			f.style.filter = "alpha(opacity=" + (~~(100 * opac)) + ")";
 			f.style.marginTop = basesize + 'px';
 			j = 0;
 			for (i = 0, l = 5 * 7; i < l; i += 1) {
@@ -255,7 +256,7 @@ JMVC.controllers.demo = function () {
 				tmp.style.backgroundColor = (basesize > els_top[i]) ?
 					((JMVC.array.inArray([10,16,17,18,24], i) >= 0) ? 'white' : 'red')
 					:
-					JMVC.color.getRandomColor(true);
+					JMVC.core.color.getRandomColor(true);
 				if(j%7 == 0) {
 					tmp = JMVC.dom.create('div',{'class':'clearer'},'&nbsp;');
 					JMVC.dom.append(f, tmp);
@@ -324,10 +325,10 @@ JMVC.controllers.demo = function () {
 		
 		v.render({cback : function () {
 			var newlogo = document.getElementById('extralogo'),
-				j = new JMVC.graf.letter('j', 22, 40),
-				m = new JMVC.graf.letter('m', 22, 110),
-				v = new JMVC.graf.letter('v', 22, 260),
-				c = new JMVC.graf.letter('c', 22, 320);
+				j = new JMVC.plotter.letter('j', 22, 40),
+				m = new JMVC.plotter.letter('m', 22, 110),
+				v = new JMVC.plotter.letter('v', 22, 260),
+				c = new JMVC.plotter.letter('c', 22, 320);
 
 			j.line(0,4, 22,4, 2);
 			j.line(0,4, 0,26, 2);
@@ -385,7 +386,7 @@ JMVC.controllers.demo = function () {
 				T1=20, T2 =10,
 				bucket = new JMVC.bucket.create(JMVC.util.range(0, a.length - 1)),
 				t = window.setInterval(function(){
-					//var trg = JMVC.util.rand(1,a.length-1);
+					/* var trg = JMVC.util.rand(1,a.length-1); */
 					if (!bucket.hasMore()) {
 						bucket.recover();
 					}
@@ -408,9 +409,10 @@ JMVC.controllers.demo = function () {
 					);
 				}, T2);
 		}});
-		//
-		// if enabled will not allow that logo to be se in a frame or iframe
-		//JMVC.util.denyXframe();
+		/*
+		if enabled will not allow that logo to be se in a frame or iframe
+		JMVC.util.denyXframe();
+		*/
 	};
 	
 	this.action_xmlparser = function () {
@@ -443,7 +445,7 @@ JMVC.controllers.demo = function () {
 		
 		t = d.extractor(1);
 		
-		//JMVC.yes.prova();
+		/*JMVC.yes.prova(); */
 	};
 	
 	this.action_docs = function () {
@@ -484,19 +486,22 @@ JMVC.controllers.demo = function () {
 			
 		
 		
-		
-			//	JMVC.debug(JMVC.xmlparser.toJson(parser.xmlDoc.getElementsByTagName('dom')[0] ));
+			/*
+			JMVC.debug(JMVC.xmlparser.toJson(parser.xmlDoc.getElementsByTagName('dom')[0] ));
+			*/
 			
+			/*
+			var r = parser.extractor(0);
+			var all = parser.extractall();
+			JMVC.debug(all);
+			*/
 			
-			//var r = parser.extractor(0);
-			//var all = parser.extractall();
-			//JMVC.debug(all);
-			
-			//step into model
-			//parser.pointer(parser.xmlDoc.getElementsByTagName('model')[0]);
-			//r = parser.extractor(0);
-			
-			//JMVC.debug(r);
+			/*
+			step into model
+			parser.pointer(parser.xmlDoc.getElementsByTagName('model')[0]);
+			r = parser.extractor(0);
+			*/
+			/* JMVC.debug(r); */
 			},
 			true
 		);
@@ -506,7 +511,7 @@ JMVC.controllers.demo = function () {
 		JMVC.require('scheduler');
 		var s = new JMVC.scheduler.create();
 		s.add({every : 3000}, function (d) {JMVC.debug(d); });
-		//console.debug(s);
+		/* console.debug(s); */
 	};
 	
 	
@@ -521,10 +526,10 @@ JMVC.controllers.demo = function () {
 			B = JMVC.dom.body();
 		
 		
-		//JMVC.debug(list.getItems());
+		/* JMVC.debug(list.getItems()); */
 		v.set({style : 'background-color:red; color:white;padding:10px;margin-bottom:10px;', id : 'prova'});
 		v.set('content', explain);
-		//JMVC.debug(v);
+		/* JMVC.debug(v); */
 		
 		list.setBuildStrategy(function (ul) {
 			JMVC.dom.empty(ul);
@@ -556,10 +561,10 @@ JMVC.controllers.demo = function () {
 					}
 				});
 
-				//or simply
+				/* or simply */
 				list.listModified.attach(function () {list.build(ulist); });
 
-				//first time build
+				/* first time build */
 				list.build(ulist);
 			}
 		});
@@ -608,7 +613,7 @@ JMVC.controllers.demo = function () {
 			}
 		});
 	}
-
+	
 
 
 

@@ -42,7 +42,7 @@ JMVC.extend('carpet',{
 					'left' : left,
 					'top' : top,
 					//DEV
-					'color' : JMVC.color.getRandomColor(true)
+					'color' : JMVC.core.color.getRandomColor(true)
 				}
 			}
 			//

@@ -60,12 +60,10 @@ JMVC.controllers.grind = function () {
 			{
 				"target" : '#extralogo',
 				"attrs" : {"id" : "prova5"},
-				//"class" : "g700",
 				"inner" : [
 					{"attrs" : {"id" : "brd1"}, "class" : "p25 round12 roundbottomright", "float" : "right"},
 					{"attrs" : {"id" : "brd2"},"class" : "p25 round12 roundbottomleft", "float" : "left", "style" : {"backgroundColor" : "none"}},
 					{"attrs" : {"id" : "brd3"},"class" : "p30", "float" : "right"},
-					//{"attrs" : {"id" : "brd4"}, "class":"p25", "float":"right"},
 					"clearer"
 				]
 			},
@@ -79,12 +77,10 @@ JMVC.controllers.grind = function () {
 		JMVC.getView('vacuum')
 			.set({
 				'style' : 'font-family:verdana;'
-				//, 'content' : '&nbsp;'
 				, 'id' : 'extralogo'
 			}).render(function () {
 				JMVC.css.style(JMVC.dom.body(), 'backgroundColor', '#444');
 				JMVC.grind.render(config, 'b960');
-				//JMVC.grind.render(config, 'b800');
 			});
 	};
 
@@ -149,13 +145,10 @@ JMVC.controllers.grind = function () {
 			{
 				"target" : 'body',
 				"attrs" : {"id" : "prova5"},
-				//"class" : "g700",
-				
 				"inner" : [
 					{"attrs" : {"id" : "brd1"}, "class" : "p25", "float" : "right"},
 					{"attrs" : {"id" : "brd2"}, "class" : "p25", "float" : "left", "style" : {"backgroundColor" : "none"}},
 					{"attrs" : {"id" : "brd3"}, "class" : "p25", "float" : "right"},
-					//{"attrs" : {"id" : "brd4"}, "class":"p25", "float":"right"},
 					"clearer"
 				]
 			},

@@ -4,20 +4,28 @@ JMVC.require(
 	,'core/lib/grind'
 	,'event_scroll'
 );
+
 JMVC.extend('console', {
 	'init' : function () {
 		JMVC.head.meta("generator", "jmvc resident in your machine");
 	},
+
 	'_status' : false,
+
 	'scroll' : 0,
-	'tpl' : '<!DOCTYPE html><html><head><style type="text/css">%style%</style><script type="text/javascript">function ___(){%script%}; window.onload = ___();</script></head><body>%body%</body></html>',
+
+	'tpl' : '<!DOCTYPE html><html><head><style type="text/css">%style%</style><script type="text/javascript">window.onload = function () {%script%};</script></head><body>%body%</body></html>',
+
 	'toggle' : function () {
+
 		if (JMVC.console._status) {
+
 			JMVC.dom.remove(JMVC.dom.find('#jmvc_console'));
 			JMVC.events.enable_scroll();
 			JMVC.W.scrollTo(0, JMVC.console.scroll);
+
 		} else {
-			
+
 			var dims = JMVC.dim.getViewportSize(),
 				border_size = 0,
 				margin = -1,
@@ -38,7 +46,14 @@ JMVC.extend('console', {
 					{
 						"target" : '#jmvc_console',
 						"attrs" : {"id" : "head"},
-						"style" : {"height":"20px"}
+						"style" : {"height" : "25px", "lineHeight" : "25px", "textAlign" : "center"},
+						"inner" : [
+							{
+								"tag" : "input",
+								"attrs" : {"type" : "button", "id" : "go", "value" : "update"},
+								"style" : {"textAlign" : "center"}
+							}
+						]
 					},
 					{
 						"target" : '#jmvc_console',
@@ -112,14 +127,12 @@ JMVC.extend('console', {
 			JMVC.grind.render(config);
 
 
-			JMVC.dom.html(JMVC.dom.find('#htmlarea'), JMVC.htmlspecialchars("<h1>hello</h1>"));
-			JMVC.dom.html(JMVC.dom.find('#jsarea'), JMVC.htmlspecialchars("var foo = JMVC.dom.find('h1');"));
-			JMVC.dom.html(JMVC.dom.find('#cssarea'), JMVC.htmlspecialchars("body{\n\tbackground-color:red;\n}"));
+			JMVC.dom.html(JMVC.dom.find('#htmlarea'), JMVC.htmlspecialchars("<h1 id='hi'>hello</h1>"));
+			JMVC.dom.html(JMVC.dom.find('#jsarea'), JMVC.htmlspecialchars("var foo = document.getElementById('hi');\nconsole.debug(foo);"));
+			JMVC.dom.html(JMVC.dom.find('#cssarea'), JMVC.htmlspecialchars("body{\n\tbackground-color:#fede76;\n}"));
 
 
-			JMVC.events.bind(JMVC.dom.find('#htmlarea'), 'keyup', function () {update(); });
-			JMVC.events.bind(JMVC.dom.find('#jsarea'), 'keyup', function () {update(); });
-			JMVC.events.bind(JMVC.dom.find('#cssarea'), 'keyup', function () {update(); });
+			JMVC.events.bind(JMVC.dom.find('#go'), 'click', function () {update(); });
 
 			function update(){
 				
@@ -133,10 +146,9 @@ JMVC.extend('console', {
 					'body' : h
 				});
 
-				JMVC.dom.find('#outarea').contentWindow.JMVC = JMVC;
 				
 				try {
-					eval.call(JMVC.dom.find('#outarea').contentWindow, j);
+					JMVC.dom.find('#outarea').contentWindow.eval(j);
 				}catch(e){}
 			}
 			JMVC.events.delay(function () {update(); }, 0);

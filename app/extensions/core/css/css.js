@@ -1,4 +1,8 @@
-JMVC.require('core/color', 'core/sniffer');
+JMVC.require(
+	'core/color',
+	'core/sniffer'
+);
+
 JMVC.extend('css', {
 
 	'init' : function () {
@@ -35,7 +39,7 @@ JMVC.extend('css', {
 		if (prop_is_obj) {
 			for (k in prop) {
 				if (new String(prop[k]).search(/rand/) != -1) {
-					newval = JMVC.color.getRandomColor();
+					newval = JMVC.core.color.getRandomColor();
 					prop[k] =  prop[k].replace(/rand/, newval);
 				}
 				if (JMVC.array.inArray(this.css3_map, k) + 1) {
@@ -47,7 +51,7 @@ JMVC.extend('css', {
 		} else if (typeof val !== 'undefined') {
 			val = val.toString();
 			if (val.search(/rand/) != -1) {
-				newval = JMVC.color.getRandomColor();
+				newval = JMVC.core.color.getRandomColor();
 				val =  val.replace(/rand/, newval);
 			}
 			if (JMVC.array.inArray( this.css3_map, prop) + 1) {

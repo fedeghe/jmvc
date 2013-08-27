@@ -9,13 +9,14 @@ JMVC.extend('affix', {
 			JMVC.events.bind(JMVC.W, 'scroll', function () {
 				var c = JMVC.dim.getScreenData(),
 					t = c.scrollTop,
-					j;
+					j,
+					top;
 				for (j in JMVC.affix.vars.pool) {
-					if (t > JMVC.affix.vars.pool[j].top - JMVC.affix.vars.pool[j].mintop) {
-						JMVC.css.style(JMVC.affix.vars.pool[j].node, 'top', (t + JMVC.affix.vars.pool[j].mintop) + 'px');
-					} else {
-						JMVC.css.style(JMVC.affix.vars.pool[j].node, 'top', JMVC.affix.vars.pool[j].top + 'px');
-					} 
+					top = (t > JMVC.affix.vars.pool[j].top - JMVC.affix.vars.pool[j].mintop) ? 
+						t + JMVC.affix.vars.pool[j].mintop
+						:
+						JMVC.affix.vars.pool[j].top;
+					JMVC.css.style(JMVC.affix.vars.pool[j].node, 'top', top + 'px');
 				}
 			});
 		});
@@ -30,13 +31,9 @@ JMVC.extend('affix', {
 			this.top = a.init || 100;
 			this.mintop = a.min || 10;
 			this.style = a.style || '';
-			this.node = JMVC.dom.create(
-				'div',
-				{
-					'style' : 'position:absolute;top:' + this.top + 'px;' + this.style
-				},
-				this.html
-			);
+			this.node = JMVC.dom.create('div', {
+				'style' : 'position:absolute;top:' + this.top + 'px;' + this.style
+				}, this.html);
 		}
 		
 		JMVC.affix.vars.index += 1;

@@ -1,4 +1,4 @@
-JMVC.extend('color', {
+JMVC.extend('core.color', {
 	'getRandomColor' : function (wsafe) {
 		'use strict';
 		var ret = '#',

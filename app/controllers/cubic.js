@@ -25,7 +25,7 @@ JMVC.controllers.cubic = function () {
 		var t = JMVC.getView('test/indextbl'),
 			that = this;
 	
-		//console.debug(t.content)
+		/* console.debug(t.content) */
 		t.render(function(){
 			
 			var lett = false,
@@ -57,7 +57,7 @@ JMVC.controllers.cubic = function () {
 			
 			
 			
-			//console.dir(JMVC.dim.window())
+			/* console.dir(JMVC.dim.window()) */
 			
 			JMVC.snow.start(JMVC.dom.body());
 			

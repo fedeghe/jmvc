@@ -1,7 +1,14 @@
 JMVC.controllers.index = function () {
 	this.action_none = function () {};
+
+	
+
 	this.action_index = function () {
-		var nowh = (new Date()).getHours();
+
+		JMVC.loading(1, 'starting');
+
+		var nowh = (new Date()).getHours(),
+			logoimg = 'jmvc_m1.svg';
 		JMVC.require(
 			'core/obj/date'
 			, 'core/i18n'
@@ -16,46 +23,37 @@ JMVC.controllers.index = function () {
 			, 'widget/lang'
 			, 'vendors/github/forkme'
 		);
+		JMVC.loading(70, 'dependencies resolved');
 		
 		
-		
-		// preload logo
-		JMVC.dom.preloadImage(JMVC.vars.baseurl + "/media/img/jmvc_m1.svg"
-			//, function (i){console.debug(i, 'loaded')}
+
+		JMVC.dom.preloadImage(JMVC.vars.baseurl + "/media/img/" + logoimg
+			/*, function (i){console.debug(i, 'loaded')}*/
 		);
 
-		//
+		
 		JMVC.events.loadify(500);
-
-		//
 		JMVC.head.title('JMVC');
-
-		//
-		//JMVC.set('bgcolor', nowh > 20 ? '#333' : 'white');
-
-		
-		// load two lang files
-		//
-		JMVC.lang.apply(null, JMVC.util.getParameters('jmvc.js').langs || ['en', 'de', 'jp', 'it']);
-		
-		//
+		JMVC.lang.apply(null, JMVC.util.getParameters('jmvc.js').langs || ['en', 'de', 'it']);
 		JMVC.head.favicon("/media/favicon.ico");
 
 
-		//
-		// JMVC.head.addscript(JMVC.vars.baseurl+"/media/js/plus_one.js");
-		// see plus_one view
-		// add a explicit style parsed from a view
-		//
+		/*
+		JMVC.head.addscript(JMVC.vars.baseurl+"/media/js/plus_one.js");
+		see plus_one view
+		add a explicit style parsed from a view
+		*/
 		JMVC.head.addstyle('{{style fontweight=`bold` txtalign=`center` margin=`0px` padding=`0px`}}', true, true);
-		JMVC.head.meta("description", "A true pure javascript model view controller framework");
+		JMVC.head.meta("description", "A true pure javascript model view controller framework", true);
 		JMVC.head.meta("keywords", "jmvc,javascript mvc,pure javascript mvc,pure javascript");
 		JMVC.head.meta("generator", "jmvc resident in your machine");
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/style.css', true);
 
-		//
-		// u can namespace views in folders
-		//var index = JMVC.getView('xxx/index');
+
+		/*
+		u can namespace views in folders
+		var index = JMVC.getView('xxx/index');
+		*/
 		var index = JMVC.getView('home/index'),
 			n = this.get('name') || 'Federico';
 		//
@@ -63,12 +61,15 @@ JMVC.controllers.index = function () {
 		index.set('i_say', '[L[pure javascript mvc framework]]');
 		//
 		
+		JMVC.loading(90, 'meta wrote');
+
 		
 		index.parse().render(
 			function () {
-				//JMVC.preload(JMVC.vars.baseurl + '/info');
-				//JMVC.preload(JMVC.vars.baseurl + '/api');
-
+				/*
+				JMVC.preload(JMVC.vars.baseurl + '/info');
+				JMVC.preload(JMVC.vars.baseurl + '/api');
+				*/
 				JMVC.github.forkme('fedeghe');
 
 				JMVC.mobile.topHide();
@@ -77,10 +78,10 @@ JMVC.controllers.index = function () {
 				JMVC.responsive.onChange(
 					function (w) {
 						if (w < 800) {
-							//JMVC.dom.addClass(JMVC.WD.body, 'mini');
+							/*JMVC.dom.addClass(JMVC.WD.body, 'mini');*/
 							JMVC.responsive.allow('mobi')
 						} else {
-							//JMVC.dom.removeClass(JMVC.WD.body, 'mini');
+							/*JMVC.dom.removeClass(JMVC.WD.body, 'mini');*/
 							JMVC.responsive.allow('dskt')
 						}
 					}
@@ -99,26 +100,15 @@ JMVC.controllers.index = function () {
 					mapid,
 					b;
 
-				//
-				
 				JMVC.dom.append(links,  [morelink, apilink, sourcelink]);
 				JMVC.dom.append(el, links);
 
 				JMVC.events.bind([morelink, apilink, sourcelink], 'click', function () {this.blur(); });
 
-				//see the pool
-				//JMVC.debug(JMVC.io.x);
+
 				logo = JMVC.dom.find('#extralogo');
-				newlogo = JMVC.dom.create('img', {src : JMVC.vars.baseurl + '/media/img/jmvc_m1.svg'});
-				//
-				//
+				newlogo = JMVC.dom.create('img', {src : JMVC.vars.baseurl + '/media/img/' + logoimg});
 				JMVC.dom.append(logo, newlogo);
-				//
-				//
-				//
-				//
-				// try gmap
-				//
 				
 				
 				if (JMVC.p.map && JMVC.p.map == 'true') {
@@ -128,14 +118,9 @@ JMVC.controllers.index = function () {
 					mapid = 'map';
 					b = JMVC.dom.body();
 					JMVC.dom.append(b, JMVC.dom.create('div', {id : mapid, style : 'opacity:0.8;position:absolute;z-index:1;top:0px;left:0px;width:' + dims.width + 'px;height:' + dims.height + 'px'}));
-					//
-				
 					
 					JMVC.gmap.initialize(function () {
-							
-						
 						JMVC.gmap.mapme('via Maggio 18, Lugano, Svizzera', function(latlng){
-							
 							var mapDiv = document.getElementById(mapid),
 								map = new google.maps.Map(mapDiv, {
 									center : new google.maps.LatLng(latlng.lat(), latlng.lng()),
@@ -173,36 +158,37 @@ JMVC.controllers.index = function () {
 								,{location : [47.366923, 8.543597], speed : 20, duration : 10, streetView : {heading : 180, zoom:-2}}
 								,{location : '767 5th Avenue, New York USA', speed : 20, duration : 10, streetView : {heading : 80, zoom:-2}}
 								
-								//
-								// heron island underwater
-								//https://maps.google.com/maps?q=heron+island+resort&hl=en&ll=-23.443045,151.906744&spn=0.001358,0.002519&sll=-23.442794,151.915555&layer=c&cid=17997865933213515154&panoid=CWskcsTEZBNXaD8gG-zATA&cbp=13,332.33,,0,11.68&gl=us&hq=heron+island+resort&t=m&cbll=-23.442896,151.906584&z=19
+								/*
+								heron island underwater
+								https://maps.google.com/maps?q=heron+island+resort&hl=en&ll=-23.443045,151.906744&spn=0.001358,0.002519&sll=-23.442794,151.915555&layer=c&cid=17997865933213515154&panoid=CWskcsTEZBNXaD8gG-zATA&cbp=13,332.33,,0,11.68&gl=us&hq=heron+island+resort&t=m&cbll=-23.442896,151.906584&z=19
+								*/
 								,{location : [-23.443045,151.906744], speed : 20, duration : 30, streetView : {heading : 270, pitch : 0, zoom:-5}}	
 								
-								// south pole telescope
-								//https://maps.google.com/maps?hl=en-US&ll=-84.999999,-44.656316&spn=0.000516,0.010074&sll=-85.000000,-44.656416&layer=c&cid=3987634083228589274&panoid=uZ7YCXJGSbyDxIbY-wPWow&cbp=13,200.62,,0,11.16&gl=US&t=h&cbll=-84.999999,-44.656316&z=17
-								//,{location : [-84.999999,-44.656316], speed : 20, duration : 20, streetView : {heading : 270, pitch : 0, zoom:-10}}	
+								/* south pole telescope
+								https://maps.google.com/maps?hl=en-US&ll=-84.999999,-44.656316&spn=0.000516,0.010074&sll=-85.000000,-44.656416&layer=c&cid=3987634083228589274&panoid=uZ7YCXJGSbyDxIbY-wPWow&cbp=13,200.62,,0,11.16&gl=US&t=h&cbll=-84.999999,-44.656316&z=17
+								,{location : [-84.999999,-44.656316], speed : 20, duration : 20, streetView : {heading : 270, pitch : 0, zoom:-10}}	
+								*/
 								
-								//Amazon rain forest
-								//https://maps.google.com/?ll=-3.137759,-60.493355&spn=0.047308,0.080595&t=h&layer=c&cbll=-3.137759,-60.493355&panoid=1ci-8iBT_UuG1dlrUy1vzg&cbp=12,154.19,,0,-2.8&z=14
-								//,{location : [-3.137759,-60.493355], speed : 20, duration : 20, streetView : {heading : 270, pitch : 0, zoom:-10}}	
-								
-								//Mayan Ruins in Mexico
-								//http://maps.google.com/maps?q=20.681145,-88.570944&hl=en&ie=UTF8&ll=20.682504,-88.56879&spn=0.005541,0.010074&sll=20.681145,-88.570944&sspn=0.005541,0.010074&hnear=Chichen+Itza,+Carretera+Merida+-+Puerto+Juarez+Km.120,+Tinum,+97757+Piste,+Yucat%C3%A1n,+Mexico&t=m&layer=c&cbll=20.682504,-88.56879&panoid=LaEFKiRNgawDJ_V5GcEmDw&cbp=12,19.56,,0,-3.53&z=17
+								/*Amazon rain forest
+								https://maps.google.com/?ll=-3.137759,-60.493355&spn=0.047308,0.080595&t=h&layer=c&cbll=-3.137759,-60.493355&panoid=1ci-8iBT_UuG1dlrUy1vzg&cbp=12,154.19,,0,-2.8&z=14
+								,{location : [-3.137759,-60.493355], speed : 20, duration : 20, streetView : {heading : 270, pitch : 0, zoom:-10}}	
+								*/
+							
+								/*Mayan Ruins in Mexico
+								http://maps.google.com/maps?q=20.681145,-88.570944&hl=en&ie=UTF8&ll=20.682504,-88.56879&spn=0.005541,0.010074&sll=20.681145,-88.570944&sspn=0.005541,0.010074&hnear=Chichen+Itza,+Carretera+Merida+-+Puerto+Juarez+Km.120,+Tinum,+97757+Piste,+Yucat%C3%A1n,+Mexico&t=m&layer=c&cbll=20.682504,-88.56879&panoid=LaEFKiRNgawDJ_V5GcEmDw&cbp=12,19.56,,0,-3.53&z=17
+								*/
 								,{location : [20.682504,-88.56879], speed : 20, duration : 20, streetView : {heading : 0, pitch : 0, zoom:-5}}	
 								
 								
 								
-								
-								
-								//
-								//
-								
 
-								//cortina ,{location : [46.545150, 12.135968], speed : 20, duration : 20, streetView : {heading : 275, pitch : 15, zoom:-2}}
-								//,{location : 'prato della valle, Padova Italia', speed : 20, duration : 20, streetView : {heading : 270, pitch : 0, zoom:-2}}
-								//,{location : '767 5th Avenue, New York USA', speed : 20, duration : 10, streetView : {heading : 80, zoom:-2}}
-								//,{location : [47.366923, 8.543597], speed : 20, duration : 10, streetView : {heading : 180, zoom:-2}}
-								//,{location : [37.331889, -122.030747], speed : 20, duration : 10, streetView : {heading : 180, zoom:-2}}
+								/*
+								cortina ,{location : [46.545150, 12.135968], speed : 20, duration : 20, streetView : {heading : 275, pitch : 15, zoom:-2}}
+								,{location : 'prato della valle, Padova Italia', speed : 20, duration : 20, streetView : {heading : 270, pitch : 0, zoom:-2}}
+								,{location : '767 5th Avenue, New York USA', speed : 20, duration : 10, streetView : {heading : 80, zoom:-2}}
+								,{location : [47.366923, 8.543597], speed : 20, duration : 10, streetView : {heading : 180, zoom:-2}}
+								,{location : [37.331889, -122.030747], speed : 20, duration : 10, streetView : {heading : 180, zoom:-2}}
+								*/
 							]);
 							
 							
@@ -237,18 +223,16 @@ JMVC.controllers.index = function () {
 		var index = JMVC.getView('index'),
 			hello = JMVC.getView('hello'),
 			n;
-		//
-		// add link tag
+
+		/* add link tag */
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/style.css');
-		//
-		// edit title
+
+		/* edit title */
 		JMVC.head.title('JS base');
-		//
-		//
+
 		n = this.get('name') || 'Guest';
 		hello.set('name', n);
 		index.set('i_say', 'be seo-unfriendly');
-		//
 		
 		index.render({
 			cback : function (n, c) {
@@ -256,7 +240,7 @@ JMVC.controllers.index = function () {
 				JMVC.events.bind(link, 'click', function () {this.blur();});
 				JMVC.dom.append(document.getElementById('cent'), link);
 				
-				// remove the spinner
+				/* remove the spinner */
 				JMVC.dom.remove(JMVC.dom.find('p')[0]);
 				
 			},
@@ -265,19 +249,19 @@ JMVC.controllers.index = function () {
 		});
 		
 	
-		//
-		// now index is loaded and contains a #cent div
-		// we try to substitute the content with the hello view content
-		// and give value to a var in it
-		///hello.set('name', this.get('name'));
-		
+		/*
+		 now index is loaded and contains a #cent div
+		 we try to substitute the content with the hello view content
+		 and give value to a var in it
+		hello.set('name', this.get('name'));
+		*/
 		hello.render({target : '#cent'});
 	};
 	//
 	//
 	//
 	this.action_index3 = function () {
-		//directly render some code
+		/* directly render some code */
 		this.render('<b>yupeeee</b>');
 	};
 	this.action_codes = function () {
@@ -298,6 +282,15 @@ JMVC.controllers.index = function () {
 			content += '"' + i +'" : "'+ String.fromCharCode(i) + '",<br />';
 		}
 		this.render(content);
+	};
+
+	this.action_foo = function () {
+		JMVC.events.delay(function () {JMVC.loading(10, 'loading settings');}, 400 );
+		JMVC.events.delay(function () {JMVC.loading(20, 'loading images');}, 800 );
+		JMVC.events.delay(function () {JMVC.loading(30, 'loading models');}, 1200 );
+		JMVC.events.delay(function () {JMVC.loading(60, 'loading views');}, 1300 );
+		JMVC.events.delay(function () {JMVC.loading(80, 'loading styles');}, 1600 );
+		JMVC.events.delay(function () {JMVC.loading(100, 'rendering');}, 2000 );
 	};
 	
 

@@ -11,22 +11,22 @@ JMVC.extend('util', {
 JMVC.extend('sniffer', {
 	'init' : function () {
 		var bcheck = {
-				Firefox : function () {return navigator.userAgent.match(/firefox\/([^\s]*)/i); },
-				Opera : function () {return navigator.userAgent.match(/opera\/([^\s]*)/i); },
-				IE : function () {return document.all && !(navigator.userAgent.match(/opera/i)); },
-				Chrome : function () {return navigator.userAgent.match(/chrome\/([^\s]*)/i); },
-				Safari : function () {return navigator.userAgent.match(/safari\/([^\s]*)/i); },
-				iCab : function () {return navigator.userAgent.match(/icab\/([^\s]*)/i); }
+				'Firefox' : function () {return navigator.userAgent.match(/firefox\/([^\s]*)/i); },
+				'Opera' : function () {return navigator.userAgent.match(/opera\/([^\s]*)/i); },
+				'IE' : function () {return document.all && !(navigator.userAgent.match(/opera/i)); },
+				'Chrome' : function () {return navigator.userAgent.match(/chrome\/([^\s]*)/i); },
+				'Safari' : function () {return navigator.userAgent.match(/safari\/([^\s]*)/i); },
+				'iCab' : function () {return navigator.userAgent.match(/icab\/([^\s]*)/i); }
 			},
 			ocheck = {
-				Android : function () {return navigator.platform.match(/android/i); },
-				MacOS : function () {return navigator.appVersion.match(/mac/i); },
-				Win : function () {return navigator.appVersion.match(/win/i); },
-				Linux : function () {return navigator.userAgent.match(/linux/i); },
-				Unix : function () {return navigator.appVersion.match(/x11/i); }
+				'Android' : function () {return navigator.platform.match(/android/i); },
+				'MacOS' : function () {return navigator.appVersion.match(/mac/i); },
+				'Win' : function () {return navigator.appVersion.match(/win/i); },
+				'Linux' : function () {return navigator.userAgent.match(/linux/i); },
+				'Unix' : function () {return navigator.appVersion.match(/x11/i); }
 			},
 			dcheck = {
-				iDevice : function () {return navigator.userAgent.match(/iPhone|iPad|iPod/i);}
+				'iDevice' : function () {return navigator.userAgent.match(/iPhone|iPad|iPod/i);}
 			},
 			bro,
 			os,
