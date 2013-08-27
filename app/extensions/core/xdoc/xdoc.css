@@ -1,0 +1,15 @@
+/* 
+    Document   : console
+    Created on : 14-nov-2012, 21.52.06
+    Author     : fedeghe
+    Description:
+        Purpose of the stylesheet follows.
+*/
+div.jmvc_xdoc {
+	position : absolute;
+	background-color : gray;
+	color : black;
+	font-size : 10px;
+	padding:10px;
+	z-index:200;
+}
