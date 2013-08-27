@@ -11,12 +11,13 @@ body{
 #extralogo span.point{
 	display:block;
 	position:absolute;
-	font-size:1px;
+	font-size:0px;
 	line-height:3px;
 	height:3px;
 	top:-10px;
 	left:-10px;
 	cursor:default;	
+	color:black;
 }
 #extralogo span.point.G{color:#2262FA;}
 #extralogo span.point.o1{color:#CC1629;}
