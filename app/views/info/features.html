@@ -71,6 +71,7 @@
 				<li><now <i>action_foo</i> is called</li>
 				<li><strong>after_<i>foo</i></strong> : called immediately after calling <i>action_foo</i> </li>
 				<li><strong>after</strong> : called after any action</li>
+				<li><strong>action</strong> : if found in the controller, will be called if <i>foo_action</i> is not in the controller, as parameters will be passed the name of the view (<i>foo</i> here) and a literal containing all found parameters</li>
 			</ul>There is no assurance that this will produce a serial execution but the idea is to create a Monad each time.
 		</p>
 	</li>
