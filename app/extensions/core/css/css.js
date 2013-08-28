@@ -30,7 +30,7 @@ JMVC.extend('css', {
 			k;
 
 		if (!prop_is_obj && typeof val == 'undefined') {
-			// opera may use currentStyle or getComputedStyle
+			/* opera may use currentStyle or getComputedStyle */
 			ret = (el.currentStyle) ? el.currentStyle[this.css_propertymap[prop] || prop + ""] : el.style[prop]; 
 			return ret == '' || ret == 'auto' ? JMVC.css.getComputedStyle(el, prop) : ret;
 		}
@@ -60,7 +60,7 @@ JMVC.extend('css', {
 				el.style[this.css_propertymap[prop] || prop + ""] = val;
 				if (prop == 'opacity') {
 					el.style['filter'] = 'alpha(opacity = ' + (~~(100 * JMVC.num.getFloat(val))) + ')';
-				}//ie
+				}/* IE */
 			}
 		}
 		return this; 
@@ -167,7 +167,7 @@ JMVC.extend('css', {
 		}
 		return out;
 	},
-
+	
 	'clearer' : JMVC.dom.create('br', {'class' : 'clearer'})
 });
 
@@ -204,3 +204,7 @@ enableSelection : function(target) {
 
 
  */
+
+
+
+
