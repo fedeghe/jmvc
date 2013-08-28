@@ -519,20 +519,14 @@
                                $JMVC.a.toLowerCase() !== JMVC_DEFAULT.action
                                && WDL.replace(US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a);
                             
-                           
-
-
-
-
-                            
-                            // AFTER HOOKS?
-                            //
-                            // @action hook
+                            /* AFTER HOOKS?
+                            *
+                            * @action hook */
                             'after_' + $JMVC.a in ctrl
                             && typeof ctrl['after_' + $JMVC.a] === 'function'
                             && ctrl['after_' + $JMVC.a]();
-                            //
-                            // @global hook
+                            /*
+                            * @global hook */
                             'after' in ctrl
                             && typeof ctrl.after === 'function'
                             && ctrl.after();
@@ -550,7 +544,10 @@
 
 
 
-                    // setter getter unsetter $JMVC vars
+                    /*
+                    * 
+                    * setter, getter, unsetter for $JMVC vars
+                    */
                     /**
                      * [description]
                      * @param  {[type]} name    [description]
