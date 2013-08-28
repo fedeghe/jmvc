@@ -78,7 +78,7 @@
                 // returning object created in that function, here $JMVC will be JMVC
                 var $JMVC,
                     JMVC_VERSION = 2.2,
-                    JMVC_REVIEW = 8,
+                    JMVC_REVIEW = 9,
                     JMVC_PACKED = false,
 
                     /**
@@ -556,7 +556,6 @@
                      */
                     "set" : function (name, content) {
                         if (JMVC.util.isObject(name)) {
-
                             for (var i in name) {
                                 $JMVC.set(i, name[i]);
                             }
