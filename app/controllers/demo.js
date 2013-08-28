@@ -58,19 +58,22 @@ JMVC.controllers.demo = function () {
 				'Sheduler' : 'demo/scheduler.jmvc',
 				'Effects' : 'demo/fx.jmvc',
 				'Key' : 'test_key',
-				'* strict' : 'test_strict',
-				'* obj/bucket' : 'test_bucket',
-				'* obj/deque' : 'test_deque',
-				'* obj/date' : 'test_date',
+				'Grind' : 'grind',
 				'canvas ext using 2d lib' : 'test_canvas',
-				'* lib/array' : 'test_array',
-				'* JMVC.util.inArrayRich' : 'test_arrayOp',
-				'* lib/crypt' : 'test_crypt',
+				
 				'modal' : 'test_modal',
 				'widget' : 'test_widget',
 				'cubic' : 'cubic',
 				'map_animator' : '?map=true',
-				'carpet' : 'carpet'
+				'carpet' : 'carpet',
+
+				'* strict' : 'test_strict',
+				'* obj/bucket' : 'test_bucket',
+				'* obj/deque' : 'test_deque',
+				'* obj/date' : 'test_date',
+				'* lib/array' : 'test_array',
+				'* JMVC.util.inArrayRich' : 'test_arrayOp',
+				'* lib/crypt' : 'test_crypt'
 			},
 			style = {
 				'body' : {
