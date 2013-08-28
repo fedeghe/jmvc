@@ -75,12 +75,11 @@ JMVC.extend('date', {
 			thatY = thatD.getFullYear(),
 			firstWeek = JMVC.date.firstW(thatY),
 			firstWeekFirstDay = firstWeek.from,
-			weeksInPrevYear = JMVC.date.weekInYear(thatY-1),
-															//security bound hack +10 ms
-			mayret = Math.ceil((thatD - firstWeekFirstDay +10 )/JMVC.date.vars.WEEKMS);
+			weeksInPrevYear = JMVC.date.weekInYear(thatY - 1),
+			/*security bound hack +10 ms*/
+			mayret = Math.ceil((thatD - firstWeekFirstDay + 10) / JMVC.date.vars.WEEKMS);
 			
-		if(thatD < firstWeekFirstDay){
-			//console.debug('z')
+		if (thatD < firstWeekFirstDay) {
 			return weeksInPrevYear;
 		}
 		return (mayret > weeksInPrevYear) ? 1 : mayret;
@@ -103,8 +102,6 @@ JMVC.extend('date', {
 			lastDay = new Date(y, 11, 28, 1, 0, 0, 0),
 			firstBounds = JMVC.date.weekBounds(firstDay),
 			lastBounds = JMVC.date.weekBounds(lastDay);
-			
-		//console.debug(lastBounds.to - firstBounds.from);
 		return Math.ceil((lastBounds.to - firstBounds.from) / JMVC.date.vars.WEEKMS);
 	},
 	'distance' : function (d1, d2, u) {
@@ -151,7 +148,7 @@ JMVC.extend('date', {
 				r = tmp < dd ? tmp : tmp - 7;
 			return new Date(d.getFullYear(), d.getMonth(), r);
 		},
-		// JMVC.date.tools.prevDay(new Date(2012,8,20), 1, 1878)
+		/* JMVC.date.tools.prevDay(new Date(2012,8,20), 1, 1878) */
 		'format' : function (dt, f) {
 			
 			var l = JMVC.date.vars.time_formats['en-us'],
