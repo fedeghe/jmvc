@@ -28,8 +28,8 @@ JMVC.controllers.google = function () {
 				o2 = new JMVC.plotter.letter('o2', 48, 148),
 				g = new JMVC.plotter.letter('g', 43, 193),
 				l = new JMVC.plotter.letter('l', 10, 220),
-				e = new JMVC.plotter.letter('e', 48, 260),
-				t = new JMVC.plotter.letter('t', 108, 360);
+				e = new JMVC.plotter.letter('e', 48, 260);
+				//t = new JMVC.plotter.letter('t', 108, 360);
 
 			G.arc(17, 3, 35, 38, -M.PI / 20, M.PI / 10, 28);
 			G.arc(18, 6, 32, 27, -M.PI / 15, -M.PI * 0.13, 21, M.PI / 4);
@@ -89,19 +89,29 @@ JMVC.controllers.google = function () {
 			e.plot(newlogo, scale);
 			
 			
-			var animate = true, a, i, T1, T2, nums, bucket, t, c, s, trg;
+			
+			
+			var animate = true, a, i, T1, T2, nums, bucket, t, c, s, trg, dotsize, maxsize,
+				aberrate = that.get('aberrate');
 			if (animate) {
 				a = newlogo.childNodes;
 				i = 1;
 				T1 = 10;
 				T2 = 1;
+				dotsize = aberrate ? 2 : 6;
+				maxsize = 300;
 				nums = JMVC.util.range(1, a.length - 1);
 				bucket = new JMVC.bucket.create(nums);
 				t = window.setInterval(function () {
 					if (that.get('flash')) {
 						var trg = i;
 					} else {
-						if (!bucket.hasMore()) {bucket.recover(); }
+						if (!bucket.hasMore()) {
+							if (aberrate) {
+								dotsize = (dotsize < maxsize) ? dotsize + 1 : maxsize;
+							}
+							bucket.recover();
+						}
 						trg =  bucket.next() || 1;
 					}
 
@@ -110,11 +120,11 @@ JMVC.controllers.google = function () {
 					window.setTimeout(
 						function (t1) {
 							a.item(t1).style.color = 'white';
-							a.item(t1).style.fontSize = '10px';	
+							a.item(t1).style.fontSize = aberrate ? dotsize*2 + 'px' : '10px';	
 							window.setTimeout(
 								function (t2) {
 									a.item(t2).style.color = c;
-									a.item(t2).style.fontSize = '4px';
+									a.item(t2).style.fontSize = dotsize + 'px';
 								}, T1, t1
 							);
 						},0, trg
