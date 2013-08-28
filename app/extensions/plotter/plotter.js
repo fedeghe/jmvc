@@ -70,9 +70,11 @@ JMVC.extend('plotter', {
 				that.arr.push([x2, y2]);
 			},
 			'plot' : function (node, positions, character, top, left) {
-				JMVC.each(positions, function (el, i) {
-					JMVC.gra.plotarr(node, el, i, character, top, left);
-				});
+				//JMVC.each(positions, function (el, i) {
+				for (var i = 0, l = positions.length; i < l; i ++) {
+					JMVC.gra.plotarr(node, positions[i], i, character, top, left);
+				}
+				//});
 			},
 			'plotarr' : function (node, positions, letter, character, top, left, scale) {
 				var i = 0,
@@ -80,19 +82,21 @@ JMVC.extend('plotter', {
 					tmp;
 				typeof scale == 'undefined' && (scale = 1);
 				
-				JMVC.each(positions, function (el) {
+				//JMVC.each(positions, function (el) {
+				for (null; i < l; i++) {
 					tmp = JMVC.dom.create('span', {
 							'class' : 'point ' + letter,
 							'style' : JMVC.string.replaceall(
 								'top:%top%px;left:%left%px',
 								{
-									top : ~~ (el[0] + top) * scale,
-									left : ~~(el[1] + left) * scale
+									top : ~~ (positions[i][0] + top) * scale,
+									left : ~~(positions[i][1] + left) * scale
 								}
 							)
 						}, character);
 					JMVC.dom.append(node, tmp);
-				});
+				}
+				//});
 			},
 			'rotate' : function (rad) {
 				var x, y;
@@ -114,6 +118,7 @@ JMVC.extend('plotter', {
 		this.line = function (x1, y1, x2, y2, p) {mod.addline(x1, y1, x2, y2, p); };
 		this.plot = function (node ,scale) {mod.plotarr(node, this.arr, letter, this['char'], this.top, this.left, scale); };
 		this.rotate = function (rad) {mod.rotate(rad); };
-		this.clone = function(inst){mod.clone(inst); };
+		this.clone = function (inst) {mod.clone(inst); };
+		this.setChar = function (c) {this['char'] = c; };
 	}
 });
