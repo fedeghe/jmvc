@@ -507,11 +507,22 @@
                             // NOW    
                             // 
                             // call action
+                             
                             ('action_' + $JMVC.a in ctrl && typeof ctrl['action_' + $JMVC.a] === 'function') ?
-                                ctrl['action_' + $JMVC.a]()
-                                :
-                                $JMVC.a.toLowerCase() !== JMVC_DEFAULT.action
-                                && WDL.replace(US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a);
+                               ctrl['action_' + $JMVC.a]()
+                               :
+                               /* maybe a action wild is in the controller */
+                               ('action' in ctrl && typeof ctrl['action'] === 'function') ?
+                               ctrl['action']($JMVC.a, $JMVC.p)
+                               :
+                               /* or go to 404 */
+                               $JMVC.a.toLowerCase() !== JMVC_DEFAULT.action
+                               && WDL.replace(US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a);
+                            
+                           
+
+
+
 
                             
                             // AFTER HOOKS?
@@ -806,7 +817,7 @@
                             try {
                                 W.opera.postError.apply(W.opera, arguments);
                             } catch (e2) {
-                                W.alert(Array.prototype.join.call(arguments, " "));
+                                W['log' in W ? 'log' : 'alert'](Array.prototype.join.call(arguments, " "));
                             }
                         }
                     },
@@ -3379,16 +3390,18 @@
                     to;
                 while (i <= top) {
                     to = W.setTimeout(
-                        function () {
-                            WD.body.style.opacity = i;
-                            WD.body.style.filter = 'alpha(opacity=' + (i * 100) + ')';
-                            if (i > top) {
+                        function (j) {
+                            WD.body.style.opacity = j;
+                            WD.body.style.filter = 'alpha(opacity=' + (j * 100) + ')';
+                            if (j > top) {
                                 WD.body.style.opacity = 1;
                                 WD.body.style.filter = 'alpha(opacity=' + 100 + ')';
-                                W.clearTimeout(to);
+                                //W.clearTimeout(to);
                             }
                         },
-                        ms * i
+                        ms * i,
+                        i + step
+
                     );
                     i += step;
                 }
