@@ -10,6 +10,7 @@ JMVC.controllers.index = function () {
 		var nowh = (new Date()).getHours(),
 			logoimg = 'jmvc_m1.svg';
 		JMVC.require(
+			/*'core/sniffer',*/
 			'core/obj/date'
 			, 'core/i18n'
 			, 'core/responsive/basic'
@@ -111,7 +112,8 @@ JMVC.controllers.index = function () {
 				JMVC.dom.append(logo, newlogo);
 				
 				
-				if (JMVC.p.map && JMVC.p.map == 'true') {
+				if (JMVC.p.map && JMVC.p.map == 'true'
+				/* || JMVC.sniffer.browser.name.toLowerCase().match(/opera|chrome/)*/) {
 				
 					JMVC.require('vendors/google/gmap');
 					dims = JMVC.dim.getViewportSize();
