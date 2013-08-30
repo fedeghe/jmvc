@@ -1,46 +1,44 @@
-   _  __  __ __     __ ____ 
-  (_)|  \/  |\ \   / //  __|
-  | || |\/| | \ \ / / | |    
-  | || |  | |  \ v /  | |__ 
- _/ ||_|  |_|   \_/   \____|
-|__/                      
+JMVC
+====
 
-Description: jmvc module
+Description
+-----------
+JMVC is a javascript module that implement the MVC architecture and is enhanced with basic utilities. 
+      
+Getting started
+---------------
+Copy the content of the repository in the root of an Apache virtual host.
+Start looking at the index.js controller in the app/controllers folder.
+Start writing your own controllers, models and views.
 
-Author: Federico Ghedina
+Samples?
+--------
+The whole [JMVC homepage](http://www.jmvc.org/) matches **exactly** the repository content,
+the [demo controller](http://www.jmvc.org/demo) will break the ice.
 
-
-Installation
-------------
-Thanks to a basic .htaccess JMVC access point is an index.html which loads in the head the main script
-and is meant to have empty body, in fact the whole body will be rewritten (see index.html)
-NOTE: the `src` attribute of the script must be the absolute url for jmvc.js
-All you have to do is, write controllers, models and views.
-
+Api
+---
+That section need to be completed, even some signatures are inconsistent. Son will be completed and 
+even all the test will be available.
 
 Features
 --------
-- cross-browser
-- no global variables so no collisions are possible
-- url dispatching
-- load views and models (synchronous ajax requests, otherwise model eval is late) from a controller
-- default controller and action (inherited 'index')
-- each view, model or controller has his own hash as private registry to contain variables.
-- in views you can write special variable placeholders for other views or for view's variable:
-  >	$variable_name$ for variable
-  >	{{my_view}} for a view
-  > {{my_view name=`Federico` surname=`Ghedina`}}
-  these will be replaced with the element content (recursively parsed, within 10 nesting level)
-- dynamically load other scripts and stylesheets 
-- the content produced by default affects the content of the body, but You can choose to affect
-	the content of a node with an ID attribute.
-	You can edit the head with some limitations using JMVC.head methods (or your scripts)
-- 7.1Kb (packed)
-- total warranty for completely seo unfriendly pages
-- automatic extra parameters from url
-- automatic extra parameters from querystring
-- add action routes in the controller
-- easily extend the inner main object with your code, from a controller or globally
+- One global variable
+- Cross-browser (at the moment JMVC is not completely IE friendly, as most of people around)
+- Includes many useful utilities: ajax, dom manipulation, event binding, etc...
+- Default `index` Controller and action (configurable)
+- In views you can write special variable placeholders in a View to render another View on the fly or to assign a value to a View`s variable
+- Dinamically load other scripts and stylesheets, both parsable, so they can depend on Your variables
+- Optimize Extensions dependencies using the JMVC.require function
+- Get all parameters from url
+- Easily extend the JMVC object with your code
+- Allow any file extension You prefer in the url... I know You noticed the .jmvc extension in this page url
+- Handle 404 Status for requests not matching a route rendering an error View and redirecting after three seconds to the default route
+- Easily enque callbacks to some predefined hooks :onBeforeRender, onAfterRender, onBeforeParse, onAfterParse (i18n works thanks to a hook)
+- Allow private function in controllers, and some *magics*: controller before & after, action before & after *magic*, wildcard action.
+- Many ready to use extensions, wrappers and widget.
+- File sizes
+  - 11.5 KB jmvc.min.js (gzipped and packed version, base62 encode, shrinked variables)
+  - 24.6 KB jmvc.js (gzipped, development version, fully commented)
 
-
-For further informations visit http://www.jmvc.org/info
+For further informations visit [http://www.jmvc.org/info](http://www.jmvc.org/info) 
