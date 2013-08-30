@@ -11,14 +11,14 @@ Copy the content of the repository in the root of an Apache virtual host.
 Start looking at the index.js controller in the app/controllers folder.
 Start writing your own controllers, models and views.
 
-Samples?
---------
+Samples
+-------
 The whole <a href="http://www.jmvc.org/" target="_blank">JMVC homepage</a> matches **exactly** the repository content,
 the <a href="http://www.jmvc.org/demo.jmvc" target="_blank">demo controller</a> will break the ice.
 
 Api
 ---
-That section need to be completed, even some signatures are inconsistent. Son will be completed and 
+The <a href="http://www.jmvc.org/api" target="_blank">JMVC api</a> section need to be completed, even some signatures are inconsistent. Soon will be completed and 
 even all the test will be available.
 
 Features
