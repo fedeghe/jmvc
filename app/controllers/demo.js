@@ -40,7 +40,7 @@ JMVC.controllers.demo = function () {
 
 		/* JMVC.require('widget/slider'); */
 		
-		var content = '<h3>TESTS</h3>',
+		var content = '<h3>SAMPLES</h3>',
 			bu = JMVC.vars.baseurl,
 			v = JMVC.getView('vacuum'),
 			links = {
