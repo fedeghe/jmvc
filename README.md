@@ -26,7 +26,7 @@ Features
 - One global variable
 - Cross-browser (at the moment JMVC is not completely IE friendly, as most of people around)
 - Includes many useful utilities: ajax, dom manipulation, event binding, etc...
-- Default `index` Controller and action (configurable)
+- Default _index_ controller and action (configurable)
 - In views you can write special variable placeholders in a View to render another View on the fly or to assign a value to a View`s variable
 - Dinamically load other scripts and stylesheets, both parsable, so they can depend on Your variables
 - Optimize Extensions dependencies using the JMVC.require function
@@ -35,7 +35,7 @@ Features
 - Allow any file extension You prefer in the url... I know You noticed the .jmvc extension in this page url
 - Handle 404 Status for requests not matching a route rendering an error View and redirecting after three seconds to the default route
 - Easily enque callbacks to some predefined hooks :onBeforeRender, onAfterRender, onBeforeParse, onAfterParse (i18n works thanks to a hook)
-- Allow private function in controllers, and some *magics*: controller before & after, action before & after *magic*, wildcard action.
+- Allow private function in controllers, and some *magics*: controller before & after, action before & after, wildcard action.
 - Many ready to use extensions, wrappers and widget.
 - File sizes
   - 11.5 KB jmvc.min.js (gzipped and packed version, base62 encode, shrinked variables)
