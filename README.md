@@ -18,7 +18,7 @@ the <a href="http://www.jmvc.org/demo.jmvc" target="_blank">demo controller</a> 
 
 Api
 ---
-The <a href="http://www.jmvc.org/api" target="_blank">JMVC api</a> section need to be completed, even some signatures are inconsistent. Soon will be completed and 
+The <a href="http://www.jmvc.org/api" target="_blank">JMVC api</a> section needs to be completed, even some signatures are inconsistent. Soon will be completed and 
 even all the test will be available.
 
 Features
