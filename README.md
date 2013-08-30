@@ -14,7 +14,7 @@ Start writing your own controllers, models and views.
 Samples?
 --------
 The whole <a href="http://www.jmvc.org/" target="_blank">JMVC homepage</a> matches **exactly** the repository content,
-the <a href="http://www.jmvc.org/demo" target="_blank">demo controller</a> will break the ice.
+the <a href="http://www.jmvc.org/demo.jmvc" target="_blank">demo controller</a> will break the ice.
 
 Api
 ---
@@ -41,4 +41,4 @@ Features
   - 11.5 KB jmvc.min.js (gzipped and packed version, base62 encode, shrinked variables)
   - 24.6 KB jmvc.js (gzipped, development version, fully commented)
 
-For further informations visit <a href="http://www.jmvc.org/info" target="_blank">http://www.jmvc.org/info</a>
+For further informations visit <a href="http://www.jmvc.org/info" target="_blank">jmvc.org/info.jmvc</a>
