@@ -24,7 +24,7 @@ even all the test will be available.
 Features
 --------
 - One global variable
-- Cross-browser (at the moment JMVC is not completely IE friendly, as most of people around)
+- Cross-browser (at the moment JMVC is not completely IE friendly, as almost everyone)
 - Includes many useful utilities: ajax, dom manipulation, event binding, etc...
 - Default _index_ controller and action (configurable)
 - In views you can write special variable placeholders in a View to render another View on the fly or to assign a value to a View`s variable
