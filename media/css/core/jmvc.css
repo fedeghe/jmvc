@@ -23,8 +23,10 @@ body{
 }
 
 @media screen {
-	img { 
-		width: auto !important; /* for ie 8 */
+	img {
+	
+		/*width: auto !important; /* for ie 8 */
+
 	}
 }
 
