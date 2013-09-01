@@ -52,43 +52,44 @@ JMVC.extend('gmap', {
 			latlngs=[],
 			points_length = points.length,
 			that = this,
-			mapType = map.getMapTypeId();
+			mapType = map.getMapTypeId(),
+			panorama = map.getStreetView(),
+			t;
 		//
 		//
 		function handleMapType(t) {
-			if (t !== mapType) {
-				map.setMapTypeId(t ? t : mapType);
-			}
+			(t !== mapType) && map.setMapTypeId(t ? t : mapType);
 		}
 		
 		function loop() {
-			var panorama = map.getStreetView(),
-				t;
+			
 			j = (i - 1 + points_length) % points_length;
+			
 
 			function do_loop() {
 				i = (i + 1) % points_length;
 				loop();
 			}
 			//
-			function move_heading(d) {
+			function move_heading(duration) {
 				var ii = 0,
 					top = 100,
-					p,
-					h = null;
+					pov,
+					heading = null;
 
-				while (ii < d * 10) {	
+				while (ii < duration * 10) {
+
 					(function (yy){
 						t = JMVC.W.setTimeout(
 
 							function () {
-								//console.debug(yy, h)
-								p = panorama.getPov();
-								h = p.heading;
+								
+								pov = panorama.getPov();
+								heading = pov.heading;
 								panorama.setPov({
-									heading : h + 0.1,
-									pitch : p.pitch,
-									zoom : p.zoom
+									'heading' : heading + 0.1,
+									'pitch' : pov.pitch,
+									'zoom' : pov.zoom
 								});
 							},				
 							yy * 100
@@ -97,21 +98,27 @@ JMVC.extend('gmap', {
 
 					ii += 1;
 				}
-				h = 0;
+				heading = 0;
 				
 			}
 			//
+			
+
+			
+
 			JMVC.W.setTimeout(function () {
 				//
 				JMVC.W.clearTimeout(t);
 				panorama.setVisible(false);
 
+				
 				//
 				if (!JMVC.util.isSet(points[i].location) && points[i].zoom) {
 					handleMapType(points[i].mapTypeId);
 					map.setZoom(points[i].zoom);
 					do_loop();
 				} else if (points[i].streetView) {
+
 					that.mapme(points[i].location, function (r) {
 						panorama.setPosition(r);
 						panorama.setPov({
@@ -134,7 +141,10 @@ JMVC.extend('gmap', {
 					});
 				}
 			}, points[j].duration * 1000);
+			
 		}
+
+
 		loop();
 	}
 });
