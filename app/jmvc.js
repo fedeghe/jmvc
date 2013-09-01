@@ -4148,9 +4148,8 @@
                     JMVC.require(JMVC.modules[i]);  
                 }
             }
-            if (JMVC.p.lang) {
-                JMVC.cookie.set('lang', JMVC.p.lang);
-            }       
+            JMVC.p.lang && JMVC.cookie.set('lang', JMVC.p.lang);
+
             JMVC.render();
         }
     )();
@@ -4160,7 +4159,7 @@
 
 
 JMVC.W.onerror = function(errorMsg, url, lineNumber) {
-    alert("Uncaught error " + errorMsg + " in " + url + ", lines " + lineNumber);
+    JMVC.debug("Uncaught error " + errorMsg + " in " + url + ", lines " + lineNumber);
 };
 //
 //
