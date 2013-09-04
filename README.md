@@ -7,9 +7,19 @@ JMVC is a javascript module that implement the MVC architecture and is enhanced 
       
 Getting started
 ---------------
-Copy the content of the repository in the root of an Apache virtual host.
+Copy the content of the repository in the root of an Apache virtual host,  
+ otherwise ** absolutely only for development** fire up the inner node minimal dummy server executing  
+`node server.js`  
+from the `srv/` folder, then add  
+`_foo.dev_    127.0.0.1`  
+to your *hosts* file
+edit the srv/config.json file to fill out the true path for the webroot  
+visit http://www.foo.dev:8080  
+If you feel more confortable with port 80, amend it in the srv/config.json file, but remember that if port is under 1024, only root will start the server successfully)
+
 Start looking at the index.js controller in the app/controllers folder.
 Start writing your own controllers, models and views.
+
 
 Samples
 -------
