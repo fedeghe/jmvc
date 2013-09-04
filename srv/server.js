@@ -3,18 +3,13 @@ var http = require('http'),
 	fs = require('fs'),
 	config = fs.existsSync('config.json') ? JSON.parse(fs.readFileSync('config.json')) : {},
 	rx = new RegExp("^\/(" + config.free.join('|') + ")\/"),
-	port = 8080;
-
+	port = 'port' in config ? config.port : 8080;
 
 http.createServer(function (request, response) {
 	var lookup = url.parse(decodeURI(request.url)).pathname,
- 		where = lookup.match(rx) ?
- 			config.webroot + url.parse(decodeURI(request.url)).pathname
- 			:
- 			config.webroot + '/' + config.accesspoint;
+ 		where = config.webroot + lookup.match(rx) ? lookup : '/' + config.accesspoint;
+	console.log(where);
  	response.end(fs.readFileSync( where ));
-
 }).listen(port);
 
-
-console.log('listening on port ' + port);
+console.log('JMVC development server listening on port ' + port);
