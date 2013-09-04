@@ -1,5 +1,7 @@
 {
-	"webroot" : "/Users/federicoghedina/Desktop/www/project_jmvc",
+	// set here the webroot of your project
+	"webroot" : "/var/www/foo",
 	"accesspoint" : "index.html",
-	"free" : ["app", "media"]
+	"free" : ["app", "media"],
+	"port" : 80
 }
