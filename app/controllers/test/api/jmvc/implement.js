@@ -7,27 +7,14 @@ JMVC.controllers.implement = function() {
 			"use strict";
 			
 			JMVC.test.initialize(true);
-			
 			JMVC.test.startAll();
-			
-			JMVC.test.message('Sorry I made only a <strong>really dummy test</strong>');
-
-
-
+			JMVC.test.message('<strong>really dummy tests</strong>');
 
 			
-			function Person(n){
-				this.name = n;
-			}
-			Person.prototype.talk = function(){
-				alert(this.name + ' says `foo`');
-			}
-			Person.prototype.wc = function(){
-				alert('my name is ' + this.name.length + ' char long');
-			}
-			Person.prototype.eat = function(){
-				alert(this.name + ' eats `foo`');
-			}
+			function Person(n){this.name = n; }
+			Person.prototype.talk = function(){alert(this.name + ' says `foo`'); }
+			Person.prototype.wc = function(){alert('my name is ' + this.name.length + ' char long'); }
+			Person.prototype.eat = function(){alert(this.name + ' eats `foo`'); }
 
 
 			JMVC.test.code('function Person(n) {\n'+
@@ -54,7 +41,29 @@ JMVC.controllers.implement = function() {
 				function () {return JMVC.implement(Person, ['walk', 'wc', 'eat']);},
 				false
 			);
+
+
+			JMVC.test.describe('Check it using a JMVC.Interface instance');
+			JMVC.test.code('var interfacePASS = new JMVC.interface(["talk", "eat"]),\n'+
+				'    interfaceFAIL = new JMVC.interface(["foo", "nope"]);\n' + 
+				'//now check\n' +
+				'interfacePASS.check(Person);\n'+
+				'interfaceFAIL.check(Person);\n'
+			);
+			var interfacePASS = new JMVC.Interface(['talk', 'eat']),
+				interfaceFAIL = new JMVC.Interface(['foo', 'nope']);
 			
+			JMVC.test.testValue(
+				'interfacePASS.check(Person)',
+				function () {return interfacePASS.check(Person);},
+				true
+			);
+			JMVC.test.testValue(
+				'interfaceFAIL.check(Person)',
+				function () {return interfaceFAIL.check(Person);},
+				false
+			);
+
 			
 			JMVC.test.finishAll();
 		});
