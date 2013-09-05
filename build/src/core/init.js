@@ -1,7 +1,7 @@
 // returning object created in that function, here $JMVC will be JMVC
 var $JMVC,
-    JMVC_VERSION = 2.2,
-    JMVC_REVIEW = 9,
+    JMVC_VERSION = $version$,
+    JMVC_REVIEW = $review$,
     JMVC_PACKED = false,
 
     /**
