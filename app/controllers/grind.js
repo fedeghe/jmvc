@@ -84,7 +84,7 @@ JMVC.controllers.grind = function () {
 			});
 	};
 
-	this.direct = function () {
+	this.action_direct = function () {
 		JMVC.events.loadify(500);
 		JMVC.require('core/lib/grind', 'core/dim');
 		JMVC.head.meta("generator", "jmvc resident in your machine");
