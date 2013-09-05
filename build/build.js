@@ -5,14 +5,14 @@
 var arg = process.argv.slice(2),
 	fs = require('fs'),
 	//ug = require('uglify-js'),
-	vars = fs.existsSync('config.json') ? JSON.parse(fs.readFileSync('vars.json')) : {},
+	vars = fs.existsSync('vars.json') ? JSON.parse(fs.readFileSync('vars.json')) : {},
 	templateh,
 	template,
 	out,
 	errs = 0,
 	level = 10,
 	reg = {
-		files : new RegExp('%%([A-z0-9-_/.]*)%%', 'g'),
+		files : new RegExp('(.*)%%([A-z0-9-_/.]*)%%', 'g'),
 		vars : new RegExp('\\\$([A-z0-9-_/.]*)\\\$', 'g')
 	},
 	replace,
@@ -37,16 +37,16 @@ template = fs.readFileSync(templateh).toString();
 replace = {
 	all : function (tpl) {
 		var str;
-		return tpl.replace(reg.files, function (str, $1) {
-			var tmp = (fs.existsSync($1)) ? fs.readFileSync($1) : false;
+		return tpl.replace(reg.files, function (str, $1, $2) {
+			var tmp = (fs.existsSync($2)) ? fs.readFileSync($2) : false;
 			if (!tmp) {
-				console.log('[ERROR]: file ' + $1 + ' NOT FOUND');
+				console.log('[ERROR]: file ' + $2 + ' NOT FOUND');
 				errs++;
-				return $1;
+				return $2;
 			} else {
-				console.log('[DEBUG]: replacing tpl ' + $1);
+				console.log('[DEBUG]: replacing tpl ' + $2);
 			} 
-			return tmp;
+			return $1 + tmp.toString().replace(/\n/g, "\n" + $1);// give back spaces to CODE
 		});
 	},
 	vars : function (tpl) {
