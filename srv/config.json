@@ -1,6 +1,6 @@
 {
 	"webroot" : "/Applications/MAMP/htdocs/project_jmvc",
-	"accesspoint" : "index.html",
+	"accesspoint" : "index.html",	
 	"free" : ["app", "media"],
-	"port" : 80
+	"port" : 8080
 }
