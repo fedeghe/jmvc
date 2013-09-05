@@ -1,7 +1,0 @@
-{
-	// set here the webroot of your project
-	"webroot" : "/var/www/foo",
-	"accesspoint" : "index.html",
-	"free" : ["app", "media"],
-	"port" : 80
-}

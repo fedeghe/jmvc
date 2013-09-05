@@ -962,6 +962,16 @@ _/        _/    _/  _/    _/    _/      _/        _/    _/  _/  _/     _/       
 			<status>incomplete</status>
 		</function>
 		<function>
+			<signature name="firstAncestor">JMVC.dom.firstAncestor(String selector)</signature>
+			<description>Finds a node by id (#id) a class (.class) or a tag (tag).</description>
+			<params>
+				<param name="*selector">the selector</param>
+			</params>
+			<returns>the found node or false</returns>
+			<status>incomplete</status>
+		</function>
+		
+		<function>
 			<signature name="hasAttribute">JMVC.dom.hasAttribute(String selector)</signature>
 			<description>Finds a node by id (#id) a class (.class) or a tag (tag).</description>
 			<params>
