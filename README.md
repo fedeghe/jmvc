@@ -11,7 +11,7 @@ Copy the content of the repository in the root of an Apache virtual host,
  otherwise **absolutely only for development** fire up the inner node minimal dummy server executing  
 `node server.js`  
 from the `srv/` folder, then add  
-`_foo.dev_    127.0.0.1`  
+`foo.dev    127.0.0.1`  
 to your *hosts* file
 edit the *srv/config.json* file to fill out the true path for the webroot  
 visit *http://www.foo.dev:8080*  
