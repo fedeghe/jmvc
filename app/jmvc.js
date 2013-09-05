@@ -247,15 +247,9 @@
                      */
                     "jeval" : function (r) {
                         //r = r.replace(/(\/\/.*\n)/gm, '');
-                        try{
-
-                        return (new Function(r))();
-                    }catch(e){
-                        //console.log(r);
-                        
-                    }
-                        //window.eval(r);
-                        //ret =  ('execScript' in window) ? window.execScript('(' + r + ')','') : eval(r);
+                        //try{return (new Function(r))(); }catch(e){}
+                        //return JMVC.W.eval(r);
+                        return ('execScript' in window) ? window.execScript('(' + r + ')','') : eval(r);
                         //return ret;
                     },
 
@@ -2381,24 +2375,13 @@
          * @param  {[type]} scriptname [description]
          * @return {[type]}            [description]
          */
-        'getParameters' : function (scriptname) {
-            var scripts = JMVC.array.coll2array(JMVC.WD.getElementsByTagName("script")),
-                cs = null,
-                src = "",
-                pattern = scriptname,
-                p = "",
-                parameters = false,
-                i = 0,
-                l = scripts.length;
-
-            for(null; i < l; i += 1){
-                cs = scripts[i];
-                src = cs.src;
-                if(src.indexOf(pattern) >= 0){
-                    p = cs.getAttribute("params");
-                    parameters = p ? eval("(" + p + ")") : {};
-                }
-            }
+        'getParameters' : function (scriptid, pname) {
+            var script = JMVC.dom.find('#' + scriptid),
+                p = false,
+                parameters = false;
+            pname = pname || 'data-params';
+            p = script.getAttribute(pname);
+            parameters = p ? eval('(' + p + ')') : {};
             return parameters;
         },
 
