@@ -66,7 +66,7 @@ FileETag MTime Size
 	Header set Access-Control-Allow-Origin "*"
 
 	# year
-	<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|swf|mp3|mp4)$">
+	<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|svg|swf|mp3|mp4)$">
 		Header set Cache-Control "max-age=31104000, must-revalidate"
 		Header unset Last-Modified
 	</FilesMatch>
