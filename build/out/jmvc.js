@@ -1740,7 +1740,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     interfaces : {},
                     vars : {
                         baseurl:    dispatched.baseurl + dispatched.port,
-                        extensions : dispatched.baseurl + PATH.ext, //'/app/extensions',
+                        extensions : dispatched.baseurl + dispatched.port + PATH.ext, //'/app/extensions',
                         devurl : DEV_URL,
                         produrl : PROD_URL,
                         version : JMVC_VERSION,
