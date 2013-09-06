@@ -18,12 +18,9 @@ jmvc = {
     "jeval" : function (r) {
         //r = r.replace(/(\/\/.*\n)/gm, '');
         try{
-
-        return (new Function(r))();
-    }catch(e){
-        //console.log(r);
-        
-    }
+            return JMVC.W.eval(r);
+            //return (new Function(r))();
+        }catch(e){/*console.log(r);*/}
         //window.eval(r);
         //ret =  ('execScript' in window) ? window.execScript('(' + r + ')','') : eval(r);
         //return ret;
