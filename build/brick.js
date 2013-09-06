@@ -4,7 +4,13 @@
  * 
  * 
  * requires uglify-js (https://github.com/mishoo/UglifyJS2)
+ *
+ * USAGE:
+ * > node brick jmvc true
+ * 
  */
+
+
 
 //check uglify-js
 try {
