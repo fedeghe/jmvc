@@ -10,7 +10,7 @@
 try {
     require.resolve("uglify-js");
 } catch(e) {
-    console.error("uglify-js is not found");
+    console.error("required package  uglify-js  NOT FOUND");
     console.log("run : npm install uglify-js");
     process.exit(e.code);
 }
