@@ -1,6 +1,6 @@
 /**
  * Script name : build.js
- * Author : Federcio Ghedina
+ * Author : Federico Ghedina
  * 
  * 
  * requires uglify-js (https://github.com/mishoo/UglifyJS2)
