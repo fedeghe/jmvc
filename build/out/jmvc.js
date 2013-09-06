@@ -12,7 +12,7 @@ A pure Javascript MVC framework
  
  
 @version: 2.8
-@date : 6-9-2013
+@date : 7-9-2013
 @copyright (c) 2013, Federico Ghedina <fedeghe@gmail.com>
 @author : Federico Ghedina
 @url : http://www.jmvc.org
@@ -244,12 +244,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				    "jeval" : function (r) {
 				        //r = r.replace(/(\/\/.*\n)/gm, '');
 				        try{
-				
-				        return (new Function(r))();
-				    }catch(e){
-				        //console.log(r);
-				        
-				    }
+				            return JMVC.W.eval(r);
+				            //return (new Function(r))();
+				        }catch(e){/*console.log(r);*/}
 				        //window.eval(r);
 				        //ret =  ('execScript' in window) ? window.execScript('(' + r + ')','') : eval(r);
 				        //return ret;
