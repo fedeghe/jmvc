@@ -3,3 +3,4 @@ sub.php
 /srv/config.json
 /tags/*
 /script/*
+/build/node_modules
