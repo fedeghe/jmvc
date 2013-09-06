@@ -1,49 +1,48 @@
 /**
- *
- *          _/  _/      _/  _/      _/    _/_/_/
- *         _/  _/_/  _/_/  _/      _/  _/
- *        _/  _/  _/  _/  _/      _/  _/
- * _/    _/  _/      _/    _/  _/    _/
- *  _/_/    _/      _/      _/        _/_/_/
- *
- * 
- *       A pure Javascript MVC framework
- *
- *
- * 
- * @version: version
- * @date : date
- * @copyright (c) year, Federico Ghedina <fedeghe@gmail.com>
- * @author : author
- * @url : http://www.jmvc.org
- *
- * 
- * All rights reserved.
- * 
- * This code is distributed under the terms of the BSD licence
- * 
- * Redistribution and use of this software in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- * 
- * > Redistributions of source code must retain the above copyright notice, this list of conditions
- *   and the following disclaimer.
- * > Redistributions in binary form must reproduce the above copyright notice, this list of
- *   conditions and the following disclaimer in the documentation and/or other materials provided
- *   with the distribution.
- * > The names of the contributors to this file may not be used to endorse or promote products
- *   derived from this software without specific prior written permission.
- *   
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
- * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
- */
 
+          _/  _/      _/  _/      _/    _/_/_/
+         _/  _/_/  _/_/  _/      _/  _/
+        _/  _/  _/  _/  _/      _/  _/
+ _/    _/  _/      _/    _/  _/    _/
+  _/_/    _/      _/      _/        _/_/_/
+
+ 
+A pure Javascript MVC framework
+ 
+ 
+ 
+@version: 2.8
+@date : 6-9-2013
+@copyright (c) 2013, Federico Ghedina <fedeghe@gmail.com>
+@author : Federico Ghedina
+@url : http://www.jmvc.org
+
+
+All rights reserved.
+
+This code is distributed under the terms of the BSD licence
+
+Redistribution and use of this software in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+> Redistributions of source code must retain the above copyright notice, this list of conditions
+and the following disclaimer.
+> Redistributions in binary form must reproduce the above copyright notice, this list of
+conditions and the following disclaimer in the documentation and/or other materials provided
+with the distribution.
+> The names of the contributors to this file may not be used to endorse or promote products
+derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ */
 
 /**
  * main auto exec function
@@ -55,23 +54,29 @@
 !function (W, undefined) {
     'use strict';
     var WD = W.document,
-        WDL = WD.location,  // reference for current location
-        i, j, l,                 // some counters
-
-        /**
-         * JMVC object, globalized
-         */
+        /* reference for current location */
+        WDL = WD.location,
+        /* some counters */
+        i, j, l,
+        /* JMVC object, globalized */
         JMVC = W.JMVC = (
-
-            /**
-             * this function returns the JMVC object after doing some stuff
-             * @return {object literal} $JMVC inner object 
-             */
+            /*
+            * this function returns the JMVC object after doing some stuff
+            * @return {object literal} $JMVC inner object 
+            */
             function () {
-
+                /*
+                
+                    _/            _/    _/      
+                       _/_/_/        _/_/_/_/   
+                  _/  _/    _/  _/    _/        
+                 _/  _/    _/  _/    _/         
+                _/  _/    _/  _/      _/_/ 
+                
+                */
                 // returning object created in that function, here $JMVC will be JMVC
                 var $JMVC,
-                    JMVC_VERSION = 2.2,
+                    JMVC_VERSION = 2.8,
                     JMVC_REVIEW = 9,
                     JMVC_PACKED = false,
                 
@@ -203,7 +208,6 @@
                      * a literal to store loaded lang files
                      * @type {Object}
                      */
-                    langs = {},
                     defaultlang = 'en',
                     currentlang = defaultlang,
                 
@@ -220,25 +224,15 @@
                     // note : seems like script mode load faster but
                     getmode = 'ajax'; // script or ajax
                 
-
-				/**
-				*
-				*
-				*
-				*
-				*
-				*
-				*
-				*
-				* 
-				*
-				*             _/  _/      _/  _/      _/    _/_/_/      _/                                          
-				*            _/  _/_/  _/_/  _/      _/  _/                _/_/_/    _/_/_/      _/_/    _/  _/_/   
-				*           _/  _/  _/  _/  _/      _/  _/            _/  _/    _/  _/    _/  _/_/_/_/  _/_/        
-				*    _/    _/  _/      _/    _/  _/    _/            _/  _/    _/  _/    _/  _/        _/           
-				*     _/_/    _/      _/      _/        _/_/_/      _/  _/    _/  _/    _/    _/_/_/  _/
-				*     
-				**/
+				/*
+				
+				         _/  _/      _/  _/      _/    _/_/_/      _/                                          
+				        _/  _/_/  _/_/  _/      _/  _/                _/_/_/    _/_/_/      _/_/    _/  _/_/   
+				       _/  _/  _/  _/  _/      _/  _/            _/  _/    _/  _/    _/  _/_/_/_/  _/_/        
+				_/    _/  _/      _/    _/  _/    _/            _/  _/    _/  _/    _/  _/        _/           
+				 _/_/    _/      _/      _/        _/_/_/      _/  _/    _/  _/    _/    _/_/_/  _/
+				    
+				*/
 				jmvc = {
 				
 				
@@ -681,7 +675,6 @@
 				        while (i < l) {
 				            if (!JMVC.i18n[lng[i]]) {
 				                JMVC.i18n[lng[i]] = true;
-				                //langs[lng[i]] = true;
 				            }
 				            i += 1;
 				        }
@@ -909,35 +902,43 @@
 				        return cnt;
 				    }
 				};
+				/*
 				
+				                                    _/                            _/   
+				     _/_/_/    _/  _/_/    _/_/    _/    _/_/      _/_/_/    _/_/_/    
+				    _/    _/  _/_/      _/_/_/_/  _/  _/    _/  _/    _/  _/    _/     
+				   _/    _/  _/        _/        _/  _/    _/  _/    _/  _/    _/      
+				  _/_/_/    _/          _/_/_/  _/    _/_/      _/_/_/    _/_/_/       
+				 _/                                                                    
+				_/
+				
+				*/                                
+				preload = function (url) {
+				    W.setTimeout(function () {
+				        //make 1*1 iframe and load url
+				        var p = new Promise(),
+				            ifr = null,
+				            cleanup = function (i) {JMVC.dom.remove(i); };
+				        p.then(cleanup);
+				        (function (pr){
+				            ifr = JMVC.dom.add(JMVC.dom.body(), 'iframe', {src : url, width : 1, height : 1});
+				            ifr.contentWindow.onload = function () {
+				                JMVC.debug('preloaded ' + url);
+				                pr.done(ifr);
+				            };
+				        })(p);
+				    }, 0);
+				};
+                /*
                 
-
+                    _/_/_/_/                                                    
+                   _/        _/  _/_/  _/  _/_/    _/_/    _/  _/_/    _/_/_/   
+                  _/_/_/    _/_/      _/_/      _/    _/  _/_/      _/_/        
+                 _/        _/        _/        _/    _/  _/            _/_/     
+                _/_/_/_/  _/        _/          _/_/    _/        _/_/_/ 
                 
-
-                //                                     _/                            _/   
-                //      _/_/_/    _/  _/_/    _/_/    _/    _/_/      _/_/_/    _/_/_/    
-                //     _/    _/  _/_/      _/_/_/_/  _/  _/    _/  _/    _/  _/    _/     
-                //    _/    _/  _/        _/        _/  _/    _/  _/    _/  _/    _/      
-                //   _/_/_/    _/          _/_/_/  _/    _/_/      _/_/_/    _/_/_/       
-                //  _/                                                                    
-                // _/                                
-                preload = function (url) {
-                    W.setTimeout(function () {
-                        //make 1*1 iframe and load url
-                        var p = new Promise(),
-                            ifr = null,
-                            cleanup = function (i) {JMVC.dom.remove(i); };
-                        p.then(cleanup);
-                        (function (pr){
-                            ifr = JMVC.dom.add(JMVC.dom.body(), 'iframe', {src : url, width : 1, height : 1});
-                            ifr.contentWindow.onload = function () {
-                                JMVC.debug('preloaded ' + url);
-                                pr.done(ifr);
-                            };
-                        })(p);
-                    }, 0);
-                };
-
+                */
+                
                 Errors = {
                     'Network' : function (msg) {
                         this.name = 'Network';
@@ -966,18 +967,15 @@
                 
                 };
                 jmvc.multi_inherit(Errors, Error);
-
-                
-
-
-
                 /*
+                
                      _/_/_/      _/_/_/  _/  _/_/    _/_/_/    _/_/    _/  _/_/   
                     _/    _/  _/    _/  _/_/      _/_/      _/_/_/_/  _/_/        
                    _/    _/  _/    _/  _/            _/_/  _/        _/           
                   _/_/_/      _/_/_/  _/        _/_/_/      _/_/_/  _/            
                  _/                                                               
                 _/  
+                
                 */
                 Parser = {
                     /**
@@ -1134,11 +1132,15 @@
                     }
                 };
                 //END PARSER
+                /*
                 
-                /**
-                 * [Event description]
-                 * @param {[type]} sender [description]
-                 */
+                    _/_/_/_/                                    _/      
+                   _/        _/      _/    _/_/    _/_/_/    _/_/_/_/   
+                  _/_/_/    _/      _/  _/_/_/_/  _/    _/    _/        
+                 _/          _/  _/    _/        _/    _/    _/         
+                _/_/_/_/      _/        _/_/_/  _/    _/      _/_/
+                
+                */
                 Event = function (sender) {
                     this.sender = sender;
                     this.listeners = [];
@@ -1166,15 +1168,19 @@
                         }
                     }
                 };
-                
                 /*
-                 -======================================-
-                  ty https://github.com/stackp/promisejs
-                 -======================================-
+                
+                    _/_/_/                                        _/                     
+                   _/    _/  _/  _/_/    _/_/    _/_/_/  _/_/          _/_/_/    _/_/    
+                  _/_/_/    _/_/      _/    _/  _/    _/    _/  _/  _/_/      _/_/_/_/   
+                 _/        _/        _/    _/  _/    _/    _/  _/      _/_/  _/          
+                _/        _/          _/_/    _/    _/    _/  _/  _/_/_/      _/_/_/ 
+                
+                
+                
+                ty https://github.com/stackp/promisejs
+                
                 */
-                /**
-                 * [Promise description]
-                 */
                 Promise = function () {
                     this.cbacks = [];
                     this.len = 0;
@@ -1218,16 +1224,15 @@
                     }
                     return this;
                 };
-
                 /*
-                    _/              _/                              _/_/                               
-                       _/_/_/    _/_/_/_/    _/_/    _/  _/_/    _/        _/_/_/    _/_/_/    _/_/    
-                  _/  _/    _/    _/      _/_/_/_/  _/_/      _/_/_/_/  _/    _/  _/        _/_/_/_/   
-                 _/  _/    _/    _/      _/        _/          _/      _/    _/  _/        _/          
-                _/  _/    _/      _/_/    _/_/_/  _/          _/        _/_/_/    _/_/_/    _/_/_/     
-                                                                                                      
-                 */
                 
+                    _/_/_/              _/                              _/_/                               
+                     _/    _/_/_/    _/_/_/_/    _/_/    _/  _/_/    _/        _/_/_/    _/_/_/    _/_/    
+                    _/    _/    _/    _/      _/_/_/_/  _/_/      _/_/_/_/  _/    _/  _/        _/_/_/_/   
+                   _/    _/    _/    _/      _/        _/          _/      _/    _/  _/        _/          
+                _/_/_/  _/    _/      _/_/    _/_/_/  _/          _/        _/_/_/    _/_/_/    _/_/_/
+                                                                                                      
+                */
                 Interface = function (/** Array */ f) {
                     this.mthds = f;
                 };
@@ -1250,7 +1255,6 @@
                     obj = null;
                     return true;
                 };
-
                 /*
                                                    _/                          _/  _/                      
                     _/_/_/    _/_/    _/_/_/    _/_/_/_/  _/  _/_/    _/_/    _/  _/    _/_/    _/  _/_/   
@@ -1258,8 +1262,8 @@
                 _/        _/    _/  _/    _/    _/      _/        _/    _/  _/  _/  _/        _/           
                  _/_/_/    _/_/    _/    _/      _/_/  _/          _/_/    _/  _/    _/_/_/  _/            
                                                                                                   
-                 */
-                // 
+                */
+                
                 // parent controller
                 Controller = function () {};
                 // for storing url vars 
@@ -1336,16 +1340,15 @@
                     this.vars = {};
                     return this;
                 };
-
                 /*
+                
                                                     _/            _/   
                    _/_/_/  _/_/      _/_/      _/_/_/    _/_/    _/    
                   _/    _/    _/  _/    _/  _/    _/  _/_/_/_/  _/     
                  _/    _/    _/  _/    _/  _/    _/  _/        _/      
                 _/    _/    _/    _/_/      _/_/_/    _/_/_/  _/
-                 */
-                //
-                //
+                
+                */
                 Model = function () {};
                 Model.prototype.vars = {};
                 /**
@@ -1362,10 +1365,9 @@
                  * @type {String}
                  */
                 Model.prototype.constructor = 'model';
-
                 /*
                 
-                              _/                                
+                  _/      _/  _/                                
                  _/      _/        _/_/    _/      _/      _/   
                 _/      _/  _/  _/_/_/_/  _/      _/      _/    
                  _/  _/    _/  _/          _/  _/  _/  _/       
@@ -1626,20 +1628,17 @@
                     }
                     return ret;
                 };
-
-
-
-
-                // 
-                //
-                //             _/  _/                                  _/                _/                            
-                //        _/_/_/        _/_/_/  _/_/_/      _/_/_/  _/_/_/_/    _/_/_/  _/_/_/      _/_/    _/  _/_/   
-                //     _/    _/  _/  _/_/      _/    _/  _/    _/    _/      _/        _/    _/  _/_/_/_/  _/_/        
-                //    _/    _/  _/      _/_/  _/    _/  _/    _/    _/      _/        _/    _/  _/        _/           
-                //     _/_/_/  _/  _/_/_/    _/_/_/      _/_/_/      _/_/    _/_/_/  _/    _/    _/_/_/  _/            
-                //                          _/                                                                         
-                //                         _/                                      
-                //
+                /*
+                
+                             _/  _/                                  _/                _/                            
+                        _/_/_/        _/_/_/  _/_/_/      _/_/_/  _/_/_/_/    _/_/_/  _/_/_/      _/_/    _/  _/_/   
+                     _/    _/  _/  _/_/      _/    _/  _/    _/    _/      _/        _/    _/  _/_/_/_/  _/_/        
+                    _/    _/  _/      _/_/  _/    _/  _/    _/    _/      _/        _/    _/  _/        _/           
+                     _/_/_/  _/  _/_/_/    _/_/_/      _/_/_/      _/_/    _/_/_/  _/    _/    _/_/_/  _/            
+                                          _/                                                                         
+                                         _/                                      
+                
+                */
                 // Dispatch url getting controller, action and parameters
                 //          
                 dispatched = (function () {
@@ -1648,7 +1647,8 @@
                             'proto' : WDL.protocol,
                             'host' : WDL.hostname,
                             'path' : WDL.pathname,
-                            'hash' : WDL.search
+                            'hash' : WDL.search,
+                            'port' : WDL.port ? ':' + WDL.port : ''
                         },
                 
                         // adjust extensions
@@ -1711,33 +1711,21 @@
                         'controller_prepath' : controller_prepath,
                         'action' : action.replace(/\//g, ""),
                         'params' : params,
-                        'baseurl' : baseurl
+                        'baseurl' : baseurl,
+                        'port' : mid.port
                     };
                     //ret.controller = jmvc_normalize(ret.controller);
                     return ret;
                 })();
-
-
-
-                //
-                //
-                //
-                //
-                //
-                //
-                //
-                //
-                //
-                //
-                //
-                //
-                //             _/_/    _/    _/  _/_/_/_/_/            _/  _/      _/  _/      _/    _/_/_/   
-                //          _/    _/  _/    _/      _/                _/  _/_/  _/_/  _/      _/  _/          
-                //         _/    _/  _/    _/      _/                _/  _/  _/  _/  _/      _/  _/           
-                //        _/    _/  _/    _/      _/          _/    _/  _/      _/    _/  _/    _/            
-                //         _/_/      _/_/        _/            _/_/    _/      _/      _/        _/_/_/ 
-                //
-                //          
+                /*
+                
+                         _/  _/      _/  _/      _/    _/_/_/                            _/                          
+                        _/  _/_/  _/_/  _/      _/  _/              _/_/    _/    _/  _/_/_/_/    _/_/    _/  _/_/   
+                       _/  _/  _/  _/  _/      _/  _/            _/    _/  _/    _/    _/      _/_/_/_/  _/_/        
+                _/    _/  _/      _/    _/  _/    _/            _/    _/  _/    _/    _/      _/        _/           
+                 _/_/    _/      _/      _/        _/_/_/        _/_/      _/_/_/      _/_/    _/_/_/  _/
+                
+                */          
                 $JMVC = {
                     loaded : false,
                     W: W,
@@ -1754,7 +1742,7 @@
                     views : {},
                     interfaces : {},
                     vars : {
-                        baseurl:    dispatched.baseurl,
+                        baseurl:    dispatched.baseurl + dispatched.port,
                         extensions : dispatched.baseurl + PATH.ext, //'/app/extensions',
                         devurl : DEV_URL,
                         produrl : PROD_URL,
@@ -1808,9 +1796,9 @@
                     require : jmvc.require,
                     lang : jmvc.lang,
                     
-                    set : jmvc.set,//@@@@@@@@@@@@@@@@@@@@@@
-                    get : jmvc.get,//@@@@@@@@@@@@@@@@@@@@@@
-                    del : jmvc.del,//@@@@@@@@@@@@@@@@@@@@@@
+                    set : jmvc.set,
+                    get : jmvc.get,
+                    del : jmvc.del,
                     htmlspecialchars : jmvc.htmlspecialchars,
                     htmlspecialchars_decode : jmvc.htmlspecialchars_decode,
                 
@@ -1897,9 +1885,11 @@
                         } catch(e) {}
                     }
                 };
+                /*
                 
-                // $JMVC is DONE
-                // clean up
+                $JMVC is DONE
+                clean up
+                */
                 $JMVC.gc(
                     DEV_URL,
                     PROD_URL,
@@ -1913,29 +1903,10 @@
                     JMVC_DEFAULT,
                     time_begin
                 );
-
                 return $JMVC;
             }
         )();
-    
-
-    /**
-    * now enhanche JMVC with some basic utility functions;
-    * all these functions are necessary and cannot be moved to Modules
-    **/
-    //
-    //########################################################################################################
-    //
-    //      _/          _/  _/_/_/  _/_/_/    _/_/_/_/  _/_/_/                _/_/_/_/  _/      _/  _/_/_/_/_/   
-    //     _/          _/    _/    _/    _/  _/        _/    _/              _/          _/  _/        _/        
-    //    _/    _/    _/    _/    _/_/_/    _/_/_/    _/    _/  _/_/_/_/_/  _/_/_/        _/          _/         
-    //     _/  _/  _/      _/    _/    _/  _/        _/    _/              _/          _/  _/        _/          
-    //      _/  _/      _/_/_/  _/    _/  _/_/_/_/  _/_/_/                _/_/_/_/  _/      _/      _/  
-    //
-    //########################################################################################################
-        
-
-
+    /** mandatory modules **/
     /**
     
     
@@ -2055,9 +2026,6 @@
         getXML : function () {}
     };
     
-
-    //--------------------------------------------------------------------------------------------------------
-
     /**
     
     
@@ -2257,9 +2225,6 @@
         }
     };
     
-
-    //--------------------------------------------------------------------------------------------------------
-
     /**
     
     -----------------------------
@@ -2303,26 +2268,15 @@
          * @param  {[type]} scriptname [description]
          * @return {[type]}            [description]
          */
-        'getParameters' : function (scriptname) {
-            var scripts = JMVC.array.coll2array(JMVC.WD.getElementsByTagName("script")),
-                cs = null,
-                src = "",
-                pattern = scriptname,
-                p = "",
-                parameters = false,
-                i = 0,
-                l = scripts.length;
-    
-            for(null; i < l; i += 1){
-                cs = scripts[i];
-                src = cs.src;
-                if(src.indexOf(pattern) >= 0){
-                    p = cs.getAttribute("params");
-                    parameters = p ? eval("(" + p + ")") : {};
-                }
-            }
-            return parameters;
-        },
+        'getParameters' : function (scriptid, pname) {
+                var script = JMVC.dom.find('#' + scriptid),
+                    p = false,
+                    parameters = false;
+                pname = pname || 'data-params';
+                p = script.getAttribute(pname);
+                parameters = p ? eval('(' + p + ')') : {};
+                return parameters;
+            },
     
         //http://stackoverflow.com/questions/7390426/better-way-to-get-type-of-a-javascript-variable
         /**
@@ -2447,9 +2401,6 @@
     
     };
     
-
-    //--------------------------------------------------------------------------------------------------------
-
     /**
     
     
@@ -3014,9 +2965,6 @@
         }
     };
     
-
-    //--------------------------------------------------------------------------------------------------------
-
     /**
     
     
@@ -3332,9 +3280,6 @@
         }
     };
     
-
-    //--------------------------------------------------------------------------------------------------------
-
     /**
     
     
@@ -3594,9 +3539,6 @@
         }
     };
     
-
-    //--------------------------------------------------------------------------------------------------------
-
     /**
     
     
@@ -3674,9 +3616,6 @@
         }
     };
     
-
-    //--------------------------------------------------------------------------------------------------------
-
     /**
     
     -------------------------------------------------------
@@ -3817,9 +3756,6 @@
         'trim' : function (s) {return s.replace(/^\s+|\s+$/g, ''); }
     };
     
-
-    //--------------------------------------------------------------------------------------------------------
-
     /**
     
     ------------------------------------------------------
@@ -3957,9 +3893,6 @@
         }
     };
     
-
-    //--------------------------------------------------------------------------------------------------------
-
     /**
     
     --------------------------------------------------------
@@ -3982,9 +3915,6 @@
         }
     };
     
-
-    //--------------------------------------------------------------------------------------------------------
-
     /**
     
     ------------------------------------
@@ -4008,31 +3938,15 @@
     	num : function (n) {return parseFloat(n.toFixed(10), 10); }
     };
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /*
     
-
+        _/_/_/    _/_/_/_/  _/      _/  _/_/_/    _/_/_/_/  _/_/_/    
+       _/    _/  _/        _/_/    _/  _/    _/  _/        _/    _/   
+      _/_/_/    _/_/_/    _/  _/  _/  _/    _/  _/_/_/    _/_/_/      
+     _/    _/  _/        _/    _/_/  _/    _/  _/        _/    _/     
+    _/    _/  _/_/_/_/  _/      _/  _/_/_/    _/_/_/_/  _/    _/ 
     
-    //        _/_/_/    _/_/_/_/  _/      _/  _/_/_/    _/_/_/_/  _/_/_/    
-    //       _/    _/  _/        _/_/    _/  _/    _/  _/        _/    _/   
-    //      _/_/_/    _/_/_/    _/  _/  _/  _/    _/  _/_/_/    _/_/_/      
-    //     _/    _/  _/        _/    _/_/  _/    _/  _/        _/    _/     
-    //    _/    _/  _/_/_/_/  _/      _/  _/_/_/    _/_/_/_/  _/    _/ 
-    //
+    */
     
     l = JMVC.modules.length;
     if (l) {
@@ -4046,12 +3960,7 @@
     JMVC.p.lang && JMVC.cookie.set('lang', JMVC.p.lang);
     
     JMVC.render();
-
-    
 }(this);
-
-
-
 JMVC.W.onerror = function(errorMsg, url, lineNumber) {
     JMVC.debug("Uncaught error " + errorMsg + " in " + url + ", lines " + lineNumber);
 };

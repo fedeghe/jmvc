@@ -1,3 +1,12 @@
+/*
+
+    _/            _/    _/      
+       _/_/_/        _/_/_/_/   
+  _/  _/    _/  _/    _/        
+ _/  _/    _/  _/    _/         
+_/  _/    _/  _/      _/_/ 
+
+*/
 // returning object created in that function, here $JMVC will be JMVC
 var $JMVC,
     JMVC_VERSION = $version$,
@@ -132,7 +141,6 @@ var $JMVC,
      * a literal to store loaded lang files
      * @type {Object}
      */
-    langs = {},
     defaultlang = 'en',
     currentlang = defaultlang,
 

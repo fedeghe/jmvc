@@ -1,13 +1,14 @@
-// 
-//
-//             _/  _/                                  _/                _/                            
-//        _/_/_/        _/_/_/  _/_/_/      _/_/_/  _/_/_/_/    _/_/_/  _/_/_/      _/_/    _/  _/_/   
-//     _/    _/  _/  _/_/      _/    _/  _/    _/    _/      _/        _/    _/  _/_/_/_/  _/_/        
-//    _/    _/  _/      _/_/  _/    _/  _/    _/    _/      _/        _/    _/  _/        _/           
-//     _/_/_/  _/  _/_/_/    _/_/_/      _/_/_/      _/_/    _/_/_/  _/    _/    _/_/_/  _/            
-//                          _/                                                                         
-//                         _/                                      
-//
+/*
+
+             _/  _/                                  _/                _/                            
+        _/_/_/        _/_/_/  _/_/_/      _/_/_/  _/_/_/_/    _/_/_/  _/_/_/      _/_/    _/  _/_/   
+     _/    _/  _/  _/_/      _/    _/  _/    _/    _/      _/        _/    _/  _/_/_/_/  _/_/        
+    _/    _/  _/      _/_/  _/    _/  _/    _/    _/      _/        _/    _/  _/        _/           
+     _/_/_/  _/  _/_/_/    _/_/_/      _/_/_/      _/_/    _/_/_/  _/    _/    _/_/_/  _/            
+                          _/                                                                         
+                         _/                                      
+
+*/
 // Dispatch url getting controller, action and parameters
 //          
 dispatched = (function () {
@@ -16,7 +17,8 @@ dispatched = (function () {
             'proto' : WDL.protocol,
             'host' : WDL.hostname,
             'path' : WDL.pathname,
-            'hash' : WDL.search
+            'hash' : WDL.search,
+            'port' : WDL.port ? ':' + WDL.port : ''
         },
 
         // adjust extensions
@@ -79,7 +81,8 @@ dispatched = (function () {
         'controller_prepath' : controller_prepath,
         'action' : action.replace(/\//g, ""),
         'params' : params,
-        'baseurl' : baseurl
+        'baseurl' : baseurl,
+        'port' : mid.port
     };
     //ret.controller = jmvc_normalize(ret.controller);
     return ret;

@@ -1,22 +1,12 @@
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//             _/_/    _/    _/  _/_/_/_/_/            _/  _/      _/  _/      _/    _/_/_/   
-//          _/    _/  _/    _/      _/                _/  _/_/  _/_/  _/      _/  _/          
-//         _/    _/  _/    _/      _/                _/  _/  _/  _/  _/      _/  _/           
-//        _/    _/  _/    _/      _/          _/    _/  _/      _/    _/  _/    _/            
-//         _/_/      _/_/        _/            _/_/    _/      _/      _/        _/_/_/ 
-//
-//          
+/*
+
+         _/  _/      _/  _/      _/    _/_/_/                            _/                          
+        _/  _/_/  _/_/  _/      _/  _/              _/_/    _/    _/  _/_/_/_/    _/_/    _/  _/_/   
+       _/  _/  _/  _/  _/      _/  _/            _/    _/  _/    _/    _/      _/_/_/_/  _/_/        
+_/    _/  _/      _/    _/  _/    _/            _/    _/  _/    _/    _/      _/        _/           
+ _/_/    _/      _/      _/        _/_/_/        _/_/      _/_/_/      _/_/    _/_/_/  _/
+
+*/          
 $JMVC = {
     loaded : false,
     W: W,
@@ -33,7 +23,7 @@ $JMVC = {
     views : {},
     interfaces : {},
     vars : {
-        baseurl:    dispatched.baseurl,
+        baseurl:    dispatched.baseurl + dispatched.port,
         extensions : dispatched.baseurl + PATH.ext, //'/app/extensions',
         devurl : DEV_URL,
         produrl : PROD_URL,
@@ -87,9 +77,9 @@ $JMVC = {
     require : jmvc.require,
     lang : jmvc.lang,
     
-    set : jmvc.set,//@@@@@@@@@@@@@@@@@@@@@@
-    get : jmvc.get,//@@@@@@@@@@@@@@@@@@@@@@
-    del : jmvc.del,//@@@@@@@@@@@@@@@@@@@@@@
+    set : jmvc.set,
+    get : jmvc.get,
+    del : jmvc.del,
     htmlspecialchars : jmvc.htmlspecialchars,
     htmlspecialchars_decode : jmvc.htmlspecialchars_decode,
 

@@ -1,7 +1,12 @@
-/**
- * [Event description]
- * @param {[type]} sender [description]
- */
+/*
+
+    _/_/_/_/                                    _/      
+   _/        _/      _/    _/_/    _/_/_/    _/_/_/_/   
+  _/_/_/    _/      _/  _/_/_/_/  _/    _/    _/        
+ _/          _/  _/    _/        _/    _/    _/         
+_/_/_/_/      _/        _/_/_/  _/    _/      _/_/
+
+*/
 Event = function (sender) {
     this.sender = sender;
     this.listeners = [];

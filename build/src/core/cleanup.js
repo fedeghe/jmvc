@@ -1,5 +1,8 @@
-// $JMVC is DONE
-// clean up
+/*
+
+$JMVC is DONE
+clean up
+*/
 $JMVC.gc(
     DEV_URL,
     PROD_URL,
