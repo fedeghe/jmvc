@@ -10,11 +10,3 @@ JMVC.extend('string',{
 		return String.fromCharCode.apply(null, arr);
 	}
 });
-
-
-
-
-//window.addEvent('domready',function(){
-//	var e = String.fromCharCode.apply(null, [105,110,102,111,64,101,120,109,97,99,104,105,110,97,46,99,104]);
-//	$('contactemail').set('html', e).setProperty('href','mailto:'+e);
-//});
