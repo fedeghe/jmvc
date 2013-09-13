@@ -8,11 +8,11 @@
 
  
 A pure Javascript MVC framework
+===============================
  
  
- 
-@version: 2.8
-@date : 7-9-2013
+@version: 2.9.1
+@date : 11/9/2013
 @copyright (c) 2013, Federico Ghedina <fedeghe@gmail.com>
 @author : Federico Ghedina
 @url : http://www.jmvc.org
@@ -48,8 +48,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * main auto exec function
  * @param  window (through this ref)
  * @pseudoparam undefined
- * @return undefined
+ * @return 14:20:18
  */
+// sfsdsdasdasd asdasd
 
 !function (W, undefined) {
     'use strict';
@@ -76,9 +77,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 */
                 // returning object created in that function, here $JMVC will be JMVC
                 var $JMVC,
-                    JMVC_VERSION = 2.8,
-                    JMVC_REVIEW = 9,
-                    JMVC_PACKED = false,
+                    JMVC_VERSION = "2.9.1",
+                    JMVC_REVIEW = "10",
                 
                     /**
                      * inner jmvc literal, will contain almost all the functions used to 
@@ -1896,10 +1896,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     dispatched,
                     Controller, Model, View,
                     Event, Modules,
-                    //hooks,
                     JMVC_DEFAULT,
                     time_begin
                 );
+                
                 return $JMVC;
             }
         )();

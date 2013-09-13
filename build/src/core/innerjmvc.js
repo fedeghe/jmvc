@@ -118,9 +118,11 @@ jmvc = {
     "hook_check" : function (hookname, params) {
         var dyn = params instanceof Array ? params : false,
             i;
-        if (hookname in hooks) {
+        if (dyn && hookname in hooks) {
             for (i in hooks[hookname]) {
                 dyn = hooks[hookname][i].apply(null, dyn);
+                //be sure is an array for next one
+                !(dyn instanceof Array) && (dyn = [dyn]);
             }
         }
         return dyn;
@@ -388,12 +390,14 @@ jmvc = {
                 extNS = arguments[i].split(US);
                 extNSlength = extNS.length;
                 extname = extNS[extNSlength - 1];
-                path = JMVC.vars.baseurl + (arguments[i] === 'testsuite' ? PATH['test'] : PATH['ext'] + arguments[i] + US) + extname +  '.js';
+                path = JMVC.vars.baseurl +
+                    (arguments[i] === 'testsuite' ? PATH['test'] : PATH['ext'] + arguments[i] + US) +
+                    extname + (JMVC_PACKED || '') + '.js';
                 switch (getmode) {
                 case 'ajax':
                     $JMVC.io.get(path, function (jres) {
                         jmvc.jeval(jres);
-                    },  false);
+                    }, false);
                     break;
                 case 'script':
                     s = JMVC.WD.createElement('script');
@@ -402,7 +406,6 @@ jmvc = {
                     break;
                 }
                 
-                //.path = basepath;
                 $JMVC.extensions[arguments[i]] = arguments[i];
             }
         }
@@ -563,13 +566,14 @@ jmvc = {
      * @return {[type]} [description]
      */
     "debug" : function () {
+        var arg = Array.prototype.slice.apply(arguments) || [];
         try {
-            W.console.log.apply(W.console, arguments);
+            W.console.log.apply(W.console, arg);
         } catch (e1) {
             try {
-                W.opera.postError.apply(W.opera, arguments);
+                W.opera.postError.apply(W.opera, arg);
             } catch (e2) {
-                W['log' in W ? 'log' : 'alert'](Array.prototype.join.call(arguments, " "));
+                W['log' in W ? 'log' : 'alert'](Array.prototype.join.call(arg, " "));
             }
         }
     },
@@ -650,7 +654,7 @@ jmvc = {
         $JMVC.lang(JMVC.vars.currentlang);
 
         if (JMVC.i18n[JMVC.vars.currentlang] === true) {
-            $JMVC.io.get(JMVC.vars.baseurl + PATH.lang + JMVC.vars.currentlang + '.js', function (ln) {
+            $JMVC.io.get(JMVC.vars.baseurl + PATH.lang + JMVC.vars.currentlang + (JMVC_PACKED || '') + '.js', function (ln) {
                 jmvc.jeval(ln);
             },  false);
         }

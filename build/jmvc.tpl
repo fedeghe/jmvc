@@ -4,8 +4,9 @@ $$src/head.js$$
  * main auto exec function
  * @param  window (through this ref)
  * @pseudoparam undefined
- * @return undefined
+ * @return __TIME__
  */
+// sfsdsdasdasd asdasd
 
 !function (W, undefined) {
     'use strict';

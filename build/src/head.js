@@ -8,14 +8,16 @@
 
  
 A pure Javascript MVC framework
- 
+===============================
  
  
 @version: $version$
-@date : $date$
-@copyright (c) $year$, Federico Ghedina <fedeghe@gmail.com>
-@author : $author$
+@date : __DATE__
+@copyright (c) __YEAR__, $author$ <fedeghe@gmail.com>
+@author : $author$ <$email$>
 @url : http://www.jmvc.org
+@file : built with $build_system$
+
 
 
 All rights reserved.

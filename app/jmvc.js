@@ -8,14 +8,16 @@
 
  
 A pure Javascript MVC framework
+===============================
  
  
- 
-@version: 2.8
-@date : 7-9-2013
+@version: 2.9.1
+@date : 14/9/2013
 @copyright (c) 2013, Federico Ghedina <fedeghe@gmail.com>
-@author : Federico Ghedina
+@author : Federico Ghedina <fedeghe@gmail.com>
 @url : http://www.jmvc.org
+@file : built with Malta http://www.github.com/fedeghe/malta
+
 
 
 All rights reserved.
@@ -48,8 +50,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * main auto exec function
  * @param  window (through this ref)
  * @pseudoparam undefined
- * @return undefined
+ * @return 0:5:23
  */
+// sfsdsdasdasd asdasd
 
 !function (W, undefined) {
     'use strict';
@@ -76,9 +79,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 */
                 // returning object created in that function, here $JMVC will be JMVC
                 var $JMVC,
-                    JMVC_VERSION = 2.8,
-                    JMVC_REVIEW = 9,
-                    JMVC_PACKED = false,
+                    JMVC_VERSION = "2.9.1",
+                    JMVC_REVIEW = "10",
+                    JMVC_PACKED = false, //'.min', 
                 
                     /**
                      * inner jmvc literal, will contain almost all the functions used to 
@@ -131,10 +134,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     },
                 
                     JMVC_EXT = {
-                        controller : '.js',
-                        model : '.js',
+                        controller : (JMVC_PACKED || '') + '.js',
+                        model : JMVC_PACKED ? '.min.js' : '.js',
                         view : '.html',
-                        'interface' : '.interface.js'
+                        'interface' : '.interface' + (JMVC_PACKED || '') + '.js'
                     },
                 
                     /**
@@ -223,6 +226,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     // script : creates a script tag with the right url to the source
                     // note : seems like script mode load faster but
                     getmode = 'ajax'; // script or ajax
+                
+                
+                    // ===========================================
+                
                 
 				/*
 				
@@ -344,9 +351,11 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				    "hook_check" : function (hookname, params) {
 				        var dyn = params instanceof Array ? params : false,
 				            i;
-				        if (hookname in hooks) {
+				        if (dyn && hookname in hooks) {
 				            for (i in hooks[hookname]) {
 				                dyn = hooks[hookname][i].apply(null, dyn);
+				                //be sure is an array for next one
+				                !(dyn instanceof Array) && (dyn = [dyn]);
 				            }
 				        }
 				        return dyn;
@@ -614,12 +623,14 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				                extNS = arguments[i].split(US);
 				                extNSlength = extNS.length;
 				                extname = extNS[extNSlength - 1];
-				                path = JMVC.vars.baseurl + (arguments[i] === 'testsuite' ? PATH['test'] : PATH['ext'] + arguments[i] + US) + extname +  '.js';
+				                path = JMVC.vars.baseurl +
+				                    (arguments[i] === 'testsuite' ? PATH['test'] : PATH['ext'] + arguments[i] + US) +
+				                    extname + (JMVC_PACKED || '') + '.js';
 				                switch (getmode) {
 				                case 'ajax':
 				                    $JMVC.io.get(path, function (jres) {
 				                        jmvc.jeval(jres);
-				                    },  false);
+				                    }, false);
 				                    break;
 				                case 'script':
 				                    s = JMVC.WD.createElement('script');
@@ -628,7 +639,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				                    break;
 				                }
 				                
-				                //.path = basepath;
 				                $JMVC.extensions[arguments[i]] = arguments[i];
 				            }
 				        }
@@ -789,13 +799,14 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				     * @return {[type]} [description]
 				     */
 				    "debug" : function () {
+				        var arg = Array.prototype.slice.apply(arguments) || [];
 				        try {
-				            W.console.log.apply(W.console, arguments);
+				            W.console.log.apply(W.console, arg);
 				        } catch (e1) {
 				            try {
-				                W.opera.postError.apply(W.opera, arguments);
+				                W.opera.postError.apply(W.opera, arg);
 				            } catch (e2) {
-				                W['log' in W ? 'log' : 'alert'](Array.prototype.join.call(arguments, " "));
+				                W['log' in W ? 'log' : 'alert'](Array.prototype.join.call(arg, " "));
 				            }
 				        }
 				    },
@@ -876,7 +887,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				        $JMVC.lang(JMVC.vars.currentlang);
 				
 				        if (JMVC.i18n[JMVC.vars.currentlang] === true) {
-				            $JMVC.io.get(JMVC.vars.baseurl + PATH.lang + JMVC.vars.currentlang + '.js', function (ln) {
+				            $JMVC.io.get(JMVC.vars.baseurl + PATH.lang + JMVC.vars.currentlang + (JMVC_PACKED || '') + '.js', function (ln) {
 				                jmvc.jeval(ln);
 				            },  false);
 				        }
@@ -1896,10 +1907,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     dispatched,
                     Controller, Model, View,
                     Event, Modules,
-                    //hooks,
                     JMVC_DEFAULT,
                     time_begin
                 );
+                
                 return $JMVC;
             }
         )();
@@ -3905,7 +3916,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     **/
     JMVC.match = {
         email : function (str) {
-            return !!str.match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/);
+            return !!str.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
         },
         url : function (str) {
             return /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(str);

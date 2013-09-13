@@ -12,7 +12,6 @@ $JMVC.gc(
     dispatched,
     Controller, Model, View,
     Event, Modules,
-    //hooks,
     JMVC_DEFAULT,
     time_begin
 );

@@ -9,9 +9,9 @@ _/  _/    _/  _/      _/_/
 */
 // returning object created in that function, here $JMVC will be JMVC
 var $JMVC,
-    JMVC_VERSION = $version$,
-    JMVC_REVIEW = $review$,
-    JMVC_PACKED = false,
+    JMVC_VERSION = "$version$",
+    JMVC_REVIEW = "$review$",
+    JMVC_PACKED = false, //'.min', 
 
     /**
      * inner jmvc literal, will contain almost all the functions used to 
@@ -64,10 +64,10 @@ var $JMVC,
     },
 
     JMVC_EXT = {
-        controller : '.js',
-        model : '.js',
+        controller : (JMVC_PACKED || '') + '.js',
+        model : JMVC_PACKED ? '.min.js' : '.js',
         view : '.html',
-        'interface' : '.interface.js'
+        'interface' : '.interface' + (JMVC_PACKED || '') + '.js'
     },
 
     /**
@@ -156,3 +156,7 @@ var $JMVC,
     // script : creates a script tag with the right url to the source
     // note : seems like script mode load faster but
     getmode = 'ajax'; // script or ajax
+
+
+    // ===========================================
+
