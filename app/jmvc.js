@@ -11,7 +11,7 @@ A pure Javascript MVC framework
 ===============================
  
  
-@version: 2.9.1
+@version: 3.0
 @date : 14/9/2013
 @copyright (c) 2013, Federico Ghedina <fedeghe@gmail.com>
 @author : Federico Ghedina <fedeghe@gmail.com>
@@ -50,7 +50,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * main auto exec function
  * @param  window (through this ref)
  * @pseudoparam undefined
- * @return 0:5:23
+ * @return 0:20:15
  */
 // sfsdsdasdasd asdasd
 
@@ -79,8 +79,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 */
                 // returning object created in that function, here $JMVC will be JMVC
                 var $JMVC,
-                    JMVC_VERSION = "2.9.1",
-                    JMVC_REVIEW = "10",
+                    JMVC_VERSION = "3.0",
+                    JMVC_REVIEW = "0",
                     JMVC_PACKED = false, //'.min', 
                 
                     /**

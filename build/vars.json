@@ -1,6 +1,6 @@
 {
-	"version" : "2.9.1",
-	"review" : 10,
+	"version" : "3.0",
+	"review" : 0,
 	"author" : "Federico Ghedina",
 	"email" : "fedeghe@gmail.com",
 	"build_system" : "Malta http://www.github.com/fedeghe/malta"
