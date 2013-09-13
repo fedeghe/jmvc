@@ -169,7 +169,7 @@ JMVC.controllers.api = function () {
 
 			JMVC.github.forkme('fedeghe');
 			
-			JMVC.widget.countdown.start('#countdown', new Date(2013, 8, 15));
+			JMVC.widget.countdown.start('#countdown', new Date(2013, 8, 30));
 			
 			JMVC.events.delay(function () {
 				for (var j = 0, l = sections.length;  j < l; j++) {
