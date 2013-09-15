@@ -6,7 +6,6 @@ $$src/head.js$$
  * @pseudoparam undefined
  * @return __TIME__
  */
-// sfsdsdasdasd asdasd
 
 !function (W, undefined) {
     'use strict';
@@ -52,5 +51,6 @@ $$src/head.js$$
     $$src/modules/match.js$$
     $$src/modules/num.js$$
     $$src/core/render.js$$
+    //
 }(this);
 $$src/foot.js$$
