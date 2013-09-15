@@ -1,31 +1,48 @@
-/*
+/**
+ * [Interface description]
+ * @constructor
+ * @param {[type]} f [description]
+ */
+Interface = function (a) {
+    this.mthds = a;
+};
 
-    _/_/_/              _/                              _/_/                               
-     _/    _/_/_/    _/_/_/_/    _/_/    _/  _/_/    _/        _/_/_/    _/_/_/    _/_/    
-    _/    _/    _/    _/      _/_/_/_/  _/_/      _/_/_/_/  _/    _/  _/        _/_/_/_/   
-   _/    _/    _/    _/      _/        _/          _/      _/    _/  _/        _/          
-_/_/_/  _/    _/      _/_/    _/_/_/  _/          _/        _/_/_/    _/_/_/    _/_/_/
-                                                                                      
-*/
-Interface = function (/** Array */ f) {
-    this.mthds = f;
-};
-Interface.prototype.addMethod = function (/** String */ mthd) {
-    this.mthds[mthd.name] || (this.mthds[mthd.name] = mthd);
-};
-Interface.prototype.removeMethod = function (/** String */ mthd) {
-    this.mthds[mthd] && (delete this.mthds[mthd]);
-};
-Interface.prototype.check = function (/** ObjLiteral */ o) {
-    var m,
-        i = 0,
-        l = this.mthds.length,
-        obj = new o();
-    for (m in this.mthds) {
-        if (typeof obj[this.mthds[m]] !== 'function') {
-            return false;
+/**
+ * [prototype description]
+ * @type {Object}
+ */
+Interface.prototype = {
+    /**
+     * [addMethod description]
+     * @param {[type]} mthd [description]
+     */
+    addMethod : function (mthd) {
+        this.mthds[mthd.name] || (this.mthds[mthd.name] = mthd);
+    },
+    /**
+     * [removeMethod description]
+     * @param  {[type]} mthd [description]
+     * @return {[type]}      [description]
+     */
+    removeMethod : function (mthd) {
+        this.mthds[mthd] && (this.mthds[mthd] = null);
+    },
+    /**
+     * [check description]
+     * @param  {[type]} o [description]
+     * @return {[type]}   [description]
+     */
+    check : function (o) {
+        var m,
+            i = 0,
+            l = this.mthds.length,
+            obj = new o();
+        for (m in this.mthds) {
+            if (typeof obj[this.mthds[m]] !== 'function') {
+                return false;
+            }
         }
+        obj = null;
+        return true;
     }
-    obj = null;
-    return true;
 };
