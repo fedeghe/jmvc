@@ -12,7 +12,7 @@ A pure Javascript MVC framework
  
  
 @version: 3.0
-@date : 14/9/2013
+@date : 15/9/2013
 @copyright (c) 2013, Federico Ghedina <fedeghe@gmail.com>
 @author : Federico Ghedina <fedeghe@gmail.com>
 @url : http://www.jmvc.org
@@ -50,9 +50,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * main auto exec function
  * @param  window (through this ref)
  * @pseudoparam undefined
- * @return 0:20:15
+ * @return 21:37:21
  */
-// sfsdsdasdasd asdasd
 
 !function (W, undefined) {
     'use strict';
@@ -337,7 +336,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				        //maybe init, in case call it
 				        if (typeof trg.init === 'function') {
 				            trg.init.call($JMVC);
-				            //and delete
+				            //and clean
 				            trg.init = null;
 				        }
 				    },
@@ -572,7 +571,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				     * @return {[type]}      [description]
 				     */
 				    "del" : function (name) {
-				        $JMVC.vars[name] && (delete $JMVC.vars[name]);
+				        $JMVC.vars[name] && ($JMVC.vars[name] = null);
 				        return $JMVC;
 				    },
 				
@@ -1232,36 +1231,53 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     }
                     return this;
                 };
-                /*
+                /**
+                 * [Interface description]
+                 * @constructor
+                 * @param {[type]} f [description]
+                 */
+                Interface = function (a) {
+                    this.mthds = a;
+                };
                 
-                    _/_/_/              _/                              _/_/                               
-                     _/    _/_/_/    _/_/_/_/    _/_/    _/  _/_/    _/        _/_/_/    _/_/_/    _/_/    
-                    _/    _/    _/    _/      _/_/_/_/  _/_/      _/_/_/_/  _/    _/  _/        _/_/_/_/   
-                   _/    _/    _/    _/      _/        _/          _/      _/    _/  _/        _/          
-                _/_/_/  _/    _/      _/_/    _/_/_/  _/          _/        _/_/_/    _/_/_/    _/_/_/
-                                                                                                      
-                */
-                Interface = function (/** Array */ f) {
-                    this.mthds = f;
-                };
-                Interface.prototype.addMethod = function (/** String */ mthd) {
-                    this.mthds[mthd.name] || (this.mthds[mthd.name] = mthd);
-                };
-                Interface.prototype.removeMethod = function (/** String */ mthd) {
-                    this.mthds[mthd] && (delete this.mthds[mthd]);
-                };
-                Interface.prototype.check = function (/** ObjLiteral */ o) {
-                    var m,
-                        i = 0,
-                        l = this.mthds.length,
-                        obj = new o();
-                    for (m in this.mthds) {
-                        if (typeof obj[this.mthds[m]] !== 'function') {
-                            return false;
+                /**
+                 * [prototype description]
+                 * @type {Object}
+                 */
+                Interface.prototype = {
+                    /**
+                     * [addMethod description]
+                     * @param {[type]} mthd [description]
+                     */
+                    addMethod : function (mthd) {
+                        this.mthds[mthd.name] || (this.mthds[mthd.name] = mthd);
+                    },
+                    /**
+                     * [removeMethod description]
+                     * @param  {[type]} mthd [description]
+                     * @return {[type]}      [description]
+                     */
+                    removeMethod : function (mthd) {
+                        this.mthds[mthd] && (this.mthds[mthd] = null);
+                    },
+                    /**
+                     * [check description]
+                     * @param  {[type]} o [description]
+                     * @return {[type]}   [description]
+                     */
+                    check : function (o) {
+                        var m,
+                            i = 0,
+                            l = this.mthds.length,
+                            obj = new o();
+                        for (m in this.mthds) {
+                            if (typeof obj[this.mthds[m]] !== 'function') {
+                                return false;
+                            }
                         }
+                        obj = null;
+                        return true;
                     }
-                    obj = null;
-                    return true;
                 };
                 /*
                                                    _/                          _/  _/                      
@@ -3968,6 +3984,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     JMVC.p.lang && JMVC.cookie.set('lang', JMVC.p.lang);
     
     JMVC.render();
+    //
 }(this);
 JMVC.W.onerror = function(errorMsg, url, lineNumber) {
     JMVC.debug("Uncaught error " + errorMsg + " in " + url + ", lines " + lineNumber);
