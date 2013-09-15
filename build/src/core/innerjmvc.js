@@ -104,7 +104,7 @@ jmvc = {
         //maybe init, in case call it
         if (typeof trg.init === 'function') {
             trg.init.call($JMVC);
-            //and delete
+            //and clean
             trg.init = null;
         }
     },
@@ -339,7 +339,7 @@ jmvc = {
      * @return {[type]}      [description]
      */
     "del" : function (name) {
-        $JMVC.vars[name] && (delete $JMVC.vars[name]);
+        $JMVC.vars[name] && ($JMVC.vars[name] = null);
         return $JMVC;
     },
 
