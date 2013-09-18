@@ -1,53 +1,48 @@
 /**
+ *
+ * ARRAY sub-module
+ *
+ */
 
-
-------------------------------------------------------
-
-        _/_/_/  _/  _/_/  _/  _/_/    _/_/_/  _/    _/   
-     _/    _/  _/_/      _/_/      _/    _/  _/    _/    
-    _/    _/  _/        _/        _/    _/  _/    _/     
-     _/_/_/  _/        _/          _/_/_/    _/_/_/      
-                                                _/       
-                                           _/_/
-
-------------------------------------------------------
-
-**/
 JMVC.array = {
     /**
-     * [ description]
-     * @param  {[type]} arr) {return      arr.concat( [description]
-     * @return {[type]}      [description]
+     * Clone an existing array
+     * @param {Array} arr the array that should be cloned
+     * @return {Array} the cloned array
      */
     'arrayClone' : function (arr) {
         return arr.concat();
     },
 
     /**
-     * [ description]
+     * Safely converts a collection to an array
      * @param  {[type]} coll [description]
      * @return {[type]}      [description]
      */
     'coll2array' : function (coll) {
-        var i = 0,
-            a = [],
-            len = coll.length;
-        for (null; i < len; i += 1) {
-            a[i] = coll[i];
-        }
+        var a = [],
+            i = 0;
+        //what if coll[i] element is false? loop breaks
+        //but this is not the case since collection has no falsy values
+        for (null; coll[i]; a[i] = coll[i++]);
         return a;
     },
 
     /**
-     * [ description]
-     * @param  {[type]} arr   [description]
+     * Check if an array contains or not a value
+     * @param  {Array} arr the array 
      * @param  {[type]} myvar [description]
      * @return {[type]}       [description]
      */
     'inArray' : function (arr, mvar) {
+        /*
         var i = arr.length;
         while (i-- && arr[i] !== mvar);
         return i;
+        */
+        var l = arr.length;
+        for (null; l-- && arr[l] !== mvar; null);
+        return l;
     },
 
     /**
