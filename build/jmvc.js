@@ -3,7 +3,6 @@ $$src/head.js$$
 /**
  * main auto exec function
  * @param  window (through this ref)
- * @pseudoparam undefined
  * @return __TIME__
  */
 
