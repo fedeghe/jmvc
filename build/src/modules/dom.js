@@ -531,7 +531,7 @@ JMVC.dom = {
      */
     'removeClass' : function (el, cls) {
         var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-        el.className = el.className.replace(reg, '');
+        el.className = el.className.replace(reg, ' ');
         return this;
     },
 
