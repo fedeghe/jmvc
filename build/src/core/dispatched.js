@@ -17,7 +17,8 @@ dispatched = (function () {
             'proto' : WDL.protocol,
             'host' : WDL.hostname,
             'path' : WDL.pathname,
-            'hash' : WDL.search,
+            'search' : WDL.search,
+            'hash' : WDL.hash.substr(1),
             'port' : WDL.port ? ':' + WDL.port : ''
         },
 
@@ -64,9 +65,9 @@ dispatched = (function () {
     }
 
     // even hash for GET params
-    if (mid.hash !== "") {
+    if (mid.search !== "") {
         // splitting an empty string give an array with one empty string
-        els = mid.hash.substr(1).split('&');
+        els = mid.search.substr(1).split('&');
 
         for (i = 0, len = els.length; i < len; i += 1) {
             lab_val = els[i].split('=');
@@ -82,7 +83,9 @@ dispatched = (function () {
         'action' : action.replace(/\//g, ""),
         'params' : params,
         'baseurl' : baseurl,
-        'port' : mid.port
+        'port' : mid.port,
+        "search" : mid.search,
+        'hash' : mid.hash
     };
     //ret.controller = jmvc_normalize(ret.controller);
     return ret;

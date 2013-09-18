@@ -18,6 +18,7 @@ $JMVC = {
     c : dispatched.controller || JMVC_DEFAULT.controller,
     a : dispatched.action || JMVC_DEFAULT.action,
     p : dispatched.params || {},
+    hash : dispatched.hash,
     controllers : {},
     models : {},
     views : {},
