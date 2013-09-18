@@ -392,6 +392,13 @@ JMVC.controllers.index = function () {
 			},{sensor:'false'});
 		});
 	};
+
+	this.action_console = function () {
+		JMVC.events.loadify(500);
+		this.render(function (){
+			JMVC.console();
+		});
+	};
 	
 
 };
