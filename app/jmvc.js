@@ -1,56 +1,45 @@
 /**
-
-          _/  _/      _/  _/      _/    _/_/_/
-         _/  _/_/  _/_/  _/      _/  _/
-        _/  _/  _/  _/  _/      _/  _/
- _/    _/  _/      _/    _/  _/    _/
-  _/_/    _/      _/      _/        _/_/_/
-
- 
-A pure Javascript MVC framework
-===============================
- 
- 
-@version: 3.0
-@date : 15/9/2013
-@copyright (c) 2013, Federico Ghedina <fedeghe@gmail.com>
-@author : Federico Ghedina <fedeghe@gmail.com>
-@url : http://www.jmvc.org
-@file : built with Malta http://www.github.com/fedeghe/malta
-
-
-
-All rights reserved.
-
-This code is distributed under the terms of the BSD licence
-
-Redistribution and use of this software in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
-> Redistributions of source code must retain the above copyright notice, this list of conditions
-and the following disclaimer.
-> Redistributions in binary form must reproduce the above copyright notice, this list of
-conditions and the following disclaimer in the documentation and/or other materials provided
-with the distribution.
-> The names of the contributors to this file may not be used to endorse or promote products
-derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
-PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
-TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+ *	JMVC : A pure Javascript MVC framework
+ *	======================================
+ *
+ *	@version :  3.0.1 (rev. 0)
+ *	@copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
+ *	@author : Federico Ghedina <fedeghe@gmail.com>
+ *	@url : http://www.jmvc.org
+ *	@file : built with Malta http://www.github.com/fedeghe/malta on 19/9/2013 at 0:9:22
+ *
+ *
+ *	All rights reserved.
+ *
+ *	This code is distributed under the terms of the BSD licence
+ *
+ *	Redistribution and use of this software in source and binary forms, with or without modification,
+ *	are permitted provided that the following conditions are met:
+ *
+ *	> Redistributions of source code must retain the above copyright notice, this list of conditions
+ *	and the following disclaimer.
+ *	> Redistributions in binary form must reproduce the above copyright notice, this list of
+ *	conditions and the following disclaimer in the documentation and/or other materials provided
+ *	with the distribution.
+ *	> The names of the contributors to this file may not be used to endorse or promote products
+ *	derived from this software without specific prior written permission.
+ *
+ *	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ *	WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ *	PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ *	ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *	LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ *	INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+ *	TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ *	ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
  */
+
 
 /**
  * main auto exec function
  * @param  window (through this ref)
- * @pseudoparam undefined
- * @return 21:37:21
+ * @return 0:9:22
  */
 
 !function (W, undefined) {
@@ -78,7 +67,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 */
                 // returning object created in that function, here $JMVC will be JMVC
                 var $JMVC,
-                    JMVC_VERSION = "3.0",
+                    JMVC_VERSION = "3.0.1",
                     JMVC_REVIEW = "0",
                     JMVC_PACKED = false, //'.min', 
                 
@@ -1671,7 +1660,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             'proto' : WDL.protocol,
                             'host' : WDL.hostname,
                             'path' : WDL.pathname,
-                            'hash' : WDL.search,
+                            'search' : WDL.search,
+                            'hash' : WDL.hash.substr(1),
                             'port' : WDL.port ? ':' + WDL.port : ''
                         },
                 
@@ -1718,9 +1708,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     }
                 
                     // even hash for GET params
-                    if (mid.hash !== "") {
+                    if (mid.search !== "") {
                         // splitting an empty string give an array with one empty string
-                        els = mid.hash.substr(1).split('&');
+                        els = mid.search.substr(1).split('&');
                 
                         for (i = 0, len = els.length; i < len; i += 1) {
                             lab_val = els[i].split('=');
@@ -1736,7 +1726,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         'action' : action.replace(/\//g, ""),
                         'params' : params,
                         'baseurl' : baseurl,
-                        'port' : mid.port
+                        'port' : mid.port,
+                        "search" : mid.search,
+                        'hash' : mid.hash
                     };
                     //ret.controller = jmvc_normalize(ret.controller);
                     return ret;
@@ -1761,6 +1753,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     c : dispatched.controller || JMVC_DEFAULT.controller,
                     a : dispatched.action || JMVC_DEFAULT.action,
                     p : dispatched.params || {},
+                    hash : dispatched.hash,
                     controllers : {},
                     models : {},
                     views : {},
@@ -1932,23 +1925,11 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         )();
     /** mandatory modules **/
     /**
-    
-    
-    --------------------------------------
-    
-                     _/                      
-            _/_/_/        _/_/_/  _/    _/   
-         _/    _/  _/  _/    _/    _/_/      
-        _/    _/  _/  _/    _/  _/    _/     
-         _/_/_/  _/    _/_/_/  _/    _/      
-                _/                           
-             _/    
-    
-    --------------------------------------
+    AJAX sub-module
+    ---------------
     
     This is the experimental versionof ajax utilities
-    
-    **/
+    */
     JMVC.ajax = {
         count : 0,
         types : {
@@ -2958,7 +2939,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
          */
         'removeClass' : function (el, cls) {
             var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-            el.className = el.className.replace(reg, '');
+            el.className = el.className.replace(reg, ' ');
             return this;
         },
     
@@ -3564,55 +3545,50 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     };
     
     /**
+     *
+     * ARRAY sub-module
+     *
+     */
     
-    
-    ------------------------------------------------------
-    
-            _/_/_/  _/  _/_/  _/  _/_/    _/_/_/  _/    _/   
-         _/    _/  _/_/      _/_/      _/    _/  _/    _/    
-        _/    _/  _/        _/        _/    _/  _/    _/     
-         _/_/_/  _/        _/          _/_/_/    _/_/_/      
-                                                    _/       
-                                               _/_/
-    
-    ------------------------------------------------------
-    
-    **/
     JMVC.array = {
         /**
-         * [ description]
-         * @param  {[type]} arr) {return      arr.concat( [description]
-         * @return {[type]}      [description]
+         * Clone an existing array
+         * @param {Array} arr the array that should be cloned
+         * @return {Array} the cloned array
          */
         'arrayClone' : function (arr) {
             return arr.concat();
         },
     
         /**
-         * [ description]
+         * Safely converts a collection to an array
          * @param  {[type]} coll [description]
          * @return {[type]}      [description]
          */
         'coll2array' : function (coll) {
-            var i = 0,
-                a = [],
-                len = coll.length;
-            for (null; i < len; i += 1) {
-                a[i] = coll[i];
-            }
+            var a = [],
+                i = 0;
+            //what if coll[i] element is false? loop breaks
+            //but this is not the case since collection has no falsy values
+            for (null; coll[i]; a[i] = coll[i++]);
             return a;
         },
     
         /**
-         * [ description]
-         * @param  {[type]} arr   [description]
+         * Check if an array contains or not a value
+         * @param  {Array} arr the array 
          * @param  {[type]} myvar [description]
          * @return {[type]}       [description]
          */
         'inArray' : function (arr, mvar) {
+            /*
             var i = arr.length;
             while (i-- && arr[i] !== mvar);
             return i;
+            */
+            var l = arr.length;
+            for (null; l-- && arr[l] !== mvar; null);
+            return l;
         },
     
         /**
