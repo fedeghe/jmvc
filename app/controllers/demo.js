@@ -48,6 +48,7 @@ JMVC.controllers.demo = function () {
 				'Controller' : 'demo/controller',
 				'View' : 'demo/view',
 				'Tabs' : 'tabs/one/i_say/Hello%20my%20Guest',
+				'Console':'index/console',
 				'Some fun' : 'demo/flag',
 				'Some game fun' : 'wcave.jmvc',
 				'JMVC Logo plotted' : 'demo/logo',
