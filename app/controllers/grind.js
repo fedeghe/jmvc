@@ -11,7 +11,7 @@ JMVC.controllers.grind = function () {
 				"target" : '#extralogo',
 				"attrs" : {"id" : "head"},
 				"style" : {"backgroundColor" : "red", "marginTop":"5px"},
-				"class" : "round12 roundup"
+				"class" : "round12 roundtop"
 			},
 			{
 				"target" : '#extralogo',
