@@ -271,7 +271,6 @@ JMVC.extend('console', {
 
 
 			JMVC.events.bind(JMVC.dom.find('.ablock'), 'click', function (e) {
-				console.debug(e);
 				var butt = JMVC.dom.find(this),
 					id =  JMVC.dom.attr(butt, 'id') || 'xxx';
 				

@@ -26,6 +26,7 @@
 	border-right:1px solid #606060;*/
 	border-bottom:1px solid #ffffff;
 	color:#ddd;
+	text-decoration:none;
 }
 #jmvc-console .console-head a.ablock div.text{
 	padding:0px 10px;
