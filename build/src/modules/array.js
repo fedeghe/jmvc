@@ -1,7 +1,5 @@
 /**
- *
  * ARRAY sub-module
- *
  */
 
 JMVC.array = {
@@ -20,10 +18,9 @@ JMVC.array = {
      * @return {[type]}      [description]
      */
     'coll2array' : function (coll) {
-        var a = [],
-            i = 0;
-        //what if coll[i] element is false? loop breaks
-        //but this is not the case since collection has no falsy values
+        var a = [], i = 0;
+        // what if coll[i] element is false? loop breaks
+        // but this is not the case since collection has no falsy values
         for (null; coll[i]; a[i] = coll[i++]);
         return a;
     },
@@ -57,7 +54,9 @@ JMVC.array = {
             len = arr.length;
 
         for (null; i < len; i += 1) {
+
             is_obj_or_array = {}.toString.call(arr[i]).match(/\[object\s(Array|Object)\]/);
+            
             if (
                 (is_obj_or_array && JSON.stringify(arr[i]) === JSON.stringify(v))
                 ||
