@@ -53,9 +53,15 @@ JMVC.extend('console', {
 
 				content = {
 					h : JMVC.p.h ? decodeURIComponent(JMVC.p.h) : "<div id='hw'>hello world</div>",
-					j : JMVC.p.j ? decodeURIComponent(JMVC.p.j) : "var t = document.getElementById('hw');",
-					c : JMVC.p.c ? decodeURIComponent(JMVC.p.c) : "#hw{\n\tbackground-color:red;\n}"
+					j : JMVC.p.j ? decodeURIComponent(JMVC.p.j) : "var t = document.getElementById('hw');\nt.onclick = function (){t.innerHTML='clicked';};",
+					c : JMVC.p.c ? decodeURIComponent(JMVC.p.c) : "#hw{\n\tcolor:red;\n\tfont-family:arial, sans-serif;\n\tpadding:20px;\n\tfont-size:20px\n}"
 				},
+				triangle = {
+					"tag":"div",
+					"float":"right",
+					"style" : {"height":"0px","width":"0px","borderBottom":"30px solid " + triBrdCol,"borderLeft":"20px solid #333", "marginTop":"-10px"}
+				},
+				brd = '<div class=" gbox" style="float: right; height: 0px; width: 0px; border-bottom: 30px solid rgb(96, 96, 96); border-left: 20px solid rgb(51, 51, 51); margin-top: -10px;"></div>',
 				config  = [
 					{
 						"target" : '#jmvc-console',
@@ -78,67 +84,110 @@ JMVC.extend('console', {
 								"html":"GET URL",
 								"attrs" : {"id":"get-url"},
 								"class" : "round4"
-							},{
-								"tag":"div",
-								"attrs" : {"id" : "options"},
-								"class" : "console-head-button round4 roundtop",
-								"float":"right",
-								"html" : "<a href='#options'>&nbsp;</a>"
 							},
 
-							{
-								"tag":"div",
-								"float":"right",
-								"style" : {"height":"0px","width":"0px","borderBottom":"30px solid " + triBrdCol,"borderLeft":"20px solid #333", "marginTop":"-10px"}
-							},{
-								"tag":"div",
-								"attrs" : {"id" : "preview"},
-								"class" : "console-head-button round4 roundtop",
-								"float":"right",
-								"html" : "<a href='#preview'>&nbsp;</a>"
-							},
+
+
+
+
+
 
 							{
-								"tag":"div",
+								"tag":"a",
+								"attrs" : {"id" : "options", "href":"#options"},
+								"class" : "ablock",
 								"float":"right",
-								"style" : {"height":"0px","width":"0px","borderBottom":"30px solid " + triBrdCol, "borderLeft":"20px solid #333", "marginTop":"-10px"}
+								//"html" : "<a href='#html'>html</a>"
+								"inner" : [
+									{
+										"tag":"div",
+										//"style":{"backgroundColor":"red", "height":"32px", "marginTop":"7px", "lineHeight":"32px","fontSize":"18px", "textAlign":"center"},
+										"class":"round4 roundtop text",
+										"float":"right"
+									},{
+										"tag":"div",
+										"float":"right",
+										"class":"tri"
+									}
+								]
 							},{
-								"tag":"div",
-								"attrs" : {"id" : "css"},
-								"class" : "console-head-button g2 round4 roundtop",
+								"tag":"a",
+								"attrs" : {"id" : "preview", "href":"#preview"},
+								"class" : "ablock",
 								"float":"right",
-								"html" : "<a href='#css'>css</a>"
+								//"html" : "<a href='#html'>html</a>"
+								"inner" : [
+									{
+										"tag":"div",
+										//"style":{"backgroundColor":"red", "height":"32px", "marginTop":"7px", "lineHeight":"32px","fontSize":"18px", "textAlign":"center"},
+										"class":"round4 roundtop text",
+										"float":"right"
+									},{
+										"tag":"div",
+										"float":"right",
+										"class":"tri"
+									}
+								]
+							},{
+								"tag":"a",
+								"attrs" : {"id" : "css", "href":"#css"},
+								"class" : "ablock",
+								"float":"right",
+								//"html" : "<a href='#html'>html</a>"
+								"inner" : [
+									{
+										"tag":"div",
+										//"style":{"backgroundColor":"red", "height":"32px", "marginTop":"7px", "lineHeight":"32px","fontSize":"18px", "textAlign":"center"},
+										"class":"round4 roundtop text",
+										"float":"right",
+										"html":"CSS"
+									},{
+										"tag":"div",
+										"float":"right",
+										"class":"tri"
+									}
+								]
+							},{
+								"tag":"a",
+								"attrs" : {"id" : "javascript", "href":"#javascript"},
+								"class" : "ablock",
+								"float":"right",
+								//"html" : "<a href='#html'>html</a>"
+								"inner" : [
+									{
+										"tag":"div",
+										//"style":{"backgroundColor":"red", "height":"32px", "marginTop":"7px", "lineHeight":"32px","fontSize":"18px", "textAlign":"center"},
+										"class":"round4 roundtop text",
+										"float":"right",
+										"html":"JAVASCRIPT"
+									},{
+										"tag":"div",
+										"float":"right",
+										"class":"tri"
+									}
+								]
+							},{
+								"tag":"a",
+								"attrs" : {"id" : "html", "href":"#html"},
+								"class" : "ablock",
+								"float":"right",
+								//"html" : "<a href='#html'>html</a>"
+								"inner" : [
+									{
+										"tag":"div",
+										//"style":{"backgroundColor":"red", "height":"32px", "marginTop":"7px", "lineHeight":"32px","fontSize":"18px", "textAlign":"center"},
+										"class":"round4 roundtop text",
+										"float":"right",
+										"html":"HTML"
+									},{
+										"tag":"div",
+										"float":"right",
+										"class":"tri"
+									}
+								]
 							},
 
-							{
-								"tag":"div",
-								"float":"right",
-								"style" : {"height":"0px","width":"0px","borderBottom":"30px solid " + triBrdCol, "borderLeft":"20px solid #333", "marginTop":"-10px"}
-							},{
-								"tag":"div",
-								"attrs" : {"id" : "javascript"},
-								"class" : "console-head-button g2 round4 roundtop",
-								"float":"right",
-								"html" : "<a href='#javascript'>javascript</a>"
-							},
 
-							{
-								"tag":"div",
-								"float":"right",
-								"style" : {"height":"0px","width":"0px","borderBottom":"30px solid " + triBrdCol, "borderLeft":"20px solid #333", "marginTop":"-10px"}
-							},{
-								"tag":"div",
-								"attrs" : {"id" : "html"},
-								"class" : "console-head-button g2 round4 roundtop",
-								"float":"right",
-								"html" : "<a href='#html'>html</a>"
-							},
-
-							{
-								"tag":"div",
-								"float":"right",
-								"style" : {"height":"0px","width":"0px","borderBottom":"30px solid " + triBrdCol, "borderLeft":"20px solid #333", "marginTop":"-10px"}
-							},
 							"clearer"
 						]
 					},{
@@ -192,7 +241,8 @@ JMVC.extend('console', {
 							}
 						]
 					}
-				];
+				],
+				hash = false;
 
 
 			//save scroll vertical position
@@ -213,24 +263,26 @@ JMVC.extend('console', {
 			if (JMVC.hash.match(/html|css|javascript|preview|options/)) {
 				JMVC.dom.addClass(JMVC.dom.find('#' + JMVC.hash), 'active');
 				JMVC.css.show(JMVC.dom.find('#in-' + JMVC.hash));
+				hash = JMVC.hash;
 			} else {
 				JMVC.dom.addClass(JMVC.dom.find('#html'), 'active');
 				JMVC.css.show(JMVC.dom.find('#in-html'));
 			}
 
 
-			JMVC.events.bind(JMVC.dom.find('.console-head-button'), 'click', function (e) {
+			JMVC.events.bind(JMVC.dom.find('.ablock'), 'click', function (e) {
+				console.debug(e);
 				var butt = JMVC.dom.find(this),
 					id =  JMVC.dom.attr(butt, 'id') || 'xxx';
 				
-				JMVC.each(JMVC.dom.find('.console-head-button'), function (elbutt){
+				JMVC.each(JMVC.dom.find('.ablock'), function (elbutt){
 					
 					JMVC.dom.removeClass(elbutt, 'active');
 				});
 				JMVC.dom.addClass(butt, 'active');
 
 
-
+				hash = id;
 
 				JMVC.each(JMVC.dom.find('.inputdiv'), function (el){
 					
@@ -304,7 +356,7 @@ JMVC.extend('console', {
 						h : vals[0],
 						j : vals[1],
 						c : vals[2],
-					});
+					}) + (hash ? "#" + hash : '');
 				prompt("Copy the following url", url);
 			});
 			

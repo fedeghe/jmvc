@@ -9,49 +9,60 @@
 #jmvc-console .console-head{
 	height:40px;
 	background-color:#333;
-	border-bottom:1px solid #ddd;
 }
-#jmvc-console .console-head .console-head-button{
+#jmvc-console .console-head a.ablock{
 	
 	margin-top:7px;
-	height:32px;
-	line-height:32px;
+	height:33px;
+	line-height:33px;
 	text-align:center;
 	font-size:22px;
 	color:#fff;
-	background-color: #606060;
+	/*background-color: #606060;*/
 	margin-right:10px;
-	border-left:1px solid #606060;
-	border-top:1px solid #606060;
-	border-right:1px solid #606060;
-	opacity:0.3;
-}
-#jmvc-console .console-head .console-head-button a{
-	text-decoration:none;
-	color:inherit;
+	margin-left:15px;
 	
+	/*border-top:1px solid #606060;
+	border-right:1px solid #606060;*/
+	border-bottom:1px solid #ffffff;
+	color:#ddd;
+}
+#jmvc-console .console-head a.ablock div.text{
+	padding:0px 10px;
+	background-color: #606060;
+	color:#aaa;
+}
+#jmvc-console .console-head a.ablock{
+	text-decoration:none;
+}
+#jmvc-console .console-head a.ablock div.text:hover {
+	color:white;
+}
+#jmvc-console .console-head a.ablock.active{
+	margin-top:6px;
+}
+#jmvc-console .console-head a.ablock.active div.text{
+	/*border-top:1px solid #eee;
+	border-right:1px solid #aaa;*/
+	opacity:1;
+	
+	color:#0f0;
+	background-color: #808080;
+	/*border-right:1px solid #a0a0a0;
+	border-top:1px solid #a0a0a0;*/
+	height:35px;
 
 }
-#jmvc-console .console-head .console-head-button:hover{
-	color:white;
-	cursor:pointer;
-	opacity:0.8;
-}
-#jmvc-console .console-head .console-head-button.active{
-	border-left:1px solid #777;
-	border-top:1px solid #eee;
-	border-right:1px solid #aaa;
-	opacity:1;
-}
-#jmvc-console .console-head .console-head-button.active,
-#jmvc-console .console-head .console-head-button.active:hover{
+#jmvc-console .console-head .ablock.active,
+#jmvc-console .console-head .ablock.active:hover{
 	color:#0f0;
-	height:33px;
-	background-color: #808080;
 	cursor:default;
 }
 
 
+div.input-divs{
+	border-top:1px solid white;
+}
 
 
 div.input-divs div{
@@ -85,25 +96,31 @@ div.input-divs div.in-preview{}
 div.input-divs div.in-options{}
 
 
-#preview a{
+a#preview .text/*.img*/{
 	display:block;
 	background-image : url($baseurl$/app/extensions/core/console/previewOC.png);
 	background-repeat:no-repeat;
-	background-position:5px -30px;
-	width:60px;
-	height:30px;
+	background-position:0px 0px;
+	width: 33px;
+	height:32px;
+	padding-right:10px;
+	/*background-color: #606060;
+	padding-bottom:2px;	*/
 }
-#preview.active a, #preview:hover a{
-	background-position:5px 0px;
+a#preview.active .text/*.img*/, a#preview:hover .text/*.img*/{
+	background-position:-51px 0px;
 }
-#options a{
+a#options .text/*.img*/{
 	display:block;
 	background-image : url($baseurl$/app/extensions/core/console/gear1.png);
 	background-repeat:no-repeat;
-	background-position:1px 0px;
-	width:32px;
-	height:30px;	
+	background-position:2px 0px;
+	width:12px;
+	height:32px;
+	/*padding-bottom:2px;	
+	background-color: #606060;*/
 }
+
 button#get-url{
 	color:#fff;
 	background-color:#888;
@@ -113,3 +130,14 @@ button#get-url{
 }
 
 
+#jmvc-console .console-head .ablock div.tri{
+	height:0px;
+	width:0px;
+	border-bottom:31px solid #606060;
+	border-left:20px solid #333;
+	margin-top:-18px;
+}
+#jmvc-console .console-head .ablock.active div.tri{
+	border-bottom:32px solid #606060;
+	border-left:20px solid #333;
+}
