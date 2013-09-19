@@ -95,7 +95,7 @@ div.input-divs div.in-html textarea{color:#f00;}
 div.input-divs div.in-javascript textarea{color:#0f0;}
 div.input-divs div.in-css textarea{color:#00f;}
 div.input-divs div.in-preview{}
-div.input-divs div.in-options{}
+div.input-divs div.in-options{padding:20px;}
 
 
 a#preview .text/*.img*/{

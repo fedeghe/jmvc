@@ -237,7 +237,7 @@ JMVC.extend('console', {
 								"tag" : "div",
 								"attrs" : {"id" : "in-options"},
 								"class" : "in-options inputdiv",
-								"html": "options"
+								"html": "no options yet"
 							}
 						]
 					}
