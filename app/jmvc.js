@@ -6,7 +6,7 @@
  *	@copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  *	@author : Federico Ghedina <fedeghe@gmail.com>
  *	@url : http://www.jmvc.org
- *	@file : built with Malta http://www.github.com/fedeghe/malta on 19/9/2013 at 0:9:22
+ *	@file : built with Malta http://www.github.com/fedeghe/malta on 20/9/2013 at 0:20:26
  *
  *
  *	All rights reserved.
@@ -39,7 +39,7 @@
 /**
  * main auto exec function
  * @param  window (through this ref)
- * @return 0:9:22
+ * @return 0:20:26
  */
 
 !function (W, undefined) {
@@ -3545,9 +3545,7 @@
     };
     
     /**
-     *
      * ARRAY sub-module
-     *
      */
     
     JMVC.array = {
@@ -3566,10 +3564,9 @@
          * @return {[type]}      [description]
          */
         'coll2array' : function (coll) {
-            var a = [],
-                i = 0;
-            //what if coll[i] element is false? loop breaks
-            //but this is not the case since collection has no falsy values
+            var a = [], i = 0;
+            // what if coll[i] element is false? loop breaks
+            // but this is not the case since collection has no falsy values
             for (null; coll[i]; a[i] = coll[i++]);
             return a;
         },
@@ -3603,7 +3600,9 @@
                 len = arr.length;
     
             for (null; i < len; i += 1) {
+    
                 is_obj_or_array = {}.toString.call(arr[i]).match(/\[object\s(Array|Object)\]/);
+                
                 if (
                     (is_obj_or_array && JSON.stringify(arr[i]) === JSON.stringify(v))
                     ||
