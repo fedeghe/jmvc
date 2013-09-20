@@ -67,7 +67,7 @@ div.input-divs{
 }
 
 
-div.input-divs div{
+div.input-divs>div{
 	display:none;
 	background-color: #000;
 	color:white;
@@ -95,7 +95,7 @@ div.input-divs div.in-html textarea{color:#f00;}
 div.input-divs div.in-javascript textarea{color:#0f0;}
 div.input-divs div.in-css textarea{color:#00f;}
 div.input-divs div.in-preview{}
-div.input-divs div.in-options{padding:20px;}
+div.input-divs div.in-options{}
 
 
 a#preview .text/*.img*/{
@@ -142,4 +142,7 @@ button#get-url{
 #jmvc-console .console-head .ablock.active div.tri{
 	border-bottom:32px solid #606060;
 	border-left:20px solid #333;
+}
+div.pad20{
+	padding:20px;
 }

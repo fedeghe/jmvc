@@ -6,6 +6,7 @@ JMVC.require(
 );
 
 JMVC.extend('console', {
+
 	'init' : function () {
 		JMVC.head.meta("generator", "jmvc resident in your machine");
 	},
@@ -19,10 +20,21 @@ JMVC.extend('console', {
 			'<head>'+
 				'<style type="text/css">body{background-color:white} html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:"";content:none}table{border-collapse:collapse;border-spacing:0}</style>'+
 				'<style type="text/css">%style%</style>'+
-				'<script type="text/javascript">window.onload = function () {alert("xxx"); %script%}; alert("asdasd);</script>'+
 			'</head>'+
 			'<body>%body%</body>'+
 		'</html>',
+
+	'options' : '<div class="pad20">'+
+			'<legend>Load external<legend>'+
+			'<select id ="fw">'+
+				'<option value="" selected="selected">No libraries</options>'+
+				'<optgroup label="jQuery">'+
+					'<option value="http://codeorigin.jquery.com/jquery-1.10.2.min.js">jQuery 1.10.2</option>'+
+					'<option value="http://codeorigin.jquery.com/jquery-1.9.1.min.js">jQuery 1.9.1</option>'+
+				'</optgroup>'+
+			'</select>'+
+		'</div>',
+
 
 	'toggle' : function () {
 
@@ -86,22 +98,16 @@ JMVC.extend('console', {
 								"class" : "round4"
 							},
 
-
-
-
-
-
+							////////////////////////////////////////
 
 							{
 								"tag":"a",
 								"attrs" : {"id" : "options", "href":"#options"},
 								"class" : "ablock",
 								"float":"right",
-								//"html" : "<a href='#html'>html</a>"
 								"inner" : [
 									{
 										"tag":"div",
-										//"style":{"backgroundColor":"red", "height":"32px", "marginTop":"7px", "lineHeight":"32px","fontSize":"18px", "textAlign":"center"},
 										"class":"round4 roundtop text",
 										"float":"right"
 									},{
@@ -115,11 +121,9 @@ JMVC.extend('console', {
 								"attrs" : {"id" : "preview", "href":"#preview"},
 								"class" : "ablock",
 								"float":"right",
-								//"html" : "<a href='#html'>html</a>"
 								"inner" : [
 									{
 										"tag":"div",
-										//"style":{"backgroundColor":"red", "height":"32px", "marginTop":"7px", "lineHeight":"32px","fontSize":"18px", "textAlign":"center"},
 										"class":"round4 roundtop text",
 										"float":"right"
 									},{
@@ -133,11 +137,9 @@ JMVC.extend('console', {
 								"attrs" : {"id" : "css", "href":"#css"},
 								"class" : "ablock",
 								"float":"right",
-								//"html" : "<a href='#html'>html</a>"
 								"inner" : [
 									{
 										"tag":"div",
-										//"style":{"backgroundColor":"red", "height":"32px", "marginTop":"7px", "lineHeight":"32px","fontSize":"18px", "textAlign":"center"},
 										"class":"round4 roundtop text",
 										"float":"right",
 										"html":"CSS"
@@ -152,11 +154,9 @@ JMVC.extend('console', {
 								"attrs" : {"id" : "javascript", "href":"#javascript"},
 								"class" : "ablock",
 								"float":"right",
-								//"html" : "<a href='#html'>html</a>"
 								"inner" : [
 									{
 										"tag":"div",
-										//"style":{"backgroundColor":"red", "height":"32px", "marginTop":"7px", "lineHeight":"32px","fontSize":"18px", "textAlign":"center"},
 										"class":"round4 roundtop text",
 										"float":"right",
 										"html":"JAVASCRIPT"
@@ -171,11 +171,9 @@ JMVC.extend('console', {
 								"attrs" : {"id" : "html", "href":"#html"},
 								"class" : "ablock",
 								"float":"right",
-								//"html" : "<a href='#html'>html</a>"
 								"inner" : [
 									{
 										"tag":"div",
-										//"style":{"backgroundColor":"red", "height":"32px", "marginTop":"7px", "lineHeight":"32px","fontSize":"18px", "textAlign":"center"},
 										"class":"round4 roundtop text",
 										"float":"right",
 										"html":"HTML"
@@ -186,8 +184,6 @@ JMVC.extend('console', {
 									}
 								]
 							},
-
-
 							"clearer"
 						]
 					},{
@@ -231,13 +227,14 @@ JMVC.extend('console', {
 								"class" : "in-preview inputdiv",
 								"inner": [{
 									"tag":"iframe",
+									//"style" : {"position":"fixed", "top":"0px", "left":"0px", "bottom":"0px", "right":"0px", "width":"100%", "height":"100%", "border":"none", "margin":"0", "padding":"0", "overflow":"hidden", "zIndex":999999},
 									"attrs":{"id":"outarea", "width":"100%","height":(dims.height - 60) + "px"}
 								}]
 							},{
 								"tag" : "div",
 								"attrs" : {"id" : "in-options"},
 								"class" : "in-options inputdiv",
-								"html": "no options yet"
+								"html": JMVC.console.options
 							}
 						]
 					}
@@ -258,6 +255,11 @@ JMVC.extend('console', {
 			JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/core/console/console.css', true);
 			JMVC.dom.append(JMVC.dom.body(), container);
 			JMVC.grind.render(config);
+
+			//lib
+			if(JMVC.p.l) {
+				JMVC.dom.find('#fw').value = decodeURIComponent(JMVC.p.l);
+			}
 
 
 			if (JMVC.hash.match(/html|css|javascript|preview|options/)) {
@@ -355,6 +357,7 @@ JMVC.extend('console', {
 						h : vals[0],
 						j : vals[1],
 						c : vals[2],
+						l : JMVC.dom.find('#fw').value
 					}) + (hash ? "#" + hash : '');
 				prompt("Copy the following url", url);
 			});
@@ -379,18 +382,22 @@ JMVC.extend('console', {
 					h = vals[0],
 					j = vals[1],
 					c = vals[2],
-					iframe = JMVC.dom.find('#outarea');
+					iframe = JMVC.dom.find('#outarea'),
+					lib = JMVC.dom.find('#fw').value;
 
 				JMVC.dom.find('#outarea').contentDocument.documentElement.innerHTML = JMVC.string.replaceall(JMVC.console.tpl, {
 					'style' : c,
-					'script' : j,
-					'body' : h
+					'body' : h,
+					'options':JMVC.console.options
 				});
+
+				
 
 				
 				try {
 					//console.log(iframe);
 					//console.log(j);
+					!!lib && iframe.contentWindow.eval('(function() {var l = document.createElement("script"); l.type = "text/javascript"; l.async = true;l.src = "' + lib + '";var s = document.getElementsByTagName("head")[0]; s.appendChild(l);})();');
 					iframe.contentWindow.eval(j);
 				}catch(e){
 					console.error(e);
