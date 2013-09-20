@@ -397,7 +397,7 @@ JMVC.extend('console', {
 				try {
 					//console.log(iframe);
 					//console.log(j);
-					!!lib && iframe.contentWindow.eval('(function() {var l = document.createElement("script"); l.type = "text/javascript"; l.async = true;l.src = "' + lib + '";var s = document.getElementsByTagName("head")[0]; s.appendChild(l);})();');
+					!!lib && iframe.contentWindow.eval('(function() {var l = document.createElement("script"); l.type = "text/javascript"; l.src = "' + lib + '";var s = document.getElementsByTagName("head")[0]; s.appendChild(l);})();');
 					iframe.contentWindow.eval(j);
 				}catch(e){
 					console.error(e);
