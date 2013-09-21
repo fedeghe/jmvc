@@ -12,7 +12,6 @@ JMVC.controllers.info = function () {
 			,'core/css'
 			,'vendors/github/forkme'
 		);
-		JMVC.loading(20, 'loaded extensions');
 		var main  = JMVC.getView('info/info'),
 			readme = JMVC.getView('info/readme'),
 			features = JMVC.getView('info/features'),
@@ -42,7 +41,6 @@ JMVC.controllers.info = function () {
 			k, k2, t,
 			len, l2,
 			tmp;
-		JMVC.loading(40, 'loaded views');
 
 		for (t in _toplinks) {
 			toplinks.push('<a href="#' + t + '" class="round4">' + _toplinks[t] + '</a>');
@@ -75,12 +73,10 @@ JMVC.controllers.info = function () {
 		infoutro.set({
 			'backtotop' : backtotop
 		});
-		JMVC.loading(80, 'rendering tree');
 
 		main.parse().render(function(){
 
 			JMVC.head.lastmodified();
-
 			JMVC.responsive.onChange(
 					function (w) {
 						if (w < 960) {

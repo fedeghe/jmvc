@@ -5,7 +5,7 @@ JMVC.controllers.index = function () {
 
 	this.action_index = function () {
 
-		JMVC.loading(1, 'starting');
+		
 
 		var nowh = (new Date()).getHours(),
 			logoimg = 'jmvc_m1.svg';
@@ -24,7 +24,6 @@ JMVC.controllers.index = function () {
 			, 'widget/lang'
 			, 'vendors/github/forkme'
 		);
-		JMVC.loading(70, 'dependencies resolved');
 		
 		
 
@@ -62,7 +61,6 @@ JMVC.controllers.index = function () {
 		index.set('i_say', '[L[pure javascript mvc framework]]');
 		//
 		
-		JMVC.loading(90, 'meta wrote');
 
 		
 		index.parse().render(
@@ -218,47 +216,6 @@ JMVC.controllers.index = function () {
 		}});
 	};
 
-
-
-
-	this.action_index2 = function () {
-		var index = JMVC.getView('index'),
-			hello = JMVC.getView('hello'),
-			n;
-
-		/* add link tag */
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/style.css');
-
-		/* edit title */
-		JMVC.head.title('JS base');
-
-		n = this.get('name') || 'Guest';
-		hello.set('name', n);
-		index.set('i_say', 'be seo-unfriendly');
-		
-		index.render({
-			cback : function (n, c) {
-				var link = JMVC.dom.create('a', {href : JMVC.vars.baseurl + '/info', title : 'more info'}, '&infin;' + n + c);
-				JMVC.events.bind(link, 'click', function () {this.blur();});
-				JMVC.dom.append(document.getElementById('cent'), link);
-				
-				/* remove the spinner */
-				JMVC.dom.remove(JMVC.dom.find('p')[0]);
-				
-			},
-			argz : [' or what ', 'else?'],
-			target : '#trial'
-		});
-		
-	
-		/*
-		 now index is loaded and contains a #cent div
-		 we try to substitute the content with the hello view content
-		 and give value to a var in it
-		hello.set('name', this.get('name'));
-		*/
-		hello.render({target : '#cent'});
-	};
 	//
 	//
 	//
@@ -286,14 +243,6 @@ JMVC.controllers.index = function () {
 		this.render(content);
 	};
 
-	this.action_foo = function () {
-		JMVC.events.delay(function () {JMVC.loading(10, 'loading settings');}, 400 );
-		JMVC.events.delay(function () {JMVC.loading(20, 'loading images');}, 800 );
-		JMVC.events.delay(function () {JMVC.loading(30, 'loading models');}, 1200 );
-		JMVC.events.delay(function () {JMVC.loading(60, 'loading views');}, 1300 );
-		JMVC.events.delay(function () {JMVC.loading(80, 'loading styles');}, 1600 );
-		JMVC.events.delay(function () {JMVC.loading(100, 'rendering');}, 2000 );
-	};
 
 	this.action_gmaps = function () {	
 		JMVC.require('vendors/google/gmap2', 'core/dim');
