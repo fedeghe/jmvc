@@ -9,20 +9,10 @@
 		<meta name="fragment" content="!">
 		<title>JMVC : pure javascript MVC</title>
 		<link rel="stylesheet" type="text/css" href="/media/css/reset.css" />
-
+		<script src="/app/jmvc.min.js" data-params="{langs:['en', 'de', 'jp', 'it']}" id="jmvcscript"></script>
+		<!-- the full code can be found here http://www.jmvc.org/app/jmvc.js -->
 	</head>
 	<body>
 		<div style="text-align: center;margin-top:50px"><img src="/media/img/spinner.gif"/></div>
-		<div style="width:30%;margin:0 auto;margin-top:10px;display:none" id="JMVCisloading">
-			<div id="JMVCloadingmessage" style="text-align:center;font-size:10px;font-family:Verdana, sans serif; color:#aaa"></div>
-			<div style="background-color:#f5f5f5;margin-top:5px;border:1px solid #aaa;">
-				<div style="width:0px;background-color:#8f8;height:3px" id="JMVCloading"></div>
-			</div>
-		</div>
-		<div id="trial" style="background-color: red;"></div>
-	
-		<!-- if moved in the header the JMVC.loading function silently won`t work -->
-		<script src="/app/jmvc.min.js" data-params="{langs:['en', 'de', 'jp', 'it']}" id="jmvcscript"></script>
-		<!-- WANT TO LOOK AT THE CODE? http://www.jmvc.org/app/jmvc.js -->
 	</body>
 </html>
