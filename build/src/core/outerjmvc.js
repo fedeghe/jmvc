@@ -159,6 +159,18 @@ $JMVC = {
         }
         JMVC.xdoc.toggle(ext);
     },
+
+
+    /*
+    MARKUP NEEDED to use that function:
+    to make it work move the jmvc.js at the end of the body
+    <div style="width:30%;margin:0 auto;margin-top:10px;display:none" id="JMVCisloading">
+        <div id="JMVCloadingmessage" style="text-align:center;font-size:10px;font-family:Verdana, sans serif; color:#aaa"></div>
+        <div style="background-color:#f5f5f5;margin-top:5px;border:1px solid #aaa;">
+            <div style="width:0px;background-color:#8f8;height:3px" id="JMVCloading"></div>
+        </div>
+    </div>
+     */
     loading : function (intperc, msg) {
         try {
             document.getElementById('JMVCisloading').style.display = 'block';
