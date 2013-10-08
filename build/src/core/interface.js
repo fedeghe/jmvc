@@ -1,8 +1,8 @@
-/**
- * [Interface description]
- * @constructor
- * @param {[type]} f [description]
- */
+/*
+---------
+INTERFACE
+---------
+*/
 Interface = function (a) {
     this.mthds = a;
 };

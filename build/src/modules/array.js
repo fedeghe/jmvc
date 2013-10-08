@@ -1,6 +1,8 @@
-/**
- * ARRAY sub-module
- */
+/*
+----------------
+ARRAY sub-module
+----------------
+*/
 
 JMVC.array = {
     /**

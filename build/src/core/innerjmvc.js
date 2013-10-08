@@ -1,11 +1,7 @@
 /*
-
-         _/  _/      _/  _/      _/    _/_/_/      _/                                          
-        _/  _/_/  _/_/  _/      _/  _/                _/_/_/    _/_/_/      _/_/    _/  _/_/   
-       _/  _/  _/  _/  _/      _/  _/            _/  _/    _/  _/    _/  _/_/_/_/  _/_/        
-_/    _/  _/      _/    _/  _/    _/            _/  _/    _/  _/    _/  _/        _/           
- _/_/    _/      _/      _/        _/_/_/      _/  _/    _/  _/    _/    _/_/_/  _/
-    
+----------
+JMVC inner
+----------
 */
 jmvc = {
 
@@ -20,15 +16,12 @@ jmvc = {
         try{
             return JMVC.W.eval(r);
             //return (new Function(r))();
-        }catch(e){/*console.log(r);*/}
+        }catch(e){}
         //window.eval(r);
         //ret =  ('execScript' in window) ? window.execScript('(' + r + ')','') : eval(r);
         //return ret;
     },
 
-
-
-    
     /**
      * [ description]
      * @param  {[type]} Child  [description]
@@ -55,7 +48,6 @@ jmvc = {
             jmvc.inherit(Childs[i], Parent);
         }
     },
-
 
     /**
      * just for models
@@ -201,7 +193,7 @@ jmvc = {
             name = pieces.pop();
             path = pieces.join(US);
         }
-
+ 
         //need to do this because of the special case when a c_prepath is used
         type === 'controller' && (path_absolute += $JMVC.c_prepath);
 
@@ -236,8 +228,10 @@ jmvc = {
 
             // grant basic ineritance from parent Controller
             jmvc.inherit($JMVC.controllers[$JMVC.c], Controller);
+
             // make an instance
             ctrl = new $JMVC.controllers[$JMVC.c]();
+
             // store it
             $JMVC.controllers[$JMVC.c] = ctrl;
 
@@ -263,10 +257,7 @@ jmvc = {
             && typeof ctrl['before_' + $JMVC.a] === 'function'
             && ctrl['before_' + $JMVC.a]();
 
-            // NOW    
-            // 
-            // call action
-             
+            // check actual action
             ('action_' + $JMVC.a in ctrl && typeof ctrl['action_' + $JMVC.a] === 'function') ?
                ctrl['action_' + $JMVC.a]()
                :
@@ -300,11 +291,7 @@ jmvc = {
         $JMVC.loaded = true;
     },
 
-
-
-
-    /*
-    * 
+    /* 
     * setter, getter, unsetter for $JMVC vars
     */
     /**
@@ -405,7 +392,6 @@ jmvc = {
                     head.appendChild(s);
                     break;
                 }
-                
                 $JMVC.extensions[arguments[i]] = arguments[i];
             }
         }
@@ -536,8 +522,11 @@ jmvc = {
      * @return {[type]}   [description]
      */
     "purge" : function (o) {
-        o = {};
-        o = null;
+        var t;
+        for(t in o){
+            o[t] = null;
+            delete o[t];
+        }
     },
 
     /**
@@ -547,17 +536,15 @@ jmvc = {
      * @return {[type]}     [description]
      */
     "prototipize" : function prt(el, obj) {
-        var  p, i = 0, l;
+        var p, l,
+            i = 0;
         if (el instanceof Array) {
             for (l = el.length; i < l; i += 1) {
                 prt(el[i], obj);
             }
         }
-        
         for (p in obj) {
-            if (obj.hasOwnProperty(p)) {
-                el.prototype[p] = obj[p];
-            }
+            obj.hasOwnProperty(p) && (el.prototype[p] = obj[p]);
         }
     },
 
@@ -635,11 +622,7 @@ jmvc = {
         return ret;
     },
 
-    "promise" : {
-        'create' : function () {return new Promise(); },
-        'join' : function () {},
-        'chain' : function () {}
-    },
+    //"promise" : function () {return new Promise(); },
 
     "parselang" : function (cnt) {
 
@@ -652,7 +635,7 @@ jmvc = {
         JMVC.vars.currentlang = def_lang;
 
         $JMVC.lang(JMVC.vars.currentlang);
-
+        
         if (JMVC.i18n[JMVC.vars.currentlang] === true) {
             $JMVC.io.get(JMVC.vars.baseurl + PATH.lang + JMVC.vars.currentlang + (JMVC_PACKED || '') + '.js', function (ln) {
                 jmvc.jeval(ln);
@@ -665,7 +648,8 @@ jmvc = {
             tmp = '';
             
             if (!!lang) {
-                tmp = $JMVC.i18n[JMVC.vars.currentlang] && $JMVC.i18n[JMVC.vars.currentlang][lang[1]] ? $JMVC.i18n[JMVC.vars.currentlang][lang[1]] : lang[1];
+                tmp = $JMVC.i18n[JMVC.vars.currentlang]
+                    && $JMVC.i18n[JMVC.vars.currentlang][lang[1]] ? $JMVC.i18n[JMVC.vars.currentlang][lang[1]] : lang[1];
                 cnt = cnt.replace(lang[0], tmp);
 
             } else {

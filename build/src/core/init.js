@@ -1,11 +1,7 @@
 /*
-
-    _/            _/    _/      
-       _/_/_/        _/_/_/_/   
-  _/  _/    _/  _/    _/        
- _/  _/    _/  _/    _/         
-_/  _/    _/  _/      _/_/ 
-
+----
+INIT
+----
 */
 // returning object created in that function, here $JMVC will be JMVC
 var $JMVC,

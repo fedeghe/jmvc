@@ -1,13 +1,9 @@
 /*
-
-  _/      _/  _/                                
- _/      _/        _/_/    _/      _/      _/   
-_/      _/  _/  _/_/_/_/  _/      _/      _/    
- _/  _/    _/  _/          _/  _/  _/  _/       
-  _/      _/    _/_/_/      _/      _/
-
+----
+VIEW
+----
 */
-// 
+
 // directly instantiated assinging content
 /**
  * [View description]
