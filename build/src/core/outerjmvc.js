@@ -1,11 +1,7 @@
 /*
-
-         _/  _/      _/  _/      _/    _/_/_/                            _/                          
-        _/  _/_/  _/_/  _/      _/  _/              _/_/    _/    _/  _/_/_/_/    _/_/    _/  _/_/   
-       _/  _/  _/  _/  _/      _/  _/            _/    _/  _/    _/    _/      _/_/_/_/  _/_/        
-_/    _/  _/      _/    _/  _/    _/            _/    _/  _/    _/    _/      _/        _/           
- _/_/    _/      _/      _/        _/_/_/        _/_/      _/_/_/      _/_/    _/_/_/  _/
-
+----------
+JMVC outer
+----------
 */          
 $JMVC = {
     loaded : false,
@@ -49,10 +45,12 @@ $JMVC = {
     modules : Modules,
     nsCheck : jmvc.ns.check,
     nsMake : jmvc.ns.make,
+
+    // Constructors
     Event : Event,
     Errors : Errors,
     Interface : Interface,
-    promise : jmvc.promise,
+    Promise : Promise,
 
     parselang : jmvc.parselang,
 
@@ -74,7 +72,7 @@ $JMVC = {
     prototipize : jmvc.prototipize,
     purge : jmvc.purge,
     parse : Parser.parse,
-    render: jmvc.render,
+    render: jmvc.render, // !api
     require : jmvc.require,
     lang : jmvc.lang,
     
@@ -91,16 +89,6 @@ $JMVC = {
 
     implement : jmvc.implement,
     //getController :   function(n) {return jmvc.factory_method('controller', n); }
-
-    // getNum : function (str) {return parseInt(str, 10); },
-    // getFloat : function (str) {return parseFloat(str, 10); },
-    // pFloat : function (f) {return 1 * f; },
-    // pInt : function (i) {return i >> 0; },
-    // mRound : function (n) {return (n + 0.5) >> 0; },
-    // mFloor : function (n) {(n > 0 ? n : n + 1) >> 0; },
-    // mCeil : function (n) {return (n + (n > 0 && !!(n % 1))) >> 0; },
-    // num : function (n) {return parseFloat(n.toFixed(10), 10); },
-    //noop : function () {return noop; },
 
     
     /**
@@ -145,33 +133,23 @@ $JMVC = {
                         error : function (e) {alert('errore'); }
 
                     }
-                );/*
-                JMVC.io.get(
-                    JMVC.vars.baseurl + '/app/extensions/' + ext + '/xdoc.xml',
-                    function (doc) {
-                        JMVC.xdoc.elements[ext] = doc;
-                        console.debug('doc : ' + doc)
-                    },
-                    false, {}, false,
-                    function (e) {alert('errore'); }
-                );*/
+                );
             } catch (e){}
         }
         JMVC.xdoc.toggle(ext);
     },
-
-
-    /*
-    MARKUP NEEDED to use that function:
-    to make it work move the jmvc.js at the end of the body
-    <div style="width:30%;margin:0 auto;margin-top:10px;display:none" id="JMVCisloading">
-        <div id="JMVCloadingmessage" style="text-align:center;font-size:10px;font-family:Verdana, sans serif; color:#aaa"></div>
-        <div style="background-color:#f5f5f5;margin-top:5px;border:1px solid #aaa;">
-            <div style="width:0px;background-color:#8f8;height:3px" id="JMVCloading"></div>
-        </div>
-    </div>
-     */
+    
     loading : function (intperc, msg) {
+        /*
+        MARKUP NEEDED to use that function:
+        to make it work move the jmvc.js at the end of the body
+        <div style="width:30%;margin:0 auto;margin-top:10px;display:none" id="JMVCisloading">
+            <div id="JMVCloadingmessage" style="text-align:center;font-size:10px;font-family:Verdana, sans serif; color:#aaa"></div>
+            <div style="background-color:#f5f5f5;margin-top:5px;border:1px solid #aaa;">
+                <div style="width:0px;background-color:#8f8;height:3px" id="JMVCloading"></div>
+            </div>
+        </div>
+         */
         try {
             document.getElementById('JMVCisloading').style.display = 'block';
             document.getElementById('JMVCloading').style.width =  ~~intperc + '%';
