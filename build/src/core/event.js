@@ -1,11 +1,7 @@
 /*
-
-    _/_/_/_/                                    _/      
-   _/        _/      _/    _/_/    _/_/_/    _/_/_/_/   
-  _/_/_/    _/      _/  _/_/_/_/  _/    _/    _/        
- _/          _/  _/    _/        _/    _/    _/         
-_/_/_/_/      _/        _/_/_/  _/    _/      _/_/
-
+-----
+EVENT
+-----
 */
 Event = function (sender) {
     this.sender = sender;
@@ -27,9 +23,9 @@ Event.prototype = {
      * @return {[type]}      [description]
      */
     'notify' : function (args) {
-        var i,
-            l;
-        for (i = 0, l = this.listeners.length; i < l; i += 1) {
+        var i = 0,
+            l = this.listeners.length;
+        for (null; i < l; i++) {
             this.listeners[i](this.sender, args);
         }
     }
