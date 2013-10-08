@@ -21,7 +21,7 @@ JMVC.controllers.api = function () {
 			tab_ext = new JMVC.tabs.tab(/*'o'*/),
 			tabs_inner = {},
 			sections = [
-				'jmvc', 'constructors', 'model', 'view'
+				'jmvc', 'constructors'/*, 'errors'*/, 'model', 'view'
 				, 'controller', 'dom', 'events', 'head'
 				, 'io', 'array', 'object', 'string'
 				, 'util', 'match'
@@ -169,7 +169,7 @@ JMVC.controllers.api = function () {
 
 			JMVC.github.forkme('fedeghe');
 			
-			JMVC.widget.countdown.start('#countdown', new Date(2013, 8, 30));
+			JMVC.widget.countdown.start('#countdown', new Date(2013, 9, 30));
 			
 			JMVC.events.delay(function () {
 				for (var j = 0, l = sections.length;  j < l; j++) {
