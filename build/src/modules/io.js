@@ -1,17 +1,8 @@
-/**
-
-
-------------------
-
-        _/           
-             _/_/    
-      _/  _/    _/   
-     _/  _/    _/    
-    _/    _/_/ 
-
-------------------
-
-**/
+/*
+---------------
+AJAX sub-module
+---------------
+*/
 JMVC.io = {
 
     'xhrcount' : 0,
@@ -106,25 +97,31 @@ JMVC.io = {
                 //headers received
                 cb_opened(xhr);
             } else if (xhr.readyState === 1) {
+
                 switch (method) {
-                case 'POST':
-                    try {
-                        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                        xhr.send(data || true);
-                    } catch (e1) {}
+                    case 'POST':
+                        try {
+                            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                            xhr.send(data || true);
+                        } catch (e1) {}
                     break;
-                case 'GET':
-                    try {
-                        tmp = {
-                            'xml' : 'text/xml',
-                            'html' : 'text/html',
-                            'json' : 'application/json'
-                        }[type];
-                        xhr.setRequestHeader("Accept", tmp + "; charset=utf-8");
+                    case 'GET':
+                        try {
+                            tmp = {
+                                'xml' : 'text/xml',
+                                'html' : 'text/html',
+                                'json' : 'application/json'
+                            }[type];
+                            xhr.setRequestHeader("Accept", tmp + "; charset=utf-8");
+                            xhr.send(null);
+                        } catch (e2) {}
+                    break;
+                    default :
+                        alert(method)
                         xhr.send(null);
-                    } catch (e2) {}
                     break;
                 }
+                
             }
         };
 
@@ -166,6 +163,13 @@ JMVC.io = {
      */
     'get' : function (uri, cback, sync, data, cache, err) {
         return JMVC.io.ajcall(uri, {cback : cback, method : 'GET', sync : sync, data : data, cache : cache, error : err});
+    },
+
+
+
+
+    'delete' : function (uri, cback) {
+        return JMVC.io.ajcall(uri, {cback : cback || function () {}, method : 'DELETE'});
     },
 
     /**
