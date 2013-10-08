@@ -1,5 +1,5 @@
 function t(){
-	var p = JMVC.promise.create();
+	var p = new JMVC.Promise();
 	window.setTimeout(function () {
 		console.debug('uan');
 		p.done();
