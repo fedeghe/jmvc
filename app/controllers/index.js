@@ -223,17 +223,34 @@ JMVC.controllers.index = function () {
 		/* directly render some code */
 		this.render('<b>yupeeee</b>');
 	};
+
 	this.action_codes = function () {
 		if (confirm('That may hang your browser! ...continue?')) {
 			var content = '',
 				i = 10;
-			for (null; i < 10000; i += 1) {
-				content += i + ' : &#' + i + ';<br />';
+			for (null; i < 2<<15; i += 1) {
+				//content += i + ' : &#' + i + ';<br />';
+				content += i + ' : ' + String.fromCharCode(i) + '<br />';
 			}
-			this.render(content);
+			this.render(content, function (){
+				var t = [10367,10431,10491,10493,10494,10487,10479,10463],
+					i = 0,
+					l = t.length;
+				window.setInterval(
+					//function (){JMVC.head.title(String.fromCharCode(JMVC.util.rand(10240, 10495)))},
+					function (){JMVC.head.title(String.fromCharCode(t[i])); i = (i+1)%l; },
+					100
+				);
+			});
 		}else{
 			this.render(':D');
+			window.setTimeout(
+				function () {window.document.location.href = JMVC.vars.baseurl; },
+				3000
+			);
 		}
+
+
 	};
 	this.action_ascii = function () {
 		var content = '', i =0;
