@@ -76,9 +76,15 @@ $JMVC = {
     require : jmvc.require,
     lang : jmvc.lang,
     
-    set : jmvc.set,
+    set : jmvc.set,    
     get : jmvc.get,
     del : jmvc.del,
+
+    //experimental
+    set2 : jmvc.set2,
+    get2 : jmvc.get2,
+    del2 : jmvc.del2,
+
     htmlspecialchars : jmvc.htmlspecialchars,
     htmlspecialchars_decode : jmvc.htmlspecialchars_decode,
 
