@@ -11,16 +11,15 @@ JMVC.controllers.google = function () {
 			v = JMVC.getView('vacuum'),
 			that = this;
 
-		v.set({'style' : 'font-family:verdana;margin:0 auto;width:285px;height:105px;margin-top:80px;position:relative', 'content' : '&nbsp;', 'id' : 'extralogo'});
+		v.set({
+			'style' : 'font-family:verdana;margin:0 auto;width:285px;height:105px;margin-top:80px;position:relative;',
+			'content' : '&nbsp;',
+			'id' : 'extralogo'
+		});
 
 		/* JMVC.p.real && JMVC.head.lib('jsapi'); */
 		
 		v.render(function () {
-
-			/*
-			var node = JMVC.dom.create('div', {'id' : 'search'});
-			JMVC.dom.append(JMVC.WD.body, node);
-			*/
 
 			var newlogo = JMVC.dom.find('#extralogo'),
 				G = new JMVC.plotter.letter('G', 22, 37),
