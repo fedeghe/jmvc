@@ -293,7 +293,6 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 								'<li>clean the cave hitting <span class="ks">d</span> (%doomObstacles% available); pause/resume with <span class="ks">p</span></li>' +
 							'</ul>' +
 						'</div>' +
-						//'<div id="socialCnt"></div>'+
 					'</div>' +
 					'<input id="start" type="button" value="START"/>',
 
@@ -301,16 +300,8 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 					'<div id="outro">' +
 						'<p>You scored <span>%score%</span> points</p>' +
 						'<div id="%hscontainerid%"></div>' +
-						//'<div id="socialCntGO"></div>'+
 					'</div>' +
-					'<input id="restart" type="button" value="PLAY AGAIN" />',
-				submitLine :
-					'<span class="rank">%rank%</span>' +
-					'<span class="name">' +
-						'<input type="text" id="yourname" placeholder="???" maxLength="7"/>' +
-						'<input type="button" value="&raquo;" id="submitscore" />' +
-					'</span>' +
-					'<span class="score">%score%</span>'
+					'<input id="restart" type="button" value="PLAY AGAIN" />'
 			}
 		},
 		cache = {
@@ -329,7 +320,6 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 			//grows up
 			'time' : 0
 		};
-	//console.dir(conf.tpl.socials);
 
 
 	// generic onerror
