@@ -1,13 +1,16 @@
 /*
-----
+-----
 INIT
-----
+-----
 */
 // returning object created in that function, here $JMVC will be JMVC
 var $JMVC,
+    // version 
     JMVC_VERSION = "$version$",
+    // review
     JMVC_REVIEW = "$review$",
-    JMVC_PACKED = false, //'.min', 
+    // experimental (ignore it)
+    JMVC_PACKED = "$packed$", //'.min' 
 
     /**
      * inner jmvc literal, will contain almost all the functions used to 
@@ -111,6 +114,8 @@ var $JMVC,
     Event,
     Promise,
     Errors,
+
+    Extension,
 
     /**
      * in case some modules need to be always loaded here's the place to set them
