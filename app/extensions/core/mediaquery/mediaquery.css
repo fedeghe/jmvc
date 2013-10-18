@@ -2,26 +2,26 @@
 @media only screen 
 and (min-device-width : 320px) 
 and (max-device-width : 480px) {
-	%mq_smart_general%
+	$mq_smart_general$
 }
 
 /* Smartphones (landscape) ----------- */
 @media only screen 
 and (min-width : 321px) {
-	%mq_smart_landscape%
+	$mq_smart_landscape$
 }
 
 /* Smartphones (portrait) ----------- */
 @media only screen 
 and (max-width : 320px) {
-	%mq_smart_portrait%
+	$mq_smart_portrait$
 }
 
 /* iPads (portrait and landscape) ----------- */
 @media only screen 
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) {
-	%mq_ipads_general%
+	$mq_ipads_general$
 }
 
 /* iPads (landscape) ----------- */
@@ -29,7 +29,7 @@ and (max-device-width : 1024px) {
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : landscape) {
-	%mq_ipads_landscape%
+	$mq_ipads_landscape$
 }
 
 /* iPads (portrait) ----------- */
@@ -37,7 +37,7 @@ and (orientation : landscape) {
 and (min-device-width : 768px) 
 and (max-device-width : 1024px) 
 and (orientation : portrait) {
-	%mq_ipads_portrait%
+	$mq_ipads_portrait$
 }
 
 /* iPads Retina (portrait and landscape) */
@@ -45,7 +45,7 @@ and (orientation : portrait) {
 and (min-device-width : 768px) 
 and (max-device-width : 1024px)
 and (-webkit-min-device-pixel-ratio: 2) {
-	%mq_ipads_retina_general%	
+	$mq_ipads_retina_general$
 }
 /* iPads Retina (portrait) */
 @media only screen 
@@ -53,7 +53,7 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : portrait)
 and (-webkit-min-device-pixel-ratio: 2) {
-	%mq_ipads_retina_general%	
+	$mq_ipads_retina_general$
 }
 /* iPads Retina (landscape) */
 @media only screen 
@@ -61,7 +61,7 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : landscape)
 and (-webkit-min-device-pixel-ratio: 2) {
-	%mq_ipads_retina_general%	
+	$mq_ipads_retina_general$	
 }
 
 
@@ -70,18 +70,18 @@ and (-webkit-min-device-pixel-ratio: 2) {
 /* Desktops and laptops ----------- */
 @media only screen 
 and (min-width : 1224px) {
-	%mq_dsktp_lptp%
+	$mq_dsktp_lptp$
 }
 
 /* Large screens ----------- */
 @media only screen 
 and (min-width : 1824px) {
-	%mq_dsktp_lptp_large%
+	$mq_dsktp_lptp_large$
 }
 
 /* iPhone 4 ----------- */
 @media
 only screen and (-webkit-min-device-pixel-ratio : 1.5),
 only screen and (min-device-pixel-ratio : 1.5) {
-	%mq_iphone4%
+	$mq_iphone4$
 }
