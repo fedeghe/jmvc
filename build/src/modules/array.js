@@ -68,5 +68,9 @@ JMVC.array = {
             }
         }
         return -1;
+    },
+
+    'shuffle' : function (arr) {
+        return arr.sort(function(){return  Math.random() - .5; });
     }
 };
