@@ -25,8 +25,8 @@ Event.prototype = {
     'notify' : function (args) {
         var i = 0,
             l = this.listeners.length;
-        for (null; i < l; i++) {
-            this.listeners[i](this.sender, args);
+        while (i < l) {
+            this.listeners[i++](this.sender, args);
         }
     }
 };
