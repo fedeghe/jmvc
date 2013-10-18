@@ -25,7 +25,7 @@ JMVC.events = {
         }
         var f = function (e) {fn.call(el, e || W.event); };
         if (W.addEventListener) {
-            el.addEventListener(tipo, fn, false);
+            el.addEventListener(tipo, f, false);
         } else if (W.attachEvent) {
             el.attachEvent('on' + tipo, f);
         } else {
