@@ -354,9 +354,9 @@ JMVC.extend('console', {
 			JMVC.events.bind(JMVC.dom.find('#get-url'), 'click', function () {
 				var vals = getValues(),
 					url = [JMVC.vars.baseurl, JMVC.c, JMVC.a].join(JMVC.US) + JMVC.object.obj2qs({
-						h : vals[0],
-						j : vals[1],
-						c : vals[2],
+						h : vals[0] || '<!-- no html content -->',
+						j : vals[1] || '/* no javascript content */',
+						c : vals[2] || '/* no css content */',
 						l : JMVC.dom.find('#fw').value
 					}) + (hash ? "#" + hash : '');
 				prompt("Copy the following url", url);
