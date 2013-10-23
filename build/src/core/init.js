@@ -1,71 +1,67 @@
 /*
------
 INIT
------
+There almost all vars adre declared
 */
-// returning object created in that function, here $JMVC will be JMVC
+//
+// the returning object created in that function,
+// global JMVC will take the $JMVC ref
 var $JMVC,
-    // version 
+
+    // version (vars.json)
     JMVC_VERSION = "$version$",
-    // review
+
+    // review (vars.json)
     JMVC_REVIEW = "$review$",
+
     // experimental (ignore it)
     JMVC_PACKED = "$packed$", //'.min' 
 
-    /**
-     * inner jmvc literal, will contain almost all the functions used to 
-     * compose the $JMVC object and thus the returning JMVC
-     * @type {Object}
-     */
+    // inner jmvc literal, will contain almost all the functions used to 
+    // compose the $JMVC object and thus the returning JMVC
+    // @type {Object}
     jmvc = {},
 
     // url separator
     US = '/',
 
-    /**
-    * in some cases is useful to automatically distinguish between a
-    * developing url and
-    * production url
-    * will be returned in a var container accessible from the JMVC object
-    */
+    // in some cases is useful to automatically distinguish between a
+    // developing url and production url
+    // will be returned in a var container accessible from the JMVC object
+    // through JMVC.vars.baseurl & JMVC.vars.devurl
     DEV_URL = WDL.protocol + US + US + 'www.jmvc.dev',
     PROD_URL = WDL.protocol + US + US + 'www.jmvc.org',
 
-    /*
-     * two paths for
-     * > extensions, used as basepath by JMVC.require
-     * > test
-     * > langs
-     */
+    //
+    // paths for
+    // extensions: used as basepath by JMVC.require
+    // test: tests
+    // lang: lang files
     PATH = {
-        /**
-         * extensions path, used as base path in the JMVC.require function
-         * @type {string}
-         */
+        //
+        // extensions path, used as base path in the JMVC.require function
+        // @type {string}
         ext  : US + 'app' + US + 'extensions' + US,
 
-        /**
-         * test suite path, every controller matching "test_foocontroller"
-         * will automatically load the test suite and
-         *  
-         * foocontroller.js will be 
-         * searched into the /app/controller/test directory
-         * to use test suite a require('test') is needed until TODO is done
-         * @type {string}
-         */
+        //
+        // test suite path, every controller matching "test_foocontroller"
+        // will automatically load the test suite and
+        //  
+        // foocontroller.js will be 
+        // searched into the /app/controller/test directory
+        // to use test suite a require('test') is needed until TODO is done
+        // @type {string}
         test : US + 'app' + US + 'testsuite' + US,
 
-        /**
-         * path for lang files, loaded with the JMVC.lang function
-         * @type {string}
-         */
+        //
+        // path for lang files, loaded with the JMVC.lang function
+        // @type {string}
         lang : US + 'app' + US + 'i18n' + US
     },
 
     JMVC_EXT = {
-        controller : (JMVC_PACKED || '') + '.js',
-        model : JMVC_PACKED ? '.min.js' : '.js',
-        view : '.html',
+        'controller' : (JMVC_PACKED || '') + '.js',
+        'model' : (JMVC_PACKED || '') + '.js',
+        'view' : '.html',
         'interface' : '.interface' + (JMVC_PACKED || '') + '.js'
     },
 
@@ -106,8 +102,6 @@ var $JMVC,
      */
     Parser,
 
-    
-
     /**
      * some useful constructors 
      */
@@ -122,8 +116,6 @@ var $JMVC,
      * @type {Array}
      */
     Modules = ['vendors/google/analytics', 'core/cookie'],
-
-
 
     /**
      * preloader
@@ -156,7 +148,7 @@ var $JMVC,
     // ajax   : use xhr to get the source and evals
     // script : creates a script tag with the right url to the source
     // note : seems like script mode load faster but
-    getmode = 'ajax'; // script or ajax
+    getmode = 'ajax'; // {script, ajax}
 
 
     // ===========================================

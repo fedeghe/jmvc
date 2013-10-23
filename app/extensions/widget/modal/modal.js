@@ -18,10 +18,6 @@ JMVC.extend('modal',{
 			screenSize = JMVC.dim.getScreenData(),
 			viewportSize = JMVC.dim.getViewportSize(),
 			viewHeight = viewportSize[1];
-		//console.debug(bodysize[1]);
-		//console.debug(viewportSize[1]);
-		//console.debug(viewHeight);
-		//console.debug(height);
 		
 		//create bg
 		bg = JMVC.dom.create(

@@ -97,12 +97,7 @@ $JMVC = {
     //getController :   function(n) {return jmvc.factory_method('controller', n); }
 
     
-    /**
-     * [each description]
-     * @param  {[type]} o    [description]
-     * @param  {[type]} func [description]
-     * @return {[type]}      [description]
-     */
+    // really really bad
     each : jmvc.each,
     
     /**

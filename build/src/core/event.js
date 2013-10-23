@@ -1,7 +1,6 @@
 /*
------
-EVENT
------
+Event JMVC object
+use mainly for observers
 */
 Event = function (sender) {
     this.sender = sender;

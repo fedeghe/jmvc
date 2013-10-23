@@ -3,9 +3,9 @@ JMVC.require('core/lib/math/dd');
 JMVC.extend(
 	'canvas', {
 		'create' : function (container, id, w, h, bgcolor) {
-			/**
-			 *
-			 */
+			
+			// create basic canvas to draw in
+			// 
 			var canvas = JMVC.dom.create('canvas', {id : id, width : w, height : h},' '),
 				ctx = canvas.getContext('2d'),
 				elements = {},
