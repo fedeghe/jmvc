@@ -17,6 +17,8 @@ JMVC.extend('responsive', {
 		 */
 		JMVC.events.bind(JMVC.W, 'resize', JMVC.responsive.wChange);
 
+		JMVC.head.meta("viewport","width=device-width; initial-scale=1.0");
+
 		/**
 		 * on dom ready trigger onchange passing current window width
 		 */
