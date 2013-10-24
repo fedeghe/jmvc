@@ -9,6 +9,7 @@ JMVC.extend('console', {
 
 	'init' : function () {
 		JMVC.head.meta("generator", "jmvc resident in your machine");
+
 	},
 
 	'_status' : false,
@@ -38,6 +39,8 @@ JMVC.extend('console', {
 
 	'toggle' : function () {
 
+		var fsmode = false,
+			title = JMVC.head.title();
 		if (JMVC.console._status) {
 
 			JMVC.dom.remove(JMVC.dom.find('#jmvc-console'));
@@ -74,6 +77,7 @@ JMVC.extend('console', {
 					"style" : {"height":"0px","width":"0px","borderBottom":"30px solid " + triBrdCol,"borderLeft":"20px solid #333", "marginTop":"-10px"}
 				},
 				brd = '<div class=" gbox" style="float: right; height: 0px; width: 0px; border-bottom: 30px solid rgb(96, 96, 96); border-left: 20px solid rgb(51, 51, 51); margin-top: -10px;"></div>',
+				version = 0.2,
 				config  = [
 					{
 						"target" : '#jmvc-console',
@@ -88,13 +92,19 @@ JMVC.extend('console', {
 							},{
 								"tag":"h5",
 								"float":"left",
-								"html":"web console v.0.1",
+								"html":"web console v." + version,
 								"style" : {"color":"#555", "paddingLeft":"10px"}
 							},{
 								"tag":"button",
 								"float":"left",
 								"html":"GET URL",
 								"attrs" : {"id":"get-url"},
+								"class" : "round4"
+							},{
+								"tag":"button",
+								"float":"left",
+								"html":"FullScreen",
+								"attrs" : {"id":"go-fs"},
 								"class" : "round4"
 							},
 
@@ -262,6 +272,14 @@ JMVC.extend('console', {
 			}
 
 
+			
+
+			
+
+
+			
+
+
 			if (JMVC.hash.match(/html|css|javascript|preview|options/)) {
 				JMVC.dom.addClass(JMVC.dom.find('#' + JMVC.hash), 'active');
 				JMVC.css.show(JMVC.dom.find('#in-' + JMVC.hash));
@@ -361,9 +379,11 @@ JMVC.extend('console', {
 					}) + (hash ? "#" + hash : '');
 				prompt("Copy the following url", url);
 			});
+			JMVC.events.bind(JMVC.dom.find('#go-fs'), 'click', function () {
+				gofs();
+			});
+			JMVC.events.bind(JMVC.dom.find('#preview'), 'click', function () {update(); });
 			
-
-
 			function getValues() {
 				return [
 					JMVC.dom.find('#content-html').value,
@@ -371,12 +391,7 @@ JMVC.extend('console', {
 					JMVC.dom.find('#content-css').value
 				];
 			}
-
-			JMVC.events.bind(JMVC.dom.find('#preview'), 'click', function () {update(); });
-
-
-
-
+			
 			function update(){
 				var vals = getValues(),
 					h = vals[0],
@@ -391,56 +406,43 @@ JMVC.extend('console', {
 					'options':JMVC.console.options
 				});
 
-				
+				//exit fullscreen
+				JMVC.dom.find('#outarea').contentWindow.document.onkeyup =  function (e) {
+					if (fsmode && e.keyCode == 27) {
+						JMVC.head.title(title);
+						JMVC.css.style(JMVC.dom.find('#outarea'),{'position':'relative'});
+						fsmode = false;
+					};
+				}
 
-				
 				try {
-					//console.log(iframe);
-					//console.log(j);
 					!!lib && iframe.contentWindow.eval('(function() {var l = document.createElement("script"); l.type = "text/javascript"; l.src = "' + lib + '";var s = document.getElementsByTagName("head")[0]; s.appendChild(l);})();');
 					iframe.contentWindow.eval(j);
 				}catch(e){
 					console.error(e);
 				}
-				
-			
 			}
+
+			function gofs(){
+				JMVC.head.title('Press esc to exit preview');
+				JMVC.css.style(
+					JMVC.dom.find('#outarea'),
+					{
+						'position':'absolute',
+						'top':'0px',
+						'left':'0px',
+						'width':'100%',
+						'height':'100%'
+					}
+				);
+				JMVC.dom.find('#outarea').contentDocument.documentElement.focus();
+				fsmode = true;
+			}
+
 			JMVC.events.delay(function () {update(); }, 0);
 
-
-
-
-
-/*
-
-			JMVC.dom.html(JMVC.dom.find('#htmlarea'), JMVC.htmlspecialchars("<h1 id='hi'>hello</h1>"));
-			JMVC.dom.html(JMVC.dom.find('#jsarea'), JMVC.htmlspecialchars("var foo = document.getElementById('hi');\nconsole.debug(foo);"));
-			JMVC.dom.html(JMVC.dom.find('#cssarea'), JMVC.htmlspecialchars("body{\n\tbackground-color:#fede76;\n}"));
-
-
-			JMVC.events.bind(JMVC.dom.find('#go'), 'click', function () {update(); });
-
-			function update(){
-				
-				var h = JMVC.htmlspecialchars_decode(JMVC.dom.find('#htmlarea').value),
-					j = JMVC.htmlspecialchars_decode(JMVC.dom.find('#jsarea').value),
-					c = JMVC.dom.find('#cssarea').value;
-
-				JMVC.dom.find('#outarea').contentDocument.documentElement.innerHTML = JMVC.string.replaceall(JMVC.console.tpl, {
-					'style' : c,
-					'script' : j,
-					'body' : h
-				});
-
-				
-				try {
-					JMVC.dom.find('#outarea').contentWindow.eval(j);
-				}catch(e){}
-			}
-			JMVC.events.delay(function () {update(); }, 0);
-			
-*/
-
+			//fullscreen ?
+			JMVC.p.fullscreen && gofs();
 		}
 		JMVC.console._status = !JMVC.console._status;
 	}

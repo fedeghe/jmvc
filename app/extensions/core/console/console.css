@@ -123,7 +123,7 @@ a#options .text/*.img*/{
 	background-color: #606060;*/
 }
 
-button#get-url{
+button#get-url, button#go-fs{
 	color:#fff;
 	background-color:#888;
 	padding:2px;
