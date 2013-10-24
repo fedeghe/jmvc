@@ -1,13 +1,14 @@
 /*
-------
-PARSER 
-------
+======
+PARSER
+======
 */
 Parser = {
     /**
-     * [tpl description]
-     * @param  {[type]} content [description]
-     * @return {[type]}         [description]
+     * microtemplating function (http://ejohn.org/blog/javascript-micro-templating/)
+     * Parses a string looking for  
+     * @param  {string} content the content that must be parsed
+     * @return {string}         parsed content
      */
     tpl : function (content) {
         return (content.match(/\<%/)) ?
@@ -26,41 +27,66 @@ Parser = {
         })(content) : content;
     },
 
-    // This function get a content and substitute jmvc.vars
-    // and direct view placeholders like {{viewname .... }}
-    // returns parsed content
     /**
-     * [parse description]
+     * This function get a content and substitute jmvc.vars
+     * and direct view placeholders like {{viewname .... }}
+     * returns parsed content
+     * 
      * @param  {[type]} content [description]
      * @return {[type]}         [description]
      */
     parse : function (content) {
-        // hook
-        var cont = content, // the view content
-            RX = {
-                'patt' : "{{(.[^\\}]*)}}", // for hunting view placeholders
-                'pattpar' : "\\s(.[A-z]*)=`(.[^/`]*)`", // for getting explicit params passed within view placeholders
-                'pattvar' : "\\$(.[^\\$\\s}]*)\\$", // for variables
-                'viewname' : "^(.[A-z_\/]*)\\s" // for getting only the viewname
-            },
-            res, // results of view hunt 
-            //resvar, // variables found ##unused
-            myview, // the view instance
-            tmp1,
-            tmp2, // two temporary variables for regexp results
-            i = 0,
-            j,
-            k, // some loop counters
-            limit = 100, // recursion limit for replacement
-            viewname, // only the view name
-            orig, // original content of {{}} stored for final replacement
-            register, // to store inner variables found in the placeholder
-            go_ahead = true; //flag
-        
-        if (!!!content) {
+
+        if (typeof content === undef) {
             return '';
         }
-        //beforeParse hook
+
+        // the view content
+        var cont = content,
+            RX = {
+                //
+                // for hunting view placeholders
+                'patt' : "{{(.[^\\}]*)}}",
+                //
+                // for getting explicit params passed within view placeholders
+                'pattpar' : "\\s(.[A-z]*)=`(.[^/`]*)`",
+                //
+                // for variables
+                'pattvar' : "\\$(.[^\\$\\s}]*)\\$",
+                //
+                // for getting only the viewname
+                'viewname' : "^(.[A-z_\/]*)\\s"
+            },
+            //
+            // some loop counters
+            i = 0, j, k,
+            //
+            // recursion limit for replacement
+            limit = 100,
+            //
+            // flag to stop parsing
+            go_ahead = true,
+            //
+            // only the view name
+            viewname,
+            //
+            // original content of {{}} stored for final replacement
+            orig,
+            //
+            // to store inner variables found in the placeholder
+            register,
+            //
+            // results of view hunt 
+            res,
+            //
+            // the view instance
+            myview,
+            //
+            // two temporary variables for regexp results
+            tmp1, tmp2;
+
+        // check
+        // beforeParse hook
         jmvc.hook_check('onBeforeParse', [cont]);
         
         while (i < limit) {
@@ -104,8 +130,6 @@ Parser = {
                         alert('`'+viewname+'` view not loaded.\nUse Factory in the controller to get it. \n\njmvc will'+
                             ' load it for you but variables are\n lost and will not be replaced.');
                     */
-                    //console.debug(viewname)
-                    //$JMVC.factory('view', viewname);
                     myview = $JMVC.factory('view', viewname);
                 } else {
                     myview = $JMVC.views[viewname];
@@ -140,21 +164,21 @@ Parser = {
                 i = limit;
             }
         }
-        
         // now $JMVC.vars parse
-        
         for (j in $JMVC.vars) {
             if ($JMVC.vars.hasOwnProperty(j)) {
                 cont = cont.replace(new RegExp("\\$" + j + "\\$", 'g'), $JMVC.vars[j]);
             }
         }
-        
-        // use script on template function
+        //
+        // use Resig microtemplating function on final content
         cont = Parser.tpl(cont);
-
-        //afterParse hook
+        //
+        // afterParse hook
         jmvc.hook_check('onAfterParse', [cont]);
         return cont;
     }
 };
-//END PARSER
+//
+// END PARSER
+//

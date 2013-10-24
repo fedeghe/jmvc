@@ -1,18 +1,21 @@
 JMVC.controllers.api = function () {
+
 	"use strict";
 
 	this.action_index = function () {
 		JMVC.require(
-			'widget/tabs'
-			,'core/codeview/script'
-			,'core/xmlparser'
-			,'core/mobile'
-			,'core/responsive/basic'
-			,'widget/countdown'
-			,'vendors/github/forkme'
+			'widget/tabs',
+			'core/codeview/script',
+			'core/xmlparser',
+			'core/mobile',
+			'core/responsive/basic',
+			'widget/countdown',
+			'vendors/github/forkme'
 		);
 		JMVC.events.loadify(500);
-
+		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/core/api.css', true, false);// parsed
+		JMVC.head.favicon("/media/favicon.ico");
+		
 		var main  = JMVC.getView('vacuum'),
 			doc_tpl = JMVC.getView('api/doctpl'),
 			apintro = JMVC.getView('api/apintro'),
@@ -26,12 +29,9 @@ JMVC.controllers.api = function () {
 				, 'io', 'array', 'object', 'string'
 				, 'util', 'match'
 			];
-
+			
+			
 		main.set('id', 'desc');
-
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/core/api.css', true, false);// parsed
-		JMVC.head.favicon("/media/favicon.ico");
-		
 
 		JMVC.io.get(JMVC.vars.baseurl + '/media/documentation.xml', function (doc) {
 

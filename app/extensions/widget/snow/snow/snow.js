@@ -29,9 +29,16 @@ JMVC.extend('snow', {
 			var left = JMVC.util.rand(0, bodysize[0]-20),
 				top = JMVC.util.rand(0, bodysize[1]-20);
 			this.s = JMVC.util.rand(5,40);
-			this.node = JMVC.dom.create('span', {'class':'flake', 'style':'line-height:'+this.s+'px;height:'+this.s+'px;font-size:'+this.s+'px;top:'+top+'px;left:'+left+'px;'}, '&bull;');
-			this.amplitude = JMVC.util.rand(1, 3) *0.5;
-			this.speed = 0.5 + Math.random();
+			this.node = JMVC.dom.create(
+				'span',
+				{
+					'class':'flake',
+					'style':'line-height:' + this.s + 'px;height:' + this.s + 'px;font-size:' + this.s + 'px;top:' + top + 'px;left:' + left + 'px;'
+				},
+				'&bull;'
+			);
+			this.amplitude = JMVC.util.rand(0.1, 2) *0.5;
+			this.speed = 0.5 + Math.random()*.5;
 			
 			this.length = JMVC.util.rand(10, 20);
 			this.cursor = 0;
@@ -41,12 +48,7 @@ JMVC.extend('snow', {
 		
 		
 		function getFlake() {
-			//var s = JMVC.util.rand(5,40),
-			//	f = JMVC.dom.create('span', {'class':'flake', 'style':'line-height:'+s+'px;height:'+s+'px;font-size:'+s+'px;left:'+JMVC.util.rand(0,bodysize[0]-20)+'px'}, '&bull;');
-			
 			var f = new Flake();
-			
-			
 			JMVC.snow.vars.flakes.push(f);
 			JMVC.dom.append(JMVC.snow.vars.trg, f.node);
 		}

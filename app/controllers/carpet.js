@@ -17,13 +17,8 @@ JMVC.controllers.carpet = function () {
 			that = this;
 
 		/* top = left = 100 from default css */
-			
-		
-
 
 		index.render(function(){
-
-
 			/* cssmargin5 * sides2 +border1 */
 			jmap = JMVC.carpet.create(JMVC.dom.body(), Ww-11, Wh-11, 3);
 
@@ -35,14 +30,10 @@ JMVC.controllers.carpet = function () {
 				jmap.beforeRemove(function (i) {console.debug('removing ID: '+i); });
 				jmap.afterRemove(function (i) {console.debug('removed ID: '+i); });
 			}
-			/* carpet.toggleDir('oriz', false); */
+			
 			jmap.enableSpeed(4.2);
 			
-			/*
-			console.dir(jmap.carpet.actualNodes);
-			jmap.move(-10,1)
-			console.dir(jmap.carpet.actualNodes);
-			*/
+			//maybe callback
 			f && f();
 		});
 
@@ -52,7 +43,7 @@ JMVC.controllers.carpet = function () {
 		var that = this;
 
 		this.action_index(function () {
-			console.debug(that);
+			//console.debug(that);
 			var jmap = that.get('jmap');
 				jmap.beforeAdd(function (i) {console.debug('adding ID: '+i); });
 				jmap.afterAdd(function (i) {console.debug('added ID: '+i); });

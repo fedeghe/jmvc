@@ -25,7 +25,6 @@ JMVC.controllers.cubic = function () {
 		var t = JMVC.getView('test/indextbl'),
 			that = this;
 	
-		/* console.debug(t.content) */
 		t.render(function(){
 			
 			var lett = false,
@@ -33,10 +32,6 @@ JMVC.controllers.cubic = function () {
 				M = JMVC.dom.create('div',{'class':'gbox', 'style':'background-color:#0e0'},lett?'<div class="lett lM">M</div>':''),
 				V = JMVC.dom.create('div',{'class':'gbox', 'style':'background-color:#00e'},lett?'<div class="lett lV">V</div>':''),
 				C = JMVC.dom.create('div',{'class':'gbox', 'style':'background-color:#ee0'},lett?'<div class="lett lC">C</div>':'');
-			
-			
-			
-			
 			
 			JMVC.dom.append(JMVC.dom.find('#cellJ'), [J]);
 			JMVC.dom.append(JMVC.dom.find('#cellM'), [M]);
@@ -55,14 +50,8 @@ JMVC.controllers.cubic = function () {
 			JMVC.dom.append(C, JMVC.border.xtop(10,200, -50,-80,'#aa0'));
 			JMVC.dom.append(C, JMVC.border.xleft(200,50, -10,-70,'#660'));
 			
-			
-			
-			/* console.dir(JMVC.dim.window()) */
-			
 			JMVC.snow.start(JMVC.dom.body());
-			
-		});
-		
+		});	
 	}
 };
 

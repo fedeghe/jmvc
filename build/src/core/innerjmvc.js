@@ -9,7 +9,6 @@ jmvc = {
         return jmvc.ns.check(ns, JMVC.vars);
     },
     set2 : function (ns, val){
-        //in vars
         jmvc.ns.make(ns, val, JMVC.vars);
     },
     del2 : function (ns){
@@ -78,8 +77,8 @@ jmvc = {
             for (null; i < l; i++) {
                 if (func.$continue) {func.$continue = false; continue; }
                 if (func.$break) {break;}
-                //ret.push(func.call(o, o[i], i));
-                ret[i] = func.call(o, o[i], i);
+                ret.push(func.call(o, o[i], i));
+                //ret[i] = func.call(o, o[i], i);
             }
         } else if (type === 'object') {
             ret = {};
@@ -87,8 +86,8 @@ jmvc = {
                 if (o.hasOwnProperty(i)) {
                     if (func.$continue) {func.$continue = false; continue; }
                     if (func.$break) {break; }
-                    //(function (j) {ret[j] = func.call(o, o[j], j); })(i);
-                    ret[i] = func.call(o, o[i], i);
+                    (function (j) {ret[j] = func.call(o, o[j], j); })(i);
+                    //ret[i] = func.call(o, o[i], i);
                 }
             }
         } else {
@@ -602,6 +601,7 @@ jmvc = {
                     s = JMVC.WD.createElement('script');
                     s.src = path;
                     head.appendChild(s);
+                    //JMVC.dom.remove(s);
                     break;
                 }
                 $JMVC.extensions[arguments[i]] = arguments[i];

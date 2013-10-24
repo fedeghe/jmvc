@@ -13,10 +13,9 @@ JMVC.get('accessor').prototype = {
 
 /**
  *
- *
  * Basic Constructors
  * 
- * */
+ */
 JMVC.extend('dd', {
 	/**
 	 * x int
@@ -36,7 +35,7 @@ JMVC.extend('dd', {
 		"use strict";
 		this.w = w;
 		this.h = h;
-		this.l = l = 0;
+		this.l = l || 0;
 	},
 
 	/**
@@ -172,8 +171,11 @@ JMVC.prototipize(JMVC.dd.Polygon, {
 	},
 	'getArea' : function () {
 		"use strict";
-		var a = 0;
-		for (var i = 0, l = this.points.length; i < l-1; i += 1) {
+		var a = 0,
+			i = 0,
+			l = this.points.length;
+
+		for (null; i < l-1; i += 1) {
 			a += this.points[i].x * this.points[i+1].y - this.points[i + 1].x * this.points[1].y;
 		}
 		this.area = a / 2;
