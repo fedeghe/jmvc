@@ -6,7 +6,7 @@
  *	@copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  *	@author : Federico Ghedina <fedeghe@gmail.com>
  *	@url : http://www.jmvc.org
- *	@file : built with Malta http://www.github.com/fedeghe/malta on 17/10/2013 at 22:54:36
+ *	@file : built with Malta http://www.github.com/fedeghe/malta on 23/10/2013 at 0:37:11
  *
  *
  *	All rights reserved.
@@ -38,10 +38,17 @@
 
 !function (W, undefined) {
     'use strict';
-    var WD = W.document,	// local reference for window.document
-        WDL = WD.location,	// local reference for current window.document.location
-        i, j, l,			// some counters 
+    //
+    //  local reference for window.document
+    var WD = W.document,
+        //
+        // local reference for current window.document.location
+        WDL = WD.location,
+        //
+        // some counters
+        i, j, l,
 
+    //
     // JMVC object, globalized
     JMVC = W.JMVC = (
         /*
@@ -50,74 +57,71 @@
         */
         function () {
             'use strict';
+            //
             /*
-            -----
             INIT
-            -----
+            There almost all vars adre declared
             */
-            // returning object created in that function, here $JMVC will be JMVC
+            //
+            // the returning object created in that function,
+            // global JMVC will take the $JMVC ref
             var $JMVC,
-                // version 
+            
+                // version (vars.json)
                 JMVC_VERSION = "3.1",
-                // review
+            
+                // review (vars.json)
                 JMVC_REVIEW = "0",
+            
                 // experimental (ignore it)
                 JMVC_PACKED = "", //'.min' 
             
-                /**
-                 * inner jmvc literal, will contain almost all the functions used to 
-                 * compose the $JMVC object and thus the returning JMVC
-                 * @type {Object}
-                 */
+                // inner jmvc literal, will contain almost all the functions used to 
+                // compose the $JMVC object and thus the returning JMVC
+                // @type {Object}
                 jmvc = {},
             
                 // url separator
                 US = '/',
             
-                /**
-                * in some cases is useful to automatically distinguish between a
-                * developing url and
-                * production url
-                * will be returned in a var container accessible from the JMVC object
-                */
+                // in some cases is useful to automatically distinguish between a
+                // developing url and production url
+                // will be returned in a var container accessible from the JMVC object
+                // through JMVC.vars.baseurl & JMVC.vars.devurl
                 DEV_URL = WDL.protocol + US + US + 'www.jmvc.dev',
                 PROD_URL = WDL.protocol + US + US + 'www.jmvc.org',
             
-                /*
-                 * two paths for
-                 * > extensions, used as basepath by JMVC.require
-                 * > test
-                 * > langs
-                 */
+                //
+                // paths for
+                // extensions: used as basepath by JMVC.require
+                // test: tests
+                // lang: lang files
                 PATH = {
-                    /**
-                     * extensions path, used as base path in the JMVC.require function
-                     * @type {string}
-                     */
+                    //
+                    // extensions path, used as base path in the JMVC.require function
+                    // @type {string}
                     ext  : US + 'app' + US + 'extensions' + US,
             
-                    /**
-                     * test suite path, every controller matching "test_foocontroller"
-                     * will automatically load the test suite and
-                     *  
-                     * foocontroller.js will be 
-                     * searched into the /app/controller/test directory
-                     * to use test suite a require('test') is needed until TODO is done
-                     * @type {string}
-                     */
+                    //
+                    // test suite path, every controller matching "test_foocontroller"
+                    // will automatically load the test suite and
+                    //  
+                    // foocontroller.js will be 
+                    // searched into the /app/controller/test directory
+                    // to use test suite a require('test') is needed until TODO is done
+                    // @type {string}
                     test : US + 'app' + US + 'testsuite' + US,
             
-                    /**
-                     * path for lang files, loaded with the JMVC.lang function
-                     * @type {string}
-                     */
+                    //
+                    // path for lang files, loaded with the JMVC.lang function
+                    // @type {string}
                     lang : US + 'app' + US + 'i18n' + US
                 },
             
                 JMVC_EXT = {
-                    controller : (JMVC_PACKED || '') + '.js',
-                    model : JMVC_PACKED ? '.min.js' : '.js',
-                    view : '.html',
+                    'controller' : (JMVC_PACKED || '') + '.js',
+                    'model' : (JMVC_PACKED || '') + '.js',
+                    'view' : '.html',
                     'interface' : '.interface' + (JMVC_PACKED || '') + '.js'
                 },
             
@@ -158,8 +162,6 @@
                  */
                 Parser,
             
-                
-            
                 /**
                  * some useful constructors 
                  */
@@ -174,8 +176,6 @@
                  * @type {Array}
                  */
                 Modules = ['vendors/google/analytics', 'core/cookie'],
-            
-            
             
                 /**
                  * preloader
@@ -208,7 +208,7 @@
                 // ajax   : use xhr to get the source and evals
                 // script : creates a script tag with the right url to the source
                 // note : seems like script mode load faster but
-                getmode = 'ajax'; // script or ajax
+                getmode = 'ajax'; // {script, ajax}
             
             
                 // ===========================================
@@ -225,7 +225,6 @@
                     return jmvc.ns.check(ns, JMVC.vars);
                 },
                 set2 : function (ns, val){
-                    //in vars
                     jmvc.ns.make(ns, val, JMVC.vars);
                 },
                 del2 : function (ns){
@@ -294,8 +293,8 @@
                         for (null; i < l; i++) {
                             if (func.$continue) {func.$continue = false; continue; }
                             if (func.$break) {break;}
-                            //ret.push(func.call(o, o[i], i));
-                            ret[i] = func.call(o, o[i], i);
+                            ret.push(func.call(o, o[i], i));
+                            //ret[i] = func.call(o, o[i], i);
                         }
                     } else if (type === 'object') {
                         ret = {};
@@ -303,8 +302,8 @@
                             if (o.hasOwnProperty(i)) {
                                 if (func.$continue) {func.$continue = false; continue; }
                                 if (func.$break) {break; }
-                                //(function (j) {ret[j] = func.call(o, o[j], j); })(i);
-                                ret[i] = func.call(o, o[i], i);
+                                (function (j) {ret[j] = func.call(o, o[j], j); })(i);
+                                //ret[i] = func.call(o, o[i], i);
                             }
                         }
                     } else {
@@ -818,6 +817,7 @@
                                 s = JMVC.WD.createElement('script');
                                 s.src = path;
                                 head.appendChild(s);
+                                //JMVC.dom.remove(s);
                                 break;
                             }
                             $JMVC.extensions[arguments[i]] = arguments[i];
@@ -900,31 +900,43 @@
                     return ret;
                 }
             };
-            /*
-            -------
-            PRELOAD
-            -------
-            */                                
+            //
+            // preloadign function                                
             preload = function (url) {
                 W.setTimeout(function () {
-                    //make 1*1 iframe and load url
+                    //
+                    // get a new Promise
                     var p = new Promise(),
+                        //
+                        // the iframe where preloading will take place
                         ifr = null,
+                        //
+                        // a function used to remove the imframe once
+                        // everything is loaded, hence cached
                         cleanup = function (i) {JMVC.dom.remove(i); };
+            
+                    //
+                    // when `done` will be called on the promise
+                    // cleanup will be called, params follows the chain
                     p.then(cleanup);
-                    (function (pr){
+            
+                    // 
+                    // now a function is executed dereferencing the promise
+                    (function (pr) {
+                        //
+                        // make 1*1 iframe and load url
                         ifr = JMVC.dom.add(JMVC.dom.body(), 'iframe', {src : url, width : 1, height : 1});
-                        ifr.contentWindow.onload = function () {
-                            JMVC.debug('preloaded ' + url);
-                            pr.done(ifr);
-                        };
+                        //
+                        // as far as the iframe is loaded,
+                        // call done on the promise
+                        ifr.contentWindow.onload = function () {pr.done(ifr); };
                     })(p);
+            
                 }, 0);
             };
             /*
-            ------
             ERRORS
-            ------
+            specific classes that will extend the built-in Error Onject
             */
             Errors = {
                 'Network' : function (msg) {
@@ -956,15 +968,16 @@
             jmvc.multi_inherit(Errors, Error);
             
             /*
-            ------
-            PARSER 
-            ------
+            ======
+            PARSER
+            ======
             */
             Parser = {
                 /**
-                 * [tpl description]
-                 * @param  {[type]} content [description]
-                 * @return {[type]}         [description]
+                 * microtemplating function (http://ejohn.org/blog/javascript-micro-templating/)
+                 * Parses a string looking for  
+                 * @param  {string} content the content that must be parsed
+                 * @return {string}         parsed content
                  */
                 tpl : function (content) {
                     return (content.match(/\<%/)) ?
@@ -983,41 +996,66 @@
                     })(content) : content;
                 },
             
-                // This function get a content and substitute jmvc.vars
-                // and direct view placeholders like {{viewname .... }}
-                // returns parsed content
                 /**
-                 * [parse description]
+                 * This function get a content and substitute jmvc.vars
+                 * and direct view placeholders like {{viewname .... }}
+                 * returns parsed content
+                 * 
                  * @param  {[type]} content [description]
                  * @return {[type]}         [description]
                  */
                 parse : function (content) {
-                    // hook
-                    var cont = content, // the view content
-                        RX = {
-                            'patt' : "{{(.[^\\}]*)}}", // for hunting view placeholders
-                            'pattpar' : "\\s(.[A-z]*)=`(.[^/`]*)`", // for getting explicit params passed within view placeholders
-                            'pattvar' : "\\$(.[^\\$\\s}]*)\\$", // for variables
-                            'viewname' : "^(.[A-z_\/]*)\\s" // for getting only the viewname
-                        },
-                        res, // results of view hunt 
-                        //resvar, // variables found ##unused
-                        myview, // the view instance
-                        tmp1,
-                        tmp2, // two temporary variables for regexp results
-                        i = 0,
-                        j,
-                        k, // some loop counters
-                        limit = 100, // recursion limit for replacement
-                        viewname, // only the view name
-                        orig, // original content of {{}} stored for final replacement
-                        register, // to store inner variables found in the placeholder
-                        go_ahead = true; //flag
-                    
-                    if (!!!content) {
+            
+                    if (typeof content === undef) {
                         return '';
                     }
-                    //beforeParse hook
+            
+                    // the view content
+                    var cont = content,
+                        RX = {
+                            //
+                            // for hunting view placeholders
+                            'patt' : "{{(.[^\\}]*)}}",
+                            //
+                            // for getting explicit params passed within view placeholders
+                            'pattpar' : "\\s(.[A-z]*)=`(.[^/`]*)`",
+                            //
+                            // for variables
+                            'pattvar' : "\\$(.[^\\$\\s}]*)\\$",
+                            //
+                            // for getting only the viewname
+                            'viewname' : "^(.[A-z_\/]*)\\s"
+                        },
+                        //
+                        // some loop counters
+                        i = 0, j, k,
+                        //
+                        // recursion limit for replacement
+                        limit = 100,
+                        //
+                        // flag to stop parsing
+                        go_ahead = true,
+                        //
+                        // only the view name
+                        viewname,
+                        //
+                        // original content of {{}} stored for final replacement
+                        orig,
+                        //
+                        // to store inner variables found in the placeholder
+                        register,
+                        //
+                        // results of view hunt 
+                        res,
+                        //
+                        // the view instance
+                        myview,
+                        //
+                        // two temporary variables for regexp results
+                        tmp1, tmp2;
+            
+                    // check
+                    // beforeParse hook
                     jmvc.hook_check('onBeforeParse', [cont]);
                     
                     while (i < limit) {
@@ -1061,8 +1099,6 @@
                                     alert('`'+viewname+'` view not loaded.\nUse Factory in the controller to get it. \n\njmvc will'+
                                         ' load it for you but variables are\n lost and will not be replaced.');
                                 */
-                                //console.debug(viewname)
-                                //$JMVC.factory('view', viewname);
                                 myview = $JMVC.factory('view', viewname);
                             } else {
                                 myview = $JMVC.views[viewname];
@@ -1097,28 +1133,27 @@
                             i = limit;
                         }
                     }
-                    
                     // now $JMVC.vars parse
-                    
                     for (j in $JMVC.vars) {
                         if ($JMVC.vars.hasOwnProperty(j)) {
                             cont = cont.replace(new RegExp("\\$" + j + "\\$", 'g'), $JMVC.vars[j]);
                         }
                     }
-                    
-                    // use script on template function
+                    //
+                    // use Resig microtemplating function on final content
                     cont = Parser.tpl(cont);
-            
-                    //afterParse hook
+                    //
+                    // afterParse hook
                     jmvc.hook_check('onAfterParse', [cont]);
                     return cont;
                 }
             };
-            //END PARSER
+            //
+            // END PARSER
+            //
             /*
-            -----
-            EVENT
-            -----
+            Event JMVC object
+            use mainly for observers
             */
             Event = function (sender) {
                 this.sender = sender;
@@ -1148,9 +1183,9 @@
                 }
             };
             /*
-            ---------
-            EXTENSION
-            ---------
+            Extension
+            This is intended to be the base class for any element loaded via the require function.
+            Now empty
             */
             Extension = function () {};
             Extension.prototype = {};
@@ -1210,49 +1245,40 @@
             INTERFACE
             ---------
             */
-            Interface = function (a) {
-                this.mthds = a;
+            Interface = function (name, a) {
+                this.name = name;
+                this.mthds = [];
+                if (!(a instanceof Array)){
+                    throw new Error('An array of strings must be passed to the Interface constructor');
+                }
+                for (var i = 0, l = a.length; i < l; i++) {
+                    (typeof a[i] === 'string') && this.mthds.push(a[i]);
+                }
             };
             
             /**
-             * [prototype description]
-             * @type {Object}
+             * [checkImplements description]
+             * @param  {[type]} obj    [description]
+             * @param  {[type]} intrfc [description]
+             * @return {[type]}        [description]
              */
-            Interface.prototype = {
-                /**
-                 * [addMethod description]
-                 * @param {[type]} mthd [description]
-                 */
-                addMethod : function (mthd) {
-                    this.mthds[mthd.name] || (this.mthds[mthd.name] = mthd);
-                },
-                /**
-                 * [removeMethod description]
-                 * @param  {[type]} mthd [description]
-                 * @return {[type]}      [description]
-                 */
-                removeMethod : function (mthd) {
-                    this.mthds[mthd] && (this.mthds[mthd] = null);
-                },
-                /**
-                 * [check description]
-                 * @param  {[type]} o [description]
-                 * @return {[type]}   [description]
-                 */
-                check : function (o) {
-                    var m,
-                        i = 0,
-                        l = this.mthds.length,
-                        obj = new o();
-                    for (m in this.mthds) {
-                        if (typeof obj[this.mthds[m]] !== 'function') {
-                            return false;
+            Interface.checkImplements = function (obj) {
+                var m,
+                    i = 0,
+                    arg = Array.prototype.slice.call(arguments);
+                    l = arg.length;
+                while (++i < l){
+                    for (m in arg[i].mthds) {
+                        if (typeof obj[arg[i].mthds[m]] !== 'function') {
+                            throw new Error("Function Interface.checkImplements: object "
+                              + "does not implement the " + arg[i].name
+                              + " interface. Method " + arg[i].mthds[m] + " was not found.");
                         }
                     }
-                    obj = null;
-                    return true;
                 }
-            };
+            
+                return obj;
+            };  
             /*
             ----------
             CONTROLLER          
@@ -1711,8 +1737,9 @@
                 W: W,
                 WD: WD,
                 WDL : WDL,
-                US : US,
                 M : Math,
+                US : US,
+            
                 c_prepath : dispatched.controller_prepath,
                 c : dispatched.controller || JMVC_DEFAULT.controller,
                 a : dispatched.action || JMVC_DEFAULT.action,
@@ -1800,12 +1827,7 @@
                 //getController :   function(n) {return jmvc.factory_method('controller', n); }
             
                 
-                /**
-                 * [each description]
-                 * @param  {[type]} o    [description]
-                 * @param  {[type]} func [description]
-                 * @return {[type]}      [description]
-                 */
+                // really really bad
                 each : jmvc.each,
                 
                 /**
@@ -1884,10 +1906,16 @@
                 time_begin
             );
             
+            //
             return $JMVC;
         }
+
     )();
-    /** mandatory modules **/
+    /** 
+     *
+     * 
+     * mandatory modules
+     */
     /*
     ---------------
     AJAX sub-module
@@ -3796,6 +3824,7 @@
     	num : function (n) {return parseFloat(n.toFixed(10), 10); }
     };
     
+    /**                **/
     /*
     ------
     RENDER
@@ -3814,5 +3843,16 @@
     JMVC.p.lang && JMVC.cookie.set('lang', JMVC.p.lang);
     
     JMVC.render();
-    //
+    /**           **/
+    /**
+     * [onerror description]
+     * @param  {[type]} errorMsg   [description]
+     * @param  {[type]} url        [description]
+     * @param  {[type]} lineNumber [description]
+     * @return {[type]}            [description]
+     */
+    JMVC.W.onerror = function(errorMsg, url, lineNumber) {
+        JMVC.debug("Uncaught error " + errorMsg + " in " + url + ", lines " + lineNumber);
+    };
+    
 }(this);
