@@ -2,10 +2,17 @@ $$src/head.js$$
 
 !function (W, undefined) {
     'use strict';
-    var WD = W.document,	// local reference for window.document
-        WDL = WD.location,	// local reference for current window.document.location
-        i, j, l,			// some counters 
+    //
+    //  local reference for window.document
+    var WD = W.document,
+        //
+        // local reference for current window.document.location
+        WDL = WD.location,
+        //
+        // some counters
+        i, j, l,
 
+    //
     // JMVC object, globalized
     JMVC = W.JMVC = (
         /*
@@ -14,6 +21,7 @@ $$src/head.js$$
         */
         function () {
             'use strict';
+            //
             $$src/core/init.js$$
             $$src/core/innerjmvc.js$$
             $$src/core/preload.js$$
@@ -29,10 +37,16 @@ $$src/head.js$$
             $$src/core/dispatched.js$$
             $$src/core/outerjmvc.js$$
             $$src/core/cleanup.js$$
+            //
             return $JMVC;
         }
+
     )();
-    /** mandatory modules **/
+    /** 
+     *
+     * 
+     * mandatory modules
+     */
     $$src/modules/io.js$$
     $$src/modules/util.js$$
     $$src/modules/dom.js$$
@@ -43,6 +57,8 @@ $$src/head.js$$
     $$src/modules/object.js$$
     $$src/modules/match.js$$
     $$src/modules/num.js$$
+    /**                **/
     $$src/core/render.js$$
-    //
+    /**           **/
+    $$src/foot.js$$
 }(this);
