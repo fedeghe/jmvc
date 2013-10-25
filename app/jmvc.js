@@ -6,7 +6,7 @@
  *	@copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  *	@author : Federico Ghedina <fedeghe@gmail.com>
  *	@url : http://www.jmvc.org
- *	@file : built with Malta http://www.github.com/fedeghe/malta on 23/10/2013 at 0:37:11
+ *	@file : built with Malta http://www.github.com/fedeghe/malta on 25/10/2013 at 11:39:34
  *
  *
  *	All rights reserved.
@@ -1240,11 +1240,15 @@
                 }
                 return this;
             };
-            /*
-            ---------
-            INTERFACE
-            ---------
-            */
+            
+            
+            /**
+             * INTERFACE
+             * =========
+             * [Interface description]
+             * @param {[type]} name [description]
+             * @param {[type]} a    [description]
+             */
             Interface = function (name, a) {
                 this.name = name;
                 this.mthds = [];
@@ -1267,6 +1271,7 @@
                     i = 0,
                     arg = Array.prototype.slice.call(arguments);
                     l = arg.length;
+            
                 while (++i < l){
                     for (m in arg[i].mthds) {
                         if (typeof obj[arg[i].mthds[m]] !== 'function') {
@@ -1737,9 +1742,8 @@
                 W: W,
                 WD: WD,
                 WDL : WDL,
-                M : Math,
                 US : US,
-            
+                M : Math,
                 c_prepath : dispatched.controller_prepath,
                 c : dispatched.controller || JMVC_DEFAULT.controller,
                 a : dispatched.action || JMVC_DEFAULT.action,
