@@ -69,6 +69,31 @@ JMVC.extend('screen',{
 	},
 	'no_frames' : function(){
 		if (JMVC.W.top.location != location){JMVC.W.top.location.href = JMVC.WD.location.href;}
+	},
+
+
+	// http://www.sitepoint.com/html5-full-screen-api/	
+	fs : function (obj, method) {
+		
+		var pfx = ["webkit", "moz", "ms", "o", ""],
+			p = 0,
+			l = pfx.length,
+			m, t;
+		while (p < l && !obj[m]) {
+			m = method;
+			if (pfx[p] == "") {
+				m = m.substr(0,1).toLowerCase() + m.substr(1);
+			}
+			m = pfx[p] + m;
+			t = typeof obj[m];
+			if (t != "undefined") {
+				pfx = [pfx[p]];
+				return (t == "function" ? obj[m]() : obj[m]);
+			}
+			p++;
+		}
+
 	}
+
 
 });
