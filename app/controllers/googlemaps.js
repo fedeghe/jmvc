@@ -23,7 +23,10 @@ JMVC.controllers.googlemaps = function () {
 			mapid = 'map';
 			b = JMVC.dom.body();
 			
-			JMVC.dom.append(b, JMVC.dom.create('div', {id : mapid, style : 'position:absolute;z-index:1;top:0px;left:0px;width:' + dims.width + 'px;height:' + dims.height + 'px'}));
+			JMVC.dom.append(b, JMVC.dom.create('div', {
+				id : mapid,
+				style : 'position:absolute;z-index:1;top:0px;left:0px;width:' + dims.width + 'px;height:' + dims.height + 'px'
+			}));
 
 		
 			
@@ -43,6 +46,8 @@ JMVC.controllers.googlemaps = function () {
 							origZoom = map.getZoom();
 
 						JMVC.gmap.marker(map, [47.366923, 8.543597], '<h1>Zürich</h1>');
+
+						JMVC.gmap.marker(map, [48.366923, 9.543597], '<h1>Amsterdam</h1>');
 						
 					});
 					
