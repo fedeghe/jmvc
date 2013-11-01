@@ -6,34 +6,64 @@ JMVC.controllers.form = function () {
 		JMVC.require('core/fvalidation');
 		
 		
-		var index = JMVC.getView('form');
+		var index = JMVC.getView('form'),
+			rules = {
+				'name':'string',
+				'option':'string',
+				'tarea':'string'
+			};
+			
 			
 		index.render(function () {
+			
 			var submit = JMVC.dom.find('#save');
+			
+			JMVC.events.bind(submit, 'click', function (e) {
+				!JMVC.fvalidation.validate(rules) && JMVC.events.preventDefault(e);
+			});
+			
+			JMVC.require('iscroll');
+			JMVC.iscroll.create(JMVC.dom.find('#tarea'), 'urle', 2);
+			
+		});
+	};
+	
+	
+	
+	
+	this.action_validation = function () {
+		
+		JMVC.events.loadify(500);
+		
+		JMVC.require('core/validation');
+		
+		
+		var index = JMVC.getView('form'),
+			rules = {
+				'name':'string',
+				'option':'string',
+				'tarea':'string'
+			};
+			
+			
+		index.render(function () {
+
+
+			var submit = JMVC.dom.find('#save'),
+				validator = JMVC.validation.create();
+			
+			//validator.add(rules);
+			
 			JMVC.events.bind(submit, 'click', function (e) {
 				
-				
-				
-				var ret =  JMVC.fvalidation.validate({
-					'name':'string',
-					'option':'string',
-					'tarea':'string'
-				});
-				
-				if(!ret){
-					JMVC.events.preventDefault(e);
-				}
-	
+				validator.check();
+				JMVC.events.preventDefault(e);
 			});
-
-
-
+			
 			JMVC.require('iscroll');
 			JMVC.iscroll.create(JMVC.dom.find('#tarea'), 'urle', 2);
 
-
-
-
 		});
 	};
+	
 };
