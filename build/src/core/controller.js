@@ -6,8 +6,11 @@ CONTROLLER
 
 // parent controller
 Controller = function () {};
-// for storing url vars 
+
+// for storing vars 
 Controller.prototype.vars = {};
+
+// this has no sense and must be removed
 Controller.prototype.jmvc_routes = {};
 
 /**
@@ -15,7 +18,7 @@ Controller.prototype.jmvc_routes = {};
  * @return {[type]} [description]
  */
 Controller.prototype.index = function () {
-    W.alert('Default index action, write down a controller with an');
+    W.alert('Default index action, write down a controller with at least an index action');
 };
 
 /**
