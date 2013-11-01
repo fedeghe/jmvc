@@ -1,5 +1,7 @@
 JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/widget/slider/slider.css', true);
 
+JMVC.nsCheck('JMVC.widget');
+
 JMVC.widget.Slider = function (node, w) {
 	var that = this;
 	this.node = node;
