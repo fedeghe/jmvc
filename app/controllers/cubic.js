@@ -1,5 +1,9 @@
-JMVC.require('core/lib/border', 'widget/snow/snow', 'core/css', 'core/dim');
-
+JMVC.require(
+	'core/lib/border',
+	'widget/snow/snow',
+	'core/css',
+	'core/dim'
+);
 JMVC.controllers.cubic = function () {
 	"use strict";
 	this.action_index = function () {
@@ -21,11 +25,10 @@ JMVC.controllers.cubic = function () {
 			'td.space {height:0px;font-size:0px;}'
 		, true, true);
 		
-		
 		var t = JMVC.getView('test/indextbl'),
 			that = this;
 	
-		t.render(function(){
+		t.render(function () {
 			
 			var lett = false,
 				J = JMVC.dom.create('div',{'class':'gbox', 'style':'background-color:#e00'},lett?'<div class="lett lJ">J</div>':''),
@@ -38,17 +41,17 @@ JMVC.controllers.cubic = function () {
 			JMVC.dom.append(JMVC.dom.find('#cellV'), [V]);
 			JMVC.dom.append(JMVC.dom.find('#cellC'), [C]);
 			
-			JMVC.dom.append(J, JMVC.border.xbottom(20,200, 50,30,'#a00'));
-			JMVC.dom.append(J, JMVC.border.xright(200,30, 70,20,'#600'));
+			JMVC.dom.append(J, JMVC.border.xbottom(20, 200, 50, 30, '#a00'));
+			JMVC.dom.append(J, JMVC.border.xright(200, 30, 70, 20, '#600'));
 			
-			JMVC.dom.append(M, JMVC.border.xbottom(30,200, -50,-100,'#0a0'));
-			JMVC.dom.append(M, JMVC.border.xleft(200,50, 70,30,'#060'));
+			JMVC.dom.append(M, JMVC.border.xbottom(30, 200, -50, -100, '#0a0'));
+			JMVC.dom.append(M, JMVC.border.xleft(200, 50, 70, 30, '#060'));
 			
-			JMVC.dom.append(V, JMVC.border.xtop(10,200, 80,50,'#00a'));
-			JMVC.dom.append(V, JMVC.border.xright(200,50, -10,-70,'#006'));
+			JMVC.dom.append(V, JMVC.border.xtop(10, 200, 80, 50, '#00a'));
+			JMVC.dom.append(V, JMVC.border.xright(200, 50, -10, -70, '#006'));
 			
-			JMVC.dom.append(C, JMVC.border.xtop(10,200, -50,-80,'#aa0'));
-			JMVC.dom.append(C, JMVC.border.xleft(200,50, -10,-70,'#660'));
+			JMVC.dom.append(C, JMVC.border.xtop(10, 200, -50, -80, '#aa0'));
+			JMVC.dom.append(C, JMVC.border.xleft(200, 50, -10, -70, '#660'));
 			
 			JMVC.snow.start(JMVC.dom.body());
 		});	

@@ -9,7 +9,7 @@ JMVC.string = {
      * @param  {[type]} code [description]
      * @return {[type]}      [description]
      */
-    'code2str' : function (code) {
+    code2str : function (code) {
         return String.fromCharCode.apply(null, code);
     },
 
@@ -18,7 +18,7 @@ JMVC.string = {
      * @param  {[type]} html [description]
      * @return {[type]}      [description]
      */
-    'htmlEntities' : function (html) {
+    htmlEntities : function (html) {
         return html
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
@@ -31,9 +31,9 @@ JMVC.string = {
      * @param  {[type]} ''         [description]
      * @return {[type]}            [description]
      */
-    'ltrim' : function (s) {return s.replace(/^\s+/g, ''); },
+    ltrim : function (s) {return s.replace(/^\s+/g, ''); },
 
-    'multireplace' : function (cnt, o, i) {
+    multireplace : function (cnt, o, i) {
         for (i in o) {
             cnt = cnt.replace(o[i], i);
         }
@@ -48,7 +48,7 @@ JMVC.string = {
      * @param  {[type]} lngt [description]
      * @return {[type]}      [description]
      */
-    'padme' : function (val, el, pos, len) {
+    padme : function (val, el, pos, len) {
         len = len || 2;
         while ((String(val)).length < len) {
             switch (pos) {
@@ -72,7 +72,7 @@ JMVC.string = {
      * @param  {string} fallback [description]
      * @return {[type]}          [description]
      */
-    'replaceall' : function (tpl, o, dD, Dd, fback) {
+    replaceall : function (tpl, o, dD, Dd, fback) {
         dD || (dD = '%');
         Dd || (Dd = '%');
         var reg = new RegExp(dD + '([A-z0-9-_]*)' + Dd, 'g'),
@@ -88,7 +88,7 @@ JMVC.string = {
      * @param  {[type]} ''         [description]
      * @return {[type]}            [description]
      */
-    'rtrim' : function (s) {return s.replace(/\s+$/g, ''); },
+    rtrim : function (s) {return s.replace(/\s+$/g, ''); },
 
     /**
      * [ description]
@@ -96,7 +96,7 @@ JMVC.string = {
      * @param  {[type]} pwd [description]
      * @return {[type]}     [description]
      */
-    'str2code' : function (str) {
+    str2code : function (str) {
         var out = [],
             i = 0,
             l = str.length;
@@ -113,7 +113,7 @@ JMVC.string = {
      * @param  {[type]} n   [description]
      * @return {[type]}     [description]
      */
-    'strRepeat' : function (str, n) {
+    strRepeat : function (str, n) {
         var t = [];
         while (n -= 1) {t.push(str.replace(/\%n\%/g, n)); }
         return t.reverse().join('');
@@ -125,8 +125,7 @@ JMVC.string = {
      * @param  {[type]} ''         [description]
      * @return {[type]}            [description]
      */
-    'trim' : function (s) {return s.replace(/^\s+|\s+$/g, ''); },
-
+    trim : function (s) {return s.replace(/^\s+|\s+$/g, ''); },
 
     entities : { __proto__: null,
         apos:0x0027,quot:0x0022,amp:0x0026,lt:0x003C,gt:0x003E,nbsp:0x00A0,iexcl:0x00A1,cent:0x00A2,pound:0x00A3,
@@ -161,8 +160,8 @@ JMVC.string = {
         sub:0x2282,sup:0x2283,nsub:0x2284,sube:0x2286,supe:0x2287,oplus:0x2295,otimes:0x2297,perp:0x22A5,
         sdot:0x22C5,lceil:0x2308,rceil:0x2309,lfloor:0x230A,rfloor:0x230B,lang:0x2329,rang:0x232A,loz:0x25CA,
         spades:0x2660,clubs:0x2663,hearts:0x2665,diams:0x2666
-
     },
+		
     charToEntity : {},
 
     UnescapeEntities : function (str){ 
