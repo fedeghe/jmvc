@@ -1,9 +1,9 @@
-JMVC.extend('calendar',{
+JMVC.extend('calendar', {
 	'vars' : {
 		css_path : JMVC.vars.extensions + 'core/obj/calendar',
 		today : new Date,
 		dINm : [31, false, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-		days : ['D','L','M','M','G','V','S'],
+		days : ['S','M','T','W','T','F','S'],
 		months : []
 	},
 	'init' : function () {
@@ -22,6 +22,7 @@ JMVC.extend('calendar',{
 			this.row_tpl = '<tr>'+JMVC.string.strRepeat('<td class="cl%n%">%%n%%</td>', 7)+'</tr>';
 
 		return {
+
 			'getDaysInMonth' : function (m, y) {
 				var bis = ( ( !(y % 100 ) && !( y % 400 ) ) || ( !( y % 4 ) && ( y % 100 ) ) );
 				return cal.vars.dINm[m] ? cal.vars.dINm[m] : (bis?29:28);
@@ -69,14 +70,18 @@ JMVC.extend('calendar',{
 			},
 			'render' : function(){
 				var mid = '<table class="cal"><tr>',
-					col = 0, i= self.starts_with, j = 0, l = cal.vars.days.length;
-				for(null; j<l;i=(i+1)%7, j++){
-					mid += '<th>'+cal.vars.days[i]+'</th>';
+					col = 0,
+					i= self.starts_with,
+					j = 0,
+					l = cal.vars.days.length;
+
+				for (null; j < l; i = (i + 1) % 7, j++) {
+					mid += '<th>' + cal.vars.days[i] + '</th>';
 				}
-				mid+='</tr>';
+				mid += '</tr>';
 				
 				//pre
-				for(i in self.contour_before){
+				for (i in self.contour_before) {
 					mid += '<td class="pre">' + i + '</td>';
 					col++;
 				}
@@ -91,7 +96,6 @@ JMVC.extend('calendar',{
 				}
 				
 				//post
-				
 				for(i in self.contour_after){
 					mid += '<td class="after">' + i + '</td>';
 				}
@@ -100,13 +104,5 @@ JMVC.extend('calendar',{
 				return mid;
 			}
 		};
-		
-	}
-	
+	}	
 });
-
-/*
-var c = JMVC.calendar.create();
-JMVC.debug(c.gmm(7,2012));
-JMVC.debug(c.gc(7,2012));
-*/
