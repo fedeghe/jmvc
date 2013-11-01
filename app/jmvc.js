@@ -6,7 +6,7 @@
  *	@copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  *	@author : Federico Ghedina <fedeghe@gmail.com>
  *	@url : http://www.jmvc.org
- *	@file : built with Malta http://www.github.com/fedeghe/malta on 25/10/2013 at 11:39:34
+ *	@file : built with Malta http://www.github.com/fedeghe/malta on 31/10/2013 at 22:45:47
  *
  *
  *	All rights reserved.
@@ -1292,8 +1292,11 @@
             
             // parent controller
             Controller = function () {};
-            // for storing url vars 
+            
+            // for storing vars 
             Controller.prototype.vars = {};
+            
+            // this has no sense and must be removed
             Controller.prototype.jmvc_routes = {};
             
             /**
@@ -1301,7 +1304,7 @@
              * @return {[type]} [description]
              */
             Controller.prototype.index = function () {
-                W.alert('Default index action, write down a controller with an');
+                W.alert('Default index action, write down a controller with at least an index action');
             };
             
             /**
@@ -1893,10 +1896,8 @@
                 }
             };
             
-            /*
-            $JMVC is DONE
-            clean up
-            */
+            //
+            // $JMVC is DONE, clean up
             $JMVC.gc(
                 DEV_URL,
                 PROD_URL,
@@ -1909,7 +1910,6 @@
                 JMVC_DEFAULT,
                 time_begin
             );
-            
             //
             return $JMVC;
         }
@@ -3490,7 +3490,7 @@
          * @param  {[type]} code [description]
          * @return {[type]}      [description]
          */
-        'code2str' : function (code) {
+        code2str : function (code) {
             return String.fromCharCode.apply(null, code);
         },
     
@@ -3499,7 +3499,7 @@
          * @param  {[type]} html [description]
          * @return {[type]}      [description]
          */
-        'htmlEntities' : function (html) {
+        htmlEntities : function (html) {
             return html
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
@@ -3512,9 +3512,9 @@
          * @param  {[type]} ''         [description]
          * @return {[type]}            [description]
          */
-        'ltrim' : function (s) {return s.replace(/^\s+/g, ''); },
+        ltrim : function (s) {return s.replace(/^\s+/g, ''); },
     
-        'multireplace' : function (cnt, o, i) {
+        multireplace : function (cnt, o, i) {
             for (i in o) {
                 cnt = cnt.replace(o[i], i);
             }
@@ -3529,7 +3529,7 @@
          * @param  {[type]} lngt [description]
          * @return {[type]}      [description]
          */
-        'padme' : function (val, el, pos, len) {
+        padme : function (val, el, pos, len) {
             len = len || 2;
             while ((String(val)).length < len) {
                 switch (pos) {
@@ -3553,7 +3553,7 @@
          * @param  {string} fallback [description]
          * @return {[type]}          [description]
          */
-        'replaceall' : function (tpl, o, dD, Dd, fback) {
+        replaceall : function (tpl, o, dD, Dd, fback) {
             dD || (dD = '%');
             Dd || (Dd = '%');
             var reg = new RegExp(dD + '([A-z0-9-_]*)' + Dd, 'g'),
@@ -3569,7 +3569,7 @@
          * @param  {[type]} ''         [description]
          * @return {[type]}            [description]
          */
-        'rtrim' : function (s) {return s.replace(/\s+$/g, ''); },
+        rtrim : function (s) {return s.replace(/\s+$/g, ''); },
     
         /**
          * [ description]
@@ -3577,7 +3577,7 @@
          * @param  {[type]} pwd [description]
          * @return {[type]}     [description]
          */
-        'str2code' : function (str) {
+        str2code : function (str) {
             var out = [],
                 i = 0,
                 l = str.length;
@@ -3594,7 +3594,7 @@
          * @param  {[type]} n   [description]
          * @return {[type]}     [description]
          */
-        'strRepeat' : function (str, n) {
+        strRepeat : function (str, n) {
             var t = [];
             while (n -= 1) {t.push(str.replace(/\%n\%/g, n)); }
             return t.reverse().join('');
@@ -3606,8 +3606,7 @@
          * @param  {[type]} ''         [description]
          * @return {[type]}            [description]
          */
-        'trim' : function (s) {return s.replace(/^\s+|\s+$/g, ''); },
-    
+        trim : function (s) {return s.replace(/^\s+|\s+$/g, ''); },
     
         entities : { __proto__: null,
             apos:0x0027,quot:0x0022,amp:0x0026,lt:0x003C,gt:0x003E,nbsp:0x00A0,iexcl:0x00A1,cent:0x00A2,pound:0x00A3,
@@ -3642,8 +3641,8 @@
             sub:0x2282,sup:0x2283,nsub:0x2284,sube:0x2286,supe:0x2287,oplus:0x2295,otimes:0x2297,perp:0x22A5,
             sdot:0x22C5,lceil:0x2308,rceil:0x2309,lfloor:0x230A,rfloor:0x230B,lang:0x2329,rang:0x232A,loz:0x25CA,
             spades:0x2660,clubs:0x2663,hearts:0x2665,diams:0x2666
-    
         },
+    		
         charToEntity : {},
     
         UnescapeEntities : function (str){ 
