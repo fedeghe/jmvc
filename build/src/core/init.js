@@ -1,7 +1,4 @@
-/*
-INIT
-There almost all vars adre declared
-*/
+/* INIT */
 //
 // the returning object created in that function,
 // global JMVC will take the $JMVC ref
@@ -105,6 +102,7 @@ var $JMVC,
     /**
      * some useful constructors 
      */
+    Pipe,
     Event,
     Promise,
     Errors,
