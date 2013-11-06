@@ -598,7 +598,7 @@ JMVC.controllers.demo = function () {
 					ulist = JMVC.dom.add(B, 'ul', {style : 'list-style-type:none;padding:10px;border:1px solid gray;width:200px;background-color:#eee;', id : 'mylist'}),
 					item,
 					render;
-/*
+
 				JMVC.events.bind(butt_plus, 'click', function () {
 					item = prompt('Item to add');
 					if (item !== null && item !== '') {
@@ -613,7 +613,7 @@ JMVC.controllers.demo = function () {
 						alert('Noitem with index ' + item);
 					}
 				});
-*/
+
 				/* or simply */
 				list.listModified.attach(function () {list.build(ulist); });
 
@@ -653,7 +653,7 @@ JMVC.controllers.demo = function () {
 				
 				JMVC.dom.html(cal, calInst.render());
 				
-				new JMVC.timer.create({target : trg});
+				new JMVC.timer.create({target : trg, lang : 'en-us', format : '%YYYY% %MM% the %D%'});
 				
 				JMVC.fx.fadeIn(JMVC.dom.find('#prova'));
 
