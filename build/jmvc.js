@@ -1,33 +1,20 @@
 $$src/head.js$$
-
 !function (W, undefined) {
     'use strict';
-    //
-    //  local reference for window.document
-    var WD = W.document,
-        //
-        // local reference for current window.document.location
-        WDL = WD.location,
-        //
-        // some counters
-        i, j, l,
-
-    //
-    // JMVC object, globalized
-    JMVC = W.JMVC = (
-        /*
-        * this function returns the JMVC object after doing some stuff
-        * @return {object literal} $JMVC inner object 
-        */
-        function () {
+    var WD = W.document,    // local reference for window.document
+        WDL = WD.location,  // local reference for current window.document.location
+        i, j, k, l,         // some counters
+        // this function returns the JMVC object, globalized, after doing some stuff
+        // @return {object literal} $JMVC inner object 
+        JMVC = W.JMVC = (function () {
             'use strict';
-            //
             $$src/core/init.js$$
             $$src/core/innerjmvc.js$$
             $$src/core/preload.js$$
             $$src/core/errors.js$$
             $$src/core/parser.js$$
             $$src/core/event.js$$
+            $$src/core/pipe.js$$
             $$src/core/extension.js$$
             $$src/core/promise.js$$
             $$src/core/interface.js$$
@@ -37,16 +24,10 @@ $$src/head.js$$
             $$src/core/dispatched.js$$
             $$src/core/outerjmvc.js$$
             $$src/core/cleanup.js$$
-            //
             return $JMVC;
-        }
-
-    )();
-    /** 
-     *
-     * 
-     * mandatory modules
-     */
+        })(),
+        _ = {}; // private ns for modules
+    // mandatory modules
     $$src/modules/io.js$$
     $$src/modules/util.js$$
     $$src/modules/dom.js$$
@@ -57,8 +38,6 @@ $$src/head.js$$
     $$src/modules/object.js$$
     $$src/modules/match.js$$
     $$src/modules/num.js$$
-    /**                **/
     $$src/core/render.js$$
-    /**           **/
     $$src/foot.js$$
 }(this);
