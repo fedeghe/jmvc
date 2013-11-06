@@ -50,6 +50,7 @@ $JMVC = {
     Event : Event,
     Errors : Errors,
     Interface : Interface,
+    Pipe : Pipe,
     Promise : Promise,
 
     parselang : jmvc.parselang,
