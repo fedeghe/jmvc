@@ -7,8 +7,8 @@
  *	@copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  *	@author : Federico Ghedina <fedeghe@gmail.com>
  *	@url : http://www.jmvc.org
- *	@file : built with Malta v.1.0.0 (glued with 31 files) & a love heap on 6/11/2013 at 21:20:55
- *
+ *	@file : built with Malta v.1.0.0 & a love heap
+ *          glued with 31 files on 6/11/2013 at 21:23:46
  *
  *	All rights reserved.
  *
