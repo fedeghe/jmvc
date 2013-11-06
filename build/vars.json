@@ -1,8 +1,9 @@
 {
 	"version" : "3.1",
-	"review" : 0,
+	"review" : 1,
 	"author" : "Federico Ghedina",
 	"email" : "fedeghe@gmail.com",
-	"build_system" : "Malta http://www.github.com/fedeghe/malta",
+	"build_system" : "Malta",
+    "build_system_link" : "http://www.github.com/fedeghe/malta",
 	"packed" : ""
 }
