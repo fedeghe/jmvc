@@ -3,6 +3,12 @@
 STRING sub-module
 -----------------
 */
+//private section
+_.string = {
+    charToEntity : {}
+};
+
+//public section
 JMVC.string = {
     /**
      * [ description]
@@ -33,6 +39,13 @@ JMVC.string = {
      */
     ltrim : function (s) {return s.replace(/^\s+/g, ''); },
 
+    /**
+     * [multireplace description]
+     * @param  {[type]} cnt [description]
+     * @param  {[type]} o   [description]
+     * @param  {[type]} i   [description]
+     * @return {[type]}     [description]
+     */
     multireplace : function (cnt, o, i) {
         for (i in o) {
             cnt = cnt.replace(o[i], i);
@@ -41,25 +54,30 @@ JMVC.string = {
     },
 
     /**
-     * [ description]
-     * @param  {[type]} val  [description]
-     * @param  {[type]} el   [description]
-     * @param  {[type]} pos  [description]
-     * @param  {[type]} lngt [description]
-     * @return {[type]}      [description]
+     * [padme description]
+     * @param  {[type]} val [description]
+     * @param  {[type]} el  [description]
+     * @param  {[type]} pos [description]
+     * @param  {[type]} len [description]
+     * @return {[type]}     [description]
      */
     padme : function (val, el, pos, len) {
+        var l = val.length;
         len = len || 2;
-        while ((String(val)).length < len) {
-            switch (pos) {
-            case 'pre':
-                val = String(el + val);
-                break;
-            case 'post':
-                val = String(val + el);
-                break;
-            }
+        pos = pos ||'post';
+
+        if (len <= l) {
+            return val;
         }
+        
+        el = new Array(len + 1 - l).join(el) + '';
+        
+        if (pos == 'pre') {
+            val = String(el + val);
+        } else if (pos == 'post') {
+            val = String(val + el);
+        }
+        
         return val;
     },
     
@@ -72,13 +90,13 @@ JMVC.string = {
      * @param  {string} fallback [description]
      * @return {[type]}          [description]
      */
-    replaceall : function (tpl, o, dD, Dd, fback) {
+    replaceall : function (tpl, o, dD, Dd, cb) {
         dD || (dD = '%');
         Dd || (Dd = '%');
         var reg = new RegExp(dD + '([A-z0-9-_]*)' + Dd, 'g'),
             str;
         return tpl.replace(reg, function (str, $1) {
-            return (typeof o === 'function' ? o($1) : o[$1]) || fback || dD + $1 + Dd;
+            return (typeof o === 'function' ? o($1) : o[$1] + '') || cb || dD + $1 + Dd;
         });
     },
     
@@ -161,26 +179,33 @@ JMVC.string = {
         sdot:0x22C5,lceil:0x2308,rceil:0x2309,lfloor:0x230A,rfloor:0x230B,lang:0x2329,rang:0x232A,loz:0x25CA,
         spades:0x2660,clubs:0x2663,hearts:0x2665,diams:0x2666
     },
-		
-    charToEntity : {},
 
+    /**
+     * [UnescapeEntities description]
+     * @param {[type]} str [description]
+     */
     UnescapeEntities : function (str){ 
+        var self = this;
         return str.replace(/&(.+?);/g,
             function(str, ent){
-                return String.fromCharCode( ent[0]!='#' ? JMVC.string.entities[ent] : ent[1]=='x' ? parseInt(ent.substr(2),16): parseInt(ent.substr(1)) );
+                return String.fromCharCode( ent[0]!='#' ? self.entities[ent] : ent[1]=='x' ? parseInt(ent.substr(2),16): parseInt(ent.substr(1)) );
             }
         );
     },
 
+    /**
+     * [EscapeEntities description]
+     * @param {[type]} str [description]
+     */
     EscapeEntities : function (str){
         return str.replace(/[^\x20-\x7E]/g,
             function(str) {
-                return JMVC.string.charToEntity[str] ? '&'+JMVC.string.charToEntity[str]+';' : str;
+                return _.string.charToEntity[str] ? '&'+ _.string.charToEntity[str]+';' : str;
             }
         );
     }
 };
 
 for ( var entityName in JMVC.string.entities ){
-    JMVC.string.charToEntity[String.fromCharCode(JMVC.string.entities[entityName])] = entityName;
+    _.string.charToEntity[String.fromCharCode(JMVC.string.entities[entityName])] = entityName;
 }

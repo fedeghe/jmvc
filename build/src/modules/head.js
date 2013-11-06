@@ -3,11 +3,17 @@
 HEAD sub-module
 ---------------
 */
+//private section
+_.head = {
+    
+};
+
+//public section
 JMVC.head = {
     /**
      * 
      */
-    'element' : WD.getElementsByTagName('head').item(0),
+    element : WD.getElementsByTagName('head').item(0),
 
     /**
      * [ description]
@@ -16,7 +22,7 @@ JMVC.head = {
      * @param  {[type]} explicit [description]
      * @return {[type]}          [description]
      */
-    'addscript': function (src, parse, explicit) {
+    addscript: function (src, parse, explicit) {
         //
         var script,
             head,
@@ -58,7 +64,7 @@ JMVC.head = {
      * @param  {[type]} explicit [description]
      * @return {[type]}          [description]
      */
-    'addstyle' : function (src, parse, explicit, id) {
+    addstyle : function (src, parse, explicit, id) {
         var style,
             head,
             tmp,
@@ -67,18 +73,18 @@ JMVC.head = {
             sync = false,
             rules,
             csscontent;
+
         if (parse) {
             if (explicit) {
                 /* in this case src is meant to be the content */
                 csscontent = JMVC.parse(src, true);
-                //
+
                 head = that.element;
                 style = WD.createElement('style');
                 rules = WD.createTextNode(String(csscontent));
-                //
+
                 style.type = 'text/css';
                 if (style.styleSheet) {
-                    //style.styleSheet.cssText = rules.nodeValue;
                     style.styleSheet.cssText = rules.value;
                 } else {
                     style.appendChild(rules);
@@ -121,26 +127,33 @@ JMVC.head = {
     },
 
     /**
-     * [ description]
-     * @param  {[type]} ) {if          (W.top !== W.self [description]
-     * @return {[type]}   [description]
+     * [denyiXrame description]
+     * @return {[type]} [description]
      */
-    'denyiXrame' : function () {
+    denyiXrame : function () {
         return W.top !== W.self &&  (W.top.location = JMVC.vars.baseurl);
     },
     
-    'favicon' : function (file) {
-        JMVC.head.link('icon', {rel : "shortcut icon", href : JMVC.vars.baseurl + file});
+    /**
+     * [favicon description]
+     * @param  {[type]} file [description]
+     * @return {[type]}      [description]
+     */
+    favicon : function (file) {
+        this.link('icon', {
+            rel : "shortcut icon",
+            href : JMVC.vars.baseurl + file
+        });
     },
 
     /**
-     * [ description]
+     * [goto description]
      * @param  {[type]} cnt  [description]
      * @param  {[type]} act  [description]
      * @param  {[type]} prms [description]
      * @return {[type]}      [description]
      */
-    'goto' : function (cnt, act, prms) {
+    goto : function (cnt, act, prms) {
         var path = [];
         cnt && path.push(cnt);
         act && path.push(act);
@@ -150,12 +163,11 @@ JMVC.head = {
     },
 
     /**
-     * [ description]
+     * [lastmodified description]
      * @param  {[type]} d [description]
      * @return {[type]}   [description]
      */
-    'lastmodified' : function (d) {
-        // <meta http-equiv="last-modified" content="Thu, 03 Jan 2013 14:56:54 +0000" />
+    lastmodified : function (d) {
         var meta = this.element.getElementsByTagName('meta'),
             newmeta = JMVC.dom.create(
                 'meta', {
@@ -165,65 +177,65 @@ JMVC.head = {
             ),
             len = meta.length;
         len ? JMVC.dom.insertAfter(newmeta, meta.item(len - 1)) : this.element.appendChild(newmeta);
-        /*
-        if (len) {
-            JMVC.dom.insertAfter(newmeta, meta.item(len - 1));
-        } else {
-            this.element.appendChild(newmeta);
-        }*/
     },
 
-    'lib' : function (l) {
+    /**
+     * [lib description]
+     * @param  {[type]} l [description]
+     * @return {[type]}   [description]
+     */
+    lib : function (l) {
         var libs = {
             'jquery' : 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js',
             'jsapi' : 'https://www.google.com/jsapi'
         };
-        (l in libs) && JMVC.head.addscript(libs[l]);
+        (l in libs) && this.addscript(libs[l]);
     },
 
     /**
-     * [ description]
+     * [link description]
      * @param  {[type]} rel   [description]
      * @param  {[type]} attrs [description]
      * @return {[type]}       [description]
      */
-    'link' : function (rel, attrs) {
+    link : function (rel, attrs) {
         attrs.rel = rel;
-        JMVC.dom.add(JMVC.head.element, 'link', attrs);
+        JMVC.dom.add(this.element, 'link', attrs);
     },
 
     /**
-     * [ description]
-     * @param  {[type]} name  [description]
-     * @param  {[type]} value [description]
-     * @return {[type]}       [description]
+     * [meta description]
+     * @param  {[type]} name    [description]
+     * @param  {[type]} value   [description]
+     * @param  {[type]} rewrite [description]
+     * @return {[type]}         [description]
      */
-    'meta' : function (name, value, rewrite) {
-        
-        //exit if rewrite is not set and the meta name already exists
+    meta : function (name, value, rewrite) {
         rewrite = !!rewrite;
-        var metas = this.metas(),
-            maybeExisting = JMVC.dom.findByAttribute('name', name, metas),
-            exists = maybeExisting.length;
-        
-        if (!rewrite && exists) {
-            return false;
-        }
 
-        rewrite && exists && JMVC.dom.remove(maybeExisting[0]);
+        var metas = this.metas(),
+            maybeExisting = JMVC.dom.findByAttribute('name', name, metas);
+        
+        if (!!maybeExisting.length) {
+            //exit if rewrite is not set and the meta name already exists
+            if (!rewrite) {
+                return false;
+            }
+            JMVC.dom.remove(maybeExisting[0]);
+        }
 
         //get last meta if exists
         var meta = this.element.getElementsByTagName('meta'),
             newmeta = JMVC.dom.create('meta', {'name' : name, 'content' : value}),
             len = meta.length;
         len ? JMVC.dom.insertAfter(newmeta, meta.item(len - 1)) : this.element.appendChild(newmeta);
-    },
+    },  
 
     /**
      * return all document meta tags
      * @return {[type]} [description]
      */
-    'metas' : function () {
+    metas : function () {
         return JMVC.array.coll2array(JMVC.WD.getElementsByTagName('meta'));
     },
 
@@ -231,9 +243,10 @@ JMVC.head = {
      * [ description]
      * @return {[type]} [description]
      */
-    'reload' : function () {
+    reload : function () {
         var n = JMVC.WD.location.href;
-        WD.location.href = n;//do not cause wierd alert
+        WD.location.href = n;
+        //that do not cause wierd IE alert
     },
 
     /**
@@ -241,9 +254,11 @@ JMVC.head = {
      * @param  {[type]} t [description]
      * @return {[type]}   [description]
      */
-    'title' : function (t) {
-        if (!t) {return WD.title; }
+    title : function (t) {
+        if (typeof t === 'undefined') {
+            return WD.title;
+        }
         WD.title = t;
-        return true;
+        return WD.title;
     }
 };

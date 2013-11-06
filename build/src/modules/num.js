@@ -3,6 +3,10 @@
 NUM sub-module
 --------------
 */
+//private section
+_.num = {};
+
+//public section
 JMVC.num = {
 	getNum : function (str) {return parseInt(str, 10); },
 	getFloat : function (str) {return parseFloat(str, 10); },

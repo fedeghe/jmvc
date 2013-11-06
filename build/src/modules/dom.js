@@ -3,6 +3,10 @@
 DOM sub-module
 --------------
 */
+//private section
+_.dom = {};
+
+//public section
 JMVC.dom = {
     /**
      * [ description]
@@ -12,7 +16,7 @@ JMVC.dom = {
      * @param  {[type]} inner [description]
      * @return {[type]}       [description]
      */
-    'add' : function (where, tag, attrs, inner) {
+    add : function (where, tag, attrs, inner) {
         var n = this.create(tag, attrs, inner);
         this.append(where, n);
         return n;
@@ -24,7 +28,7 @@ JMVC.dom = {
      * @param  {[type]} addingClass [description]
      * @return {[type]}             [description]
      */
-    'addClass' : function (elem, addingClass) {
+    addClass : function (elem, addingClass) {
         var cls = !!(elem.className) ? elem.className.split(' ') : [];
         if (JMVC.array.inArray(cls, addingClass) < 0) {
             cls.push(addingClass);
@@ -38,7 +42,7 @@ JMVC.dom = {
      * @param  {[type]} what  [description]
      * @return {[type]}       [description]
      */
-    'append' : function (where, what) {
+    append : function (where, what) {
         if (JMVC.util.isArray(what)) {
             for (var i = 0, l = what.length; i < l; i++) {
                 where.appendChild(what[i]);
@@ -56,7 +60,7 @@ JMVC.dom = {
      * @param  {[type]} value [description]
      * @return {[type]}       [description]
      */
-    'attr' : function (elem, name, value) {
+    attr : function (elem, name, value) {
         var attrs = false,
             l = false,
             i = 0,
@@ -108,11 +112,11 @@ JMVC.dom = {
      * [ description]
      * @return {[type]} [description]
      */
-    'body' : function () {
+    body : function () {
         return WD.body;
     },
 
-    'childs' : function (node) {
+    childs : function (node) {
         return node.childNodes;
     },
 
@@ -122,7 +126,7 @@ JMVC.dom = {
      * @param  {[type]} deep [description]
      * @return {[type]}      [description]
      */
-    'clone' : function(n, deep){
+    clone : function(n, deep){
         return n.cloneNode(!!deep);
     },
 
@@ -133,7 +137,7 @@ JMVC.dom = {
      * @param  {[type]} inner [description]
      * @return {[type]}       [description]
      */
-    'create' : function (tag, attrs, inner) {
+    create : function (tag, attrs, inner) {
         if (!tag) {W.alert('no tag'); return; }
         var node = JMVC.WD.createElement(tag),
             att;
@@ -158,7 +162,7 @@ JMVC.dom = {
      * @param  {[type]} text [description]
      * @return {[type]}      [description]
      */
-    'createText' : function(text){
+    createText : function(text){
         return JMVC.WD.createTextNode(text);
     },
 
@@ -168,7 +172,7 @@ JMVC.dom = {
      * @param  {[type]} name [description]
      * @return {[type]}      [description]
      */
-    'createNS' : function (ns, name) {
+    createNS : function (ns, name) {
         return JMVC.WD.createElementNS(ns, name);
     },
 
@@ -177,7 +181,7 @@ JMVC.dom = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    'empty' : function (el) {
+    empty : function (el) {
         el.innerHTML = '';
     },
     
@@ -187,7 +191,7 @@ JMVC.dom = {
      * @param  {[type]} b [description]
      * @return {[type]}   [description]
      */
-    'find' : function (a, b) {
+    find : function (a, b) {
         if (a.nodeType === 1) {return a; }
         var sel = "getElement",
             toArr = false,
@@ -221,7 +225,7 @@ JMVC.dom = {
         return ((ret instanceof Array) && ret.length == 1) ? ret[0] : ret;
     },
 
-    'find2' : function (a, b) {
+    find2 : function (a, b) {
         if (a.nodeType === 1) {return a; }
         var sel = "getElement",
             toArr = 0,
@@ -246,7 +250,7 @@ JMVC.dom = {
      * @param  {[type]} cname [description]
      * @return {[type]}       [description]
      */
-    'findInnerByClass' : function (ctx, cname) {
+    findInnerByClass : function (ctx, cname) {
         var a = [],
             re = new RegExp('\\b' + cname + '\\b'),
             els = ctx.getElementsByTagName("*"),
@@ -267,7 +271,7 @@ JMVC.dom = {
      * @param  {[type]} root  [description]
      * @return {[type]}       [description]
      */
-    'findByAttribute' : function (attr, value, root) {
+    findByAttribute : function (attr, value, root) {
         var ret = [],
             whole = [],
             val,
@@ -287,15 +291,16 @@ JMVC.dom = {
         return ret;
     },
 
-
-
-    'firstAncestor' : function(el, tagName) {
-        while(el = el.parentNode, el && (el.tagName != tagName.toUpperCase()));
+    /**
+     * [firstAncestor description]
+     * @param  {[type]} el      [description]
+     * @param  {[type]} tagName [description]
+     * @return {[type]}         [description]
+     */
+    firstAncestor : function(el, tagName) {
+        while (el = el.parentNode, el && (el.tagName != tagName.toUpperCase()));
         return el;
     },
-
-
-
 
     /**
      * [ description]
@@ -303,7 +308,7 @@ JMVC.dom = {
      * @param  {[type]} name [description]
      * @return {[type]}      [description]
      */
-    'hasAttribute' : function (el, name) {
+    hasAttribute : function (el, name) {
         return el.getAttribute(name) !== null;
     },
 
@@ -313,7 +318,7 @@ JMVC.dom = {
      * @param  {[type]} classname [description]
      * @return {[type]}           [description]
      */
-    'hasClass' : function (el, classname) {
+    hasClass : function (el, classname) {
         return el.className.match(new RegExp('(\\s|^)' + classname + '(\\s|$)'));
     },
     
@@ -323,16 +328,16 @@ JMVC.dom = {
      * @param  {[type]} html [description]
      * @return {[type]}      [description]
      */
-    'html' : function (el, html) {
+    html : function (el, html) {
         if (!el) {return this; }
         var t = "";
         //alert(el);
         if (typeof html !== 'undefined') {
             if (el) {
                 try {
-                    if(JMVC.dom.isElement(html)){
-                        JMVC.dom.empty(el);
-                        JMVC.dom.append(el, html);
+                    if(this.isElement(html)){
+                        this.empty(el);
+                        this.append(el, html);
                     } else {
                         el.innerHTML = html + '';
                     }
@@ -353,7 +358,7 @@ JMVC.dom = {
      * @param  {[type]} referenceNode [description]
      * @return {[type]}               [description]
      */
-    'insertAfter' : function (node, referenceNode) {
+    insertAfter : function (node, referenceNode) {
         var p = referenceNode.parentNode;
         p.insertBefore(node, referenceNode.nextSibling);
         return node;
@@ -365,7 +370,7 @@ JMVC.dom = {
      * @param  {[type]} referenceNode [description]
      * @return {[type]}               [description]
      */
-    'insertBefore' : function (node, referenceNode) {
+    insertBefore : function (node, referenceNode) {
         var p = referenceNode.parentNode;
         p.insertBefore(node, referenceNode);
         return node;
@@ -379,7 +384,7 @@ JMVC.dom = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    'isElement' : function (o) {
+    isElement : function (o) {
         return (
             typeof HTMLElement === "object" ?
                 o instanceof HTMLElement
@@ -396,7 +401,7 @@ JMVC.dom = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    'isNode' : function (o) {
+    isNode : function (o) {
         return (
             typeof Node === "object" ? o instanceof Node : 
             o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName==="string"
@@ -408,7 +413,7 @@ JMVC.dom = {
      * @param  {[type]} node [description]
      * @return {[type]}      [description]
      */
-    'nodeTypeString' : function (node) {
+    nodeTypeString : function (node) {
         var types = [
             'ELEMENT_NODE', 'ATTRIBUTE_NODE', 'TEXT_NODE', 'CDATA_SECTION_NODE', 'ENTITY_REFERENCE_NODE',
             'ENTITY_NODE', 'PROCESSING_INSTRUCTION_NODE', 'COMMENT_NODE', 'DOCUMENT_NODE', 'DOCUMENT_TYPE_NODE',
@@ -423,7 +428,7 @@ JMVC.dom = {
      * @param  {[type]} types [description]
      * @return {[type]}       [description]
      */
-    'nthchild' : function (node, num, types) {
+    nthchild : function (node, num, types) {
         var childs = node.childNodes,
             // filtered 
             tagChilds = [],
@@ -451,7 +456,7 @@ JMVC.dom = {
      * @param  {[type]} src [description]
      * @return {[type]}     [description]
      */
-    'preloadImage' : function (src, fn) {
+    preloadImage : function (src, fn) {
         var i = new W.Image();
         typeof fn === 'function' && (i.onload = fn(i));
         i.src = src;
@@ -463,7 +468,7 @@ JMVC.dom = {
      * @param  {[type]} node [description]
      * @return {[type]}      [description]
      */
-    'parent' : function (node) {return node.parentNode; },
+    parent : function (node) {return node.parentNode; },
 
     /**
      * [ description]
@@ -471,7 +476,7 @@ JMVC.dom = {
      * @param  {[type]} what  [description]
      * @return {[type]}       [description]
      */
-    'prepend' : function (where, what) {
+    prepend : function (where, what) {
         var c = where.childNodes[0];
         where.insertBefore(what, c);
         return what;
@@ -482,18 +487,18 @@ JMVC.dom = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    'remove' : function (el) {
+    remove : function (el) {
         if (!el) {
             return;
         }
 
         var parent;
         if(typeof el === 'string'){
-            el = JMVC.dom.find(el);
+            el = this.find(el);
         }
         if(JMVC.util.isArray(el)){
             for (var i  = 0, l = el.length; i < l; i++) {
-                JMVC.dom.remove(el[i]);
+                this.remove(el[i]);
             }
             return;
         }
@@ -509,7 +514,7 @@ JMVC.dom = {
      * @param  {[type]} mode   [description]
      * @return {[type]}        [description]
      */
-    'removeAttribute' : function (el, valore, mode) {
+    removeAttribute : function (el, valore, mode) {
         el.removeAttribute(valore);
         return el;
     },
@@ -520,7 +525,7 @@ JMVC.dom = {
      * @param  {[type]} cls [description]
      * @return {[type]}     [description]
      */
-    'removeClass' : function (el, cls) {
+    removeClass : function (el, cls) {
         var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
         el.className = el.className.replace(reg, ' ');
         return this;
@@ -533,7 +538,7 @@ JMVC.dom = {
      * @param  {[type]} newclass [description]
      * @return {[type]}          [description]
      */
-    'switchClass' : function (el, oldclass, newclass) {
+    switchClass : function (el, oldclass, newclass) {
         if (this.hasClass(el, oldclass)) {
             this.removeClass(el, oldclass);
             if (!this.hasClass(el, newclass)) {
@@ -548,7 +553,7 @@ JMVC.dom = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    'val' : function (el) {
+    val : function (el) {
         return el.value;
     }
 };

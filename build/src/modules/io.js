@@ -3,22 +3,19 @@
 AJAX sub-module
 ---------------
 */
-JMVC.io = {
 
-    'xhrcount' : 0,
-
+// private section
+_.io = {
     /**
-     * [ description]
-     * @return {[type]} [description]
+     * Façade for getting the xhr object
+     * @return {object} the xhr
      */
-    'getxhr' : function () {
+    getxhr : function () {
         JMVC.io.xhrcount += 1;
         var xhr,
-            // IEfuckIds = ['MSXML2.XMLHTTP.3.0', 'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'],
-            // 'Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'
             IEfuckIds = ['Msxml2.XMLHTTP', 'Msxml3.XMLHTTP', 'Microsoft.XMLHTTP'],
-            i = 0,
-            len = IEfuckIds.length;
+            len = IEfuckIds.length,
+            i = 0;
 
         try {
             xhr = new W.XMLHttpRequest();
@@ -42,8 +39,8 @@ JMVC.io = {
      * @param  {[type]} options [description]
      * @return {[type]}         [description]
      */
-    'ajcall' : function (uri, options) {
-        var xhr = JMVC.io.getxhr(),
+    ajcall : function (uri, options) {
+        var xhr = _.io.getxhr(),
             method = (options && options.method) || 'POST',
             cback = options && options.cback,
             cb_opened = (options && options.opened) || function () {},
@@ -66,18 +63,14 @@ JMVC.io = {
         data = JMVC.object.obj2qs(data).substr(1);
 
         xhr.onreadystatechange = function () {
-            //console.dir(xhr)
             var tmp;
 
             if (state === xhr.readyState) {return false; }
             state = xhr.readyState;
 
-
-            //JMVC.debug('called '+uri + ' ('+xhr.readyState+')');
             if (xhr.readyState === "complete" || (xhr.readyState === 4 && xhr.status === 200)) {
                 complete = true;
                 if (cback) {
-                    //res = (targetType === 'responseXML') ?  xhr[targetType].childNodes[0] : xhr[targetType];
                     res = xhr[targetType];
                     (function () {cback(res); })(res);
                 }
@@ -108,16 +101,18 @@ JMVC.io = {
                     case 'GET':
                         try {
                             tmp = {
-                                'xml' : 'text/xml',
-                                'html' : 'text/html',
-                                'json' : 'application/json'
-                            }[type];
+                                xml : 'text/xml',
+                                html : 'text/html',
+                                json : 'application/json'
+                            }[type] || 'text/html';
+                            
                             xhr.setRequestHeader("Accept", tmp + "; charset=utf-8");
                             xhr.send(null);
+                            
                         } catch (e2) {}
                     break;
                     default :
-                        alert(method)
+                        alert(method);
                         xhr.send(null);
                     break;
                 }
@@ -126,6 +121,7 @@ JMVC.io = {
         };
 
         xhr.onerror = function () {if (cb_error) {cb_error.apply(null, arguments); } };
+        
         xhr.onabort = function () {if (cb_abort) {cb_abort.apply(null, arguments); } };
 
         //open request
@@ -137,6 +133,34 @@ JMVC.io = {
         try {
             return (targetType === 'responseXML') ? xhr[targetType].childNodes[0] : xhr[targetType];
         } catch (e3) {}
+    }
+};
+
+
+// public section
+JMVC.io = {
+    xhrcount : 0,
+
+    getxhr : _.io.getxhr,
+
+    /**
+     * [ description]
+     * @param  {[type]} uri   [description]
+     * @param  {[type]} cback [description]
+     * @param  {[type]} sync  [description]
+     * @param  {[type]} data  [description]
+     * @param  {[type]} cache [description]
+     * @return {[type]}       [description]
+     */
+    post : function (uri, cback, sync, data, cache, err) {
+        return _.io.ajcall(uri, {
+            cback : cback,
+            method : 'POST',
+            sync : sync,
+            data : data,
+            cache : cache,
+            error: err
+        });
     },
 
     /**
@@ -148,29 +172,37 @@ JMVC.io = {
      * @param  {[type]} cache [description]
      * @return {[type]}       [description]
      */
-    'post' : function (uri, cback, sync, data, cache) {
-        return JMVC.io.ajcall(uri, {cback : cback, method : 'POST', sync : sync, data : data, cache : cache});
+    get : function (uri, cback, sync, data, cache, err) {
+        return _.io.ajcall(uri, {
+            cback : cback || function () {},
+            method : 'GET',
+            sync : sync,
+            data : data,
+            cache : cache,
+            error : err
+        });
     },
 
     /**
-     * [ description]
+     * [delete description]
      * @param  {[type]} uri   [description]
      * @param  {[type]} cback [description]
      * @param  {[type]} sync  [description]
      * @param  {[type]} data  [description]
      * @param  {[type]} cache [description]
+     * @param  {[type]} err   [description]
      * @return {[type]}       [description]
      */
-    'get' : function (uri, cback, sync, data, cache, err) {
-        return JMVC.io.ajcall(uri, {cback : cback, method : 'GET', sync : sync, data : data, cache : cache, error : err});
-    },
-
-
-
-
-    'delete' : function (uri, cback) {
-        return JMVC.io.ajcall(uri, {cback : cback || function () {}, method : 'DELETE'});
-    },
+    delete : function (uri, cback, sync, data, cache, err) {
+        return _.io.ajcall(uri, {
+            cback : cback || function () {},
+            method : 'DELETE',
+            sync : sync,
+            data : data,
+            cache : cache,
+            error : err
+        });
+    },  
 
     /**
      * [ description]
@@ -179,12 +211,12 @@ JMVC.io = {
      * @param  {[type]} data  [description]
      * @return {[type]}       [description]
      */
-    'getJson' : function (uri, cback, data) {
-        var r = JMVC.io.ajcall(uri, {
+    getJson : function (uri, cback, data) {
+        var r = _.io.ajcall(uri, {
             type : 'json',
             method: 'GET',
             sync : false,
-            cback :cback,
+            cback :cback || function () {},
             data : data
         });
         return (W.JSON && W.JSON.parse) ? JSON.parse(r) : JMVC.jeval('(' + r + ')');
@@ -196,7 +228,12 @@ JMVC.io = {
      * @param  {[type]} cback [description]
      * @return {[type]}       [description]
      */
-    'getXML' : function (uri, cback) {
-        return JMVC.io.ajcall(uri, {method : 'GET', sync : false, type : 'xml', cback : cback || function () {} });
+    getXML : function (uri, cback) {
+        return _.io.ajcall(uri, {
+            method : 'GET',
+            sync : false,
+            type : 'xml',
+            cback : cback || function () {}
+        });
     }
 };

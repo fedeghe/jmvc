@@ -3,11 +3,17 @@
 EVENT sub-module
 ----------------
 */
+//private section
+_.events = {
+    
+};
+
+//public section
 JMVC.events = {
-    'bindings' : {},
-    'onedone' : false,
-    'Estart' : [],
-    'Eend' : [],
+    bindings : {},
+    onedone : false,
+    Estart : [],
+    Eend : [],
 
     /**
      * [ description]
@@ -16,10 +22,10 @@ JMVC.events = {
      * @param  {Function} fn   [description]
      * @return {[type]}        [description]
      */
-    'bind' : function (el, tipo, fn) {
+    bind : function (el, tipo, fn) {
         if (el instanceof Array) {
             for (var i =0, l = el.length; i < l; i++) {
-                JMVC.events.bind(el[i], tipo, fn);
+                this.bind(el[i], tipo, fn);
             }
             return ;
         }
@@ -31,8 +37,8 @@ JMVC.events = {
         } else {
             el['on' + tipo] = f;
         }
-        if (!JMVC.events.bindings[el]) {JMVC.events.bindings[el] = {}; }
-        JMVC.events.bindings[el][tipo] = fn;
+        if (!this.bindings[el]) {this.bindings[el] = {}; }
+        this.bindings[el][tipo] = fn;
     },
 
     /**
@@ -41,14 +47,14 @@ JMVC.events = {
      * @param  {[type]} tipo [description]
      * @return {[type]}      [description]
      */
-    'unbind' : function (el, tipo) {
+    unbind : function (el, tipo) {
         if (el === null) {return; }
         if (el.removeEventListener) {
-            el.removeEventListener(tipo, JMVC.events.bindings[el][tipo], false);
+            el.removeEventListener(tipo, this.bindings[el][tipo], false);
         } else if (el.detachEvent) {
-            el.detachEvent("on" + tipo, JMVC.events.bindings[el][tipo]);
+            el.detachEvent("on" + tipo, this.bindings[el][tipo]);
         }
-        JMVC.events.bindings[el][tipo] = null;
+        this.bindings[el][tipo] = null;
     },
 
     /**
@@ -58,10 +64,10 @@ JMVC.events = {
      * @param  {Function} fn   [description]
      * @return {[type]}        [description]
      */
-    'one' : function (el, tipo, fn) {
+    one : function (el, tipo, fn) {
         if (el instanceof Array) {
             for (var i = 0, l = el.length; i < l; i ++) {
-                JMVC.events.one(el[i], tipo, fn);
+                this.one(el[i], tipo, fn);
             }
             return;
         }
@@ -69,7 +75,7 @@ JMVC.events = {
             if (!this.onedone) {fn(e); }
             this.onedone = true;
         };
-        JMVC.events.bind(el, tipo, newf);
+        this.bind(el, tipo, newf);
     },
 
     /**
@@ -77,7 +83,7 @@ JMVC.events = {
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
-    'kill' : function (e) {
+    kill : function (e) {
         if (!e) {
             e = W.event;
             e.cancelBubble = true;
@@ -95,7 +101,7 @@ JMVC.events = {
      * @param  {[type]} func [description]
      * @return {[type]}      [description]
      */
-    'ready' : function (func) {
+    ready : function (func) {
         // if some event are booked when the dom is
         // already loaded execute immediately
         if (JMVC.loaded) {
@@ -121,7 +127,7 @@ JMVC.events = {
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
-    'preventDefault' : function (e) {
+    preventDefault : function (e) {
         e = e || W.event;
         if (e.preventDefault) {
             e.preventDefault();
@@ -135,7 +141,7 @@ JMVC.events = {
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
-    'eventTarget' : function (e) {
+    eventTarget : function (e) {
         
         e = e ? e : JMVC.W.event;
         var targetElement = e.currentTarget || (typeof e.target !== "undefined") ? e.target : e.srcElement;
@@ -154,7 +160,7 @@ JMVC.events = {
      * @param  {[type]} e  [description]
      * @return {[type]}    [description]
      */
-    'getCoord' : function (el, e) {
+    getCoord : function (el, e) {
         var x,
             y;
         if (e.pageX || e.pageY) {
@@ -174,7 +180,7 @@ JMVC.events = {
      * @param  {[type]} f [description]
      * @return {[type]}   [description]
      */
-    'start' : function (f) {
+    start : function (f) {
         this.Estart.push(f);
     },
 
@@ -183,7 +189,7 @@ JMVC.events = {
      * @param  {[type]} f [description]
      * @return {[type]}   [description]
      */
-    'end' : function (f) {
+    end : function (f) {
         this.Eend.push(f);
     },
 
@@ -191,7 +197,7 @@ JMVC.events = {
      * [ description]
      * @return {[type]} [description]
      */
-    'startRender' : function () {
+    startRender : function () {
         var i = 0,
             l = this.Estart.length;
         for (null; i < l; i += 1) {
@@ -203,7 +209,7 @@ JMVC.events = {
      * [ description]
      * @return {[type]} [description]
      */
-    'endRender' : function () {
+    endRender : function () {
         var i = 0,
             l = this.Eend.length;
         for (null; i < l; i += 1) {
@@ -217,7 +223,7 @@ JMVC.events = {
      * @param  {[type]} t [description]
      * @return {[type]}   [description]
      */
-    'delay' : function (f, t) {
+    delay : function (f, t) {
         W.setTimeout(f, t);
     },
 
@@ -227,8 +233,8 @@ JMVC.events = {
      * @param  {[type]} top  [description]
      * @return {[type]}      [description]
      */
-    'scrollBy' : function (left, top) {
-        JMVC.events.delay(function () {
+    scrollBy : function (left, top) {
+        this.delay(function () {
             W.scrollBy(left, top);
         }, 1);
     },
@@ -239,8 +245,8 @@ JMVC.events = {
      * @param  {[type]} top  [description]
      * @return {[type]}      [description]
      */
-    'scrollTo' : function (left, top) {
-        JMVC.events.delay(function () {
+    scrollTo : function (left, top) {
+        this.delay(function () {
             W.scrollTo(left, top);
         }, 1);
     },
@@ -250,15 +256,16 @@ JMVC.events = {
      * @param  {[type]} ms [description]
      * @return {[type]}    [description]
      */
-    'loadify' : function (ms) {
-        JMVC.events.start(function () {
+    loadify : function (ms) {
+        var self = this;
+        this.start(function () {
             //otherwise some browser hangs (opera)
-            JMVC.events.delay(function () {
+            self.delay(function () {
                 WD.body.style.opacity = 0;
                 WD.body.style.filter = 'alpha(opacity=0)';
             }, 0);
         });
-        JMVC.events.end(function () {
+        this.end(function () {
             var i = 0,
                 step = 0.05,
                 top = 1,
@@ -288,7 +295,7 @@ JMVC.events = {
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
-    'touch' : function (e) {
+    touch : function (e) {
         var touches = [],
             i = 0,
             ect = e.touches,

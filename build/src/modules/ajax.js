@@ -5,24 +5,40 @@ AJAX sub-module
 
 This is the experimental versionof ajax utilities
 */
-JMVC.ajax = {
-    count : 0,
+
+//PRIVATE
+_.ajax = {
     types : {
         'xml' : 'text/xml',
         'html' : 'text/html',
         'json' : 'application/json'
     },
-    getReq : function () {
+    IEfuckIds = ['Msxml2.XMLHTTP', 'Msxml3.XMLHTTP', 'Microsoft.XMLHTTP'],
+
+    /**
+     * [modes description]
+     * @type {Object}
+     */
+    methods : {
+        'POST' : 'POST',
+        'GET' : 'GET'
+    },
+    /**
+     * façade for fetting an xhr object
+     * 
+     * @return {Object} the xhr object
+     */
+    getxhr : function () {
         var xhr,
-            IEfuckIds = ['Msxml2.XMLHTTP', 'Msxml3.XMLHTTP', 'Microsoft.XMLHTTP'],
+            
             i = 0,
-            len = IEfuckIds.length;
+            len = this.IEfuckIds.length;
         try {
             xhr = new W.XMLHttpRequest();
         } catch (e1) {
             for (null; i < len; i += 1) {
                 try {
-                    xhr = new ActiveXObject(IEfuckIds[i]);
+                    xhr = new ActiveXObject(this.IEfuckIds[i]);
                 } catch (e2) {continue; }
             }
             !xhr && JMVC.debug('No way to initialize hxr');
@@ -31,27 +47,34 @@ JMVC.ajax = {
         JMVC.ajax.count += 1;
         return xhr;
     },
+
+    /**
+     * [call description]
+     * @param  {[type]} options [description]
+     * @return {[type]}         [description]
+     */
     call : function (options) {
         var xhr = {
-            req : JMVC.ajax.getReq(),
-            uri : options && options.uri,
-            method : options && 'method' in options ? options.method : 'POST',
-            cback : options && 'cback' in options ? options.cback : function () {} ,
-            cb_opened : options && 'opened' in options ? options.opened : function () {},
-            cb_loading : options && 'loading' in options ? options.loading : function () {},
-            cb_error : options && 'error' in options ? options.error : function () {},
-            cb_abort : options && 'abort' in options ? options.abort : function () {},
-            sync : options && options.sync,
-            data : options && options.data || false,
-            type : (options && options.type) || JMVC.ajax.types.html,
-            cache : (options && options.cache !== undefined) ? options.cache : true,
-            targetType : options.type === 'xml' ?  'responseXML' : 'responseText',
-            timeout : options && options.timeout || 3000,
-            complete : false,
-            res : false,
-            ret : false,
-            state : false
-        };
+                req : this.getxhr(),
+                uri : options && options.uri,
+                method : options && 'method' in options && this.methods[options.method] || 'POST',
+                cback : options && 'cback' in options ? options.cback : function () {} ,
+                cb_opened : options && 'opened' in options ? options.opened : function () {},
+                cb_loading : options && 'loading' in options ? options.loading : function () {},
+                cb_error : options && 'error' in options ? options.error : function () {},
+                cb_abort : options && 'abort' in options ? options.abort : function () {},
+                sync : options && options.sync,
+                data : options && options.data || false,
+                type : (options && options.type) || this.types.html,
+                cache : (options && options.cache !== undefined) ? options.cache : true,
+                targetType : options.type === 'xml' ?  'responseXML' : 'responseText',
+                timeout : options && options.timeout || 3000,
+                complete : false,
+                res : false,
+                ret : false,
+                state : false
+            },
+            self = this;
         xhr.req.onerror = function () {xhr.cb_error && xhr.cb_error.apply(null, arguments); };
         xhr.req.onabort = function () {xhr.cb_abort && xhr.cb_abort.apply(null, arguments); };
         xhr.req.onreadystatechange = function () {
@@ -65,7 +88,7 @@ JMVC.ajax = {
                     break;
                     case 'GET':
                         try {
-                            xhr.req.setRequestHeader("Accept", JMVC.ajax.types[xhr.type] + "; charset=utf-8");
+                            xhr.req.setRequestHeader("Accept", self.types[xhr.type] + "; charset=utf-8");
                             xhr.req.send(null);
                         } catch (e2) {}
                     break;
@@ -99,7 +122,12 @@ JMVC.ajax = {
             }
         };
         xhr.req.open(xhr.method, (xhr.method === 'GET') ? (xhr.uri + ((xhr.data) ? '?' + xhr.data : "")) : xhr.uri, xhr.sync);
-    },
+    }
+};
+
+// PUBLIC
+JMVC.ajax = {
+    count : 0,
     post : function () {},
     get : function () {},
     getJson : function () {},

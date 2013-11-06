@@ -3,13 +3,19 @@
 UTIL sub-module
 ---------------
 */
+//private section
+_.util = {
+    
+};
+
+//public section
 JMVC.util = {
     /**
      * [ description]
      * @param  {[type]} d [description]
      * @return {[type]}   [description]
      */
-    'deg2rad' : function (d) {return JMVC.M.PI * d / 180; },
+    deg2rad : function (d) {return JMVC.M.PI * d / 180; },
 
 
     /**
@@ -18,7 +24,7 @@ JMVC.util = {
      * @param  {[type]} ext [description]
      * @return {[type]}     [description]
      */
-    'extend' : function (obj, ext) {
+    extend : function (obj, ext) {
         var j;
         for (j in ext) {
             if (ext.hasOwnProperty(j)) {
@@ -33,7 +39,7 @@ JMVC.util = {
      * @param  {[type]} scriptname [description]
      * @return {[type]}            [description]
      */
-    'getParameters' : function (scriptid, pname) {
+    getParameters : function (scriptid, pname) {
             var script = JMVC.dom.find('#' + scriptid),
                 p = false,
                 parameters = false;
@@ -49,7 +55,7 @@ JMVC.util = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    'getType' : function (o) {
+    getType : function (o) {
         return ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
     },
 
@@ -58,7 +64,7 @@ JMVC.util = {
      * @param  {[type]} hex [description]
      * @return {[type]}     [description]
      */
-    'hex2int' : function (hex) {
+    hex2int : function (hex) {
         return parseInt(hex, 16);
     },
 
@@ -70,7 +76,7 @@ JMVC.util = {
      * @param  {[type]} i [description]
      * @return {[type]}   [description]
      */
-    'int2hex' : function (i) {
+    int2hex : function (i) {
         return parseInt(i, 10).toString(16);
     },
 
@@ -79,7 +85,7 @@ JMVC.util = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    'isArray' : function (o) {
+    isArray : function (o) {
         var y = Array.isArray && Array.isArray(o), t1, t2;
         if (y) {return true; }
         t1 = String(o) !== o;
@@ -92,7 +98,7 @@ JMVC.util = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    'isObject' : function (o) {
+    isObject : function (o) {
         var t1 = String(o) !== o,
             t2 = {}.toString.call(o).match(/\[object\sObject\]/);
         return t1 && !!(t2 && t2.length);
@@ -104,7 +110,7 @@ JMVC.util = {
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
-    'isSet' : function (e) {return typeof e !== 'undefined'; },
+    isSet : function (e) {return typeof e !== 'undefined'; },
 
 
     /**
@@ -113,7 +119,7 @@ JMVC.util = {
      * @param  {[type]} type [description]
      * @return {[type]}      [description]
      */
-    'isTypeOf' : function (el, type) {return typeof el === type; },
+    isTypeOf : function (el, type) {return typeof el === type; },
 
     
     /**
@@ -121,7 +127,7 @@ JMVC.util = {
      * @param  {[type]} ) {return      +new Date( [description]
      * @return {[type]}   [description]
      */
-    'now' : function () {return +new Date(); },
+    now : function () {return +new Date(); },
 
 
 
@@ -131,7 +137,7 @@ JMVC.util = {
      * @param  {[type]} max) {return      min + ~~(JMVC.M.random() * (max - min + 1) [description]
      * @return {[type]}      [description]
      */
-    'rand' : function (min, max) {return min + ~~(JMVC.M.random() * (max - min + 1)); },
+    rand : function (min, max) {return min + ~~(JMVC.M.random() * (max - min + 1)); },
 
     
     /**
@@ -139,7 +145,7 @@ JMVC.util = {
      * @param  {[type]} r [description]
      * @return {[type]}   [description]
      */
-    'rad2deg' : function (r) {return 180 * r / JMVC.M.PI; },
+    rad2deg : function (r) {return 180 * r / JMVC.M.PI; },
 
 
     /**
@@ -148,7 +154,7 @@ JMVC.util = {
      * @param  {[type]} end   [description]
      * @return {[type]}       [description]
      */
-    'range' : function (start, end) {
+    range : function (start, end) {
         var ret = [];
         while (end - start + 1) {
             ret.push((start += 1) - 1);
@@ -156,8 +162,11 @@ JMVC.util = {
         return ret;
     },
 
-
-    'uniqueid' : new function () {
+    /**
+     * [description]
+     * @return {[type]} [description]
+     */
+    uniqueid : new function () {
         var count = 0;
         this.toString = function () {
             return 'JMVCID' + ++count;

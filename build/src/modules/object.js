@@ -3,6 +3,12 @@
 OBJECT sub-module
 -----------------
 */
+//private section
+_.object = {
+    
+};
+
+//public section
 JMVC.object = {
     /**
      * Clones an object
@@ -10,7 +16,7 @@ JMVC.object = {
      * @param Literal obj
      * @returns cloned Object
      */
-    'clone' : function (obj) {
+    clone : function (obj) {
         var temp,
             key;
         if (obj === null || typeof obj !== 'object') {
@@ -34,7 +40,7 @@ JMVC.object = {
      * @param  {[type]} i    [description]
      * @return {[type]}      [description]
      */
-    'objCompare' : function (obj1, obj2, ret, i) {
+    objCompare : function (obj1, obj2, ret, i) {
         "use strict";
         (ret == undefined) && (ret = true);
         if (!ret) {return 0; }
@@ -42,11 +48,11 @@ JMVC.object = {
             return false;
         }
         for (i in obj1) {
-            ret = ret && obj2[i] && JMVC.object.objCompare(obj1[i], obj2[i], ret);
+            ret = ret && obj2[i] && this.objCompare(obj1[i], obj2[i], ret);
             if (!ret) {return false; }
         }
         for (i in obj2) {
-            ret = ret && obj1[i] && JMVC.object.objCompare(obj2[i], obj1[i], ret);
+            ret = ret && obj1[i] && this.objCompare(obj2[i], obj1[i], ret);
             if (!ret) {return false; }
         }
         return ret;
@@ -58,7 +64,7 @@ JMVC.object = {
      * @param  {[type]} obj2 [description]
      * @return {[type]}      [description]
      */
-    'objJCompare' : function (obj1, obj2) {
+    objJCompare : function (obj1, obj2) {
         "use strict";
         return JSON.stringify(obj1) === JSON.stringify(obj2);
     },
@@ -69,7 +75,7 @@ JMVC.object = {
      * @param  {[type]} field) {return      (typeof obj === 'object' && obj[field] [description]
      * @return {[type]}        [description]
      */
-    'inObject' : function (obj, field) {
+    inObject : function (obj, field) {
         return (typeof obj === 'object' && obj[field]);
     },
 
@@ -78,7 +84,7 @@ JMVC.object = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    'obj2attr' : function (o) {
+    obj2attr : function (o) {
         var ret = '', i;
         for (i in o) {
             if (o.hasOwnProperty(i)) {
@@ -93,7 +99,7 @@ JMVC.object = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    'obj2css' : function (o) {
+    obj2css : function (o) {
         var ret = '', i, j;
         for (i in o) {
             if (o.hasOwnProperty(i)) {
@@ -114,7 +120,7 @@ JMVC.object = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    'obj2qs' : function (o) {
+    obj2qs : function (o) {
         var ret = '', i;
         for (i in o) {
             if (o.hasOwnProperty(i)) {
