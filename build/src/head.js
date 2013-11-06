@@ -1,4 +1,5 @@
 /**
+ * 
  *	JMVC : A pure Javascript MVC framework
  *	======================================
  *
@@ -6,7 +7,7 @@
  *	@copyright : __YEAR__, $author$ <fedeghe@gmail.com>
  *	@author : $author$ <$email$>
  *	@url : http://www.jmvc.org
- *	@file : built with $build_system$ on __DATE__ at __TIME__
+ *	@file : built with Malta v.__VERSION__ (glued with __FILES__ files) & a love heap on __DATE__ at __TIME__
  *
  *
  *	All rights reserved.
