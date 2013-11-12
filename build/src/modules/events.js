@@ -5,13 +5,11 @@ EVENT sub-module
 */
 //private section
 _.events = {
-    
+    bindings : {}
 };
 
 //public section
 JMVC.events = {
-    bindings : {},
-    onedone : false,
     Estart : [],
     Eend : [],
 
@@ -24,12 +22,15 @@ JMVC.events = {
      */
     bind : function (el, tipo, fn) {
         if (el instanceof Array) {
-            for (var i =0, l = el.length; i < l; i++) {
+            for (var i = 0, l = el.length; i < l; i++) {
                 this.bind(el[i], tipo, fn);
             }
             return ;
         }
+
+        //basic delegation
         var f = function (e) {fn.call(el, e || W.event); };
+
         if (W.addEventListener) {
             el.addEventListener(tipo, f, false);
         } else if (W.attachEvent) {
@@ -37,8 +38,11 @@ JMVC.events = {
         } else {
             el['on' + tipo] = f;
         }
-        if (!this.bindings[el]) {this.bindings[el] = {}; }
-        this.bindings[el][tipo] = fn;
+        if (!_.events.bindings[el]) {
+            _.events[el] = {};
+        }
+        //store for unbinding
+        _.events[el][tipo] = f;
     },
 
     /**
@@ -50,11 +54,11 @@ JMVC.events = {
     unbind : function (el, tipo) {
         if (el === null) {return; }
         if (el.removeEventListener) {
-            el.removeEventListener(tipo, this.bindings[el][tipo], false);
+            el.removeEventListener(tipo, _.events.bindings[el][tipo], false);
         } else if (el.detachEvent) {
-            el.detachEvent("on" + tipo, this.bindings[el][tipo]);
+            el.detachEvent("on" + tipo, _.events.bindings[el][tipo]);
         }
-        this.bindings[el][tipo] = null;
+        _.events.bindings[el][tipo] = null;
     },
 
     /**
@@ -65,17 +69,20 @@ JMVC.events = {
      * @return {[type]}        [description]
      */
     one : function (el, tipo, fn) {
+        
+        var self = this;
+
         if (el instanceof Array) {
             for (var i = 0, l = el.length; i < l; i ++) {
                 this.one(el[i], tipo, fn);
             }
             return;
         }
-        var newf = function (e) {
-            if (!this.onedone) {fn(e); }
-            this.onedone = true;
-        };
-        this.bind(el, tipo, newf);
+        
+        this.bind(el, tipo, function (e) {
+            fn(e);
+            self.   unbind(el, tipo);
+        });
     },
 
     /**
@@ -110,6 +117,7 @@ JMVC.events = {
         }
         //return this.bind(W, 'load', func);
         var e = null;
+
         if(WD.addEventListener){
             e = WD.addEventListener('DOMContentLoaded', func, false);
         }else if(W.addEventListener){
