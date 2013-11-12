@@ -39,6 +39,5 @@ Interface.checkImplements = function (obj) {
             }
         }
     }
-
     return obj;
 };  

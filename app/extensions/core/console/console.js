@@ -9,7 +9,6 @@ JMVC.extend('console', {
 
 	'init' : function () {
 		JMVC.head.meta("generator", "jmvc resident in your machine");
-
 	},
 
 	'_status' : false,
@@ -62,7 +61,7 @@ JMVC.extend('console', {
 					'div',{
 						'id' : 'jmvc-console',
 						'class' : 'jmvc-console',
-						'style':'left:' + margin + 'px;right:' + margin + 'px;top:' + margin + 'px;bottom:' + margin + 'px;border:' + border_size + 'px solid black'
+						'style' : 'left:' + margin + 'px;right:' + margin + 'px;top:' + margin + 'px;bottom:' + margin + 'px;border:' + border_size + 'px solid black'
 					}
 				),
 
@@ -71,11 +70,11 @@ JMVC.extend('console', {
 					j : JMVC.p.j ? decodeURIComponent(JMVC.p.j) : "var t = document.getElementById('hw');\nt.onclick = function (){t.innerHTML='clicked';};",
 					c : JMVC.p.c ? decodeURIComponent(JMVC.p.c) : "#hw{\n\tcolor:red;\n\tfont-family:arial, sans-serif;\n\tpadding:20px;\n\tfont-size:20px\n}"
 				},
-				triangle = {
-					"tag":"div",
-					"float":"right",
-					"style" : {"height":"0px","width":"0px","borderBottom":"30px solid " + triBrdCol,"borderLeft":"20px solid #333", "marginTop":"-10px"}
-				},
+				// triangle = {
+				// 	 tag : "div",
+				// 	 "float" : "right",
+				// 	 style  : {"height":"0px","width":"0px","borderBottom":"30px solid " + triBrdCol,"borderLeft":"20px solid #333", "marginTop":"-10px"}
+				// },
 				brd = '<div class=" gbox" style="float: right; height: 0px; width: 0px; border-bottom: 30px solid rgb(96, 96, 96); border-left: 20px solid rgb(51, 51, 51); margin-top: -10px;"></div>',
 				version = 0.2,
 				config  = [
@@ -394,9 +393,9 @@ JMVC.extend('console', {
 			
 			function update(){
 				var vals = getValues(),
-					h = vals[0],
-					j = vals[1],
-					c = vals[2],
+					h = vals[0] || ' ',
+					j = vals[1] || ' ',
+					c = vals[2] || ' ',
 					iframe = JMVC.dom.find('#outarea'),
 					lib = JMVC.dom.find('#fw').value;
 

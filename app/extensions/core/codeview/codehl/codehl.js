@@ -41,13 +41,14 @@ JMVC.hook({'onBeforeRender' : function(cnt){
 			'html' : "<\\[H\\[([\\S\\s]*?)\\]H\\]>"
 		},
 		html = true,
+		tmp,
 		limit = 1000,
 		mode = 'easy',
 		strat = {
 			easy : function () {
 				while (limit && html) {
-					html = new RegExp(RX.html, 'gm').exec(cnt),
-						tmp = '';
+					html = new RegExp(RX.html, 'gm').exec(cnt);
+					tmp = '';
 					if (html) {
 						tmp = hl(JMVC.htmlspecialchars(html[1]));
 						cnt = cnt.replace(html[0], tmp);

@@ -35,7 +35,7 @@ JMVC.extend('widget.countdown', {
 			mainid = ids.id,
 			tpl = JMVC.string.replaceall(wc.tpl, ids),
 			now = JMVC.util.now(),
-			d, h, m, s,
+			d, h, m, s, ms,
 			interval,
 			diff,
 			minms = 60 * 1000,

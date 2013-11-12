@@ -173,7 +173,7 @@ JMVC.extend('tabs', {
 				sizes = {
 					oriz : {border : 2, round : 5},
 					vert : {border : 2, round : 5}
-				}
+				},
 				styles = {
 					'ul.tablabels_o':'overflow:hidden; list-style:none;margin:0px;padding:0px;',
 					'ul.tablabels_o li':'color:' + colors.oriz.text + ';float:left; line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;background-color:' + colors.oriz.base + ';padding:5px; cursor:pointer;margin-left:5px;'+
