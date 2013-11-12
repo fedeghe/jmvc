@@ -5,13 +5,14 @@ EVENT sub-module
 */
 //private section
 _.events = {
-    bindings : {}
+    bindings : {},
+    Estart : [],
+    Eend : [],
 };
 
 //public section
 JMVC.events = {
-    Estart : [],
-    Eend : [],
+    
 
     /**
      * [ description]
@@ -39,10 +40,10 @@ JMVC.events = {
             el['on' + tipo] = f;
         }
         if (!_.events.bindings[el]) {
-            _.events[el] = {};
+            _.events.bindings[el] = {};
         }
         //store for unbinding
-        _.events[el][tipo] = f;
+        _.events.bindings[el][tipo] = f;
     },
 
     /**
@@ -81,7 +82,7 @@ JMVC.events = {
         
         this.bind(el, tipo, function (e) {
             fn(e);
-            self.   unbind(el, tipo);
+            self.unbind(el, tipo);
         });
     },
 
@@ -189,7 +190,7 @@ JMVC.events = {
      * @return {[type]}   [description]
      */
     start : function (f) {
-        this.Estart.push(f);
+        _.events.Estart.push(f);
     },
 
     /**
@@ -198,7 +199,7 @@ JMVC.events = {
      * @return {[type]}   [description]
      */
     end : function (f) {
-        this.Eend.push(f);
+        _.events.Eend.push(f);
     },
 
     /**
@@ -207,9 +208,9 @@ JMVC.events = {
      */
     startRender : function () {
         var i = 0,
-            l = this.Estart.length;
+            l = _.events.Estart.length;
         for (null; i < l; i += 1) {
-            this.Estart[i]();
+            _.events.Estart[i]();
         }
     },
 
@@ -219,9 +220,9 @@ JMVC.events = {
      */
     endRender : function () {
         var i = 0,
-            l = this.Eend.length;
+            l = _.events.Eend.length;
         for (null; i < l; i += 1) {
-            this.Eend[i]();
+            _.events.Eend[i]();
         }
     },
 
