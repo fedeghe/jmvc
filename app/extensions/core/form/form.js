@@ -2,7 +2,7 @@ JMVC.require('event_scroll');
 
 
 JMVC.extend('form', {
-	"slidenum" : function (n, val, opts) {
+	slidenum : function (n, val, opts) {
 		if (n.tagName === 'INPUT' && n.type === "text" ) {
 			JMVC.dom.attr(n, 'value', val);
 

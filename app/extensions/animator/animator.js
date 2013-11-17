@@ -1,10 +1,14 @@
-/*
- * Author: Federico Ghedina
- **/
+/**
+ * @author: Federico Ghedina
+ */
 JMVC.extend('animator', {
 
+	init : function (){
+		JMVC.require('core/css');	
+	},
+
 	//follow implicit path
-	'follow_ipath' : function (that, func, prange, options) {
+	follow_ipath : function (that, func, prange, options) {
 		
 		var ani = {},
 			parent,
@@ -28,51 +32,51 @@ JMVC.extend('animator', {
 		
 		
 		switch (ani.mode) {
-		case 'repeat':
-			ani.next = function (that, x ,f) {
-				if (x < ani.range.to) {
-					window.setTimeout(
-						function () {move(that, x + ani.step, f); },
-						ani.timeout 
-					);
-				} else {
-					move(that, ani.range.from, f);
-				}
-			};
-			break;
-		case 'back':
-			ani.next = function (that, x ,f) {
-				if (ani.range.from <= x && x <= ani.range.to) {
-					if (x <= ani.range.from) {
-						x = ani.range.from;
-						ani.op = ani.operators['+'];
+			case 'repeat':
+				ani.next = function (that, x ,f) {
+					if (x < ani.range.to) {
+						window.setTimeout(
+							function () {move(that, x + ani.step, f); },
+							ani.timeout 
+						);
+					} else {
+						move(that, ani.range.from, f);
 					}
-					if (x >= ani.range.to) {
-						x = ani.range.to;
-						ani.op = ani.operators['-'];
+				};
+			break;
+			case 'back':
+				ani.next = function (that, x ,f) {
+					if (ani.range.from <= x && x <= ani.range.to) {
+						if (x <= ani.range.from) {
+							x = ani.range.from;
+							ani.op = ani.operators['+'];
+						}
+						if (x >= ani.range.to) {
+							x = ani.range.to;
+							ani.op = ani.operators['-'];
+						}
+						window.setTimeout(
+							function () {
+								move(that, ani.op(x), f);
+							},
+							ani.timeout
+						); 
 					}
-					window.setTimeout(
-						function () {
-							move(that, ani.op(x), f);
-						},
-						ani.timeout
-					); 
-				}
-			};
+				};
 			break;
-		case 'stop':
-			ani.next = function (that, x ,f) {
-				if (ani.range.from <= x && x <= ani.range.to) {
-					window.setTimeout(
-						function () {move(that, ani.op(x), f); },
-						ani.timeout
-					);
-				} else {
-					return false;
-				}
-			};
+			case 'stop':
+				ani.next = function (that, x ,f) {
+					if (ani.range.from <= x && x <= ani.range.to) {
+						window.setTimeout(
+							function () {move(that, ani.op(x), f); },
+							ani.timeout
+						);
+					} else {
+						return false;
+					}
+				};
 			break;
-		default : break;
+			default : break;
 		}
 		
 		move = function (that, x, f) {
@@ -91,7 +95,7 @@ JMVC.extend('animator', {
 	
 	/*
 	 sample
-	j('#anibull').follow_ppath(
+	JMVC.animator.follow_ppath(JMVC.dom.find('#anibull'),
 		function(i){return 40-50*Math.cos(i/10);},
 		function(i){return 40-70*Math.sin(i/10);},
 		{from:0, to:3600},
@@ -100,13 +104,12 @@ JMVC.extend('animator', {
 	 **/
 	
 	//parametric version
-	'follow_ppath' : function (that, funcx, funcy, prange, options) {
+	follow_ppath : function (that, funcx, funcy, prange, options) {
 		
 		var ani = {},
 			parent,
-			move,
 			//save initial font-size
-			fsize = JMVC.num.getNum(JMVC.css.getComputedStyle('font-size'));
+			fsize = JMVC.num.getNum(JMVC.css.getComputedStyle(JMVC.WD.body, 'font-size'));
 		
 		ani.timeout = JMVC.object.inObject(options, 'timeout') ? options.timeout : 25;
 		ani.mode = JMVC.object.inObject(options, 'mode') ? options.mode : 'repeat';
@@ -119,7 +122,7 @@ JMVC.extend('animator', {
 			prange : {from : 0, to : 10000};
 		ani.next = function () {};
 		ani.operators = {
-			'+' : function (a) {return a + 1; },
+			'+' : function (a) {return a + 1; },	
 			'-' : function (a) {return a - 1; }
 		};
 		ani.op = ani.operators['+'];
@@ -186,18 +189,15 @@ JMVC.extend('animator', {
 		
 		
 		
-		move = function(that, t, fx, fy){
+		function move(that, t, fx, fy){
 			var more,
 				n;
-			JMVC.css.stylej(
-				that,
-				{
-					'left' : fx(t) + 'px',
-					'top' : fy(t) + 'px'
-				}
-			);
+			JMVC.css.style(that, {
+				'left' : fx(t) + 'px',
+				'top' : fy(t) + 'px'
+			});
+
 			if (ani.threeD) {
-				
 				more = ani.threeD(t);
 				n = JMVC.num.getNum(fsize + (fsize * (1 - more))) + 'px';
 				
@@ -209,6 +209,5 @@ JMVC.extend('animator', {
 			ani.next(that, t ,fx, fy);
 		};
 		move(that, ani.range.from, funcx, funcy);
-		
 	}
 });

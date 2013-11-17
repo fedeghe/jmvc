@@ -1,8 +1,6 @@
-/*
-----------
+/*--------
 CONTROLLER          
-----------
-*/
+--------*/
 
 // parent controller
 Controller = function () {};

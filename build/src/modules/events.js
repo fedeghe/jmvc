@@ -1,16 +1,15 @@
-/*
-----------------
+/*--------------
 EVENT sub-module
-----------------
-*/
-//private section
+--------------*/
+
+// private section
 _.events = {
     bindings : {},
     Estart : [],
     Eend : [],
 };
 
-//public section
+// public section
 JMVC.events = {
     
 

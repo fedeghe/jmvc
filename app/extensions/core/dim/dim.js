@@ -1,7 +1,7 @@
 JMVC.extend('dim', {
 
-	'getViewportSize' : function () {
-		var size = {'width' : 0, 'height' : 0}; 
+	getViewportSize : function () {
+		var size = {width : 0, height : 0}; 
 		if (typeof JMVC.W.innerWidth != 'undefined') {
 			size.width = JMVC.W.innerWidth;
 			size.height = JMVC.W.innerHeight; 
@@ -20,7 +20,7 @@ JMVC.extend('dim', {
 		return size; 
 	},
 	
-	'bodySize' : function () {
+	bodySize : function () {
 		var body = JMVC.WD.body,
 			html = JMVC.WD.documentElement;
 		return [ 
@@ -29,7 +29,7 @@ JMVC.extend('dim', {
 		];
 	},
 	
-	'getScreenData' : function () {
+	getScreenData : function () {
 		var clientWidth = this.f_filterResults (
 				JMVC.W.innerWidth ? JMVC.W.innerWidth : 0,
 				JMVC.WD.documentElement ? JMVC.WD.documentElement.clientWidth : 0,
@@ -58,7 +58,7 @@ JMVC.extend('dim', {
 		};
 	},
 	
-	'f_filterResults' : function (n_win, n_docel, n_body) {
+	f_filterResults : function (n_win, n_docel, n_body) {
 		var n_result = n_win ? n_win : 0;
 		if (n_docel && (!n_result || (n_result > n_docel))) {
 			n_result = n_docel;
@@ -66,7 +66,7 @@ JMVC.extend('dim', {
 		return n_body && (!n_result || (n_result > n_body)) ? n_body : n_result;
 	},
 	
-	'no_frames' : function () {
+	no_frames : function () {
 		if (JMVC.W.top.location != JMVC.W.location){JMVC.W.top.location.href = JMVC.WD.location.href;}
 	},
 	
@@ -88,23 +88,23 @@ JMVC.extend('dim', {
 		}
 		
 		return {
-			'width' : myWidth,
-			'height' : myHeight
+			width : myWidth,
+			height : myHeight
 		};
 	},
 	
-	'screen' : function () {
+	screen : function () {
 		return {
-			'width' : JMVC.W.innerWidth,
-			'height' : JMVC.W.innerHeight
+			width : JMVC.W.innerWidth,
+			height : JMVC.W.innerHeight
 		};
 	},
 	
-	'page' : function () {
+	page : function () {
 		
 		var d = {
-				'width' : JMVC.WD.width !== undefined ? JMVC.WD.width : JMVC.WD.body.offsetWidth,
-				'height' : JMVC.WD.height !== undefined ? JMVC.WD.height : JMVC.WD.body.offsetHeight
+				width : JMVC.WD.width !== undefined ? JMVC.WD.width : JMVC.WD.body.offsetWidth,
+				height : JMVC.WD.height !== undefined ? JMVC.WD.height : JMVC.WD.body.offsetHeight
 			},
 			wp = JMVC.dim.screen();
 			
@@ -112,19 +112,19 @@ JMVC.extend('dim', {
 		 *if body is taller than viewport the page height assumes viewport height 
 		 */
 		return {
-			'width' : d.width,
-			'height' : wp.height > d.height ? wp.height : d.height
+			width : d.width,
+			height : wp.height > d.height ? wp.height : d.height
 		};
 	},
 	
-	'scroll' : function () {
+	scroll : function () {
 		return {
-			'left' : JMVC.dim.f_filterResults (
+			left : JMVC.dim.f_filterResults (
 				JMVC.W.pageXOffset ? JMVC.W.pageXOffset : 0,
 				JMVC.WD.documentElement ? JMVC.WD.documentElement.scrollLeft : 0,
 				JMVC.WD.body ? JMVC.WD.body.scrollLeft : 0
 			),
-			'top' : JMVC.dim.f_filterResults (
+			top : JMVC.dim.f_filterResults (
 				JMVC.W.pageYOffset ? JMVC.W.pageYOffset : 0,
 				JMVC.WD.documentElement ? JMVC.WD.documentElement.scrollTop : 0,
 				JMVC.WD.body ? JMVC.WD.body.scrollTop : 0
@@ -136,13 +136,13 @@ JMVC.extend('dim', {
 	 * take the dimensions of the square that needs to be centerer
 	 * returns the upper-left absolute position to be used
 	 */
-	'centerHelper' : function (w, h) {
+	centerHelper : function (w, h) {
 		var win = JMVC.dim.window(),
 			page = JMVC.dim.page(),
 			scroll = JMVC.dim.scroll();
 		return {
-			'left' : scroll['left'] + (win['width'] - w) / 2, 
-			'top' : scroll['top'] + (win['height'] - h) / 2
+			left : scroll['left'] + (win['width'] - w) / 2, 
+			top : scroll['top'] + (win['height'] - h) / 2
 		}	
 	}
 });

@@ -1,8 +1,7 @@
-/*
-----------
+/*--------
 DISPATCHED
-----------
-*/
+--------*/
+
 // Dispatch url getting controller, action and parameters
 //          
 dispatched = (function () {

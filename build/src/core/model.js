@@ -1,8 +1,7 @@
-/*
------
+/*---
 MODEL
------
-*/
+---*/
+
 Model = function () {};
 Model.prototype.vars = {};
 /**

@@ -5,7 +5,7 @@ JMVC.require(
 
 JMVC.extend('css', {
 
-	'init' : function () {
+	init : function () {
 		/*
 		if not loaded in the index.html can be loaded calling
 		JMVC.css.reset();
@@ -13,9 +13,9 @@ JMVC.extend('css', {
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/core/jmvc.css');
 	},
 
-	'_mappedStyles' : {/* id : node */},
+	_mappedStyles : {/* id : node */},
 
-	'mappedStyle' : function (id, style) {
+	mappedStyle : function (id, style) {
 		var t = JMVC.dom.find('#' + id);
 		t && JMVC.dom.remove(t);
 		JMVC.css._mappedStyles[id] = JMVC.dom.create('style', {'id' : id, 'type' : 'text/css'}, style);
@@ -73,16 +73,16 @@ JMVC.extend('css', {
 		JMVC.css.style(el, 'display', 'none');
 	}, 
 	
-	'width' : function (el) {
+	width : function (el) {
 		return el.offsetWidth || el.scrollWidth || JMVC.css.getComputedStyle(el ,'width');
 	},
 	
-	'height' : function (el) {
+	height : function (el) {
 
 		return el.offsetHeight || el.scrollHeight || JMVC.css.getComputedStyle(el ,'height');
 	},
 	
-	'getComputedStyle' : function (el, styleProperty) { 
+	getComputedStyle : function (el, styleProperty) { 
 		
 		if (JMVC.sniffer.browser.name == 'Opera') {
 			return  JMVC.W.getComputedStyle(el, null).getPropertyValue(styleProperty);
@@ -96,9 +96,9 @@ JMVC.extend('css', {
 		return computedStyle[this.css_propertymap[styleProperty] || styleProperty]; 
 	},
 
-	'css3_map' : ['-o-transform', '-moz-transform', '-o-transform'],
+	css3_map : ['-o-transform', '-moz-transform', '-o-transform'],
 
-	'css_propertymap' : {
+	css_propertymap : {
 		'background-attachment' : 'backgroundAttachment',
 		'background-color' : 'backgroundColor',
 		'background-image' : 'backgroundImage',
@@ -152,12 +152,12 @@ JMVC.extend('css', {
 		'z-Index ' : 'zIndex'
 	},
 
-	'reset' : function () {
+	reset : function () {
 		var style = "/* http://meyerweb.com/eric/tools/css/reset/    v2.0 | 20110126   License: none (public domain)*/html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video {	margin: 0;	padding: 0;	border: 0;	font-size: 100%;	font: inherit;	vertical-align: baseline;}/* HTML5 display-role reset for older browsers */article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;}body {	line-height: 1;}ol, ul {	list-style: none;}blockquote, q {	quotes: none;}blockquote:before, blockquote:after,q:before, q:after {content: '';content: none;}table {border-collapse: collapse;border-spacing: 0;}"
 		JMVC.head.addstyle(style, true, true);
 	},
 
-	'json2css' : function (json) {
+	json2css : function (json) {
 		var out = '',
 			i;
 		for (i in json) {
@@ -168,7 +168,7 @@ JMVC.extend('css', {
 		return out;
 	},
 	
-	'clearer' : JMVC.dom.create('br', {'class' : 'clearer'})
+	clearer : JMVC.dom.create('br', {'class' : 'clearer'})
 });
 
 

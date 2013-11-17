@@ -1,6 +1,8 @@
 JMVC.extend('security', {
-	'seed' : 3,
-	'crypt' : function (msg, pwd) {
+
+	seed : 3,
+
+	crypt : function (msg, pwd) {
 		var code_msg = JMVC.string.str2code(escape(msg)),
 			code_pwd = JMVC.string.str2code(pwd),
 			cout = [],
@@ -18,7 +20,7 @@ JMVC.extend('security', {
 		return JMVC.string.code2str(cout);
 		
 	},
-	'decrypt' : function (cmsg, pwd) {
+	decrypt : function (cmsg, pwd) {
 		var code_cmsg = JMVC.string.str2code(cmsg),
 			code_pwd = JMVC.string.str2code(pwd),
 			out = [],
@@ -40,17 +42,15 @@ JMVC.extend('security', {
 	
 	
 	
-	'javascrypt' : function (code, pwd) {
-		
-		return "" +
-			"(function (p) {" +
-				"if (p) {" +
-					"try {" +
-						"eval(JMVC.security.decrypt('" + JMVC.security.crypt(code, pwd) + "', p));" +
-					"} catch (e) {" +
-						"console.debug(e);alert('Password invalid');" +
-					"}" +
+	javascrypt : function (code, pwd) {
+		return  "(function (p) {" +
+			"if (p) {" +
+				"try {" +
+					"eval(JMVC.security.decrypt('" + JMVC.security.crypt(code, pwd) + "', p));" +
+				"} catch (e) {" +
+					"console.debug(e);alert('Password invalid');" +
 				"}" +
-			"})(prompt('Insert passphrase please:'))";
+			"}" +
+		"})(prompt('Insert passphrase please:'))";
 	}
 });

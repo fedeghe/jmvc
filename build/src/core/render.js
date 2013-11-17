@@ -1,8 +1,6 @@
-/*
-------
+/*----
 RENDER
-------
-*/
+----*/
 
 l = JMVC.modules.length;
 if (l) {

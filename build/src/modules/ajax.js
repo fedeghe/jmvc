@@ -1,8 +1,8 @@
-/*
----------------
+/*-------------
 AJAX sub-module
----------------
+-------------*/
 
+/*
 This is the experimental versionof ajax utilities
 */
 

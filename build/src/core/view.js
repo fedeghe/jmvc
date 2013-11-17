@@ -1,8 +1,6 @@
-/*
-----
+/*--
 VIEW
-----
-*/
+--*/
 
 // directly instantiated assinging content
 /**

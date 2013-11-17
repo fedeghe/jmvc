@@ -1,23 +1,23 @@
 JMVC.require('core/css');
 JMVC.extend('fx',{
-	'speed' : 10,
+	speed : 10,
 	
-	'show' : function(elem) { 
+	show : function(elem) { 
 		JMVC.css.style(elem, 'display', 'block'); 
 	},
 
-	'hide' : function(elem) { 
+	hide : function(elem) { 
 		JMVC.css.style(elem, 'display', 'none'); 
 	},
 	
-	'toggle' : function(elem){
+	toggle : function(elem){
 		var disp = JMVC.css.style(elem, 'display'),
 			hidd = (disp === 'none' || disp === '');
 		this[hidd ? 'show' : 'hide'](elem);
 		return this;
 	},
 	
-	'animate' : function (el, prop, to, delta, cb) {
+	animate : function (el, prop, to, delta, cb) {
 		(function () {
 			var from = JMVC.num.getNum(JMVC.css.style(el, prop)),
 				versus = from < to,
@@ -51,7 +51,7 @@ JMVC.extend('fx',{
 		})();
 	},
 	
-	'close' : function (el, prop, str, inc, cb) {
+	close : function (el, prop, str, inc, cb) {
 		var timeout_me = function () {
 			JMVC.W.setTimeout(
 				function () {
@@ -73,7 +73,7 @@ JMVC.extend('fx',{
 		timeout_me();
 	},
 
-	'open' : function (el, prop, str, inc, cb) {
+	open : function (el, prop, str, inc, cb) {
 		var self = this,
 			base = 0,
 			timeout_me = function () {
@@ -96,8 +96,8 @@ JMVC.extend('fx',{
 	},
 	//
 	// used to remember sizes
-	'nodes_sizes' : {},
-	'slideUp' : function (el, v) {
+	nodes_sizes : {},
+	slideUp : function (el, v) {
 		var height = JMVC.num.getNum(JMVC.css.style(el, 'height')),
 			paddingTop = JMVC.num.getNum(JMVC.css.style(el, 'paddingTop')),
 			paddingBottom = JMVC.num.getNum(JMVC.css.style(el, 'paddingBottom')),
@@ -126,8 +126,7 @@ JMVC.extend('fx',{
 		return this;
 	},
 
-	'slideDown' : function (el, v) {
-		
+	slideDown : function (el, v) {
 		var target = this.nodes_sizes[el],
 			height = 0,
 			paddingTop = 0,
@@ -178,7 +177,7 @@ JMVC.extend('fx',{
 		return this;
 	},
 
-	'slideToggle' : function (el, v) {
+	slideToggle : function (el, v) {
 		var vis = JMVC.css.style(el, 'display'),
 			self = JMVC.fx;
 
@@ -193,7 +192,7 @@ JMVC.extend('fx',{
 		}
 	},
 	
-	'fadeIn' : function (el) {
+	fadeIn : function (el) {
 		var opacity = 0.0,
 			targets = {opacity : 1};
 		JMVC.css.style(el, 'opacity', 0);
@@ -222,7 +221,7 @@ JMVC.extend('fx',{
 		
 	},
 
-	'fadeOut' : function (el) {
+	fadeOut : function (el) {
 		var opacity = JMVC.css.getComputedStyle(el, 'opacity');
 		this.nodes_sizes[el] = {opacity : 1};
 		

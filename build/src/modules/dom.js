@@ -1,12 +1,11 @@
-/*
---------------
+/*------------
 DOM sub-module
---------------
-*/
-//private section
+------------*/
+
+// private section
 _.dom = {};
 
-//public section
+// public section
 JMVC.dom = {
     /**
      * [ description]

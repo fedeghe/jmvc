@@ -1,8 +1,7 @@
-/*
-======
+/*----
 PARSER
-======
-*/
+----*/
+
 Parser = {
     /**
      * microtemplating function (http://ejohn.org/blog/javascript-micro-templating/)

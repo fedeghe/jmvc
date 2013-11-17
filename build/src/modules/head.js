@@ -1,14 +1,13 @@
-/*
----------------
+/*-------------
 HEAD sub-module
----------------
-*/
-//private section
+-------------*/
+
+// private section
 _.head = {
     
 };
 
-//public section
+// public section
 JMVC.head = {
     /**
      * 

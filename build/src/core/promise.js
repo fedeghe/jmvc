@@ -1,11 +1,8 @@
-/*
--------
+/*-----
 PROMISE
--------
+-----*/
 
-ty https://github.com/stackp/promisejs
-
-*/
+// ty https://github.com/stackp/promisejs
 Promise = function () {
     this.cbacks = [];
     this.len = 0;
@@ -17,6 +14,7 @@ Promise = function () {
         this.cbacks = [];
     };
 };
+
 /**
  * [done description]
  * @param  {[type]}   res [description]
@@ -33,6 +31,7 @@ Promise.prototype.done = function (res, err) {
     }
     this.reset();
 };
+
 /**
  * [then description]
  * @param  {[type]} cback [description]
