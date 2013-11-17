@@ -142,7 +142,7 @@ JMVC.extend('tabs', {
 			}
 		});
 	},
-	'end' : function () {
+	'render' : function () {
 		
 		JMVC.events.end(function () {
 			var border3 = '-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;',
