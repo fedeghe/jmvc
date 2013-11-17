@@ -1,6 +1,8 @@
 JMVC.extend('affix', {
-	'init' : function () {
+	
+	init : function () {
 		JMVC.require('core/dim', 'core/css');
+
 		JMVC.affix.vars = {
 			index : 0,
 			pool : {}
@@ -8,12 +10,11 @@ JMVC.extend('affix', {
 		
 		JMVC.events.end(function () {
 
-			JMVC.events.bind(JMVC.W, 'scroll', function () {
-				var c = JMVC.dim.getScreenData(),
-					t = c.scrollTop,
-					j,
-					top,
-					doit;
+			function react() {
+				var j, top, doit,
+					c = JMVC.dim.getScreenData(),
+					t = c.scrollTop;
+
 				for (j in JMVC.affix.vars.pool) {
 
 					doit = (t > JMVC.affix.vars.pool[j].top - JMVC.affix.vars.pool[j].mintop);
@@ -23,20 +24,20 @@ JMVC.extend('affix', {
 						JMVC.affix.vars.pool[j].top;
 
 					JMVC.css.style(JMVC.affix.vars.pool[j].node, 'top', top + 'px');
-					if (doit) {
-						JMVC.css.style(JMVC.affix.vars.pool[j].node, {'position':'fixed', 'top' : JMVC.affix.vars.pool[j].mintop + 'px'});
-					} else {
-						JMVC.css.style(JMVC.affix.vars.pool[j].node, 'position','absolute');
-					}
+
+					JMVC.css.style(
+						JMVC.affix.vars.pool[j].node,
+						doit ? {'position':'fixed', 'top' : JMVC.affix.vars.pool[j].mintop + 'px'} : {'position':'absolute'}
+					);
 				}
-			});
+			}
+
+			JMVC.events.bind(JMVC.W, 'scroll', react);
+			JMVC.events.ready(react);
 		});
 	},
-
-
-
 	
-	'add' : function (where) {
+	add : function (where) {
 		var tmp = new function () {
 			var a = arguments[0];
 			this.html = a.html ||'no content';
