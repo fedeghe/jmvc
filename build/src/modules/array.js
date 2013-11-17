@@ -1,21 +1,28 @@
-/*
-----------------
+/*--------------
 ARRAY sub-module
-----------------
-*/
-//private section
-_.array = {};
+--------------*/
 
-//public section
+// private section
+_.array = {
+    op : function (a, op) {
+        var ret = NaN;
+        try {
+            ret = (new Function('return ' + a.join(op) + ';'))();
+        }catch(e){}
+        return ret;
+    }
+};
+
+// public section
 JMVC.array = {
     /**
      * Clone an existing array
      * @param {Array} arr the array that should be cloned
      * @return {Array} the cloned array
      */
-    arrayClone : function (arr) {
+    clone : function (arr) {
         return arr.concat();
-    },
+    },  
 
     /**
      * Safely converts a collection to an array
@@ -27,10 +34,9 @@ JMVC.array = {
         try{
             ret = Array.prototype.slice.call(coll, 0);
         } catch(e){
-            var i = 0;
             // what if coll[i] element is false? loop breaks
             // but this is not the case since collection has no falsy values
-            for (null; coll[i]; ret[i] = coll[i++]);    
+            for (var i = 0; coll[i]; ret[i] = coll[i++]);    
         }
         return ret;
     },
@@ -57,8 +63,7 @@ JMVC.array = {
         if ('indexOf' in arr) {
             return arr.indexOf(mvar);
         }
-        var l = arr.length;
-        for (null; l-- && arr[l] !== mvar; null);
+        for (var l = arr.length; l-- && arr[l] !== mvar; null);
         return l;
     },
 
@@ -89,11 +94,64 @@ JMVC.array = {
     },
 
     /**
+     * [max description]
+     * @param  {[type]} a) {return      Math.max.apply(null, a [description]
+     * @return {[type]}    [description]
+     */
+    max : function (a) {
+        return Math.max.apply(null, a);
+    },
+
+    /**
+     * [mean description]
+     * @param  {[type]} a [description]
+     * @return {[type]}   [description]
+     */
+    mean : function (a) {
+        return this.sum(a) / a.length;
+    },
+    /**
+     * [min description]
+     * @param  {[type]} a) {return      Math.min.apply(null, a [description]
+     * @return {[type]}    [description]
+     */
+    min : function (a) {
+        return Math.min.apply(null, a);
+    },
+
+    /**
+     * [mult description]
+     * @param  {[type]} a [description]
+     * @return {[type]}   [description]
+     */
+    mult : function (a) {
+        return _.array.op(a, '*');
+    },
+
+    /**
+     * [rand description]
+     * @param  {[type]} a [description]
+     * @return {[type]}   [description]
+     */
+    rand : function (a) {
+        var m = Math;
+        return a[m.floor(m.random() * a.length)];
+    },
+
+    /**
      * [shuffle description]
      * @param  {[type]} arr [description]
      * @return {[type]}     [description]
      */
     shuffle : function (arr) {
-        return arr.sort(function(){return  Math.random() - .5; });
-    }
+        var mr = Math.random;
+        return arr.sort(function(){return mr() - .5; });
+    },
+
+    /**
+     * [sum description]
+     * @param  {[type]} a [description]
+     * @return {[type]}   [description]
+     */
+    sum : function (a) {return _.array.op(a, '+');}
 };
