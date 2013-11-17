@@ -58,7 +58,7 @@ FileETag MTime Size
 
 	
 <ifModule mod_headers.c>
-	#CORS
+	#CORS, {*, null, or exact domain(http://ws.jmvc.org)}
 	Header set Access-Control-Allow-Origin "*"
 
 	# year
