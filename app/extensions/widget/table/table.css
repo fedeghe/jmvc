@@ -1,0 +1,20 @@
+
+table.jmvc{
+    border:2px solid gainsboro;
+    margin:10px;
+}
+table.jmvc tr:nth-child(odd) td{
+    background-color:#ff6600;
+}
+table.jmvc tr:nth-child(even) td{
+    background-color:#afa;
+}
+table.jmvc td{padding:10px}
+table.jmvc th{
+    font-weight:bold;
+    padding:10px;
+}
+table.jmvc td,
+table.jmvc th{
+    text-align:left;
+}
