@@ -1,8 +1,7 @@
-/*
-----------
+/*--------
 JMVC outer
-----------
-*/          
+--------*/
+          
 $JMVC = {
     loaded : false,
     W: W,
@@ -47,6 +46,7 @@ $JMVC = {
     nsMake : jmvc.ns.make,
 
     // Constructors
+    Channel : Channel,
     Event : Event,
     Errors : Errors,
     Interface : Interface,
