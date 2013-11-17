@@ -1,14 +1,13 @@
-/*
------------------
+/*---------------
 OBJECT sub-module
------------------
-*/
-//private section
+---------------*/
+
+// private section
 _.object = {
     
 };
 
-//public section
+// public section
 JMVC.object = {
     /**
      * Clones an object

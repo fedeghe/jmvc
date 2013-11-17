@@ -1,14 +1,13 @@
-/*
------------------
+/*---------------
 STRING sub-module
------------------
-*/
-//private section
+---------------*/
+
+// private section
 _.string = {
     charToEntity : {}
 };
 
-//public section
+// public section
 JMVC.string = {
     /**
      * [ description]

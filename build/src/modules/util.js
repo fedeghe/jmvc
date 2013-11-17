@@ -1,14 +1,13 @@
-/*
----------------
+/*-------------
 UTIL sub-module
----------------
-*/
-//private section
+-------------*/
+
+// private section
 _.util = {
     
 };
 
-//public section
+// public section
 JMVC.util = {
     /**
      * [ description]
@@ -27,7 +26,7 @@ JMVC.util = {
     extend : function (obj, ext) {
         var j;
         for (j in ext) {
-            if (ext.hasOwnProperty(j)) {
+            if (ext.hasOwnProperty(j) && !(j in obj)) {
                 obj[j] = ext[j];
             }
         }
@@ -92,6 +91,17 @@ JMVC.util = {
         t2 = {}.toString.call(o).match(/\[object\sArray\]/);
         return t1 && !!(t2 && t2.length);
     },
+
+    /**
+     * [isFunction description]
+     * @param  {[type]}  f [description]
+     * @return {Boolean}   [description]
+     */
+    isFunction : function (f) {
+        return typeof f === 'function';
+    },
+
+
 
     /**
      * [ description]
