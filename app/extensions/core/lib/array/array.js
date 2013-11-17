@@ -82,7 +82,7 @@ JMVC.extend('array', {
 
 			function findMinIndex() {
 				var minIndex = 0;
-				for (var i = 1, arrayLength = arguments.length; i < arrayLength; i++) {
+				for (var i = 1, lArg = arguments.length; i < lArg; i++) {
 					//with < round down, with <= round up
 					if (arguments[i] <= arguments[minIndex]) {
 						minIndex = i;
