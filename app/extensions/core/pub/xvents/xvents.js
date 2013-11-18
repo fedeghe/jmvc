@@ -1,5 +1,5 @@
 JMVC.extend('xvents',{
-	'init' : function () {
+	init : function () {
 		// console.debug('xvents initialized');
 		this.xvents.els = ("abort|afterprint|beforeprint|beforeunload|blur|canplay|canplaythrough|change|click|"+
 			"contextmenu|dblclick|drag|dragend|dragenter|dragleave|dragover|dragstart|drop|durationchange|emptied|"+
@@ -14,7 +14,7 @@ JMVC.extend('xvents',{
 	 * [ description]
 	 * @return {[type]} [description]
 	 */
-	'create' : function () {
+	create : function () {
 		/**
 		 * [ description]
 		 * @param  {[type]} node    [description]
@@ -163,18 +163,18 @@ JMVC.extend('xvents',{
 		 * 
 		 */
 		return {
-			'list' : [],
-			'add' : function (node, attrAct, attrPar) {
+			list : [],
+			add : function (node, attrAct, attrPar) {
 				var newarea = new Area(node, attrAct, attrPar);
 				this.list.push(newarea);
 				return newarea;
 			},
-			'disable' : function () {
+			disable : function () {
 				JMVC.each(this.list, function (e) {
 					e.disable();
 				});
 			},
-			'enable' : function () {
+			enable : function () {
 				JMVC.each(this.list, function (e) {
 					e.enable();
 				});

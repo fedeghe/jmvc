@@ -1,5 +1,5 @@
 JMVC.extend('xpub',{
-	'init' : function () {
+	init : function () {
 		console.debug('xpub initialized');
 		this.xpub.els = ("abort|afterprint|beforeprint|beforeunload|blur|canplay|canplaythrough|change|click|"+
 			"contextmenu|dblclick|drag|dragend|dragenter|dragleave|dragover|dragstart|drop|durationchange|emptied|"+
@@ -11,7 +11,7 @@ JMVC.extend('xpub',{
 		this.xpub.areas = {};
 		
 	},
-	'create' : function () {
+	create : function () {
 		var Area,
 			debug = false;
 		function out(el) {
@@ -168,8 +168,8 @@ JMVC.extend('xpub',{
 			
 		};
 		return {
-			'list' : [],
-			'add' : function (node, name) {
+			list : [],
+			add : function (node, name) {
 				var newarea = new Area(node);
 				this.list.push(newarea);
 				if (!!name && name.length && !JMVC.xpub.areas[name]) {
@@ -177,12 +177,12 @@ JMVC.extend('xpub',{
 				}
 				return newarea;
 			},
-			'disable' : function () {
+			disable : function () {
 				JMVC.each(this.list, function (e) {
 					e.disable();
 				});
 			},
-			'enable' : function () {
+			enable : function () {
 				JMVC.each(this.list, function (e) {
 					e.enable();
 				});

@@ -1,5 +1,5 @@
 JMVC.extend('presentation', {
-	'init' : function () {
+	init : function () {
 
 	},
 	

@@ -1,6 +1,6 @@
 JMVC.extend('timer',{
 	
-	'create' : function(options){
+	create : function(options){
 		
 		var time_formats = {
 				'en-us' :{

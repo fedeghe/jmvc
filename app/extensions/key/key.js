@@ -4,8 +4,8 @@
  */
 
 JMVC.extend('key', {
-	'all_shortcuts' : {},//All the shortcuts are stored in this array
-	'add': function (shortcut_combination, callback, opt) {
+	all_shortcuts : {},//All the shortcuts are stored in this array
+	add : function (shortcut_combination, callback, opt) {
 
 		'use strict';
 
@@ -256,7 +256,7 @@ JMVC.extend('key', {
 	},
 
 	//Remove the shortcut - just specify the shortcut and I will remove the binding
-	'remove' : function (shortcut_combination) {
+	remove : function (shortcut_combination) {
 
 		'use strict';
 
@@ -266,6 +266,7 @@ JMVC.extend('key', {
 			callback;
 		shortcut_combination = shortcut_combination.toLowerCase();
 		binding = this.all_shortcuts[shortcut_combination];
+		this.all_shortcuts[shortcut_combination] = null;
 		delete this.all_shortcuts[shortcut_combination];
 		if (!binding) {
 			return;

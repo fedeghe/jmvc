@@ -1,12 +1,12 @@
 JMVC.require('core/css');
 JMVC.extend('tabs', {
-	'counter' : 0,
-	'vert_css' : false,
-	'oriz_css' : false,
+	counter : 0,
+	vert_css : false,
+	oriz_css : false,
 
-	'init' : function () {},
+	init : function () {},
 
-	'tab' : function (mode, vertlabel) {
+	tab : function (mode, vertlabel) {
 		JMVC.tabs.counter += 1;
 		var bid = '_' + JMVC.tabs.counter,
 			direction = {'v' : 'v', 'o' : 'o'}[mode] || 'o',
@@ -129,7 +129,7 @@ JMVC.extend('tabs', {
 		};
 		
 	},
-	'fixheight' : function () {
+	fixheight : function () {
 		
 		var tc = JMVC.dom.find('.tabcontainer_v');
 	
@@ -142,7 +142,7 @@ JMVC.extend('tabs', {
 			}
 		});
 	},
-	'render' : function () {
+	render : function () {
 		
 		JMVC.events.end(function () {
 			var border3 = '-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;',

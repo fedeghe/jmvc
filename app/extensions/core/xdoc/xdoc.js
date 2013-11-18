@@ -1,24 +1,19 @@
-JMVC.require(
-	'core/css'
-	,'core/dim'
-	,'event_scroll'
-	,'widget/tabs'
-);
+JMVC.require('core/css', 'core/dim', 'event_scroll', 'widget/tabs');
 
 JMVC.extend('xdoc', {
-	'init' : function () {
+	init : function () {
 		//JMVC.head.meta("generator", "jmvc resident in your machine");
 		JMVC.xdoc.otitle = JMVC.head.title();
 		JMVC.head.title(JMVC.xdoc.etitle);
 	},
-	'otitle' : '',
-	'etitle' : 'Xdoc',
+	otitle : '',
+	etitle : 'Xdoc',
 
-	'_status' : false,
+	_status : false,
 
-	'scroll' : 0,
+	scroll : 0,
 
-	'toggle' : function (ext) {
+	toggle : function (ext) {
 
 		
 		JMVC.require(ext.replace('.', '/'));

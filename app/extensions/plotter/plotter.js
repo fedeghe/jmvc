@@ -1,6 +1,6 @@
 JMVC.extend('plotter', {
 	
-	'letter' : function (letter, top, left, character) {
+	letter : function (letter, top, left, character) {
 		
 		var mod,
 			that = this;
@@ -11,8 +11,8 @@ JMVC.extend('plotter', {
 		this.top = top;
 		
 		mod = {
-			'adddot' : function (x, y) {that.arr.push([x, y]); },
-			'addarc' : function (centerx, centery, radiusx, radiusy, radstep, radfrom, howmany, rad) {
+			adddot : function (x, y) {that.arr.push([x, y]); },
+			addarc : function (centerx, centery, radiusx, radiusy, radstep, radfrom, howmany, rad) {
 				var i = 0,
 					x,
 					y,
@@ -40,7 +40,7 @@ JMVC.extend('plotter', {
 				});
 				that.arr = that.arr.concat(iarr);
 			},
-			'beizer' : function (x1, y1,  x2, y2,  x3, y3,  x4, y4,  hm) {
+			beizer : function (x1, y1,  x2, y2,  x3, y3,  x4, y4,  hm) {
 				var B1 = function (t) {return t * t * t; },
 					B2 = function (t) {return 3 * t * t * (1 - t); },
 					B3 = function (t) {return 3 * t * (1 - t) * (1 - t); },
@@ -55,7 +55,7 @@ JMVC.extend('plotter', {
 					]);
 				}
 			},
-			'addline' : function (x1, y1, x2, y2, howmany) {
+			addline : function (x1, y1, x2, y2, howmany) {
 				var hm = howmany + 1,
 					distance = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)),
 					tx = (x2 - x1) / hm,
@@ -69,14 +69,14 @@ JMVC.extend('plotter', {
 				}
 				that.arr.push([x2, y2]);
 			},
-			'plot' : function (node, positions, character, top, left) {
+			plot : function (node, positions, character, top, left) {
 				//JMVC.each(positions, function (el, i) {
 				for (var i = 0, l = positions.length; i < l; i ++) {
 					JMVC.gra.plotarr(node, positions[i], i, character, top, left);
 				}
 				//});
 			},
-			'plotarr' : function (node, positions, letter, character, top, left, scale) {
+			plotarr : function (node, positions, letter, character, top, left, scale) {
 				var i = 0,
 					l = positions.length,
 					tmp;
@@ -98,7 +98,7 @@ JMVC.extend('plotter', {
 				}
 				//});
 			},
-			'rotate' : function (rad) {
+			rotate : function (rad) {
 				var x, y;
 
 				JMVC.each(that.arr, function (el ,i) {
@@ -108,7 +108,7 @@ JMVC.extend('plotter', {
 					el[1] = x * Math.sin(rad) + y * Math.cos(rad);
 				});
 			},
-			'clone' : function (inst) {
+			clone : function (inst) {
 				that.arr = Array.prototype.slice.call(inst.arr, 0);
 			}
 		};

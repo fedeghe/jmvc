@@ -1,5 +1,5 @@
 JMVC.extend('screen',{
-	'getViewportSize' : function(){
+	getViewportSize : function(){
 		var size = [0, 0]; 
 		if (typeof JMVC.W.innerWidth != 'undefined'){
 			size = [ 
@@ -17,7 +17,7 @@ JMVC.extend('screen',{
 		}
 		return size; 
 	},
-	'bodySize' : function(){
+	bodySize : function(){
 		var body = JMVC.WD.body,
 			html = JMVC.WD.documentElement;
 		return [ 
@@ -25,7 +25,7 @@ JMVC.extend('screen',{
 			Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight ) 
 		];
 	},
-	'getScreenData' : function(){
+	getScreenData : function(){
 		var clientWidth = this.f_filterResults (
 			JMVC.W.innerWidth ? JMVC.W.innerWidth : 0,
 			JMVC.WD.documentElement ? JMVC.WD.documentElement.clientWidth : 0,
@@ -48,13 +48,13 @@ JMVC.extend('screen',{
 		);
 		return {clientWidth : clientWidth, clientHeight : clientHeight, scrollLeft :scrollLeft, scrollTop : scrollTop};
 	},
-	'f_filterResults' : function(n_win, n_docel, n_body) {
+	f_filterResults : function(n_win, n_docel, n_body) {
 		var n_result = n_win ? n_win : 0;
 		if (n_docel && (!n_result || (n_result > n_docel)))
 			n_result = n_docel;
 		return n_body && (!n_result || (n_result > n_body)) ? n_body : n_result;
 	},
-	'fullscreen' : function () {
+	fullscreen : function () {
 		JMVC.W.moveTo(0, 0);
 		if (JMVC.WD.all) {
 			JMVC.W.top.window.resizeTo(screen.availWidth, screen.availHeight);
@@ -67,7 +67,7 @@ JMVC.extend('screen',{
 			}
 		}
 	},
-	'no_frames' : function(){
+	no_frames : function(){
 		if (JMVC.W.top.location != location){JMVC.W.top.location.href = JMVC.WD.location.href;}
 	},
 

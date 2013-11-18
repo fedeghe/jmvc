@@ -3,7 +3,7 @@ JMVC.extend('xmlparser', {
 	// takes the contant of
 	// the xml to be parsed
 	//
-	'load' : function (txt, or_is_xml) {
+	load : function (txt, or_is_xml) {
 
 		var that = this,
 			xmlDoc,
@@ -118,22 +118,22 @@ JMVC.extend('xmlparser', {
 	 * 
 	 * SOME UTILITY FUNCTIONS
 	 */
-	'_text' : function(node){
+	_text : function(node){
 		return node.childNodes[0].nodeValue;
 	},
-	'_attribute' : function(node, attribute){
+	_attribute : function(node, attribute){
 		var r = node.attributes.getNamedItem(attribute);
 		if(r == null){return '';}
 		return r.nodeValue;
 	},
-	'_tag' : function(node, tag, n){
+	_tag : function(node, tag, n){
 		var nodes = node.getElementsByTagName(tag);
 		return n<nodes.length ? nodes[n] : false;
 	},
 	
 //	Thanks to the great David Walsh
 //	url : http://davidwalsh.name/convert-xml-json
-	'toJson' : function(xml){ 
+	toJson : function(xml){ 
 //		Create the return object
 		var obj = {};
 

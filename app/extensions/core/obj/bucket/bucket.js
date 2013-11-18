@@ -1,5 +1,4 @@
 JMVC.extend('bucket', {
-	init : function(){},
 	create : function (arr) {
 		"use strict";
 		var that = this;
@@ -33,7 +32,11 @@ JMVC.extend('bucket', {
 				that.r = false;
 				that.l = 0;
 			},
-			hasMore : function () {return !!that.l; }
+			hasMore : function () {return !!that.l; },
+			shuffle : function (t) {
+				if (t) while (t--) this.shuffle();
+				Array.prototype.sort.call(that.arr, function () {return Math.random() > .5; });
+			}
 		};
 	}
 });

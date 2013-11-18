@@ -5,11 +5,7 @@ JMVC.events.end(function () {
 	//################## 
 	// set here your UA
 	var ua = 'UA-29571830-1',
-	//
-	//////----
-		//
 		t =/(^true$|^false$)/i,
-		//
 		do_ga = function () {
 			JMVC.head.addscript("{{vendors/google/analytics ua=`" + ua + "`}}", true, true);
 		};

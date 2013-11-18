@@ -1,5 +1,5 @@
 JMVC.extend('util',{
-	'init' : function(){
+	init : function(){
 		JMVC.debug((JMVC.vars.retina ? 'OMG you do' : 'no')+' retina');
 	}
 });

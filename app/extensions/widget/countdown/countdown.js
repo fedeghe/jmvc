@@ -4,7 +4,7 @@ JMVC.nsMake('JMVC.widget');
 
 // create the widget
 JMVC.extend('widget.countdown', {
-	'init' : function () {
+	init : function () {
 		var wc = JMVC.widget.countdown;
 		wc.tpl = '<span class="jmvc_countdown" id="%id%">' +
 			'<span class="wrap"><span id ="%idD%">%d%</span> days</span>' +
@@ -16,7 +16,7 @@ JMVC.extend('widget.countdown', {
 		
 	},
 	
-	'start' : function (sel, date) {
+	start : function (sel, date) {
 		JMVC.head.addstyle('.jmvc_countdown{color:red} .jmvc_countdown span{padding:0px 3px}', true, true);
 		var node = JMVC.dom.find(sel);
 		if (!node) { alert('xxx'); return false; }

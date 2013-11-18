@@ -1,5 +1,5 @@
 JMVC.extend('string',{
-	'hide' : function(txt){
+	hide : function(txt){
 		var out = [],
 			i;
 		for (i in txt){
@@ -7,7 +7,7 @@ JMVC.extend('string',{
 		}
 		return out;
 	},
-	'unhide' : function(arr){
+	unhide : function(arr){
 		return String.fromCharCode.apply(null, arr);
 	}
 });  //sadasd

@@ -1,7 +1,7 @@
 JMVC.require('core/dim', 'core/css', 'event_scroll');
 JMVC.extend('modal',{
-	'id' : 0,
-	'open' : function(content, title, width, height, options){
+	id : 0,
+	open : function(content, title, width, height, options){
 		var bgcolor = options && options.bgcolor ? options.bgcolor : 'red',
 			shadow = options && options.shadow;
 	
@@ -20,13 +20,10 @@ JMVC.extend('modal',{
 			viewHeight = viewportSize[1];
 		
 		//create bg
-		bg = JMVC.dom.create(
-			'div',
-			{
-				'class' : 'jmvc_modal_content_bg',
-				'style' : 'width:'+bodysize[0]+'px;height:'+bodysize[1]+'px;background-color:'+bgcolor+';'
-			}
-		);
+		bg = JMVC.dom.create('div',{
+			'class' : 'jmvc_modal_content_bg',
+			'style' : 'width:' + bodysize[0] + 'px;height:' + bodysize[1] + 'px;background-color:' + bgcolor + ';'
+		});
 		
 		//get style
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/widget/modal/modal.css', true);
@@ -63,12 +60,10 @@ JMVC.extend('modal',{
 		//JMVC.debug(scrData);
 		//JMVC.debug(this.id);
 	},
-	'close' : function (element) {
-
+	close : function (element) {
 		JMVC.events.unbind(element, 'click');
 		JMVC.dom.remove(JMVC.dom.find('.jmvc_modal_content'));
 		JMVC.dom.remove(JMVC.dom.find('.jmvc_modal_content_bg'));
 		JMVC.events.enable_scroll();
-		
 	}
 });

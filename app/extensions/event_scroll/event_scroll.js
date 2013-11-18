@@ -2,10 +2,10 @@
  * based on http://stackoverflow.com/questions/4770025/how-to-disable-scrolling-temporarily
  */
 JMVC.extend('events', {
-	'vars' : {
+	vars : {
 		cb : false
 	},
-	'disable_scroll' : function (node) {
+	disable_scroll : function (node) {
 		node = node || JMVC.WD.body; 
 		this.vars.overflow = node.style['overflow'];
 		JMVC.WD.body.style.overflow = 'hidden';
@@ -28,7 +28,7 @@ JMVC.extend('events', {
 		*/
 	   //JMVC.W.onmousewheel = JMVC.WD.onmousewheel = JMVC.events.preventDefault;
 	},
-	'enable_scroll' : function (node) {
+	enable_scroll : function (node) {
 		node = node || JMVC.WD.body;
 		node.style['overflow'] = this.vars.overflow;
 		
@@ -51,7 +51,7 @@ JMVC.extend('events', {
 		
 	   //JMVC.WD.body.style.overflow = 'visible';
 	},
-	'onScroll' : function (el, cback) {
+	onScroll : function (el, cback) {
 		JMVC.events.vars.cb = function (e) {
 			cback(e);
 			//JMVC.events.preventDefault;

@@ -1,18 +1,18 @@
 JMVC.extend('scheduler',{
-	'create' : function(){
+	create : function(){
 		this.scheduler = { events : {}};
 		var that = this;
 		return {
-			'add' : function(date, action, r){
+			add : function(date, action, r){
 				var dat = new Date(),
 					sets = {
-						's' : typeof date.s === 'number',
-						'i' : typeof date.i === 'number',
-						'h' : typeof date.h === 'number',
-						'd' : typeof date.d === 'number',
-						'm' : typeof date.m === 'number',
-						'y' : typeof date.y === 'number',
-						'every' : date.every
+						s : typeof date.s === 'number',
+						i : typeof date.i === 'number',
+						h : typeof date.h === 'number',
+						d : typeof date.d === 'number',
+						m : typeof date.m === 'number',
+						y : typeof date.y === 'number',
+						every : date.every
 					},
 					repeat = r,
 					func = JMVC.util.isTypeOf(action, 'function') ? action : function () {alert('no function booked'); },
@@ -41,15 +41,15 @@ JMVC.extend('scheduler',{
 				that.scheduler.events[millis_event_abs] = (sets.every) ? window.setInterval(function(){func(new Date());}, ~~(sets.every)) : window.setTimeout(function(){func(new Date());}, millis_remaining);
 				return that;
 			},
-			'delall' : function(){},
-			'getall' : function(){},
-			'del': function(el){
+			delall : function(){},
+			getall : function(){},
+			del: function(el){
 				delete this.events[el];
 			},
-			'list' : function(){
+			list : function(){
 				JMVC.log(this.events);
 			},
-			'get' : function(){
+			get : function(){
 				return this.events;
 			}
 		};

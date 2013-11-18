@@ -13,7 +13,7 @@ JMVC.extend('fvalidation', {
 	// if o is
 	// a string : is meant to be a registered bucket
 	// a object : is meant to be used as a temporary rule object
-	'validate' : function (o) {
+	validate : function (o) {
 		
 		var ret = true,
 			trg = false;
@@ -187,11 +187,11 @@ JMVC.extend('fvalidation', {
 
 	//
 	reset_form :function (){
-		for(var valore in this.validates){
-			switch(this.validates[valore]){
+		for (var valore in this.validates) {
+			switch (this.validates[valore]) {
 				case 'chbx':
 					JMVC.dom.attr(
-						JMVC.dom.find("#"+valore),
+						JMVC.dom.find("#" + valore),
 						'checked',
 						''
 					);
