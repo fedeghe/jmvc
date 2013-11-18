@@ -4,41 +4,39 @@ JMVC.extend('console', {
 
 	init : function () {
 		JMVC.head.meta("generator", "jmvc resident in your machine");
+		JMVC.console._ = {
+			status : false,
+			scroll : 0,
+			tpl : '<!DOCTYPE html>'+
+				'<html>'+
+					'<head>'+
+						'<style type="text/css">body{background-color:white} html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:"";content:none}table{border-collapse:collapse;border-spacing:0}</style>'+
+						'<style type="text/css">%style%</style>'+
+					'</head>'+
+					'<body>%body%</body>'+
+				'</html>',
+			options : '<div class="pad20">'+
+					'<legend>Load external<legend>'+
+					'<select id ="fw">'+
+						'<option value="" selected="selected">No libraries</options>'+
+						'<optgroup label="jQuery">'+
+							'<option value="http://codeorigin.jquery.com/jquery-1.10.2.min.js">jQuery 1.10.2</option>'+
+							'<option value="http://codeorigin.jquery.com/jquery-1.9.1.min.js">jQuery 1.9.1</option>'+
+						'</optgroup>'+
+					'</select>'+
+				'</div>'
+		}
 	},
-
-	_status : false,
-
-	scroll : 0,
-
-	tpl : '<!DOCTYPE html>'+
-		'<html>'+
-			'<head>'+
-				'<style type="text/css">body{background-color:white} html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:"";content:none}table{border-collapse:collapse;border-spacing:0}</style>'+
-				'<style type="text/css">%style%</style>'+
-			'</head>'+
-			'<body>%body%</body>'+
-		'</html>',
-
-	options : '<div class="pad20">'+
-			'<legend>Load external<legend>'+
-			'<select id ="fw">'+
-				'<option value="" selected="selected">No libraries</options>'+
-				'<optgroup label="jQuery">'+
-					'<option value="http://codeorigin.jquery.com/jquery-1.10.2.min.js">jQuery 1.10.2</option>'+
-					'<option value="http://codeorigin.jquery.com/jquery-1.9.1.min.js">jQuery 1.9.1</option>'+
-				'</optgroup>'+
-			'</select>'+
-		'</div>',
-
+	
 	toggle : function () {
 
 		var fsmode = false,
 			title = JMVC.head.title();
-		if (JMVC.console._status) {
+		if (JMVC.console._.status) {
 
 			JMVC.dom.remove(JMVC.dom.find('#jmvc-console'));
 			JMVC.events.enable_scroll();
-			JMVC.W.scrollTo(0, JMVC.console.scroll);
+			JMVC.W.scrollTo(0, JMVC.console._.scroll);
 
 		} else {
 
@@ -237,7 +235,7 @@ JMVC.extend('console', {
 								"tag" : "div",
 								"attrs" : {"id" : "in-options"},
 								"class" : "in-options inputdiv",
-								"html": JMVC.console.options
+								"html": JMVC.console._.options
 							}
 						]
 					}
@@ -246,7 +244,7 @@ JMVC.extend('console', {
 
 
 			//save scroll vertical position
-			JMVC.console.scroll = scrollTop;
+			JMVC.console._.scroll = scrollTop;
 
 			//scroll to top
 			JMVC.W.scrollTo(0, 1);
@@ -393,10 +391,11 @@ JMVC.extend('console', {
 					iframe = JMVC.dom.find('#outarea'),
 					lib = JMVC.dom.find('#fw').value;
 
-				JMVC.dom.find('#outarea').contentDocument.documentElement.innerHTML = JMVC.string.replaceall(JMVC.console.tpl, {
+				//JMVC.dom.find('#outarea').contentDocument.documentElement.innerHTML = JMVC.string.replaceall(JMVC.console.tpl, {
+				JMVC.dom.find('#outarea').contentDocument.documentElement.innerHTML = JMVC.string.replaceall(JMVC.console._.tpl, {
 					'style' : c,
 					'body' : h,
-					'options':JMVC.console.options
+					'options':JMVC.console._.options
 				});
 
 				//exit fullscreen
@@ -437,6 +436,6 @@ JMVC.extend('console', {
 			//fullscreen ?
 			JMVC.p.fullscreen && gofs();
 		}
-		JMVC.console._status = !JMVC.console._status;
+		JMVC.console._.status = !JMVC.console._.status;
 	}
 });	
