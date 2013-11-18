@@ -4,14 +4,13 @@
  */
 JMVC.extend('webgl', {
 	
-	'create' : function (canvas) {
+	create : function (canvas) {
 		var gl;
-		console.debug(canvas);
+		
 		try {
 			gl = canvas.getContext("webgl");
             gl.viewportWidth = canvas.width;
             gl.viewportHeight = canvas.height;
-			console.debug(gl)
 		} catch (e) {
 			var msg = "Error creating WebGL Context!: " + e.toString();
 			alert(msg);

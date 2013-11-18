@@ -1,14 +1,14 @@
 JMVC.extend('date', {
-	'init' : function(){
+	init : function(){
 		JMVC.date.vars.END = (JMVC.date.vars.START + 6 ) % 7;
 	},
-	'vars' : {
-		'DAYMS' : 1E5 * 36 * 24,
-		'WEEKMS' : 1E5 * 36 * 24 * 7,
-		'START' : 0,
-		'END' : 0,
-		'START_ON_SUN' : true,
-		'DAYMAP' : [
+	vars : {
+		DAYMS : 1E5 * 36 * 24,
+		WEEKMS : 1E5 * 36 * 24 * 7,
+		START : 0,
+		END : 0,
+		START_ON_SUN : true,
+		DAYMAP : [
 			'Sunday',
 			'Monday',
 			'Tuesday',
@@ -17,7 +17,7 @@ JMVC.extend('date', {
 			'Friday',
 			'Saturnday'
 		],
-		'time_formats' : {
+		time_formats : {
 			'en-us' :{
 				format : '%DD%, %MM% %D%, %YYYY% %H12% : %I% : %S% %APM%',
 				days : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturnday'],
@@ -25,7 +25,7 @@ JMVC.extend('date', {
 			}
 		}
 	},
-	'setStart' : function(d){
+	setStart : function(d){
 		JMVC.date.vars.START = d;
 		JMVC.date.vars.END = (JMVC.date.vars.START + 6 ) % 7;
 	},
@@ -34,7 +34,7 @@ JMVC.extend('date', {
 	 * Given a date returns the belonging week bounds,
 	 * standing on START and END of the week settings
 	 */
-	'weekBounds' : function (date) {
+	weekBounds : function (date) {
 		var thatD = JMVC.date.tools.ensureDate(date),
 			b1 = 0,
 			b2 = 0,
@@ -60,17 +60,17 @@ JMVC.extend('date', {
 	/* 
 	 * The 4th of each Year is always on the first week (ISO-8601)
 	 */
-	'firstW' : function (y) {	
+	firstW : function (y) {	
 		var referenceDay = new Date(y, 0, 4, 0, 0, 0, 0);
 		return JMVC.date.weekBounds(referenceDay);	
 	},
 	
-	'lastW' : function (y) {
+	lastW : function (y) {
 		var referenceDay = new Date(y, 11, 28, 1, 0, 0, 0);
 		return JMVC.date.weekBounds(referenceDay);		
 	},
 	
-	'day2week' : function (date) {
+	day2week : function (date) {
 		var thatD = JMVC.date.tools.ensureDate(date),
 			thatY = thatD.getFullYear(),
 			firstWeek = JMVC.date.firstW(thatY),
@@ -86,7 +86,7 @@ JMVC.extend('date', {
 	},
 	
 	
-	'week2range' : function (w, Ny) {
+	week2range : function (w, Ny) {
 		var thatW = w || 1,
 			thatY = JMVC.date.tools.ensureYear(Ny),
 			firstDayFirstWeek = JMVC.date.firstW(thatY).from,
@@ -97,14 +97,14 @@ JMVC.extend('date', {
 	},
 	
 	
-	'weekInYear' : function (y) {
+	weekInYear : function (y) {
 		var firstDay = new Date(y, 0, 4, 0, 0, 0, 0),
 			lastDay = new Date(y, 11, 28, 1, 0, 0, 0),
 			firstBounds = JMVC.date.weekBounds(firstDay),
 			lastBounds = JMVC.date.weekBounds(lastDay);
 		return Math.ceil((lastBounds.to - firstBounds.from) / JMVC.date.vars.WEEKMS);
 	},
-	'distance' : function (d1, d2, u) {
+	distance : function (d1, d2, u) {
 		var t1 = (d1 instanceof Date) ? d1 : d1 instanceof Array ? new Date(d1[0], d1[1], d1[2]) : new Date(),
 			t2 = (d2 instanceof Date) ? d2 : d2 instanceof Array ? new Date(d2[0], d2[1], d2[2]) : new Date(),
 			unit = NYATT.util.isSet(u) ? 10 : this.vars.DAYMS;
@@ -113,21 +113,21 @@ JMVC.extend('date', {
 		return ~~((t2  - t1) / this.vars.DAYMS);			
 	},
 	
-	'tools' : {
-		'ensureYear' : function (y) {
+	tools : {
+		ensureYear : function (y) {
 			return (y !== undefined && /^\d{4}$/.test(y) ) ? y : (new Date()).getFullYear();
 		},
-		'ensureDate' : function(date){
+		ensureDate : function(date){
 			return (date !== undefined && date instanceof Date) ? date : new Date();
 		},
-		'checkDate' : function (y, m, d) {
+		checkDate : function (y, m, d) {
 			var r = new Date(y, m, d);
 			return !(r.getDate() - d + r.getMonth() - m + r.getFullYear() - y); 
 		},
-		'isLeap' : function (y) {
+		isLeap : function (y) {
 			return new Date(y, 1, 29).getMonth() === 1;
 		},
-		'nextDay' : function (d0, day, mult) {
+		nextDay : function (d0, day, mult) {
 			
 			var d = d0 instanceof Date ? d0 : new Date(),
 				m = mult != undefined ? mult : 0, 
@@ -138,7 +138,7 @@ JMVC.extend('date', {
 			return new Date(d.getFullYear(), d.getMonth(), r);
 			
 		},
-		'prevDay' : function (d0, day, mult) {
+		prevDay : function (d0, day, mult) {
 			
 			var d = d0 instanceof Date ? d0 : new Date(),
 				m = mult != undefined ? mult : 0,
@@ -149,7 +149,7 @@ JMVC.extend('date', {
 			return new Date(d.getFullYear(), d.getMonth(), r);
 		},
 		/* JMVC.date.tools.prevDay(new Date(2012,8,20), 1, 1878) */
-		'format' : function (dt, f) {
+		format : function (dt, f) {
 			
 			var l = JMVC.date.vars.time_formats['en-us'],
 				d = dt instanceof Date ? dt : new Date(),
