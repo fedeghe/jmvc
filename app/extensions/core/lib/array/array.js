@@ -7,7 +7,14 @@ JMVC.extend('array', {
      * ceils to 20 if the last return uses >=
      * floos to 10 if uses >
 	 */
-	"nearestElement" : function f(v, arr) {
+	
+	/**
+	 * [nearestElement description]
+	 * @param  {[type]} v   [description]
+	 * @param  {[type]} arr [description]
+	 * @return {[type]}     [description]
+	 */
+	nearestElement : function (v, arr) {
 		//add locally two big bounds
 		var steps = Array.prototype.concat(-Infinity, arr, Infinity),
 			len = steps.length,           // cache length
@@ -23,7 +30,14 @@ JMVC.extend('array', {
 		// return element with nearest bound index
 		return steps[i + (v - steps[i] >= steps[i + 1] - v)];
 	},
-	"bNearestElement" : function f(v, steps) {
+
+	/**
+	 * [bNearestElement description]
+	 * @param  {[type]} v     [description]
+	 * @param  {[type]} steps [description]
+	 * @return {[type]}       [description]
+	 */
+	bNearestElement : function f(v, steps) {
 		var len = steps.length, m, dir, r1, r2;
 		if (len === 2) {
 			return v - steps[0] < steps[1] - v ? steps[0] : steps[1];
@@ -36,7 +50,13 @@ JMVC.extend('array', {
 		return f(v, steps.slice(r1, r2));
 	},
 	
-	'fastNearest' : function f(v, steps) {
+	/**
+	 * [fastNearest description]
+	 * @param  {[type]} v     [description]
+	 * @param  {[type]} steps [description]
+	 * @return {[type]}       [description]
+	 */
+	fastNearest : function (v, steps) {
 		var len = steps.length,
 			lindex = 0,
 			hindex = len-1,
@@ -57,7 +77,14 @@ JMVC.extend('array', {
 		}
 		
 	},
-	"origNearest" : function f(value, sortedValues) {
+
+	/**
+	 * [origNearest description]
+	 * @param  {[type]} value        [description]
+	 * @param  {[type]} sortedValues [description]
+	 * @return {[type]}              [description]
+	 */
+	origNearest : function (value, sortedValues) {
 		if (sortedValues.length > 0) {
 			var lowIndex = 0, highIndex = sortedValues.length, middleIndex = -1;
 

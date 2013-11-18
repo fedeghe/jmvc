@@ -1,9 +1,9 @@
 JMVC.require('core/css');
 JMVC.extend('jmap',{
-	'init' : function () {
+	init : function () {
 		JMVC.head.addstyle(JMVC.vars.extensions + 'lib/jmap/css/default.css', true, false);
 	},
-	'create' : function (container, w, h, s) {
+	create : function (container, w, h, s) {
 		var tileSize = {
 				width : 50, //256
 				height : 50 //256

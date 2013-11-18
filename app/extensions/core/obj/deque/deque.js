@@ -1,7 +1,7 @@
 JMVC.extend('deque', {
 	
 	
-	'create' : function () {
+	create : function () {
 		"use strict";
 		var that = this,
 		
@@ -26,21 +26,21 @@ JMVC.extend('deque', {
 		this.header.setNext(this.trailer);
 	   
 		return {
-			'insertFirst' : function(o){
+			insertFirst : function(o){
 				var oldFirst = that.header.getNext(),
 					newFirst = new Node(o, that.header, oldFirst);
 				oldFirst.setPrev(newFirst);
 				that.header.setNext(newFirst);
 				that.size += 1;
 			},
-			'insertLast' : function(o){
+			insertLast : function(o){
 				var oldLast = that.trailer.getPrev(),
 					newLast = new Node(o, oldLast, that.trailer);
 				oldLast.setNext(newLast);
 				that.trailer.setPrev(newLast);
 				that.size += 1;
 			},
-			'removeLast' : function(){
+			removeLast : function(){
 				if(this.isEmpty()){ throw new Error('No elements');}
 
 				var last = that.trailer.getPrev(),
@@ -54,7 +54,7 @@ JMVC.extend('deque', {
 				o = null;
 				return ret;
 			},
-			'removeFirst' : function(){
+			removeFirst : function(){
 				if(this.isEmpty()){ throw new Error('No elements');}
 				var first = that.header.getNext(),
 					o = first,
@@ -67,17 +67,17 @@ JMVC.extend('deque', {
 				o = null;
 				return ret;
 			},
-			'first' : function(){
+			first :function(){
 				return that.header.getNext().element;
 			},
-			'last' : function(){
+			last : function(){
 				return that.trailer.getPrev().element;
 			},
-			'size' : function(){
+			size : function(){
 				return +that.size;
 			},
-			'isEmpty' : function(){return !that.size;},
-			'print' : function(){
+			isEmpty : function(){return !that.size;},
+			print : function(){
 				if(this.isEmpty()){
 					throw new Error('No elements');
 				}

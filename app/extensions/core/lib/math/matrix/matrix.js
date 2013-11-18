@@ -5,7 +5,7 @@ JMVC.require(
 
 JMVC.extend('matrix', {
 	
-	'KKmatrix' : function () {
+	KKmatrix : function () {
 		//var _ = Array.prototype.splice.call(arguments[0], 0),
 		var _ = Array.prototype.slice.call(arguments[0]),
 			len = _.length,
@@ -64,15 +64,15 @@ JMVC.extend('matrix', {
 	
 });
 JMVC.prototipize(JMVC.matrix.KKmatrix, {
-	'constructor' : 'KKmatrix',
-	'uncache' : function () {
+	constructor : 'KKmatrix',
+	uncache : function () {
 		//invalid cached values
 		this.invertible = false;
 		this.determinant = false;
 		this.inverse = false;
 		this.transposed = false;
 	},
-	'print' : function () {
+	print : function () {
 		var out ='',
 			i = 0;
 		for (null; i < this.dim; i += 1) {
@@ -80,7 +80,7 @@ JMVC.prototipize(JMVC.matrix.KKmatrix, {
 		}
 		JMVC.debug(out + "\n");
 	},
-	'set' : function (r, c, val) {
+	set : function (r, c, val) {
 		if(r > (this.dim-1) || c > (this.dim-1)) {
 			console.warn('Out of bounds'); return false;
 		}
@@ -89,10 +89,10 @@ JMVC.prototipize(JMVC.matrix.KKmatrix, {
 		this.rows[r][c] = val;
 		this.cols[c][r] = val;
 	},
-	'get' : function (r, c) {
+	get : function (r, c) {
 		return this._[this.dim * r + c];
 	},
-	'sum' : function (m, sign) {
+	sum : function (m, sign) {
 		var _ = [],
 			i = 0;
 		sign = sign || 1;
@@ -101,10 +101,10 @@ JMVC.prototipize(JMVC.matrix.KKmatrix, {
 		}
 		return new JMVC.matrix.KKmatrix(_);
 	},
-	'sub' : function (m) {
+	sub : function (m) {
 		return this.sum(m, -1);
 	},
-	'mult' : function (m) {
+	mult : function (m) {
 		var _ = [],
 			i = 0,
 			j = 0,
@@ -118,7 +118,7 @@ JMVC.prototipize(JMVC.matrix.KKmatrix, {
 		//console.debug(_);
 		return new JMVC.matrix.KKmatrix(_);
 	},
-	'det' : function () {
+	det : function () {
 		//check cache
 		if (this.determinant !== false) {
 			return this.determinant;
@@ -153,7 +153,7 @@ JMVC.prototipize(JMVC.matrix.KKmatrix, {
 		return res;
 	},
 	/// 3 * 3 determinant
-	'sarrus' : function () {
+	sarrus : function () {
 
 		return this.get(0,0) * this.get(1,1) * this.get(2,2) + 
 			this.get(0,1) * this.get(1,2) * this.get(2,0) + 
@@ -167,7 +167,7 @@ JMVC.prototipize(JMVC.matrix.KKmatrix, {
 	/**
 	 * get submatrix leaving out from the original the whole column cOut and the whole row rOut
 	 */
-	'subMat' : function (rOut, cOut) {
+	subMat : function (rOut, cOut) {
 		var _ = [],
 			i = 0;
 		if (rOut >= this.dim || cOut >= this.dim) {
@@ -181,7 +181,7 @@ JMVC.prototipize(JMVC.matrix.KKmatrix, {
 		return new JMVC.matrix.KKmatrix(_);
 	},
 
-	'isInvertible' : function () {
+	isInvertible : function () {
 		this.determinant = this.det();
 		if (this.determinant) {
 			this.invertible = true;
@@ -189,7 +189,7 @@ JMVC.prototipize(JMVC.matrix.KKmatrix, {
 		return this.invertible;
 	},
 
-	'invert' : function () {
+	invert : function () {
 		var _ = [],
 			d = this.dim,
 			det = this.det(),
@@ -204,7 +204,7 @@ JMVC.prototipize(JMVC.matrix.KKmatrix, {
 		return new JMVC.matrix.KKmatrix(_);
 	},
 
-	'transpose' : function () {
+	transpose : function () {
 		var _ = [],
 			i = 0;
 		for (null; i < this.dim; i += 1) {

@@ -1,9 +1,9 @@
 JMVC.require('core/css');
 JMVC.extend('carpet',{
-	'init' : function () {
+	init : function () {
 		JMVC.head.addstyle(JMVC.vars.extensions + 'core/lib/carpet/css/default.css', true, false);
 	},
-	'create' : function (container, w, h, s) {
+	create : function (container, w, h, s) {
 		var tileSize = {
 				width : 100, //256
 				height : 100 //256

@@ -1,11 +1,11 @@
 JMVC.set('accessor', function () {});
 
 JMVC.get('accessor').prototype = {
-	'get' : function (f) {
+	get : function (f) {
 		"use strict";
 		return this[f];
 	},
-	'set' : function (e, f) {
+	set : function (e, f) {
 		"use strict";
 		this[e] = f; return this[e];
 	}
@@ -21,7 +21,7 @@ JMVC.extend('dd', {
 	 * x int
 	 * y int
 	 */
-	'Point' : function (x, y) {
+	Point : function (x, y) {
 		"use strict";
 		this.x = x;
 		this.y = y;
@@ -31,7 +31,7 @@ JMVC.extend('dd', {
 	 * w int
 	 * h int
 	 */
-	'Dimension' : function (w, h, l) {
+	Dimension : function (w, h, l) {
 		"use strict";
 		this.w = w;
 		this.h = h;
@@ -42,7 +42,7 @@ JMVC.extend('dd', {
 	 * p1 Point
 	 * p2 Point
 	 */
-	'Line' : function (p1, p2) {
+	Line : function (p1, p2) {
 		"use strict";
 		this.p1 = p1;
 		this.p2 = p2;
@@ -54,7 +54,7 @@ JMVC.extend('dd', {
 	 * p2 Point
 	 * p3 Point
 	 */
-	'Triangle' : function (p1, p2, p3) {
+	Triangle : function (p1, p2, p3) {
 		"use strict";
 		this.p1 = p1;
 		this.p2 = p2;
@@ -65,20 +65,20 @@ JMVC.extend('dd', {
 	 * p Point
 	 * pi Point or integer
 	 */
-	'Rect' : function (p1, p2) {
+	Rect : function (p1, p2) {
 		"use strict";
 		this.oregon = p1;
 		this.width = p2.x - p1.x;
 		this.height = p2.y - p1.y;
 	},
 
-	'Circle' : function (c, dORp) {
+	Circle : function (c, dORp) {
 		"use strict";
 		var isPoint = dORp instanceof JMVC.dd.Point;
 		this.center = c;
 		this.radius = isPoint ? dORp.distance(c) : dORp;
 	},
-	'Vector' : function (p1, p2) {
+	Vector : function (p1, p2) {
 		this.p1 = p1;
 		this.p2 = p2;
 		this.lenght = Math.abs(p2.distance(p1));
@@ -114,7 +114,7 @@ JMVC.inherit(JMVC.dd.Triangle, JMVC.get('accessor'));
  *
  **/
 JMVC.prototipize(JMVC.dd.Point, {
-	'distance' : function (p2) {
+	distance : function (p2) {
 		"use strict";
 		return Math.sqrt((p2.x - this.x) * (p2.x - this.x) + (p2.y - this.y) * (p2.y - this.y));
 	}
@@ -126,7 +126,7 @@ JMVC.prototipize(JMVC.dd.Point, {
  *
  **/
 JMVC.prototipize(JMVC.dd.Triangle, {
-	'area' : function () {
+	area : function () {
 		"use strict";
 		var a = this.p1.distance(this.p2),
 			b = this.p2.distance(this.p3),
@@ -141,7 +141,7 @@ JMVC.prototipize(JMVC.dd.Triangle, {
  *
  **/
 JMVC.prototipize(JMVC.dd.Rect, {
-	'area' : function () {
+	area : function () {
 		"use strict";
 		return this.width * this.height;
 	}
@@ -153,7 +153,7 @@ JMVC.prototipize(JMVC.dd.Rect, {
  *
  **/
 JMVC.prototipize(JMVC.dd.Circle, {
-	'area' : function () {
+	area : function () {
 		"use strict";
 		return 2 * this.radius * Math.PI;
 	}
@@ -162,14 +162,14 @@ JMVC.prototipize(JMVC.dd.Circle, {
 
 
 JMVC.prototipize(JMVC.dd.Polygon, {
-	'addPoint' : function (p) {
+	addPoint : function (p) {
 		this.points.push(p);
 	},
-	'delPoint' : function (i) {
+	delPoint : function (i) {
 		var r = this.points[i];
 		this.points.splice(i, 1);
 	},
-	'getArea' : function () {
+	getArea : function () {
 		"use strict";
 		var a = 0,
 			i = 0,

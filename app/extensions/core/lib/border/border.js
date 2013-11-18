@@ -1,6 +1,6 @@
 JMVC.require('core/css');
 JMVC.extend('border', {
-	'init' : function () {
+	init : function () {
 		JMVC.head.addstyle(JMVC.vars.extensions + 'core/lib/border/default.css', true, false);
 	},
 	/**
@@ -17,14 +17,14 @@ JMVC.extend('border', {
 	 * right > 0 => /
 	 * right < 0 => \
 	 */				   
-	'xtop' : function (height /* border */, width, left, right, color) {
+	xtop : function (height , width, left, right, color) {
 		
 		var node, dleft, dright, br,
 			brdsize = height,
 			left_style, right_style;
 			
 		node = JMVC.dom.create('div', {'class':'babs', 'style': 'top:-'+brdsize+'px'});
-		switch(true){
+		switch (true) {
 			//    /-------\
 			case left >= 0 && right <= 0 :
 				left_style = 'width:'+(width/2 - left)+'px;left:0px;top:0px;border-left:'+left+'px solid transparent;border-bottom:'+brdsize+'px solid '+color+';';
@@ -49,7 +49,7 @@ JMVC.extend('border', {
 		return JMVC.dom.append(node,[dleft, dright, br]);
 	},
 	
-	'xbottom' : function (height /* border */, width, left, right, color) {
+	xbottom : function (height /* border */, width, left, right, color) {
 		var node, dleft, dright, br,
 			brdsize = height,
 			left_style, right_style;
@@ -89,7 +89,7 @@ JMVC.extend('border', {
 	 * bottom > 0 => /
 	 * bottom < 0 => \
 	 */
-	'xleft' : function (height, width /* border */, top, bottom, color) {
+	xleft : function (height, width /* border */, top, bottom, color) {
 		var node, dtop, dbottom,
 			brdsize = width,
 			top_style, bottom_style;
@@ -127,11 +127,11 @@ JMVC.extend('border', {
 		}		
 		dtop = JMVC.dom.create('div', {'style':top_style, 'class':'zerofsize brel'}, '&nbsp;');
 		dbottom = JMVC.dom.create('div', {'style':bottom_style, 'class':'zerofsize brel'}, '&nbsp;');
-		
 
 		return JMVC.dom.append(node,[dtop, dbottom]);
 	},
-	'xright' : function (height, width /* border */, top, bottom, color) {
+
+	xright : function (height, width /* border */, top, bottom, color) {
 		var node, dtop, dbottom,
 			brdsize = width,
 			top_style, bottom_style;
@@ -183,7 +183,7 @@ JMVC.extend('border', {
 	
 	
 	
-	'top' : function(color, bgcolor, w, size){
+	top : function(color, bgcolor, w, size){
 		return JMVC.dom.create(
 			'div',
 			{
@@ -196,7 +196,9 @@ JMVC.extend('border', {
 			'&nbsp;'
 		);
 	},
-	'right' : function(color, bgcolor, h, size){
+
+
+	right : function(color, bgcolor, h, size){
 		return JMVC.dom.create(
 			'div',
 			{
@@ -209,7 +211,9 @@ JMVC.extend('border', {
 			'&nbsp;'
 		);
 	},
-	'bottom' : function(color, bgcolor, w, size){
+
+
+	bottom : function(color, bgcolor, w, size){
 		return JMVC.dom.create(
 			'div',
 			{
@@ -222,7 +226,7 @@ JMVC.extend('border', {
 			'&nbsp;'
 		);
 	},
-	'left' : function(color, bgcolor, h, size){
+	left : function(color, bgcolor, h, size){
 		return JMVC.dom.create(
 			'div',
 			{
@@ -245,7 +249,7 @@ JMVC.extend('border', {
 	
 	
 	
-	'vert' : function (width, height, top, down, pos, color, bgcolor) {
+	vert : function (width, height, top, down, pos, color, bgcolor) {
 		/*
 		/  > 0
 		\  < 0

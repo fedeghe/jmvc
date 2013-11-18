@@ -1,5 +1,5 @@
 JMVC.extend('vector', {
-	'Kvector' : function(){
+	Kvector : function(){
 		var that = this; 
 		//this._ = Array.prototype.splice.call(arguments[0], 0);
 		this._ = Array.prototype.slice.call(arguments[0]);
@@ -23,11 +23,11 @@ JMVC.extend('vector', {
  */
 JMVC.prototipize(JMVC.vector.Kvector, {
 	
-	'print' : function () {
+	print : function () {
 		console.debug('[' + this._.join(', ') + ']');
 	},
 	
-	'map' : function (fn) {
+	map : function (fn) {
 		var that = this;
 		JMVC.each(this._, function (el) {return fn(el); });
 	},	
@@ -36,7 +36,7 @@ JMVC.prototipize(JMVC.vector.Kvector, {
 	 * Perform dot Product 
 	 * 
 	 */
-	'dotP' : function (vec) {
+	dotP : function (vec) {
 		if (vec.dim !== this.dim) {
 			console.warn('Unmatching dmensions for dot product');
 			return false;
@@ -53,7 +53,7 @@ JMVC.prototipize(JMVC.vector.Kvector, {
 	 * @description Scalar product
 	 * 
 	 */
-	'scalP' : function (a) {
+	scalP : function (a) {
 		var newV = [];
 		for(var i = 0; i < this.dim; i += 1){
 			newV.push(JMVC.num.num(this._[i] * a));
@@ -66,7 +66,7 @@ JMVC.prototipize(JMVC.vector.Kvector, {
 	 * in  : v
 	 * out : this x v
 	 */
-	'vecP' : function (vec) {
+	vecP : function (vec) {
 		if (this.dim !== 3 || vec.dim !== 3) {
 			console.warn('Vector product can be done in 3 dimensions only');
 			return false;
@@ -79,7 +79,7 @@ JMVC.prototipize(JMVC.vector.Kvector, {
 			JMVC.num.num(c[0] * v[1] - v[0] * c[1])
 		]); 
 	},
-	'sum' : function (v, sign) {
+	sum : function (v, sign) {
 		if (this.dim !== v.dim) {
 			console.warn('Vector sum/sub can be done only between vectors within the same dimension space');
 			return false;
@@ -93,24 +93,24 @@ JMVC.prototipize(JMVC.vector.Kvector, {
 		return new JMVC.vector.Kvector(_);
 	},
 	
-	'sub' : function (v) {
+	sub : function (v) {
 		return this.sum(v, -1);
 	},
 	
-	'angle' : function (vec) {
+	angle : function (vec) {
 		return 2 * JMVC.M.PI + JMVC.M.acos(this.dotP(vec) / (this.lenght * vec.lenght));
 	},
 	
-	'parallelTo' : function (v) {
+	parallelTo : function (v) {
 		return !(this.angle(v) % JMVC.M.PI);
 	},
 
-	'antiParallelTo' : function (v) {
+	antiParallelTo : function (v) {
 		//console.debug(this.angle(v));
 		return (this.angle(v) % (3*JMVC.M.PI) === 0);
 	},
 	
-	'orthogonalTo' : function (v) {
+	orthogonalTo : function (v) {
 		return this.dotP(v) === 0;
 		//return  !!(this.angle(v) % JMVC.M.PI/2) && (this.angle(v) % JMVC.M.PI != 0);
 	}
