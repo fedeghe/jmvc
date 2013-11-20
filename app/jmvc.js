@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.1 (rev. 2)
+ * @version :  3.1 (rev. 4)
  * @copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *          glued with 31 files on 17/11/2013 at 20:20:57
+ *          glued with 31 files on 20/11/2013 at 1:25:2
  *
  * All rights reserved.
  *
@@ -59,7 +59,7 @@
                 JMVC_VERSION = "3.1",
                 //
                 // review (vars.json)
-                JMVC_REVIEW = "2",
+                JMVC_REVIEW = "4",
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = "", //'.min' 
@@ -299,6 +299,10 @@
                     //
                     // ensures that the target namespace exists 
                     var trg = jmvc.ns.make('JMVC.' + label);
+            
+                    //let the literal straigth inherith from Extension Object
+                    Extension.call(trg);
+            
                     //
                     // and set a flag, that can be switched off as far as
                     // if the object passed has a initCheck function
@@ -327,8 +331,7 @@
                         trg.init = null;
                     }
                     //
-                    //let the literal straigth inherith from Extension Object
-                    Extension.call(trg);
+                    
                 },
                 /**
                  * @param  {[type]} type   [description]
@@ -2092,10 +2095,9 @@
                                     html : 'text/html',
                                     json : 'application/json'
                                 }[type] || 'text/html';
-                                
+    
                                 xhr.setRequestHeader("Accept", tmp + "; charset=utf-8");
                                 xhr.send(null);
-                                
                             } catch (e2) {}
                         break;
                         default :
@@ -2107,9 +2109,8 @@
                 }
             };
     
-            xhr.onerror = function () {if (cb_error) {cb_error.apply(null, arguments); } };
-            
-            xhr.onabort = function () {if (cb_abort) {cb_abort.apply(null, arguments); } };
+            xhr.onerror = function () {cb_error && cb_error.apply(null, arguments); };
+            xhr.onabort = function () {cb_abort && cb_abort.apply(null, arguments); };
     
             //open request
             xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data : "")) : uri, sync);
@@ -3011,11 +3012,27 @@
             } else {
                 el['on' + tipo] = f;
             }
-            if (!_.events.bindings[el]) {
+            if (!_.events.bindings[el]) {   
                 _.events.bindings[el] = {};
             }
             //store for unbinding
             _.events.bindings[el][tipo] = f;
+        },
+    
+        /**
+         * [code description]
+         * @param  {[type]} e [description]
+         * @return {[type]}   [description]
+         */
+        code : function (e) {
+            if (e.keyCode) {
+                return e.keyCode;
+            } else if (e.charCode) {
+                return e.charCode;
+            } else if (e.which) {
+                return e.which;
+            }
+            return false;
         },
     
         /**
@@ -3325,6 +3342,7 @@
                 async = true,
                 script_content;
             if (parse) {
+                
                 if (explicit) {
                     //script_content = JMVC.parse(src/* in this case is mean to be the content */);
                     script_content = JMVC.parse(src, true);
@@ -4128,7 +4146,7 @@
     
     JMVC.p.lang && JMVC.cookie.set('lang', JMVC.p.lang);
     
-    JMVC.render();
+    W.JMVCshut || JMVC.render();
     /**
      * [onerror description]
      * @param  {[type]} errorMsg   [description]
