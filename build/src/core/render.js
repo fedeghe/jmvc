@@ -13,4 +13,4 @@ if (l) {
 
 JMVC.p.lang && JMVC.cookie.set('lang', JMVC.p.lang);
 
-JMVC.render();
+W.JMVCshut || JMVC.render();
