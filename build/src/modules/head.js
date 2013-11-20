@@ -31,6 +31,7 @@ JMVC.head = {
             async = true,
             script_content;
         if (parse) {
+            
             if (explicit) {
                 //script_content = JMVC.parse(src/* in this case is mean to be the content */);
                 script_content = JMVC.parse(src, true);
