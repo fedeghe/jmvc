@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.1 (rev. 4)
+ * @version :  3.1 (rev. 5)
  * @copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *          glued with 31 files on 20/11/2013 at 1:25:2
+ *          glued with 31 files on 20/11/2013 at 11:34:42
  *
  * All rights reserved.
  *
@@ -59,7 +59,7 @@
                 JMVC_VERSION = "3.1",
                 //
                 // review (vars.json)
-                JMVC_REVIEW = "4",
+                JMVC_REVIEW = "5",
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = "", //'.min' 
@@ -3828,8 +3828,19 @@
             Dd || (Dd = '%');
             var reg = new RegExp(dD + '([A-z0-9-_]*)' + Dd, 'g'),
                 str;
+            cb = cb || false;
             return tpl.replace(reg, function (str, $1) {
-                return (typeof o === 'function' ? o($1) : o[$1] + '') || cb || dD + $1 + Dd;
+    
+                switch (true) {
+                    case typeof o === 'function' : return o($1); break;
+                    case $1 in o : return o[$1]; break;
+                }
+                return cb || dD + $1 + Dd;
+                /*
+                // The switch above is functionally identical to the next line, but
+                // which one is the fastest?
+                return typeof o === 'function' ? o($1) : $1 in o ? o[$1] : cb || dD + $1 + Dd;
+                */
             });
         },
         
