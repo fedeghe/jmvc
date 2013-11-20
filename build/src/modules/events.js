@@ -38,11 +38,27 @@ JMVC.events = {
         } else {
             el['on' + tipo] = f;
         }
-        if (!_.events.bindings[el]) {
+        if (!_.events.bindings[el]) {   
             _.events.bindings[el] = {};
         }
         //store for unbinding
         _.events.bindings[el][tipo] = f;
+    },
+
+    /**
+     * [code description]
+     * @param  {[type]} e [description]
+     * @return {[type]}   [description]
+     */
+    code : function (e) {
+        if (e.keyCode) {
+            return e.keyCode;
+        } else if (e.charCode) {
+            return e.charCode;
+        } else if (e.which) {
+            return e.which;
+        }
+        return false;
     },
 
     /**
