@@ -11,19 +11,14 @@
 	background-color:#333;
 }
 #jmvc-console .console-head a.ablock{
-	
 	margin-top:7px;
 	height:33px;
 	line-height:33px;
 	text-align:center;
 	font-size:22px;
 	color:#fff;
-	/*background-color: #606060;*/
 	margin-right:10px;
 	margin-left:15px;
-	
-	/*border-top:1px solid #606060;
-	border-right:1px solid #606060;*/
 	border-bottom:1px solid #ffffff;
 	color:#ddd;
 	text-decoration:none;
@@ -44,29 +39,19 @@
 	margin-top:6px;
 }
 #jmvc-console .console-head a.ablock.active div.text{
-	/*border-top:1px solid #eee;
-	border-right:1px solid #aaa;*/
 	opacity:1;
-	
 	color:#0f0;
 	background-color: #808080;
-	/*border-right:1px solid #a0a0a0;
-	border-top:1px solid #a0a0a0;*/
 	height:35px;
-
 }
 #jmvc-console .console-head .ablock.active,
 #jmvc-console .console-head .ablock.active:hover{
 	color:#0f0;
 	cursor:default;
 }
-
-
 div.input-divs{
 	border-top:1px solid white;
 }
-
-
 div.input-divs>div{
 	display:none;
 	background-color: #000;
@@ -81,24 +66,18 @@ div.input-divs div textarea{
 	resize:none;
 	line-height:16px;
 	font-size:14px;
-
 	padding-left:5px;
 	width:99%;
-
 	-moz-tab-size:4;
 	-o-tab-size:4;
 	tab-size:4;
-	
-
 }
 div.input-divs div.in-html textarea{color:#f00;}
 div.input-divs div.in-javascript textarea{color:#0f0;}
 div.input-divs div.in-css textarea{color:#00f;}
 div.input-divs div.in-preview{}
 div.input-divs div.in-options{}
-
-
-a#preview .text/*.img*/{
+a#preview .text{
 	display:block;
 	background-image : url($baseurl$/app/extensions/core/console/previewOC.png);
 	background-repeat:no-repeat;
@@ -106,23 +85,18 @@ a#preview .text/*.img*/{
 	width: 33px;
 	height:32px;
 	padding-right:10px;
-	/*background-color: #606060;
-	padding-bottom:2px;	*/
 }
-a#preview.active .text/*.img*/, a#preview:hover .text/*.img*/{
+a#preview.active .text, a#preview:hover .text{
 	background-position:-51px 0px;
 }
-a#options .text/*.img*/{
+a#options .text{
 	display:block;
 	background-image : url($baseurl$/app/extensions/core/console/gear1.png);
 	background-repeat:no-repeat;
 	background-position:2px 0px;
 	width:12px;
 	height:32px;
-	/*padding-bottom:2px;	
-	background-color: #606060;*/
 }
-
 button#get-url, button#go-fs{
 	color:#fff;
 	background-color:#888;
@@ -130,8 +104,9 @@ button#get-url, button#go-fs{
 	margin:10px;
 	cursor:pointer;
 }
-
-
+button#go-fs{
+	display:none;
+}
 #jmvc-console .console-head .ablock div.tri{
 	height:0px;
 	width:0px;
@@ -146,3 +121,6 @@ button#get-url, button#go-fs{
 div.pad20{
 	padding:20px;
 }
+#jmvc-console .console-head a#html.active div.text{color:#f00;}
+#jmvc-console .console-head a#javascript.active div.text{color:#0f0;}
+#jmvc-console .console-head a#css.active div.text{color:#00f;}
