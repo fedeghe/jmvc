@@ -100,6 +100,10 @@ jmvc = {
         //
         // ensures that the target namespace exists 
         var trg = jmvc.ns.make('JMVC.' + label);
+
+        //let the literal straigth inherith from Extension Object
+        Extension.call(trg);
+
         //
         // and set a flag, that can be switched off as far as
         // if the object passed has a initCheck function
@@ -128,8 +132,7 @@ jmvc = {
             trg.init = null;
         }
         //
-        //let the literal straigth inherith from Extension Object
-        Extension.call(trg);
+        
     },
     /**
      * @param  {[type]} type   [description]
