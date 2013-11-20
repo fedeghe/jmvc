@@ -203,18 +203,26 @@ JMVC.controllers.index = function () {
 		);
 	};
 	
+	
 	this.action_video = function () {
 		JMVC.require('core/html5');
-		var index = JMVC.getView('index'),
-			video = JMVC.html5.video({w : 240, h : 180, uri : 'http://techslides.com/demos/sample-videos/small.ogv', autoplay : 'autoplay', controls : true}),
-			progress = JMVC.html5.progress(35);
+		var index = JMVC.getView('home/index'),
+			video = JMVC.html5.video({
+				width : 240,
+				height : 180,
+				src : 'http://techslides.com/demos/sample-videos/small.ogv',
+				autoplay : 'autoplay',
+				controls : true
+			}),
+			progress = false; //JMVC.html5.progress(35);
 
 		index.set('i_say', 'Federico');
 
 		index.render({cback : function () {
-			JMVC.dom.html(JMVC.dom.find('#cent'), video + '<br />' + progress);
+			JMVC.dom.append(JMVC.dom.find('#cent'), video); // + '<br />' + progress);
 		}});
 	};
+
 
 	//
 	//
