@@ -103,10 +103,9 @@ _.io = {
                                 html : 'text/html',
                                 json : 'application/json'
                             }[type] || 'text/html';
-                            
+
                             xhr.setRequestHeader("Accept", tmp + "; charset=utf-8");
                             xhr.send(null);
-                            
                         } catch (e2) {}
                     break;
                     default :
@@ -118,9 +117,8 @@ _.io = {
             }
         };
 
-        xhr.onerror = function () {if (cb_error) {cb_error.apply(null, arguments); } };
-        
-        xhr.onabort = function () {if (cb_abort) {cb_abort.apply(null, arguments); } };
+        xhr.onerror = function () {cb_error && cb_error.apply(null, arguments); };
+        xhr.onabort = function () {cb_abort && cb_abort.apply(null, arguments); };
 
         //open request
         xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data : "")) : uri, sync);
