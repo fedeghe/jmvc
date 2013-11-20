@@ -94,8 +94,19 @@ JMVC.string = {
         Dd || (Dd = '%');
         var reg = new RegExp(dD + '([A-z0-9-_]*)' + Dd, 'g'),
             str;
+        cb = cb || false;
         return tpl.replace(reg, function (str, $1) {
-            return (typeof o === 'function' ? o($1) : o[$1] + '') || cb || dD + $1 + Dd;
+
+            switch (true) {
+                case typeof o === 'function' : return o($1); break;
+                case $1 in o : return o[$1]; break;
+            }
+            return cb || dD + $1 + Dd;
+            /*
+            // The switch above is functionally identical to the next line, but
+            // which one is the fastest?
+            return typeof o === 'function' ? o($1) : $1 in o ? o[$1] : cb || dD + $1 + Dd;
+            */
         });
     },
     
