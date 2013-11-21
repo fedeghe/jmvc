@@ -3,7 +3,6 @@
  * @param {[type]} n [description]
  */
 Channel = function () {
-    "use strict";
     this.topic2cbs = {};
     this.enabled = true;
 };
@@ -13,13 +12,17 @@ Channel.prototype = {
      * enable cb execution on publish
      * @return {undefined}
      */
-    enable : function () {this.enabled = false; },
+    enable : function () {
+        this.enabled = false;
+    },
 
     /**
      * disable cb execution on publish
      * @return {undefined}
      */
-    disable : function () {this.enabled = true; },
+    disable : function () {
+        this.enabled = true;
+    },
 
     /**
      * publish an event on that channel
@@ -31,10 +34,11 @@ Channel.prototype = {
      * @return {undefined}
      */
     pub : function (topic, args) {
+        var i = 0, l;
         if (!(topic in this.topic2cbs) || !this.enabled) {
             return false;
         }
-        for (var i = 0, l = this.topic2cbs[topic].length; i < l; i++) {
+        for (l = this.topic2cbs[topic].length; i < l; i += 1) {
             this.topic2cbs[topic][i].apply(null, [topic].concat(args));
         }
     },
@@ -51,7 +55,7 @@ Channel.prototype = {
     sub : function (topic, cb) {
         var i = 0, l;
         if (topic instanceof Array) {
-            for (l = topic.length; i < l; i++) {
+            for (l = topic.length; i < l; i += 1) {
                 this.sub(topic[i], cb);
             }
         }
@@ -60,7 +64,7 @@ Channel.prototype = {
         }
         this.topic2cbs[topic].push(cb);
     },
-    
+
     /**
      * Removes all callbacks for one or more topic
      * @param [String] ...
@@ -72,10 +76,10 @@ Channel.prototype = {
             l = ts.length,
             i = 0;
         if (!l) {
-           this.topic2cbs = {};
-           return this;
-       }
-        for (null;   i < l; i++) {
+            this.topic2cbs = {};
+            return this;
+        }
+        for (null;   i < l; i += 1) {
             if (ts[i] in this.topic2cbs) {
                 this.topic2cbs[ts[i]] = [];
             }

@@ -13,13 +13,13 @@ $$src/head.js$$
             $$src/core/init.js$$
             $$src/core/innerjmvc.js$$
             $$src/core/preload.js$$
-            $$src/core/errors.js$$
+            $$src/core/constructors/errors.js$$
             $$src/core/parser.js$$
-            $$src/core/event.js$$
-            $$src/core/channelpipe.js$$
-            $$src/core/extension.js$$
-            $$src/core/promise.js$$
-            $$src/core/interface.js$$
+            $$src/core/constructors/event.js$$
+            $$src/core/constructors/channelpipe.js$$
+            $$src/core/constructors/extension.js$$
+            $$src/core/constructors/promise.js$$
+            $$src/core/constructors/interface.js$$
             $$src/core/controller.js$$
             $$src/core/model.js$$
             $$src/core/view.js$$

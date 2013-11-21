@@ -15,11 +15,12 @@ Interface = function (name, a) {
     }
     for (var i = 0, l = a.length; i < l; i++) {
         (typeof a[i] === 'string') && this.mthds.push(a[i]);
+        console.debug(checkInterface(a[i]));
     }
 };
 
 /**
- * [checkImplements description]
+ * Static method to check if an instance inplements one or more Interfaces
  * @param  {[type]} obj    [description]
  * @param  {[type]} intrfc [description]
  * @return {[type]}        [description]
@@ -30,6 +31,7 @@ Interface.checkImplements = function (obj) {
         arg = Array.prototype.slice.call(arguments);
         l = arg.length;
 
+    //skip 0 being it obj
     while (++i < l){
         for (m in arg[i].mthds) {
             if (typeof obj[arg[i].mthds[m]] !== 'function') {
@@ -40,4 +42,31 @@ Interface.checkImplements = function (obj) {
         }
     }
     return obj;
-};  
+};
+
+
+function checkInterface(f) {
+    var r = f.toString()
+        .match(/function\s(.*)\((.*)\)\s?{return\s[\'\"]?(.*)[\'\"]?;}/);
+    return r instanceof Array && r.length == 4? {
+        name : r[1],
+        params : !!r[2] ? r[2].replace(/\s/g, '').split(',') : false,
+        ret : !!r[3] ? r[3]  : false
+    } : false;
+}
+
+/*
+function tee(func, obj, str) {return 'obj';}
+
+function checkInterface(f) {
+    var r = f.toString()
+        .match(/function\s(.*)\((.*)\)\s?{return\s[\'\"]?(.*)[\'\"]?;}/);
+    return r instanceof Array && r.length == 4? {
+        name : r[1],
+        params : !!r[2] ? r[2].replace(/\s/g, '').split(',') : false,
+        ret : r[3]
+    } : false;
+}
+
+console.dir(checkInterface(tee));
+ */
