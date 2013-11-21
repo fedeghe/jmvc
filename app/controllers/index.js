@@ -47,7 +47,7 @@ JMVC.controllers.index = function () {
 		JMVC.head.meta("description", "A true pure javascript model view controller framework", true);
 		JMVC.head.meta("keywords", "jmvc,javascript mvc,pure javascript mvc,pure javascript");
 		JMVC.head.meta("generator", "jmvc resident in your machine");
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/style.css', true);
+		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/homestyle.css', true);
 
 
 		/*
@@ -155,7 +155,14 @@ JMVC.controllers.index = function () {
 								//http://maps.google.com/maps?q=cortina+d%27ampezzo&hl=en&ll=46.545509,12.135808&spn=0.001018,0.002519&sll=37.0625,-95.677068&sspn=38.365962,82.529297&hnear=Cortina+d%27Ampezzo,+Province+of+Belluno,+Veneto,+Italy&t=h&z=19&layer=c&cbll=46.545509,12.135808&panoid=AK2j0F5pNJw6qwjw5UuG3w&cbp=12,232.07,,0,0.26
 								{location : [46.545509,12.135808], speed : 20, duration :20, streetView : {heading : 180, pitch : 15, zoom:0}}
 								,{location : 'prato della valle, Padova Italia', speed : 20, duration : 10, streetView : {heading : 230, pitch : 0, zoom:-2}}
-								,{location : [47.366923, 8.543597], speed : 20, duration : 20, streetView : {heading : 180, zoom:-2}}
+								//piazza dam
+								//https://maps.google.com/maps?hl=en&ll=52.372652,4.893193&spn=0.002067,0.005037&t=m&z=18&layer=c&cbll=52.372652,4.893193&panoid=mzbA1vt87ilTOJDAl90Eyw&cbp=12,353.64,,0,-4.75
+								,{location : [52.372652,4.893193], speed : 20, duration : 20, streetView : {heading : 270, zoom:-2}}
+								//zurigo ponte
+								//,{location : [47.366923, 8.543597], speed : 20, duration : 20, streetView : {heading : 180, zoom:-2}}
+								//zurigo
+								////https://maps.google.com/maps?q=zurich&hl=en&ll=47.369227,8.543485&spn=0.004556,0.010074&sll=52.372652,4.893193&sspn=0.002067,0.005037&hnear=Zurich,+Canton+of+Zurich,+Switzerland&t=m&z=17&layer=c&cbll=47.369227,8.543485&panoid=VY2rgUeHf9tPBIWMo4-Dmw&cbp=12,231.49,,0,0.26
+								,{location : [47.369227,8.543485], speed : 20, duration : 20, streetView : {heading : 195, zoom:-2}}
 								,{location : '767 5th Avenue, New York USA', speed : 20, duration : 20, streetView : {heading : 90, zoom:-2}}
 								
 								/*
