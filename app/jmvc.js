@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.1 (rev. 5)
+ * @version :  3.1 (rev. 6)
  * @copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *          glued with 31 files on 20/11/2013 at 11:34:42
+ *          glued with 31 files on 21/11/2013 at 9:56:26
  *
  * All rights reserved.
  *
@@ -59,7 +59,7 @@
                 JMVC_VERSION = "3.1",
                 //
                 // review (vars.json)
-                JMVC_REVIEW = "5",
+                JMVC_REVIEW = "6",
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = "", //'.min' 
@@ -1339,11 +1339,12 @@
                 }
                 for (var i = 0, l = a.length; i < l; i++) {
                     (typeof a[i] === 'string') && this.mthds.push(a[i]);
+                    console.debug(checkInterface(a[i]));
                 }
             };
             
             /**
-             * [checkImplements description]
+             * Static method to check if an instance inplements one or more Interfaces
              * @param  {[type]} obj    [description]
              * @param  {[type]} intrfc [description]
              * @return {[type]}        [description]
@@ -1354,6 +1355,7 @@
                     arg = Array.prototype.slice.call(arguments);
                     l = arg.length;
             
+                //skip 0 being it obj
                 while (++i < l){
                     for (m in arg[i].mthds) {
                         if (typeof obj[arg[i].mthds[m]] !== 'function') {
@@ -1364,7 +1366,34 @@
                     }
                 }
                 return obj;
-            };  
+            };
+            
+            
+            function checkInterface(f) {
+                var r = f.toString()
+                    .match(/function\s(.*)\((.*)\)\s?{return\s[\'\"]?(.*)[\'\"]?;}/);
+                return r instanceof Array && r.length == 4? {
+                    name : r[1],
+                    params : !!r[2] ? r[2].replace(/\s/g, '').split(',') : false,
+                    ret : !!r[3] ? r[3]  : false
+                } : false;
+            }
+            
+            /*
+            function tee(func, obj, str) {return 'obj';}
+            
+            function checkInterface(f) {
+                var r = f.toString()
+                    .match(/function\s(.*)\((.*)\)\s?{return\s[\'\"]?(.*)[\'\"]?;}/);
+                return r instanceof Array && r.length == 4? {
+                    name : r[1],
+                    params : !!r[2] ? r[2].replace(/\s/g, '').split(',') : false,
+                    ret : r[3]
+                } : false;
+            }
+            
+            console.dir(checkInterface(tee));
+             */
             /*--------
             CONTROLLER          
             --------*/
@@ -3776,12 +3805,11 @@
          * [multireplace description]
          * @param  {[type]} cnt [description]
          * @param  {[type]} o   [description]
-         * @param  {[type]} i   [description]
          * @return {[type]}     [description]
          */
-        multireplace : function (cnt, o, i) {
-            for (i in o) {
-                cnt = cnt.replace(o[i], i);
+        multireplace : function (cnt, o, _i) {
+            for (_i in o) {
+                cnt = cnt.replace(o[_i], _i);
             }
             return cnt;
         },
@@ -3802,26 +3830,23 @@
             if (len <= l) {
                 return val;
             }
-            
             el = new Array(len + 1 - l).join(el) + '';
             
-            if (pos == 'pre') {
-                val = String(el + val);
-            } else if (pos == 'post') {
-                val = String(val + el);
-            }
-            
-            return val;
+            return String({
+                pre     : el + val,
+                post    : val + el
+            }[pos]) || val;
         },
         
         /** 
          * [ description]
          * @param  {string} tpl      the template
-         * @param  {literal or function} o        
-         * @param  {string} dD       [description]
-         * @param  {string} Dd       [description]
-         * @param  {string} fallback [description]
-         * @return {[type]}          [description]
+         * @param  {literal or function} a literal for substitution or a function that will
+         *                               return the substitution given as parameter a string
+         * @param  {string} dD       optional- the opening placeholder delimitator (%)
+         * @param  {string} Dd       optional- the closing placeholder delimitator (%)
+         * @param  {string} fallback optional- a fallback value in case an element is not found
+         * @return {string}          the resulting string with replaced values
          */
         replaceall : function (tpl, o, dD, Dd, cb) {
             dD || (dD = '%');
@@ -3838,7 +3863,8 @@
                 return cb || dD + $1 + Dd;
                 /*
                 // The switch above is functionally identical to the next line, but
-                // which one is the fastest?
+                // is for sure more readable, the real question is : which one is the fastest?
+                // try it out loading the following testfrom console: JMVC.head.goto('test_api_string_replaceall-perf')
                 return typeof o === 'function' ? o($1) : $1 in o ? o[$1] : cb || dD + $1 + Dd;
                 */
             });
@@ -3875,10 +3901,8 @@
          * @param  {[type]} n   [description]
          * @return {[type]}     [description]
          */
-        strRepeat : function (str, n) {
-            var t = [];
-            while (n -= 1) {t.push(str.replace(/\%n\%/g, n)); }
-            return t.reverse().join('');
+        repeat : function (str, n) {
+            return new Array(n+1).join(str);
         },
     
         /**
