@@ -42,12 +42,11 @@ JMVC.string = {
      * [multireplace description]
      * @param  {[type]} cnt [description]
      * @param  {[type]} o   [description]
-     * @param  {[type]} i   [description]
      * @return {[type]}     [description]
      */
-    multireplace : function (cnt, o, i) {
-        for (i in o) {
-            cnt = cnt.replace(o[i], i);
+    multireplace : function (cnt, o, _i) {
+        for (_i in o) {
+            cnt = cnt.replace(o[_i], _i);
         }
         return cnt;
     },
@@ -68,26 +67,23 @@ JMVC.string = {
         if (len <= l) {
             return val;
         }
-        
         el = new Array(len + 1 - l).join(el) + '';
         
-        if (pos == 'pre') {
-            val = String(el + val);
-        } else if (pos == 'post') {
-            val = String(val + el);
-        }
-        
-        return val;
+        return String({
+            pre     : el + val,
+            post    : val + el
+        }[pos]) || val;
     },
     
     /** 
      * [ description]
      * @param  {string} tpl      the template
-     * @param  {literal or function} o        
-     * @param  {string} dD       [description]
-     * @param  {string} Dd       [description]
-     * @param  {string} fallback [description]
-     * @return {[type]}          [description]
+     * @param  {literal or function} a literal for substitution or a function that will
+     *                               return the substitution given as parameter a string
+     * @param  {string} dD       optional- the opening placeholder delimitator (%)
+     * @param  {string} Dd       optional- the closing placeholder delimitator (%)
+     * @param  {string} fallback optional- a fallback value in case an element is not found
+     * @return {string}          the resulting string with replaced values
      */
     replaceall : function (tpl, o, dD, Dd, cb) {
         dD || (dD = '%');
@@ -104,7 +100,8 @@ JMVC.string = {
             return cb || dD + $1 + Dd;
             /*
             // The switch above is functionally identical to the next line, but
-            // which one is the fastest?
+            // is for sure more readable, the real question is : which one is the fastest?
+            // try it out loading the following testfrom console: JMVC.head.goto('test_api_string_replaceall-perf')
             return typeof o === 'function' ? o($1) : $1 in o ? o[$1] : cb || dD + $1 + Dd;
             */
         });
@@ -141,10 +138,8 @@ JMVC.string = {
      * @param  {[type]} n   [description]
      * @return {[type]}     [description]
      */
-    strRepeat : function (str, n) {
-        var t = [];
-        while (n -= 1) {t.push(str.replace(/\%n\%/g, n)); }
-        return t.reverse().join('');
+    repeat : function (str, n) {
+        return new Array(n+1).join(str);
     },
 
     /**
