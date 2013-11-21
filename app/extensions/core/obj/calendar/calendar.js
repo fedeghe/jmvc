@@ -19,7 +19,7 @@ JMVC.extend('calendar', {
 			this.current_length = 0,
 			this.starts_with = 1,//lun
 			this.ends_with = (this.starts_with+6)%7,
-			this.row_tpl = '<tr>'+JMVC.string.strRepeat('<td class="cl%n%">%%n%%</td>', 7)+'</tr>';
+			this.row_tpl = '<tr>'+JMVC.string.repeat('<td class="cl%n%">%%n%%</td>', 7)+'</tr>';
 
 		return {
 
