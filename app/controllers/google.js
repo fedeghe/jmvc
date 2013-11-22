@@ -22,12 +22,12 @@ JMVC.controllers.google = function () {
 		v.render(function () {
 
 			var newlogo = JMVC.dom.find('#extralogo'),
-				G = new JMVC.plotter.letter('G', 22, 37),
-				o1 = new JMVC.plotter.letter('o1', 48, 97),
-				o2 = new JMVC.plotter.letter('o2', 48, 148),
-				g = new JMVC.plotter.letter('g', 43, 193),
-				l = new JMVC.plotter.letter('l', 10, 220),
-				e = new JMVC.plotter.letter('e', 48, 260);
+				G = new JMVC.plotter.symbol('G', 22, 37),
+				o1 = new JMVC.plotter.symbol('o1', 48, 97),
+				o2 = new JMVC.plotter.symbol('o2', 48, 148),
+				g = new JMVC.plotter.symbol('g', 43, 193),
+				l = new JMVC.plotter.symbol('l', 10, 220),
+				e = new JMVC.plotter.symbol('e', 48, 260);
 				//t = new JMVC.plotter.letter('t', 108, 360);
 
 			G.arc(17, 3, 35, 38, -M.PI / 20, M.PI / 10, 28);

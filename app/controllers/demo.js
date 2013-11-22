@@ -381,10 +381,10 @@ JMVC.controllers.demo = function () {
 		
 		v.render({cback : function () {
 			var newlogo = document.getElementById('extralogo'),
-				j = new JMVC.plotter.letter('j', 22, 40),
-				m = new JMVC.plotter.letter('m', 22, 110),
-				v = new JMVC.plotter.letter('v', 22, 260),
-				c = new JMVC.plotter.letter('c', 22, 320);
+				j = new JMVC.plotter.symbol('j', 22, 40),
+				m = new JMVC.plotter.symbol('m', 22, 110),
+				v = new JMVC.plotter.symbol('v', 22, 260),
+				c = new JMVC.plotter.symbol('c', 22, 320);
 
 			j.line(0,4, 22,4, 2);
 			j.line(0,4, 0,26, 2);

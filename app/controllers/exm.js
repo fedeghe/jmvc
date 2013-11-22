@@ -17,9 +17,9 @@ JMVC.controllers.exm = function () {
 		
 		v.render(function () {
 			var newlogo = document.getElementById('extralogo'),
-				e = new JMVC.plotter.letter('e', 8, 0),
-				x = new JMVC.plotter.letter('x', 8, 71),
-				m = new JMVC.plotter.letter('m', 22, 260),
+				e = new JMVC.plotter.symbol('e', 8, 0),
+				x = new JMVC.plotter.symbol('x', 8, 71),
+				m = new JMVC.plotter.symbol('m', 22, 260),
 				a = newlogo.childNodes,
 				i = 1,
 				t,
