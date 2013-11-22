@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.1 (rev. 6)
+ * @version :  3.2 (rev. 1)
  * @copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *          glued with 31 files on 21/11/2013 at 12:17:37
+ *          glued with 31 files on 22/11/2013 at 0:55:28
  *
  * All rights reserved.
  *
@@ -56,10 +56,10 @@
             var $JMVC,
                 //
                 // version (vars.json)
-                JMVC_VERSION = "3.1",
+                JMVC_VERSION = "3.2",
                 //
                 // review (vars.json)
-                JMVC_REVIEW = "6",
+                JMVC_REVIEW = "1",
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = "", //'.min' 
@@ -3009,11 +3009,89 @@
     EVENT sub-module
     --------------*/
     
+    /*
+    // in jmvc home try
+    var l = JMVC.dom.find('#extralogo'),
+        f1 = function (e){console.debug(e); alert(1); },
+        f2 = function (){alert(2); };
+    JMVC.events.bind([
+        [l, 'click', f1],
+        [l, 'click', f2]
+    ]);
+    JMVC.events.unbind([
+        [l, 'dblclick', f1],
+        [l, 'click', f2]
+    ]);
+     */
+    
+    
+    
     // private section
     _.events = {
         bindings : {},
         Estart : [],
         Eend : [],
+    
+        /**
+         * delefated functions register
+         * @type {Object}
+         */
+        cbreg : {},
+        /**
+         * delegation function
+         * @param  {Function} cb [description]
+         * @param  {[type]}   el [description]
+         * @return {[type]}      [description]
+         */
+        cbks : function (cb, el) {
+            if (cb in _.events.cbreg) {
+                return _.events.cbreg[cb]
+            }
+            _.events.cbreg[cb] = function (e) {cb.call(el, e || W.event); };
+            return _.events.cbreg[cb];
+        },
+    
+        bind : function (el, evnt, cb) {
+            //basic delegation
+            var f = cb; //_.events.cbks(cb, el);
+    
+            if (W.addEventListener) {
+                el.addEventListener(evnt, f, false);
+            } else if (W.attachEvent) {
+                el.attachEvent('on' + evnt, f);
+            } else {
+                el['on' + evnt] = f;
+            }
+    
+            if (!_.events.bindings[el]) {   
+                _.events.bindings[el] = {};
+            }
+            if (!_.events.bindings[el][evnt]) {   
+                _.events.bindings[el][evnt] = {};
+            }
+            //store for unbinding
+            _.events.bindings[el][evnt][f] = f;
+        },
+        unbind : function (el, tipo, cb) {
+            var f = cb; //_.events.cbks(cb, el);
+    
+            try {
+                var ___ = _.events.bindings[el][tipo][f];
+            }catch(e){
+                JMVC.debug(tipo + ': binding not found');
+                return false;
+            }
+    
+            if (el.removeEventListener) {
+                el.removeEventListener(tipo, f, false);
+            } else if (el.detachEvent) {
+                el.detachEvent("on" + tipo, f);
+            }
+            
+            _.events.bindings[el][tipo][f] = null;
+            delete _.events.bindings[el][tipo][f];
+            
+        }
     };
     
     // public section
@@ -3030,26 +3108,15 @@
         bind : function (el, tipo, fn) {
             if (el instanceof Array) {
                 for (var i = 0, l = el.length; i < l; i++) {
-                    this.bind(el[i], tipo, fn);
+                    if (el[i] instanceof Array) {
+                        _.events.bind(el[i][0], el[i][1], el[i][2]);
+                    } else {
+                        _.events.bind(el[i], tipo, fn);
+                    }
                 }
                 return ;
             }
-    
-            //basic delegation
-            var f = function (e) {fn.call(el, e || W.event); };
-    
-            if (W.addEventListener) {
-                el.addEventListener(tipo, f, false);
-            } else if (W.attachEvent) {
-                el.attachEvent('on' + tipo, f);
-            } else {
-                el['on' + tipo] = f;
-            }
-            if (!_.events.bindings[el]) {   
-                _.events.bindings[el] = {};
-            }
-            //store for unbinding
-            _.events.bindings[el][tipo] = f;
+            _.events.bind(el, tipo, fn);
         },
     
         /**
@@ -3074,14 +3141,27 @@
          * @param  {[type]} tipo [description]
          * @return {[type]}      [description]
          */
-        unbind : function (el, tipo) {
-            if (el === null) {return; }
-            if (el.removeEventListener) {
-                el.removeEventListener(tipo, _.events.bindings[el][tipo], false);
-            } else if (el.detachEvent) {
-                el.detachEvent("on" + tipo, _.events.bindings[el][tipo]);
+        unbind : function (el, tipo, fn) {
+            //as for binding
+            if (el instanceof Array) {
+                for (var i = 0, l = el.length; i < l; i++) {
+                    if (el[i] instanceof Array) {
+                        _.events.unbind(el[i][0], el[i][1], el[i][2]);
+                    } else {
+                        _.events.unbind(el[i], tipo, fn);
+                    }
+                }
+                return ;
             }
-            _.events.bindings[el][tipo] = null;
+            //
+            //  loop if a function is not given
+            if (typeof fn === 'undefined') {
+                for (var i in _.events.bindings[el][tipo]) {
+                    _.events.unbind(el, tipo, _.events.bindings[el][tipo][i]);
+                }
+            } else {
+                _.events.unbind(el, tipo, fn);
+            }
         },
     
         /**
@@ -3102,9 +3182,9 @@
                 return;
             }
             
-            this.bind(el, tipo, function (e) {
+            this.bind(el, tipo, function f(e) {
                 fn(e);
-                self.unbind(el, tipo);
+                self.unbind(el, tipo, f);
             });
         },
     
