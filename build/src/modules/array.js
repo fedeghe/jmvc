@@ -139,6 +139,21 @@ JMVC.array = {
     },
 
     /**
+     * @source http://stackoverflow.com/questions/5767325/remove-specific-element-from-an-array
+     * [remove description]
+     * @param  {[type]} arr  [description]
+     * @param  {[type]} item [description]
+     * @return {[type]}      [description]
+     */
+    remove : function (arr,item){
+        for(var i = arr.length; i--;) {
+            if(arr[i] === item) {
+                arr.splice(i, 1);
+            }
+        }
+    },
+
+    /**
      * [shuffle description]
      * @param  {[type]} arr [description]
      * @return {[type]}     [description]

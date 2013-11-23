@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.2 (rev. 1)
+ * @version :  3.2 (rev. 2)
  * @copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *          glued with 31 files on 22/11/2013 at 0:55:28
+ *          glued with 31 files on 23/11/2013 at 1:36:4
  *
  * All rights reserved.
  *
@@ -59,7 +59,7 @@
                 JMVC_VERSION = "3.2",
                 //
                 // review (vars.json)
-                JMVC_REVIEW = "1",
+                JMVC_REVIEW = "2",
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = "", //'.min' 
@@ -3028,69 +3028,154 @@
     
     // private section
     _.events = {
+        /**
+         * storage literal to speed up unbinding
+         * @type {Object}
+         */
         bindings : {},
+    
+        /**
+         * wired function queue fired 
+         * at the beginning of render function
+         * @type {Array}
+         */
         Estart : [],
+    
+        /**
+         * wired function queue fired 
+         * at the end of render function
+         * @type {Array}
+         */
         Eend : [],
     
         /**
-         * delefated functions register
+         * property name used for indexind functions
+         * attached to a node starting form event
+         * in bindings
+         * bindings[event][node__ownid__] = [func1, func2, ...]
+         * @type {String}
+         */
+        nodeAttrForIndex : '__ownid__',
+    
+        /**
+         * map used to get back a node from an id
          * @type {Object}
          */
-        cbreg : {},
+        nodeidMap : {},
+    
         /**
-         * delegation function
-         * @param  {Function} cb [description]
-         * @param  {[type]}   el [description]
-         * @return {[type]}      [description]
+         * function used to get back node from id
+         * @param  {[type]} id [description]
+         * @return {[type]}    [description]
          */
-        cbks : function (cb, el) {
-            if (cb in _.events.cbreg) {
-                return _.events.cbreg[cb]
-            }
-            _.events.cbreg[cb] = function (e) {cb.call(el, e || W.event); };
-            return _.events.cbreg[cb];
+        nodeidInverse : function (id) {
+            return id in _.events.nodeidMap ? _.events.nodeidMap[id] : false;
         },
     
+        /**
+         * obtain a uniqueid for a node if not assigned
+         * or the previously one assigned
+         * @param  {DOM node} el the node for which the id is requested
+         * @return {String} unique id for the DOM node
+         */
+        nodeid : function (el) {
+            if (!el.hasOwnProperty(_.events.nodeAttrForIndex)) {
+                var nid = JMVC.util.uniqueid + '';
+                el[_.events.nodeAttrForIndex] = nid;
+    
+                //store for inverse search
+                _.events.nodeidMap[nid] = el;
+                //console.debug('given id ' + el[_.events.nodeAttrForIndex] + ' to ', el);
+            }
+            return el[_.events.nodeAttrForIndex];
+        },
+        
+        /**
+         * bind exactly one domnode event to a function
+         * @param  {DOM node}   el the dom node where the event must be attached
+         * @param  {String}   evnt the event 
+         * @param  {Function} cb   the callback executed when event is fired on node
+         * @return {undefined}
+         */
         bind : function (el, evnt, cb) {
             //basic delegation
-            var f = cb; //_.events.cbks(cb, el);
+            var nodeid = _.events.nodeid(el); 
     
             if (W.addEventListener) {
-                el.addEventListener(evnt, f, false);
+                el.addEventListener(evnt, cb, false);
             } else if (W.attachEvent) {
-                el.attachEvent('on' + evnt, f);
+                el.attachEvent('on' + evnt, cb);
             } else {
-                el['on' + evnt] = f;
+                el['on' + evnt] = cb;
             }
     
-            if (!_.events.bindings[el]) {   
-                _.events.bindings[el] = {};
+            if (!(evnt in _.events.bindings)) {
+                _.events.bindings[evnt] = {};
             }
-            if (!_.events.bindings[el][evnt]) {   
-                _.events.bindings[el][evnt] = {};
+            if (!(nodeid in _.events.bindings[evnt])) {
+                _.events.bindings[evnt][nodeid] = [];
             }
             //store for unbinding
-            _.events.bindings[el][evnt][f] = f;
+            _.events.bindings[evnt][nodeid].push(cb);
+            return true;
         },
+        
+        /**
+         * unbind the passed cb or all function 
+         * binded to a node-event pair 
+         * 
+         * @param  {DOM node}   el   the node 
+         * @param  {String}   tipo   the event
+         * @param  {Function|undefined} cb the function that must be unbinded
+         *                                 if not passed all functions attached
+         *                                 will be unattached
+         * @return {boolean}    whether the unbinding succeded
+         */
         unbind : function (el, tipo, cb) {
-            var f = cb; //_.events.cbks(cb, el);
+    
+            var nodeid = _.events.nodeid(el),
+                index, tmp, ___;
     
             try {
-                var ___ = _.events.bindings[el][tipo][f];
+                ___ = _.events.bindings[tipo][nodeid];
             }catch(e){
                 JMVC.debug(tipo + ': binding not found');
                 return false;
             }
     
-            if (el.removeEventListener) {
-                el.removeEventListener(tipo, f, false);
-            } else if (el.detachEvent) {
-                el.detachEvent("on" + tipo, f);
+    
+            //
+            //  loop if a function is not given
+            if (typeof cb === 'undefined') {
+                tmp = _.events.bindings[tipo][_.events.nodeid(el)];
+    
+                /*the element will be removed at the end of the real unbind*/
+                while (tmp.length) {
+                    _.events.unbind(el, tipo, tmp[0]);
+                }
+                return true;
+            }
+    
+    
+    
+    
+    
+            index = JMVC.array.inArray(_.events.bindings[tipo][nodeid], cb);
+    
+            if (index == -1) {
+                return false;
             }
             
-            _.events.bindings[el][tipo][f] = null;
-            delete _.events.bindings[el][tipo][f];
+    
+            if (el.removeEventListener) {
+                el.removeEventListener(tipo, cb, false);
+            } else if (el.detachEvent) {
+                el.detachEvent("on" + tipo, cb);
+            }
             
+            //remove it
+            Array.prototype.splice.call(_.events.bindings[tipo][nodeid], index, 1);
+            return true;
         }
     };
     
@@ -3106,17 +3191,18 @@
          * @return {[type]}        [description]
          */
         bind : function (el, tipo, fn) {
+            var res = true;
             if (el instanceof Array) {
                 for (var i = 0, l = el.length; i < l; i++) {
                     if (el[i] instanceof Array) {
-                        _.events.bind(el[i][0], el[i][1], el[i][2]);
+                        res = res & _.events.bind(el[i][0], el[i][1], el[i][2]);
                     } else {
-                        _.events.bind(el[i], tipo, fn);
+                        res = res & _.events.bind(el[i], tipo, fn);
                     }
                 }
-                return ;
+                return res;
             }
-            _.events.bind(el, tipo, fn);
+            return _.events.bind(el, tipo, fn);
         },
     
         /**
@@ -3153,15 +3239,7 @@
                 }
                 return ;
             }
-            //
-            //  loop if a function is not given
-            if (typeof fn === 'undefined') {
-                for (var i in _.events.bindings[el][tipo]) {
-                    _.events.unbind(el, tipo, _.events.bindings[el][tipo][i]);
-                }
-            } else {
-                _.events.unbind(el, tipo, fn);
-            }
+            _.events.unbind(el, tipo, fn);
         },
     
         /**
@@ -3825,6 +3903,21 @@
         rand : function (a) {
             var m = Math;
             return a[m.floor(m.random() * a.length)];
+        },
+    
+        /**
+         * @source http://stackoverflow.com/questions/5767325/remove-specific-element-from-an-array
+         * [remove description]
+         * @param  {[type]} arr  [description]
+         * @param  {[type]} item [description]
+         * @return {[type]}      [description]
+         */
+        remove : function (arr,item){
+            for(var i = arr.length; i--;) {
+                if(arr[i] === item) {
+                    arr.splice(i, 1);
+                }
+            }
         },
     
         /**
