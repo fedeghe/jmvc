@@ -188,7 +188,7 @@ jmvc = {
         for (f in obj) {
             if (obj.hasOwnProperty(f)) {
                 try {
-                    if ($JMVC.array.inArray(allowed, f) > -1 || force) {
+                    if ($JMVC.array.find(allowed, f) > -1 || force) {
                         hooks[f] instanceof Array || (hooks[f] = []);
                         hooks[f].push(obj[f]);
                     } else {
