@@ -91,7 +91,7 @@ JMVC.extend('zpub',{
 
 											//if (a === id) {
 											
-											if (JMVC.array.inArray(a, id) >= 0) {
+											if (JMVC.array.find(a, id) >= 0) {
 												cback.call(null, {'event' : e, 'node' : trg, 'realtaget' : realtrg});
 											} else {
 												console.debug('no is match: '+ a + ' | ' + id);

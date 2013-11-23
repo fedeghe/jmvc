@@ -29,7 +29,7 @@ JMVC.dom = {
      */
     addClass : function (elem, addingClass) {
         var cls = !!(elem.className) ? elem.className.split(' ') : [];
-        if (JMVC.array.inArray(cls, addingClass) < 0) {
+        if (JMVC.array.find(cls, addingClass) < 0) {
             cls.push(addingClass);
             elem.className = cls.join(' ');
         }
@@ -439,7 +439,7 @@ JMVC.dom = {
             type2consider = types || ['TEXT_NODE'];
             // clean text ones
         while (len) {
-            if (JMVC.array.inArray(type2consider, this.nodeTypeString(childs[i]))) {
+            if (JMVC.array.find(type2consider, this.nodeTypeString(childs[i]))) {
                 tagChilds.push(childs[i]);
                 i += 1;
             }

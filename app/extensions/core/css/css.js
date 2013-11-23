@@ -42,7 +42,7 @@ JMVC.extend('css', {
 					newval = JMVC.core.color.getRandomColor();
 					prop[k] =  prop[k].replace(/rand/, newval);
 				}
-				if (JMVC.array.inArray(this.css3_map, k) + 1) {
+				if (JMVC.array.find(this.css3_map, k) + 1) {
 					el.style.cssText += ';' + k + ' : ' + prop[k];
 				} else {
 					el.style[this.css_propertymap[k] || k + ""] = prop[k];
@@ -54,7 +54,7 @@ JMVC.extend('css', {
 				newval = JMVC.core.color.getRandomColor();
 				val =  val.replace(/rand/, newval);
 			}
-			if (JMVC.array.inArray( this.css3_map, prop) + 1) {
+			if (JMVC.array.find( this.css3_map, prop) + 1) {
 				el.style.cssText += ';' + prop + ' : ' + val;
 			} else {
 				el.style[this.css_propertymap[prop] || prop + ""] = val;

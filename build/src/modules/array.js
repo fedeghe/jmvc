@@ -21,7 +21,7 @@ JMVC.array = {
      * @return {Array} the cloned array
      */
     clone : function (arr) {
-        return arr.concat();
+        return Array.prototype.concat.call(arr);
     },  
 
     /**
@@ -58,7 +58,7 @@ JMVC.array = {
      * @param  {[type]} myvar [description]
      * @return {[type]}       [description]
      */
-    inArray : function (arr, mvar) {
+    find : function (arr, mvar) {
         //IE6,7,8 fail here
         if ('indexOf' in arr) {
             return arr.indexOf(mvar);
@@ -146,7 +146,8 @@ JMVC.array = {
      * @return {[type]}      [description]
      */
     remove : function (arr,item){
-        for(var i = arr.length; i--;) {
+        var i = arr.length
+        while(i--) {
             if(arr[i] === item) {
                 arr.splice(i, 1);
             }
