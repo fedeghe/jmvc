@@ -2,7 +2,6 @@
 <api>
 <!--
 
-
                                                 
          _/  _/      _/  _/      _/    _/_/_/   
         _/  _/_/  _/_/  _/      _/  _/          
@@ -1884,7 +1883,7 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="strRepeat">JMVC.string.strRepeat(String name, String value)</signature>
+			<signature name="repeat">JMVC.string.repeat(String name, String value)</signature>
 			<description>Gets/sets document title</description>
 			<params>
 				<param name="name">The name of the meta You want to add</param>
@@ -2043,7 +2042,7 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 -->
 	<array>
 		<function>
-			<signature name="arrayClone">JMVC.array.arrayClone(String name, String value)</signature>
+			<signature name="clone">JMVC.array.clone(String name, String value)</signature>
 			<description>Gets/sets document title</description>
 			<params>
 				<param name="name">The name of the meta You want to add</param>
@@ -2051,7 +2050,6 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 			</params>
 			<returns>void (undefined)</returns>
 			<status>incomplete</status>
-
 		</function>
 		<function>
 			<signature name="coll2array">JMVC.array.coll2array(String name, String value)</signature>
@@ -2067,7 +2065,7 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="inArray">JMVC.array.inArray(String name, String value)</signature>
+			<signature name="find">JMVC.array.find(String name, String value)</signature>
 			<description>Gets/sets document title</description>
 			<params>
 				<param name="name">The name of the meta You want to add</param>
