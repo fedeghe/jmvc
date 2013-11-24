@@ -11,11 +11,11 @@ _.string = {
 JMVC.string = {
     /**
      * [ description]
-     * @param  {[type]} code [description]
+     * @param  {Array[int]} code [description]
      * @return {[type]}      [description]
      */
     code2str : function (code) {
-        return String.fromCharCode.apply(null, code);
+        return ''.fromCharCode.apply(null, code);
     },
 
      /**
