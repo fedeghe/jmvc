@@ -76,7 +76,7 @@ JMVC.controllers.demo = function () {
 				'* obj/deque' : 'test_deque',
 				'* obj/date' : 'test_date',
 				'* lib/array' : 'test_array',
-				'* JMVC.util.inArrayRich' : 'test_arrayOp',
+				'* JMVC.util.findRich' : 'test_arrayOp',
 				'* lib/crypt' : 'test_crypt'
 			},
 			style = {
@@ -295,7 +295,7 @@ JMVC.controllers.demo = function () {
 				tmp = JMVC.dom.create('div', {'style' : 'width:' + basesize + 'px; height:' + basesize + 'px;', 'class' : 'box'}, '&nbsp;');
 				JMVC.dom.append(f, tmp);
 				tmp.style.backgroundColor = (basesize > els_top[i]) ?
-					((JMVC.array.inArray([10,16,17,18,24], i) >= 0) ? 'white' : 'red')
+					((JMVC.array.find([10,16,17,18,24], i) >= 0) ? 'white' : 'red')
 					:
 					JMVC.core.color.getRandomColor(true);
 				if(j%7 == 0) {

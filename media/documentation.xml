@@ -2076,7 +2076,7 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="inArrayRich">JMVC.array.inArrayRich(String name, String value)</signature>
+			<signature name="findRich">JMVC.array.findRich(String name, String value)</signature>
 			<description>Gets/sets document title</description>
 			<params>
 				<param name="name">The name of the meta You want to add</param>

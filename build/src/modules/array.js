@@ -21,7 +21,7 @@ JMVC.array = {
      * @return {Array} the cloned array
      */
     clone : function (arr) {
-        return Array.prototype.concat.call(arr);
+        return [].concat.call(arr);
     },  
 
     /**
@@ -32,7 +32,7 @@ JMVC.array = {
     coll2array : function (coll) {
         var ret = [];
         try{
-            ret = Array.prototype.slice.call(coll, 0);
+            ret = [].slice.call(coll, 0);
         } catch(e){
             // what if coll[i] element is false? loop breaks
             // but this is not the case since collection has no falsy values
@@ -49,7 +49,7 @@ JMVC.array = {
     empty : function (a) {
         // second param (deleteCount) would not be necessary
         // but in the buggIE
-        a.splice(0, a.length);
+        [].splice.call(a, 0, a.length);
     },
 
     /**
@@ -73,7 +73,7 @@ JMVC.array = {
      * @param  {[type]} v   [description]
      * @return {[type]}     [description]
      */
-    inArrayRich : function (arr, v) {
+    findRich : function (arr, v) {
         var i = 0,
             is_obj_or_array = false,
             len = arr.length;
