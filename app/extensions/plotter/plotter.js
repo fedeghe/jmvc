@@ -6,18 +6,7 @@ JMVC.extend('plotter', {
 			that = this,
 			M = Math;
 			
-		this.arr = [];
-		this['char'] = character || '&bull;';
-		this.left = left;
-		this.top = top;
-		this.dot = mod.adddot;
-		this.arc = mod.addarc;
-		this.beizer = mod.beizer;
-		this.line = mod.addline;
-		this.plot = function (node ,scale) {mod.plotarr(node, this.arr, letter, this['char'], this.top, this.left, scale); };
-		this.rotate = mod.rotate;
-		this.clone = mod.clone;
-		this.setChar = function (c) {this['char'] = c; };
+		
 
 		mod = {
 			adddot : function (x, y) {that.arr.push([x, y]); },
@@ -117,6 +106,20 @@ JMVC.extend('plotter', {
 				that.arr = Array.prototype.slice.call(inst.arr, 0);
 			}
 		};
+
+
+		this.arr = [];
+		this['char'] = character || '&bull;';
+		this.left = left;
+		this.top = top;
+		this.dot = mod.adddot;
+		this.arc = mod.addarc;
+		this.beizer = mod.beizer;
+		this.line = mod.addline;
+		this.plot = function (node ,scale) {mod.plotarr(node, this.arr, letter, this['char'], this.top, this.left, scale); };
+		this.rotate = mod.rotate;
+		this.clone = mod.clone;
+		this.setChar = function (c) {this['char'] = c; };
 		
 	}
 });
