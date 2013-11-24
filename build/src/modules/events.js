@@ -127,7 +127,7 @@ _.events = {
     unbind : function (el, tipo, cb) {
 
         var nodeid = _.events.nodeid(el),
-            index, tmp, ___;
+            index, tmp, ___, l;
 
         try {
             ___ = _.events.bindings[tipo][nodeid];
@@ -141,10 +141,10 @@ _.events = {
         //  loop if a function is not given
         if (typeof cb === 'undefined') {
             tmp = _.events.bindings[tipo][_.events.nodeid(el)];
-
+            l = tmp.length;
             /*the element will be removed at the end of the real unbind*/
-            while (tmp.length) {
-                _.events.unbind(el, tipo, tmp[0]);
+            while (l--) {
+                _.events.unbind(el, tipo, tmp[l]);
             }
             return true;
         }
@@ -153,7 +153,7 @@ _.events = {
 
 
 
-        index = JMVC.array.inArray(_.events.bindings[tipo][nodeid], cb);
+        index = JMVC.array.find(_.events.bindings[tipo][nodeid], cb);
 
         if (index == -1) {
             return false;
@@ -283,13 +283,13 @@ JMVC.events = {
      * @return {[type]}      [description]
      */
     ready : function (func) {
-        // if some event are booked when the dom is
-        // already loaded execute immediately
+        // if called when the dom is already loaded
+        // execute immediately
         if (JMVC.loaded) {
             func.call();
             return;
         }
-        //return this.bind(W, 'load', func);
+        
         var e = null;
 
         if(WD.addEventListener){
@@ -324,7 +324,6 @@ JMVC.events = {
      * @return {[type]}   [description]
      */
     eventTarget : function (e) {
-        
         e = e ? e : JMVC.W.event;
         var targetElement = e.currentTarget || (typeof e.target !== "undefined") ? e.target : e.srcElement;
         if (!targetElement) {
