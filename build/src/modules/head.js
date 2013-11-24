@@ -21,7 +21,7 @@ JMVC.head = {
      * @param  {[type]} explicit [description]
      * @return {[type]}          [description]
      */
-    addscript: function (src, parse, explicit) {
+    addscript : function (src, parse, explicit) {
         //
         var script,
             head,
