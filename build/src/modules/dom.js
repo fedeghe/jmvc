@@ -191,10 +191,17 @@ JMVC.dom = {
      * @return {[type]}   [description]
      */
     find : function (a, b) {
-        if (a.nodeType === 1) {return a; }
+        
         var sel = "getElement",
             toArr = false,
             ret = false;
+
+        if (a.nodeType === 1) {return a; }
+        
+        if ('querySelectorAll' in JMVC.WD) {
+            var ret = [].slice.call(JMVC.WD.querySelectorAll(a));
+            return ret.length === 1 ? ret[0] : ret;
+        }
 
         //look for no word before something
         a = a.match(/^(\W)?([A-z0-9-_]*)/);
