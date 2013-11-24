@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.2 (rev. 2)
+ * @version :  3.2 (rev. 3)
  * @copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *          glued with 31 files on 23/11/2013 at 1:36:4
+ *          glued with 31 files on 24/11/2013 at 23:18:47
  *
  * All rights reserved.
  *
@@ -59,7 +59,7 @@
                 JMVC_VERSION = "3.2",
                 //
                 // review (vars.json)
-                JMVC_REVIEW = "2",
+                JMVC_REVIEW = "3",
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = "", //'.min' 
@@ -387,7 +387,7 @@
                     for (f in obj) {
                         if (obj.hasOwnProperty(f)) {
                             try {
-                                if ($JMVC.array.inArray(allowed, f) > -1 || force) {
+                                if ($JMVC.array.find(allowed, f) > -1 || force) {
                                     hooks[f] instanceof Array || (hooks[f] = []);
                                     hooks[f].push(obj[f]);
                                 } else {
@@ -2477,7 +2477,7 @@
          */
         addClass : function (elem, addingClass) {
             var cls = !!(elem.className) ? elem.className.split(' ') : [];
-            if (JMVC.array.inArray(cls, addingClass) < 0) {
+            if (JMVC.array.find(cls, addingClass) < 0) {
                 cls.push(addingClass);
                 elem.className = cls.join(' ');
             }
@@ -2639,10 +2639,17 @@
          * @return {[type]}   [description]
          */
         find : function (a, b) {
-            if (a.nodeType === 1) {return a; }
+            
             var sel = "getElement",
                 toArr = false,
                 ret = false;
+    
+            if (a.nodeType === 1) {return a; }
+            
+            if ('querySelectorAll' in JMVC.WD) {
+                var ret = [].slice.call(JMVC.WD.querySelectorAll(a));
+                return ret.length === 1 ? ret[0] : ret;
+            }
     
             //look for no word before something
             a = a.match(/^(\W)?([A-z0-9-_]*)/);
@@ -2887,7 +2894,7 @@
                 type2consider = types || ['TEXT_NODE'];
                 // clean text ones
             while (len) {
-                if (JMVC.array.inArray(type2consider, this.nodeTypeString(childs[i]))) {
+                if (JMVC.array.find(type2consider, this.nodeTypeString(childs[i]))) {
                     tagChilds.push(childs[i]);
                     i += 1;
                 }
@@ -3134,7 +3141,7 @@
         unbind : function (el, tipo, cb) {
     
             var nodeid = _.events.nodeid(el),
-                index, tmp, ___;
+                index, tmp, ___, l;
     
             try {
                 ___ = _.events.bindings[tipo][nodeid];
@@ -3148,10 +3155,10 @@
             //  loop if a function is not given
             if (typeof cb === 'undefined') {
                 tmp = _.events.bindings[tipo][_.events.nodeid(el)];
-    
+                l = tmp.length;
                 /*the element will be removed at the end of the real unbind*/
-                while (tmp.length) {
-                    _.events.unbind(el, tipo, tmp[0]);
+                while (l--) {
+                    _.events.unbind(el, tipo, tmp[l]);
                 }
                 return true;
             }
@@ -3160,7 +3167,7 @@
     
     
     
-            index = JMVC.array.inArray(_.events.bindings[tipo][nodeid], cb);
+            index = JMVC.array.find(_.events.bindings[tipo][nodeid], cb);
     
             if (index == -1) {
                 return false;
@@ -3290,13 +3297,13 @@
          * @return {[type]}      [description]
          */
         ready : function (func) {
-            // if some event are booked when the dom is
-            // already loaded execute immediately
+            // if called when the dom is already loaded
+            // execute immediately
             if (JMVC.loaded) {
                 func.call();
                 return;
             }
-            //return this.bind(W, 'load', func);
+            
             var e = null;
     
             if(WD.addEventListener){
@@ -3331,7 +3338,6 @@
          * @return {[type]}   [description]
          */
         eventTarget : function (e) {
-            
             e = e ? e : JMVC.W.event;
             var targetElement = e.currentTarget || (typeof e.target !== "undefined") ? e.target : e.srcElement;
             if (!targetElement) {
@@ -3523,7 +3529,7 @@
          * @param  {[type]} explicit [description]
          * @return {[type]}          [description]
          */
-        addscript: function (src, parse, explicit) {
+        addscript : function (src, parse, explicit) {
             //
             var script,
                 head,
@@ -3788,7 +3794,7 @@
          * @return {Array} the cloned array
          */
         clone : function (arr) {
-            return arr.concat();
+            return [].concat.call(arr);
         },  
     
         /**
@@ -3799,7 +3805,7 @@
         coll2array : function (coll) {
             var ret = [];
             try{
-                ret = Array.prototype.slice.call(coll, 0);
+                ret = [].slice.call(coll, 0);
             } catch(e){
                 // what if coll[i] element is false? loop breaks
                 // but this is not the case since collection has no falsy values
@@ -3816,7 +3822,7 @@
         empty : function (a) {
             // second param (deleteCount) would not be necessary
             // but in the buggIE
-            a.splice(0, a.length);
+            [].splice.call(a, 0, a.length);
         },
     
         /**
@@ -3825,7 +3831,7 @@
          * @param  {[type]} myvar [description]
          * @return {[type]}       [description]
          */
-        inArray : function (arr, mvar) {
+        find : function (arr, mvar) {
             //IE6,7,8 fail here
             if ('indexOf' in arr) {
                 return arr.indexOf(mvar);
@@ -3840,7 +3846,7 @@
          * @param  {[type]} v   [description]
          * @return {[type]}     [description]
          */
-        inArrayRich : function (arr, v) {
+        findRich : function (arr, v) {
             var i = 0,
                 is_obj_or_array = false,
                 len = arr.length;
@@ -3913,7 +3919,8 @@
          * @return {[type]}      [description]
          */
         remove : function (arr,item){
-            for(var i = arr.length; i--;) {
+            var i = arr.length
+            while(i--) {
                 if(arr[i] === item) {
                     arr.splice(i, 1);
                 }
@@ -3951,11 +3958,11 @@
     JMVC.string = {
         /**
          * [ description]
-         * @param  {[type]} code [description]
+         * @param  {Array[int]} code [description]
          * @return {[type]}      [description]
          */
         code2str : function (code) {
-            return String.fromCharCode.apply(null, code);
+            return ''.fromCharCode.apply(null, code);
         },
     
          /**
