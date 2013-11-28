@@ -5,8 +5,6 @@ JMVC.extend('plotter', {
 		var mod,
 			that = this,
 			M = Math;
-			
-		
 
 		mod = {
 			adddot : function (x, y) {that.arr.push([x, y]); },
@@ -81,13 +79,10 @@ JMVC.extend('plotter', {
 				for (null; i < l; i++) {
 					tmp = JMVC.dom.create('span', {
 							'class' : 'point ' + letter,
-							'style' : JMVC.string.replaceall(
-								'top:%top%px;left:%left%px',
-								{
-									top : ~~ (positions[i][0] + top) * scale,
-									left : ~~(positions[i][1] + left) * scale
-								}
-							)
+							'style' : JMVC.string.replaceall('top:%top%px;left:%left%px', {
+								top : ~~ (positions[i][0] + top) * scale,
+								left : ~~(positions[i][1] + left) * scale
+							})
 						}, character);
 					JMVC.dom.append(node, tmp);
 				}

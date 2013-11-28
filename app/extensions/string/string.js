@@ -10,4 +10,4 @@ JMVC.extend('string',{
 	unhide : function(arr){
 		return String.fromCharCode.apply(null, arr);
 	}
-});  //sadasd
+});

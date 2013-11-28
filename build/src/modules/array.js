@@ -4,6 +4,12 @@ ARRAY sub-module
 
 // private section
 _.array = {
+    /**
+     * [op description]
+     * @param  {[type]} a  [description]
+     * @param  {[type]} op [description]
+     * @return {[type]}    [description]
+     */
     op : function (a, op) {
         var ret = NaN;
         try {
@@ -42,28 +48,30 @@ JMVC.array = {
     },
 
     /**
-     * [empty description]
-     * @param  {[type]} a [description]
-     * @return {[type]}   [description]
+     * Empties an array
+     * @param  {Array} arr the array to be emptied
+     * @return {undefined}
      */
-    empty : function (a) {
+    empty : function (arr) {
         // second param (deleteCount) would not be necessary
         // but in the buggIE
-        [].splice.call(a, 0, a.length);
+        [].splice.call(arr, 0, arr.length);
     },
 
     /**
      * Cross-Façade function to check if an array contains or not a value
-     * @param  {Array} arr the array 
+     * @param  {Array}  arr     the array to search in 
      * @param  {[type]} myvar [description]
      * @return {[type]}       [description]
      */
     find : function (arr, mvar) {
         //IE6,7,8 fail here
+        
         if ('indexOf' in arr) {
             return arr.indexOf(mvar);
         }
-        for (var l = arr.length; l-- && arr[l] !== mvar; null);
+        var l = arr.length;
+        while (l-- && arr[l] !== mvar);
         return l;
     },
 
@@ -160,8 +168,7 @@ JMVC.array = {
      * @return {[type]}     [description]
      */
     shuffle : function (arr) {
-        var mr = Math.random;
-        return arr.sort(function(){return mr() - .5; });
+        return arr.sort(function(){return 0.5 - Math.random(); });
     },
 
     /**

@@ -91,10 +91,10 @@ jmvc = {
     /**
      * Basic function for extending an object
      * only under JMVC ns
-     * @param  {[type]} label [description]
+     * @param  {String} label the label under which JMVC will be extended,
+     *                        here can even be used dots to subspace
      * @param  {[type]} obj   [description]
-     * @param  {[type]} reqs  [description]
-     * @return {[type]}       [description]
+     * @return {Object|false} The 
      */
     extend : function (label, obj) {
         //
@@ -132,7 +132,7 @@ jmvc = {
             trg.init = null;
         }
         //
-        
+        return trg;
     },
     /**
      * @param  {[type]} type   [description]
@@ -189,7 +189,9 @@ jmvc = {
             if (obj.hasOwnProperty(f)) {
                 try {
                     if ($JMVC.array.find(allowed, f) > -1 || force) {
-                        hooks[f] instanceof Array || (hooks[f] = []);
+                        if(!(f in hooks) || !(hooks[f] instanceof Array)){
+                            hooks[f] = [];
+                        }
                         hooks[f].push(obj[f]);
                     } else {
                         throw {
@@ -292,6 +294,7 @@ jmvc = {
         try{
             return JMVC.W.eval(r);
         }catch(e){}
+        return false;
     },
     /**
      * lang loader

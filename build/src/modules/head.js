@@ -228,7 +228,7 @@ JMVC.head = {
         var meta = this.element.getElementsByTagName('meta'),
             newmeta = JMVC.dom.create('meta', {'name' : name, 'content' : value}),
             len = meta.length;
-        len ? JMVC.dom.insertAfter(newmeta, meta.item(len - 1)) : this.element.appendChild(newmeta);
+        return len ? JMVC.dom.insertAfter(newmeta, meta.item(len - 1)) : this.element.appendChild(newmeta);
     },  
 
     /**

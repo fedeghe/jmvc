@@ -34,13 +34,15 @@ Channel.prototype = {
      * @return {undefined}
      */
     pub : function (topic, args) {
-        var i = 0, l;
+        var i = 0,
+            l;
         if (!(topic in this.topic2cbs) || !this.enabled) {
             return false;
         }
         for (l = this.topic2cbs[topic].length; i < l; i += 1) {
             this.topic2cbs[topic][i].apply(null, [topic].concat(args));
         }
+        return true;
     },
 
     /**
