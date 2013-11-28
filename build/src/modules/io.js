@@ -115,6 +115,7 @@ _.io = {
                 }
                 
             }
+            return true;
         };
 
         xhr.onerror = function () {cb_error && cb_error.apply(null, arguments); };
@@ -129,6 +130,7 @@ _.io = {
         try {
             return (targetType === 'responseXML') ? xhr[targetType].childNodes[0] : xhr[targetType];
         } catch (e3) {}
+        return true;
     }
 };
 
