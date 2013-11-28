@@ -380,7 +380,7 @@ JMVC.controllers.demo = function () {
 							flt = JMVC.image.createFilter(img);
 						
 						JMVC.events.bind(JMVC.dom.find('#brightness'), 'click', function () {
-							flt.filterImage(flt.filters.brightness, -40);	
+							flt.filterImage(flt.filters.brightness, 80);
 						});
 						JMVC.events.bind(JMVC.dom.find('#threshold'), 'click', function () {
 							flt.filterImage(flt.filters.threshold, 20);	
