@@ -15,18 +15,19 @@ JMVC.extend('timer',{
 					'months' : ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'] 
 				}
 			},
-			self = this;
-		
-		this.target = options.target;
-		this.lang = options.lang in time_formats ? options.lang : 'it';
-		this.l = time_formats[this.lang];
-		this.format = options.format ||  "%H24% : %I% : %S%"; 
+			timer = function (o) {
+				this.target = o.target;
+				this.lang = o.lang in time_formats ? o.lang : 'it';
+				this.l = time_formats[this.lang];
+				this.format = o.format ||  "%H24% : %I% : %S%"; 
+			};
 
-		function updateTime() {
-			window.setTimeout(function () {init(); }, 1000);
+		timer.prototype.updateTime = function () {
+			var self = this;
+			window.setTimeout(function () {self.init(); }, 1000);
 		};
 
-		function getTime(){
+		timer.prototype.getTime = function () {
 			var d = new Date(),
 				h = d.getHours(),
 				H12 = (h > 12) ? h-12 : h,
@@ -38,20 +39,21 @@ JMVC.extend('timer',{
 				M = d.getMonth()+1,
 				YYYY = d.getFullYear(),
 				YY = (d.getFullYear()+'').substr(1),
-				DD = self.l.days[d.getDay()],
-				MM = self.l.months[M-1];
+				DD = this.l.days[d.getDay()],
+				MM = this.l.months[M-1];
 
 			return JMVC.string.replaceall(
-				self.format,
+				this.format,
 				{APM : APM, H12 : H12, H24 : H24, I : I, S : S, YY : YY, YYYY : YYYY, M : M, D : D, MM : MM, DD : DD}
 			);
 		};
-		function init() {
-			JMVC.dom.html(self.target, getTime());
-			updateTime();
+		timer.prototype.init =  function () {
+			JMVC.dom.html(this.target, this.getTime());
+			this.updateTime();
+			return this;
 		} 
-		init();
-		return self;
+		
+		return (new timer(options)).init();
 	}
 });
 
