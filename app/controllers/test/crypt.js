@@ -34,11 +34,9 @@ JMVC.controllers.crypt = function() {
 					escape('<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html; charset=UTF-8" /><meta name="copyright" content="&copy; 2012 F80px; text-align:center;font-size:14px;display:none"><b>JMVC:</b> the true pure java.gif" /></p><div id="trial" style="background-color: red;"></div></body></html>'),
 					escape('<TYPEml><html><head><div id="trial" style="background-color: red;"></div></body></html>')
 				],
-				pwd = 'rfvsd jbsdjbfskdjhfb skh23y87234y78__!@##%@%$#^23462346!@#$%^&*()/<>:;"[}]{\|`~vaa';
+				pwd = 'rfvsdjbsdj234b23fsk23d2jh2fb';
 
-			JMVC.test.describe('Now crypt lib will be testest on '+messages.length+' messages containing escaped html (subparts of what you can see with ctrl+u, I suppose You`re using a good browser)\n\
-<br />> the seed is a random number between in [10, 1000]\n\
-<br />> the password used is deliberately highly tricky: <b>'+pwd+'</b>');
+			JMVC.test.describe('Now crypt lib will be testest on ' + messages.length + ' messages containing escaped html (subparts of what you can see with ctrl+u, I suppose You`re using a good browser)<br />> the seed is a random number between in [10, 1000]<br />> the password used is deliberately highly tricky: <b>' + pwd + '</b>');
 			
 			for (var i = 0, l = messages.length; i < l; i++) {
 				JMVC.security.seed = JMVC.util.rand(32000, 33000);
@@ -47,8 +45,9 @@ JMVC.controllers.crypt = function() {
 					
 					
 				JMVC.test.message('seed is  : '+ JMVC.security.seed);
-				JMVC.test.message('<b>Crypted message</b><br />'+m);
-				n = JMVC.security.decrypt(m,pwd);
+				JMVC.test.message('<b>Crypted message</b><br />' + m);
+				n = JMVC.security.decrypt(m, pwd);
+				
 				JMVC.test.testValue("Test message "+ i, function(){
 					return n;
 				}, messages[i]);
