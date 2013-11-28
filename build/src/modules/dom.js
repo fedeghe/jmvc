@@ -3,7 +3,11 @@ DOM sub-module
 ------------*/
 
 // private section
-_.dom = {};
+_.dom = {
+    qsall : function (a){
+        return ('querySelectorAll' in JMVC.WD) ? JMVC.WD.querySelectorAll(a) : false;
+    }
+};
 
 // public section
 JMVC.dom = {
@@ -115,6 +119,11 @@ JMVC.dom = {
         return WD.body;
     },
 
+    /**
+     * [childs description]
+     * @param  {[type]} node [description]
+     * @return {[type]}      [description]
+     */
     childs : function (node) {
         return node.childNodes;
     },
@@ -137,7 +146,7 @@ JMVC.dom = {
      * @return {[type]}       [description]
      */
     create : function (tag, attrs, inner) {
-        if (!tag) {W.alert('no tag'); return; }
+        if (!tag) {W.alert('no tag'); return false; }
         var node = JMVC.WD.createElement(tag),
             att;
         attrs = attrs || {};
@@ -147,7 +156,7 @@ JMVC.dom = {
             }
         }
         if (typeof inner !== 'undefined') {
-            if (inner.nodeType === 1) {
+            if (inner.hasOwnProperty('nodeType') && inner.nodeType === 1) {
                 this.append(node, inner);
             } else {
                 this.html(node, inner);
@@ -193,42 +202,39 @@ JMVC.dom = {
     find : function (a, b) {
         
         var sel = "getElement",
-            toArr = false,
-            ret = false;
+            toArr = true,
+            ret = false,
+            isArr = false;
 
         if (a.nodeType === 1) {return a; }
         
-        if ('querySelectorAll' in JMVC.WD) {
-            var ret = [].slice.call(JMVC.WD.querySelectorAll(a));
-            return ret.length === 1 ? ret[0] : ret;
+        ret = _.dom.qsall(a);
+
+        if (!ret) {
+            //look for no word before something consistent
+            a = a.match(/^(\W)?([A-z0-9-_]*)/);
+
+            switch (a[1] || '=') {
+                case '#': sel += 'ById';
+                    toArr = false;
+                break;
+                case '.': sel += "sByClassName"; break;
+                case '@': sel += "sByName"; break;
+                case '=': sel += "sByTagName"; break;
+                default: return [];
+            }
+            ret = (b || JMVC.WD)[sel](a[2]);
         }
 
-        //look for no word before something
-        a = a.match(/^(\W)?([A-z0-9-_]*)/);
-
-        switch (a[1] || '=') {
-        case '#':
-            sel += 'ById';
-            break;
-        case '.':
-            sel += "sByClassName";
-            toArr = true;
-            break;
-        case '@':
-            sel += "sByName";
-            toArr = true;
-            break;
-        case '=':
-            sel += "sByTagName";
-            toArr = true;
-            break;
-        default: return [];
-        }
-        
-        ret = (b || JMVC.WD)[sel](a[2]);
         ret = toArr ? JMVC.array.coll2array(ret) : ret;
         
-        return ((ret instanceof Array) && ret.length == 1) ? ret[0] : ret;
+        isArr = ret instanceof Array;
+        
+
+        return (isArr && ret.length == 1) ?
+            ret[0]
+            :
+            isArr && ret.length > 0 ? ret : false;
     },
 
     find2 : function (a, b) {
@@ -236,6 +242,10 @@ JMVC.dom = {
         var sel = "getElement",
             toArr = 0,
             ret = 0;
+
+        //ret = _.dom.qsall(a);
+        //if (ret) {return ret; }
+
         //look for no word before something
         a = a.match(/^(\W)?([A-z0-9-_]*)/);
         a[1] = a[1] || '=';
@@ -282,12 +292,13 @@ JMVC.dom = {
             whole = [],
             val,
             tof = (value == undefined),
-            isRootArray = root instanceof Array;
+            isRootArray = root instanceof Array,
+            i;
         
         root = isRootArray ? root : root || JMVC.WD.body;
         whole = isRootArray ? root : root.all ? root.all : root.getElementsByTagName('*');
 
-        for(var i = whole.length; i--; ) {
+        for(i = whole.length; i--; ) {
             val = whole[i].getAttribute(attr);
         
             if (typeof val == "string" && (tof || val == value)) {
@@ -395,7 +406,9 @@ JMVC.dom = {
             typeof HTMLElement === "object" ?
                 o instanceof HTMLElement
             : //DOM2
-                o && typeof o === "object" && o.nodeType === 1 && typeof o.nodeName==="string"
+                o && typeof o === "object" &&
+                typeof o.nodeType !== undefined && o.nodeType === 1 &&
+                typeof o.nodeName === "string"
         );
     },
 
@@ -420,11 +433,10 @@ JMVC.dom = {
      * @return {[type]}      [description]
      */
     nodeTypeString : function (node) {
-        var types = [
-            'ELEMENT_NODE', 'ATTRIBUTE_NODE', 'TEXT_NODE', 'CDATA_SECTION_NODE', 'ENTITY_REFERENCE_NODE',
-            'ENTITY_NODE', 'PROCESSING_INSTRUCTION_NODE', 'COMMENT_NODE', 'DOCUMENT_NODE', 'DOCUMENT_TYPE_NODE',
-            'DOCUMENT_FRAGMENT_NODE', 'NOTATION_NODE'];
-        return types[node.nodeType - 1];
+        return ['ELEMENT_NODE', 'ATTRIBUTE_NODE', 'TEXT_NODE', 'CDATA_SECTION_NODE',
+            'ENTITY_REFERENCE_NODE', 'ENTITY_NODE', 'PROCESSING_INSTRUCTION_NODE', 'COMMENT_NODE',
+            'DOCUMENT_NODE', 'DOCUMENT_TYPE_NODE', 'DOCUMENT_FRAGMENT_NODE', 'NOTATION_NODE'
+        ][node.nodeType - 1] || undefined;
     },
 
     /**
@@ -474,7 +486,10 @@ JMVC.dom = {
      * @param  {[type]} node [description]
      * @return {[type]}      [description]
      */
-    parent : function (node) {return node.parentNode; },
+    parent : function (node) {
+        return (node.parentNode && node.parentNode.nodeType != 11) ?
+            node.parentNode : false;
+    },
 
     /**
      * [ description]
@@ -494,9 +509,7 @@ JMVC.dom = {
      * @return {[type]}    [description]
      */
     remove : function (el) {
-        if (!el) {
-            return;
-        }
+        if (!el) {return false;}
 
         var parent;
         if(typeof el === 'string'){
@@ -506,7 +519,7 @@ JMVC.dom = {
             for (var i  = 0, l = el.length; i < l; i++) {
                 this.remove(el[i]);
             }
-            return;
+            return true;
         }
         parent = el.parentNode;
         parent.removeChild(el);
@@ -535,6 +548,15 @@ JMVC.dom = {
         var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
         el.className = el.className.replace(reg, ' ');
         return this;
+    },
+
+    swap : function (going, coming) {
+        var display = coming.style.display;
+        coming.style.display = 'none';
+        this.insertAfter(coming, going);
+        if (this.remove(going)) {
+            coming.style.display = display;
+        }
     },
 
     /**
