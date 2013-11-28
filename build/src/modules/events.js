@@ -124,15 +124,15 @@ _.events = {
      *                                 will be unattached
      * @return {boolean}    whether the unbinding succeded
      */
-    unbind : function (el, tipo, cb) {
+    unbind : function (el, evnt, cb) {
 
         var nodeid = _.events.nodeid(el),
-            index, tmp, ___, l;
+            index, tmp, l;
 
         try {
-            ___ = _.events.bindings[tipo][nodeid];
+            var ___ = _.events.bindings[evnt][nodeid];
         }catch(e){
-            JMVC.debug(tipo + ': binding not found');
+            JMVC.debug(evnt + ': binding not found');
             return false;
         }
 
@@ -140,20 +140,16 @@ _.events = {
         //
         //  loop if a function is not given
         if (typeof cb === 'undefined') {
-            tmp = _.events.bindings[tipo][_.events.nodeid(el)];
+            tmp = _.events.bindings[evnt][_.events.nodeid(el)];
             l = tmp.length;
             /*the element will be removed at the end of the real unbind*/
             while (l--) {
-                _.events.unbind(el, tipo, tmp[l]);
+                _.events.unbind(el, evnt, tmp[l]);
             }
             return true;
         }
 
-
-
-
-
-        index = JMVC.array.find(_.events.bindings[tipo][nodeid], cb);
+        index = JMVC.array.find(_.events.bindings[evnt][nodeid], cb);
 
         if (index == -1) {
             return false;
@@ -161,21 +157,19 @@ _.events = {
         
 
         if (el.removeEventListener) {
-            el.removeEventListener(tipo, cb, false);
+            el.removeEventListener(evnt, cb, false);
         } else if (el.detachEvent) {
-            el.detachEvent("on" + tipo, cb);
+            el.detachEvent("on" + evnt, cb);
         }
         
-        //remove it
-        Array.prototype.splice.call(_.events.bindings[tipo][nodeid], index, 1);
+        //remove it from private bindings register
+        Array.prototype.splice.call(_.events.bindings[evnt][nodeid], index, 1);
         return true;
     }
 };
 
-// public section
+// PUBLIC section
 JMVC.events = {
-    
-
     /**
      * [ description]
      * @param  {[type]}   el   [description]
@@ -216,23 +210,40 @@ JMVC.events = {
 
     /**
      * [ description]
-     * @param  {[type]} el   [description]
-     * @param  {[type]} tipo [description]
-     * @return {[type]}      [description]
+     * @param  {[type]} e [description]
+     * @return {[type]}   [description]
      */
-    unbind : function (el, tipo, fn) {
-        //as for binding
-        if (el instanceof Array) {
-            for (var i = 0, l = el.length; i < l; i++) {
-                if (el[i] instanceof Array) {
-                    _.events.unbind(el[i][0], el[i][1], el[i][2]);
-                } else {
-                    _.events.unbind(el[i], tipo, fn);
-                }
-            }
-            return ;
+    eventTarget : function (e) {
+        e = e ? e : JMVC.W.event;
+        var targetElement = e.currentTarget || (typeof e.target !== "undefined") ? e.target : e.srcElement;
+        if (!targetElement) {
+            return false;
         }
-        _.events.unbind(el, tipo, fn);
+        while (targetElement.nodeType == 3 && targetElement.parentNode != null) {
+            targetElement = targetElement.parentNode;
+        }
+        return targetElement;
+    },
+
+    /**
+     * [ description]
+     * @param  {[type]} el [description]
+     * @param  {[type]} e  [description]
+     * @return {[type]}    [description]
+     */
+    getCoord : function (el, e) {
+        var x,
+            y;
+        if (e.pageX || e.pageY) {
+            x = e.pageX;
+            y = e.pageY;
+        } else {
+            x = e.clientX + JMVC.WD.body.scrollLeft + JMVC.WD.documentElement.scrollLeft;
+            y = e.clientY + JMVC.WD.body.scrollTop + JMVC.WD.documentElement.scrollTop;
+        }
+        x -= el.offsetLeft;
+        y -= el.offsetTop;
+        return [x, y];
     },
 
     /**
@@ -279,6 +290,21 @@ JMVC.events = {
 
     /**
      * [ description]
+     * @param  {[type]} e [description]
+     * @return {[type]}   [description]
+     */
+    preventDefault : function (e) {
+        e = e || W.event;
+
+        if (e.preventDefault) {
+            e.preventDefault();
+        } else {
+            e.returnValue = false;
+        }
+    },
+
+    /**
+     * [ description]
      * @param  {[type]} func [description]
      * @return {[type]}      [description]
      */
@@ -286,8 +312,7 @@ JMVC.events = {
         // if called when the dom is already loaded
         // execute immediately
         if (JMVC.loaded) {
-            func.call();
-            return;
+            return func.call();
         }
         
         var e = null;
@@ -306,54 +331,23 @@ JMVC.events = {
 
     /**
      * [ description]
-     * @param  {[type]} e [description]
-     * @return {[type]}   [description]
+     * @param  {[type]} el   [description]
+     * @param  {[type]} tipo [description]
+     * @return {[type]}      [description]
      */
-    preventDefault : function (e) {
-        e = e || W.event;
-        if (e.preventDefault) {
-            e.preventDefault();
-        } else {
-            e.returnValue = false;
+    unbind : function (el, tipo, fn) {
+        //as for binding
+        if (el instanceof Array) {
+            for (var i = 0, l = el.length; i < l; i++) {
+                if (el[i] instanceof Array) {
+                    _.events.unbind(el[i][0], el[i][1], el[i][2]);
+                } else {
+                    _.events.unbind(el[i], tipo, fn);
+                }
+            }
+            return ;
         }
-    },
-
-    /**
-     * [ description]
-     * @param  {[type]} e [description]
-     * @return {[type]}   [description]
-     */
-    eventTarget : function (e) {
-        e = e ? e : JMVC.W.event;
-        var targetElement = e.currentTarget || (typeof e.target !== "undefined") ? e.target : e.srcElement;
-        if (!targetElement) {
-            return false;
-        }
-        while (targetElement.nodeType == 3 && targetElement.parentNode != null) {
-            targetElement = targetElement.parentNode;
-        }
-        return targetElement;
-    },
-
-    /**
-     * [ description]
-     * @param  {[type]} el [description]
-     * @param  {[type]} e  [description]
-     * @return {[type]}    [description]
-     */
-    getCoord : function (el, e) {
-        var x,
-            y;
-        if (e.pageX || e.pageY) {
-            x = e.pageX;
-            y = e.pageY;
-        } else {
-            x = e.clientX + JMVC.WD.body.scrollLeft + JMVC.WD.documentElement.scrollLeft;
-            y = e.clientY + JMVC.WD.body.scrollTop + JMVC.WD.documentElement.scrollTop;
-        }
-        x -= el.offsetLeft;
-        y -= el.offsetTop;
-        return [x, y];
+        _.events.unbind(el, tipo, fn);
     },
 
     /**
