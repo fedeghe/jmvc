@@ -1,12 +1,11 @@
 $$src/head.js$$
 !function (W) {
+    //
     'use strict';
+    //
     var WD = W.document,    // local reference for window.document
         WDL = WD.location,  // local reference for current window.document.location
-        i, //
-        j, // some
-        k, // counters
-        l, //
+        i, j, k, l,          // some counters
         // this function returns the JMVC object, globalized, after doing some stuff
         // @return {object literal} $JMVC inner object 
         JMVC = W.JMVC = (function () {
