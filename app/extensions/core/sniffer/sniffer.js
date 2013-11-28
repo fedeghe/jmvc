@@ -127,7 +127,7 @@ JMVC.extend('sniffer', {
 			webSimpleDB : !!JMVC.W.indexedDB,
 			webSockets : !!JMVC.W.WebSocket,
 			webSQLDatabase : !!JMVC.W.openDatabase,
-			webWorkers : !!JMVC.W.Worker,
+			webWorkers : 'Worker' in JMVC.W,
 			undo : typeof UndoManager !== 'undefined'
 		}
 
