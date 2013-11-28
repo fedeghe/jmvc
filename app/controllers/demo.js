@@ -363,9 +363,38 @@ JMVC.controllers.demo = function () {
 
 
 	this.action_img = function () {
-		JMVC.head.title('Crypto image');
+		JMVC.head.title('Filter image');
 		JMVC.require('core/lib/image');
-		this.render('<img src="'+ JMVC.vars.baseurl + '/media/img/gabpattinaggio.jpg" />');
+		var that = this;
+		JMVC.dom.preloadImage(JMVC.vars.baseurl + '/media/img/gabpattinaggio.jpg', function () {
+			that.render(
+				'<button id="brightness">brightness</button>' +
+				'<button id="threshold">threshold</button>' +
+				'<button id="grayscale">grayscale</button>' +
+				'<button id="reset">RESET</button>' +
+				'<img src="'+ JMVC.vars.baseurl + '/media/img/gabpattinaggio.jpg" />',
+				function (){
+					JMVC.events.delay(function () {
+						var img = JMVC.dom.find('img'),
+							flt = JMVC.image.createFilter(img);
+						
+						JMVC.events.bind(JMVC.dom.find('#brightness'), 'click', function () {
+							flt.filterImage(flt.filters.brightness, -40);	
+						});
+						JMVC.events.bind(JMVC.dom.find('#threshold'), 'click', function () {
+							flt.filterImage(flt.filters.threshold, 20);	
+						});
+						JMVC.events.bind(JMVC.dom.find('#grayscale'), 'click', function () {
+							flt.filterImage(flt.filters.grayscale);	
+						});
+						JMVC.events.bind(JMVC.dom.find('#reset'), 'click', function () {
+							flt.reset();	
+						});
+
+					}, 1000);
+				}
+			);
+		});
 	};
 
 
