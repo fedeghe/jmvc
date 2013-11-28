@@ -32,61 +32,108 @@ JMVC.extend('image', {
             this.canvas.width = imgt.width;
             this.canvas.height = imgt.height;
             
-            JMVC.dom.swap(imgt, this.canvas);
-            this.ctx.drawImage(imgtag, 0, 0);
+            JMVC.dom.insertAfter(this.canvas, this.tag);
+            this.tag.style.display = 'none';
+            
+            this.canvas.style.display = '';
+            this.ctx.drawImage(this.tag, 0, 0);
+            this.active = true;
         }
 
         filteredImage.prototype = {
+            /**
+             * [reset description]
+             * @return {[type]} [description]
+             */
+            reset : function(){
+                this.ctx.drawImage(this.tag, 0, 0);
+                this.disable();
+            },
+
+            /**
+             * [disable description]
+             * @return {[type]} [description]
+             */
+            disable : function () {
+                this.canvas.style.display = 'none';
+                this.tag.style.display = '';
+                this.active = false;
+            },
+
+            /**
+             * [enable description]
+             * @return {[type]} [description]
+             */
+            enable : function () {
+                this.canvas.style.display = '';
+                this.tag.style.display = 'none';
+                this.active = true;
+            },
+
+            /**
+             * [filterImage description]
+             * @param  {[type]} filter   [description]
+             * @param  {[type]} var_args [description]
+             * @return {[type]}          [description]
+             */
             filterImage : function(filter, var_args) {
-                console.debug(this);
-                var args = [this.getPx()];
-                for (var i=1; i<arguments.length; i++) {
+                if (! this.active) {
+                    this.reset();
+                    this.enable();
+                }
+                var args = [this.getPx()],
+                    i = 1,
+                    l = arguments.length;
+                for (null; i < l; i += 1) {
                     args.push(arguments[i]);
                 }
-                this.ctx.putImageData(
-                    filter.apply(this, args)
-                    , 0, 0
-                );
-                
+                this.ctx.putImageData(filter.apply(this, args), 0, 0);
             },
+
             getPx : function() {
                 return this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
             },
-
 
             filters : {
                 brightness : function(pixels, adjustment) {
                     console.debug(arguments)
                     //var pixels = this.getPx();
-                    var d = pixels.data;
-                    for (var i=0; i<d.length; i+=4) {
+                    var d = pixels.data,
+                        i = 0,
+                        l = d.length;
+                    for (null; i < l; i += 4) {
                         d[i] += adjustment;
-                        d[i+1] += adjustment;
-                        d[i+2] += adjustment;
+                        d[i + 1] += adjustment;
+                        d[i + 2] += adjustment;
                     }
                     return pixels;
                 },
                 threshold : function(pixels, threshold) {
-                    var d = pixels.data;
-                    for (var i=0; i<d.length; i+=4) {
-                        var r = d[i];
-                        var g = d[i+1];
-                        var b = d[i+2];
-                        var v = (0.2126*r + 0.7152*g + 0.0722*b >= threshold) ? 255 : 0;
-                        d[i] = d[i+1] = d[i+2] = v
+                    var d = pixels.data,
+                        i = 0,
+                        l = d.length;
+
+                    for (null; i < l; i += 4) {
+                        var r = d[i],
+                            g = d[i + 1],
+                            b = d[i + 2],
+                            v = (0.2126 * r + 0.7152 * g + 0.0722 * b >= threshold) ? 255 : 0;
+                        d[i] = d[i + 1] = d[i + 2] = v
                     }
                     return pixels;
                 },
                 grayscale : function(pixels) {
-                    var d = pixels.data;
-                    for (var i=0; i<d.length; i+=4) {
-                        var r = d[i];
-                        var g = d[i+1];
-                        var b = d[i+2];
-                        // CIE luminance for the RGB
-                        // The human eye is bad at seeing red and blue, so we de-emphasize them.
-                        var v = 0.2126*r + 0.7152*g + 0.0722*b;
-                        d[i] = d[i+1] = d[i+2] = v
+                    var d = pixels.data,
+                        i = 0,
+                        l = d.length;
+                    for (null; i < l; i += 4) {
+                        var r = d[i],
+                            g = d[i + 1],
+                            b = d[i + 2],
+                            // CIE luminance for the RGB
+                            // The human eye is bad at seeing red and blue, so we de-emphasize them.
+                            v = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+                        d[i] = d[i + 1] = d[i + 2] = v;
                     }
                     return pixels;
                 }
