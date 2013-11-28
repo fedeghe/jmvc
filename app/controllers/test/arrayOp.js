@@ -28,10 +28,6 @@ JMVC.controllers.arrayOp = function() {
 				afunc
 			];
 			
-
-			
-
-			
 			JMVC.test.initialize(true);
 			
 			JMVC.test.startAll();
