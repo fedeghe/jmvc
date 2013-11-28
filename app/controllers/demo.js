@@ -63,6 +63,7 @@ JMVC.controllers.demo = function () {
 				'Key' : 'test_key',
 				'Grind' : 'grind',
 				'canvas ext using 2d lib' : 'test_canvas',
+				'Image filter' : 'demo/img',
 				
 				'direct&crypt_image' : 'demo/direct',
 
