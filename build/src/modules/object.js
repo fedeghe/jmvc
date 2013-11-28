@@ -102,13 +102,7 @@ JMVC.object = {
         var ret = '', i, j;
         for (i in o) {
             if (o.hasOwnProperty(i)) {
-                ret += i + '{';
-                for (j in o[i]) {
-                    if (o[i].hasOwnProperty(j)) {
-                        ret += j + ':' + o[i][j] + ';';
-                    }
-                }
-                ret += '} ';
+                ret += i + ' {' + JMVC.object.obj2str(o[i]) + '} ';
             }
         }
         return ret;
@@ -127,5 +121,16 @@ JMVC.object = {
             }
         }
         return ret;
+    },
+
+    obj2str : function (o) {
+        var ret = '';
+        for (j in o) {
+            if (o.hasOwnProperty(j)) {
+                ret += j + ':' + o[j] + ';';
+            }
+        }
+        return ret;
     }
+
 };
