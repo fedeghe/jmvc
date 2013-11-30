@@ -48,6 +48,7 @@ JMVC.dom = {
     append : function (where, what) {
         if (JMVC.util.isArray(what)) {
             for (var i = 0, l = what.length; i < l; i++) {
+
                 where.appendChild(what[i]);
             }
         } else {
@@ -64,6 +65,9 @@ JMVC.dom = {
      * @return {[type]}       [description]
      */
     attr : function (elem, name, value) {
+        if (!elem) {
+            return '';
+        }
         var attrs = false,
             l = false,
             i = 0,
@@ -208,7 +212,7 @@ JMVC.dom = {
 
         if (a.nodeType === 1) {return a; }
         
-        ret = _.dom.qsall(a);
+        //ret = _.dom.qsall(a);
 
         if (!ret) {
             //look for no word before something consistent
@@ -230,11 +234,7 @@ JMVC.dom = {
         
         isArr = ret instanceof Array;
         
-
-        return (isArr && ret.length == 1) ?
-            ret[0]
-            :
-            isArr && ret.length > 0 ? ret : false;
+        return (isArr && ret.length == 1) ? ret[0] : ret;
     },
 
     find2 : function (a, b) {
