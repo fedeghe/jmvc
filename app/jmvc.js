@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.2 (rev. 4)
+ * @version :  3.2 (rev. 5)
  * @copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *          glued with 31 files on 28/11/2013 at 10:30:39
+ *          glued with 31 files on 30/11/2013 at 10:42:49
  *
  * All rights reserved.
  *
@@ -58,7 +58,7 @@
                 JMVC_VERSION = "3.2",
                 //
                 // review (vars.json)
-                JMVC_REVIEW = "4",
+                JMVC_REVIEW = "5",
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = "", //'.min' 
@@ -2502,6 +2502,7 @@
         append : function (where, what) {
             if (JMVC.util.isArray(what)) {
                 for (var i = 0, l = what.length; i < l; i++) {
+    
                     where.appendChild(what[i]);
                 }
             } else {
@@ -2518,6 +2519,9 @@
          * @return {[type]}       [description]
          */
         attr : function (elem, name, value) {
+            if (!elem) {
+                return '';
+            }
             var attrs = false,
                 l = false,
                 i = 0,
@@ -2662,7 +2666,7 @@
     
             if (a.nodeType === 1) {return a; }
             
-            ret = _.dom.qsall(a);
+            //ret = _.dom.qsall(a);
     
             if (!ret) {
                 //look for no word before something consistent
@@ -2684,11 +2688,7 @@
             
             isArr = ret instanceof Array;
             
-    
-            return (isArr && ret.length == 1) ?
-                ret[0]
-                :
-                isArr && ret.length > 0 ? ret : false;
+            return (isArr && ret.length == 1) ? ret[0] : ret;
         },
     
         find2 : function (a, b) {
