@@ -25,6 +25,55 @@ JMVC.extend('image', {
     createFilter : function (imgtag) {  
         "use strict";
 
+        function getPxVector(pixels) {
+            var w = pixels.width,
+                h = pixels.height,
+                px = pixels.data;
+
+            return function (r, c){
+                if (r < 0 || r >= h || c < 0 || c >= w) {return [0,0,0,0];}
+
+                var i = 4*(r * w + c);
+
+                return [
+                    px[i],
+                    px[i + 1],
+                    px[i + 2],
+                    px[i + 3]
+                ];
+            }
+        }
+        function getRoundMatrix(px, r, c) {
+            var gpv = getPxVector(px);
+
+            var t = [
+                gpv(r-1, c-1),
+                gpv(r-1, c),
+                gpv(r-1, c+1),
+
+                gpv(r, c-1),
+                gpv(r, c),
+                gpv(r, c+1),
+
+                gpv(r+1, c-1),
+                gpv(r+1, c),
+                gpv(r+1, c+1)
+            ];
+            
+            return  t;
+        }
+        function convolutePX(px, matrix, factorM){
+            
+            for (var i=0, l = matrix.length; i < l; i += 1) {
+                px[0] += matrix[i][0] * factorM[i];
+                px[1] += matrix[i][1] * factorM[i];
+                px[2] += matrix[i][2] * factorM[i];
+                px[3] += matrix[i][3] * factorM[i];
+            }
+            return px;
+        }
+
+
         function filteredImage(imgt) {
             this.tag = imgt;
             this.canvas = JMVC.WD.createElement('canvas');
@@ -94,10 +143,58 @@ JMVC.extend('image', {
                 return this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
             },
 
+            
+            convolute : function (pixels, matrix){
+            
+                var w = pixels.width,
+                    h = pixels.height,
+                    d = pixels.data;
+
+                for (var i  = 0; i < h; i +=1)
+                    for (var j = 0, tmp, k; j < w; j +=1) {
+                        tmp = convolutePX(getPxVector(pixels)(i, j), getRoundMatrix(pixels, i, j), matrix);
+                        k = 4 * (i * w + j); 
+                        d[k] = tmp[0];
+                        d[k + 1] = tmp[1];
+                        d[k + 2] = tmp[2];
+                        d[k + 3] = tmp[3];
+                    }
+                
+                return pixels;
+            },
+
+            matrices : {
+                'gauss' : [.1, .2, .1, .2, .4, .2, .1, .2, .1],
+                'blur0' : [0.1,0.1,0.1, 0.1,0.1,0.1, 0.1,0.1,0.1],
+
+                'blur1' : [0.1,0.1,0.1, 0.1,0.1,0.1, 0.1,0.1,0.1],
+                'blur2' : [0.2,0.2,0.2, 0.2,0.2,0.2, 0.2,0.2,0.2],
+                'blur3' : [0.3,0.3,0.3, 0.3,0.3,0.3, 0.3,0.3,0.3],
+                'detect_hlines' : [-1,-1,-1, 2,2,2, -1,-1,-1],
+                'detect_vlines' : [-1,2,-1, -1,2,-1, -1,2,-1],
+                'laplace' : [0,-1,0, -1,5,-1, 0,-1,0]
+                /*'detect_45lines'    =>array(    array(-1,-1,2),         array(-1,2,-1),         array(2,-1,-1)  ),
+                'detect_135lines'   =>array(    array(2,-1,-1),         array(-1,2,-1),         array(-1,-1,2)  ),
+                'detect_edges'      =>array(    array(-1,-1,-1),        array(-1,8,-1),         array(-1,-1,-1) ),
+                'sobel_horiz'       =>array(    array(-1,-2,-1),        array(0,0,0),           array(1,2,1)    ),
+                'sobel_vert'        =>array(    array(-1,0,1),          array(-2,0,2),          array(-1,0,1)   ),
+                'sobel'             =>array(    array(0,2,2),           array(-2,0,3),          array(-2,-3,0)  ),
+                'detect_edges'      =>array(    array(-1,0,1),          array(-2,0,2),          array(-1,0,1)   ),
+                'edges'             =>array(    array(0,1,2),           array(-1,0,1),          array(-2,-1,0)  ),
+                'sharpen'           =>array(    array(-1, -1, -1),      array(-1, 16, -1),      array(-1, -1, -1),  8,  0),
+                'laplace_emboss'    =>array(    array(-1,0,-1),         array(0,4,0),           array(-1,0,-1)),
+                'sharp'             =>array(    array(0,-1,0),          array(-1,5,-1),         array(0,-1,0)),
+                'mean_removal'      =>array(    array(-1,-1,-1),            array(-1,9,-1),         array(-1,-1,-1)),
+                'emboss'=>array(array(-2,-1,0),array(-1,1,1), array(0,1,2))*/
+            },
+ 
+
+
             filters : {
+                laplace : function (pixels){return this.convolute(pixels, this.matrices.laplace); },
+                gauss : function (pixels){return this.convolute(pixels, this.matrices.gauss); },
+                blur : function (pixels){return this.convolute(pixels, this.matrices.blur0); },
                 brightness : function(pixels, adjustment) {
-                    console.debug(arguments)
-                    //var pixels = this.getPx();
                     var d = pixels.data,
                         i = 0,
                         l = d.length;
@@ -112,7 +209,6 @@ JMVC.extend('image', {
                     var d = pixels.data,
                         i = 0,
                         l = d.length;
-
                     for (null; i < l; i += 4) {
                         var r = d[i],
                             g = d[i + 1],

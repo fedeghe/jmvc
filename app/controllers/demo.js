@@ -366,27 +366,42 @@ JMVC.controllers.demo = function () {
 	this.action_img = function () {
 		JMVC.head.title('Filter image');
 		JMVC.require('core/lib/image');
-		var that = this;
-		JMVC.dom.preloadImage(JMVC.vars.baseurl + '/media/img/gabpattinaggio.jpg', function () {
+		var that = this,
+			//img = 'gabpattinaggio.jpg';
+			img = 'fgk.jpg';
+		
+		JMVC.dom.preloadImage(JMVC.vars.baseurl + '/media/img/' + img, function () {
 			that.render(
 				'<button id="brightness">brightness</button>' +
 				'<button id="threshold">threshold</button>' +
 				'<button id="grayscale">grayscale</button>' +
-				'<button id="reset">RESET</button>' +
-				'<img src="'+ JMVC.vars.baseurl + '/media/img/gabpattinaggio.jpg" />',
+				'<button id="laplace">laplace</button>' +
+				'<button id="gauss">gauss</button>' +
+				'<button id="blur">blur</button>' +
+				'<button id="reset">RESET</button><br/>' +
+				'<img src="'+ JMVC.vars.baseurl + '/media/img/' + img + '" />',
 				function (){
 					JMVC.events.delay(function () {
 						var img = JMVC.dom.find('img'),
 							flt = JMVC.image.createFilter(img);
 						
 						JMVC.events.bind(JMVC.dom.find('#brightness'), 'click', function () {
-							flt.filterImage(flt.filters.brightness, 80);
+							flt.filterImage(flt.filters.brightness, 20);
 						});
 						JMVC.events.bind(JMVC.dom.find('#threshold'), 'click', function () {
-							flt.filterImage(flt.filters.threshold, 20);	
+							flt.filterImage(flt.filters.threshold, 50);	
 						});
 						JMVC.events.bind(JMVC.dom.find('#grayscale'), 'click', function () {
 							flt.filterImage(flt.filters.grayscale);	
+						});
+						JMVC.events.bind(JMVC.dom.find('#laplace'), 'click', function () {
+							flt.filterImage(flt.filters.laplace);	
+						});
+						JMVC.events.bind(JMVC.dom.find('#gauss'), 'click', function () {
+							flt.filterImage(flt.filters.gauss);	
+						});
+						JMVC.events.bind(JMVC.dom.find('#blur'), 'click', function () {
+							flt.filterImage(flt.filters.blur);	
 						});
 						JMVC.events.bind(JMVC.dom.find('#reset'), 'click', function () {
 							flt.reset();	
