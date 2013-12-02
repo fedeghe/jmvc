@@ -44,33 +44,39 @@ JMVC.extend('image', {
             }
         }
         function getRoundMatrix(px, r, c) {
-            var gpv = getPxVector(px);
-
-            var t = [
-                gpv(r-1, c-1),
-                gpv(r-1, c),
-                gpv(r-1, c+1),
-
-                gpv(r, c-1),
-                gpv(r, c),
-                gpv(r, c+1),
-
-                gpv(r+1, c-1),
-                gpv(r+1, c),
-                gpv(r+1, c+1)
-            ];
-            
+            var gpv = getPxVector(px),
+                t = [
+                    gpv(r-1, c-1), gpv(r-1, c), gpv(r-1, c+1),
+                    gpv(r, c-1), gpv(r, c), gpv(r, c+1),
+                    gpv(r+1, c-1), gpv(r+1, c), gpv(r+1, c+1)
+                ];
             return  t;
         }
-        function convolutePX(px, matrix, factorM){
+        function convolutePX(matrix, factorM){
+            var i = 0,
+                l = matrix.length,
+                p = [0,0,0,0];
             
-            for (var i=0, l = matrix.length; i < l; i += 1) {
-                px[0] += matrix[i][0] * factorM[i];
-                px[1] += matrix[i][1] * factorM[i];
-                px[2] += matrix[i][2] * factorM[i];
-                px[3] += matrix[i][3] * factorM[i];
+
+            for (null; i < l; i += 1) {
+                p[0] += matrix[i][0] * factorM[i];
+                p[1] += matrix[i][1] * factorM[i];
+                p[2] += matrix[i][2] * factorM[i];
+                p[3] += matrix[i][3] * factorM[i];
             }
-            return px;
+            
+
+            /*
+            if (p[0] < 0) p[0] = 0;
+            if (p[0] > 255) p[0] = 255;
+            if (p[1] < 0) p[1] = 0;
+            if (p[1] > 255) p[1] = 255;
+            if (p[2] < 0) p[2] = 0;
+            if (p[2] > 255) p[2] = 255;
+            if (p[3] < 0) p[3] = 0;
+            if (p[3] > 255) p[3] = 255;
+            */
+            return p;
         }
 
 
@@ -148,31 +154,58 @@ JMVC.extend('image', {
             
                 var w = pixels.width,
                     h = pixels.height,
-                    d = pixels.data;
+                    d = pixels.data,
+                    tmparr = [],
+                    //for normalization
+                    min = 255,
+                    max = 0,
+                    normalize = false;
 
-                for (var i  = 0; i < h; i +=1)
+                for (var i = 0; i < h; i +=1 ) {
                     for (var j = 0, tmp, k; j < w; j +=1) {
-                        tmp = convolutePX(getPxVector(pixels)(i, j), getRoundMatrix(pixels, i, j), matrix);
+                        var pij = getRoundMatrix(pixels, i, j);
+                        tmp = convolutePX(pij, matrix);
+                        
                         k = 4 * (i * w + j); 
-                        d[k] = tmp[0];
-                        d[k + 1] = tmp[1];
-                        d[k + 2] = tmp[2];
-                        d[k + 3] = tmp[3];
+                        tmparr[k] = tmp[0];
+                        tmparr[k + 1] = tmp[1];
+                        tmparr[k + 2] = tmp[2];
+                        //tmparr[k + 3] = tmp[3];
+                        tmparr[k + 3] = d[k + 3];
+                        
+                        // normalize ?
+                        if (normalize) {
+                            min = Math.min(min, tmp[0], tmp[1], tmp[2], tmp[3]);
+                            max = Math.max(max, tmp[0], tmp[1], tmp[2], tmp[3]);
+                        }
                     }
+                }
                 
+                normalize && JMVC.debug(min, max);
+
+                for (var i = 0, l = tmparr.length; i < l; i +=1) {
+                    d[i] = normalize ?
+                        (tmparr[i] - min) * 255 / (max - min)
+                        :
+                        tmparr[i];
+                }
+
+                console.debug('done')
                 return pixels;
             },
 
             matrices : {
-                'gauss' : [.1, .2, .1, .2, .4, .2, .1, .2, .1],
-                'blur0' : [0.1,0.1,0.1, 0.1,0.1,0.1, 0.1,0.1,0.1],
+                
+                'laplace' : [-1,-1,-1, -1,8,-1, -1,-1,-1],
+                'laplace2' : [0,-1,0, -1,4,-1, 0,-1,0],
 
-                'blur1' : [0.1,0.1,0.1, 0.1,0.1,0.1, 0.1,0.1,0.1],
-                'blur2' : [0.2,0.2,0.2, 0.2,0.2,0.2, 0.2,0.2,0.2],
-                'blur3' : [0.3,0.3,0.3, 0.3,0.3,0.3, 0.3,0.3,0.3],
-                'detect_hlines' : [-1,-1,-1, 2,2,2, -1,-1,-1],
-                'detect_vlines' : [-1,2,-1, -1,2,-1, -1,2,-1],
-                'laplace' : [0,-1,0, -1,5,-1, 0,-1,0]
+                
+
+                'sharpen' : [0,-1,0, -1,5,-1, 0,-1,0],
+                'blur' : [1/9,1/9,1/9, 1/9,1/9,1/9, 1/9,1/9,1/9],
+                
+                'sobelvert' : [-1,0,1, -2,0,2, -1,0,1],
+                'sobeloriz' : [-1,-2,-1, 0,0,0, 1,2,1]
                 /*'detect_45lines'    =>array(    array(-1,-1,2),         array(-1,2,-1),         array(2,-1,-1)  ),
                 'detect_135lines'   =>array(    array(2,-1,-1),         array(-1,2,-1),         array(-1,-1,2)  ),
                 'detect_edges'      =>array(    array(-1,-1,-1),        array(-1,8,-1),         array(-1,-1,-1) ),
@@ -192,8 +225,13 @@ JMVC.extend('image', {
 
             filters : {
                 laplace : function (pixels){return this.convolute(pixels, this.matrices.laplace); },
-                gauss : function (pixels){return this.convolute(pixels, this.matrices.gauss); },
-                blur : function (pixels){return this.convolute(pixels, this.matrices.blur0); },
+                
+
+                
+                blur : function (pixels){return this.convolute(pixels, this.matrices.blur); },
+                sharpen : function (pixels){return this.convolute(pixels, this.matrices.sharpen); },
+                sobeloriz : function (pixels){return this.convolute(pixels, this.matrices.sobeloriz); },
+                sobelvert : function (pixels){return this.convolute(pixels, this.matrices.sobelvert); },
                 brightness : function(pixels, adjustment) {
                     var d = pixels.data,
                         i = 0,
