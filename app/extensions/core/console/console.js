@@ -251,7 +251,7 @@ JMVC.extend('console', {
 
 			function getUrl() {
 				var vals = getValues(),
-					url = [JMVC.vars.baseurl, JMVC.c, JMVC.a].join(JMVC.US) + JMVC.object.obj2qs({
+					url = [JMVC.vars.baseurl, JMVC.c, JMVC.a].join(JMVC.US) + JMVC.object.toQs({
 						h : vals[0] || defaults.h,
 						j : vals[1] || defaults.j,
 						c : vals[2] || defaults.c,

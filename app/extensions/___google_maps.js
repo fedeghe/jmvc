@@ -8,7 +8,7 @@ JMVC.extend('gmap', {
 		//extend options with those passed
 		JMVC.util.extend(params, options);
 		
-		JMVC.head.addscript('http://maps.google.com/maps/api/js' + JMVC.object.obj2qs(params));
+		JMVC.head.addscript('http://maps.google.com/maps/api/js' + JMVC.object.toQs(params));
 	},
 	
 	'mapme' : function (address, cback) {

@@ -1,5 +1,6 @@
 JMVC.extend('html5', {
 	init : function () {
+		"use strict";
 		JMVC.html5._ = {
 			mimemap : {
 				//ogv : 'ogg' 
@@ -8,6 +9,7 @@ JMVC.extend('html5', {
 	},
 	
 	video : function (options) {
+		"use strict";
 		if (!('src' in options)) throw new Error('No src passed for video');
 
 		var video,
@@ -36,6 +38,7 @@ JMVC.extend('html5', {
 	},
 
 	audio : function (options) {
+		"use strict";
 		/*
 		
 		<audio src="http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg" autoplay>
@@ -81,8 +84,9 @@ JMVC.extend('html5', {
 		return audio;		
 	},
 	progress : function(progress, attr){
+		"use strict";
 		attr = attr || {};
 		if (!('max' in attr)){attr.max = 100;}
-		return '<progress '+JMVC.object.obj2attr(attr)+' value="'+progress+'"></progress>';
+		return '<progress '+JMVC.object.toAttr(attr)+' value="'+progress+'"></progress>';
 	}
 });

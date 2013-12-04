@@ -2,6 +2,8 @@
 <api>
 <!--
 
+	
+
                                                 
          _/  _/      _/  _/      _/    _/_/_/   
         _/  _/_/  _/_/  _/      _/  _/          
@@ -1296,6 +1298,17 @@ _/        _/    _/  _/    _/    _/      _/        _/    _/  _/  _/     _/       
 			<status>incomplete</status>
 		</function>
 		<function>
+			<signature name="swap">JMVC.dom.swap(Element outNode, Element inNode)</signature>
+			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+			<params>
+				<param name="node">The parent where search n-th child</param>
+				<param name="num">Starting from 0 the number of the child needed</param>
+				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+			</params>
+			<returns>the brand new node</returns>
+			<status>incomplete</status>
+		</function>
+		<function>
 			<signature name="switchClass">JMVC.dom.switchClass(Element node, int  num [, Array types ])</signature>
 			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
 			<params>
@@ -1945,7 +1958,18 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="objCompare">JMVC.object.objCompare(String name, String value)</signature>
+			<signature name="extend">JMVC.object.extend(obj, extension)</signature>
+			<description>Check a namspace</description>
+			<params>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+				<param name="name">The variable to check</param>
+			</params>
+			<returns>Object</returns>
+			<status>incomplete</status>
+		</function>
+		<function>
+			<signature name="compare">JMVC.object.compare(String name, String value)</signature>
 			<description>Gets/sets document title</description>
 			<params>
 				<param name="name">The name of the meta You want to add</param>
@@ -1955,7 +1979,7 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="objJCompare">JMVC.object.objJCompare(String name, String value)</signature>
+			<signature name="contains">JMVC.object.contains(String name, String value)</signature>
 			<description>Gets/sets document title</description>
 			<params>
 				<param name="name">The name of the meta You want to add</param>
@@ -1965,7 +1989,7 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="inObject">JMVC.object.inObject(String name, String value)</signature>
+			<signature name="jCompare">JMVC.object.jCompare(String name, String value)</signature>
 			<description>Gets/sets document title</description>
 			<params>
 				<param name="name">The name of the meta You want to add</param>
@@ -1975,7 +1999,7 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="obj2attr">JMVC.object.obj2attr(String name, String value)</signature>
+			<signature name="toAttr">JMVC.object.toAttr(String name, String value)</signature>
 			<description>Gets/sets document title</description>
 			<params>
 				<param name="name">The name of the meta You want to add</param>
@@ -1985,7 +2009,7 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="obj2css">JMVC.object.obj2css(String name, String value)</signature>
+			<signature name="toCss">JMVC.object.toCss(String name, String value)</signature>
 			<description>Gets/sets document title</description>
 			<params>
 				<param name="name">The name of the meta You want to add</param>
@@ -1995,7 +2019,7 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="obj2qs">JMVC.object.obj2qs(String name, String value)</signature>
+			<signature name="toQs">JMVC.object.toQs(String name, String value)</signature>
 			<description>Gets/sets document title</description>
 			<params>
 				<param name="name">The name of the meta You want to add</param>
@@ -2136,17 +2160,6 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 			<status>incomplete</status>
 		</function>
 		<function>
-			<signature name="extend">JMVC.util.extend(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
 			<signature name="getParameters">JMVC.util.getParameters(str, obj, ctx)</signature>
 			<description>Check a namspace</description>
 			<params>
@@ -2192,17 +2205,6 @@ _/    _/    _/_/_/    _/_/_/    _/_/_/
 		</function>
 		<function>
 			<signature name="isArray">JMVC.util.isArray(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="extend">JMVC.util.extend(str, obj, ctx)</signature>
 			<description>Check a namspace</description>
 			<params>
 				<param name="name">The variable to check</param>

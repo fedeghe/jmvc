@@ -13,9 +13,9 @@ JMVC.extend('animator', {
 		var ani = {},
 			parent,
 			move;
-		ani.timeout = JMVC.object.inObject(options, 'timeout') ? options.timeout : 25;
-		ani.mode = JMVC.object.inObject(options, 'mode') ? options.mode : 'repeat';
-		ani.step = JMVC.object.inObject(options, 'step') ? JMVC.num.getFloat(options.step) : 1;
+		ani.timeout = JMVC.object.contains(options, 'timeout') ? options.timeout : 25;
+		ani.mode = JMVC.object.contains(options, 'mode') ? options.mode : 'repeat';
+		ani.step = JMVC.object.contains(options, 'step') ? JMVC.num.getFloat(options.step) : 1;
 		ani.range = prange ? prange : {from : 0, to : 300};
 		ani.next = function () {};
 		ani.operators = {
@@ -111,13 +111,13 @@ JMVC.extend('animator', {
 			//save initial font-size
 			fsize = JMVC.num.getNum(JMVC.css.getComputedStyle(JMVC.WD.body, 'font-size'));
 		
-		ani.timeout = JMVC.object.inObject(options, 'timeout') ? options.timeout : 25;
-		ani.mode = JMVC.object.inObject(options, 'mode') ? options.mode : 'repeat';
-		ani.threeD = JMVC.object.inObject(options, 'threeD') ? options.threeD : false;
+		ani.timeout = JMVC.object.contains(options, 'timeout') ? options.timeout : 25;
+		ani.mode = JMVC.object.contains(options, 'mode') ? options.mode : 'repeat';
+		ani.threeD = JMVC.object.contains(options, 'threeD') ? options.threeD : false;
 		ani.range = (
-				prange && JMVC.object.inObject(prange, 'from')
+				prange && JMVC.object.contains(prange, 'from')
 				&&
-				JMVC.object.inObject(prange, 'to')
+				JMVC.object.contains(prange, 'to')
 			) ?
 			prange : {from : 0, to : 10000};
 		ani.next = function () {};

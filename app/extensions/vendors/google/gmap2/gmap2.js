@@ -9,11 +9,11 @@ JMVC.extend('gmap2', {
 		JMVC.head.addstyle(JMVC.vars.extensions + 'vendors/google/gmap2/gmap.css');
 		
 		//extend options with those passed
-		JMVC.util.extend(params, options);
+		params = JMVC.object.extend(params, options);
 		
 		//JMVC.head.addscript('https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=cb');
-		JMVC.head.addscript('https://maps.google.com/maps/api/js' + JMVC.object.obj2qs(params));
-		//console.debug('http://maps.google.com/maps/api/js' + JMVC.object.obj2qs(params));
+		JMVC.head.addscript('https://maps.google.com/maps/api/js' + JMVC.object.toQs(params));
+		//console.debug('http://maps.google.com/maps/api/js' + JMVC.object.toQs(params));
 	},
 	
 	'mapme' : function (address, cback) {

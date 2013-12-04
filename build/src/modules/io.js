@@ -58,7 +58,7 @@ _.io = {
 
         //prepare data, caring of cache
         if (!cache) {data.C = JMVC.util.now(); }
-        data = JMVC.object.obj2qs(data).substr(1);
+        data = JMVC.object.toQs(data).substr(1);
 
         xhr.onreadystatechange = function () {
             var tmp;

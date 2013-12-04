@@ -71,7 +71,7 @@ JMVC.extend('responsive', {
 	 */
 	allow : function (lab) {
 		if (JMVC.responsive._rulez[lab]) {
-			JMVC.css.mappedStyle('__jmvc__basicresponsive', JMVC.object.obj2css(JMVC.responsive._rulez[lab]));
+			JMVC.css.mappedStyle('__jmvc__basicresponsive', JMVC.object.toCss(JMVC.responsive._rulez[lab]));
 		}
 	},
 
