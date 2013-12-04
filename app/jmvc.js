@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.2 (rev. 5)
+ * @version :  3.2 (rev. 6)
  * @copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *          glued with 31 files on 30/11/2013 at 10:42:49
+ *          glued with 31 files on 4/12/2013 at 1:8:44
  *
  * All rights reserved.
  *
@@ -58,7 +58,7 @@
                 JMVC_VERSION = "3.2",
                 //
                 // review (vars.json)
-                JMVC_REVIEW = "5",
+                JMVC_REVIEW = "6",
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = "", //'.min' 
@@ -2502,7 +2502,6 @@
         append : function (where, what) {
             if (JMVC.util.isArray(what)) {
                 for (var i = 0, l = what.length; i < l; i++) {
-    
                     where.appendChild(what[i]);
                 }
             } else {
@@ -4106,13 +4105,56 @@
          * @param  {string} Dd       optional- the closing placeholder delimitator (%)
          * @param  {string} fallback optional- a fallback value in case an element is not found
          * @return {string}          the resulting string with replaced values
+         *
+         * this allows
+         //  var tpl = 'a%x%e',
+         //      o = {
+         //          x : 'b%y%d',
+         //          y:'c'
+         //      };
+         //  JMVC.string.replaceall(tpl, o); // abcde
+         * 
          */
         replaceall : function (tpl, o, dD, Dd, cb) {
             dD || (dD = '%');
             Dd || (Dd = '%');
             var reg = new RegExp(dD + '([A-z0-9-_]*)' + Dd, 'g'),
+                str,
+                straight = true,
+                tmp;
+            cb = cb || false;
+    
+            while (straight) {
+                if (!(tpl.match(reg))){
+                    straight = false;
+                    break;
+                }
+                tpl = tpl.replace(reg, function (str, $1) {
+    
+                    switch (true) {
+                        case typeof o === 'function' :
+                            // avoid silly loops
+                            //
+                            tmp = o($1);
+                            return tmp !== dD + $1 + Dd ? o($1)  : $1;
+                        break;
+                        case $1 in o : return o[$1]; break;
+                        case !($1 in o):
+                            straight = false;
+                            return cb || dD + $1 + Dd;    
+                        break;
+                    }
+                });
+            }
+            return tpl;
+        },/*
+        replaceallold : function (tpl, o, dD, Dd, cb) {
+            dD || (dD = '%');
+            Dd || (Dd = '%');
+            var reg = new RegExp(dD + '([A-z0-9-_]*)' + Dd, 'g'),
                 str;
             cb = cb || false;
+    
             return tpl.replace(reg, function (str, $1) {
     
                 switch (true) {
@@ -4120,15 +4162,14 @@
                     case $1 in o : return o[$1]; break;
                 }
                 return cb || dD + $1 + Dd;
-                /*
                 // The switch above is functionally identical to the next line, but
                 // is for sure more readable, the real question is : which one is the fastest?
                 // try it out loading the following testfrom console: JMVC.head.goto('test_api_string_replaceall-perf')
-                return typeof o === 'function' ? o($1) : $1 in o ? o[$1] : cb || dD + $1 + Dd;
-                */
+                //return typeof o === 'function' ? o($1) : $1 in o ? o[$1] : cb || dD + $1 + Dd;
             });
         },
-        
+        */
+       
         /**
          * [ description]
          * @param  {[type]} s){return s.replace(/\s+$/g [description]
@@ -4172,8 +4213,6 @@
         ucFirst : function (str) {
             return str.replace(/^\w/, function (chr) {return chr.toUpperCase(); });
         },
-    
-        
     
         /**
          * [UnescapeEntities description]
