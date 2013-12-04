@@ -13,7 +13,7 @@ JMVC.controllers.modal = function() {
 
 			JMVC.test.startAll();
 			
-			JMVC.test.describe(JMVC.string.repeat('<br />', 20) + '<input type="button" id="openmodal" value="Open modal" style="cursor:pointer" />' + JMVC.string.strRepeat('<br />', 40));
+			JMVC.test.describe(JMVC.string.repeat('<br />', 20) + '<input type="button" id="openmodal" value="Open modal" style="cursor:pointer" />' + JMVC.string.repeat('<br />', 40));
 			//JMVC.test.describe('<input type="button" id="openmodal" value="Open modal" style="cursor:pointer" />');
 
 			JMVC.events.bind(JMVC.dom.find('#openmodal'), 'click', function () {
