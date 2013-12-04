@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.2 (rev. 6)
+ * @version :  3.2 (rev. 7)
  * @copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *          glued with 31 files on 4/12/2013 at 1:8:44
+ *          glued with 31 files on 5/12/2013 at 0:20:45
  *
  * All rights reserved.
  *
@@ -58,7 +58,7 @@
                 JMVC_VERSION = "3.2",
                 //
                 // review (vars.json)
-                JMVC_REVIEW = "6",
+                JMVC_REVIEW = "7",
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = "", //'.min' 
@@ -2087,7 +2087,7 @@
     
             //prepare data, caring of cache
             if (!cache) {data.C = JMVC.util.now(); }
-            data = JMVC.object.obj2qs(data).substr(1);
+            data = JMVC.object.toQs(data).substr(1);
     
             xhr.onreadystatechange = function () {
                 var tmp;
@@ -2283,23 +2283,6 @@
          */
         deg2rad : function (d) {return JMVC.M.PI * d / 180; },
     
-    
-        /**
-         * [ description]
-         * @param  {[type]} obj [description]
-         * @param  {[type]} ext [description]
-         * @return {[type]}     [description]
-         */
-        extend : function (obj, ext) {
-            var j;
-            for (j in ext) {
-                if (ext.hasOwnProperty(j) && !(j in obj)) {
-                    obj[j] = ext[j];
-                }
-            }
-        },
-    
-    
         /**
          * [ description]
          * @param  {[type]} scriptname [description]
@@ -2334,9 +2317,6 @@
             return parseInt(hex, 16);
         },
     
-    
-        
-    
         /**
          * [ description]
          * @param  {[type]} i [description]
@@ -2368,8 +2348,6 @@
             return typeof f === 'function';
         },
     
-    
-    
         /**
          * [ description]
          * @param  {[type]} o [description]
@@ -2381,14 +2359,12 @@
             return t1 && !!(t2 && t2.length);
         },
     
-    
         /**
          * [ description]
          * @param  {[type]} e [description]
          * @return {[type]}   [description]
          */
         isSet : function (e) {return typeof e !== 'undefined'; },
-    
     
         /**
          * [ description]
@@ -2398,15 +2374,12 @@
          */
         isTypeOf : function (el, type) {return typeof el === type; },
     
-        
         /**
          * [ description]
          * @param  {[type]} ) {return      +new Date( [description]
          * @return {[type]}   [description]
          */
         now : function () {return +new Date(); },
-    
-    
     
         /**
          * [ description]
@@ -2416,14 +2389,12 @@
          */
         rand : function (min, max) {return min + ~~(JMVC.M.random() * (max - min + 1)); },
     
-        
         /**
          * [ description]
          * @param  {[type]} r [description]
          * @return {[type]}   [description]
          */
         rad2deg : function (r) {return 180 * r / JMVC.M.PI; },
-    
     
         /**
          * [ description]
@@ -4101,47 +4072,54 @@
          * @param  {string} tpl      the template
          * @param  {literal or function} a literal for substitution or a function that will
          *                               return the substitution given as parameter a string
-         * @param  {string} dD       optional- the opening placeholder delimitator (%)
-         * @param  {string} Dd       optional- the closing placeholder delimitator (%)
+         * @param  {string} start       optional- the opening placeholder delimitator (%)
+         * @param  {string} end       optional- the closing placeholder delimitator (%)
          * @param  {string} fallback optional- a fallback value in case an element is not found
          * @return {string}          the resulting string with replaced values
          *
          * this allows
-         //  var tpl = 'a%x%e',
-         //      o = {
-         //          x : 'b%y%d',
-         //          y:'c'
-         //      };
-         //  JMVC.string.replaceall(tpl, o); // abcde
+    var tpl = 'a%x%e',
+       o = {
+           x : 'b%y%d',
+           y:'c'
+       };
+    JMVC.string.replaceall(tpl, o); // abcde
          * 
          */
-        replaceall : function (tpl, o, dD, Dd, cb) {
-            dD || (dD = '%');
-            Dd || (Dd = '%');
-            var reg = new RegExp(dD + '([A-z0-9-_]*)' + Dd, 'g'),
-                str,
+        replaceall : function (tpl, obj, start, end, fb) {
+            start || (start = '%');
+            end || (end = '%');
+    
+            var reg = new RegExp(start + '([A-z0-9-_]*)' + end, 'g'),
                 straight = true,
-                tmp;
-            cb = cb || false;
+                str, tmp;
+    
+            fb = fb || false;
     
             while (straight) {
-                if (!(tpl.match(reg))){
-                    straight = false;
-                    break;
+    
+                if (!(tpl.match(reg))) {
+                    return tpl;
                 }
                 tpl = tpl.replace(reg, function (str, $1) {
-    
                     switch (true) {
-                        case typeof o === 'function' :
-                            // avoid silly loops
-                            //
-                            tmp = o($1);
-                            return tmp !== dD + $1 + Dd ? o($1)  : $1;
+                        // 
+                        case typeof obj === 'function' :
+                            // avoid silly infiloops
+                            tmp = obj($1);
+                            return (tmp !== start + $1 + end) ? obj($1)  : $1;
                         break;
-                        case $1 in o : return o[$1]; break;
-                        case !($1 in o):
+    
+                        // the label matches a obj literal element
+                        // use it
+                        case $1 in obj : return obj[$1]; break;
+    
+                        // not a function and not found in literal
+                        // use fallback if passed or get back the placeholder
+                        // switching off before returning
+                        default:
                             straight = false;
-                            return cb || dD + $1 + Dd;    
+                            return fb || start + $1 + end;    
                         break;
                     }
                 });
@@ -4248,12 +4226,33 @@
     OBJECT sub-module
     ---------------*/
     
-    // private section
+    /**
+     * [object description]
+     * @type {Object}
+     */
     _.object = {
-        
+        /**
+         * [walkout description]
+         * @param  {[type]}   o  [description]
+         * @param  {Function} fn [description]
+         * @return {[type]}      [description]
+         */
+        walkout : function (o, fn) {
+            "use strict";
+            var ret = '', j;
+            for (j in o) {
+                if (o.hasOwnProperty(j)) {
+                    ret += fn(o, j, ret);
+                }
+            }
+            return ret;
+        }
     };
     
-    // public section
+    /**
+     * [object description]
+     * @type {Object}
+     */
     JMVC.object = {
         /**
          * Clones an object
@@ -4262,6 +4261,7 @@
          * @returns cloned Object
          */
         clone : function (obj) {
+            "use strict";
             var temp,
                 key;
             if (obj === null || typeof obj !== 'object') {
@@ -4285,7 +4285,7 @@
          * @param  {[type]} i    [description]
          * @return {[type]}      [description]
          */
-        objCompare : function (obj1, obj2, ret, i) {
+        compare : function (obj1, obj2, ret, i) {
             "use strict";
             (ret == undefined) && (ret = true);
             if (!ret) {return 0; }
@@ -4293,25 +4293,14 @@
                 return false;
             }
             for (i in obj1) {
-                ret = ret && obj2[i] && this.objCompare(obj1[i], obj2[i], ret);
+                ret = ret && obj2[i] && this.compare(obj1[i], obj2[i], ret);
                 if (!ret) {return false; }
             }
             for (i in obj2) {
-                ret = ret && obj1[i] && this.objCompare(obj2[i], obj1[i], ret);
+                ret = ret && obj1[i] && this.compare(obj2[i], obj1[i], ret);
                 if (!ret) {return false; }
             }
             return ret;
-        },
-    
-        /**
-         * [ description]
-         * @param  {[type]} obj1 [description]
-         * @param  {[type]} obj2 [description]
-         * @return {[type]}      [description]
-         */
-        objJCompare : function (obj1, obj2) {
-            "use strict";
-            return JSON.stringify(obj1) === JSON.stringify(obj2);
         },
     
         /**
@@ -4320,8 +4309,37 @@
          * @param  {[type]} field) {return      (typeof obj === 'object' && obj[field] [description]
          * @return {[type]}        [description]
          */
-        inObject : function (obj, field) {
-            return (typeof obj === 'object' && obj[field]);
+        contains : function (obj, field) {
+            "use strict";
+            return (typeof obj === 'object' && filed in obj);
+        },
+    
+        /**
+         * [ description]
+         * @param  {[type]} obj [description]
+         * @param  {[type]} ext [description]
+         * @return {[type]}     [description]
+         */
+        extend : function (o, ext) {
+            "use strict";
+            var obj = this.clone(o), j;
+            for (j in ext) {
+                if (ext.hasOwnProperty(j) && !(j in obj)) {
+                    obj[j] = ext[j];
+                }
+            }
+            return obj;
+        },
+    
+        /**
+         * [ description]
+         * @param  {[type]} obj1 [description]
+         * @param  {[type]} obj2 [description]
+         * @return {[type]}      [description]
+         */
+        jCompare : function (obj1, obj2) {
+            "use strict";
+            return JSON.stringify(obj1) === JSON.stringify(obj2);
         },
     
         /**
@@ -4329,14 +4347,11 @@
          * @param  {[type]} o [description]
          * @return {[type]}   [description]
          */
-        obj2attr : function (o) {
-            var ret = '', i;
-            for (i in o) {
-                if (o.hasOwnProperty(i)) {
-                    ret += ' ' + i + (o[i] ? '="' + o[i] + '"' : '');
-                }
-            }
-            return ret;
+        toAttr : function (obj) {
+            "use strict";
+            return _.object.walkout(obj, function (o, i) {
+                return ' ' + i + (o[i] ? '="' + o[i] + '"' : '');
+            });
         },
     
         /**
@@ -4344,14 +4359,15 @@
          * @param  {[type]} o [description]
          * @return {[type]}   [description]
          */
-        obj2css : function (o) {
-            var ret = '', i, j;
-            for (i in o) {
-                if (o.hasOwnProperty(i)) {
-                    ret += i + ' {' + JMVC.object.obj2str(o[i]) + '} ';
-                }
-            }
-            return ret;
+        toCss : function (obj) {
+            "use strict";
+            return _.object.walkout(obj, function (ob, i) {
+                return i + ' {' + _.object.walkout(ob[i], 
+                    function (o, j){
+                        return j + ':' + o[j] + ';';
+                    }
+                ) + '} ';
+            });
         },
     
         /**
@@ -4359,24 +4375,23 @@
          * @param  {[type]} o [description]
          * @return {[type]}   [description]
          */
-        obj2qs : function (o) {
-            var ret = '', i;
-            for (i in o) {
-                if (o.hasOwnProperty(i)) {
-                    ret += String((ret ? '&' : '?') + i + '=' + encodeURIComponent(o[i]));
-                }
-            }
-            return ret;
+        toQs : function (obj) {
+            "use strict";
+            return _.object.walkout(obj, function (o, i, r) {
+                return (r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i]);
+            });
         },
     
-        obj2str : function (o) {
-            var ret = '';
-            for (j in o) {
-                if (o.hasOwnProperty(j)) {
-                    ret += j + ':' + o[j] + ';';
-                }
-            }
-            return ret;
+        /**
+         * [obj2str description]
+         * @param  {[type]} obj [description]
+         * @return {[type]}     [description]
+         */
+        toStr : function (obj) {
+            "use strict";
+            return _.object.walkout(obj, function (o, i) {
+                return i + ':' + o[i] + ';';
+            });
         }
     
     };
