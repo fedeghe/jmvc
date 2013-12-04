@@ -48,7 +48,6 @@ JMVC.dom = {
     append : function (where, what) {
         if (JMVC.util.isArray(what)) {
             for (var i = 0, l = what.length; i < l; i++) {
-
                 where.appendChild(what[i]);
             }
         } else {

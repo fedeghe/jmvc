@@ -631,11 +631,10 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 		});
 		self.utils.attr(self.messagePanel, {'class' : 'panel'});
 		self.messagePanel.innerHTML = self.utils.replaceall(
-			conf.tpl.start,
-			{
-				'gameName' : conf.gameName,
-				'wormLength' : conf.wormLenght,
-				'doomObstacles' : conf.doomObstacles
+			conf.tpl.start, {
+				gameName : conf.gameName,
+				wormLength : conf.wormLenght,
+				doomObstacles : conf.doomObstacles
 			}
 		);
 
