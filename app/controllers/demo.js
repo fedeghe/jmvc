@@ -354,7 +354,7 @@ JMVC.controllers.demo = function () {
 					if (!dec) {
 						alert('Password invalid');
 					} else {
-						JMVC.WD.body.innerHTML =  JMVC.string.replaceall(img, {imgdata:dec});
+						JMVC.WD.body.innerHTML =  img.replace(/%imgdata%/, dec);
 					}
 				});
 				JMVC.debug('simple callback on render!');
@@ -366,60 +366,83 @@ JMVC.controllers.demo = function () {
 	this.action_img = function () {
 		JMVC.head.title('Filter image');
 		JMVC.require('core/lib/image');
+		JMVC.head.addstyle(JMVC.object.obj2css({
+			'body' : {'font-family' : 'Verdana, sans-serif'},
+			'button' : {'border' : 'none', 'margin-right' : '5px', 'cursor' : 'pointer'},
+			'button.flt:hover' : {'background-color' : 'green', 'color':'white'},
+			'div.filters':{'margin' : '10px', 'width' : '900px'},
+			'#done' : {'margin-left' : '10px'},
+			'#done li' : {'padding-left':'10px','border-left':'3px solid lime','font-size' : '11px','line-height' : '13px','margin-bottom' : '5px'},
+			'#reset' : {'color' : 'red','font-weight' : 'bold','margin' : '5px 0px'}
+		}), true, true);
 		var that = this,
-			//img = 'gabpattinaggio.jpg';
+			img = 'gabpattinaggio.jpg';
 			//img = 'fgk.jpg';
-			img = 'marscula.jpg';
+			//img = 'marscula.jpg';
 			//img = 'demo_small.png';
 		
 		JMVC.dom.preloadImage(JMVC.vars.baseurl + '/media/img/' + img, function () {
-			that.render(
-				'<button id="brightness">brightness</button>' +
-				'<button id="threshold">threshold</button>' +
-				'<button id="grayscale">grayscale</button>' +
-				'<button id="blur">blur</button>' +
-				'<button id="sharpen">sharpen</button>' +
+			var elements = [
+					{id:'brightness', label : 'Brightness'},
+					{id:'threshold', label : 'Threshold'},
+					{id:'grayscale', label : 'Grayscale'},
+					{id:'blur', label : 'Blur'},
+					{id:'emboss', label : 'Emboss'},
+					{id:'sharpen', label : 'Sharpen'},
+					{id:'laplace', label : 'Laplace'},
+					{id:'sobeloriz', label : 'Sobel oriz'},
+					{id:'sobelvert', label:' Sobel vert'},
+					{id:'red', label:' Remove RED channel'},
+					{id:'green', label:'Remove GREEN channel'},
+					{id:'blue', label:'Remove BLUE channel'},
+					{id:'x', label:'x'},
+					{id:'mblur', label:'Mblur'}
+				],
+				butts = '';
 
-				'<button id="laplace">laplace</button>' +
-				'<button id="sobeloriz">sobel oriz</button>' +
-				'<button id="sobelvert">sobel vert</button>' +
-				'<button id="reset">RESET</button><br/>' +
-				'<img src="'+ JMVC.vars.baseurl + '/media/img/' + img + '" />',
+			for(var i =0, l = elements.length; i < l; i += 1) {
+				butts += JMVC.string.replaceall('<button id="%id%" class="flt">%label%</button>', elements[i]);
+			}
+
+			function track(msg) {
+				JMVC.dom.append(JMVC.dom.find('#done'), JMVC.dom.create('li',{},msg));
+			}
+			track.reset = function () {
+				JMVC.dom.empty(JMVC.dom.find('#done'));	
+			}
+
+			that.render(
+				'<div class="filters">Filters : ' + butts +
+				'<br /><button id="reset">RESET</button></div>' +
+				'<div style="float:left"><img src="'+ JMVC.vars.baseurl + '/media/img/' + img + '" /></div>'+
+				'<div style="float:left"><ol id="done"></ol></div>',
 				function (){
 					JMVC.events.delay(function () {
 						var img = JMVC.dom.find('img'),
 							flt = JMVC.image.createFilter(img);
 						
-						JMVC.events.bind(JMVC.dom.find('#brightness'), 'click', function () {
-							flt.filterImage(flt.filters.brightness, 20);
-						});
-						JMVC.events.bind(JMVC.dom.find('#threshold'), 'click', function () {
-							flt.filterImage(flt.filters.threshold, 50);	
-						});
-						JMVC.events.bind(JMVC.dom.find('#grayscale'), 'click', function () {
-							flt.filterImage(flt.filters.grayscale);	
-						});
-						JMVC.events.bind(JMVC.dom.find('#blur'), 'click', function () {
-							flt.filterImage(flt.filters.blur);	
-						});
-						JMVC.events.bind(JMVC.dom.find('#sharpen'), 'click', function () {
-							flt.filterImage(flt.filters.sharpen);	
-						});
+						JMVC.events.bind([
+							[JMVC.dom.find('#brightness'), 'click', function () { flt.filterImage(flt.filters.brightness, 20); track('brightness'); }],
+							[JMVC.dom.find('#threshold'), 'click', function () {flt.filterImage(flt.filters.threshold, 50);	track('threshold');}],
+							[JMVC.dom.find('#grayscale'), 'click', function () {flt.filterImage(flt.filters.grayscale);	track('grayscale');}],
+							[JMVC.dom.find('#blur'), 'click', function () {flt.filterImage(flt.filters.blur); track('blur');}],
+							[JMVC.dom.find('#sharpen'), 'click', function () {flt.filterImage(flt.filters.sharpen);	track('sharpen');}],
+							[JMVC.dom.find('#laplace'), 'click', function () {flt.filterImage(flt.filters.laplace);	track('laplace');}],
+							[JMVC.dom.find('#sobeloriz'), 'click', function () {flt.filterImage(flt.filters.sobeloriz);	track('sobel orizontal');}],
+							[JMVC.dom.find('#sobelvert'), 'click', function () {flt.filterImage(flt.filters.sobelvert);	track('sobel vertical');}],
+							[JMVC.dom.find('#emboss'), 'click', function () {flt.filterImage(flt.filters.emboss);	track('emboss');}],
 
-
-						JMVC.events.bind(JMVC.dom.find('#laplace'), 'click', function () {
-							flt.filterImage(flt.filters.laplace);	
-						});
-						JMVC.events.bind(JMVC.dom.find('#sobeloriz'), 'click', function () {
-							flt.filterImage(flt.filters.sobeloriz);	
-						});
-						JMVC.events.bind(JMVC.dom.find('#sobelvert'), 'click', function () {
-							flt.filterImage(flt.filters.sobelvert);	
-						});
+							[JMVC.dom.find('#red'), 'click', function () {flt.filterImage(flt.filters.remove, 0); track('red channel removed');}],
+							[JMVC.dom.find('#green'), 'click', function () {flt.filterImage(flt.filters.remove, 1); track('green channel removed');}],
+							[JMVC.dom.find('#blue'), 'click', function () {flt.filterImage(flt.filters.remove, 2); track('blue channel removed');}],
+							[JMVC.dom.find('#x'), 'click', function () {flt.filterImage(flt.filters.x); track('x filter');}],
+							[JMVC.dom.find('#mblur'), 'click', function () {flt.filterImage(flt.filters.mblur);	 track('motion blur');}]
+						]);
 
 
 						JMVC.events.bind(JMVC.dom.find('#reset'), 'click', function () {
-							flt.reset();	
+							flt.reset();
+							track.reset();
 						});
 
 					}, 1000);
