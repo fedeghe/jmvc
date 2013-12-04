@@ -1,10 +1,18 @@
 JMVC.extend('cookie', {
 	initCheck : function () {
+		"use strict";
 		return JMVC.W.navigator.cookieEnabled;
 	},
 	cookie_nocookiesaround : false,
+	
 	/**
-	 *
+	 * [set description]
+	 * @param {[type]} name    [description]
+	 * @param {[type]} value   [description]
+	 * @param {[type]} expires [description]
+	 * @param {[type]} path    [description]
+	 * @param {[type]} domain  [description]
+	 * @param {[type]} secure  [description]
 	 */
 	set : function (name, value, expires, path, domain, secure) {
 		"use strict";
@@ -21,6 +29,11 @@ JMVC.extend('cookie', {
 		return true;
 	},
 
+	/**
+	 * [get description]
+	 * @param  {[type]} check_name [description]
+	 * @return {[type]}            [description]
+	 */
 	get : function (check_name) {
 		"use strict";
 		var a_all_cookies = JMVC.WD.cookie.split(';'),
@@ -44,6 +57,13 @@ JMVC.extend('cookie', {
 		return b_cookie_found;
 	},
 
+	/**
+	 * [del description]
+	 * @param  {[type]} name   [description]
+	 * @param  {[type]} path   [description]
+	 * @param  {[type]} domain [description]
+	 * @return {[type]}        [description]
+	 */
 	del : function (name, path, domain) {
 		"use strict";
 		var ret = false;
@@ -54,9 +74,9 @@ JMVC.extend('cookie', {
 		return ret;
 	},
 
-
 	/**
-	 *
+	 * [delall description]
+	 * @return {[type]} [description]
 	 */
 	delall : function () {
 		"use strict";
@@ -71,8 +91,10 @@ JMVC.extend('cookie', {
 		this.cookie_nocookiesaround = true;
 		return true;
 	},
+
 	/**
-	 * 
+	 * [getall description]
+	 * @return {[type]} [description]
 	 */
 	getall : function () {
 		"use strict";
