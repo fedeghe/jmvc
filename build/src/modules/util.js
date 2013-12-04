@@ -16,23 +16,6 @@ JMVC.util = {
      */
     deg2rad : function (d) {return JMVC.M.PI * d / 180; },
 
-
-    /**
-     * [ description]
-     * @param  {[type]} obj [description]
-     * @param  {[type]} ext [description]
-     * @return {[type]}     [description]
-     */
-    extend : function (obj, ext) {
-        var j;
-        for (j in ext) {
-            if (ext.hasOwnProperty(j) && !(j in obj)) {
-                obj[j] = ext[j];
-            }
-        }
-    },
-
-
     /**
      * [ description]
      * @param  {[type]} scriptname [description]
@@ -67,9 +50,6 @@ JMVC.util = {
         return parseInt(hex, 16);
     },
 
-
-    
-
     /**
      * [ description]
      * @param  {[type]} i [description]
@@ -101,8 +81,6 @@ JMVC.util = {
         return typeof f === 'function';
     },
 
-
-
     /**
      * [ description]
      * @param  {[type]} o [description]
@@ -114,14 +92,12 @@ JMVC.util = {
         return t1 && !!(t2 && t2.length);
     },
 
-
     /**
      * [ description]
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
     isSet : function (e) {return typeof e !== 'undefined'; },
-
 
     /**
      * [ description]
@@ -131,15 +107,12 @@ JMVC.util = {
      */
     isTypeOf : function (el, type) {return typeof el === type; },
 
-    
     /**
      * [ description]
      * @param  {[type]} ) {return      +new Date( [description]
      * @return {[type]}   [description]
      */
     now : function () {return +new Date(); },
-
-
 
     /**
      * [ description]
@@ -149,14 +122,12 @@ JMVC.util = {
      */
     rand : function (min, max) {return min + ~~(JMVC.M.random() * (max - min + 1)); },
 
-    
     /**
      * [ description]
      * @param  {[type]} r [description]
      * @return {[type]}   [description]
      */
     rad2deg : function (r) {return 180 * r / JMVC.M.PI; },
-
 
     /**
      * [ description]
