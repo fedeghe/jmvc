@@ -40,7 +40,8 @@ JMVC.extend('console', {
 
 		} else {
 
-			var dims = JMVC.dim.getViewportSize(),
+			var jmvc_iframe_file = 'jmvc.min.js',
+				dims = JMVC.dim.getViewportSize(),
 				border_size = 0,
 				margin = -1,
 				top_height = 10,
@@ -303,7 +304,7 @@ JMVC.extend('console', {
 				try {
 					var dl = JMVC.WD.location;
 					iframe.contentWindow.eval('var JMVCshut = true; ')
-					iframe.contentWindow.eval(appenderCode( "/app/jmvc.js"));
+					iframe.contentWindow.eval(appenderCode( '/app/' + jmvc_iframe_file));
 					!!lib && iframe.contentWindow.eval(appenderCode(lib));
 					iframe.contentWindow.eval(j);
 				}catch(e){
