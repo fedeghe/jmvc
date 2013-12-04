@@ -231,6 +231,27 @@ JMVC.controllers.index = function () {
 	};
 
 
+	this.action_audio = function () {
+		JMVC.require('core/html5');
+		var index = JMVC.getView('home/index'),
+			audio = JMVC.html5.audio({
+				type:'ogv',
+				src : 'http://techslides.com/demos/sample-videos/small.ogv',
+				autoplay : 'autoplay',
+				controls : true
+			}),
+			progress = false; //JMVC.html5.progress(35);
+
+		console.debug(audio);
+
+		index.set('i_say', 'Federico');
+
+		index.render({cback : function () {
+			JMVC.dom.append(JMVC.dom.find('#cent'), audio); // + '<br />' + progress);
+		}});
+	};
+
+
 	//
 	//
 	//
