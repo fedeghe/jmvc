@@ -55,27 +55,14 @@ JMVC.extend('image', {
         function convolutePX(matrix, factorM){
             var i = 0,
                 l = matrix.length,
-                p = [0,0,0,0];
+                p = [0, 0, 0, 0];
             
-
             for (null; i < l; i += 1) {
                 p[0] += matrix[i][0] * factorM[i];
                 p[1] += matrix[i][1] * factorM[i];
                 p[2] += matrix[i][2] * factorM[i];
                 p[3] += matrix[i][3] * factorM[i];
             }
-            
-
-            /*
-            if (p[0] < 0) p[0] = 0;
-            if (p[0] > 255) p[0] = 255;
-            if (p[1] < 0) p[1] = 0;
-            if (p[1] > 255) p[1] = 255;
-            if (p[2] < 0) p[2] = 0;
-            if (p[2] > 255) p[2] = 255;
-            if (p[3] < 0) p[3] = 0;
-            if (p[3] > 255) p[3] = 255;
-            */
             return p;
         }
 
@@ -145,11 +132,20 @@ JMVC.extend('image', {
                 this.ctx.putImageData(filter.apply(this, args), 0, 0);
             },
 
+            /**
+             * [getPx description]
+             * @return {[type]} [description]
+             */
             getPx : function() {
                 return this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
             },
 
-            
+            /**
+             * [convolute description]
+             * @param  {[type]} pixels [description]
+             * @param  {[type]} matrix [description]
+             * @return {[type]}        [description]
+             */
             convolute : function (pixels, matrix){
             
                 var w = pixels.width,
@@ -172,7 +168,7 @@ JMVC.extend('image', {
                         tmparr[k + 2] = tmp[2];
                         //tmparr[k + 3] = tmp[3];
                         tmparr[k + 3] = d[k + 3];
-                        
+
                         // normalize ?
                         if (normalize) {
                             min = Math.min(min, tmp[0], tmp[1], tmp[2], tmp[3]);
@@ -180,8 +176,6 @@ JMVC.extend('image', {
                         }
                     }
                 }
-                
-                normalize && JMVC.debug(min, max);
 
                 for (var i = 0, l = tmparr.length; i < l; i +=1) {
                     d[i] = normalize ?
@@ -195,47 +189,29 @@ JMVC.extend('image', {
             },
 
             matrices : {
-                
-                'laplace' : [-1,-1,-1, -1,8,-1, -1,-1,-1],
-                'laplace2' : [0,-1,0, -1,4,-1, 0,-1,0],
-
-                
-
-                'sharpen' : [0,-1,0, -1,5,-1, 0,-1,0],
-                'blur' : [1/9,1/9,1/9, 1/9,1/9,1/9, 1/9,1/9,1/9],
-                
+                'laplace'   : [-1,-1,-1, -1,8,-1, -1,-1,-1],
+                'laplace2'  : [ 0,-1,0, -1,4,-1, 0,-1,0],
+                'sharpen'   : [ 0,-1,0, -1,5,-1, 0,-1,0],
+                'blur'      : [1/9,1/9,1/9, 1/9,1/9,1/9, 1/9,1/9,1/9],
                 'sobelvert' : [-1,0,1, -2,0,2, -1,0,1],
-                'sobeloriz' : [-1,-2,-1, 0,0,0, 1,2,1]
-                /*'detect_45lines'    =>array(    array(-1,-1,2),         array(-1,2,-1),         array(2,-1,-1)  ),
-                'detect_135lines'   =>array(    array(2,-1,-1),         array(-1,2,-1),         array(-1,-1,2)  ),
-                'detect_edges'      =>array(    array(-1,-1,-1),        array(-1,8,-1),         array(-1,-1,-1) ),
-                'sobel_horiz'       =>array(    array(-1,-2,-1),        array(0,0,0),           array(1,2,1)    ),
-                'sobel_vert'        =>array(    array(-1,0,1),          array(-2,0,2),          array(-1,0,1)   ),
-                'sobel'             =>array(    array(0,2,2),           array(-2,0,3),          array(-2,-3,0)  ),
-                'detect_edges'      =>array(    array(-1,0,1),          array(-2,0,2),          array(-1,0,1)   ),
-                'edges'             =>array(    array(0,1,2),           array(-1,0,1),          array(-2,-1,0)  ),
-                'sharpen'           =>array(    array(-1, -1, -1),      array(-1, 16, -1),      array(-1, -1, -1),  8,  0),
-                'laplace_emboss'    =>array(    array(-1,0,-1),         array(0,4,0),           array(-1,0,-1)),
-                'sharp'             =>array(    array(0,-1,0),          array(-1,5,-1),         array(0,-1,0)),
-                'mean_removal'      =>array(    array(-1,-1,-1),            array(-1,9,-1),         array(-1,-1,-1)),
-                'emboss'=>array(array(-2,-1,0),array(-1,1,1), array(0,1,2))*/
+                'sobeloriz' : [-1,-2,-1, 0,0,0, 1,2,1],
+                'emboss'    : [-2,-1,0, -1,1,1, 0,1,2],
+                //'emboss'    : [1,1,1, 1,.7,-1, -1,-1,-1],
+                'mblur'     : [ 0,0,0, 1/3,1/3,1/3, 0,0,0],
+                'x'         : [10,-10,10, -10,1,-10, 10,-10,10]
             },
  
-
-
             filters : {
                 laplace : function (pixels){return this.convolute(pixels, this.matrices.laplace); },
-                
-
-                
+                emboss : function (pixels){return this.convolute(pixels, this.matrices.emboss); },
+                mblur : function (pixels){return this.convolute(pixels, this.matrices.mblur); },
+                x : function (pixels){return this.convolute(pixels, this.matrices.x); },
                 blur : function (pixels){return this.convolute(pixels, this.matrices.blur); },
                 sharpen : function (pixels){return this.convolute(pixels, this.matrices.sharpen); },
                 sobeloriz : function (pixels){return this.convolute(pixels, this.matrices.sobeloriz); },
                 sobelvert : function (pixels){return this.convolute(pixels, this.matrices.sobelvert); },
                 brightness : function(pixels, adjustment) {
-                    var d = pixels.data,
-                        i = 0,
-                        l = d.length;
+                    var d = pixels.data, i = 0, l = d.length;
                     for (null; i < l; i += 4) {
                         d[i] += adjustment;
                         d[i + 1] += adjustment;
@@ -244,31 +220,28 @@ JMVC.extend('image', {
                     return pixels;
                 },
                 threshold : function(pixels, threshold) {
-                    var d = pixels.data,
-                        i = 0,
-                        l = d.length;
+                    var d = pixels.data, i = 0, l = d.length;
                     for (null; i < l; i += 4) {
-                        var r = d[i],
-                            g = d[i + 1],
-                            b = d[i + 2],
-                            v = (0.2126 * r + 0.7152 * g + 0.0722 * b >= threshold) ? 255 : 0;
-                        d[i] = d[i + 1] = d[i + 2] = v
+                        d[i] =
+                        d[i + 1] =
+                        d[i + 2] =
+                        (0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2] >= threshold) ? 255 : 0;
                     }
                     return pixels;
                 },
                 grayscale : function(pixels) {
-                    var d = pixels.data,
-                        i = 0,
-                        l = d.length;
+                    var d = pixels.data, i = 0, l = d.length;
                     for (null; i < l; i += 4) {
-                        var r = d[i],
-                            g = d[i + 1],
-                            b = d[i + 2],
-                            // CIE luminance for the RGB
-                            // The human eye is bad at seeing red and blue, so we de-emphasize them.
-                            v = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-                        d[i] = d[i + 1] = d[i + 2] = v;
+                        d[i] =
+                        d[i + 1] =
+                        d[i + 2] =
+                        0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2]
                     }
+                    return pixels;
+                },
+                remove : function (pixels, channel) {
+                    var d = pixels.data, i = 0, l = d.length;
+                    for (null; i < l; i += 4) {d[i + channel] = 0;}
                     return pixels;
                 }
             }
