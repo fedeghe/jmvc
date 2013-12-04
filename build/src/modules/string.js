@@ -126,47 +126,54 @@ JMVC.string = {
      * @param  {string} tpl      the template
      * @param  {literal or function} a literal for substitution or a function that will
      *                               return the substitution given as parameter a string
-     * @param  {string} dD       optional- the opening placeholder delimitator (%)
-     * @param  {string} Dd       optional- the closing placeholder delimitator (%)
+     * @param  {string} start       optional- the opening placeholder delimitator (%)
+     * @param  {string} end       optional- the closing placeholder delimitator (%)
      * @param  {string} fallback optional- a fallback value in case an element is not found
      * @return {string}          the resulting string with replaced values
      *
      * this allows
-     //  var tpl = 'a%x%e',
-     //      o = {
-     //          x : 'b%y%d',
-     //          y:'c'
-     //      };
-     //  JMVC.string.replaceall(tpl, o); // abcde
+var tpl = 'a%x%e',
+   o = {
+       x : 'b%y%d',
+       y:'c'
+   };
+JMVC.string.replaceall(tpl, o); // abcde
      * 
      */
-    replaceall : function (tpl, o, dD, Dd, cb) {
-        dD || (dD = '%');
-        Dd || (Dd = '%');
-        var reg = new RegExp(dD + '([A-z0-9-_]*)' + Dd, 'g'),
-            str,
+    replaceall : function (tpl, obj, start, end, fb) {
+        start || (start = '%');
+        end || (end = '%');
+
+        var reg = new RegExp(start + '([A-z0-9-_]*)' + end, 'g'),
             straight = true,
-            tmp;
-        cb = cb || false;
+            str, tmp;
+
+        fb = fb || false;
 
         while (straight) {
-            if (!(tpl.match(reg))){
-                straight = false;
-                break;
+
+            if (!(tpl.match(reg))) {
+                return tpl;
             }
             tpl = tpl.replace(reg, function (str, $1) {
-
                 switch (true) {
-                    case typeof o === 'function' :
-                        // avoid silly loops
-                        //
-                        tmp = o($1);
-                        return tmp !== dD + $1 + Dd ? o($1)  : $1;
+                    // 
+                    case typeof obj === 'function' :
+                        // avoid silly infiloops
+                        tmp = obj($1);
+                        return (tmp !== start + $1 + end) ? obj($1)  : $1;
                     break;
-                    case $1 in o : return o[$1]; break;
-                    case !($1 in o):
+
+                    // the label matches a obj literal element
+                    // use it
+                    case $1 in obj : return obj[$1]; break;
+
+                    // not a function and not found in literal
+                    // use fallback if passed or get back the placeholder
+                    // switching off before returning
+                    default:
                         straight = false;
-                        return cb || dD + $1 + Dd;    
+                        return fb || start + $1 + end;    
                     break;
                 }
             });
