@@ -151,7 +151,8 @@ JMVC.extend('image', {
                     h = pixels.height,
                     d = pixels.data,
                     tmparr = [],
-                    i, j, l;
+                    tmp,
+                    i, j, l, k;
 
                 for (i = 0; i < h; i +=1 ) {
                     for (j = 0, tmp, k; j < w; j +=1) {
