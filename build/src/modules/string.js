@@ -112,6 +112,17 @@ JMVC.string = {
     },
 
     /**
+     * [regEscape description]
+     * @param  {[type]} str [description]
+     * @return {[type]}     [description]
+     *
+     * http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
+     */
+    regEscape : function (str) {
+        return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+    },
+
+    /**
      * [ description]
      * @param  {[type]} str [description]
      * @param  {[type]} n   [description]
@@ -132,17 +143,20 @@ JMVC.string = {
      * @return {string}          the resulting string with replaced values
      *
      * this allows
-var tpl = 'a%x%e',
-   o = {
-       x : 'b%y%d',
-       y:'c'
-   };
-JMVC.string.replaceall(tpl, o); // abcde
+    var tpl = 'a%x%g',
+       o = {
+           x : 'b%y%f',
+           y:'c%z%e',
+           z : 'd'
+       };
+    JMVC.string.replaceall(tpl, o); // abcdefg
      * 
      */
     replaceall : function (tpl, obj, start, end, fb) {
         start || (start = '%');
         end || (end = '%');
+        //start = this.regEscape(start);
+        //end = this.regEscape(end);
 
         var reg = new RegExp(start + '([A-z0-9-_]*)' + end, 'g'),
             straight = true,
