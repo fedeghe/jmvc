@@ -30,11 +30,11 @@ JMVC.extend('image', {
                 h = pixels.height,
                 px = pixels.data;
 
-            return function (r, c){
-                if (r < 0 || r >= h || c < 0 || c >= w) {return [0,0,0,0];}
-
-                var i = 4*(r * w + c);
-
+            return function (r, c) {
+                if (r < 0 || r >= h || c < 0 || c >= w) {
+                    return [0, 0, 0, 0];
+                }
+                var i = 4 * (r * w + c);
                 return [
                     px[i],
                     px[i + 1],
@@ -46,9 +46,9 @@ JMVC.extend('image', {
         function getRoundMatrix(px, r, c) {
             var gpv = getPxVector(px),
                 t = [
-                    gpv(r-1, c-1), gpv(r-1, c), gpv(r-1, c+1),
-                    gpv(r, c-1), gpv(r, c), gpv(r, c+1),
-                    gpv(r+1, c-1), gpv(r+1, c), gpv(r+1, c+1)
+                    gpv(r - 1, c - 1),  gpv(r - 1, c),  gpv(r - 1, c + 1),
+                    gpv(r, c - 1),      gpv(r, c),      gpv(r, c + 1),
+                    gpv(r + 1, c - 1),  gpv(r + 1, c),  gpv(r + 1, c + 1)
                 ];
             return  t;
         }
@@ -87,7 +87,7 @@ JMVC.extend('image', {
              * [reset description]
              * @return {[type]} [description]
              */
-            reset : function(){
+            reset : function () {
                 this.ctx.drawImage(this.tag, 0, 0);
                 this.disable();
             },
@@ -118,7 +118,7 @@ JMVC.extend('image', {
              * @param  {[type]} var_args [description]
              * @return {[type]}          [description]
              */
-            filterImage : function(filter, var_args) {
+            filterImage : function (filter, var_args) {
                 if (! this.active) {
                     this.reset();
                     this.enable();
@@ -136,7 +136,7 @@ JMVC.extend('image', {
              * [getPx description]
              * @return {[type]} [description]
              */
-            getPx : function() {
+            getPx : function () {
                 return this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
             },
 
@@ -146,45 +146,29 @@ JMVC.extend('image', {
              * @param  {[type]} matrix [description]
              * @return {[type]}        [description]
              */
-            convolute : function (pixels, matrix){
-            
+            convolute : function (pixels, matrix) {
                 var w = pixels.width,
                     h = pixels.height,
                     d = pixels.data,
                     tmparr = [],
-                    //for normalization
-                    min = 255,
-                    max = 0,
-                    normalize = false;
+                    i, j, l;
 
-                for (var i = 0; i < h; i +=1 ) {
-                    for (var j = 0, tmp, k; j < w; j +=1) {
+                for (i = 0; i < h; i +=1 ) {
+                    for (j = 0, tmp, k; j < w; j +=1) {
                         var pij = getRoundMatrix(pixels, i, j);
                         tmp = convolutePX(pij, matrix);
                         
-                        k = 4 * (i * w + j); 
+                        k = 4 * (i * w + j);
+
                         tmparr[k] = tmp[0];
                         tmparr[k + 1] = tmp[1];
                         tmparr[k + 2] = tmp[2];
-                        //tmparr[k + 3] = tmp[3];
                         tmparr[k + 3] = d[k + 3];
-
-                        // normalize ?
-                        if (normalize) {
-                            min = Math.min(min, tmp[0], tmp[1], tmp[2], tmp[3]);
-                            max = Math.max(max, tmp[0], tmp[1], tmp[2], tmp[3]);
-                        }
                     }
                 }
-
-                for (var i = 0, l = tmparr.length; i < l; i +=1) {
-                    d[i] = normalize ?
-                        (tmparr[i] - min) * 255 / (max - min)
-                        :
-                        tmparr[i];
+                for (i = 0, l = tmparr.length; i < l; i +=1) {
+                    d[i] = tmparr[i];
                 }
-
-                console.debug('done')
                 return pixels;
             },
 
@@ -202,15 +186,31 @@ JMVC.extend('image', {
             },
  
             filters : {
-                laplace : function (pixels){return this.convolute(pixels, this.matrices.laplace); },
-                emboss : function (pixels){return this.convolute(pixels, this.matrices.emboss); },
-                mblur : function (pixels){return this.convolute(pixels, this.matrices.mblur); },
-                x : function (pixels){return this.convolute(pixels, this.matrices.x); },
-                blur : function (pixels){return this.convolute(pixels, this.matrices.blur); },
-                sharpen : function (pixels){return this.convolute(pixels, this.matrices.sharpen); },
-                sobeloriz : function (pixels){return this.convolute(pixels, this.matrices.sobeloriz); },
-                sobelvert : function (pixels){return this.convolute(pixels, this.matrices.sobelvert); },
-                brightness : function(pixels, adjustment) {
+                laplace : function (pixels) {
+                    return this.convolute(pixels, this.matrices.laplace);
+                },
+                emboss : function (pixels) {
+                    return this.convolute(pixels, this.matrices.emboss);
+                },
+                mblur : function (pixels) {
+                    return this.convolute(pixels, this.matrices.mblur);
+                },
+                x : function (pixels) {
+                    return this.convolute(pixels, this.matrices.x);
+                },
+                blur : function (pixels) {
+                    return this.convolute(pixels, this.matrices.blur);
+                },
+                sharpen : function (pixels) {
+                    return this.convolute(pixels, this.matrices.sharpen);
+                },
+                sobeloriz : function (pixels) {
+                    return this.convolute(pixels, this.matrices.sobeloriz);
+                },
+                sobelvert : function (pixels) {
+                    return this.convolute(pixels, this.matrices.sobelvert);
+                },
+                brightness : function (pixels, adjustment) {
                     var d = pixels.data, i = 0, l = d.length;
                     for (null; i < l; i += 4) {
                         d[i] += adjustment;
@@ -239,9 +239,20 @@ JMVC.extend('image', {
                     }
                     return pixels;
                 },
+                invert : function (pixels) {
+                    var d = pixels.data, i = 0, l = d.length;
+                    for (null; i < l; i += 4) {
+                        d[i] = 255 - d[i];
+                        d[i + 1] =255 - d[i + 1];
+                        d[i + 2] =255 - d[i + 2];
+                    }
+                    return pixels;
+                },
                 remove : function (pixels, channel) {
                     var d = pixels.data, i = 0, l = d.length;
-                    for (null; i < l; i += 4) {d[i + channel] = 0;}
+                    for (null; i < l; i += 4) {
+                        d[i + channel] = 0;
+                    }
                     return pixels;
                 }
             }
