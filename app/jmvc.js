@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.2 (rev. 7)
+ * @version :  3.2 (rev. 8)
  * @copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *          glued with 31 files on 5/12/2013 at 0:20:45
+ *          glued with 31 files on 6/12/2013 at 2:3:47
  *
  * All rights reserved.
  *
@@ -58,7 +58,7 @@
                 JMVC_VERSION = "3.2",
                 //
                 // review (vars.json)
-                JMVC_REVIEW = "7",
+                JMVC_REVIEW = "8",
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = "", //'.min' 
@@ -2269,13 +2269,20 @@
     UTIL sub-module
     -------------*/
     
-    // private section
+    /**
+     * private section
+     * @type {Object}
+     */
     _.util = {
         
     };
     
-    // public section
+    /**
+     * public section
+     * @type {Object}
+     */
     JMVC.util = {
+    
         /**
          * [ description]
          * @param  {[type]} d [description]
@@ -2289,14 +2296,14 @@
          * @return {[type]}            [description]
          */
         getParameters : function (scriptid, pname) {
-                var script = JMVC.dom.find('#' + scriptid),
-                    p = false,
-                    parameters = false;
-                pname = pname || 'data-params';
-                p = script.getAttribute(pname);
-                parameters = p ? eval('(' + p + ')') : {};
-                return parameters;
-            },
+            var script = document.getElementById(scriptid),
+                p = false,
+                parameters = false;
+            pname = pname || 'data-params';
+            p = script.getAttribute(pname);
+            parameters = p ? eval('(' + p + ')') : {};
+            return parameters;
+        },
     
         //http://stackoverflow.com/questions/7390426/better-way-to-get-type-of-a-javascript-variable
         /**
@@ -2364,7 +2371,9 @@
          * @param  {[type]} e [description]
          * @return {[type]}   [description]
          */
-        isSet : function (e) {return typeof e !== 'undefined'; },
+        isSet : function (e) {
+            return typeof e !== 'undefined';
+        },
     
         /**
          * [ description]
@@ -2372,14 +2381,18 @@
          * @param  {[type]} type [description]
          * @return {[type]}      [description]
          */
-        isTypeOf : function (el, type) {return typeof el === type; },
+        isTypeOf : function (el, type) {
+            return typeof el === type;
+        },
     
         /**
          * [ description]
          * @param  {[type]} ) {return      +new Date( [description]
          * @return {[type]}   [description]
          */
-        now : function () {return +new Date(); },
+        now : function () {
+            return +new Date();
+        },
     
         /**
          * [ description]
@@ -2387,14 +2400,18 @@
          * @param  {[type]} max) {return      min + ~~(JMVC.M.random() * (max - min + 1) [description]
          * @return {[type]}      [description]
          */
-        rand : function (min, max) {return min + ~~(JMVC.M.random() * (max - min + 1)); },
+        rand : function (min, max) {
+            return min + ~~(JMVC.M.random() * (max - min + 1));
+        },
     
         /**
          * [ description]
          * @param  {[type]} r [description]
          * @return {[type]}   [description]
          */
-        rad2deg : function (r) {return 180 * r / JMVC.M.PI; },
+        rad2deg : function (r) {
+            return 180 * r / JMVC.M.PI;
+        },
     
         /**
          * [ description]
@@ -2403,6 +2420,10 @@
          * @return {[type]}       [description]
          */
         range : function (start, end) {
+            if (start > end) {
+                throw new JMVC.Errors.BadParams('ERROR: JMVC.util.range function #badparams (' + start + ', ' + end + ')');
+                return false;
+            }
             var ret = [];
             while (end - start + 1) {
                 ret.push((start += 1) - 1);
@@ -2415,9 +2436,11 @@
          * @return {[type]} [description]
          */
         uniqueid : new function () {
-            var count = 0;
+            var count = 0,
+                self = this;
+            this.prefix = 'JMVCID';
             this.toString = function () {
-                return 'JMVCID' + ++count;
+                return  self.prefix + ++count;
             }
         }
     
@@ -4058,6 +4081,17 @@
         },
     
         /**
+         * [regEscape description]
+         * @param  {[type]} str [description]
+         * @return {[type]}     [description]
+         *
+         * http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
+         */
+        regEscape : function (str) {
+            return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+        },
+    
+        /**
          * [ description]
          * @param  {[type]} str [description]
          * @param  {[type]} n   [description]
@@ -4078,17 +4112,20 @@
          * @return {string}          the resulting string with replaced values
          *
          * this allows
-    var tpl = 'a%x%e',
-       o = {
-           x : 'b%y%d',
-           y:'c'
-       };
-    JMVC.string.replaceall(tpl, o); // abcde
+        var tpl = 'a%x%g',
+           o = {
+               x : 'b%y%f',
+               y:'c%z%e',
+               z : 'd'
+           };
+        JMVC.string.replaceall(tpl, o); // abcdefg
          * 
          */
         replaceall : function (tpl, obj, start, end, fb) {
             start || (start = '%');
             end || (end = '%');
+            //start = this.regEscape(start);
+            //end = this.regEscape(end);
     
             var reg = new RegExp(start + '([A-z0-9-_]*)' + end, 'g'),
                 straight = true,
