@@ -154,11 +154,12 @@ JMVC.extend('image', {
                     tmp,
                     i, j, l, k;
 
+                // original pxs must not be modified
                 for (i = 0; i < h; i +=1 ) {
                     for (j = 0, tmp, k; j < w; j +=1) {
                         var pij = getRoundMatrix(pixels, i, j);
-                        tmp = convolutePX(pij, matrix);
                         
+                        tmp = convolutePX(pij, matrix);
                         k = 4 * (i * w + j);
 
                         tmparr[k] = tmp[0];
@@ -167,6 +168,7 @@ JMVC.extend('image', {
                         tmparr[k + 3] = d[k + 3];
                     }
                 }
+                //but copied after the whole transformation
                 for (i = 0, l = tmparr.length; i < l; i +=1) {
                     d[i] = tmparr[i];
                 }

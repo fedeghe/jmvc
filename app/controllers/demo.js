@@ -33,7 +33,6 @@ JMVC.controllers.demo = function () {
 		JMVC.require('vendors/google/analytics', 'core/responsive/basic', 'affix');
 		
 		JMVC.events.loadify(500);
-
 		JMVC.dom.preloadImage(JMVC.vars.baseurl + "/media/img/jmvc_m1.svg");
 
 		var newlogo = JMVC.dom.create('img', {src : JMVC.vars.baseurl + '/media/img/jmvc_m1.svg'});
@@ -498,8 +497,6 @@ JMVC.controllers.demo = function () {
 			j.arc(38,-16, 72,72,  -M.PI / 26	, M.PI / 2, 12);
 			j.arc(38,-16, 52,52,  -M.PI / 20	, M.PI / 2	, 9);
 
-			j.plot(newlogo);
-
 			m.line(0,0, 0,24, 2);
 			m.line(0,0, 60,0, 7);
 			m.line(0,24, 60,24, 7);
@@ -510,7 +507,6 @@ JMVC.controllers.demo = function () {
 			m.arc(60,84, 30,30, -M.PI / 12	, -M.PI	, 7);
 			m.line(60,64, 60,87, 2);
 			m.line(60,114, 60,137, 2);
-			m.plot(newlogo);
 
 			v.line(0,45,0,69, 2);
 			v.line(0,45, 45,45, 4);
@@ -522,7 +518,6 @@ JMVC.controllers.demo = function () {
 			v.line(60,0, 88,28, 3);
 			v.line(60,0, 48,12, 1);
 			v.line(60,28, 48,12, 1);
-			v.plot(newlogo);
 
 			c.line(0,80, 22,80, 2);
 			c.line(0,80, 0,58, 2);
@@ -536,6 +531,10 @@ JMVC.controllers.demo = function () {
 			c.line(66,66, 88,66, 2);
 			c.line(88,44, 88,66, 2);
 			c.arc(66,44, 22,22, -M.PI / 8, 0, 4);
+
+			j.plot(newlogo);
+			m.plot(newlogo);
+			v.plot(newlogo);
 			c.plot(newlogo);
 
 			var a = newlogo.childNodes,
