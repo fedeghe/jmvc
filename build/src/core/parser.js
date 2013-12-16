@@ -4,7 +4,10 @@ PARSER
 
 Parser = {
     /**
-     * microtemplating function (http://ejohn.org/blog/javascript-micro-templating/)
+     * microtemplating function
+     * Based on the work of a self-professed javascript ninja 
+     * http://ejohn.org/blog/javascript-micro-templating/
+     * 
      * Parses a string looking for  
      * @param  {string} content the content that must be parsed
      * @return {string}         parsed content
