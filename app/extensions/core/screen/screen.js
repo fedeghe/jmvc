@@ -6,15 +6,16 @@ JMVC.extend('screen',{
 			JMVC.W.innerWidth, 
 			JMVC.W.innerHeight 
 			]; 
-		}
-		else
-		if(typeof JMVC.WD.documentElement != 'undefined' &&
+		} else if (typeof JMVC.WD.documentElement != 'undefined' &&
 			typeof JMVC.WD.documentElement.clientWidth != 'undefined' &&
-			JMVC.WD.documentElement.clientWidth != 0){
+			JMVC.WD.documentElement.clientWidth != 0) {
 			size = [JMVC.WD.documentElement.clientWidth, JMVC.WD.documentElement.clientHeight];
-		}else{
+		} else {
 			size = [JMVC.WD.getElementsByTagName('body')[0].clientWidth, JMVC.WD.getElementsByTagName('body')[0].clientHeight]; 
 		}
+
+
+		
 		return size; 
 	},
 	bodySize : function(){
