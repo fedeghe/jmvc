@@ -9,11 +9,11 @@ VIEW
  */
 View = function (cnt) {
     // original content
-    
     this.ocontent = cnt || '';
     this.content = cnt || '';
-
-    this.vars = {'baseurl' : $JMVC.vars.baseurl};
+    this.vars = {
+        baseurl : $JMVC.vars.baseurl
+    };
 };
 
 //
@@ -88,9 +88,6 @@ View.prototype.getFromUrl = function (vname) {
  * @return {[type]}      [description]
  */
 View.prototype.render = function (pars) {
-    
-    
-
     var arg = pars || {},
         //
         // maybe a callback is passed   
@@ -124,17 +121,11 @@ View.prototype.render = function (pars) {
         trg,
         may_trg;
 
-    
-
     //let pars be the callback function
     if (typeof pars === 'function') {
         cback = pars;
     }
 
-    // parse for other views or $JMVC.vars
-    
-    //cont = Parser.parse(cont);
-    
     // look for / substitute  vars
     // in the view (these belongs to the view)
     
@@ -149,7 +140,6 @@ View.prototype.render = function (pars) {
     cont = Parser.parse(cont);
     
     this.content = cont;
-
 
     if(!$JMVC.loaded){
 
@@ -180,9 +170,9 @@ View.prototype.render = function (pars) {
             //trigger end of render queue
             $JMVC.events.endRender();
         });
-    // yet loaded
-    //happend after load... so can render a view from a render cback 
-    //of a main view
+
+    // happend after load... so can render a view from a render cback 
+    // of a main view
     } else {
         may_trg = target ? $JMVC.dom.find(target) : false;
         trg = may_trg || WD.body;
@@ -190,14 +180,8 @@ View.prototype.render = function (pars) {
         cback && cback.apply(this, !!argz ? argz : []);
     }
     // allow chain
-    // 
-    
-    
     return this;
-    
 };
-
-
 
 ///////////////////////
 // COMMON
@@ -220,15 +204,15 @@ View.prototype.get = Model.prototype.get = Controller.prototype.get = function (
 View.prototype.set = Model.prototype.set = Controller.prototype.set = function (vname, vval, force) {
     var i;
     switch (typeof vname) {
-    case 'string':
-        if (!this.vars[vname] || force) {this.vars[vname] = vval; }
+        case 'string':
+            if (!this.vars[vname] || force) {this.vars[vname] = vval; }
         break;
-    case 'object':
-        for (i in vname) {
-            if (vname.hasOwnProperty(i) && (!this.vars[i] || vval || force)) {
-                this.vars[i] = vname[i];
+        case 'object':
+            for (i in vname) {
+                if (vname.hasOwnProperty(i) && (!this.vars[i] || vval || force)) {
+                    this.vars[i] = vname[i];
+                }
             }
-        }
         break;
     }
     return this;
