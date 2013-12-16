@@ -76,9 +76,9 @@ _.events = {
             var nid = JMVC.util.uniqueid + '';
             el[_.events.nodeAttrForIndex] = nid;
 
-            //store for inverse search
+            // store for inverse search
             _.events.nodeidMap[nid] = el;
-            //console.debug('given id ' + el[_.events.nodeAttrForIndex] + ' to ', el);
+            //console.debug('given id ' + nid + ' to ', el);
         }
         return el[_.events.nodeAttrForIndex];
     },
@@ -90,9 +90,10 @@ _.events = {
      * @param  {Function} cb   the callback executed when event is fired on node
      * @return {undefined}
      */
+    /*
     bind : function (el, evnt, cb) {
         //basic delegation
-        var nodeid = _.events.nodeid(el); 
+        var nid = _.events.nodeid(el); 
 
         if (W.addEventListener) {
             el.addEventListener(evnt, cb, false);
@@ -105,13 +106,52 @@ _.events = {
         if (!(evnt in _.events.bindings)) {
             _.events.bindings[evnt] = {};
         }
-        if (!(nodeid in _.events.bindings[evnt])) {
-            _.events.bindings[evnt][nodeid] = [];
+        if (!(nid in _.events.bindings[evnt])) {
+            _.events.bindings[evnt][nid] = [];
         }
         //store for unbinding
-        _.events.bindings[evnt][nodeid].push(cb);
+        _.events.bindings[evnt][nid].push(cb);
         return true;
-    },
+    },*/
+
+
+    bind : (function (){
+        function loopcall(el, cback, args){
+            if (el instanceof Array) {
+                for (var i = 0, l = el.length; i < l; i += 1) {
+                    el[i][cback].apply(el[i], args || []);
+                }
+            } else {
+                el[cback].apply(el, args || []);
+            }
+        }
+        function store(el, evnt, cb) {
+            var nid = _.events.nodeid(el); 
+            if (!(evnt in _.events.bindings)) {
+                _.events.bindings[evnt] = {};
+            }
+            if (!(nid in _.events.bindings[evnt])) {
+                _.events.bindings[evnt][nid] = [];
+            }
+            //store for unbinding
+            _.events.bindings[evnt][nid].push(cb);
+            return true;
+        }
+        
+        if ('addEventListener' in W) {
+            return function (el, evnt, cb) {
+                loopcall(el, 'addEventListener', [evnt, cb, false]);
+                store(el, evnt, cb);
+            };
+        } else if ('attachEvent' in W) {
+            return function (el, evnt, cb) {
+                loopcall(el, 'attachEvent', ['on' + evnt, cb]);
+                store(el, evnt, cb);
+            };
+        } else {
+            throw new Error('No straight way to bind an event');
+        }
+    })(),
     
     /**
      * unbind the passed cb or all function 
@@ -140,7 +180,7 @@ _.events = {
         //
         //  loop if a function is not given
         if (typeof cb === 'undefined') {
-            tmp = _.events.bindings[evnt][_.events.nodeid(el)];
+            tmp = _.events.bindings[evnt][nodeid];
             l = tmp.length;
             /*the element will be removed at the end of the real unbind*/
             while (l--) {
@@ -154,7 +194,6 @@ _.events = {
         if (index == -1) {
             return false;
         }
-        
 
         if (el.removeEventListener) {
             el.removeEventListener(evnt, cb, false);
