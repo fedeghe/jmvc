@@ -8,7 +8,7 @@
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *          glued with 31 files on 6/12/2013 at 2:3:47
+ *          glued with 32 files on 16/12/2013 at 1:16:1
  *
  * All rights reserved.
  *
@@ -42,7 +42,8 @@
     //
     var WD = W.document,    // local reference for window.document
         WDL = WD.location,  // local reference for current window.document.location
-        i, j, k, l,          // some counters
+        i, j, k, l, m, n,   // some counters
+        //
         // this function returns the JMVC object, globalized, after doing some stuff
         // @return {object literal} $JMVC inner object 
         JMVC = W.JMVC = (function () {
@@ -155,12 +156,13 @@
                 Errors,
                 Channel,
                 Extension,
+                FunctionQueue,
                 //
                 /**
                  * in case some modules need to be always loaded here's the place to set them
                  * @type {Array}
                  */
-                Modules = ['vendors/google/analytics', 'core/cookie'],
+                Modules = ['vendors/google/analytics/analytics', 'core/cookie/cookie'],
                 //
                 /**
                  * preloader
@@ -191,7 +193,7 @@
                 // getmode used in the require function
                 // ajax   : use xhr to get the source and evals
                 // script : creates a script tag with the right url to the source
-                // note : seems like script mode load faster but
+                // NOTE > it seems like script mode load faster but ...
                 getmode = 'ajax'; // {script, ajax}
                 //
                 // ===========================================
@@ -209,33 +211,35 @@
                 del2 : function (ns) {
                     jmvc.purge(jmvc.get2(ns));
                 },
+            
                 /**
-                 * [ description]
+                 * Hey, self-proclaimed ninja, apply is not as cross!
                  * @return {[type]} [description]
                  */
-                debug : function () {
-                    var arg = Array.prototype.slice.apply(arguments) || [];
+                debug : function (m) {
                     try {
-                        W.console.log.apply(W.console, arg);
+                        W.console.log(m);
                     } catch (e1) {
                         try {
-                            W.opera.postError.apply(W.opera, arg);
+                            W.opera.postError(m);
                         } catch (e2) {
-                            W['log' in W ? 'log' : 'alert'](Array.prototype.join.call(arg, " "));
+                            W['log' in W ? 'log' : 'alert'](m);
                         }
                     }
                 },
+            
                 /**
                  * [description]
                  * @param  {[type]} name [description]
                  * @return {[type]}      [description]
                  */
                 del : function (name) {
-                    if ($JMVC.vars[name]) {
+                    if (name in $JMVC.vars) {
                         $JMVC.vars[name] = null;
                     }
                     return $JMVC;
                 },
+            
                 /**
                  * [description]
                  * @param  {[type]} func [description]
@@ -243,11 +247,13 @@
                  * @return {[type]}      [description]
                  */
                 delegate : function (func, ctx) {
+                    //get relevat arguments
                     var args = Array.prototype.slice.call(arguments, 2);
                     return function () {
                         return func.apply(ctx || $JMVC, [].concat(args, Array.prototype.slice.call(arguments)));
                     };
                 },
+            
                 /**
                  * Every each implementation is really bad compared to a native loop,
                  * so, if possible , do not use that function.
@@ -256,13 +262,15 @@
                  * @return {[type]}      [description]
                  */
                 each : function (o, func) {
-                    var i, l, ret, type;
-                    type = ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
+                    var type = ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase(),
+                        i, l,
+                        ret;
+            
                     func._break = false;
                     func._continue = false;
                     func['break'] = /*func.exit = */function () {func._break = true; };
                     func['continue'] = /*func.skip = */function () {func._continue = true; };
-                    //
+            
                     if (type === 'array') {
                         ret = [];
                         i = 0;
@@ -286,6 +294,7 @@
                     }
                     return ret;
                 },
+            
                 /**
                  * Basic function for extending an object
                  * only under JMVC ns
@@ -332,6 +341,7 @@
                     //
                     return trg;
                 },
+            
                 /**
                  * @param  {[type]} type   [description]
                  * @param  {[type]} name   [description]
@@ -363,6 +373,7 @@
                     ret = jmvc.xhrget(path_absolute, type, name, params);
                     return ret;
                 },
+            
                 /**
                  * [description]
                  * @param  {[type]} name [description]
@@ -371,9 +382,17 @@
                 get : function (name) {
                     return $JMVC.vars[name] || undefined;
                 },
+            
+                /**
+                 * [globalize description]
+                 * @param  {[type]} obj  [description]
+                 * @param  {[type]} name [description]
+                 * @return {[type]}      [description]
+                 */
                 globalize : function (obj, name) {
                     JMVC.W[name] = obj;
                 },
+            
                 /**
                  * [ description]
                  * @param  {[type]} obj   [description]
@@ -402,6 +421,7 @@
                         }
                     }
                 },
+            
                 /**
                  * hook utility
                  * @param  {[type]} hookname [description]
@@ -420,6 +440,7 @@
                     }
                     return dyn;
                 },
+            
                 /**
                  * [htmlspecialchars description]
                  * @param  {[type]} text [description]
@@ -433,6 +454,7 @@
                         .replace(/"/g, "&quot;")
                         .replace(/'/g, "&#039;");
                 },
+            
                 /**
                  * [htmlspecialchars_decode description]
                  * @param  {[type]} html [description]
@@ -446,6 +468,7 @@
                         .replace(/&quot;/g, '"')
                         .replace(/&#039;/g, "'");
                 },
+            
                 /**
                  * [description]
                  * @param  {[type]} o      [description]
@@ -468,6 +491,7 @@
                     }
                     return true;
                 },
+            
                 /**
                  * [ description]
                  * @param  {[type]} Child  [description]
@@ -482,6 +506,7 @@
                     Child.superClass = Parent.prototype;
                     Child.baseConstructor = Parent;
                 },
+            
                 /**
                  * eval function wrap
                  * @param  string   code to be evalued
@@ -494,6 +519,7 @@
                     }catch(e){}
                     return false;
                 },
+            
                 /**
                  * lang loader
                  * @return {[type]} [description]
@@ -508,8 +534,8 @@
                         }
                         i += 1;
                     }
-            
                 },
+            
                 /**
                  * just for models
                  * @param  {[type]} m [description]
@@ -523,6 +549,7 @@
                     m.prototype.reset = Model.prototype.reset;
                     m.prototype.constructor = Model.prototype.constructor;
                 },
+            
                 /**
                  * [ description]
                  * @param  {obejct literal} Childs [description]
@@ -534,6 +561,7 @@
                         jmvc.inherit(Childs[i], Parent);
                     }
                 },
+            
                 /**
                  * 
                  */
@@ -559,6 +587,7 @@
                         ret = ctx[els[0]];
                         return (l > 1) ? jmvc.ns.make(els.slice(1).join(chr), obj, ctx[els[0]]) : ret;
                     },
+            
                     /**
                      * check if a namespace already exists
                      * @param  {[type]} ns  namesoace dot glued
@@ -580,6 +609,7 @@
                         return ctx;
                     }
                 },
+            
                 /**
                  * [parselang description]
                  * @param  {[type]} cnt [description]
@@ -589,16 +619,20 @@
                     var RXlng = "\\[L\\[([\\S\\s]*?)\\]\\]",
                         lang = true,
                         tmp,
-                        limit = 100000,
+                        limit = 1E5,
                         def_lang = $JMVC.cookie.get('lang') || defaultlang;
-                    //
+            
                     JMVC.vars.currentlang = def_lang;
                     $JMVC.lang(JMVC.vars.currentlang);
-                    //
+            
                     if (JMVC.i18n[JMVC.vars.currentlang] === true) {
-                        $JMVC.io.get(JMVC.vars.baseurl + PATH.lang + JMVC.vars.currentlang + (JMVC_PACKED || '') + '.js', function (ln) {
-                            jmvc.jeval(ln);
-                        },  false);
+                        $JMVC.io.get(
+                            JMVC.vars.baseurl + PATH.lang + JMVC.vars.currentlang + (JMVC_PACKED || '') + '.js',
+                            function (ln) {
+                                jmvc.jeval(ln);
+                            },
+                            false
+                        );
                     }
                     //
                     // check for [[js code]], es. [[JMVC.vars.baseurl]] will be rendered as the value of baseurl
@@ -617,6 +651,7 @@
                     }
                     return cnt;
                 },
+            
                 /**
                  * [ description]
                  * @param  {[type]} el  [description]
@@ -628,7 +663,6 @@
                         i = 0;
                     if (el instanceof Array) {
                         for (l = el.length; i < l; i += 1) {
-                            //prt(el[i], obj);
                             jmvc.prototipize(el[i], obj);
                         }
                     }
@@ -636,6 +670,7 @@
                         obj.hasOwnProperty(p) && (el.prototype[p] = obj[p]);
                     }
                 },
+            
                 /**
                  * [ description]
                  * @param  {[type]} o [description]
@@ -650,6 +685,7 @@
                         }
                     } catch(e){}
                 },
+            
                 /**
                  * render function
                  * @param  {[type]} cback [description]
@@ -664,6 +700,7 @@
                     //
                     // if the constructor has been evalued correctly
                     if ($JMVC.c in $JMVC.controllers) {
+                        //
                         // grant basic ineritance from parent Controller
                         jmvc.inherit(JMVC.controllers[JMVC.c], Controller);
                         //
@@ -682,6 +719,7 @@
                         for (i in $JMVC.p) {
                             $JMVC.p.hasOwnProperty(i) && ctrl.set(i, decodeURI($JMVC.p[i]));
                         }
+            
                         //
                         //////////////////////////
                         // BEFORE HOOKS?
@@ -697,6 +735,7 @@
                         && ctrl['before_' + $JMVC.a]();
                         //////////////////////////
                         //
+                        
                         //////////////////////////
                         // REAL ACTION
                         // check actual action
@@ -711,6 +750,7 @@
                            $JMVC.a.toLowerCase() !== JMVC_DEFAULT.action
                            && WDL.replace(US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a);
                         //////////////////////////
+                        
                         //
                         //////////////////////////
                         // AFTER HOOKS?
@@ -734,6 +774,7 @@
                     }
                     $JMVC.loaded = true;
                 },
+            
                 /**
                  * 'test' is an exception, if passed then the path will be /app/test
                  * @param {String} none [description]
@@ -742,17 +783,34 @@
                 require : function () {
                     var path, extNS, extNSlength, extname, s,
                         i = 0,
-                        lArg = arguments.length,    
-                        head = JMVC.WD.getElementsByTagName('head').item(0);
+                        arg = arguments,
+                        lArg = arg.length,    
+                        head = JMVC.WD.getElementsByTagName('head').item(0)
                         //
                     while (i < lArg) {
-                        if (typeof arguments[i] === 'string' && !$JMVC.extensions[arguments[i]]) {
-                            extNS = arguments[i].split(US);
+            
+                        if (typeof arg[i] === 'string' && !$JMVC.extensions[arg[i]]) {
+            
+                            // check if the required end with /, in this case
+                            // 
+                            if (arg[i].match(/\/$/)) {
+                                $JMVC.io.getJson(JMVC.vars.baseurl + PATH.ext + arg[i] + 'require.json', function (json) {
+                                    for (j in json.require){
+                                        jmvc.require( arg[i] + json.require[j] );
+                                    }
+                                }, false);
+                                return;
+                            }
+                            extNS = arg[i].split(US);
                             extNSlength = extNS.length;
                             extname = extNS[extNSlength - 1];
+                            /*
                             path = JMVC.vars.baseurl +
-                                (arguments[i] === 'testsuite' ? PATH.test : PATH.ext + arguments[i] + US) +
+                                (arguments[i] === 'testsuite' ? PATH.test : PATH.ext + arg[i] + US) +
                                 extname + (JMVC_PACKED || '') + '.js';
+                            */
+                            path = JMVC.vars.baseurl +
+                                (arg[i] === 'testsuite' ? PATH.test : PATH.ext )+ arg[i] + (JMVC_PACKED || '') + '.js';
                             switch (getmode) {
                                 case 'ajax':
                                     $JMVC.io.get(path, function (jres) {
@@ -767,11 +825,17 @@
                                     head.removeChild(s);
                                 break;
                             }
-                            $JMVC.extensions[arguments[i]] = arguments[i];
+                            $JMVC.extensions[arg[i]] = arg[i];
+            
+            
+            
+            
+            
                         }
                         i += 1;
                     }
                 },
+            
                 /* 
                 * setter, getter, unsetter for $JMVC vars
                 */
@@ -791,6 +855,7 @@
                     $JMVC.vars[name] = content;
                     return $JMVC;
                 },
+            
                 /**
                  * instance new view content or eval a model or controller
                  * @param  {[type]} path   [description]
@@ -918,7 +983,10 @@
             
             Parser = {
                 /**
-                 * microtemplating function (http://ejohn.org/blog/javascript-micro-templating/)
+                 * microtemplating function
+                 * Based on the work of a self-professed javascript ninja 
+                 * http://ejohn.org/blog/javascript-micro-templating/
+                 * 
                  * Parses a string looking for  
                  * @param  {string} content the content that must be parsed
                  * @return {string}         parsed content
@@ -1103,6 +1171,11 @@
                 this.sender = sender;
                 this.listeners = [];
             };
+            
+            /**
+             * [prototype description]
+             * @type {Object}
+             */
             Event.prototype = {
                 /**
                  * [ description]
@@ -1183,7 +1256,8 @@
                  * @return {undefined}
                  */
                 sub : function (topic, cb) {
-                    var i = 0, l;
+                    var i = 0,
+                        l;
                     if (topic instanceof Array) {
                         for (l = topic.length; i < l; i += 1) {
                             this.sub(topic[i], cb);
@@ -1209,7 +1283,7 @@
                         this.topic2cbs = {};
                         return this;
                     }
-                    for (null;   i < l; i += 1) {
+                    for (null; i < l; i += 1) {
                         if (ts[i] in this.topic2cbs) {
                             this.topic2cbs[ts[i]] = [];
                         }
@@ -1340,12 +1414,15 @@
              * @param {[type]} a    [description]
              */
             Interface = function (name, a) {
+                var i, l;
                 this.name = name;
                 this.mthds = [];
                 if (!(a instanceof Array)){
                     throw new Error('An array of strings must be passed to the Interface constructor');
                 }
-                for (var i = 0, l = a.length; i < l; i++) {
+                i = 0;
+                l = a.length;
+                for (null; i < l; i += 1) {
                     (typeof a[i] === 'string') && this.mthds.push(a[i]);
                     console.debug(checkInterface(a[i]));
                 }
@@ -1402,6 +1479,33 @@
             
             console.dir(checkInterface(tee));
              */
+            /*---
+            MONAD
+            
+            ok, that's not a true monad, but it's similar
+            ---*/
+            FunctionQueue = function () {
+                this.queue = [];
+            };
+            FunctionQueue.prototype.add = function (f) {
+                this.queue.push(f)
+            };
+            FunctionQueue.prototype.run = function() {
+                var i = 0,
+                    l = this.queue.length,
+                    args = [].slice.call(arguments, 0),
+                    f;
+            
+                while (i < l){
+                    f = this.queue[i++];
+                    (args instanceof Array) || (args = [args]);
+                    args = f.apply(null, args);
+                }
+                return args;    
+            };
+            FunctionQueue.prototype.reset = function () {
+                this.queue.length = 0;
+            }
             /*--------
             CONTROLLER          
             --------*/
@@ -1435,9 +1539,7 @@
                 }
                 if (typeof name === 'object') {
                     for (j in name) {
-                        if (name.hasOwnProperty(j)) {
-                            this.addRoutes(j, name[j]);
-                        }
+                        name.hasOwnProperty(j) && this.addRoutes(j, name[j]);
                     }
                 }
             };
@@ -1450,9 +1552,7 @@
              */
             Controller.prototype.relocate = function (uri, ms) {
                 W.setTimeout(
-                    function () {
-                        WDL.href = String(uri);
-                    },
+                    function () {WDL.href = String(uri); },
                     ~~(1 * ms) || 0
                 );
             };
@@ -1464,7 +1564,6 @@
              * @return {[type]}         [description]
              */
             Controller.prototype.render = function (content, cback) {
-            
                 ///allow only cback 
                 if (typeof content === 'function') {
                     cback = content;
@@ -1472,8 +1571,8 @@
                 }
                 
                 var tmp_v = new View(content);
-            
                 tmp_v.render(cback && typeof cback === 'function' ? {cback : cback} : null);
+            
                 return this;
             };
             
@@ -1516,11 +1615,11 @@
              */
             View = function (cnt) {
                 // original content
-                
                 this.ocontent = cnt || '';
                 this.content = cnt || '';
-            
-                this.vars = {'baseurl' : $JMVC.vars.baseurl};
+                this.vars = {
+                    baseurl : $JMVC.vars.baseurl
+                };
             };
             
             //
@@ -1595,9 +1694,6 @@
              * @return {[type]}      [description]
              */
             View.prototype.render = function (pars) {
-                
-                
-            
                 var arg = pars || {},
                     //
                     // maybe a callback is passed   
@@ -1631,17 +1727,11 @@
                     trg,
                     may_trg;
             
-                
-            
                 //let pars be the callback function
                 if (typeof pars === 'function') {
                     cback = pars;
                 }
             
-                // parse for other views or $JMVC.vars
-                
-                //cont = Parser.parse(cont);
-                
                 // look for / substitute  vars
                 // in the view (these belongs to the view)
                 
@@ -1656,7 +1746,6 @@
                 cont = Parser.parse(cont);
                 
                 this.content = cont;
-            
             
                 if(!$JMVC.loaded){
             
@@ -1687,9 +1776,9 @@
                         //trigger end of render queue
                         $JMVC.events.endRender();
                     });
-                // yet loaded
-                //happend after load... so can render a view from a render cback 
-                //of a main view
+            
+                // happend after load... so can render a view from a render cback 
+                // of a main view
                 } else {
                     may_trg = target ? $JMVC.dom.find(target) : false;
                     trg = may_trg || WD.body;
@@ -1697,14 +1786,8 @@
                     cback && cback.apply(this, !!argz ? argz : []);
                 }
                 // allow chain
-                // 
-                
-                
                 return this;
-                
             };
-            
-            
             
             ///////////////////////
             // COMMON
@@ -1727,15 +1810,15 @@
             View.prototype.set = Model.prototype.set = Controller.prototype.set = function (vname, vval, force) {
                 var i;
                 switch (typeof vname) {
-                case 'string':
-                    if (!this.vars[vname] || force) {this.vars[vname] = vval; }
+                    case 'string':
+                        if (!this.vars[vname] || force) {this.vars[vname] = vval; }
                     break;
-                case 'object':
-                    for (i in vname) {
-                        if (vname.hasOwnProperty(i) && (!this.vars[i] || vval || force)) {
-                            this.vars[i] = vname[i];
+                    case 'object':
+                        for (i in vname) {
+                            if (vname.hasOwnProperty(i) && (!this.vars[i] || vval || force)) {
+                                this.vars[i] = vname[i];
+                            }
                         }
-                    }
                     break;
                 }
                 return this;
@@ -1770,13 +1853,13 @@
             //          
             dispatched = (function () {
                 var mid = {
-                        'url' : WDL.protocol + US + US + WDL.hostname + WDL.pathname + WDL.search,
-                        'proto' : WDL.protocol,
-                        'host' : WDL.hostname,
-                        'path' : WDL.pathname,
-                        'search' : WDL.search,
-                        'hash' : WDL.hash.substr(1),
-                        'port' : WDL.port ? ':' + WDL.port : ''
+                        url : WDL.protocol + US + US + WDL.hostname + WDL.pathname + WDL.search,
+                        proto : WDL.protocol,
+                        host : WDL.hostname,
+                        path : WDL.pathname,
+                        search : WDL.search,
+                        hash : WDL.hash.substr(1),
+                        port : WDL.port ? ':' + WDL.port : ''
                     },
             
                     // adjust extensions
@@ -1787,32 +1870,25 @@
                     action = false,
                     params = {},
                     lab_val,
-                    ret,
                     i,
                     src,
                     len = 0,
                     baseurl = WDL.protocol + US + US + WDL.hostname;
             
+                // maybe is the case to load testsuite
+                els[0].match(/test_/) && Modules.push('testsuite');
             
-            
-                //maybe is the case to load testsuite
-                if (els[0].match(/test_/)) {
-                    Modules.push('testsuite');
-                }
-            
-                if (WDL.hostname === 'localhost') {
-                    els.shift();
-                }
+                WDL.hostname === 'localhost' && els.shift();
             
                 controller = els.shift() || JMVC_DEFAULT.controller;
                 
-                //check extrapath for controller
+                // check extrapath for controller
                 if (!!controller.match(/_/)) {
                     controller_prepath_parts = controller.split('_');
                     controller = controller_prepath_parts.pop();
                     controller_prepath = controller_prepath_parts.join(US) + US;
-            
                 }
+            
                 action = els.shift() || JMVC_DEFAULT.action;
                 len = els.length;
             
@@ -1829,23 +1905,22 @@
                     for (i = 0, len = els.length; i < len; i += 1) {
                         lab_val = els[i].split('=');
                         // do not override extra path params
-                        if (!params[lab_val[0]]) {params[lab_val[0]] = lab_val[1]; }
+                        if (!params[lab_val[0]]) {
+                            params[lab_val[0]] = lab_val[1];
+                        }
                     }
                 }
-                
             
-                ret = {
-                    'controller' : controller.replace(/\//g, ""),
-                    'controller_prepath' : controller_prepath,
-                    'action' : action.replace(/\//g, ""),
-                    'params' : params,
-                    'baseurl' : baseurl,
-                    'port' : mid.port,
-                    "search" : mid.search,
-                    'hash' : mid.hash
+                return {
+                    controller : controller.replace(/\//g, ""),
+                    controller_prepath : controller_prepath,
+                    action : action.replace(/\//g, ""),
+                    params : params,
+                    baseurl : baseurl,
+                    port : mid.port,
+                    search : mid.search,
+                    hash : mid.hash
                 };
-                //ret.controller = jmvc_normalize(ret.controller);
-                return ret;
             })();
             /*--------
             JMVC outer
@@ -1899,6 +1974,7 @@
                 Event : Event,
                 Errors : Errors,
                 Interface : Interface,
+                FunctionQueue : FunctionQueue,
                 Pipe : Pipe,
                 Promise : Promise,
             
@@ -1956,7 +2032,7 @@
                  */
                 console : function(){
                     if(! ('core/console' in $JMVC.extensions)){
-                        $JMVC.require('core/console');
+                        $JMVC.require('core/console/console');
                     }
                     JMVC.console.toggle();
                 },
@@ -1970,7 +2046,7 @@
                     if (!('elements' in JMVC.xdoc)) {
                         JMVC.xdoc.elements = {};
                     }
-                    !('core/xdoc' in $JMVC.extensions) && $JMVC.require('core/xdoc');
+                    !('core/xdoc/xdoc' in $JMVC.extensions) && $JMVC.require('core/xdoc/xdoc');
                     if (!(ext in JMVC.xdoc.elements)) {
                         try {
                             JMVC.io.ajcall(
@@ -1982,7 +2058,6 @@
                                         console.debug('doc : ' + doc)
                                     },
                                     error : function (e) {alert('errore'); }
-            
                                 }
                             );
                         } catch (e){}
@@ -2053,7 +2128,7 @@
                     } catch (e2) {continue; }
                 }
                 if (!xhr) {
-                    JMVC.debug('No way to initialize hxr');
+                    JMVC.debug('No way to initialize XHR');
                 }
             }
             JMVC.gc(IEfuckIds, i, len);
@@ -2075,7 +2150,7 @@
                 cb_error = (options && options.error) || function () {},
                 cb_abort = (options && options.abort) || function () {},
                 sync = options && options.sync,
-                data = (options && options.data) || {},
+                data = (options && options.data) || false,
                 type = (options && options.type) || 'text/html',
                 cache = (options && options.cache !== undefined) ? options.cache : true,
                 targetType = type === 'xml' ?  'responseXML' : 'responseText',
@@ -2239,14 +2314,17 @@
          * @return {[type]}       [description]
          */
         getJson : function (uri, cback, data) {
-            var r = _.io.ajcall(uri, {
+    
+            return _.io.ajcall(uri, {
                 type : 'json',
                 method: 'GET',
                 sync : false,
-                cback :cback || function () {},
+                cback : function (r) {
+                    var j = (W.JSON && W.JSON.parse) ? JSON.parse(r) : JMVC.jeval('(' + r + ')');
+                    cback(j);
+                },
                 data : data
             });
-            return (W.JSON && W.JSON.parse) ? JSON.parse(r) : JMVC.jeval('(' + r + ')');
         },
     
         /**
@@ -2480,6 +2558,12 @@
          * @return {[type]}             [description]
          */
         addClass : function (elem, addingClass) {
+            if (JMVC.util.isArray(elem)) {
+                for (var i = 0, l = elem.length; i < l; i++) {
+                    JMVC.dom.addClass(elem[i], addingClass);
+                }
+                return;
+            } 
             var cls = !!(elem.className) ? elem.className.split(' ') : [];
             if (JMVC.array.find(cls, addingClass) < 0) {
                 cls.push(addingClass);
@@ -2992,6 +3076,12 @@
          * @return {[type]}     [description]
          */
         removeClass : function (el, cls) {
+            if (JMVC.util.isArray(el)) {
+                for (var i = 0, l = el.length; i < l; i++) {
+                    JMVC.dom.removeClass(el[i], cls);
+                }
+                return;
+            }
             var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
             el.className = el.className.replace(reg, ' ');
             return this;
@@ -3111,9 +3201,9 @@
                 var nid = JMVC.util.uniqueid + '';
                 el[_.events.nodeAttrForIndex] = nid;
     
-                //store for inverse search
+                // store for inverse search
                 _.events.nodeidMap[nid] = el;
-                //console.debug('given id ' + el[_.events.nodeAttrForIndex] + ' to ', el);
+                //console.debug('given id ' + nid + ' to ', el);
             }
             return el[_.events.nodeAttrForIndex];
         },
@@ -3125,9 +3215,10 @@
          * @param  {Function} cb   the callback executed when event is fired on node
          * @return {undefined}
          */
+        /*
         bind : function (el, evnt, cb) {
             //basic delegation
-            var nodeid = _.events.nodeid(el); 
+            var nid = _.events.nodeid(el); 
     
             if (W.addEventListener) {
                 el.addEventListener(evnt, cb, false);
@@ -3140,13 +3231,52 @@
             if (!(evnt in _.events.bindings)) {
                 _.events.bindings[evnt] = {};
             }
-            if (!(nodeid in _.events.bindings[evnt])) {
-                _.events.bindings[evnt][nodeid] = [];
+            if (!(nid in _.events.bindings[evnt])) {
+                _.events.bindings[evnt][nid] = [];
             }
             //store for unbinding
-            _.events.bindings[evnt][nodeid].push(cb);
+            _.events.bindings[evnt][nid].push(cb);
             return true;
-        },
+        },*/
+    
+    
+        bind : (function (){
+            function loopcall(el, cback, args){
+                if (el instanceof Array) {
+                    for (var i = 0, l = el.length; i < l; i += 1) {
+                        el[i][cback].apply(el[i], args || []);
+                    }
+                } else {
+                    el[cback].apply(el, args || []);
+                }
+            }
+            function store(el, evnt, cb) {
+                var nid = _.events.nodeid(el); 
+                if (!(evnt in _.events.bindings)) {
+                    _.events.bindings[evnt] = {};
+                }
+                if (!(nid in _.events.bindings[evnt])) {
+                    _.events.bindings[evnt][nid] = [];
+                }
+                //store for unbinding
+                _.events.bindings[evnt][nid].push(cb);
+                return true;
+            }
+            
+            if ('addEventListener' in W) {
+                return function (el, evnt, cb) {
+                    loopcall(el, 'addEventListener', [evnt, cb, false]);
+                    store(el, evnt, cb);
+                };
+            } else if ('attachEvent' in W) {
+                return function (el, evnt, cb) {
+                    loopcall(el, 'attachEvent', ['on' + evnt, cb]);
+                    store(el, evnt, cb);
+                };
+            } else {
+                throw new Error('No straight way to bind an event');
+            }
+        })(),
         
         /**
          * unbind the passed cb or all function 
@@ -3175,7 +3305,7 @@
             //
             //  loop if a function is not given
             if (typeof cb === 'undefined') {
-                tmp = _.events.bindings[evnt][_.events.nodeid(el)];
+                tmp = _.events.bindings[evnt][nodeid];
                 l = tmp.length;
                 /*the element will be removed at the end of the real unbind*/
                 while (l--) {
@@ -3189,7 +3319,6 @@
             if (index == -1) {
                 return false;
             }
-            
     
             if (el.removeEventListener) {
                 el.removeEventListener(evnt, cb, false);
@@ -4237,7 +4366,7 @@
             var self = this;
             return str.replace(/&(.+?);/g,
                 function(str, ent){
-                    return String.fromCharCode( ent[0]!='#' ? _.string.entities[ent] : ent[1]=='x' ? parseInt(ent.substr(2),16): parseInt(ent.substr(1)) );
+                    return String.fromCharCode( ent[0] !== '#' ? _.string.entities[ent] : ent[1] === 'x' ? parseInt(ent.substr(2), 16): parseInt(ent.substr(1), 10) );
                 }
             );
         },
