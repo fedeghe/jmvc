@@ -1,0 +1,9 @@
+style=”-webkit-user-select: none; -moz-user-select: none; user-select: none;”
+
+document.getElementById(“c”).addEventListener(“mousemove”,function (event) { event.preventDefault(); });
+
+onselectstart=”return false;”
+draggable=”false”
+
+
+
