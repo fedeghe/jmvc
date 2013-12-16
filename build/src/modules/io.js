@@ -24,7 +24,7 @@ _.io = {
                 } catch (e2) {continue; }
             }
             if (!xhr) {
-                JMVC.debug('No way to initialize hxr');
+                JMVC.debug('No way to initialize XHR');
             }
         }
         JMVC.gc(IEfuckIds, i, len);
@@ -46,7 +46,7 @@ _.io = {
             cb_error = (options && options.error) || function () {},
             cb_abort = (options && options.abort) || function () {},
             sync = options && options.sync,
-            data = (options && options.data) || {},
+            data = (options && options.data) || false,
             type = (options && options.type) || 'text/html',
             cache = (options && options.cache !== undefined) ? options.cache : true,
             targetType = type === 'xml' ?  'responseXML' : 'responseText',
@@ -210,14 +210,17 @@ JMVC.io = {
      * @return {[type]}       [description]
      */
     getJson : function (uri, cback, data) {
-        var r = _.io.ajcall(uri, {
+
+        return _.io.ajcall(uri, {
             type : 'json',
             method: 'GET',
             sync : false,
-            cback :cback || function () {},
+            cback : function (r) {
+                var j = (W.JSON && W.JSON.parse) ? JSON.parse(r) : JMVC.jeval('(' + r + ')');
+                cback(j);
+            },
             data : data
         });
-        return (W.JSON && W.JSON.parse) ? JSON.parse(r) : JMVC.jeval('(' + r + ')');
     },
 
     /**
