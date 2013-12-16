@@ -55,7 +55,8 @@ Channel.prototype = {
      * @return {undefined}
      */
     sub : function (topic, cb) {
-        var i = 0, l;
+        var i = 0,
+            l;
         if (topic instanceof Array) {
             for (l = topic.length; i < l; i += 1) {
                 this.sub(topic[i], cb);
@@ -81,7 +82,7 @@ Channel.prototype = {
             this.topic2cbs = {};
             return this;
         }
-        for (null;   i < l; i += 1) {
+        for (null; i < l; i += 1) {
             if (ts[i] in this.topic2cbs) {
                 this.topic2cbs[ts[i]] = [];
             }
