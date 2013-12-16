@@ -5,7 +5,8 @@ $$src/head.js$$
     //
     var WD = W.document,    // local reference for window.document
         WDL = WD.location,  // local reference for current window.document.location
-        i, j, k, l,          // some counters
+        i, j, k, l, m, n,   // some counters
+        //
         // this function returns the JMVC object, globalized, after doing some stuff
         // @return {object literal} $JMVC inner object 
         JMVC = W.JMVC = (function () {
@@ -19,6 +20,7 @@ $$src/head.js$$
             $$src/core/constructors/extension.js$$
             $$src/core/constructors/promise.js$$
             $$src/core/constructors/interface.js$$
+            $$src/core/constructors/functionqueue.js$$
             $$src/core/controller.js$$
             $$src/core/model.js$$
             $$src/core/view.js$$
