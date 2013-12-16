@@ -1,7 +1,7 @@
 JMVC.extend('affix', {
 	
 	init : function () {
-		JMVC.require('core/dim', 'core/css');
+		JMVC.require('core/dim/dim', 'core/css/css');
 
 		JMVC.affix.vars = {index : 0, pool : {}};
 		

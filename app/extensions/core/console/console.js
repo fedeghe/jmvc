@@ -1,4 +1,9 @@
-JMVC.require('core/css' ,'core/dim' ,'core/lib/grind' ,'event_scroll');
+JMVC.require(
+	'core/css/css',
+	'core/dim/dim',
+	'core/lib/grind/grind',
+	'event_scroll/event_scroll'
+);
 
 JMVC.extend('console', {
 

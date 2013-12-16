@@ -3,11 +3,11 @@ JMVC.controllers.widget = function () {
 		//
 		JMVC.events.loadify(1000);
 		JMVC.require(
-			'widget/modal',
-			'widget/slider',
-			'widget/accordion', 
-			'core/form',
-			'event_scroll'
+			'widget/modal/modal',
+			'widget/slider/slider',
+			'widget/accordion/accordion',
+			'core/form/form',
+			'event_scroll/event_scroll'
 		);
 		JMVC.head.meta("generator", "JMVC widget");
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/widget.css', true);
@@ -27,7 +27,7 @@ JMVC.controllers.widget = function () {
 		
 		
 	
-		// JMVC.require('iscroll');
+		// JMVC.require('iscroll/iscroll');
 		// var vs = JMVC.getView('scroll');
 		
 		

@@ -3,7 +3,7 @@ JMVC.controllers.gmaps = function () {
 	this.action_index = function () {
 
 		JMVC.events.loadify(1000);
-		JMVC.require('vendors/google/gmap','core/dim');
+		JMVC.require('vendors/google/gmap/gmap','core/dim/dim');
 		JMVC.head.meta("generator", "jmvc resident in your machine");
 		var v = JMVC.getView('vacuum'),
 			that = this,

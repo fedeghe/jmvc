@@ -1,6 +1,6 @@
 JMVC.require(
-	'core/color',
-	'core/sniffer'
+	'core/color/color',
+	'core/sniffer/sniffer'
 );
 
 JMVC.extend('css', {

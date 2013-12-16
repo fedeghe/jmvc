@@ -1,4 +1,4 @@
-JMVC.require('core/css', 'core/dim', 'event_scroll', 'widget/tabs');
+JMVC.require('core/css/css', 'core/dim/dim', 'event_scroll/event_scroll', 'widget/tabs/tabs');
 
 JMVC.extend('xdoc', {
 	init : function () {

@@ -1,4 +1,4 @@
-JMVC.require('core/css');
+JMVC.require('core/css/css');
 JMVC.extend('border', {
 	init : function () {
 		JMVC.head.addstyle(JMVC.vars.extensions + 'core/lib/border/default.css', true, false);

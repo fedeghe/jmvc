@@ -50,21 +50,21 @@ JMVC.extend('bin', {
 
 
 /*
-JMVC.require('core/lib/bin')
+JMVC.require('core/lib/bin/bin')
 var bin = JMVC.bin.string2binString('foo');
 console.debug(bin)
 JMVC.bin.binString2String(bin);
 
 
 
-JMVC.require('core/lib/bin');
+JMVC.require('core/lib/bin/bin');
 var code = JMVC.bin.code2cry('(function (n){alert("hello " + n); })("JMVC")');
 console.debug(code);
 JMVC.bin.eval(code)
 
 
 //END
-JMVC.require('core/lib/bin');
+JMVC.require('core/lib/bin/bin');
 var arrcode = JMVC.bin.code2cry('alert("hello");');
 console.debug(arrcode);
 JMVC.bin.eval(arrcode)

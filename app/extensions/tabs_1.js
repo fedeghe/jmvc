@@ -1,4 +1,4 @@
-JMVC.require('core/css');
+JMVC.require('core/css/css');
 JMVC.extend('tabs',{
 	tabs : {},
 	els2render : [],

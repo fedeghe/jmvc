@@ -1,4 +1,4 @@
-JMVC.require('event_scroll');
+JMVC.require('event_scroll/event_scroll');
 
 
 JMVC.extend('form', {

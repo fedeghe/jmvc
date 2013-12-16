@@ -3,10 +3,10 @@ JMVC.controllers.pub = function () {
 	this.action_index = function () {
 
 		JMVC.require(
-			'core/codeview/codehl',
-			'core/codeview/script',
-			'core/pub/xvents',
-			'core/css'
+			'core/codeview/codehl/codehl',
+			'core/codeview/script/script',
+			'core/pub/xvents/xvents',
+			'core/css/csss'
 		);
 
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/pub.css');
@@ -77,7 +77,7 @@ JMVC.controllers.pub = function () {
 
 		JMVC.events.loadify(500);
 
-		JMVC.require('core/pub/xvents');
+		JMVC.require('core/pub/xvents/xvents');
 
 		var v = JMVC.getView('pub/xvents'),
 			xvents0 = JMVC.xvents.create(),
@@ -130,7 +130,7 @@ JMVC.controllers.pub = function () {
 
 		JMVC.events.loadify(500);
 
-		JMVC.require('core/pub/xpub');
+		JMVC.require('core/pub/xpub/xpub');
 
 		var v = JMVC.getView('pub/xpub'),
 			xpub = JMVC.xpub.create();
@@ -162,7 +162,7 @@ JMVC.controllers.pub = function () {
 	this.action_zpub = function () {
 
 		JMVC.events.loadify(500);
-		JMVC.require('core/pub/zpub');
+		JMVC.require('core/pub/zpub/zpub');
 
 		var v = JMVC.getView('pub/zpub'),
 			zpub = JMVC.zpub.create('data-id');
@@ -187,7 +187,7 @@ JMVC.controllers.pub = function () {
 /*
 	this.hpub = function () {
 		JMVC.events.loadify(500);
-		JMVC.require('core/pub/hpub');
+		JMVC.require('core/pub/hpub/hpub');
 		JMVC.head.meta("generator", "jmvc resident in your machine");
 		var v = JMVC.getView('pub/hpub');
 		

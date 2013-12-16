@@ -1,9 +1,9 @@
-JMVC.require('core/lib/border', 'widget/snow');
+JMVC.require('core/lib/border/border', 'widget/snow/snow');
 JMVC.controllers.grind = function () {
 
 	this.action_index = function () {
 		JMVC.events.loadify(500);
-		JMVC.require('core/lib/grind', 'core/dim');
+		JMVC.require('core/lib/grind/grind', 'core/dim/dim');
 		JMVC.head.meta("generator", "jmvc resident in your machine");
 		
 		var config  = [
@@ -86,7 +86,7 @@ JMVC.controllers.grind = function () {
 
 	this.action_direct = function () {
 		JMVC.events.loadify(500);
-		JMVC.require('core/lib/grind', 'core/dim');
+		JMVC.require('core/lib/grind/grind', 'core/dim/dim');
 		JMVC.head.meta("generator", "jmvc resident in your machine");
 
 				

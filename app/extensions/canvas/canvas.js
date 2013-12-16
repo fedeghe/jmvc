@@ -1,4 +1,4 @@
-JMVC.require('core/lib/math/dd');
+JMVC.require('core/lib/math/dd/dd');
 
 JMVC.extend('canvas', {
 	create : function (container, id, w, h, bgcolor) {

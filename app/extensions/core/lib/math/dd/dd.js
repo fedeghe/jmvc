@@ -187,7 +187,7 @@ JMVC.prototipize(JMVC.dd.Polygon, {
 
 
 /*
-JMVC.require('core/lib/dd');
+JMVC.require('core/lib/dd/dd');
 
 var p1 = new JMVC.dd.Point(0,0),
     p2 = new JMVC.dd.Point(10,0),

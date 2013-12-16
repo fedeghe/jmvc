@@ -1,4 +1,4 @@
-JMVC.require('core/obj/date');
+JMVC.require('core/obj/date/date');
 		
 JMVC.controllers.date = function() {
 	this.action_i = function(){

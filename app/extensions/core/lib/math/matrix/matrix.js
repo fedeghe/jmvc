@@ -1,6 +1,6 @@
 JMVC.require(
-	'core/lib/math',
-	'core/lib/math/vector'
+	'core/lib/math/math',
+	'core/lib/math/vector/vector'
 );
 
 JMVC.extend('matrix', {
@@ -215,7 +215,7 @@ JMVC.prototipize(JMVC.matrix.KKmatrix, {
 	
 });
 /*
-JMVC.require('core/lib/math/matrix');
+JMVC.require('core/lib/math/matrix/matrix');
 JMVC.events.delay(function(){
 	var m = new JMVC.matrix.KKmatrix([1,2,3,44,5,60,7,8,9]);
 	console.debug(m.det(), m.sarrus());
@@ -226,7 +226,7 @@ JMVC.events.delay(function(){
 
 /*
 
-JMVC.require('core/lib/math/matrix');
+JMVC.require('core/lib/math/matrix/matrix');
 var m = new JMVC.matrix.KKmatrix([1,2,3,4,5,6,7,8,9]);
 m.transpose()
 
@@ -237,7 +237,7 @@ m.transpose()
  *
  *
  *
-JMVC.require('core/lib/matrix');
+JMVC.require('core/lib/matrix/matrix');
 var m = new JMVC.matrix.KKmatrix([1,2,3,4,5,6,7,8,9]);
 console.dir(m)
 m.set(0,2, 100)
@@ -248,7 +248,7 @@ console.dir(m)
 *
 *
 *
-JMVC.require('core/lib/math/matrix');
+JMVC.require('core/lib/math/matrix/matrix');
 var m1 = new JMVC.matrix.KKmatrix([1,2,1,4]);
 //
 var inv = m1.invert();

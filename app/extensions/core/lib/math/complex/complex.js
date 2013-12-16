@@ -1,4 +1,4 @@
-JMVC.require('core/lib/math');
+JMVC.require('core/lib/math/math');
 JMVC.extend('complex', {
 	Complex : function (re, im) {
 		this._re = re;

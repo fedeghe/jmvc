@@ -4,7 +4,7 @@
 JMVC.extend('animator', {
 
 	init : function (){
-		JMVC.require('core/css');	
+		JMVC.require('core/css/css');	
 	},
 
 	//follow implicit path

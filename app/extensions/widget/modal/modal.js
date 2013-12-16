@@ -1,4 +1,4 @@
-JMVC.require('core/dim', 'core/css', 'event_scroll');
+JMVC.require('core/dim/dim', 'core/css/css', 'event_scroll/event_scroll');
 JMVC.extend('modal',{
 	id : 0,
 	open : function(content, title, width, height, options){

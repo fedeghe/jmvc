@@ -29,9 +29,9 @@ JMVC.extend('test', {
 	'init' : function () {
 		'use strict';
 		JMVC.require(
-			'core/sniffer'
-			,'core/fx'
-			,'core/lib/shl'
+			'core/sniffer/sniffer'
+			,'core/fx/fx'
+			,'core/lib/shl/shl'
 		);
 	},
 

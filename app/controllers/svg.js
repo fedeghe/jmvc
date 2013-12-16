@@ -3,7 +3,7 @@ JMVC.controllers.svg = function () {
 	this.action_index = function () {
 		//
 		JMVC.events.loadify(50);
-		JMVC.require('core/lib/svg','core/dim');
+		JMVC.require('core/lib/svg/svg','core/dim/dim');
 		JMVC.head.meta("generator", "jmvc resident in your machine");
 		var v = JMVC.getView('vacuum'),
 			that = this,

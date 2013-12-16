@@ -4,13 +4,13 @@ JMVC.controllers.api = function () {
 
 	this.action_index = function () {
 		JMVC.require(
-			'widget/tabs',
-			'core/codeview/script',
-			'core/xmlparser',
-			'core/mobile',
-			'core/responsive/basic',
-			'widget/countdown',
-			'vendors/github/forkme'
+			'widget/tabs/tabs',
+			'core/codeview/script/script',
+			'core/xmlparser/xmlparser',
+			'core/mobile/mobile',
+			'core/responsive/basic/basic',
+			'widget/countdown/countdown',
+			'vendors/github/forkme/forkme'
 		);
 		JMVC.events.loadify(500);
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/core/api.css', true, false);// parsed

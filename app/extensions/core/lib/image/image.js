@@ -9,7 +9,7 @@
 http://www.jmvc.dev/demo/img
 //////////
 
-JMVC.require('core/lib/image');
+JMVC.require('core/lib/image/image');
 
 var flt = JMVC.image.createFilter(JMVC.dom.find('img'));
 //flt.filterImage(flt.filters.brightness, -40);
@@ -68,6 +68,7 @@ JMVC.extend('image', {
 
 
         function filteredImage(imgt) {
+
             this.tag = imgt;
             this.canvas = JMVC.WD.createElement('canvas');
             this.ctx = this.canvas.getContext('2d');
@@ -78,6 +79,7 @@ JMVC.extend('image', {
             this.tag.style.display = 'none';
             
             this.canvas.style.display = '';
+            //should work with img and canvas tooo
             this.ctx.drawImage(this.tag, 0, 0);
             this.active = true;
         }
@@ -271,7 +273,7 @@ JMVC.extend('image', {
 
     /*
     
-    JMVC.require('core/lib/image');
+    JMVC.require('core/lib/image/image');
     var img = JMVC.dom.find('img')[4];
     JMVC.image.filter.filterImg(
         JMVC.image.filter.filters.grayscale,
@@ -291,7 +293,7 @@ JMVC.extend('image', {
         /*
         // in home
         // http://www.jmvc.dev/demo/img
-        JMVC.require('core/lib/image');
+        JMVC.require('core/lib/image/image');
         var img = JMVC.dom.find('img'),
             code = JMVC.image.get64(img.length ? img[0] : img);
         JMVC.dom.add(JMVC.WD.body, 'img', {src : 'data:image/jpg;base64,' + code});

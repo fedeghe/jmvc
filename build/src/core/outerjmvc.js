@@ -50,6 +50,7 @@ $JMVC = {
     Event : Event,
     Errors : Errors,
     Interface : Interface,
+    FunctionQueue : FunctionQueue,
     Pipe : Pipe,
     Promise : Promise,
 
@@ -107,7 +108,7 @@ $JMVC = {
      */
     console : function(){
         if(! ('core/console' in $JMVC.extensions)){
-            $JMVC.require('core/console');
+            $JMVC.require('core/console/console');
         }
         JMVC.console.toggle();
     },
@@ -121,7 +122,7 @@ $JMVC = {
         if (!('elements' in JMVC.xdoc)) {
             JMVC.xdoc.elements = {};
         }
-        !('core/xdoc' in $JMVC.extensions) && $JMVC.require('core/xdoc');
+        !('core/xdoc/xdoc' in $JMVC.extensions) && $JMVC.require('core/xdoc/xdoc');
         if (!(ext in JMVC.xdoc.elements)) {
             try {
                 JMVC.io.ajcall(
@@ -133,7 +134,6 @@ $JMVC = {
                             console.debug('doc : ' + doc)
                         },
                         error : function (e) {alert('errore'); }
-
                     }
                 );
             } catch (e){}

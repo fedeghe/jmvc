@@ -117,7 +117,7 @@ JMVC.prototipize(JMVC.vector.Kvector, {
 	
 });
 /*
-JMVC.require('core/lib/math/vector');
+JMVC.require('core/lib/math/vector/vector');
 var v1 = new JMVC.vector.Kvector([1,2,3]),
 	v2 = new JMVC.vector.Kvector([4,5,6]);
 v2.sub(v1).print()
@@ -125,7 +125,7 @@ v2.sub(v1).print()
 
 
 /*
-JMVC.require('core/lib/math/vector');
+JMVC.require('core/lib/math/vector/vector');
 var v1 = new JMVC.vector.Kvector([1,0,0,0]),
     v2 = new JMVC.vector.Kvector([61,0,0,0]),
     v3 = new JMVC.vector.Kvector([-61,0,0,0]),

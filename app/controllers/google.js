@@ -3,7 +3,7 @@ JMVC.controllers.google = function () {
 	this.action_index = function () {
 
 		JMVC.events.loadify(1000);
-		JMVC.require('plotter', 'core/obj/bucket');
+		JMVC.require('plotter/plotter', 'core/obj/bucket/bucket');
 		JMVC.head.meta("generator", "jmvc resident in your machine");
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/logoogle.css');
 

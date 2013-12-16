@@ -1,7 +1,7 @@
 JMVC.controllers.bucket = function () {
 
 	this.action_index = function () {
-		JMVC.require('core/obj/bucket');
+		JMVC.require('core/obj/bucket/bucket');
 		
 		var a = new JMVC.bucket.create();
 		

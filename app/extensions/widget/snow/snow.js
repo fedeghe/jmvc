@@ -1,4 +1,4 @@
-JMVC.require('core/css', 'core/dim');
+JMVC.require('core/css/css', 'core/dim/dim');
 
 JMVC.extend('snow', {
 

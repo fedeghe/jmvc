@@ -3,14 +3,14 @@ JMVC.controllers.info = function () {
 		JMVC.events.loadify(500);
 		
 		JMVC.require(
-			'core/codeview/script'
-			,'core/responsive/basic'
-			,'vendors/google/analytics'
-			,'core/sniffer'
-			,'core/mobile'
-			,'core/dim'
-			,'core/css'
-			,'vendors/github/forkme'
+			'core/codeview/script/script'
+			,'core/responsive/basic/basic'
+			,'vendors/google/analytics/analytics'
+			,'core/sniffer/sniffer'
+			,'core/mobile/mobile'
+			,'core/dim/dim'
+			,'core/css/css'
+			,'vendors/github/forkme/forkme'
 		);
 		var main  = JMVC.getView('info/info'),
 			readme = JMVC.getView('info/readme'),

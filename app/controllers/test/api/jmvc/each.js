@@ -3,7 +3,7 @@ JMVC.controllers.each = function() {
 		
 		JMVC.events.loadify(500);
 
-		JMVC.head.lib('jquery');
+		//JMVC.head.lib('jquery');
 		
 		this.render(function test(){
 			"use strict";
@@ -96,12 +96,12 @@ JMVC.controllers.each = function() {
 			JMVC.test.describe('With Array');
 			JMVC.test.testTime('native for (array)', nativeforarray, times, [big]);
 			JMVC.test.testTime('native forEach (array)', nativeforeach, times, [big]);
-			JMVC.test.testTime('jQuery.each (array)', jqueryeach, times, [big]);
+			//JMVC.test.testTime('jQuery.each (array)', jqueryeach, times, [big]);
 			JMVC.test.testTime('JMVC.each (array)', jmvceach, times, [big]);
 
 			JMVC.test.describe('With Object literal');
 			JMVC.test.testTime('native for (obj literal)', nativeforobj, times, [obig]);
-			JMVC.test.testTime('jQuery.each (obj literal)', jqueryeach, times, [obig]);
+			//JMVC.test.testTime('jQuery.each (obj literal)', jqueryeach, times, [obig]);
 			JMVC.test.testTime('JMVC.each (obj literal)', jmvceach, times, [obig]);
 			
 			

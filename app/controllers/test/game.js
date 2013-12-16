@@ -2,7 +2,7 @@ JMVC.controllers.game = function() {
 
 	this.action_index = function(){
 
-		JMVC.require('core/lib/game');
+		JMVC.require('core/lib/game/game');
 		
 		JMVC.getModel('game/Rect');
 		

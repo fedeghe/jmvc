@@ -1,6 +1,6 @@
 JMVC.controllers.jmaps = function () {
 	this.action_index = function () {
-		JMVC.require('core/lib/jmap');
+		JMVC.require('core/lib/jmap/jmap');
 		var index = JMVC.getView('zero'),
 			jmap = false;
 		index.render({cback : function(){

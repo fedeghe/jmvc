@@ -11,18 +11,18 @@ JMVC.controllers.index = function () {
 			logoimg = 'jmvc_m1.svg';
 		JMVC.require(
 			/*'core/sniffer',*/
-			'core/obj/date'
-			, 'core/i18n'
-			, 'core/responsive/basic'
-			, 'core/mobile'
-			, 'core/color'
-			, 'core/css'
-			, 'core/dim'
-			, 'core/cookie'
-			, 'vendors/google/analytics'
-			, 'core/fx'
-			, 'widget/lang'
-			, 'vendors/github/forkme'
+			'core/obj/date/date'
+			, 'core/i18n/i18n'
+			, 'core/responsive/basic/basic'
+			, 'core/mobile/mobile'
+			, 'core/color/color'
+			, 'core/css/css'
+			, 'core/dim/dim'
+			, 'core/cookie/cookie'
+			, 'vendors/google/analytics/analytics'
+			, 'core/fx/fx'
+			, 'widget/lang/lang'
+			, 'vendors/github/forkme/forkme'
 		);
 		
 		
@@ -212,7 +212,7 @@ JMVC.controllers.index = function () {
 	
 	
 	this.action_video = function () {
-		JMVC.require('core/html5');
+		JMVC.require('core/html5/html5');
 		var index = JMVC.getView('home/index'),
 			video = JMVC.html5.video({
 				width : 240,
@@ -232,7 +232,7 @@ JMVC.controllers.index = function () {
 
 
 	this.action_audio = function () {
-		JMVC.require('core/html5');
+		JMVC.require('core/html5/html5');
 		var index = JMVC.getView('home/index'),
 			audio = JMVC.html5.audio({
 				type:'ogv',
@@ -298,7 +298,7 @@ JMVC.controllers.index = function () {
 
 
 	this.action_gmaps = function () {	
-		JMVC.require('vendors/google/gmap2', 'core/dim');
+		JMVC.require('vendors/google/gmap2/gmap2', 'core/dim/dim');
 		this.render(function (){
 			
 			var dims = JMVC.dim.getViewportSize(),
