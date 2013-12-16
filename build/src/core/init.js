@@ -107,12 +107,13 @@ var $JMVC,
     Errors,
     Channel,
     Extension,
+    FunctionQueue,
     //
     /**
      * in case some modules need to be always loaded here's the place to set them
      * @type {Array}
      */
-    Modules = ['vendors/google/analytics', 'core/cookie'],
+    Modules = ['vendors/google/analytics/analytics', 'core/cookie/cookie'],
     //
     /**
      * preloader
@@ -143,7 +144,7 @@ var $JMVC,
     // getmode used in the require function
     // ajax   : use xhr to get the source and evals
     // script : creates a script tag with the right url to the source
-    // note : seems like script mode load faster but
+    // NOTE > it seems like script mode load faster but ...
     getmode = 'ajax'; // {script, ajax}
     //
     // ===========================================
