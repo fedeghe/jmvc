@@ -268,7 +268,7 @@ JMVC.string = {
         var self = this;
         return str.replace(/&(.+?);/g,
             function(str, ent){
-                return String.fromCharCode( ent[0]!='#' ? _.string.entities[ent] : ent[1]=='x' ? parseInt(ent.substr(2),16): parseInt(ent.substr(1)) );
+                return String.fromCharCode( ent[0] !== '#' ? _.string.entities[ent] : ent[1] === 'x' ? parseInt(ent.substr(2), 16): parseInt(ent.substr(1), 10) );
             }
         );
     },
