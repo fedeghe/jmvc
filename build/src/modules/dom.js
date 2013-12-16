@@ -32,6 +32,12 @@ JMVC.dom = {
      * @return {[type]}             [description]
      */
     addClass : function (elem, addingClass) {
+        if (JMVC.util.isArray(elem)) {
+            for (var i = 0, l = elem.length; i < l; i++) {
+                JMVC.dom.addClass(elem[i], addingClass);
+            }
+            return;
+        } 
         var cls = !!(elem.className) ? elem.className.split(' ') : [];
         if (JMVC.array.find(cls, addingClass) < 0) {
             cls.push(addingClass);
@@ -544,6 +550,12 @@ JMVC.dom = {
      * @return {[type]}     [description]
      */
     removeClass : function (el, cls) {
+        if (JMVC.util.isArray(el)) {
+            for (var i = 0, l = el.length; i < l; i++) {
+                JMVC.dom.removeClass(el[i], cls);
+            }
+            return;
+        }
         var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
         el.className = el.className.replace(reg, ' ');
         return this;
