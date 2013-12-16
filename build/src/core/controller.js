@@ -31,9 +31,7 @@ Controller.prototype.addRoutes = function (name, val) {
     }
     if (typeof name === 'object') {
         for (j in name) {
-            if (name.hasOwnProperty(j)) {
-                this.addRoutes(j, name[j]);
-            }
+            name.hasOwnProperty(j) && this.addRoutes(j, name[j]);
         }
     }
 };
@@ -46,9 +44,7 @@ Controller.prototype.addRoutes = function (name, val) {
  */
 Controller.prototype.relocate = function (uri, ms) {
     W.setTimeout(
-        function () {
-            WDL.href = String(uri);
-        },
+        function () {WDL.href = String(uri); },
         ~~(1 * ms) || 0
     );
 };
@@ -60,7 +56,6 @@ Controller.prototype.relocate = function (uri, ms) {
  * @return {[type]}         [description]
  */
 Controller.prototype.render = function (content, cback) {
-
     ///allow only cback 
     if (typeof content === 'function') {
         cback = content;
@@ -68,8 +63,8 @@ Controller.prototype.render = function (content, cback) {
     }
     
     var tmp_v = new View(content);
-
     tmp_v.render(cback && typeof cback === 'function' ? {cback : cback} : null);
+
     return this;
 };
 
