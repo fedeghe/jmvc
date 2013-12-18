@@ -8,7 +8,7 @@
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *          glued with 32 files on 18/12/2013 at 18:34:46
+ *          glued with 32 files on 18/12/2013 at 18:41:27
  *
  * All rights reserved.
  *
@@ -3126,6 +3126,12 @@
             return el;
         },
     
+        /**
+         * [toggleClass description]
+         * @param  {[type]} el  [description]
+         * @param  {[type]} cls [description]
+         * @return {[type]}     [description]
+         */
         toggleClass : function (el, cls) {
             this[this.hasClass(el, cls) ? 'removeClass' : 'addClass'](el, cls);
         },
