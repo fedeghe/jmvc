@@ -528,12 +528,12 @@ jmvc = {
             // @global hook
             'before' in ctrl
             && typeof ctrl.before === 'function'
-            && ctrl.before(JMVC.p);
+            && ctrl.before($JMVC.p);
             //
             // @action hook
             'before_' + $JMVC.a in ctrl
             && typeof ctrl['before_' + $JMVC.a] === 'function'
-            && ctrl['before_' + $JMVC.a](JMVC.p);
+            && ctrl['before_' + $JMVC.a]($JMVC.p);
             //////////////////////////
             //
             
@@ -541,11 +541,11 @@ jmvc = {
             // REAL ACTION
             // check actual action
             ('action_' + $JMVC.a in ctrl && typeof ctrl['action_' + $JMVC.a] === 'function') ?
-               ctrl['action_' + $JMVC.a](JMVC.p)
+               ctrl['action_' + $JMVC.a]($JMVC.p)
                :
                /* maybe a action wild is in the controller */
                ('action' in ctrl && typeof ctrl['action'] === 'function') ?
-               ctrl['action']($JMVC.a, $JMVC.p, JMVC.p)
+               ctrl['action']($JMVC.a, $JMVC.p, $JMVC.p)
                :
                /* or go to 404 */
                $JMVC.a.toLowerCase() !== JMVC_DEFAULT.action
@@ -559,12 +559,12 @@ jmvc = {
             // @action hook 
             'after_' + $JMVC.a in ctrl
             && typeof ctrl['after_' + $JMVC.a] === 'function'
-            && ctrl['after_' + $JMVC.a](JMVC.p);
+            && ctrl['after_' + $JMVC.a]($JMVC.p);
             //
             // @global hook
             'after' in ctrl
             && typeof ctrl.after === 'function'
-            && ctrl.after(JMVC.p);
+            && ctrl.after($JMVC.p);
             //////////////////////////
         } else {
             $JMVC.c.toLowerCase() !== JMVC_DEFAULT.controller
