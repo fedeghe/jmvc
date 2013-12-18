@@ -1029,7 +1029,6 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 		return self.xpos().ypos();
 	};
 
-
 	Wcave.prototype.updateCursor = function () {
 		vars.cursor += 1;
 	};
@@ -1056,7 +1055,6 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 		 * only if the condition is evalued true.
 		 */
 		self.utils.queueCall.apply(self, [
-
 			'updateCursor',
 			'xypos',
 			'drawBg',
@@ -1066,7 +1064,6 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 			'drawWorm',
 			'drawPills',
 			'drawDoomObstacles',
-
 			[conf.collision, 'checkCollisions'],
 			//[vars.ppills, 'ppillsNotifyBonus'],
 			[vars.active && !vars.paused, 'update'],
@@ -1230,7 +1227,6 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 			l,
 			feverCount = vars.feverCount;
 
-
 		for (i = 0, l = conf.wormLenght; i < l; i += 1) {
 
 			self.ctx.beginPath(
@@ -1257,8 +1253,6 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 			self.ctx.closePath();
 			self.ctx.fill();
 		}
-			
-
 
 		self.checkWorm();
 	};
@@ -1451,28 +1445,20 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 		if (vars.obstacles.length && vars.obstacles[0][0] + vars.Xoffset < 0) {
 			vars.obstacles.splice(0, 1);
 		}
+
 		self.ctx.fillStyle = conf.colors[conf.theme].obstacles;
+
 		for (i = 0, l = vars.obstacles.length; i < l; i += 1) {
-			/*
-			self.ctx.fillRect(
-				vars.obstacles[i][0] + vars.Xoffset - vars.real.obstacleSize / 2,
-				vars.obstacles[i][1] + vars.Yoffset - vars.real.obstacleSize / 2,
-				vars.real.obstacleSize / 2,
-				vars.real.obstacleSize
-			);
-			*/
 			self.roundRect(
 				vars.obstacles[i][0] + vars.Xoffset - vars.real.obstacleSize / 2,
 				vars.obstacles[i][1] + vars.Yoffset - vars.real.obstacleSize / 2,
 				vars.real.obstacleSize / 2,
 				vars.real.obstacleSize
 			);
-
 		}
 	};
 	Wcave.prototype.roundRect = function (x, y, w, h, r) {
 		r = r || 20;
-
 		self.ctx.beginPath();
 		self.ctx.moveTo(x + r, y);
 		self.ctx.lineTo(x + w - r, y);
@@ -1484,7 +1470,6 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 		self.ctx.lineTo(x, y + r);
 		self.ctx.quadraticCurveTo(x, y, x + r, y);
 		self.ctx.closePath();
-
 		self.ctx.stroke();
 		self.ctx.fill();
 	};
@@ -1503,15 +1488,10 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 	 * @return {[type]} [description]
 	 */
 	Wcave.prototype.drawPills = function () {
-		var	i,
-			l;
+		var	i, l;
 		
 		self.checkFeverAlive();
 		self.clearPpills();
-
-
-
-
 
 		function pill(x, y, tpill) {
 			self.ctx.beginPath(
@@ -1519,14 +1499,12 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 				y
 			);
 			self.ctx.arc(
-				x,
-				y,
+				x, y,
 				vars.real.ppillsSize,
 				0,
 				2 * Math.PI,
 				true
 			);
-
 			self.ctx.fillStyle = tpill.getRandomColor();// conf.colors[conf.theme].ppills;
 			self.ctx.lineWidth = 1;
 			self.ctx.closePath();
@@ -1537,10 +1515,11 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 		self.ctx.fillStyle = conf.colors[conf.theme].ppills;
 
 		for (i = 0, l = vars.ppills.length; i < l; i += 1) {
-
-			pill(vars.ppills[i].left + vars.Xoffset - vars.real.ppillsSize / 2,
-					vars.ppills[i].top + vars.Yoffset - vars.real.ppillsSize / 2,
-					vars.ppills[i]);
+			pill(
+				vars.ppills[i].left + vars.Xoffset - vars.real.ppillsSize / 2,
+				vars.ppills[i].top + vars.Yoffset - vars.real.ppillsSize / 2,
+				vars.ppills[i]
+			);
 		}
 	};
 
