@@ -138,6 +138,14 @@ JMVC.dom = {
     },
 
     /**
+     * returns a crearer node
+     * @return {[type]} [description]
+     */
+    clearer : function (){
+        return this.create('br', {'class':'clearer'});
+    },
+
+    /**
      * [ description]
      * @param  {[type]} n    [description]
      * @param  {[type]} deep [description]
@@ -585,6 +593,16 @@ JMVC.dom = {
             }
         }
         return el;
+    },
+
+    /**
+     * [toggleClass description]
+     * @param  {[type]} el  [description]
+     * @param  {[type]} cls [description]
+     * @return {[type]}     [description]
+     */
+    toggleClass : function (el, cls) {
+        this[this.hasClass(el, cls) ? 'removeClass' : 'addClass'](el, cls);
     },
 
     /**
