@@ -24,6 +24,22 @@ JMVC.util = {
     deg2rad : function (d) {return JMVC.M.PI * d / 180; },
 
     /**
+     * [getLink description]
+     * @param  {[type]} cnt  [description]
+     * @param  {[type]} act  [description]
+     * @param  {[type]} prms [description]
+     * @return {[type]}      [description]
+     */
+    getLink : function (cnt, act, prms) {
+        var path = [];
+        cnt && path.push(cnt);
+        act && path.push(act);
+        prms && path.push(prms);
+        
+        return JMVC.vars.baseurl + JMVC.US + path.join(JMVC.US);
+    },
+
+    /**
      * [ description]
      * @param  {[type]} scriptname [description]
      * @return {[type]}            [description]
