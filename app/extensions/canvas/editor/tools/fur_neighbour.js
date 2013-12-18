@@ -1,5 +1,7 @@
 JMVC.extend('canvas.editor.tools.fur_neighbour', {
+
     use : function (instance) {
+
         var self = this,
             el = instance.cnv,
             ctx = instance.ctx,
@@ -9,12 +11,6 @@ JMVC.extend('canvas.editor.tools.fur_neighbour', {
         el.onmousedown = el.onmousemove = el.onmousemove = null;
 
         ctx.fillStyle = self.options.color.value;
-
-        
-
-
-
-
 
         ctx.lineWidth = 1;
         ctx.lineJoin = ctx.lineCap = 'round';
@@ -67,7 +63,7 @@ JMVC.extend('canvas.editor.tools.fur_neighbour', {
             type : 'int'
         },
         color : {
-            value : 'rgba(0, 255, 0, 0.1)',
+            value : 'rgba(0, 255, 0, 0.5)',
             name : 'color',
             type : 'color'
         },

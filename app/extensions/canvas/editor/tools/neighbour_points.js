@@ -1,7 +1,7 @@
 JMVC.extend('canvas.editor.tools.neighbour_points', {
 
     use : function (instance) {
-        
+
         var self = this,
             el = instance.cnv,
             ctx = instance.ctx,

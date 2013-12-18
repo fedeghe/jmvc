@@ -26,11 +26,17 @@
     height:1px;
     border:none;
 }
+li{
+    line-height:16px;
+    padding: 0px 5px;
+    margin:2px;
+    margin-bottom:5px;
+}
 #panel ul{}
 #panel ul li {
-    line-height: 24px;
+    
     margin-bottom:5px;
-    padding: 0px 5px;
+    
 
     border:solid 1px #ddd;
     -moz-border-radius:5px;
@@ -45,4 +51,9 @@
 }
 #panel ul li.active{
     background-color:#444;
+}
+
+
+ul#panelTools li{
+    float:left;
 }

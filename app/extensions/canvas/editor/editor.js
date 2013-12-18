@@ -1,229 +1,139 @@
-JMVC.extend('canvas.editor', {
-    init : function () {
-        JMVC.require(
-            'core/css/css',
-            'canvas/editor/toolinterface/toolinterface',
-            'core/fx/fx'
-        );
-        JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/canvas/editor/editor.css', true);
-    },
-    create : function (opt) {
-        "use strict";
+JMVC.nsMake('JMVC.canvas');
+
+JMVC.require(
+    'core/css/css',
+    'core/fx/fx',
+    'core/color/color'
+);
+
+// create ns for options fields
+JMVC.nsMake('JMVC.canvas.Editor.fields');
+
+// load editor helpers
+JMVC.require('canvas/editor/helpers/');
+
+// style
+JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/canvas/editor/editor.css', true);
 
 
-        var self,
-            toolsRootPath = [JMVC.vars.baseurl, ].join(JMVC.US);
+var self,
+    toolsRootPath = [JMVC.vars.baseurl, ].join(JMVC.US),
+    fieldsNs = JMVC.nsCheck('JMVC.canvas.Editor.fields'),
+    proto;
 
-        function editor(options) {
-            self = this;
+JMVC.canvas.Editor = function (options) {
+    self = this;
+    this.panel = null;
+    this.node = options.node;
+    this.width = options.width;
+    this.height = options.height;
+    this.style = JMVC.object.toStr({
+        '-webkit-user-select':'none',
+        '-moz-user-select': 'none',
+        'user-select': 'none',
+        'background-color':'white',
+        'cursor':'crosshair',
+        'border':'0px',
+        'margin':'0px',
+        'padding':'0px',
+        'line-height':'0px'}) + (options.style || '');
+    this.tools_files = options.tools || [];
+    this.tools = {};
+    this.currentTool = null;
 
-            this.panel = null;
-            this.node = options.node;
-            this.width = options.width;
-            this.height = options.height;
-            this.style = 'background-color:white; cursor:crosshair; border:0px; margin:0px; padding:0px; line-height:0px;' + (options.style || '');
-            this.tools_files = options.tools || [];
-            this.tools = {};
+    this.layerManager = JMVC.canvas.editor.layerManager(this);
+    this.panelManager = JMVC.canvas.editor.panelManager(this);
+};
 
-            this.layers = [];
-            this.activeLayer = null;
-            this.activeLayerIndex = null;
-        }
+proto = JMVC.canvas.Editor.prototype;
 
-        editor.prototype = {
-            /**
-             * creates the canvas and append it to the 
-             * destination node
-             * @return {[type]} [description]
-             */
-            init : function () {
+/**
+ * creates the canvas and append it to the 
+ * destination node
+ * @return {[type]} [description]
+ */
+proto.init = function () {
 
-                JMVC.css.style(this.node, {position : 'relative', overflow : 'hidden'});
+    JMVC.css.style(this.node, {position : 'relative', overflow : 'hidden'});
 
-                //create first layer
-                var tmpid = JMVC.util.uniqueid,
-                    tmpcnv = JMVC.dom.create('canvas', {
-                        id : JMVC.util.uniqueid,
-                        width : self.width,
-                        height: self.height,
-                        style : self.style
-                    }),
-                    tmpctx = tmpcnv.getContext('2d');
+    self.layerManager.add();
+    self.layerManager.activate();
+    
+    //load tool, interface
+    self.loadTools();
+    this.panelManager.init().render().bind();
 
-                self.panelTool.size_pos = {
-                    width : 300,
-                    height : self.height,
-                    topClosed : 30 - self.height,
-                    rightClosed : 30 - 300
-                };
+    return self;
+};
 
-                self.layers.push({
-                    id : tmpid,
-                    cnv : tmpcnv,
-                    ctx : tmpctx
-                });
-                self.activeLayerIndex = 0;
-                self.activeLayer = self.layers[self.activeLayerIndex];
+proto.render = function (){
+    JMVC.dom.append(self.node, self.layerManager.getCurrent().cnv);
+    //styleup
+    JMVC.css.style(self.layerManager.getCurrent().cnv, {margin : '0px', padding: '0px'});
+    return self;
+};
 
-                
-                //load tool, interface
-                self.loadTools();
-                self.panelTool.init(); 
-                self.panelTool.render();
-                self.panelTool.bind();
+proto.save = function () {
+    JMVC.dom.add(self.node, 'a', {
+        download : 'filename.png',
+        href : self.activeLayer.cnv.toDataURL("image/png"),
+        style:'display:none'
+    }).click();
+};
 
-                return self;
-            },
+proto.clear = function () {
+    self.activeLayer.cnv.width = self.activeLayer.cnv.width;
+};
 
-            render : function (){
-                JMVC.dom.append(self.node, self.activeLayer.cnv);
-                //styleup
-                JMVC.css.style(self.activeLayer.cnv, {margin : '0px', padding: '0px'});
-                return self;
-            },
+proto.changeTool = function (tool) {
+    // iniject the layer(convas, context, ... )
+    // and let che tool decide
+    tool.use(self.layerManager.getCurrent());
 
-            save : function () {
-                //var strDataURI = self.cnv.toDataURL("image/png;base64");
-                JMVC.dom.add(self.node, 'a', {
-                    download : 'filename.png',
-                    href : self.activeLayer.cnv.toDataURL("image/png"),
-                    style:'display:none'
-                }).click();
-            },
+    //load the options found on the tool
+    self.loadToolsOptions(tool);
+    self.currentTool = tool;
+};
 
-            clear : function () {
-                self.activeLayer.cnv.width = self.activeLayer.cnv.width;
-            },
+proto.loadToolsOptions = function (tool) {
+    // empty tools
+    JMVC.dom.html(JMVC.dom.find('#toolOptions'), '');
 
-            changeTool : function (tool) {
-
-                // iniject the layer(convas, context, ... )
-                // and let che tool decide
-                tool.use(self.activeLayer);
-
-                //load the options found on the tool
-                self.loadToolsOptions(tool);
-            },
-
-            loadToolsOptions : function (tool) {
-                
-                // empty tools
-                JMVC.dom.html(JMVC.dom.find('#toolOptions'), '');
-
-                // get options and  show  all
-                if ('options' in tool) {
-                    for(var i in tool.options){
-                        JMVC.dom.append(JMVC.dom.find('#toolOptions'), JMVC.dom.create('li',{}, i));
-                    }
-                }
-            },
-
-            pickColor : function (x, y) {
-                var pixel = self.activeLayer.ctx.getImageData(x, y, 1, 1);
-                return {
-                    r: pixel.data[0],
-                    g: pixel.data[1],
-                    b: pixel.data[2],
-                    a: pixel.data[3]
-                };
-            },
-
-            loadTools : function () {
-                JMVC.debug('Loading tools');
-                for (var i = 0, l = self.tools_files.length; i < l; i += 1) {
-                    JMVC.require(self.tools_files[i]);
-                }
-            },
-
-            layer : {
-                add : function () {
-
-                },
-                remove : function (index) {
-                    if (!(index < self.layers.length)) {
-                        throw new Error('Impossible to remove non existent layer indexed ' + index);
-                    }
-                    [].splice.call(self.layers, index, 1);
-                },
-                activate : function (index) {
-                    
-                },
-                setOpacity : function () {
-                    
-                },
-                lock : function () {
-                    
-                },
-                unlock : function () {
-                    
-                }
-            },
-
-            panelTool : {
-                size_pos : {},
-                template : '<div><h3>Tools</h3><ul id="panelTools"></ul><hr/><h4>Options</h4><ul id="toolOptions"></ul></div>',
-                init : function () {
-                    
-                    JMVC.debug('Initializing panel');
-
-
-                    self.panel = JMVC.dom.create('div', {
-                        id : 'panel',
-                        style : 'position:absolute;  width:' + self.panelTool.size_pos.width + 'px; height:' + self.panelTool.size_pos.height +
-                            'px; top:' + (self.panelTool.size_pos.topClosed) +
-                            'px; right:' + (self.panelTool.size_pos.rightClosed) + 'px'
-                    }, self.panelTool.template);
-
-
-                    //JMVC.canvas.editor.tools.neighbour_points.use(self.activeLayer);
-                    
-
-                },
-                render : function () {
-                    JMVC.debug('Rendering panel');
-
-                    JMVC.dom.append(self.node, self.panel);
-
-                    var dst = JMVC.dom.find('#panelTools');
-
-                    for (var i in JMVC.canvas.editor.tools) {
-                        var tmp = JMVC.dom.add(dst, 'li',{}, i);
-
-                        (function(el, tool){
-                            JMVC.events.bind(el, 'click', function (){
-                                JMVC.dom.removeClass(JMVC.dom.find('li', dst), 'active');
-
-                                JMVC.dom.addClass(this, 'active');
-                                self.changeTool(tool);
-
-                            });
-                        })(tmp, JMVC.canvas.editor.tools[i]);
-                    }
-                },
-
-                bind : function () {
-                    JMVC.debug('Binding panel');
-                    
-                    self.changeTool(JMVC.canvas.editor.tools.neighbour_points);
-
-                    JMVC.events.bind(self.panel, 'mouseenter', self.panelTool.showPanel);
-                    JMVC.events.bind(self.panel, 'mouseleave', self.panelTool.hidePanel);
-                },
-
-                showPanel : function () {
-                    JMVC.fx.animate(self.panel, 'top', 0, 100);
-                    JMVC.fx.animate(self.panel, 'right', 0, 100);
-                },
-
-                hidePanel : function () {
-                    JMVC.fx.animate(self.panel, 'top', self.panelTool.size_pos.topClosed, 100);
-                    JMVC.fx.animate(self.panel, 'right', self.panelTool.size_pos.rightClosed, 100);
-                },
+    // get options and  show  all
+    if ('options' in tool) {
+        for(var i in tool.options){
+            var node = JMVC.dom.create('li',{}, i);
+            JMVC.dom.append(JMVC.dom.find('#toolOptions'), node);
+            if (i === 'color') { 
+                var cp = JMVC.canvas.editor.fields.colorpicker.create({node:node});
+                cp.render();
+                cp.onChange(function (c){ self.currentTool.options.color.value = c; });
             }
-            
-        };
-
-        return new editor(opt);
-
+        }
     }
-});
+};
+
+proto.pickColor = function (x, y) {
+    var pixel = self.activeLayer.ctx.getImageData(x, y, 1, 1);
+    return {
+        r: pixel.data[0],
+        g: pixel.data[1],
+        b: pixel.data[2],
+        a: pixel.data[3]
+    };
+};
+
+proto.loadTools = function () {
+    JMVC.debug('Loading tools');
+    for (var i = 0, l = self.tools_files.length; i < l; i += 1) {
+        JMVC.require(self.tools_files[i]);
+    }
+};
+
+
+
+
+
+
+
+
