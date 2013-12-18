@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.2 (rev. 13)
+ * @version :  3.2 (rev. 14)
  * @copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *          glued with 32 files on 18/12/2013 at 18:41:27
+ *          glued with 32 files on 18/12/2013 at 20:25:14
  *
  * All rights reserved.
  *
@@ -59,7 +59,7 @@
                 JMVC_VERSION = "3.2",
                 //
                 // review (vars.json)
-                JMVC_REVIEW = "13",
+                JMVC_REVIEW = "14",
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = "", //'.min' 
@@ -728,12 +728,12 @@
                         // @global hook
                         'before' in ctrl
                         && typeof ctrl.before === 'function'
-                        && ctrl.before(JMVC.p);
+                        && ctrl.before($JMVC.p);
                         //
                         // @action hook
                         'before_' + $JMVC.a in ctrl
                         && typeof ctrl['before_' + $JMVC.a] === 'function'
-                        && ctrl['before_' + $JMVC.a](JMVC.p);
+                        && ctrl['before_' + $JMVC.a]($JMVC.p);
                         //////////////////////////
                         //
                         
@@ -741,11 +741,11 @@
                         // REAL ACTION
                         // check actual action
                         ('action_' + $JMVC.a in ctrl && typeof ctrl['action_' + $JMVC.a] === 'function') ?
-                           ctrl['action_' + $JMVC.a](JMVC.p)
+                           ctrl['action_' + $JMVC.a]($JMVC.p)
                            :
                            /* maybe a action wild is in the controller */
                            ('action' in ctrl && typeof ctrl['action'] === 'function') ?
-                           ctrl['action']($JMVC.a, $JMVC.p, JMVC.p)
+                           ctrl['action']($JMVC.a, $JMVC.p, $JMVC.p)
                            :
                            /* or go to 404 */
                            $JMVC.a.toLowerCase() !== JMVC_DEFAULT.action
@@ -759,12 +759,12 @@
                         // @action hook 
                         'after_' + $JMVC.a in ctrl
                         && typeof ctrl['after_' + $JMVC.a] === 'function'
-                        && ctrl['after_' + $JMVC.a](JMVC.p);
+                        && ctrl['after_' + $JMVC.a]($JMVC.p);
                         //
                         // @global hook
                         'after' in ctrl
                         && typeof ctrl.after === 'function'
-                        && ctrl.after(JMVC.p);
+                        && ctrl.after($JMVC.p);
                         //////////////////////////
                     } else {
                         $JMVC.c.toLowerCase() !== JMVC_DEFAULT.controller
@@ -1864,10 +1864,9 @@
                     len = 0,
                     baseurl = WDL.protocol + US + US + WDL.hostname;
             
+            
                 // maybe is the case to load testsuite
                 els[0].match(/test_/) && Modules.push('testsuite');
-            
-                WDL.hostname === 'localhost' && els.shift();
             
                 controller = els.shift() || JMVC_DEFAULT.controller;
                 
@@ -1900,7 +1899,7 @@
                     }
                 }
             
-                return {
+                var ret =  {
                     controller : controller.replace(/\//g, ""),
                     controller_prepath : controller_prepath,
                     action : action.replace(/\//g, ""),
@@ -1910,6 +1909,8 @@
                     search : mid.search,
                     hash : mid.hash
                 };
+                
+                return ret;
             })();
             /*--------
             JMVC outer
