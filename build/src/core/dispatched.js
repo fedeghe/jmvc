@@ -28,10 +28,9 @@ dispatched = (function () {
         len = 0,
         baseurl = WDL.protocol + US + US + WDL.hostname;
 
+
     // maybe is the case to load testsuite
     els[0].match(/test_/) && Modules.push('testsuite');
-
-    WDL.hostname === 'localhost' && els.shift();
 
     controller = els.shift() || JMVC_DEFAULT.controller;
     
@@ -64,7 +63,7 @@ dispatched = (function () {
         }
     }
 
-    return {
+    var ret =  {
         controller : controller.replace(/\//g, ""),
         controller_prepath : controller_prepath,
         action : action.replace(/\//g, ""),
@@ -74,4 +73,6 @@ dispatched = (function () {
         search : mid.search,
         hash : mid.hash
     };
+    
+    return ret;
 })();
