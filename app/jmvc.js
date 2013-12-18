@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.2 (rev. 8)
+ * @version :  3.2 (rev. 13)
  * @copyright : 2013, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *          glued with 32 files on 16/12/2013 at 1:16:1
+ *          glued with 32 files on 18/12/2013 at 18:34:46
  *
  * All rights reserved.
  *
@@ -59,7 +59,7 @@
                 JMVC_VERSION = "3.2",
                 //
                 // review (vars.json)
-                JMVC_REVIEW = "8",
+                JMVC_REVIEW = "13",
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = "", //'.min' 
@@ -162,7 +162,7 @@
                  * in case some modules need to be always loaded here's the place to set them
                  * @type {Array}
                  */
-                Modules = ['vendors/google/analytics/analytics', 'core/cookie/cookie'],
+                Modules = ['vendors/google/analytics/analytics', 'core/cookie/cookie', 'core/css/css'],
                 //
                 /**
                  * preloader
@@ -623,6 +623,7 @@
                         def_lang = $JMVC.cookie.get('lang') || defaultlang;
             
                     JMVC.vars.currentlang = def_lang;
+                    
                     $JMVC.lang(JMVC.vars.currentlang);
             
                     if (JMVC.i18n[JMVC.vars.currentlang] === true) {
@@ -727,12 +728,12 @@
                         // @global hook
                         'before' in ctrl
                         && typeof ctrl.before === 'function'
-                        && ctrl.before();
+                        && ctrl.before(JMVC.p);
                         //
                         // @action hook
                         'before_' + $JMVC.a in ctrl
                         && typeof ctrl['before_' + $JMVC.a] === 'function'
-                        && ctrl['before_' + $JMVC.a]();
+                        && ctrl['before_' + $JMVC.a](JMVC.p);
                         //////////////////////////
                         //
                         
@@ -740,11 +741,11 @@
                         // REAL ACTION
                         // check actual action
                         ('action_' + $JMVC.a in ctrl && typeof ctrl['action_' + $JMVC.a] === 'function') ?
-                           ctrl['action_' + $JMVC.a]()
+                           ctrl['action_' + $JMVC.a](JMVC.p)
                            :
                            /* maybe a action wild is in the controller */
                            ('action' in ctrl && typeof ctrl['action'] === 'function') ?
-                           ctrl['action']($JMVC.a, $JMVC.p)
+                           ctrl['action']($JMVC.a, $JMVC.p, JMVC.p)
                            :
                            /* or go to 404 */
                            $JMVC.a.toLowerCase() !== JMVC_DEFAULT.action
@@ -758,12 +759,12 @@
                         // @action hook 
                         'after_' + $JMVC.a in ctrl
                         && typeof ctrl['after_' + $JMVC.a] === 'function'
-                        && ctrl['after_' + $JMVC.a]();
+                        && ctrl['after_' + $JMVC.a](JMVC.p);
                         //
                         // @global hook
                         'after' in ctrl
                         && typeof ctrl.after === 'function'
-                        && ctrl.after();
+                        && ctrl.after(JMVC.p);
                         //////////////////////////
                     } else {
                         $JMVC.c.toLowerCase() !== JMVC_DEFAULT.controller
@@ -786,7 +787,7 @@
                         arg = arguments,
                         lArg = arg.length,    
                         head = JMVC.WD.getElementsByTagName('head').item(0)
-                        //
+            
                     while (i < lArg) {
             
                         if (typeof arg[i] === 'string' && !$JMVC.extensions[arg[i]]) {
@@ -804,13 +805,11 @@
                             extNS = arg[i].split(US);
                             extNSlength = extNS.length;
                             extname = extNS[extNSlength - 1];
-                            /*
+            
                             path = JMVC.vars.baseurl +
-                                (arguments[i] === 'testsuite' ? PATH.test : PATH.ext + arg[i] + US) +
-                                extname + (JMVC_PACKED || '') + '.js';
-                            */
-                            path = JMVC.vars.baseurl +
-                                (arg[i] === 'testsuite' ? PATH.test : PATH.ext )+ arg[i] + (JMVC_PACKED || '') + '.js';
+                                PATH[(arg[i] === 'testsuite' ? 'test' : 'ext' )] +
+                                arg[i] + (JMVC_PACKED || '') + '.js';
+            
                             switch (getmode) {
                                 case 'ajax':
                                     $JMVC.io.get(path, function (jres) {
@@ -826,11 +825,6 @@
                                 break;
                             }
                             $JMVC.extensions[arg[i]] = arg[i];
-            
-            
-            
-            
-            
                         }
                         i += 1;
                     }
@@ -1171,11 +1165,6 @@
                 this.sender = sender;
                 this.listeners = [];
             };
-            
-            /**
-             * [prototype description]
-             * @type {Object}
-             */
             Event.prototype = {
                 /**
                  * [ description]
@@ -2369,6 +2358,22 @@
         deg2rad : function (d) {return JMVC.M.PI * d / 180; },
     
         /**
+         * [getLink description]
+         * @param  {[type]} cnt  [description]
+         * @param  {[type]} act  [description]
+         * @param  {[type]} prms [description]
+         * @return {[type]}      [description]
+         */
+        getLink : function (cnt, act, prms) {
+            var path = [];
+            cnt && path.push(cnt);
+            act && path.push(act);
+            prms && path.push(prms);
+            
+            return JMVC.vars.baseurl + JMVC.US + path.join(JMVC.US);
+        },
+    
+        /**
          * [ description]
          * @param  {[type]} scriptname [description]
          * @return {[type]}            [description]
@@ -2661,6 +2666,14 @@
          */
         childs : function (node) {
             return node.childNodes;
+        },
+    
+        /**
+         * returns a crearer node
+         * @return {[type]} [description]
+         */
+        clearer : function (){
+            return this.create('br', {'class':'clearer'});
         },
     
         /**
@@ -3111,6 +3124,10 @@
                 }
             }
             return el;
+        },
+    
+        toggleClass : function (el, cls) {
+            this[this.hasClass(el, cls) ? 'removeClass' : 'addClass'](el, cls);
         },
     
         /**
