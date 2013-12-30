@@ -207,7 +207,7 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 			// radius for point pills, perc @ cnv.width
 			ppillsSize : 0.015,
 
-			theme : 'matrix',
+			theme : 'holland',
 
 			// the tunnel height will shrink until it satisfies
 			// tunnel_height >= stopHeightDecay * obstacleSize
@@ -273,6 +273,20 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 					feverHead : ['#FFFF00', '#0fFFf0', '#ff00FF'],
 					feverBonus : ['#FF0000', '#00FF00', '#0000FF'],
 					ppills : ['#0000', '#ffFF00', '#ffffFF']
+				},
+				holland : {
+					worm : ['#ff8800', '#662200'],
+					//the background, the gradient is created with all the colors specified
+					bg : ['00AA00', '#FF6600', '#000000'],
+					freezebg : ['#555555', '#333333'],
+					//freezebg : ['#FF0000', '#00FF00', '#0000FF'],
+					tunnel : '#000000',
+					obstacles : '#ffffff',
+					//ppills : '#ff0000',
+					hpills : '#00ff00',
+					feverHead : ['#FF6600', '#00AA00', '#FFFFFF'],
+					feverBonus : ['#FF6600', '#00AA00', '#FFFFFF'],
+					ppills : ['#FF6600', '#00AA00', '#FFFFFF']
 				}
 			},
 
