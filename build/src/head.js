@@ -8,7 +8,7 @@
  * @author : $author$ <$email$>
  * @url : http://www.jmvc.org
  * @file : built with $build_system$ v.__VERSION__ & a love heap
- *          glued with __FILES__ files on __DATE__ at __TIME__
+ *         glued with __FILES__ files on __DATE__ at __TIME__
  *
  * All rights reserved.
  *
@@ -34,4 +34,5 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
+ * 
  */

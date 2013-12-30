@@ -14,7 +14,7 @@ dispatched = (function () {
             hash : WDL.hash.substr(1),
             port : WDL.port ? ':' + WDL.port : ''
         },
-
+        //
         // adjust extensions
         els = mid.path.replace(new RegExp('\\.' + URL_ALLOWED_EXTENSIONS.join('|\\.'), 'gm'), "").substr(1).split(US),
         controller = false,
@@ -24,31 +24,28 @@ dispatched = (function () {
         params = {},
         lab_val,
         i,
-        src,
         len = 0,
         baseurl = WDL.protocol + US + US + WDL.hostname;
-
-
     // maybe is the case to load testsuite
     els[0].match(/test_/) && Modules.push('testsuite');
-
+    //
     controller = els.shift() || JMVC_DEFAULT.controller;
-    
+    //
     // check extrapath for controller
     if (!!controller.match(/_/)) {
         controller_prepath_parts = controller.split('_');
         controller = controller_prepath_parts.pop();
         controller_prepath = controller_prepath_parts.join(US) + US;
     }
-
+    //
     action = els.shift() || JMVC_DEFAULT.action;
     len = els.length;
-
+    //
     // now if els has non zero size, these are extra path params
     for (i = 0; i + 1 < len; i += 2) {
         params[els[i]] = els[i + 1];
     }
-
+    //
     // even hash for GET params
     if (mid.search !== "") {
         // splitting an empty string give an array with one empty string
@@ -62,8 +59,8 @@ dispatched = (function () {
             }
         }
     }
-
-    var ret =  {
+    //
+    return {
         controller : controller.replace(/\//g, ""),
         controller_prepath : controller_prepath,
         action : action.replace(/\//g, ""),
@@ -73,6 +70,5 @@ dispatched = (function () {
         search : mid.search,
         hash : mid.hash
     };
-    
-    return ret;
 })();
+//-----------------------------------------------------------------------------

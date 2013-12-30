@@ -1,10 +1,8 @@
 /*------------
 NUM sub-module
 ------------*/
-
 // private section
 _.num = {};
-
 // public section
 JMVC.num = {
 	getNum : function (str) {return parseInt(str, 10); },
@@ -16,3 +14,4 @@ JMVC.num = {
 	mCeil : function (n) {return (n + (n > 0 && !!(n % 1))) >> 0; },
 	num : function (n) {return parseFloat(n.toFixed(10), 10); }
 };
+//-----------------------------------------------------------------------------

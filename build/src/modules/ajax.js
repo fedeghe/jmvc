@@ -1,12 +1,9 @@
 /*-------------
 AJAX sub-module
 -------------*/
-
-/*
-This is the experimental versionof ajax utilities
-*/
-
-//PRIVATE
+// This is the experimental versionof ajax utilities
+// 
+// PRIVATE
 _.ajax = {
     types : {
         'xml' : 'text/xml',
@@ -14,7 +11,6 @@ _.ajax = {
         'json' : 'application/json'
     },
     IEfuckIds = ['Msxml2.XMLHTTP', 'Msxml3.XMLHTTP', 'Microsoft.XMLHTTP'],
-
     /**
      * [modes description]
      * @type {Object}
@@ -30,7 +26,6 @@ _.ajax = {
      */
     getxhr : function () {
         var xhr,
-            
             i = 0,
             len = this.IEfuckIds.length;
         try {
@@ -47,7 +42,6 @@ _.ajax = {
         JMVC.ajax.count += 1;
         return xhr;
     },
-
     /**
      * [call description]
      * @param  {[type]} options [description]
@@ -104,27 +98,21 @@ _.ajax = {
                     xhr.complete = true;
                     return;
                 }
-
                 xhr.complete = true;
-                
                 xhr.ret = xhr.type == 'json' ? new Function("return " + xhr.req[xhr.targetType])() : xhr.req[xhr.targetType];
-
                 //cback
                 xhr.cback && (function (r) {xhr.cback(r); })(xhr.ret);
-                
                 //IE leak ?????
                 W.setTimeout(function () {
                     JMVC.ajax.count -= 1;
                     JMVC.purge(xhr.req);
                 }, 50);
-
                 return xhr.ret;
             }
         };
         xhr.req.open(xhr.method, (xhr.method === 'GET') ? (xhr.uri + ((xhr.data) ? '?' + xhr.data : "")) : xhr.uri, xhr.sync);
     }
 };
-
 // PUBLIC
 JMVC.ajax = {
     count : 0,
@@ -133,3 +121,4 @@ JMVC.ajax = {
     getJson : function () {},
     getXML : function () {}
 };
+//-----------------------------------------------------------------------------

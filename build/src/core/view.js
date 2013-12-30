@@ -1,7 +1,6 @@
 /*--
 VIEW
 --*/
-
 // directly instantiated assinging content
 /**
  * [View description]
@@ -15,7 +14,6 @@ View = function (cnt) {
         baseurl : $JMVC.vars.baseurl
     };
 };
-
 //
 // meat to receive a model, all $name$
 // placeholders in the view content
@@ -46,7 +44,6 @@ View.prototype.parse = function (obj) {
     // allow chain
     return this;
 };
-
 //
 // reset content to orginal (unparsed) value
 // and reset all vars
@@ -60,7 +57,6 @@ View.prototype.reset = function () {
     // allow chain
     return this;
 };
-
 /**
  * [setFromUrl description]
  * @param {[type]} vname [description]
@@ -79,8 +75,6 @@ View.prototype.setFromUrl = function (vname, alt) {
 View.prototype.getFromUrl = function (vname) {
     return $JMVC.controllers[$JMVC.c].get(vname) || false;
 };
-
-
 // render the view parsing for variable&view placeholders
 /**
  * [render description]
@@ -102,33 +96,30 @@ View.prototype.render = function (pars) {
         // note that here dom is not loaded so you
         // cannot pass an element
         target = arg.target || false,
-
+        //
         // for binding this context in the callback
         that = this,
-
+        //
         // the view content
         cont = this.content,
-
+        //
         // regexp for variables, do NOT use here new RegExp
         pattvar = "\\$(.[^\\$\\s}]*)\\$",
-
+        //
         // variables found
         resvar,
-
+        //
         // a loop temporary variable
         t,
-
         trg,
         may_trg;
-
     //let pars be the callback function
     if (typeof pars === 'function') {
         cback = pars;
     }
-
     // look for / substitute  vars
     // in the view (these belongs to the view)
-    
+    //
     resvar = 1;
     while (resvar) {
         resvar = new RegExp(pattvar, 'gm').exec(cont);
@@ -138,39 +129,35 @@ View.prototype.render = function (pars) {
         }
     }
     cont = Parser.parse(cont);
-    
     this.content = cont;
-
     if(!$JMVC.loaded){
-
+        //
         // books rendering in body or elsewhere, on load
         $JMVC.events.bind(W, 'load', function () {
-            
+            //  
             //call before render
             $JMVC.events.startRender();
-
+            //
             $JMVC.loaded = true;
             may_trg = target ? $JMVC.dom.find(target) : false;
             trg = may_trg || WD.body;
-
-
+            //
             $JMVC.vars.rendertime = +new Date() - time_begin;
-            
+            //
             // before render
             that.content = jmvc.hook_check('onBeforeRender', [that.content]) || that.content;
-
+            //
             // render
             $JMVC.dom.html(trg, that.content);
-
+            //
             // after render
             jmvc.hook_check('onAfterRender', [that.content]);
-
+            //
             // may be a callback? 
             cback && cback.apply(this, argz || []);
             //trigger end of render queue
             $JMVC.events.endRender();
         });
-
     // happend after load... so can render a view from a render cback 
     // of a main view
     } else {
@@ -182,7 +169,6 @@ View.prototype.render = function (pars) {
     // allow chain
     return this;
 };
-
 ///////////////////////
 // COMMON
 // getter, setter and "deleter" for mvc classes
@@ -194,7 +180,6 @@ View.prototype.render = function (pars) {
 View.prototype.get = Model.prototype.get = Controller.prototype.get = function (n) {
     return (!!this.vars[n]) ? this.vars[n] : false;
 };
-
 /**
  * [set description]
  * @param {[type]} vname [description]
@@ -217,7 +202,6 @@ View.prototype.set = Model.prototype.set = Controller.prototype.set = function (
     }
     return this;
 };
-
 /**
  * [del description]
  * @param  {[type]} n [description]
@@ -228,7 +212,6 @@ View.prototype.del = Model.prototype.del = Controller.prototype.del = function (
     return this;
 };
 //////////////////////
-
 View.prototype.clone  = function (name) {
     var ret = false; 
     if (typeof name !== 'undefined') {
@@ -239,3 +222,4 @@ View.prototype.clone  = function (name) {
     }
     return ret;
 };
+//-----------------------------------------------------------------------------

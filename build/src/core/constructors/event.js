@@ -15,7 +15,6 @@ Event.prototype = {
     'attach' : function (listener) {
         this.listeners.push(listener);
     },
-
     /**
      * [ description]
      * @param  {[type]} args [description]
@@ -29,3 +28,4 @@ Event.prototype = {
         }
     }
 };
+//-----------------------------------------------------------------------------

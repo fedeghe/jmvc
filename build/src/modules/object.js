@@ -1,7 +1,6 @@
 /*---------------
 OBJECT sub-module
 ---------------*/
-
 /**
  * [object description]
  * @type {Object}
@@ -24,7 +23,6 @@ _.object = {
         return ret;
     }
 };
-
 /**
  * [object description]
  * @type {Object}
@@ -44,7 +42,6 @@ JMVC.object = {
             return obj;
         }
         temp = obj.constructor();
-
         for (key in obj) {
             if (obj.hasOwnProperty(key)) {
                 temp[key] = this.clone(obj[key]);
@@ -52,7 +49,6 @@ JMVC.object = {
         }
         return temp;
     },
-
     /**
      * [ description]
      * @param  {[type]} obj1 [description]
@@ -78,7 +74,6 @@ JMVC.object = {
         }
         return ret;
     },
-
     /**
      * [ description]
      * @param  {[type]} obj    [description]
@@ -89,7 +84,6 @@ JMVC.object = {
         "use strict";
         return (typeof obj === 'object' && filed in obj);
     },
-
     /**
      * [ description]
      * @param  {[type]} obj [description]
@@ -106,7 +100,6 @@ JMVC.object = {
         }
         return obj;
     },
-
     /**
      * [ description]
      * @param  {[type]} obj1 [description]
@@ -117,7 +110,6 @@ JMVC.object = {
         "use strict";
         return JSON.stringify(obj1) === JSON.stringify(obj2);
     },
-
     /**
      * [ description]
      * @param  {[type]} o [description]
@@ -129,7 +121,6 @@ JMVC.object = {
             return ' ' + i + (o[i] ? '="' + o[i] + '"' : '');
         });
     },
-
     /**
      * [ description]
      * @param  {[type]} o [description]
@@ -145,7 +136,6 @@ JMVC.object = {
             ) + '} ';
         });
     },
-
     /**
      * [ description]
      * @param  {[type]} o [description]
@@ -157,7 +147,6 @@ JMVC.object = {
             return (r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i]);
         });
     },
-
     /**
      * [obj2str description]
      * @param  {[type]} obj [description]
@@ -169,5 +158,5 @@ JMVC.object = {
             return i + ':' + o[i] + ';';
         });
     }
-
 };
+//-----------------------------------------------------------------------------

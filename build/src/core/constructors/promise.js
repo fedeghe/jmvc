@@ -1,7 +1,6 @@
 /*-----
 PROMISE
 -----*/
-
 // ty https://github.com/stackp/promisejs
 Promise = function () {
     this.cbacks = [];
@@ -14,7 +13,6 @@ Promise = function () {
         this.cbacks = [];
     };
 };
-
 /**
  * [done description]
  * @param  {[type]}   res [description]
@@ -31,7 +29,6 @@ Promise.prototype.done = function (res, err) {
     }
     this.reset();
 };
-
 /**
  * [then description]
  * @param  {[type]} cback [description]
@@ -48,3 +45,4 @@ Promise.prototype.then = function (cback, ctx) {
     }
     return this;
 };
+//-----------------------------------------------------------------------------

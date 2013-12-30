@@ -1,7 +1,6 @@
 /*--------------
 MATCH sub-module
 --------------*/
-
 // private section
 _.match = {
     rex : {
@@ -13,7 +12,6 @@ _.match = {
         alfanum : new RegExp(/^[A-z0-9]*$/)
     }
 };
-
 // public section
 JMVC.match = {
     email : function (str) {
@@ -32,5 +30,5 @@ JMVC.match = {
     floatnum : function (fn) {
         return (fn+'').match(_.match.rex.floatnum);
     }
-
 };
+//-----------------------------------------------------------------------------

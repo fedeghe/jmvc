@@ -1,7 +1,6 @@
 /*--------
 JMVC outer
 --------*/
-          
 $JMVC = {
     loaded : false,
     W: W,
@@ -40,11 +39,11 @@ $JMVC = {
     extensions : {},
     extensions_params : {},
     i18n : {},
-
+    //
     modules : Modules,
     nsCheck : jmvc.ns.check,
     nsMake : jmvc.ns.make,
-
+    //
     // Constructors
     Channel : Channel,
     Event : Event,
@@ -53,21 +52,20 @@ $JMVC = {
     FunctionQueue : FunctionQueue,
     Pipe : Pipe,
     Promise : Promise,
-
+    //
     parselang : jmvc.parselang,
-
+    //
     hookCheck : jmvc.hook_check,
-    
+    //
     debug : jmvc.debug,
     delegate : jmvc.delegate,
     extend : jmvc.extend,
     factory:    jmvc.factory_method,
     inherit : jmvc.inherit,
     multinherit : jmvc.multi_inherit,
-
+    //
     preload : preload,
-
-
+    //
     hook : jmvc.hook,
     hooks : hooks,
     jeval : jmvc.jeval,
@@ -77,31 +75,30 @@ $JMVC = {
     render: jmvc.render, // !api
     require : jmvc.require,
     lang : jmvc.lang,
-    
+    //
     set : jmvc.set,    
     get : jmvc.get,
     del : jmvc.del,
-
+    //
     //experimental
     set2 : jmvc.set2,
     get2 : jmvc.get2,
     del2 : jmvc.del2,
-
+    //
     htmlspecialchars : jmvc.htmlspecialchars,
     htmlspecialchars_decode : jmvc.htmlspecialchars_decode,
-
+    //
     gc : function () {var i = 0, a = arguments, l = a.length; for (null; i < l; i += 1) {a[i] = null; } },
     getView : function (n) {return jmvc.factory_method('view', n); },
     getModel : function (n, params) {return jmvc.factory_method('model', n, params); },
     loadInterfaces : function (n, params) {return jmvc.factory_method('interface', n, params); },
-
+    //
     implement : jmvc.implement,
     //getController :   function(n) {return jmvc.factory_method('controller', n); }
-
-    
+    //
     // really really bad
     each : jmvc.each,
-    
+    //
     /**
      * [console description]
      * @return {[type]} [description]
@@ -118,7 +115,6 @@ $JMVC = {
      * @return {[type]}     [description]
      */
     xdoc : function(ext){
-
         if (!('elements' in JMVC.xdoc)) {
             JMVC.xdoc.elements = {};
         }
@@ -140,7 +136,7 @@ $JMVC = {
         }
         JMVC.xdoc.toggle(ext);
     },
-    
+    //
     loading : function (intperc, msg) {
         /*
         MARKUP NEEDED to use that function:
@@ -159,3 +155,4 @@ $JMVC = {
         } catch(e) {}
     }
 };
+//-----------------------------------------------------------------------------

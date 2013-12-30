@@ -1,7 +1,6 @@
 /*-------------
 AJAX sub-module
 -------------*/
-
 // private section
 _.io = {
     /**
@@ -14,7 +13,6 @@ _.io = {
             IEfuckIds = ['Msxml2.XMLHTTP', 'Msxml3.XMLHTTP', 'Microsoft.XMLHTTP'],
             len = IEfuckIds.length,
             i = 0;
-
         try {
             xhr = new W.XMLHttpRequest();
         } catch (e1) {
@@ -30,7 +28,6 @@ _.io = {
         JMVC.gc(IEfuckIds, i, len);
         return xhr;
     },
-
     /**
      * [ description]
      * @param  {[type]} uri     [description]
@@ -55,17 +52,15 @@ _.io = {
             res = false,
             ret = false,
             state = false;
-
         //prepare data, caring of cache
         if (!cache) {data.C = JMVC.util.now(); }
         data = JMVC.object.toQs(data).substr(1);
-
         xhr.onreadystatechange = function () {
             var tmp;
-
-            if (state === xhr.readyState) {return false; }
+            if (state === xhr.readyState) {
+                return false;
+            }
             state = xhr.readyState;
-
             if (xhr.readyState === "complete" || (xhr.readyState === 4 && xhr.status === 200)) {
                 complete = true;
                 if (cback) {
@@ -73,13 +68,11 @@ _.io = {
                     (function () {cback(res); })(res);
                 }
                 ret = xhr[targetType];
-
                 //IE leak ?????
                 W.setTimeout(function () {
                     JMVC.io.xhrcount -= 1;
                     //JMVC.purge(xhr);
                 }, 50);
-
                 return ret;
             } else if (xhr.readyState === 3) {
                 //loading data
@@ -88,7 +81,6 @@ _.io = {
                 //headers received
                 cb_opened(xhr);
             } else if (xhr.readyState === 1) {
-
                 switch (method) {
                     case 'POST':
                         try {
@@ -113,34 +105,26 @@ _.io = {
                         xhr.send(null);
                     break;
                 }
-                
             }
             return true;
         };
-
         xhr.onerror = function () {cb_error && cb_error.apply(null, arguments); };
         xhr.onabort = function () {cb_abort && cb_abort.apply(null, arguments); };
-
         //open request
         xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data : "")) : uri, sync);
-
         //thread abortion
         W.setTimeout(function () {if (!complete) {complete = true; xhr.abort(); } }, timeout);
-        
         try {
             return (targetType === 'responseXML') ? xhr[targetType].childNodes[0] : xhr[targetType];
         } catch (e3) {}
         return true;
     }
 };
-
-
+//
 // public section
 JMVC.io = {
     xhrcount : 0,
-
     getxhr : _.io.getxhr,
-
     /**
      * [ description]
      * @param  {[type]} uri   [description]
@@ -160,7 +144,6 @@ JMVC.io = {
             error: err
         });
     },
-
     /**
      * [ description]
      * @param  {[type]} uri   [description]
@@ -180,7 +163,6 @@ JMVC.io = {
             error : err
         });
     },
-
     /**
      * [delete description]
      * @param  {[type]} uri   [description]
@@ -200,8 +182,7 @@ JMVC.io = {
             cache : cache,
             error : err
         });
-    },  
-
+    },
     /**
      * [ description]
      * @param  {[type]} uri   [description]
@@ -210,7 +191,6 @@ JMVC.io = {
      * @return {[type]}       [description]
      */
     getJson : function (uri, cback, data) {
-
         return _.io.ajcall(uri, {
             type : 'json',
             method: 'GET',
@@ -222,7 +202,6 @@ JMVC.io = {
             data : data
         });
     },
-
     /**
      * [ description]
      * @param  {[type]} uri   [description]
@@ -238,3 +217,4 @@ JMVC.io = {
         });
     }
 };
+//-----------------------------------------------------------------------------

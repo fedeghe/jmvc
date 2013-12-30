@@ -1,16 +1,12 @@
 /*--------
 CONTROLLER          
 --------*/
-
 // parent controller
 Controller = function () {};
-
 // for storing vars 
 Controller.prototype.vars = {};
-
 // this has no sense and must be removed
 Controller.prototype.jmvc_routes = {};
-
 /**
  * [index description]
  * @return {[type]} [description]
@@ -18,7 +14,6 @@ Controller.prototype.jmvc_routes = {};
 Controller.prototype.index = function () {
     W.alert('Default index action, write down a controller with at least an index action');
 };
-
 /**
  * [addRoutes description]
  * @param {[type]} name [description]
@@ -31,11 +26,12 @@ Controller.prototype.addRoutes = function (name, val) {
     }
     if (typeof name === 'object') {
         for (j in name) {
-            name.hasOwnProperty(j) && this.addRoutes(j, name[j]);
+            if (name.hasOwnProperty(j)) {
+                this.addRoutes(j, name[j]);
+            }
         }
     }
 };
-
 /**
  * [relocate description]
  * @param  {[type]} uri [description]
@@ -45,10 +41,9 @@ Controller.prototype.addRoutes = function (name, val) {
 Controller.prototype.relocate = function (uri, ms) {
     W.setTimeout(
         function () {WDL.href = String(uri); },
-        ~~(1 * ms) || 0
+        parseInt(ms * 1, 10) || 0
     );
 };
-
 /**
  * [render description]
  * @param  {[type]} content [description]
@@ -61,13 +56,12 @@ Controller.prototype.render = function (content, cback) {
         cback = content;
         content = false;
     }
-    
+
     var tmp_v = new View(content);
     tmp_v.render(cback && typeof cback === 'function' ? {cback : cback} : null);
 
     return this;
 };
-
 /**
  * [reset description]
  * @return {[type]} [description]
@@ -76,3 +70,4 @@ Controller.prototype.reset = function () {
     this.vars = {};
     return this;
 };
+//-----------------------------------------------------------------------------

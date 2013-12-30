@@ -7,13 +7,13 @@ INIT
 var $JMVC,
     //
     // version (vars.json)
-    JMVC_VERSION = "$version$",
+    JMVC_VERSION = '$version$',
     //
     // review (vars.json)
-    JMVC_REVIEW = "$review$",
+    JMVC_REVIEW = '$review$',
     //
     // experimental (ignore it)
-    JMVC_PACKED = "$packed$", //'.min' 
+    JMVC_PACKED = '$packed$', //'.min' 
     //
     // inner jmvc literal, will contain almost all the functions used to 
     // compose the $JMVC object and thus the returning JMVC
@@ -142,10 +142,12 @@ var $JMVC,
     undef = 'undefined',
     //
     // getmode used in the require function
-    // ajax   : use xhr to get the source and evals
-    // script : creates a script tag with the right url to the source
+    // ajax         : use xhr to get the source and evals
+    // script       : creates a script tag with the right url to the source
+    // scriptghost  : same as script but removes all injected script from the DOM after load
     // NOTE > it seems like script mode load faster but ...
-    getmode = 'ajax'; // {script, ajax}
+    getmode = 'ajax'; // {ajax, script, scriptghost}
     //
     // ===========================================
     //
+    //-----------------------------------------------------------------------------

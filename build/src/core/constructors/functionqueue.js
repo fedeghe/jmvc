@@ -1,8 +1,6 @@
-/*---
-MONAD
-
-ok, that's not a true monad, but it's similar
----*/
+/*------------
+Function queue
+------------*/
 FunctionQueue = function () {
     this.queue = [];
 };
@@ -14,7 +12,6 @@ FunctionQueue.prototype.run = function() {
         l = this.queue.length,
         args = [].slice.call(arguments, 0),
         f;
-
     while (i < l){
         f = this.queue[i++];
         (args instanceof Array) || (args = [args]);
@@ -25,3 +22,4 @@ FunctionQueue.prototype.run = function() {
 FunctionQueue.prototype.reset = function () {
     this.queue.length = 0;
 }
+//-----------------------------------------------------------------------------

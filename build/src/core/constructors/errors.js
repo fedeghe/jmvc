@@ -30,5 +30,5 @@ Errors = {
         this.msg = msg ||  this.name + ' error';
     }
 };
-
 jmvc.multi_inherit(Errors, Error);
+//-----------------------------------------------------------------------------

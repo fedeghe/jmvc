@@ -12,13 +12,11 @@ preload = function (url) {
             // a function used to remove the imframe once
             // everything is loaded, hence cached
             cleanup = function (i) {JMVC.dom.remove(i); };
-
         //
         // when `done` will be called on the promise
         // cleanup will be called, params follows the chain
         p.then(cleanup);
-
-        // 
+        //
         // now a function is executed dereferencing the promise
         (function (pr) {
             //
@@ -32,3 +30,4 @@ preload = function (url) {
 
     }, 0);
 };
+//-----------------------------------------------------------------------------

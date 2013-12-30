@@ -1,4 +1,3 @@
-//
 // $JMVC is DONE, clean up
 $JMVC.gc(
     DEV_URL,
@@ -12,3 +11,4 @@ $JMVC.gc(
     JMVC_DEFAULT,
     time_begin
 );
+//-----------------------------------------------------------------------------

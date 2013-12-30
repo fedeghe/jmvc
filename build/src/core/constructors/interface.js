@@ -1,5 +1,3 @@
-
-
 /**
  * INTERFACE
  * =========
@@ -8,20 +6,22 @@
  * @param {[type]} a    [description]
  */
 Interface = function (name, a) {
-    var i, l;
+    var i,
+        l;
     this.name = name;
     this.mthds = [];
-    if (!(a instanceof Array)){
+    if (!(a instanceof Array)) {
         throw new Error('An array of strings must be passed to the Interface constructor');
     }
     i = 0;
     l = a.length;
     for (null; i < l; i += 1) {
-        (typeof a[i] === 'string') && this.mthds.push(a[i]);
+        if (typeof a[i] === 'string') {
+            this.mthds.push(a[i]);
+        }
         console.debug(checkInterface(a[i]));
     }
 };
-
 /**
  * Static method to check if an instance inplements one or more Interfaces
  * @param  {[type]} obj    [description]
@@ -46,8 +46,11 @@ Interface.checkImplements = function (obj) {
     }
     return obj;
 };
-
-
+/**
+ * [checkInterface description]
+ * @param  {[type]} f [description]
+ * @return {[type]}   [description]
+ */
 function checkInterface(f) {
     var r = f.toString()
         .match(/function\s(.*)\((.*)\)\s?{return\s[\'\"]?(.*)[\'\"]?;}/);
@@ -57,7 +60,6 @@ function checkInterface(f) {
         ret : !!r[3] ? r[3]  : false
     } : false;
 }
-
 /*
 function tee(func, obj, str) {return 'obj';}
 
@@ -73,3 +75,4 @@ function checkInterface(f) {
 
 console.dir(checkInterface(tee));
  */
+//-----------------------------------------------------------------------------

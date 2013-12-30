@@ -1,19 +1,14 @@
 /*-------------
 HEAD sub-module
 -------------*/
-
 // private section
-_.head = {
-    
-};
-
+_.head = {};
 // public section
 JMVC.head = {
     /**
      * 
      */
     element : WD.getElementsByTagName('head').item(0),
-
     /**
      * [ description]
      * @param  {[type]} src      [description]
@@ -31,7 +26,6 @@ JMVC.head = {
             async = true,
             script_content;
         if (parse) {
-            
             if (explicit) {
                 //script_content = JMVC.parse(src/* in this case is mean to be the content */);
                 script_content = JMVC.parse(src, true);
@@ -56,7 +50,6 @@ JMVC.head = {
             head.appendChild(script);
         }
     },
-
     /**
      * [ description]
      * @param  {[type]} src      [description]
@@ -73,7 +66,6 @@ JMVC.head = {
             sync = false,
             rules,
             csscontent;
-
         if (parse) {
             if (explicit) {
                 /* in this case src is meant to be the content */
@@ -125,7 +117,6 @@ JMVC.head = {
         }
         return style;
     },
-
     /**
      * [denyiXrame description]
      * @return {[type]} [description]
@@ -133,7 +124,6 @@ JMVC.head = {
     denyiXrame : function () {
         return W.top !== W.self &&  (W.top.location = JMVC.vars.baseurl);
     },
-    
     /**
      * [favicon description]
      * @param  {[type]} file [description]
@@ -145,7 +135,6 @@ JMVC.head = {
             href : JMVC.vars.baseurl + file
         });
     },
-
     /**
      * [goto description]
      * @param  {[type]} cnt  [description]
@@ -161,7 +150,6 @@ JMVC.head = {
         
         WD.location.href = JMVC.vars.baseurl + JMVC.US + path.join(JMVC.US);
     },
-
     /**
      * [lastmodified description]
      * @param  {[type]} d [description]
@@ -178,7 +166,6 @@ JMVC.head = {
             len = meta.length;
         len ? JMVC.dom.insertAfter(newmeta, meta.item(len - 1)) : this.element.appendChild(newmeta);
     },
-
     /**
      * [lib description]
      * @param  {[type]} l [description]
@@ -191,7 +178,6 @@ JMVC.head = {
         };
         (l in libs) && this.addscript(libs[l]);
     },
-
     /**
      * [link description]
      * @param  {[type]} rel   [description]
@@ -202,7 +188,6 @@ JMVC.head = {
         attrs.rel = rel;
         JMVC.dom.add(this.element, 'link', attrs);
     },
-
     /**
      * [meta description]
      * @param  {[type]} name    [description]
@@ -212,10 +197,8 @@ JMVC.head = {
      */
     meta : function (name, value, rewrite) {
         rewrite = !!rewrite;
-
         var metas = this.metas(),
             maybeExisting = JMVC.dom.findByAttribute('name', name, metas);
-        
         if (!!maybeExisting.length) {
             //exit if rewrite is not set and the meta name already exists
             if (!rewrite) {
@@ -223,14 +206,12 @@ JMVC.head = {
             }
             JMVC.dom.remove(maybeExisting[0]);
         }
-
         //get last meta if exists
         var meta = this.element.getElementsByTagName('meta'),
             newmeta = JMVC.dom.create('meta', {'name' : name, 'content' : value}),
             len = meta.length;
         return len ? JMVC.dom.insertAfter(newmeta, meta.item(len - 1)) : this.element.appendChild(newmeta);
     },  
-
     /**
      * return all document meta tags
      * @return {[type]} [description]
@@ -238,7 +219,6 @@ JMVC.head = {
     metas : function () {
         return JMVC.array.coll2array(JMVC.WD.getElementsByTagName('meta'));
     },
-
     /**
      * [ description]
      * @return {[type]} [description]
@@ -248,7 +228,6 @@ JMVC.head = {
         WD.location.href = n;
         //that do not cause wierd IE alert
     },
-
     /**
      * [ description]
      * @param  {[type]} t [description]
@@ -262,3 +241,4 @@ JMVC.head = {
         return WD.title;
     }
 };
+//-----------------------------------------------------------------------------

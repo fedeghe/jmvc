@@ -1,7 +1,6 @@
 /*----
 PARSER
 ----*/
-
 Parser = {
     /**
      * microtemplating function
@@ -28,7 +27,6 @@ Parser = {
             return fn(str);
         })(content) : content;
     },
-
     /**
      * This function get a content and substitute jmvc.vars
      * and direct view placeholders like {{viewname .... }}
@@ -38,11 +36,10 @@ Parser = {
      * @return {[type]}         [description]
      */
     parse : function (content) {
-
         if (typeof content === undef) {
             return '';
         }
-
+        //
         // the view content
         var cont = content,
             RX = {
@@ -86,33 +83,32 @@ Parser = {
             //
             // two temporary variables for regexp results
             tmp1, tmp2;
-
+        //
         // check
         // beforeParse hook
         jmvc.hook_check('onBeforeParse', [cont]);
-        
+        //
         while (i < limit) {
             i += 1;
             res = new RegExp(RX.patt, 'gm').exec(cont);
-            
+            //   
             if (res) {
                 viewname = orig = res[1];
                 register = false;
-
+                //
                 // got params within ?
                 if (new RegExp(RX.pattpar, 'gm').test(res[1])) {
                     // register becomes an object and flags result for later check
                     register = {};
-
+                    //
                     // get only the view name, ingoring parameters
                     tmp2  = (new RegExp(RX.viewname)).exec(res[1]);
                     viewname = tmp2[1];
-
                     tmp2 = res[1];
                     while (go_ahead) {
                         // this is exactly pattpar but if I use it does not work
                         tmp1 = (new RegExp(RX.pattpar, 'gm')).exec(tmp2);
-
+                        //
                         if (tmp1) {
                             // add to temporary register
                             register[tmp1[1]] = tmp1[2];
@@ -136,7 +132,7 @@ Parser = {
                 } else {
                     myview = $JMVC.views[viewname];
                 }
-
+                //
                 // in case there are some vars in placeholder
                 // register will hold values obtained above
                 // and we give'em to the view, the parse method
@@ -148,7 +144,7 @@ Parser = {
                         }
                     }
                 }
-
+                //
                 // before view substitution,
                 // look for variables, these have to be set with set method on view instance,
                 // (and that cannot be done using {{viewname}} placeholder )
@@ -159,7 +155,7 @@ Parser = {
                         myview.content = myview.content.replace('$' + tmp1[1] + '$', myview.get(tmp1[1]));
                     }
                 }
-                
+                //
                 // now the whole view
                 cont = cont.replace('{{' + orig + '}}', myview.content);
             } else {
@@ -184,3 +180,4 @@ Parser = {
 //
 // END PARSER
 //
+//-----------------------------------------------------------------------------

@@ -1,7 +1,6 @@
 /*--------------
 ARRAY sub-module
 --------------*/
-
 // private section
 _.array = {
     /**
@@ -28,8 +27,7 @@ JMVC.array = {
      */
     clone : function (arr) {
         return [].concat.call(arr);
-    },  
-
+    },
     /**
      * Safely converts a collection to an array
      * @param  {[type]} coll [description]
@@ -46,7 +44,6 @@ JMVC.array = {
         }
         return ret;
     },
-
     /**
      * Empties an array
      * @param  {Array} arr the array to be emptied
@@ -57,7 +54,6 @@ JMVC.array = {
         // but in the buggIE
         [].splice.call(arr, 0, arr.length);
     },
-
     /**
      * Cross-Façade function to check if an array contains or not a value
      * @param  {Array}  arr     the array to search in 
@@ -74,7 +70,6 @@ JMVC.array = {
         while (l-- && arr[l] !== mvar);
         return l;
     },
-
     /**
      * [ description]
      * @param  {[type]} arr [description]
@@ -85,11 +80,8 @@ JMVC.array = {
         var i = 0,
             is_obj_or_array = false,
             len = arr.length;
-
         for (null; i < len; i += 1) {
-
             is_obj_or_array = {}.toString.call(arr[i]).match(/\[object\s(Array|Object)\]/);
-            
             if (
                 (is_obj_or_array && JSON.stringify(arr[i]) === JSON.stringify(v))
                 ||
@@ -100,7 +92,6 @@ JMVC.array = {
         }
         return -1;
     },
-
     /**
      * [max description]
      * @param  {[type]} a) {return      Math.max.apply(null, a [description]
@@ -109,7 +100,6 @@ JMVC.array = {
     max : function (a) {
         return Math.max.apply(null, a);
     },
-
     /**
      * [mean description]
      * @param  {[type]} a [description]
@@ -126,7 +116,6 @@ JMVC.array = {
     min : function (a) {
         return Math.min.apply(null, a);
     },
-
     /**
      * [mult description]
      * @param  {[type]} a [description]
@@ -135,7 +124,6 @@ JMVC.array = {
     mult : function (a) {
         return _.array.op(a, '*');
     },
-
     /**
      * [rand description]
      * @param  {[type]} a [description]
@@ -145,7 +133,6 @@ JMVC.array = {
         var m = Math;
         return a[m.floor(m.random() * a.length)];
     },
-
     /**
      * @source http://stackoverflow.com/questions/5767325/remove-specific-element-from-an-array
      * [remove description]
@@ -161,7 +148,6 @@ JMVC.array = {
             }
         }
     },
-
     /**
      * [shuffle description]
      * @param  {[type]} arr [description]
@@ -170,7 +156,6 @@ JMVC.array = {
     shuffle : function (arr) {
         return arr.sort(function(){return 0.5 - Math.random(); });
     },
-
     /**
      * [sum description]
      * @param  {[type]} a [description]
@@ -178,3 +163,4 @@ JMVC.array = {
      */
     sum : function (a) {return _.array.op(a, '+');}
 };
+//-----------------------------------------------------------------------------
