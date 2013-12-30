@@ -1,7 +1,7 @@
 JMVC.controllers.carpet = function () {
 	"use strict";
 	/* default action */
-	this.action_index = function (f) {
+	this.action_index = function () {
 
 		/* get lib & view */
 		JMVC.require('core/lib/carpet/carpet', 'core/dim/dim');
@@ -32,9 +32,6 @@ JMVC.controllers.carpet = function () {
 			}
 			
 			jmap.enableSpeed(4.2);
-			
-			//maybe callback
-			f && f();
 		});
 
 	};
