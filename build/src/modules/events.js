@@ -1,7 +1,6 @@
 /*--------------
 EVENT sub-module
 --------------*/
-
 /*
 // in jmvc home try
 var l = JMVC.dom.find('#extralogo'),
@@ -16,9 +15,6 @@ JMVC.events.unbind([
     [l, 'click', f2]
 ]);
  */
-
-
-
 // private section
 _.events = {
     /**
@@ -26,21 +22,18 @@ _.events = {
      * @type {Object}
      */
     bindings : {},
-
     /**
      * wired function queue fired 
      * at the beginning of render function
      * @type {Array}
      */
     Estart : [],
-
     /**
      * wired function queue fired 
      * at the end of render function
      * @type {Array}
      */
     Eend : [],
-
     /**
      * property name used for indexind functions
      * attached to a node starting form event
@@ -49,13 +42,11 @@ _.events = {
      * @type {String}
      */
     nodeAttrForIndex : '__ownid__',
-
     /**
      * map used to get back a node from an id
      * @type {Object}
      */
     nodeidMap : {},
-
     /**
      * function used to get back node from id
      * @param  {[type]} id [description]
@@ -64,7 +55,6 @@ _.events = {
     nodeidInverse : function (id) {
         return id in _.events.nodeidMap ? _.events.nodeidMap[id] : false;
     },
-
     /**
      * obtain a uniqueid for a node if not assigned
      * or the previously one assigned
@@ -75,14 +65,11 @@ _.events = {
         if (!el.hasOwnProperty(_.events.nodeAttrForIndex)) {
             var nid = JMVC.util.uniqueid + '';
             el[_.events.nodeAttrForIndex] = nid;
-
             // store for inverse search
             _.events.nodeidMap[nid] = el;
-            //console.debug('given id ' + nid + ' to ', el);
         }
         return el[_.events.nodeAttrForIndex];
     },
-    
     /**
      * bind exactly one domnode event to a function
      * @param  {DOM node}   el the dom node where the event must be attached
@@ -113,8 +100,6 @@ _.events = {
         _.events.bindings[evnt][nid].push(cb);
         return true;
     },*/
-
-
     bind : (function (){
         function loopcall(el, cback, args){
             if (el instanceof Array) {
@@ -137,7 +122,6 @@ _.events = {
             _.events.bindings[evnt][nid].push(cb);
             return true;
         }
-        
         if ('addEventListener' in W) {
             return function (el, evnt, cb) {
                 loopcall(el, 'addEventListener', [evnt, cb, false]);
@@ -152,7 +136,6 @@ _.events = {
             throw new Error('No straight way to bind an event');
         }
     })(),
-    
     /**
      * unbind the passed cb or all function 
      * binded to a node-event pair 
@@ -165,18 +148,14 @@ _.events = {
      * @return {boolean}    whether the unbinding succeded
      */
     unbind : function (el, evnt, cb) {
-
         var nodeid = _.events.nodeid(el),
             index, tmp, l;
-
         try {
             var ___ = _.events.bindings[evnt][nodeid];
         }catch(e){
             JMVC.debug(evnt + ': binding not found');
             return false;
         }
-
-
         //
         //  loop if a function is not given
         if (typeof cb === 'undefined') {
@@ -188,25 +167,21 @@ _.events = {
             }
             return true;
         }
-
         index = JMVC.array.find(_.events.bindings[evnt][nodeid], cb);
-
         if (index == -1) {
             return false;
         }
-
         if (el.removeEventListener) {
             el.removeEventListener(evnt, cb, false);
         } else if (el.detachEvent) {
             el.detachEvent("on" + evnt, cb);
         }
-        
         //remove it from private bindings register
         Array.prototype.splice.call(_.events.bindings[evnt][nodeid], index, 1);
         return true;
     }
 };
-
+//
 // PUBLIC section
 JMVC.events = {
     /**
@@ -230,7 +205,30 @@ JMVC.events = {
         }
         return _.events.bind(el, tipo, fn);
     },
-
+    /**
+     * Very experimental function to bind a function to
+     * a click triggered outside of a node tree 
+     * @param  {[type]}   el [description]
+     * @param  {Function} cb [description]
+     * @return {[type]}      [description]
+     * @sample http://www.jmvc.dev
+     * || var tr = JMVC.dom.find('#extralogo');
+     * || JMVC.events.clickout(tr, function (){console.debug('out')});
+     */
+    clickout : function (el, cb) {
+        var self = this,
+            root = JMVC.dom.body();
+        this.bind(root, 'click', function (e) {
+            var trg = self.eventTarget(e);
+            while (trg !== el) {
+                trg = JMVC.dom.parent(trg);
+                if (trg == root) {
+                    self.unbind(root, 'click');
+                    return cb();
+                }
+            }
+        });
+    },
     /**
      * [code description]
      * @param  {[type]} e [description]
@@ -246,7 +244,6 @@ JMVC.events = {
         }
         return false;
     },
-
     /**
      * [ description]
      * @param  {[type]} e [description]
@@ -263,7 +260,6 @@ JMVC.events = {
         }
         return targetElement;
     },
-
     /**
      * [ description]
      * @param  {[type]} el [description]
@@ -284,7 +280,6 @@ JMVC.events = {
         y -= el.offsetTop;
         return [x, y];
     },
-
     /**
      * [ description]
      * @param  {[type]}   el   [description]
@@ -293,22 +288,18 @@ JMVC.events = {
      * @return {[type]}        [description]
      */
     one : function (el, tipo, fn) {
-        
         var self = this;
-
         if (el instanceof Array) {
             for (var i = 0, l = el.length; i < l; i ++) {
                 this.one(el[i], tipo, fn);
             }
             return;
         }
-        
         this.bind(el, tipo, function f(e) {
             fn(e);
             self.unbind(el, tipo, f);
         });
     },
-
     /**
      * [ description]
      * @param  {[type]} e [description]
@@ -326,7 +317,6 @@ JMVC.events = {
         }
         return false;
     },
-
     /**
      * [ description]
      * @param  {[type]} e [description]
@@ -341,7 +331,6 @@ JMVC.events = {
             e.returnValue = false;
         }
     },
-
     /**
      * [ description]
      * @param  {[type]} func [description]
@@ -353,9 +342,7 @@ JMVC.events = {
         if (JMVC.loaded) {
             return func.call();
         }
-        
         var e = null;
-
         if(WD.addEventListener){
             e = WD.addEventListener('DOMContentLoaded', func, false);
         }else if(W.addEventListener){
@@ -367,7 +354,6 @@ JMVC.events = {
         }
         return e;
     },
-
     /**
      * [ description]
      * @param  {[type]} el   [description]
@@ -388,7 +374,6 @@ JMVC.events = {
         }
         _.events.unbind(el, tipo, fn);
     },
-
     /**
      * [ description]
      * @param  {[type]} f [description]
@@ -397,7 +382,6 @@ JMVC.events = {
     start : function (f) {
         _.events.Estart.push(f);
     },
-
     /**
      * [ description]
      * @param  {[type]} f [description]
@@ -406,7 +390,6 @@ JMVC.events = {
     end : function (f) {
         _.events.Eend.push(f);
     },
-
     /**
      * [ description]
      * @return {[type]} [description]
@@ -418,7 +401,6 @@ JMVC.events = {
             _.events.Estart[i]();
         }
     },
-
     /**
      * [ description]
      * @return {[type]} [description]
@@ -430,7 +412,6 @@ JMVC.events = {
             _.events.Eend[i]();
         }
     },
-
     /**
      * [ description]
      * @param  {[type]} f [description]
@@ -440,7 +421,6 @@ JMVC.events = {
     delay : function (f, t) {
         W.setTimeout(f, t);
     },
-
     /**
      * [ description]
      * @param  {[type]} left [description]
@@ -452,7 +432,6 @@ JMVC.events = {
             W.scrollBy(left, top);
         }, 1);
     },
-
     /**
      * [ description]
      * @param  {[type]} left [description]
@@ -464,7 +443,6 @@ JMVC.events = {
             W.scrollTo(left, top);
         }, 1);
     },
-
     /**
      * [ description]
      * @param  {[type]} ms [description]
@@ -497,13 +475,11 @@ JMVC.events = {
                     },
                     ms * i,
                     i + step
-
                 );
                 i += step;
             }
         });
     },
-
     /**
      * [ description]
      * @param  {[type]} e [description]
@@ -524,3 +500,4 @@ JMVC.events = {
         return touches;
     }
 };
+//-----------------------------------------------------------------------------
