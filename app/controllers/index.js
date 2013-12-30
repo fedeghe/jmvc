@@ -1,4 +1,5 @@
 JMVC.controllers.index = function () {
+	
 	this.action_none = function () {};
 
 	
@@ -113,7 +114,7 @@ JMVC.controllers.index = function () {
 				if (JMVC.p.map && JMVC.p.map == 'true'
 				/* || JMVC.sniffer.browser.name.toLowerCase().match(/opera|chrome/)*/) {
 				
-					JMVC.require('vendors/google/gmap2');
+					JMVC.require('vendors/google/gmap2/gmap2');
 					dims = JMVC.dim.getViewportSize();
 					mapid = 'map';
 					b = JMVC.dom.body();
