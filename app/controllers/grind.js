@@ -12,15 +12,13 @@ JMVC.controllers.grind = function () {
 				"attrs" : {"id" : "head"},
 				"style" : {"backgroundColor" : "red", "marginTop":"5px"},
 				"class" : "round12 roundtop"
-			},
-			{
+			},{
 				"target" : '#extralogo',
 				"attrs" : {"id" : "prova1"},
 				"float" : "left",
 				"class" : "p100",
 				"style" : {"backgroundColor" : "#EEE"}
-			},
-			{
+			},{
 				"target" : '#extralogo',
 				"attrs" : {"id" : "prova2"},
 				"float" : "left",
@@ -35,8 +33,7 @@ JMVC.controllers.grind = function () {
 							{"style" : {"marginBottom" : "50px", "backgroundColor" : "green"}},
 							{"style" : {"backgroundColor" : "green"}}
 						]
-					},
-					{
+					},{
 						"attrs" : {"id" : "prova4"},
 						"float" : "left",
 						"class" : "p50",
@@ -51,8 +48,11 @@ JMVC.controllers.grind = function () {
 								]
 							}
 						]
+					},{
+						"class" : "p20",
+						"float" : "left",
+						"style" : {"height" : "140px"}
 					},
-					{"class" : "p20", "float" : "left", "style" : {"height" : "140px"}},
 					"clearer"
 				]
 			},
@@ -97,14 +97,12 @@ JMVC.controllers.grind = function () {
 				"attrs" : {"id" : "head"},
 				"class" : "",
 				"style" : {"backgroundColor" : "red"}
-			},
-			{
+			},{
 				"target" : 'body',
 				"attrs" : {"id" : "prova1"},
 				"float" : "left",
 				"class" : "p25"
-			},
-			{
+			},{
 				"target" : 'body',
 				"attrs" : {"id" : "prova2"},
 				"float" : "left",
@@ -119,8 +117,7 @@ JMVC.controllers.grind = function () {
 							{"class" : "", "style" : {"marginBottom" : "50px"}},
 							{"class" : ""}
 						]
-					},
-					{
+					},{
 						"attrs" : {"id" : "prova4"},
 						"float" : "left",
 						"class" : "p60",
@@ -136,8 +133,11 @@ JMVC.controllers.grind = function () {
 								]
 							}
 						]
+					},{
+						"class" : "p10",
+						"float" : "left",
+						"style":{"height":"100px"}
 					},
-					{"class" : "p10", "float" : "left", "style":{"height":"100px"}},
 					"clearer"
 				]
 			},
