@@ -1,9 +1,9 @@
 {
     "require" : {
-        "inputs" : "input/",
-        "colorLib" : "colorlib",
-        "optionsHelper" : "optionsHelper",
-        "layerHelper" : "layerHelper",
-        "panelManager" : "panelManager"
+        "layerManager" : "layerManager",
+        "panelManager" : "panelManager",
+        "optionsManager" : "optionsManager",
+        "toolsManager" : "toolsManager",
+        "inputs" : "inputs/"
     }
 }

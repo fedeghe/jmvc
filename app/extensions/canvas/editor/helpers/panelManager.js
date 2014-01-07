@@ -1,73 +1,98 @@
-JMVC.canvas.editor.panelManager = function (instance) {
+/**
+ * [panelManager description]
+ * @param  {[type]} instance [description]
+ * @param  {[type]} options  [description]
+ * @return {[type]}          [description]
+ */
 
+JMVC.canvas.Editor.getPanelManager = function (instance, options) {
+
+    options = options || {};
     var self = instance,
+        panel,
+        openWidth = 400,
+        closedSquareSize = 30,
         size_pos = {
-            width : 300,
+            width : openWidth,
             height : self.height,
-            topClosed : 30 - self.height,
-            rightClosed : 30 - 300
+            topClosed : closedSquareSize - self.height,
+            rightClosed : closedSquareSize - openWidth
         },
-        template = '<div><h3>Tools</h3><ul id="panelTools"></ul><hr/><h4>Options</h4><ul id="toolOptions"></ul></div>';
+        buttons = {
+            'export' : JMVC.dom.create('button', {}, 'Export'),
+            'import' : JMVC.dom.create('button', {}, 'Import'),
+            'clear' : JMVC.dom.create('button', {}, 'Clear')
+        },
+
+        wrapper = JMVC.dom.create('div', {'class' : 'wrapper'}),
+
+        dstId = 'panelTools',
+        moving = false,
+        toolsManager = null,
+        optionsManager = null;
+
+    JMVC.dom.append(wrapper, [
+        buttons['export'],
+        buttons['import'],
+        buttons['clear'],
+        JMVC.dom.create('hr'),
+        JMVC.dom.create('h4', {}, 'Tools'),
+        JMVC.dom.create('ul', {id : 'panelTools'}, ''),
+        JMVC.dom.create('hr'),
+        JMVC.dom.create('h4', {}, 'Options'),
+        JMVC.dom.create('ul', {id : 'toolOptions'}, '')]
+    );
+
     return {
         init : function () {
-            
             JMVC.debug('Initializing panel');
-
-            self.panel = JMVC.dom.create('div', {
+            toolsManager = JMVC.canvas.Editor.getToolsManager(self, ['canvas/editor/tools/']);
+            optionsManager = JMVC.canvas.Editor.getOptionsManager(self);
+            panel = JMVC.dom.create('div', {
                 id : 'panel',
                 style : JMVC.object.toStr({
-                    position : 'absolute',
-                    width : size_pos.width + 'px',
-                    height : size_pos.height +'px',
-                    top : size_pos.topClosed +'px',
-                    right : size_pos.rightClosed + 'px'
+                     width : size_pos.width + 'px',
+                     height : size_pos.height +'px',
+                     top : size_pos.topClosed +'px',
+                     right : size_pos.rightClosed + 'px'
                 })
-            }, template);
+            });
+            panel.appendChild(wrapper);
             return this;
         },
 
         render : function () {
-            JMVC.debug('Rendering panel');
-
-            JMVC.dom.append(self.node, self.panel);
-
-            var dst = JMVC.dom.find('#panelTools');
-
-            for (var i in JMVC.canvas.editor.tools) {
-                var tmp = JMVC.dom.add(dst, 'li',{}, i);
-
-                (function(el, tool){
-                    JMVC.events.bind(el, 'click', function (){
-                        JMVC.dom.removeClass(JMVC.dom.find('li', dst), 'active');
-
-                        JMVC.dom.addClass(this, 'active');
-                        self.changeTool(tool);
-
-                    });
-                })(tmp, JMVC.canvas.editor.tools[i]);
-            }
-            JMVC.dom.append(dst, JMVC.dom.clearer());
+            JMVC.debug('Rendering panel'); 
+            JMVC.dom.append(self.node, panel);
+            
+            toolsManager.init().render(JMVC.dom.find('#' + dstId));
             return this;
         },
 
         bind : function () {
             JMVC.debug('Binding panel');
             
-            self.changeTool(JMVC.canvas.editor.tools.neighbour_points);
+            JMVC.events.bind(buttons['clear'], 'click', function () {
+                toolsManager.clear();
+            });
+            JMVC.events.bind(buttons['export'], 'click', function () {
+                toolsManager.save();
+            });
 
-            JMVC.events.bind(self.panel, 'mouseenter', self.panelManager.showPanel);
-            JMVC.events.bind(self.panel, 'mouseleave', self.panelManager.hidePanel);
+            JMVC.events.bind(panel, 'mouseenter',
+                function () {
+                    JMVC.css.style(panel, {top : '0px', right : '0px'});
+                }
+            );
+/*
+            JMVC.events.bind(panel, 'mouseleave',
+                function () {
+                    JMVC.css.style(panel, {top : size_pos.topClosed + 'px', right : size_pos.rightClosed + 'px'});
+                }
+            );
+  */          
             return this;
-        },
-
-        showPanel : function () {
-            JMVC.fx.animate(self.panel, 'top', 0, 100);
-            JMVC.fx.animate(self.panel, 'right', 0, 100);
-        },
-
-        hidePanel : function () {
-            JMVC.fx.animate(self.panel, 'top', size_pos.topClosed, 100);
-            JMVC.fx.animate(self.panel, 'right', size_pos.rightClosed, 100);
         }
-    }
+
+    };
 };

@@ -1,4 +1,4 @@
-JMVC.extend('canvas.editor.tools.dots_random', {
+JMVC.extend('canvas.editortools.dots_random', {
     use : function (instance) {
         var self = this,
             el = instance.cnv,
@@ -8,15 +8,16 @@ JMVC.extend('canvas.editor.tools.dots_random', {
 
         el.onmousedown = el.onmousemove = el.onmousemove = null;
 
-        ctx.fillStyle = self.options.color.value;
-
-        
+        ctx.fillStyle = 'hsla('+self.options.color.hueZero+', ' + (self.options.color.satZero * 100) + '% ,' + (self.options.color.lumZero * 100) + '%, ' + (self.options.color.alpZero) + ')'; 
 
         function getRandomFloat(min, max) {
             return Math.random() * (max - min) + min;
         }
 
         el.onmousedown = function (e) {
+
+            ctx.fillStyle = self.options.color.value;
+
             ctx.lineJoin = ctx.lineCap = 'round';
             clientX = e.clientX;
             clientY = e.clientY;
@@ -24,7 +25,7 @@ JMVC.extend('canvas.editor.tools.dots_random', {
             timeout = setTimeout(function draw() {
                 for (var i = density; i--; ) {
                     var angle = getRandomFloat(0, Math.PI * 2),
-                        radius = getRandomFloat(0, 30);
+                        radius = getRandomFloat(0, self.options.radius.value);
                     ctx.globalAlpha = Math.random();
                     ctx.fillRect(
                         clientX + radius * Math.cos(angle),
@@ -37,10 +38,12 @@ JMVC.extend('canvas.editor.tools.dots_random', {
                 timeout = setTimeout(draw, 50);
             }, 50);
         };
+
         el.onmousemove = function(e) {
             clientX = e.clientX;
             clientY = e.clientY;
         };
+
         el.onmouseup = function() {
             clearTimeout(timeout);
         };
@@ -50,10 +53,17 @@ JMVC.extend('canvas.editor.tools.dots_random', {
     options : {
         radius : {
             name : 'radius',
-            type : 'int'
+            type : 'int',
+            value : 30
         },
         color : {
-            value : 'rgba(0, 0, 255, 1)',
+            value : '',
+
+            hueZero : 1,
+            satZero : 1,
+            lumZero : 0.5,
+
+            alpZero : 1,
             name : 'color',
             type : 'color'
         },

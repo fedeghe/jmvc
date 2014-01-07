@@ -1,10 +1,10 @@
-JMVC.extend('canvas.editor.tools.timesprayround', {
+JMVC.extend('canvas.editortools.timesprayround', {
     use : function (instance) {
         var self = this,
             el = instance.cnv,
             ctx = instance.ctx,
             clientX, clientY, timeout,
-            density = 50;
+            density = parseInt(self.options.density.value, 10);
 
         
 
@@ -13,6 +13,8 @@ JMVC.extend('canvas.editor.tools.timesprayround', {
         }
 
         el.onmousedown = function(e) {
+            density = parseInt(self.options.density.value, 10);
+            ctx.fillStyle = self.options.color.value;
             ctx.lineJoin = ctx.lineCap = 'round';
             clientX = e.clientX;
             clientY = e.clientY;
@@ -47,7 +49,14 @@ JMVC.extend('canvas.editor.tools.timesprayround', {
             type : 'int'
         },
         color : {
-            value : 'rgba(0, 0, 0, 0.5)',
+            value : '',
+
+            hueZero : 1,
+            satZero : 1,
+            lumZero : 0.5,
+
+            alpZero : 0.1,
+
             name : 'color',
             type : 'color'
         },
@@ -57,7 +66,8 @@ JMVC.extend('canvas.editor.tools.timesprayround', {
         },
         density : {
             name : 'density',
-            type : 'int'
+            type : 'int',
+            value : 50 
         }
 
     }

@@ -1,10 +1,14 @@
-JMVC.extend('canvas.editor.tools.timespray', {
+JMVC.extend('canvas.editortools.timespray', {
     use : function (instance) {
         var self = this,
             el = instance.cnv,
             ctx = instance.ctx,
             clientX, clientY, timeout,
-            density = 50;
+            density = parseInt(self.options.density.value, 10),
+            tout = 50;
+
+
+        ctx.fillStyle = self.options.color.value;
 
         function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -13,6 +17,7 @@ JMVC.extend('canvas.editor.tools.timespray', {
         el.onmousedown = function(e) {
 
             ctx.fillStyle = self.options.color.value;
+            density = parseInt(self.options.density.value, 10);
 
             ctx.lineJoin = ctx.lineCap = 'round';
             clientX = e.clientX;
@@ -20,7 +25,7 @@ JMVC.extend('canvas.editor.tools.timespray', {
 
             timeout = setTimeout(function draw() {
                 for (var i = density; i--; ) {
-                    var radius = 30;
+                    var radius = self.options.radius.value;
                     var offsetX = getRandomInt(-radius, radius);
                     var offsetY = getRandomInt(-radius, radius);
                     if (offsetX * offsetX + offsetY * offsetY < radius * radius) {
@@ -28,8 +33,8 @@ JMVC.extend('canvas.editor.tools.timespray', {
                     }
                 }
                 if (!timeout) return;
-                timeout = setTimeout(draw, 50);
-            }, 50);
+                timeout = setTimeout(draw, tout);
+            }, tout);
         };
         el.onmousemove = function(e) {
             clientX = e.clientX;
@@ -40,14 +45,21 @@ JMVC.extend('canvas.editor.tools.timespray', {
         };        
     },
 
-    
     options : {
         radius : {
             name : 'radius',
-            type : 'int'
+            type : 'int',
+            value : 20
         },
         color : {
-            value : 'rgba(0, 0, 0, 0.5)',
+            value : '',
+
+            hueZero : 1,
+            satZero : 1,
+            lumZero : 0.5,
+
+            alpZero : 0.5,
+
             name : 'color',
             type : 'color'
         },
@@ -57,8 +69,8 @@ JMVC.extend('canvas.editor.tools.timespray', {
         },
         density : {
             name : 'density',
-            type : 'int'
+            type : 'int',
+            value : 50 
         }
-
     }
 });
