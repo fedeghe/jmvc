@@ -31,140 +31,126 @@ JMVC.extend('xvents',{
 			this.map = {};
 			this.binded = false;
 			this.listening = true;
-			
-			/**
-			 * [ description]
-			 * @param  {[type]} eventType [description]
-			 * @param  {[type]} func      [description]
-			 * @param  {[type]} action    [description]
-			 * @param  {[type]} bubble    [description]
-			 * @return {[type]}           [description]
-			 */
-			this.listen = function (eventType, func, action, bubble) {
+		};
+		/**
+		 * [ description]
+		 * @param  {[type]} eventType [description]
+		 * @param  {[type]} func      [description]
+		 * @param  {[type]} action    [description]
+		 * @param  {[type]} bubble    [description]
+		 * @return {[type]}           [description]
+		 */
+		Area.prototype.listen = function (eventType, func, action, bubble) {
 
-				this.map[eventType] || (this.map[eventType] = action ? {} : []);
+			this.map[eventType] || (this.map[eventType] = action ? {} : []);
 
-				// bubbles 
-				func['bubble'] = !!bubble;
+			// bubbles 
+			func['bubble'] = !!bubble;
 
-				if (!!action) {
-					this.map[eventType][action] || (this.map[eventType][action] = []);
-					this.map[eventType][action].push(func);
-				} else {
-					this.map[eventType].push(func);
-				}
-
-				return this;
-			};
-
-			/**
-			 * [ description]
-			 * @param  {[type]} eventType [description]
-			 * @param  {[type]} action    [description]
-			 * @return {[type]}           [description]
-			 */
-			this.clean = function (eventType, action) {
-				this.map[eventType] &&
-					!!action ?
-						(this.map[eventType][action] && (delete this.map[eventType][action]))
-						:
-						(delete this.map[eventType]);
-			};
-
-			/**
-			 * [ description]
-			 * @return {[type]} [description]
-			 */
-			this.enable = function () {this.listening = true; }
-
-			/**
-			 * [ description]
-			 * @return {[type]} [description]
-			 */
-			this.disable = function () {this.listening = false; }
-
-			/**
-			 * [ description]
-			 * @return {[type]} [description]
-			 */
-			this.bind = function () {
-				//console.debug(self.map)
-				if (!self.binded) {		
-					
-					// loop the map
-					JMVC.each(self.map, function (fnArr, ev) {
-						
-						JMVC.each(fnArr, function (fn, i) {
-
-							JMVC.events.bind(self.node, ev, function (e) {
-
-								if (!self.listening) {return false; }
-
-								var trg = JMVC.events.eventTarget(e),
-									realtrg = e.currentTarget,
-									eventType = e.type,
-									act = JMVC.dom.attr(trg, self.attrAct),
-									par = JMVC.dom.attr(trg, self.attrPar);
-
-								// if is array
-								if (fn instanceof Array) {
-									act = act.length ? act.split('|') : false; 
-									if (!act) {return false; }
-									par = {'event' : e, 'node' : trg, 'realtarget' : realtrg, 'params' : par.length ? getParams(par) : false};
-									
-									JMVC.each(act, function (a) {
-										self.map[eventType] &&
-										self.map[eventType][a] &&
-										(function (el, p) {
-											JMVC.each(el, function (f) {
-												f.apply(null, [p, trg, realtrg]);
-												!f.bubble && stopBubble(e);
-											});
-										})(self.map[eventType][a], par);
-									});
-								} else {
-									fn.apply(self.node, [e, trg, realtrg]);
-									!fn.bubble && stopBubble(e);
-								}
-							});
-						});
-					});
-					this.binded = true;
-				}
-			};
-
-			/**
-			 * [stopBubble description]
-			 * @param  {[type]} e [description]
-			 * @return {[type]}   [description]
-			 */
-			function stopBubble(e) {
-				//console.debug('stopping bubble for ', e);
-				
-				if (e.stopPropagation) {
-					e.stopPropagation();
-				}
- 				if (e.cancelBubble!=null) {
- 					e.cancelBubble = true;
- 				}
+			if (!!action) {
+				this.map[eventType][action] || (this.map[eventType][action] = []);
+				this.map[eventType][action].push(func);
+			} else {
+				this.map[eventType].push(func);
 			}
 
-			/**
-			 * [getParams description]
-			 * @param  {[type]} att [description]
-			 * @return {[type]}     [description]
-			 */
-			function getParams(att) {
-				return JSON.parse(att.replace(/\'/g, '"'));
-			} 
+			return this;
 		};
+
+		/**
+		 * [ description]
+		 * @param  {[type]} eventType [description]
+		 * @param  {[type]} action    [description]
+		 * @return {[type]}           [description]
+		 */
+		Area.prototype.clean = function (eventType, action) {
+			this.map[eventType] &&
+				!!action ?
+					(this.map[eventType][action] && (delete this.map[eventType][action]))
+					:
+					(delete this.map[eventType]);
+		};
+
+		/**
+		 * [ description]
+		 * @return {[type]} [description]
+		 */
+		Area.prototype.enable = function () {this.listening = true; };
+
+		/**
+		 * [ description]
+		 * @return {[type]} [description]
+		 */
+		Area.prototype.disable = function () {this.listening = false; };
+
+		/**
+		 * [ description]
+		 * @return {[type]} [description]
+		 */
+		Area.prototype.bind = function () {
+			var self = this;
+			//console.debug(self.map)
+			if (!self.binded) {		
+				
+				// loop the map
+				JMVC.each(self.map, function (fnArr, ev) {
+					
+					JMVC.each(fnArr, function (fn, i) {
+
+						JMVC.events.bind(self.node, ev, function (e) {
+
+							if (!self.listening) {return false; }
+
+							var trg = JMVC.events.eventTarget(e),
+								realtrg = e.currentTarget,
+								eventType = e.type,
+								act = JMVC.dom.attr(trg, self.attrAct),
+								par = JMVC.dom.attr(trg, self.attrPar);
+
+							// if is array
+							if (fn instanceof Array) {
+								act = act.length ? act.split('|') : false; 
+								if (!act) {return false; }
+								par = {'event' : e, 'node' : trg, 'realtarget' : realtrg, 'params' : par.length ? getParams(par) : false};
+								
+								JMVC.each(act, function (a) {
+									self.map[eventType] &&
+									self.map[eventType][a] &&
+									(function (el, p) {
+										JMVC.each(el, function (f) {
+											f.apply(null, [p, trg, realtrg]);
+											!f.bubble && JMVC.events.stopBubble(e);
+										});
+									})(self.map[eventType][a], par);
+								});
+							} else {
+								fn.apply(self.node, [e, trg, realtrg]);
+								!fn.bubble && JMVC.events.stopBubble(e);
+							}
+						});
+					});
+				});
+				this.binded = true;
+			}
+		};
+		
+
+		/**
+		 * [getParams description]
+		 * @param  {[type]} att [description]
+		 * @return {[type]}     [description]
+		 */
+		function getParams(att) {
+			return JSON.parse(att.replace(/\'/g, '"'));
+		} 
+
 
 		/**
 		 * 
 		 */
 		return {
 			list : [],
-			add : function (node, attrAct, attrPar) {
+			add : function (node, zlib.createDeflateRaw(o);ct, attrPar) {
 				var newarea = new Area(node, attrAct, attrPar);
 				this.list.push(newarea);
 				return newarea;
