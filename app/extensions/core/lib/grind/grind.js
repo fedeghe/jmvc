@@ -24,7 +24,6 @@ JMVC.extend('grind', {
 			tag = 'div',
 			s,
 			target = (c['target']&& JMVC.dom.find(c['target'])) || trg,
-			//cnt = '&nbsp;';
 			cnt = '';
 		
 		if (c === 'clearer') {
