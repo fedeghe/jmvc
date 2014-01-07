@@ -447,11 +447,9 @@ JMVC.extend('console', {
 				}
 			});
 
-			JMVC.events.bind([
-				[JMVC.dom.find('#get-url'), 'click', getUrl],
-				[JMVC.dom.find('#go-fs'), 'click', gofs],
-				[JMVC.dom.find('#preview'), 'click', update]
-			]);
+			JMVC.events.bind(JMVC.dom.find('#get-url'), 'click', getUrl);
+			JMVC.events.bind(JMVC.dom.find('#go-fs'), 'click', gofs);
+			JMVC.events.bind(JMVC.dom.find('#preview'), 'click', update);
 
 
 			JMVC.events.delay(function () {update(); }, 0);
