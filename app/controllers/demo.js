@@ -252,30 +252,52 @@ JMVC.controllers.demo = function () {
 	
 
 
+	/* just to celebrate a better time */
+	this.action_flag = function(p) {
 
-
-
-
-
-
-	
-	/* just to celebrate a good start */
-	this.action_flag = function() {
 		/* color extension is needed */
 		JMVC.require('core/color/color');
-		
-		JMVC.head.title('CH beat');
 
-		JMVC.head.addstyle(JMVC.vars.baseurl+'/media/css/flag.css');
+		var nation = p.nation || 'ndl',
+			nations = {
+				ndl : {
+					w : 9,
+					h : 6,
+					strat : function (i) {
+						return i < this.w * 2 ? 'red' : i < this.w * 4 ? 'white' : 'blue';
+					}
+				},
+				ch : {
+					w : 7,
+					h : 5,
+					strat : function (i) {
+						return (JMVC.array.find([10,16,17,18,24], i) >= 0) ? 'white' : 'red';
+					}
+				},
+				it : {
+					w : 9,
+					h : 6,
+					strat : function (i) {
+						return i % this.w < 3 ? 'green' : i % this.w < 6 ? 'white' : 'red';
+					}
+				}
+			},
+			opt = nations[nation];
+
+		JMVC.head.title(nation.toUpperCase() + ' beat');
+
+		JMVC.css.style(JMVC.WD.body, 'backgroundColor', 'black');
 
 		var v = JMVC.getView('flag'),
 			mode = 'grow',
-			box_size=1,
+			box_size = 1,
 			factor = 0.8,
 			top_fact = 80,
 			els_top = [],
 			i = 0,
-			l = 5 * 7,
+			w = opt.w,
+			h = opt.h
+			l = w * h,
 			recall = function() {
 				for(null; i<l; i++) {
 					els_top[i] = JMVC.util.rand(10, top_fact-5);
@@ -292,8 +314,8 @@ JMVC.controllers.demo = function () {
 				tmp, i, j, l,
 				fact,
 				opac = Math.sqrt(basesize / (box_size * top_fact));
-			f.style.width = (basesize * 7.5) + 'px';
-			f.style.height = (basesize * 5.5) + 'px';
+			f.style.width = (basesize * w) + 'px';
+			f.style.height = (basesize * h) + 'px';
 			f.style.margin = '0 auto';
 			f.style.zoom = 1;
 			f.style.opacity = opac;
@@ -301,16 +323,16 @@ JMVC.controllers.demo = function () {
 			f.style.filter = "alpha(opacity=" + (~~(100 * opac)) + ")";
 			f.style.marginTop = basesize + 'px';
 			j = 0;
-			for (i = 0, l = 5 * 7; i < l; i += 1) {
+			for (i = 0, l = h * w; i < l; i += 1) {
 				j += 1;					
-				tmp = JMVC.dom.create('div', {'style' : 'width:' + basesize + 'px; height:' + basesize + 'px;', 'class' : 'box'}, '&nbsp;');
+				tmp = JMVC.dom.create('div', {'style' : 'float:left;width:' + basesize + 'px; height:' + basesize + 'px;', 'class' : 'box'}, '&nbsp;');
 				JMVC.dom.append(f, tmp);
 				tmp.style.backgroundColor = (basesize > els_top[i]) ?
-					((JMVC.array.find([10,16,17,18,24], i) >= 0) ? 'white' : 'red')
+					opt.strat(i)
 					:
 					JMVC.core.color.getRandomColor(true);
-				if(j%7 == 0) {
-					tmp = JMVC.dom.create('div',{'class':'clearer'},'&nbsp;');
+				if(j % w == 0) {
+					tmp = JMVC.dom.clearer();
 					JMVC.dom.append(f, tmp);
 				}
 			}
@@ -337,8 +359,6 @@ JMVC.controllers.demo = function () {
 		v.render({cback : back});
 		
 	};
-
-
 
 	this.action_direct = function () {
 		JMVC.head.title('Crypto image');
