@@ -58,7 +58,10 @@ JMVC.canvas.Editor.getOptionsManager = function () {
                         options[i] = JMVC.canvas.Editor.fields.integerinput.create({
                             ctx : layer.ctx,
                             node : node,
-                            value:tool.options.density.value
+                            value:tool.options.density.value,
+                            min : tool.options.density.min,
+                            max : tool.options.density.max,
+                            step : tool.options.density.step 
                         });
                         options[i].render();
                         options[i].onChange(function (c){ tool.options.density.value = c; });   

@@ -9,9 +9,9 @@ JMVC.extend('canvas.Editor.fields.integerinput', {
             field,
             value = options.value || 0,
             node = options.node,
-            min = options.min,
-            max = options.max,
-            step = options.step,
+            min = options.min || 0,
+            max = options.max || 100,
+            step = options.step || 10,
             onchange = null;
 
         return {

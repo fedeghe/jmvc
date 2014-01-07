@@ -45,8 +45,12 @@ JMVC.extend('canvas.editortools.timesprayround', {
     
     options : {
         radius : {
+            value : 20,
             name : 'radius',
-            type : 'int'
+            type : 'int',
+            min : 5,
+            max : 1000,
+            step : 5
         },
         color : {
             value : '',
@@ -67,7 +71,10 @@ JMVC.extend('canvas.editortools.timesprayround', {
         density : {
             name : 'density',
             type : 'int',
-            value : 50 
+            value : 50,
+            min : 1,
+            max : 1000,
+            step : 10
         }
 
     }

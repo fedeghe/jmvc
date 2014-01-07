@@ -70,21 +70,12 @@ JMVC.extend('canvas.editortools.neighbour_points', {
             max : 100000,
             step : 10
         },
-        opacity : {
-            value : 1000,
-            name : 'opacity',
-            type : 'int'
-
-        },
         color : {
             value : '',
-
             hueZero : 1,
             satZero : 1,
             lumZero : 0,
-
             alpZero : 0.1,
-
             name : 'color',
             type : 'color'
         }

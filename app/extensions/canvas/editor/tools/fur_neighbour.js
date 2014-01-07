@@ -70,8 +70,13 @@ JMVC.extend('canvas.editortools.fur_neighbour', {
             step : 100
         },
         color : {
-            value : 'rgba(0, 255, 0, 0.05)',
-            alphaZero : 0.05,
+            value : '',
+            hueZero : 1,
+            satZero : 1,
+            lumZero : 0,
+
+            alpZero : 0.1,
+
             name : 'color',
             type : 'color'
         },

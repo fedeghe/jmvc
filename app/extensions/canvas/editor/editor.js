@@ -41,6 +41,9 @@ JMVC.canvas.Editor.prototype = {
         return this;
     }
 };
+
+JMVC.events.disableRightClick();
+
 // load almost anything else (check canvas/editor/require.json)
 JMVC.require('canvas/editor/helpers/');
 
