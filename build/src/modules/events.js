@@ -1,20 +1,6 @@
 /*--------------
 EVENT sub-module
 --------------*/
-/*
-// in jmvc home try
-var l = JMVC.dom.find('#extralogo'),
-    f1 = function (e){console.debug(e); alert(1); },
-    f2 = function (){alert(2); };
-JMVC.events.bind([
-    [l, 'click', f1],
-    [l, 'click', f2]
-]);
-JMVC.events.unbind([
-    [l, 'dblclick', f1],
-    [l, 'click', f2]
-]);
- */
 // private section
 _.events = {
     /**
@@ -101,15 +87,7 @@ _.events = {
         return true;
     },*/
     bind : (function (){
-        function loopcall(el, cback, args){
-            if (el instanceof Array) {
-                for (var i = 0, l = el.length; i < l; i += 1) {
-                    el[i][cback].apply(el[i], args || []);
-                }
-            } else {
-                el[cback].apply(el, args || []);
-            }
-        }
+
         function store(el, evnt, cb) {
             var nid = _.events.nodeid(el); 
             if (!(evnt in _.events.bindings)) {
@@ -124,18 +102,39 @@ _.events = {
         }
         if ('addEventListener' in W) {
             return function (el, evnt, cb) {
-                loopcall(el, 'addEventListener', [evnt, cb, false]);
+                cb = _.events.fixCurrentTarget(cb, el);
+                el.addEventListener.apply(el, [evnt, cb, false]);
                 store(el, evnt, cb);
             };
         } else if ('attachEvent' in W) {
             return function (el, evnt, cb) {
-                loopcall(el, 'attachEvent', ['on' + evnt, cb]);
+                cb = _.events.fixCurrentTarget(cb, el);     
+                el.attachEvent.apply(el, ['on' + evnt, cb]);
                 store(el, evnt, cb);
             };
         } else {
             throw new Error('No straight way to bind an event');
         }
     })(),
+    /**
+     * [fixCurrentTarget description]
+     * @return {[type]} [description]
+     */
+    fixCurrentTarget : function (f, el) {
+        return function (e) {
+            // currentTarget (the node where binding has been done) is the core of
+            // event delegation
+            // it would be nice to fix currentTarget
+            // leak in (fuckin)IE7 and (fuckin)IE8
+            // with something like
+            // e.currentTarget || (e.currentTarget = el);
+            //
+            // a bad WORKING workaround is to pass the current target
+            // to the
+            // callback as second parameter and let it to be the context 
+            return f.call(el, e, el);
+        };
+    },
     /**
      * unbind the passed cb or all function 
      * binded to a node-event pair 
@@ -148,6 +147,13 @@ _.events = {
      * @return {boolean}    whether the unbinding succeded
      */
     unbind : function (el, evnt, cb) {
+
+        function unstore(evnt, nodeid, index) {
+            Array.prototype.splice.call(_.events.bindings[evnt][nodeid], index, 1);
+        }
+
+        cb && (cb = this.fixCurrentTarget(cb, el));
+
         var nodeid = _.events.nodeid(el),
             index, tmp, l;
         try {
@@ -171,6 +177,45 @@ _.events = {
         if (index == -1) {
             return false;
         }
+        
+        if (el.removeEventListener) {
+            el.removeEventListener(evnt, cb, false);
+        } else if (el.detachEvent) {
+            el.detachEvent("on" + evnt, cb);
+        }
+        //remove it from private bindings register
+        unstore(evnt, nodeid, index);
+        return true;
+    },
+    unbindold : function (el, evnt, cb) {
+
+
+        cb && (cb = this.fixCurrentTarget(cb, el));
+
+        var nodeid = _.events.nodeid(el),
+            index, tmp, l;
+        try {
+            var ___ = _.events.bindings[evnt][nodeid];
+        }catch(e){
+            JMVC.debug(evnt + ': binding not found');
+            return false;
+        }
+        //
+        //  loop if a function is not given
+        if (typeof cb === 'undefined') {
+            tmp = _.events.bindings[evnt][nodeid];
+            l = tmp.length;
+            /*the element will be removed at the end of the real unbind*/
+            while (l--) {
+                _.events.unbind(el, evnt, tmp[l]);
+            }
+            return true;
+        }
+        index = JMVC.array.find(_.events.bindings[evnt][nodeid], cb);
+        if (index == -1) {
+            return false;
+        }
+        
         if (el.removeEventListener) {
             el.removeEventListener(evnt, cb, false);
         } else if (el.detachEvent) {
@@ -194,16 +239,14 @@ JMVC.events = {
     bind : function (el, tipo, fn) {
         var res = true;
         if (el instanceof Array) {
-            for (var i = 0, l = el.length; i < l; i++) {
-                if (el[i] instanceof Array) {
-                    res = res & _.events.bind(el[i][0], el[i][1], el[i][2]);
-                } else {
-                    res = res & _.events.bind(el[i], tipo, fn);
-                }
+            for (var i = 0, l = el.length; i < l; i++) {    
+                res = res & _.events.bind(el[i], tipo, fn);
+                //res = res & _.events.bind(el[i], tipo, _.events.fixCurrentTarget(fn, el[i]));
             }
             return res;
         }
         return _.events.bind(el, tipo, fn);
+        //return _.events.bind(el, tipo, _.events.fixCurrentTarget(fn, el));
     },
     /**
      * Very experimental function to bind a function to
@@ -218,12 +261,14 @@ JMVC.events = {
     clickout : function (el, cb) {
         var self = this,
             root = JMVC.dom.body();
-        this.bind(root, 'click', function (e) {
+
+        this.bind(root, 'click', function f(e) {
+            
             var trg = self.eventTarget(e);
             while (trg !== el) {
                 trg = JMVC.dom.parent(trg);
                 if (trg == root) {
-                    self.unbind(root, 'click');
+                    self.unbind(root, 'click', f);
                     return cb();
                 }
             }
@@ -244,8 +289,16 @@ JMVC.events = {
         }
         return false;
     },
+    disableRightClick : function () {
+        JMVC.dom.attr(JMVC.WD.body, 'oncontextmenu', 'return false');
+        this.bind(JMVC.WD, 'mousedown', function (e) {
+            if(e.button == 2) {
+                return false;
+            }
+        });
+    },
     /**
-     * [ description]
+     * [eventTarget description]
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
@@ -355,6 +408,19 @@ JMVC.events = {
         return e;
     },
     /**
+     * [stopBubble description]
+     * @param  {[type]} e [description]
+     * @return {[type]}   [description]
+     */
+    stopBubble : function (e) {
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
+        if (e.cancelBubble!=null) {
+            e.cancelBubble = true;
+        }
+    },
+    /**
      * [ description]
      * @param  {[type]} el   [description]
      * @param  {[type]} tipo [description]
@@ -364,13 +430,9 @@ JMVC.events = {
         //as for binding
         if (el instanceof Array) {
             for (var i = 0, l = el.length; i < l; i++) {
-                if (el[i] instanceof Array) {
-                    _.events.unbind(el[i][0], el[i][1], el[i][2]);
-                } else {
-                    _.events.unbind(el[i], tipo, fn);
-                }
+                _.events.unbind(el[i], tipo, fn);
             }
-            return ;
+            return;
         }
         _.events.unbind(el, tipo, fn);
     },
