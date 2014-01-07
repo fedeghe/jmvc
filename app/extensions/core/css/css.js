@@ -7,7 +7,7 @@ JMVC.extend('css', {
 
 	init : function () {
 		/*
-		if not loaded in the index.html can be loaded calling
+		if css is not loaded by default or in the index.html can be loaded manually calling
 		JMVC.css.reset();
 		*/
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/core/jmvc.css');
@@ -22,7 +22,7 @@ JMVC.extend('css', {
 		JMVC.dom.append(JMVC.head.element, JMVC.css._mappedStyles[id]);
 	},
 
-	'style' : function (el, prop, val) {
+	style : function (el, prop, val) {
 
 		var prop_is_obj = (typeof prop === 'object' && typeof val === 'undefined'),
 			ret = false,
@@ -34,7 +34,6 @@ JMVC.extend('css', {
 			ret = (el.currentStyle) ? el.currentStyle[this.css_propertymap[prop] || prop + ""] : el.style[prop]; 
 			return ret == '' || ret == 'auto' ? JMVC.css.getComputedStyle(el, prop) : ret;
 		}
-		
 		
 		if (prop_is_obj) {
 			for (k in prop) {
@@ -49,7 +48,7 @@ JMVC.extend('css', {
 				}
 			}
 		} else if (typeof val !== 'undefined') {
-			val = val.toString();
+			val += "";
 			if (val.search(/rand/) != -1) {
 				newval = JMVC.core.color.getRandomColor();
 				val =  val.replace(/rand/, newval);
@@ -67,23 +66,34 @@ JMVC.extend('css', {
 	},
 
 	show : function (el) {
+		if (el instanceof Array) {
+			for(var i = 0, l = el.length; i < l; i += 1) {
+				this.show(el[i]);
+			}
+			return;
+		}
 		JMVC.css.style(el, 'display', 'block');
-	}, 
+	},
+
 	hide : function (el) {
+		if (el instanceof Array) {
+			for(var i = 0, l = el.length; i < l; i += 1) {
+				this.hide(el[i]);
+			}
+			return;
+		}
 		JMVC.css.style(el, 'display', 'none');
-	}, 
+	},
 	
 	width : function (el) {
 		return el.offsetWidth || el.scrollWidth || JMVC.css.getComputedStyle(el ,'width');
 	},
 	
 	height : function (el) {
-
 		return el.offsetHeight || el.scrollHeight || JMVC.css.getComputedStyle(el ,'height');
 	},
 	
 	getComputedStyle : function (el, styleProperty) { 
-		
 		if (JMVC.sniffer.browser.name == 'Opera') {
 			return  JMVC.W.getComputedStyle(el, null).getPropertyValue(styleProperty);
 		}
@@ -96,7 +106,22 @@ JMVC.extend('css', {
 		return computedStyle[this.css_propertymap[styleProperty] || styleProperty]; 
 	},
 
-	css3_map : ['-o-transform', '-moz-transform', '-o-transform'],
+	// 
+	// http://www.quirksmode.org/js/findpos.html
+	// 
+	getPosition : function (el) {
+		var curleft = 0,
+			curtop = 0;
+		if (el.offsetParent) {
+			do {
+				curleft += el.offsetLeft;
+				curtop += el.offsetTop;
+			} while (el = el.offsetParent);
+		}
+		return [curleft, curtop];
+	},
+
+	css3_map : ['-o-transform', '-moz-transform'],
 
 	css_propertymap : {
 		'background-attachment' : 'backgroundAttachment',
@@ -156,7 +181,7 @@ JMVC.extend('css', {
 		var style = "/* http://meyerweb.com/eric/tools/css/reset/    v2.0 | 20110126   License: none (public domain)*/html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video {	margin: 0;	padding: 0;	border: 0;	font-size: 100%;	font: inherit;	vertical-align: baseline;}/* HTML5 display-role reset for older browsers */article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;}body {	line-height: 1;}ol, ul {	list-style: none;}blockquote, q {	quotes: none;}blockquote:before, blockquote:after,q:before, q:after {content: '';content: none;}table {border-collapse: collapse;border-spacing: 0;}"
 		JMVC.head.addstyle(style, true, true);
 	},
-
+/*
 	json2css : function (json) {
 		var out = '',
 			i;
@@ -167,7 +192,7 @@ JMVC.extend('css', {
 		}
 		return out;
 	},
-	
+*/	
 	clearer : JMVC.dom.create('br', {'class' : 'clearer'})
 });
 
