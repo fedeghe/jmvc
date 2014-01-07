@@ -277,7 +277,7 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 				holland : {
 					worm : ['#ff8800', '#662200'],
 					//the background, the gradient is created with all the colors specified
-					bg : ['00AA00', '#FF6600', '#000000'],
+					bg : ['#00AA00', '#FF6600', '#000000'],
 					freezebg : ['#555555', '#333333'],
 					//freezebg : ['#FF0000', '#00FF00', '#0000FF'],
 					tunnel : '#000000',
