@@ -1,33 +1,20 @@
 div.jmaps.outerdiv{
-	
-	
 	position : relative;
 	overflow : hidden;
 	border:1px solid black;
 	z-index : 200;
 	
-	
-	/*DEV*/
 	top:5px;
 	left:5px;
 	overflow: hidden;
-	/*overflow:visible;*/
 	background-color:#999;
-	/* DEV */
 }
+
 div.jmaps.outerdiv div.jmaps.innerdiv {
-	
-	
 	position:relative;
 	overflow:visible;
-	/*overflow:hidden;*/
 	z-index:100;
-	
-	/*DEV*/
 	background-color:#ddd;
-	/*opacity:0.6*/
-
-	/*DEV*/	
 } 
 
 div.jmaps.outerdiv div.jmaps.innerdiv div.tile{
@@ -39,5 +26,4 @@ div.jmaps.outerdiv div.jmaps.innerdiv div.tile{
 	font-weight:bold;
 	line-height:20px;
 	text-align:center;
-	/*border:1px solid black*/
 }
