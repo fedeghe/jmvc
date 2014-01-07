@@ -51,6 +51,7 @@ JMVC.controllers.demo = function () {
 				//'Controller' : 'demo/controller',
 				//'View' : 'demo/view',
 				'Canvas editor' : 'canvaseditor',
+				'Canvas editor layout 2' : 'canvaseditor?old=true',
 				'Cube div' : 'demo/divrot.js',
 				
 				'Console':'console',
@@ -60,7 +61,6 @@ JMVC.controllers.demo = function () {
 				'Wcave game' : 'wcave.jmvc',
 				'Image filter' : 'demo/img',
 				'map_animator' : '?map=true',
-
 
 //				'Console cube' : 'console/index?h=%3Cdiv%20class%3D%22flip-card-content%22%3E%0A%20%20%3Cdiv%20class%3D%22flip-card-side-a%22%20style%3D%22background%3Ared%22%3E%0A%20%20%20%20FRONT%20%0A%20%20%3C%2Fdiv%3E%0A%20%20%3Cdiv%20class%3D%22flip-card-side-b%22%20style%3D%22background%3Agreen%22%3E%0A%20%20%20%20BACK%0A%20%20%3C%2Fdiv%3E%0A%3C%2Fdiv%3E%0A%0A%3Cbutton%20id%3D%22button%22%3EFlip%3C%2Fbutton%3E&j=%24(%22%23button%22).on('click'%2C%20function()%7B%0A%20%20%24(%22.flip-card-content%22).toggleClass(%22flip%22)%3B%0A%7D)%3B&c=.flip-card-content%20%7B%0A%20%20%20%20position%3A%20relative%3B%0A%20%20%20%20margin%3A%20100px%3B%0A%20%20%20%20width%3A%20200px%3B%0A%20%20%20%20height%3A%20200px%3B%0A%20%20%20%20transform-style%3A%20preserve-3d%3B%0A%20%20%20%20perspective%3A%201000px%3B%0A%7D%0A%0A.flip-card-side-a%2C%0A.flip-card-side-b%20%7B%0A%20%20%20%20width%3A%20100%25%3B%0A%20%20%20%20position%3A%20absolute%3B%0A%20%20%20%20height%3A%20100%25%3B%0A%20%20%20%20backface-visibility%3A%20hidden%3B%0A%20%20%20%20transform-origin%3A%2050%25%2050%25%3B%0A%20%20%20%20transition%3A%20all%20.5s%20ease-in-out%3B%0A%7D%0A%0A.flip-card-side-a%20%7B%0A%20%20transform%3A%20rotateY(0deg)%20translateZ(100px)%3B%0A%20%20z-index%3A%201%3B%0A%7D%0A.flip-card-side-b%20%7B%0A%20%20transform%3A%20rotateY(90deg)%20translateZ(100px)%3B%0A%7D%0A%0A.flip%20.flip-card-side-a%20%7B%0A%20%20transform%3A%20rotateY(-90deg)%20translateZ(100px)%3B%0A%7D%0A.flip%20.flip-card-side-b%20%7B%0A%20%20transform%3A%20rotateY(0deg)%20translateZ(100px)%3B%0A%20%20z-index%3A%201%3B%0A%7D&l=http%3A%2F%2Fcodeorigin.jquery.com%2Fjquery-1.10.2.min.js#preview',
 				'Some fun' : 'demo/flag',
@@ -99,7 +99,7 @@ JMVC.controllers.demo = function () {
 					'background-color' : '#fff',
 					'color' : '#000',
 					'padding' : '0px 30px',
-					'height':'1800px',
+					'padding-bottom':'100px',
 					'border-left' : '50px solid gray'
 				},
 				'ul' : {
@@ -135,7 +135,7 @@ JMVC.controllers.demo = function () {
 			
 		content += '<ul>' + out + '</ul>';
 		content += '<br /><b>* real test</b>';
-
+		
 		JMVC.head.addstyle(JMVC.object.toCss(style), true, true);
 		
 		v.set({
@@ -436,30 +436,25 @@ JMVC.controllers.demo = function () {
 						var img = JMVC.dom.find('img'),
 							flt = JMVC.image.createFilter(img);
 						
-						JMVC.events.bind([
-							[JMVC.dom.find('#brightness'), 'click', function () { flt.filterImage(flt.filters.brightness, 20); track('brightness'); }],
-							[JMVC.dom.find('#threshold'), 'click', function () {flt.filterImage(flt.filters.threshold, 50);	track('threshold');}],
-							[JMVC.dom.find('#grayscale'), 'click', function () {flt.filterImage(flt.filters.grayscale);	track('grayscale');}],
-							[JMVC.dom.find('#invert'), 'click', function () {flt.filterImage(flt.filters.invert);	track('invert');}],
-							[JMVC.dom.find('#blur'), 'click', function () {flt.filterImage(flt.filters.blur); track('blur');}],
-							[JMVC.dom.find('#sharpen'), 'click', function () {flt.filterImage(flt.filters.sharpen);	track('sharpen');}],
-							[JMVC.dom.find('#laplace'), 'click', function () {flt.filterImage(flt.filters.laplace);	track('laplace');}],
-							[JMVC.dom.find('#sobeloriz'), 'click', function () {flt.filterImage(flt.filters.sobeloriz);	track('sobel orizontal');}],
-							[JMVC.dom.find('#sobelvert'), 'click', function () {flt.filterImage(flt.filters.sobelvert);	track('sobel vertical');}],
-							[JMVC.dom.find('#emboss'), 'click', function () {flt.filterImage(flt.filters.emboss);	track('emboss');}],
+						JMVC.events.bind(JMVC.dom.find('#brightness'), 'click', function () { flt.filterImage(flt.filters.brightness, 20); track('brightness'); });
+						JMVC.events.bind(JMVC.dom.find('#threshold'), 'click', function () {flt.filterImage(flt.filters.threshold, 50);	track('threshold'); });
+						JMVC.events.bind(JMVC.dom.find('#grayscale'), 'click', function () {flt.filterImage(flt.filters.grayscale);	track('grayscale'); });
+						JMVC.events.bind(JMVC.dom.find('#invert'), 'click', function () {flt.filterImage(flt.filters.invert);	track('invert'); });
+						JMVC.events.bind(JMVC.dom.find('#blur'), 'click', function () {flt.filterImage(flt.filters.blur); track('blur'); });
+						JMVC.events.bind(JMVC.dom.find('#sharpen'), 'click', function () {flt.filterImage(flt.filters.sharpen);	track('sharpen'); });
+						JMVC.events.bind(JMVC.dom.find('#laplace'), 'click', function () {flt.filterImage(flt.filters.laplace);	track('laplace'); });
+						JMVC.events.bind(JMVC.dom.find('#sobeloriz'), 'click', function () {flt.filterImage(flt.filters.sobeloriz);	track('sobel orizontal'); });
+						JMVC.events.bind(JMVC.dom.find('#sobelvert'), 'click', function () {flt.filterImage(flt.filters.sobelvert);	track('sobel vertical'); });
+						JMVC.events.bind(JMVC.dom.find('#emboss'), 'click', function () {flt.filterImage(flt.filters.emboss);	track('emboss'); });
 
-							[JMVC.dom.find('#red'), 'click', function () {flt.filterImage(flt.filters.remove, 0); track('red channel removed');}],
-							[JMVC.dom.find('#green'), 'click', function () {flt.filterImage(flt.filters.remove, 1); track('green channel removed');}],
-							[JMVC.dom.find('#blue'), 'click', function () {flt.filterImage(flt.filters.remove, 2); track('blue channel removed');}],
-							[JMVC.dom.find('#x'), 'click', function () {flt.filterImage(flt.filters.x); track('x filter');}],
-							[JMVC.dom.find('#mblur'), 'click', function () {flt.filterImage(flt.filters.mblur);	 track('motion blur');}]
-						]);
+						JMVC.events.bind(JMVC.dom.find('#red'), 'click', function () {flt.filterImage(flt.filters.remove, 0); track('red channel removed'); });
+						JMVC.events.bind(JMVC.dom.find('#green'), 'click', function () {flt.filterImage(flt.filters.remove, 1); track('green channel removed'); });
+						JMVC.events.bind(JMVC.dom.find('#blue'), 'click', function () {flt.filterImage(flt.filters.remove, 2); track('blue channel removed'); });
+						JMVC.events.bind(JMVC.dom.find('#x'), 'click', function () {flt.filterImage(flt.filters.x); track('x filter'); });
+						JMVC.events.bind(JMVC.dom.find('#mblur'), 'click', function () {flt.filterImage(flt.filters.mblur);	 track('motion blur'); });
 
 
-						JMVC.events.bind(JMVC.dom.find('#reset'), 'click', function () {
-							flt.reset();
-							track.reset();
-						});
+						JMVC.events.bind(JMVC.dom.find('#reset'), 'click', function () {flt.reset(); track.reset(); });
 
 					}, 1000);
 				}
