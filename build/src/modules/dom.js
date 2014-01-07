@@ -302,6 +302,26 @@ JMVC.dom = {
         return el;
     },
     /**
+     * [getPosition description]
+     * @param  {[type]} node [description]
+     * @return {[type]}      [description]
+     */
+    getPosition : function (node) {
+        var res = {x : 0, y : 0};
+        if (node.offsetParent) {
+            while (1) {
+                res.x += node.offsetLeft;
+                res.y += node.offsetTop;
+                if (!node.offsetParent) {break; }
+                node = node.offsetParent;
+            }
+        } else {
+            if (node.x) {res.x += node.x; }
+            if (node.y) {res.y += node.y; }
+        }
+        return res;
+    },
+    /**
      * [ description]
      * @param  {[type]} el   [description]
      * @param  {[type]} name [description]
