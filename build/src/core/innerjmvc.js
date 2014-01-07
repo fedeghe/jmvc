@@ -340,9 +340,9 @@ jmvc = {
      * @return {[type]}        [description]
      */
     multi_inherit : function (Childs, Parent) {
-        for (var i in Childs) {
-            jmvc.inherit(Childs[i], Parent);
-        }
+        jmvc.each(Childs, function (ch, i){
+            jmvc.inherit(ch, Parent);
+        });
     },
     /**
      * [ns description]
@@ -420,15 +420,7 @@ jmvc = {
             lang = new RegExp(RXlng, 'gm').exec(cnt);
             tmp = '';
             if (!!lang) {
-                /*
-                tmp = $JMVC.i18n[JMVC.vars.currentlang]
-                    && $JMVC.i18n[JMVC.vars.currentlang][lang[1]] ?
-                        $JMVC.i18n[JMVC.vars.currentlang][lang[1]]
-                        :
-                        lang[1];
-                */        
                 tmp = ($JMVC.i18n[JMVC.vars.currentlang] && $JMVC.i18n[JMVC.vars.currentlang][lang[1]]) || lang[1];
-                        
                 cnt = cnt.replace(lang[0], tmp);
             } else {
                 break;
