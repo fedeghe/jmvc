@@ -6,7 +6,7 @@ JMVC.controllers.pub = function () {
 			'core/codeview/codehl/codehl',
 			'core/codeview/script/script',
 			'core/pub/xvents/xvents',
-			'core/css/csss'
+			'core/css/css'
 		);
 
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/pub.css');
@@ -24,15 +24,19 @@ JMVC.controllers.pub = function () {
 			bu = JMVC.vars.baseurl,
 			v = JMVC.getView('vacuum'),
 			links = {
-				//'zpub' : JMVC.vars.baseurl + '/pub/zpub',
-				//'xpub' : JMVC.vars.baseurl + '/pub/xpub',
-				////'hpub' : JMVC.vars.baseurl + '/pub/hpub',
+				/*
+				'zpub' : JMVC.vars.baseurl + '/pub/zpub',
+				'xpub' : JMVC.vars.baseurl + '/pub/xpub',
+				'hpub' : JMVC.vars.baseurl + '/pub/hpub',
+				*/
 				'xvents' : JMVC.vars.baseurl + '/pub/xvents'
 			},
 			views = {
-				//'hpub' : JMVC.getView('pub/info/hpub'),
-				//'xpub' : JMVC.getView('pub/info/xpub'),
-				//'zpub' : JMVC.getView('pub/info/zpub'),
+				/*
+				'hpub' : JMVC.getView('pub/info/hpub'),
+				'xpub' : JMVC.getView('pub/info/xpub'),
+				'zpub' : JMVC.getView('pub/info/zpub'),
+				*/
 				'xvents' : JMVC.getView('pub/info/xvents')
 			},
 			tpl = '<li><a href="%base_url%/%path%">$index$ %label%</a></li>',
