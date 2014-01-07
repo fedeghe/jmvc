@@ -1,0 +1,10 @@
+{
+    "require" : {
+        "layerManager" : "layerManager",
+        "panelManager" : "panelManager",
+        "optionsManager" : "optionsManager",
+        "toolsManager" : "toolsManager",
+        "panel" : "Panels",
+        "inputs" : "inputs/"
+    }
+}
