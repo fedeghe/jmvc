@@ -126,16 +126,19 @@ JMVC.object = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    toCss : function (obj) {
+    toCss : function (obj, straight) {
         "use strict";
         return _.object.walkout(obj, function (ob, i) {
-            return i + ' {' + _.object.walkout(ob[i], 
-                function (o, j){
-                    return j + ':' + o[j] + ';';
-                }
-            ) + '} ';
+                return !!straight ?
+                    i + '{' + ob[i] + '} '
+                    :
+                    i + ' {' + _.object.walkout(ob[i], 
+                        function (o, j) {
+                            return j + ':' + o[j] + ';';
+                        }
+                    ) + '} ';
         });
-    },
+    },  
     /**
      * [ description]
      * @param  {[type]} o [description]
