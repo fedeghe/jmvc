@@ -1,0 +1,7 @@
+{
+    "require" : {
+        "color" : "colorpicker",
+        "int" : "integerinput",
+        "float" : "floatinput"
+    }
+}
