@@ -150,7 +150,7 @@ JMVC.extend('xvents',{
 		 */
 		return {
 			list : [],
-			add : function (node, zlib.createDeflateRaw(o);ct, attrPar) {
+			add : function (node, attrAct, attrPar) {
 				var newarea = new Area(node, attrAct, attrPar);
 				this.list.push(newarea);
 				return newarea;
@@ -166,5 +166,5 @@ JMVC.extend('xvents',{
 				});
 			}
 		};	
-	}	
+	}
 });
