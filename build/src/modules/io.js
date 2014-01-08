@@ -173,7 +173,7 @@ JMVC.io = {
      * @param  {[type]} err   [description]
      * @return {[type]}       [description]
      */
-    delete : function (uri, cback, sync, data, cache, err) {
+    'delete' : function (uri, cback, sync, data, cache, err) {
         return _.io.ajcall(uri, {
             cback : cback || function () {},
             method : 'DELETE',
