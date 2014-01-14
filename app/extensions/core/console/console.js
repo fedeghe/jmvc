@@ -66,7 +66,7 @@ JMVC.extend('console', {
 
 				content = {
 					h : JMVC.p.h ? decodeURIComponent(JMVC.p.h) : "<div id='hw'>hello world</div>",
-					j : JMVC.p.j ? decodeURIComponent(JMVC.p.j) : "var t = document.getElementById('hw');\nt.onclick = function (){t.innerHTML='clicked';};",
+					j : JMVC.p.j ? decodeURIComponent(JMVC.p.j) : "var t = document.getElementById('hw');\nt.onclick = function () {t.innerHTML='clicked'; };",
 					c : JMVC.p.c ? decodeURIComponent(JMVC.p.c) : "#hw{\n\tcolor:red;\n\tfont-family:arial, sans-serif;\n\tpadding:20px;\n\tfont-size:20px\n}"
 				},
 				// triangle = {
