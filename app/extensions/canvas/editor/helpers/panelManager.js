@@ -90,7 +90,7 @@ JMVC.canvas.Editor.getPanelManager = function (instance, options) {
                     JMVC.css.style(panel, {top : size_pos.topClosed + 'px', right : size_pos.rightClosed + 'px'});
                 }
             );
-  */          
+*/
             return this;
         }
 

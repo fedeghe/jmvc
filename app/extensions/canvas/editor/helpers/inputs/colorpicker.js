@@ -20,7 +20,25 @@ JMVC.extend('canvas.Editor.fields.colorpicker', {
             
 
             node = options.node,
-            onchange = null;
+            onchange = null,
+
+            updatecolor = function () {
+                hueVal = hue.value / 360;
+
+                satVal = parseFloat(sat.value, 10);
+                lumVal = parseFloat(lum.value, 10);
+                alpVal = parseFloat(alp.value, 10);
+                
+                field.value = 'rgba(' + JMVC.core.color.hsl2rgb(hueVal, satVal, lumVal).join(',') + ',' + alpVal + ')';
+
+                JMVC.css.style(col, 'background-color', field.value);
+                onchange && onchange(field.value);
+            },
+
+            bind = function () {
+                JMVC.events.bind([hue, sat, lum, alp], 'click', updatecolor);
+                JMVC.events.bind([hue, sat, lum, alp], 'change', updatecolor);
+            };
 
 
         /*
@@ -39,7 +57,6 @@ JMVC.extend('canvas.Editor.fields.colorpicker', {
 
 
         return {
-
             render : function (){
                 wrap = JMVC.dom.create('div', {'class' : 'colorpicker'});
 
@@ -51,6 +68,7 @@ JMVC.extend('canvas.Editor.fields.colorpicker', {
                 }
                 hue = JMVC.dom.add(huewrap, 'input', {'class' : 'huerange', type : 'range', min : 0, max : 360, step : 2});
 
+
                 ul = JMVC.dom.create('ul');
 
                 lisat = JMVC.dom.create('li');
@@ -61,9 +79,11 @@ JMVC.extend('canvas.Editor.fields.colorpicker', {
                 JMVC.dom.add(lilum, 'h5', {}, 'Luminance');
                 lum = JMVC.dom.add(lilum, 'input', {type : 'range', min : 0, max : 1, step : 0.05});
 
+                // list item for alpha range
                 lialp = JMVC.dom.create('li');
                 JMVC.dom.add(lialp, 'h5', {}, 'Alpha');
                 alp = JMVC.dom.add(lialp, 'input', {type : 'range', min : 0.1, max : 1, step : 0.05});
+
                 colwrap = JMVC.dom.create('div', {'class' : 'colorwrap'});
                 col = JMVC.dom.add(colwrap, 'div', {'class' : 'color'});
 
@@ -82,32 +102,17 @@ JMVC.extend('canvas.Editor.fields.colorpicker', {
                     field
                 ]);
 
-                
                 JMVC.dom.append(node, wrap);
-
-
-
-                function updatecolor() {
-                    hueVal = hue.value / 360;
-                    satVal = parseFloat(sat.value, 10);
-                    lumVal = parseFloat(lum.value, 10);
-                    alpVal = parseFloat(alp.value, 10);
-                    
-                    field.value = 'rgba(' + JMVC.core.color.hsl2rgb(hueVal, satVal, lumVal).join(',') + ',' + alpVal + ')';
-
-                    JMVC.css.style(col, 'background-color', field.value);
-                    onchange && onchange(field.value);
-                }
-
-                JMVC.events.bind([hue, sat, lum, alp], 'click', updatecolor);
-                JMVC.events.bind([hue, sat, lum, alp], 'change', updatecolor);
-
+                
+                bind();
                 updatecolor();
             },
+
             unbind : function () {
                 JMVC.events.unbind([hue, sat, lum, alp], 'click');
                 JMVC.events.unbind([hue, sat, lum, alp], 'change');
             },
+
             onChange : function (f){onchange = f; }
         };
     }

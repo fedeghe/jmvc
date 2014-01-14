@@ -19,7 +19,8 @@ JMVC.extend('canvas.editortools.neighbour_points', {
             a : self.options.color.alpZero
         }, '{', '}');
         
-        var isDrawing, points = [ ];
+        var isDrawing,
+            points = [ ];
 
         el.onmousedown = function(e) {
             points = [ ];
@@ -66,8 +67,8 @@ JMVC.extend('canvas.editortools.neighbour_points', {
             value : 1000,
             name : 'distance',
             type : 'int',
-            min : 500,
-            max : 100000,
+            min : 0,
+            max : 10000,
             step : 10
         },
         color : {

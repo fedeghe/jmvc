@@ -34,11 +34,11 @@ JMVC.extend('canvas.editortools.timesprayround', {
             }, 50);
         };
         el.onmousemove = function(e) {
-        clientX = e.clientX;
-        clientY = e.clientY;
+            clientX = e.clientX;
+            clientY = e.clientY;
         };
         el.onmouseup = function() {
-        clearTimeout(timeout);
+            clearTimeout(timeout);
         };  
     },
 
