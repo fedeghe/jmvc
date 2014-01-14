@@ -25,6 +25,8 @@ JMVC.canvas.Editor = function (options) {
     this.height = options.height || 200;
     this.layerManager = null;
     this.panelManager = null;
+
+    JMVC.canvas.Editor.eventManager = JMVC.canvas.Editor.getEventManager(this);
     
     JMVC.io.getJson(this.basepath + 'config.json', function (json) {
         self.config = json;
@@ -52,6 +54,8 @@ JMVC.canvas.Editor.prototype = {
         this.layerManager.add().activate();
         // ad the panel
         this.panelManager.init().render().bind();
+
+        JMVC.canvas.Editor.eventManager.init();
         return this;
     }
 };

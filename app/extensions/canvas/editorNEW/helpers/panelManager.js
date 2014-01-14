@@ -41,8 +41,8 @@ JMVC.canvas.Editor.getPanelManager = function (instance) {
         },
         commands = [
             {'class' : 'tools active', title : 'tool manager', data : 'toolmanager', hasPanel : true},
-            //{'class' : 'undo unactive', title : 'undo', data : 'undo'},
-            //{'class' : 'redo unactive', title : 'redo', data : 'redo'},
+            {'class' : 'undo unactive', name : 'undo', title : 'undo', data : 'undo'},
+            {'class' : 'redo unactive', name : 'redo', title : 'redo', data : 'redo'},
             {'class' : 'layers active', title : 'layer manager', data : 'layermanager', hasPanel : true},
             {'class' : 'filters active', title : 'filters', data : 'filtersmanager', hasPanel : true},
             {'class' : 'separator'},
@@ -52,28 +52,52 @@ JMVC.canvas.Editor.getPanelManager = function (instance) {
             {'class' : 'options active', title : 'options', data : 'optionsmanager', hasPanel : true},
             {'class' : 'info active', title : 'usage info', data : 'getinfo', hasPanel : true}
         ],
+        commandsNodes = {},
         
-        toolsManager = JMVC.canvas.Editor.getToolsManager(self, ['canvas/editorNEW/tools/']),
-
-        loadRightPanel = function (topic, action, el, positions, size){
-
-            // maybe a panel is required
-            if (el.hasPanel) {
-                if (currentPanel) {currentPanel.hide();}
-                currentPanel = JMVC.canvas.Editor[action];
-                currentPanel.render();
-                currentPanel.show(size, positions[0]);
-                (function (cp) {
-                    JMVC.events.clickout(cp.node, function () {cp.hide(); });
-                })(currentPanel);
-                
-
-            }else if (currentPanel) {currentPanel.hide();}
-            console.debug(arguments)
-        };
+        toolsManager = JMVC.canvas.Editor.getToolsManager(self, ['canvas/editorNEW/tools/']);
 
 
-    JMVC.Channel('canvaseditor').sub('PANEL_EVENT', loadRightPanel);
+
+    JMVC.Channel('canvaseditor').sub('UNDOREDO_EVENT', function (topic, elem, status) {
+        JMVC.dom.removeClass(commandsNodes[elem], ['active','unactive']);
+        JMVC.dom.addClass(commandsNodes[elem], status ? 'active' : 'unactive');
+
+    });
+
+
+
+    JMVC.Channel('canvaseditor').sub('PANEL_EVENT', function (topic, action, el, positions, size){
+
+        // maybe a panel is required
+        if (el.hasPanel) {
+            if (currentPanel) {
+                currentPanel.hide();
+            }
+            currentPanel = JMVC.canvas.Editor[action];
+            currentPanel.render();
+            currentPanel.show(size, positions[0]);
+            (function (cp) {
+                JMVC.events.clickout(cp.node, function () {cp.hide(); });
+            })(currentPanel);
+        } else if (currentPanel) {
+            currentPanel.hide();
+        }
+
+        //
+        // direct actions
+        switch (action) {
+            case 'cleancanvas':
+                toolsManager.clear();
+            break;
+            case 'undo':
+                JMVC.canvas.Editor.eventManager.back();
+            break;
+            case 'redo':
+                JMVC.canvas.Editor.eventManager.forth();
+            break;
+        }
+
+    });
 
     
 
@@ -83,23 +107,39 @@ JMVC.canvas.Editor.getPanelManager = function (instance) {
         init : function () {
             JMVC.debug('Initializing panel');
 
+            
+
             toolsManager.init().render();
 
             mainPanel = JMVC.dom.create('div', {id : panelID});
             
             for (var i = 0, l = commands.length; i < l; i += 1) {
-                var sec = JMVC.dom.create('li', {'data-act' : commands[i].data}, getCommand(commands[i]));
+                var n = getCommand(commands[i]),
+                    sec;
+                if ('name' in commands[i]) {
+                    commandsNodes[commands[i].name] = n;
+                }
+
+                sec = JMVC.dom.create('li', {'data-act' : commands[i].data}, n );
+
                 if (commands[i].hasPanel) {
                     sec.hasPanel = true;
+                    
                     JMVC.canvas.Editor[commands[i].data] = new JMVC.canvas.Editor.Panel();
+
                 }
                 sections.push(sec);
             }
-            //console.debug(sections);
+
+            JMVC.canvas.Editor.toolmanager.html('tools');
+            JMVC.canvas.Editor.layermanager.html('layers');
+            JMVC.canvas.Editor.filtersmanager.html('filters');
+            JMVC.canvas.Editor.exportimage.html('export');
+            JMVC.canvas.Editor.optionsmanager.html('options');
+            JMVC.canvas.Editor.getinfo.html('made with love');
+
             sections.push(JMVC.dom.clearer());
             sectionsContainer = JMVC.dom.create('ul');
-
-            
             return this;
         },
 

@@ -41,7 +41,7 @@ canvas {
     display:none;
     background-color:#555;
     line-height:20px;
-    min-height: 400px;
+    min-height: 200px;
     min-width: 200px;
     -moz-box-shadow: 5px 3px 5px #000000;
     -webkit-box-shadow: 5px 3px 5px #000000;
@@ -52,11 +52,14 @@ canvas {
     padding:10px;
 }
 #jmvcCEpanel div.panel div.arrow{
-    position:relative;
-    top:-25px;
-    left:-10px;
+    position:absolute;
+    top:-15px;
+    left:0px;
     width:0px;
     height : 0px;
     border-left:20px solid #555;
     border-top:20px solid transparent;
+}
+#jmvcCEpanel div.panel div.inner{
+    
 }

@@ -51,6 +51,8 @@ JMVC.extend('canvas.editortools.neighbour_points', {
         };
 
         el.onmouseup = function() {
+            
+            JMVC.canvas.Editor.eventManager.save();
             isDrawing = false;
             points.length = 0;
         };

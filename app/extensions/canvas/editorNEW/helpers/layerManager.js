@@ -14,16 +14,26 @@ JMVC.canvas.Editor.getLayerManager = function (instance) {
                     draggable : 'false',
                     onselectstart : 'return false;'
                 }),
-                ctx = cnv.getContext('2d');
+                ctx = cnv.getContext('2d'),
+                l = {
+                    id : JMVC.util.uniqueid,
+                    cnv : cnv,
+                    ctx : ctx
+                };
 
-            ctx.fillStyle = '#FFFFFF';
-            ctx.fillRect(0, 0, self.width, self.height);
-            layers.push({
-                id : JMVC.util.uniqueid,
-                cnv : cnv,
-                ctx : ctx
-            });
+            this.clean(l);
+            layers.push(l);
             return this;
+        },
+        clean : function (l) {
+            if (!l) {
+                l = activeLayer;
+            }
+            l.ctx.save();
+            l.ctx.width = l.ctx.width;
+            l.ctx.fillStyle = 'hsla(0,100%, 100%, 100)';
+            l.ctx.fillRect(0, 0, self.width, self.height);
+            l.ctx.restore();
         },
         remove : function (index) {
             if (!(index < layers.length)) {
@@ -36,6 +46,25 @@ JMVC.canvas.Editor.getLayerManager = function (instance) {
             activeLayer = layers[activeLayerIndex];
             self.node.appendChild(activeLayer.cnv);
             JMVC.events.bind(activeLayer.cnv, "mousemove", function (e) { e.preventDefault(); });
+        },
+        createThumb : function (index, width, height) {
+            var canvasOrig = layers[index],
+                dataurl = canvasOrig.toDataURL("image/png"),
+                canvasDest = JMVC.dom.create('canvas'),
+                ctxDest = canvasDest.getContext("2d"),
+                img = new Image(),
+                w = width || 400,
+                h = height || 300;
+
+            img.onload = function () {
+                canvasDest.width = w;
+                canvasDest.height = h;
+                ctxDest.drawImage(img, 0, 0, w, h);
+            }
+            img.src = dataurl;
+            img.width = w;
+            img.height = h;
+            return img;
         },
         // getter / setter
         opacity : function () {},

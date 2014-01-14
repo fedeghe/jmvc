@@ -2,9 +2,14 @@
     "require" : {
         "layerManager" : "layerManager",
         "panelManager" : "panelManager",
-        "optionsManager" : "optionsManager",
         "toolsManager" : "toolsManager",
-        "panel" : "Panels",
+        "eventManager" : "eventManager",
+        "filterManager" : "filterManager",
+        "exportManager" : "exportManager",
+        "optionsManager" : "optionsManager",
+        "infoManager" : "infoManager",
+
+        "panel" : "Panel",
         "inputs" : "inputs/"
     }
 }

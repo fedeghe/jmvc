@@ -75,8 +75,10 @@ JMVC.canvas.Editor.getToolsManager = function (instance, tools) {
         },
 
         clear : function () {
-            var c = self.layerManager.getCurrent().cnv;
-            c.width = c.width;
+            var l = self.layerManager.getCurrent();
+            self.layerManager.clean(l);
+            JMVC.Channel('canvaseditor').pub('EDITOR_CLEANED');
+            
         },
 
         pickColor : function (x, y) {
