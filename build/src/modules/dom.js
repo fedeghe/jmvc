@@ -495,8 +495,12 @@ JMVC.dom = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    remove : function (el) {
+    remove : function (el, afterFreeMem) {
         if (!el) {return false;}
+
+        if (afterFreeMem) {
+            JMVC.events.free(el);
+        }
 
         var parent;
         if(typeof el === 'string'){
@@ -533,6 +537,12 @@ JMVC.dom = {
         if (JMVC.util.isArray(el)) {
             for (var i = 0, l = el.length; i < l; i++) {
                 JMVC.dom.removeClass(el[i], cls);
+            }
+            return;
+        }
+        if (JMVC.util.isArray(cls)) {
+            for (var i = 0, l = cls.length; i < l; i++) {
+                JMVC.dom.removeClass(el, cls[i]);
             }
             return;
         }
@@ -580,6 +590,21 @@ JMVC.dom = {
      */
     val : function (el) {
         return el.value;
+    },
+    /**
+     * :D :D :D 
+     * from http://stackoverflow.com/questions/6969604/recursion-down-dom-tree
+     * @param  {[type]} node [description]
+     * @param  {[type]} func [description]
+     * @return {[type]}      [description]
+     */
+    walk : function (node,func) {
+        func(node);                     //What does this do?
+        node = node.firstChild;
+        while (node) {
+            this.walk(node,func);
+            node = node.nextSibling;
+        }
     }
 };
 //-----------------------------------------------------------------------------
