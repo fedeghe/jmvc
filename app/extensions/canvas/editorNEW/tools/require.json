@@ -1,9 +1,0 @@
-{
-    "require" : {
-        "neighbour" : "neighbour_points",
-        "rdots" : "dots_random",
-        "fur_neighbour" : "fur_neighbour",
-        "timespray" : "timespray",
-        "timesprayround" : "timesprayround"
-    }
-}
