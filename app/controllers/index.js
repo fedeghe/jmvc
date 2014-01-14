@@ -94,16 +94,16 @@ JMVC.controllers.index = function () {
 					morelink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/info.jmvc', title : 'get more info'}, JMVC.parselang('[L[more]]')),
 					sourcelink = JMVC.dom.create('a', {'class' : 'homelinks', href : 'https://github.com/fedeghe/jmvc', title : 'get code from github!', target : '_blank'}, JMVC.parselang('[L[source]]')),
 					apilink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/api.jmvc', title : 'basic documentation'}, JMVC.parselang('[L[api]]')),
-					logo,
-					newlogo,
+					demolink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/demo.jmvc', title : 'some demos'}, JMVC.parselang('[L[demos]]')),
+					logo, newlogo,
 					dims,
 					mapid,
-					b;
+					body;
 
-				JMVC.dom.append(links,  [morelink, apilink, sourcelink]);
+				JMVC.dom.append(links,  [morelink, apilink, sourcelink, demolink]);
 				JMVC.dom.append(el, links);
 
-				JMVC.events.bind([morelink, apilink, sourcelink], 'click', function () {this.blur(); });
+				JMVC.events.bind([morelink, apilink, sourcelink, demolink], 'click', function () {this.blur(); });
 
 
 				logo = JMVC.dom.find('#extralogo');
@@ -117,7 +117,7 @@ JMVC.controllers.index = function () {
 					JMVC.require('vendors/google/gmap2/gmap2');
 					dims = JMVC.dim.getViewportSize();
 					mapid = 'map';
-					b = JMVC.dom.body();
+					body = JMVC.dom.body();
 					JMVC.dom.append(b, JMVC.dom.create('div', {id : mapid, style : 'opacity:0.8;position:absolute;z-index:1;top:0px;left:0px;width:' + dims.width + 'px;height:' + dims.height + 'px'}));
 					
 					JMVC.gmap2.initialize(function () {
