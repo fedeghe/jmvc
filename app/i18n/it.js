@@ -7,5 +7,6 @@ JMVC.i18n.it = {
 	'source':'sorgente',
 	'desktop' : 'desktop',
 	'mobile':'mobile',
-	'api' : 'api'
+	'api' : 'api',
+    'demos' : 'demo'
 };

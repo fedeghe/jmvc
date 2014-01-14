@@ -7,5 +7,6 @@ JMVC.i18n.en = {
 	'source':'source',
 	'desktop' : 'desktop',
 	'mobile':'mobile',
-	'api' : 'api'
+	'api' : 'api',
+    'demos' : 'demos'
 };

@@ -8,5 +8,6 @@ JMVC.i18n.jp = {
 	'source':'ソース',
 	'desktop' : 'デスクトップ',
 	'mobile':'携帯電話',
-	'api' : 'ミツバチ'
+	'api' : 'ミツバチ',
+    'demos' : 'デモ'
 };

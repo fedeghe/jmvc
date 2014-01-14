@@ -7,5 +7,6 @@ JMVC.i18n.de = {
 	'source':'quelle',
 	'desktop' : 'desktop',
 	'mobile':'mobil',
-	'api' : 'api'
+	'api' : 'api',
+    'demos' : 'vorführung'
 };
