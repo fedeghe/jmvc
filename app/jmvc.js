@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.2 (rev. 16)
+ * @version :  3.3 (rev. 0)
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *         glued with 32 files on 7/1/2014 at 1:51:16
+ *         glued with 32 files on 14/1/2014 at 12:22:37
  *
  * All rights reserved.
  *
@@ -62,10 +62,10 @@
             var $JMVC,
                 //
                 // version (vars.json)
-                JMVC_VERSION = '3.2',
+                JMVC_VERSION = '3.3',
                 //
                 // review (vars.json)
-                JMVC_REVIEW = '16',
+                JMVC_REVIEW = '0',
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -2237,7 +2237,7 @@
          * @param  {[type]} err   [description]
          * @return {[type]}       [description]
          */
-        delete : function (uri, cback, sync, data, cache, err) {
+        'delete' : function (uri, cback, sync, data, cache, err) {
             return _.io.ajcall(uri, {
                 cback : cback || function () {},
                 method : 'DELETE',
@@ -2954,8 +2954,12 @@
          * @param  {[type]} el [description]
          * @return {[type]}    [description]
          */
-        remove : function (el) {
+        remove : function (el, afterFreeMem) {
             if (!el) {return false;}
+    
+            if (afterFreeMem) {
+                JMVC.events.free(el);
+            }
     
             var parent;
             if(typeof el === 'string'){
@@ -2992,6 +2996,12 @@
             if (JMVC.util.isArray(el)) {
                 for (var i = 0, l = el.length; i < l; i++) {
                     JMVC.dom.removeClass(el[i], cls);
+                }
+                return;
+            }
+            if (JMVC.util.isArray(cls)) {
+                for (var i = 0, l = cls.length; i < l; i++) {
+                    JMVC.dom.removeClass(el, cls[i]);
                 }
                 return;
             }
@@ -3039,6 +3049,21 @@
          */
         val : function (el) {
             return el.value;
+        },
+        /**
+         * :D :D :D 
+         * from http://stackoverflow.com/questions/6969604/recursion-down-dom-tree
+         * @param  {[type]} node [description]
+         * @param  {[type]} func [description]
+         * @return {[type]}      [description]
+         */
+        walk : function (node,func) {
+            func(node);                     //What does this do?
+            node = node.firstChild;
+            while (node) {
+                this.walk(node,func);
+                node = node.nextSibling;
+            }
         }
     };
     //-----------------------------------------------------------------------------
@@ -3052,6 +3077,11 @@
          * @type {Object}
          */
         bindings : {},
+        /**
+         * store wrapped callbacks
+         * @type {Array}
+         */
+        cbs : [],
         /**
          * wired function queue fired 
          * at the beginning of render function
@@ -3146,13 +3176,13 @@
             }
             if ('addEventListener' in W) {
                 return function (el, evnt, cb) {
-                    cb = _.events.fixCurrentTarget(cb, el);
+                    // cb = _.events.fixCurrentTarget(cb, el);
                     el.addEventListener.apply(el, [evnt, cb, false]);
                     store(el, evnt, cb);
                 };
             } else if ('attachEvent' in W) {
                 return function (el, evnt, cb) {
-                    cb = _.events.fixCurrentTarget(cb, el);     
+                    // cb = _.events.fixCurrentTarget(cb, el);
                     el.attachEvent.apply(el, ['on' + evnt, cb]);
                     store(el, evnt, cb);
                 };
@@ -3160,24 +3190,32 @@
                 throw new Error('No straight way to bind an event');
             }
         })(),
+    
         /**
          * [fixCurrentTarget description]
          * @return {[type]} [description]
          */
         fixCurrentTarget : function (f, el) {
-            return function (e) {
-                // currentTarget (the node where binding has been done) is the core of
-                // event delegation
-                // it would be nice to fix currentTarget
-                // leak in (fuckin)IE7 and (fuckin)IE8
-                // with something like
-                // e.currentTarget || (e.currentTarget = el);
-                //
-                // a bad WORKING workaround is to pass the current target
-                // to the
-                // callback as second parameter and let it to be the context 
-                return f.call(el, e, el);
-            };
+            var wrapf = function (e) {
+                    // currentTarget (the node where binding has been done) is the core of
+                    // event delegation
+                    // it would be nice to fix currentTarget
+                    // leak in (fuckin)IE7 and (fuckin)IE8
+                    // with something like
+                    // e.currentTarget || (e.currentTarget = el);
+                    //
+                    // a bad WORKING workaround is to pass the current target
+                    // to the
+                    // callback as second parameter and let it to be the context 
+                    return f.call(el, e, el);
+                },
+                i = JMVC.array.find(_.events.cbs, wrapf);
+            if (i > -1) {
+                return _.events.cbs[i];
+            } else { 
+                _.events.cbs.push(wrapf);
+            }
+            return wrapf;
         },
         /**
          * unbind the passed cb or all function 
@@ -3190,26 +3228,30 @@
          *                                 will be unattached
          * @return {boolean}    whether the unbinding succeded
          */
+        
         unbind : function (el, evnt, cb) {
     
             function unstore(evnt, nodeid, index) {
                 Array.prototype.splice.call(_.events.bindings[evnt][nodeid], index, 1);
             }
     
-            cb && (cb = this.fixCurrentTarget(cb, el));
+            //cb && (cb = this.fixCurrentTarget(cb, el));
     
             var nodeid = _.events.nodeid(el),
                 index, tmp, l;
+            
             try {
                 var ___ = _.events.bindings[evnt][nodeid];
             }catch(e){
-                JMVC.debug(evnt + ': binding not found');
+                //JMVC.debug(evnt + ': binding not found');
                 return false;
             }
+    
             //
             //  loop if a function is not given
             if (typeof cb === 'undefined') {
                 tmp = _.events.bindings[evnt][nodeid];
+                if (!tmp) {return false; }
                 l = tmp.length;
                 /*the element will be removed at the end of the real unbind*/
                 while (l--) {
@@ -3217,7 +3259,10 @@
                 }
                 return true;
             }
+            
+            JMVC.W.exp = _.events.bindings;
             index = JMVC.array.find(_.events.bindings[evnt][nodeid], cb);
+            
             if (index == -1) {
                 return false;
             }
@@ -3229,44 +3274,6 @@
             }
             //remove it from private bindings register
             unstore(evnt, nodeid, index);
-            return true;
-        },
-        unbindold : function (el, evnt, cb) {
-    
-    
-            cb && (cb = this.fixCurrentTarget(cb, el));
-    
-            var nodeid = _.events.nodeid(el),
-                index, tmp, l;
-            try {
-                var ___ = _.events.bindings[evnt][nodeid];
-            }catch(e){
-                JMVC.debug(evnt + ': binding not found');
-                return false;
-            }
-            //
-            //  loop if a function is not given
-            if (typeof cb === 'undefined') {
-                tmp = _.events.bindings[evnt][nodeid];
-                l = tmp.length;
-                /*the element will be removed at the end of the real unbind*/
-                while (l--) {
-                    _.events.unbind(el, evnt, tmp[l]);
-                }
-                return true;
-            }
-            index = JMVC.array.find(_.events.bindings[evnt][nodeid], cb);
-            if (index == -1) {
-                return false;
-            }
-            
-            if (el.removeEventListener) {
-                el.removeEventListener(evnt, cb, false);
-            } else if (el.detachEvent) {
-                el.detachEvent("on" + evnt, cb);
-            }
-            //remove it from private bindings register
-            Array.prototype.splice.call(_.events.bindings[evnt][nodeid], index, 1);
             return true;
         }
     };
@@ -3333,6 +3340,19 @@
             }
             return false;
         },
+        /**
+         * [ description]
+         * @param  {[type]} f [description]
+         * @param  {[type]} t [description]
+         * @return {[type]}   [description]
+         */
+        delay : function (f, t) {
+            W.setTimeout(f, t);
+        },
+        /**
+         * [disableRightClick description]
+         * @return {[type]} [description]
+         */
         disableRightClick : function () {
             JMVC.dom.attr(JMVC.WD.body, 'oncontextmenu', 'return false');
             this.bind(JMVC.WD, 'mousedown', function (e) {
@@ -3340,6 +3360,25 @@
                     return false;
                 }
             });
+        },
+        /**
+         * [ description]
+         * @param  {[type]} f [description]
+         * @return {[type]}   [description]
+         */
+        end : function (f) {
+            _.events.Eend.push(f);
+        },
+        /**
+         * [ description]
+         * @return {[type]} [description]
+         */
+        endRender : function () {
+            var i = 0,
+                l = _.events.Eend.length;
+            for (null; i < l; i += 1) {
+                _.events.Eend[i]();
+            }
         },
         /**
          * [eventTarget description]
@@ -3356,6 +3395,22 @@
                 targetElement = targetElement.parentNode;
             }
             return targetElement;
+        },
+        /**
+         * [free description]
+         * @param  {[type]} node [description]
+         * @return {[type]}      [description]
+         */
+        free : function (node, evnt) {
+            if (typeof evnt === 'undefined') {
+                for (var j in _.events.bindings) {
+                    this.free(node, j);
+                }
+                return true;
+            }
+            JMVC.dom.walk(node, function (n) {
+                JMVC.events.unbind(n, evnt);
+            });
         },
         /**
          * [ description]
@@ -3376,6 +3431,43 @@
             x -= el.offsetLeft;
             y -= el.offsetTop;
             return [x, y];
+        },
+        /**
+         * [ description]
+         * @param  {[type]} ms [description]
+         * @return {[type]}    [description]
+         */
+        loadify : function (ms) {
+            var self = this;
+            this.start(function () {
+                //otherwise some browser hangs (opera)
+                self.delay(function () {
+                    WD.body.style.opacity = 0;
+                    WD.body.style.filter = 'alpha(opacity=0)';
+                }, 0);
+            });
+            this.end(function () {
+                var i = 0,
+                    step = 0.05,
+                    top = 1,
+                    to;
+                while (i <= top) {
+                    to = W.setTimeout(
+                        function (j) {
+                            WD.body.style.opacity = j;
+                            WD.body.style.filter = 'alpha(opacity=' + (j * 100) + ')';
+                            if (j > top || isNaN(j)) {
+                                WD.body.style.opacity = 1;
+                                WD.body.style.filter = 'alpha(opacity=' + 100 + ')';
+                                //W.clearTimeout(to);
+                            }
+                        },
+                        ms * i,
+                        i + step
+                    );
+                    i += step;
+                }
+            });
         },
         /**
          * [ description]
@@ -3452,49 +3544,12 @@
             return e;
         },
         /**
-         * [stopBubble description]
-         * @param  {[type]} e [description]
-         * @return {[type]}   [description]
-         */
-        stopBubble : function (e) {
-            if (e.stopPropagation) {
-                e.stopPropagation();
-            }
-            if (e.cancelBubble!=null) {
-                e.cancelBubble = true;
-            }
-        },
-        /**
-         * [ description]
-         * @param  {[type]} el   [description]
-         * @param  {[type]} tipo [description]
-         * @return {[type]}      [description]
-         */
-        unbind : function (el, tipo, fn) {
-            //as for binding
-            if (el instanceof Array) {
-                for (var i = 0, l = el.length; i < l; i++) {
-                    _.events.unbind(el[i], tipo, fn);
-                }
-                return;
-            }
-            _.events.unbind(el, tipo, fn);
-        },
-        /**
          * [ description]
          * @param  {[type]} f [description]
          * @return {[type]}   [description]
          */
         start : function (f) {
             _.events.Estart.push(f);
-        },
-        /**
-         * [ description]
-         * @param  {[type]} f [description]
-         * @return {[type]}   [description]
-         */
-        end : function (f) {
-            _.events.Eend.push(f);
         },
         /**
          * [ description]
@@ -3508,24 +3563,17 @@
             }
         },
         /**
-         * [ description]
-         * @return {[type]} [description]
-         */
-        endRender : function () {
-            var i = 0,
-                l = _.events.Eend.length;
-            for (null; i < l; i += 1) {
-                _.events.Eend[i]();
-            }
-        },
-        /**
-         * [ description]
-         * @param  {[type]} f [description]
-         * @param  {[type]} t [description]
+         * [stopBubble description]
+         * @param  {[type]} e [description]
          * @return {[type]}   [description]
          */
-        delay : function (f, t) {
-            W.setTimeout(f, t);
+        stopBubble : function (e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            if (e.cancelBubble!=null) {
+                e.cancelBubble = true;
+            }
         },
         /**
          * [ description]
@@ -3551,43 +3599,6 @@
         },
         /**
          * [ description]
-         * @param  {[type]} ms [description]
-         * @return {[type]}    [description]
-         */
-        loadify : function (ms) {
-            var self = this;
-            this.start(function () {
-                //otherwise some browser hangs (opera)
-                self.delay(function () {
-                    WD.body.style.opacity = 0;
-                    WD.body.style.filter = 'alpha(opacity=0)';
-                }, 0);
-            });
-            this.end(function () {
-                var i = 0,
-                    step = 0.05,
-                    top = 1,
-                    to;
-                while (i <= top) {
-                    to = W.setTimeout(
-                        function (j) {
-                            WD.body.style.opacity = j;
-                            WD.body.style.filter = 'alpha(opacity=' + (j * 100) + ')';
-                            if (j > top) {
-                                WD.body.style.opacity = 1;
-                                WD.body.style.filter = 'alpha(opacity=' + 100 + ')';
-                                //W.clearTimeout(to);
-                            }
-                        },
-                        ms * i,
-                        i + step
-                    );
-                    i += step;
-                }
-            });
-        },
-        /**
-         * [ description]
          * @param  {[type]} e [description]
          * @return {[type]}   [description]
          */
@@ -3604,9 +3615,43 @@
                 })
             }
             return touches;
+        },
+        /**
+         * [ description]
+         * @param  {[type]} el   [description]
+         * @param  {[type]} tipo [description]
+         * @return {[type]}      [description]
+         */
+        unbind : function (el, tipo, fn) {
+            //as for binding
+            if (el instanceof Array) {
+                for (var i = 0, l = el.length; i < l; i++) {
+                    _.events.unbind(el[i], tipo, fn);
+                }
+                return;
+            }
+            _.events.unbind(el, tipo, fn);
         }
     };
     //-----------------------------------------------------------------------------
+    // in home
+    /*
+    var el = JMVC.dom.find('#extralogo'),
+        cb1 = function () {
+            console.debug('1', arguments);
+        },
+        cb2 = function () {
+            console.debug('2', arguments);
+        },
+        cb3 = function () {
+            console.debug('3', arguments);
+        };
+    JMVC.events.bind(el, 'click', cb1);
+    JMVC.events.bind(el, 'click', cb2);
+    JMVC.events.bind(el, 'mouseenter', cb3);
+    //JMVC.events.free(JMVC.WD.body);
+    
+     */
     /*-------------
     HEAD sub-module
     -------------*/
