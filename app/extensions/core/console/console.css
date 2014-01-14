@@ -64,7 +64,7 @@ div.input-divs div textarea{
 	color:white;
 	background-color: black;
 	resize:none;
-	line-height:16px;
+	line-height:18px;
 	font-size:14px;
 	padding-left:5px;
 	width:99%;
@@ -117,6 +117,11 @@ button#go-fs{
 #jmvc-console .console-head .ablock.active div.tri{
 	border-bottom:32px solid #606060;
 	border-left:20px solid #333;
+
+}
+#jmvc-console .console-head a div.text{
+	font-size:14px;
+	font-weight:bold;
 }
 div.pad20{
 	padding:20px;
