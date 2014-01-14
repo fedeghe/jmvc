@@ -11,6 +11,7 @@ JMVC.widget.Tooltip = function (node, html, styled, options) {
 
     var priv = {
         showTip : function(e, innerhtml, styled){
+            
             document.body.style.cursor= ' pointer';
 
             //alert(event);
@@ -24,7 +25,6 @@ JMVC.widget.Tooltip = function (node, html, styled, options) {
             var content = target.getAttribute("title"); 
 
             target.tooltip = tip;
-
             target.setAttribute("title", "");
             
             
@@ -34,12 +34,10 @@ JMVC.widget.Tooltip = function (node, html, styled, options) {
 
             if(typeof innerhtml !== 'undefined' && innerhtml){
                 tip.innerHTML = innerhtml;
-            }
-
-            else{
+            } else {
                 tip.appendChild(document.createTextNode(content));
             }
-            console.debug(tip)
+
             var scrollingPosition = JMVC.screen.getScreenData();
             
             var cursorPosition = [0, 0]; 
@@ -121,7 +119,8 @@ JMVC.widget.Tooltip = function (node, html, styled, options) {
                 cursorPosition[1] = (parseInt(e.clientY, 10) + scrollingPosition.scrollTop + 10)+'px'
                 
             }
-            JMVC.css.style(tip, {'position':'absolute','left':cursorPosition[0],'top':cursorPosition[1]});    
+            JMVC.css.style(tip, {'position':'absolute','left':cursorPosition[0],'top':cursorPosition[1]});
+            //JMVC.dom.html(tip, JMVC.dom.attr(tip, 'title'));
         },
         
         
@@ -149,8 +148,7 @@ JMVC.widget.Tooltip = function (node, html, styled, options) {
                 '<div id="hide_my_tip" style="position:absolute; top:0px; right:0px; width:10px;height:16px;text-align:center;font-family:verdana; line-height:14px;padding:1px;color:black">X</div>'+
         '</div>';
         html = more + html;
-    }
-    else{
+    } else {
         JMVC.events.bind(node,
             'mouseout',
             function (e) {
@@ -165,8 +163,9 @@ JMVC.widget.Tooltip = function (node, html, styled, options) {
         node,
         'mouseover',
         function (e1) {
+
             priv.showTip(e1, html, styled);
-            
+            //            
             //in case add event to the header closer
             if (stayopen) {
 
