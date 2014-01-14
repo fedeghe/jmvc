@@ -2,12 +2,23 @@ JMVC.controllers.canvaseditor = function () {
     
     this.action_index = function (p) {
 
-        var editor = p['old'] ? 'canvas/editor/editor' : 'canvas/editorNEW/editor',
+        var default_version = 0,
+            version = p['v'] || 0,
+            editors = [
+                'canvas/editor/editor',
+                //'canvas/editorNEW/editor',
+                'canvas/editorNEXT/editor'
+            ],
             screen_size,
             editorContainerId = 'canvasEditorContainerId';
 
+        if (version >= editors.length) {
+            alert('out of version, loading version ' + default_version);
+            version = default_version;
+        }
+
         JMVC.require(
-            editor,
+            editors[version],
             'core/screen/screen',
             'core/lib/image/image'
         );
