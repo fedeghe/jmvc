@@ -22,13 +22,13 @@
 .arrow{
     position:absolute;
     width:11px;
-    height:19px;
-	top : -4px;
+    height:16px;
+	top : -5px;
     /*border:1px solid gray;*/
     cursor:ew-resize;
     text-align:center;
     line-height:8px;
-    background-image: url($baseurl$/app/extensions/widget/slider/handler.png);
+    background-image: url($baseurl$/app/extensions/widget/slider/handle.png);
     background-repeat:no-repeat;
 	background-position:0px 1px;
 	-moz-user-select: -moz-none;
