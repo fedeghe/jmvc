@@ -1,0 +1,63 @@
+
+strong.icon {
+	background-image : url(app/extensions/canvas/editorNEXT/css/icons.jpg);
+	display:block;
+	width:30px;
+	height:30px;
+	/*margin-left:10px;*/
+	/*border:1px solid red;*/
+
+	cursor:pointer;
+	text-align:center;
+}
+strong.icon.active{
+	opacity:0.6;
+}
+strong.icon.unactive{
+	opacity:0.3;
+	cursor:default;
+}
+strong.icon.separator{
+	width:0px;
+	border:none;
+	border-left:1px solid #444;
+	height:22px;
+	cursor:default;
+	opacity:1;
+	margin-top:4px;
+}
+strong.icon.active:hover{
+	opacity:1;
+}
+
+strong.icon.tools{
+	background-position: -195px -289px
+}
+strong.icon.filters{
+	background-position: -41px -322px;
+}
+strong.icon.clean{
+	background-position: -144px -289px
+}
+strong.icon.layers{
+	background-position: -502px -289px;
+}
+strong.icon.undo{
+	background-position: -144px -20px;
+}
+strong.icon.redo{
+	background-position: -168px -20px;
+}
+strong.icon.export{
+	background-position:-502px -188px;
+}
+strong.icon.precisebounds{
+	background-position:-348px -289px;
+}
+strong.icon.options{
+	background-position:-399px -289px;
+}
+strong.icon.info{
+	background-position: -68px -86px;
+}
+

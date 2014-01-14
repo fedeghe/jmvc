@@ -1,0 +1,65 @@
+body {
+    font-family:Verdana, sans-serif;
+}
+canvas {
+    background-color: white;
+    cursor: crosshair;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    line-height: 0px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+} 
+#jmvcCEpanel {
+    font-family:Verdana, sans-serif;
+    background-color:#000;
+    /*background-color: hsl(0, 100%, 50%);*/
+    position:absolute;
+    top:0px;
+    left:0px;
+    color:white;
+    font-size:10px;
+    height:30px;
+    width:100%;
+    -moz-box-shadow: 0px 3px 5px #555;
+    -webkit-box-shadow: 0px 3px 5px #555;
+    box-shadow: 0px 3px 5px #555;
+}
+#jmvcCEpanel>ul>li {
+    float : left;
+    margin:0 auto;
+    text-align:center;
+    line-height:30px;
+    font-size:30px;
+    height:30px;
+    padding:0px 10px;
+}
+
+#jmvcCEpanel div.panel{
+    display:none;
+    background-color:#555;
+    line-height:20px;
+    min-height: 200px;
+    min-width: 200px;
+    -moz-box-shadow: 5px 3px 5px #000000;
+    -webkit-box-shadow: 5px 3px 5px #000000;
+    box-shadow: 5px 3px 5px #000000;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+    padding:10px;
+}
+#jmvcCEpanel div.panel div.arrow{
+    position:absolute;
+    top:-15px;
+    left:0px;
+    width:0px;
+    height : 0px;
+    border-left:20px solid #555;
+    border-top:20px solid transparent;
+}
+#jmvcCEpanel div.panel div.inner{
+    
+}

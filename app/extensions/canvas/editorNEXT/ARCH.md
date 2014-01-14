@@ -1,0 +1,1 @@
+_Editor_ instances a _panelManager_

@@ -1,0 +1,11 @@
+{
+    "require" : {
+        "toolManager" : "toolManager",
+        "undoredoManager" : "undoredoManager",
+        "layerManager" : "layerManager",
+        "filterManager" : "filterManager",
+        "exportManager" : "exportManager",
+        "optionsManager" : "optionsManager",
+        "infoManager" : "infoManager"
+    }
+}

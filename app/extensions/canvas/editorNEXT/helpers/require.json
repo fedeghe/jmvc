@@ -1,0 +1,7 @@
+{
+    "require" : {
+        "panelManager" : "panelManager",
+        "panel" : "Panel",
+        "inputs" : "inputs/"
+    }
+}
