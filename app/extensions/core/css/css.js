@@ -18,7 +18,7 @@ JMVC.extend('css', {
 	mappedStyle : function (id, style) {
 		var t = JMVC.dom.find('#' + id);
 		t && JMVC.dom.remove(t);
-		JMVC.css._mappedStyles[id] = JMVC.dom.create('style', {'id' : id, 'type' : 'text/css'}, style);
+		JMVC.css._mappedStyles[id] = JMVC.dom.create('style', {id : id, type : 'text/css'}, style);
 		JMVC.dom.append(JMVC.head.element, JMVC.css._mappedStyles[id]);
 	},
 
