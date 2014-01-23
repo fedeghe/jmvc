@@ -4,7 +4,11 @@ JMVC.controllers.carpet = function () {
 	this.action_index = function () {
 
 		/* get lib & view */
-		JMVC.require('core/lib/carpet/carpet', 'core/dim/dim');
+		JMVC.require(
+			'core/color/color',
+			'core/lib/carpet/carpet',
+			'core/dim/dim'
+		);
 
 		JMVC.head.title('Carpet');
 
@@ -18,17 +22,17 @@ JMVC.controllers.carpet = function () {
 
 		/* top = left = 100 from default css */
 
-		index.render(function(){
+		index.render(function () {
 			/* cssmargin5 * sides2 +border1 */
-			jmap = JMVC.carpet.create(JMVC.dom.body(), Ww-11, Wh-11, 3);
+			jmap = JMVC.carpet.create(JMVC.dom.body(), Ww - 11, Wh - 11, 3);
 
 			that.set('jmap', jmap);
 
-			if (JMVC.p.debug == 'true') {		
-				jmap.beforeAdd(function (i) {console.debug('adding ID: '+i); });
-				jmap.afterAdd(function (i) {console.debug('added ID: '+i); });
-				jmap.beforeRemove(function (i) {console.debug('removing ID: '+i); });
-				jmap.afterRemove(function (i) {console.debug('removed ID: '+i); });
+			if (JMVC.p.debug === 'true') {
+				jmap.beforeAdd(function (i) {console.debug('adding ID: ' + i); });
+				jmap.afterAdd(function (i) {console.debug('added ID: ' + i); });
+				jmap.beforeRemove(function (i) {console.debug('removing ID: ' + i); });
+				jmap.afterRemove(function (i) {console.debug('removed ID: ' + i); });
 			}
 			
 			jmap.enableSpeed(4.2);
@@ -38,18 +42,14 @@ JMVC.controllers.carpet = function () {
 
 	this.action_logo = function () {
 		var that = this;
-
 		this.action_index(function () {
 			//console.debug(that);
 			var jmap = that.get('jmap');
-				jmap.beforeAdd(function (i) {console.debug('adding ID: '+i); });
-				jmap.afterAdd(function (i) {console.debug('added ID: '+i); });
-				jmap.beforeRemove(function (i) {console.debug('removing ID: '+i); });
-				jmap.afterRemove(function (i) {console.debug('removed ID: '+i); });
-			console.debug(jmap);	
+				jmap.beforeAdd(function (i) {console.debug('adding ID: ' + i); });
+				jmap.afterAdd(function (i) {console.debug('added ID: ' + i); });
+				jmap.beforeRemove(function (i) {console.debug('removing ID: ' + i); });
+				jmap.afterRemove(function (i) {console.debug('removed ID: ' + i); });
+			console.debug(jmap);
 		});
-		
-
 	};
-
 }
