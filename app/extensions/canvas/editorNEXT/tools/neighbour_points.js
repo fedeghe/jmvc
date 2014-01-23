@@ -5,15 +5,22 @@ JMVC.extend('canvas.editortools.neighbour_points', {
         var self = this,
             el = instance.cnv,
             ctx = instance.ctx,
-            len = 0;
+            len = 0,
+            dis = 0.2;
 
-        el.onmousedown = el.onmousemove = el.onmousemove = null;
+        el.onmousedown = el.onmousemove = el.onmouseup = null;
 
         ctx.lineWidth = 1;
         ctx.lineJoin = ctx.lineCap = 'round';
-        ctx.strokeStyle = self.options.color.value;
+        ctx.strokeStyle = JMVC.string.replaceall('hsla({h}, {s}%, {l}%, {a})',{
+            h : self.options.color.hueZero,
+            s : self.options.color.satZero * 100,
+            l : self.options.color.lumZero * 100,
+            a : self.options.color.alpZero
+        }, '{', '}');
         
-        var isDrawing, points = [ ];
+        var isDrawing,
+            points = [ ];
 
         el.onmousedown = function(e) {
             points = [ ];
@@ -22,10 +29,12 @@ JMVC.extend('canvas.editortools.neighbour_points', {
         };
 
         el.onmousemove = function(e) {
+
             if (!isDrawing) return;
             ctx.strokeStyle = self.options.color.value;
 
             points.push({ x: e.clientX, y: e.clientY });
+
             len = points.length;
 
             ctx.beginPath();
@@ -39,42 +48,39 @@ JMVC.extend('canvas.editortools.neighbour_points', {
                 d = dx * dx + dy * dy;
 
                 if (d < self.options.distance.value) {
-                    ctx.beginPath();
-                    
-                    ctx.moveTo( points[len-1].x + (dx * 0.2), points[len-1].y + (dy * 0.2));
-                    ctx.lineTo( points[i].x - (dx * 0.2), points[i].y - (dy * 0.2));
+                    ctx.beginPath();                    
+                    ctx.moveTo( points[len-1].x + (dx * dis), points[len-1].y + (dy * dis));
+                    ctx.lineTo( points[i].x - (dx * dis), points[i].y - (dy * dis));
                     ctx.stroke();
                 }
             }
         };
-        el.onmouseup = function() {
+
+        el.onmouseup = function () {
             JMVC.canvas.Editor.undoredoManager.save();
             isDrawing = false;
             points.length = 0;
         };
     },
+
     options : {
         distance : {
             value : 1000,
             name : 'distance',
-            type : 'int'
-
-        },
-        opacity : {
-            value : 1000,
-            name : 'opacity',
-            type : 'int'
-
+            type : 'int',
+            min : 0,
+            max : 10000,
+            step : 10
         },
         color : {
-            value : 'rgba(0,0,0,0.1)',
+            value : '',
+            hueZero : 1,
+            satZero : 1,
+            lumZero : 0,
+            alpZero : 0.05,
             name : 'color',
             type : 'color'
         }
 
     }
 });
-
-
-
-

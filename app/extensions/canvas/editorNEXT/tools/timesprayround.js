@@ -4,15 +4,17 @@ JMVC.extend('canvas.editortools.timesprayround', {
             el = instance.cnv,
             ctx = instance.ctx,
             clientX, clientY, timeout,
-            density = 50;
+            density = parseInt(self.options.density.value, 10);
 
-        
+        el.onmousedown = el.onmousemove = el.onmouseup = null;
 
         function getRandomFloat(min, max) {
             return Math.random() * (max - min) + min;
         }
 
         el.onmousedown = function(e) {
+            density = parseInt(self.options.density.value, 10);
+            ctx.fillStyle = self.options.color.value;
             ctx.lineJoin = ctx.lineCap = 'round';
             clientX = e.clientX;
             clientY = e.clientY;
@@ -32,22 +34,34 @@ JMVC.extend('canvas.editortools.timesprayround', {
             }, 50);
         };
         el.onmousemove = function(e) {
-        clientX = e.clientX;
-        clientY = e.clientY;
+            clientX = e.clientX;
+            clientY = e.clientY;
         };
         el.onmouseup = function() {
-        clearTimeout(timeout);
+            JMVC.canvas.Editor.undoredoManager.save();
+            clearTimeout(timeout);
         };  
     },
 
     
     options : {
         radius : {
+            value : 20,
             name : 'radius',
-            type : 'int'
+            type : 'int',
+            min : 5,
+            max : 1000,
+            step : 5
         },
         color : {
-            value : 'rgba(0, 0, 0, 0.5)',
+            value : '',
+
+            hueZero : 1,
+            satZero : 1,
+            lumZero : 0.5,
+
+            alpZero : 0.1,
+
             name : 'color',
             type : 'color'
         },
@@ -57,7 +71,11 @@ JMVC.extend('canvas.editortools.timesprayround', {
         },
         density : {
             name : 'density',
-            type : 'int'
+            type : 'int',
+            value : 50,
+            min : 1,
+            max : 1000,
+            step : 10
         }
 
     }

@@ -1,6 +1,5 @@
 JMVC.nsMake('JMVC.canvas');
 JMVC.require(
-    'core/css/css',
     'core/fx/fx',
     'core/color/color'
 );
@@ -23,7 +22,7 @@ JMVC.canvas.Editor = function (options) {
     this.node = options.node;
     this.width = options.width || 200;
     this.height = options.height || 200;
-    //
+
     this.panelManager = null;
     
     JMVC.io.getJson(this.basepath + 'config.json', function (json) {
@@ -41,18 +40,20 @@ JMVC.canvas.Editor.prototype = {
         JMVC.head.addstyle(this.basepath + 'css/tooltip.css', true);
         JMVC.head.addstyle(this.basepath + 'css/' + this.config.sprite, true);  
         
-        
         this.panelManager = JMVC.canvas.Editor.getPanelManager(this);
-        
+        this.panelManager.init();
         JMVC.events.disableRightClick();
 
         return this;
     },
     render: function () {
         // ad the panel
-        this.panelManager.init().render().bind();
-
+        this.panelManager.render();
         // JMVC.canvas.Editor.eventManager.init();
+        return this;
+    },
+    bind : function () {
+        this.panelManager.bind();
         return this;
     }
 };
@@ -61,3 +62,6 @@ JMVC.canvas.Editor.prototype = {
 JMVC.require('canvas/editorNEXT/helpers/');
 //
 JMVC.nsMake('JMVC.canvas.Editor.fields');
+//
+//
+//

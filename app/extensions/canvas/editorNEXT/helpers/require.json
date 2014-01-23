@@ -1,6 +1,7 @@
 {
     "require" : {
         "panelManager" : "panelManager",
+        "toolOptionsManager" : "toolOptionsManager",
         "panel" : "Panel",
         "inputs" : "inputs/"
     }

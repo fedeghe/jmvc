@@ -1,5 +1,4 @@
 JMVC.require(
-    'core/css/css',
     'core/fx/fx',
     'core/color/color'
 );
@@ -39,7 +38,8 @@ JMVC.canvas.Editor.prototype = {
         // ad the panel
         this.panelManager.init().render().bind();
         return this;
-    }
+    },
+    bind : function (){}
 };
 
 JMVC.events.disableRightClick();

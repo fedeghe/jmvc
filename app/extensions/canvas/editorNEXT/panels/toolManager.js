@@ -6,7 +6,10 @@ JMVC.canvas.Editor.getToolManager = function (instance, tools) {
         toolObjs,
         toolnodes,
         tools_files = tools,
-        optionsManager = JMVC.canvas.Editor.getOptionsManager();
+        toolOptionsManager = JMVC.canvas.Editor.getToolOptionsManager(),
+        getCurrentLayer = function () {
+            return self.panelManager.getLayerManager().getCurrent();
+        };
 
     function loadTools() {
         JMVC.debug('Loading tools');
@@ -18,74 +21,90 @@ JMVC.canvas.Editor.getToolManager = function (instance, tools) {
     return {
         panel : panel,
 
+        optionsNode : null,
+
         init : function () {
             panel.html('tools');
+            JMVC.css.style(panel.node, {'width': '365px'});
             loadTools();
             return this;
         },
 
-        render : function (dst) {
+        render : function () {
             
-            this.changeTool(JMVC.canvas.editortools.neighbour_points);
-/*
-            var i, tmp,
-                that = this;
+            var that = this,
+                dst = panel.getInnerNode(),
+                list = JMVC.dom.create('ul', {'class' : 'tools'}),
+                i, tmp;
+
+            this.optionsNode = JMVC.dom.create('div', {'id' : 'toolOptions'});
 
             toolObjs = JMVC.canvas.editortools;
 
             for (i in toolObjs) {
-                tmp = JMVC.dom.add(dst, 'li',{}, i);
-                (function(el, tool){
-                    JMVC.events.bind(el, 'click', function (){
-                        JMVC.dom.removeClass(JMVC.dom.find('li', dst), 'active');
 
+                tmp = JMVC.dom.add(list, 'li',{title : i}, '');
+
+                JMVC.widget.Tooltip(
+                    tmp,
+                    false,
+                    {},
+                    {follow : true}
+                );
+
+                (function (el, tool) {
+                    JMVC.events.bind(el, 'click', function () {
+                        JMVC.dom.removeClass(JMVC.dom.find('li', dst), 'active');
                         JMVC.dom.addClass(this, 'active');
                         that.changeTool(tool);
-
                     });
                 })(tmp, toolObjs[i]);
             }
-            dst.appendChild(JMVC.dom.clearer());
-  */          
+            JMVC.dom.append(dst, [list, JMVC.dom.clearer(), that.optionsNode]);
+           
             return this;
         },
 
         bind : function () {
+            this.changeTool(JMVC.canvas.editortools.neighbour_points);
             return this;
         },
         
         changeTool : function (tool) {
+            var layer = getCurrentLayer();
+            JMVC.css.style(layer.cnv, 'cursor', 'crosshair');
             // iniject the layer (canvas, context, ... )
             // and let che tool decide
-            tool.use(self.panelManager.getLayerManager().getCurrent());
+            tool.use(layer);
 
             // load the options
             // found on the tool
-            //optionsManager.loadToolOptions(JMVC.dom.find('#toolOptions'), tool, self.panelManager.layerManager);
+            toolOptionsManager.loadToolOptions(
+                this.optionsNode,
+                tool,
+                self.panelManager.getLayerManager()
+            );
             currentTool = tool;
         },
 
-        save : function () {
-            var name = prompt('Name for file?');
-            
-            if (name) {
-                JMVC.dom.add(self.node, 'a', {
-                    download : name + '.png',
-                    href : self.panelManager.getLayerManager().getCurrent().cnv.toDataURL("image/png"),
-                    style : 'display:none'
-                }).click();
-            }
+        getCurrentTool : function () {
+            return currentTool;
+        },
+
+        noTool : function () {
+            var el = getCurrentLayer().cnv;
+            el.onmousedown = el.onmousemove = el.onmouseup = null;
         },
 
         clear : function () {
-            var lm = self.panelManager.getLayerManager(); 
-            var l = lm.getCurrent();
+            var lm = self.panelManager.getLayerManager(),
+                l = lm.getCurrent();
             lm.clean(l);
             JMVC.Channel('canvaseditor').pub('EDITOR_CLEANED');
         },
 
         pickColor : function (x, y) {
-            var pixel = self.getLayerManager().getCurrent().ctx.getImageData(x, y, 1, 1);
+            var pixel = getCurrentLayer().ctx.getImageData(x, y, 1, 1);
             return {
                 r: pixel.data[0],
                 g: pixel.data[1],

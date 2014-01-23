@@ -6,9 +6,10 @@ JMVC.extend('canvas.editortools.fur_neighbour', {
             el = instance.cnv,
             ctx = instance.ctx,
             clientX, clientY, timeout,
-            density = 40;
+            density = 40,
+            radius = self.options.radius.value;
 
-        el.onmousedown = el.onmousemove = el.onmousemove = null;
+        el.onmousedown = el.onmousemove = el.onmouseup = null;
 
         ctx.fillStyle = self.options.color.value;
 
@@ -26,6 +27,8 @@ JMVC.extend('canvas.editortools.fur_neighbour', {
         el.onmousemove = function(e) {
             if (!isDrawing) return;
 
+            radius = self.options.radius.value;
+
             //ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
             points.push({ x: e.clientX, y: e.clientY });
 
@@ -39,7 +42,7 @@ JMVC.extend('canvas.editortools.fur_neighbour', {
                 dy = points[i].y - points[points.length-1].y;
                 d = dx * dx + dy * dy;
 
-                if (d < 2000 && Math.random() > d / 2000) {
+                if (d < radius && Math.random() > d / radius) {
                     ctx.beginPath();
                     ctx.strokeStyle = self.options.color.value;
                     ctx.moveTo( points[points.length-1].x + (dx * 0.5), points[points.length-1].y + (dy * 0.5));
@@ -50,6 +53,7 @@ JMVC.extend('canvas.editortools.fur_neighbour', {
         };
 
         el.onmouseup = function() {
+            JMVC.canvas.Editor.undoredoManager.save();
             isDrawing = false;
             points.length = 0;
         };
@@ -60,10 +64,20 @@ JMVC.extend('canvas.editortools.fur_neighbour', {
     options : {
         radius : {
             name : 'radius',
-            type : 'int'
+            type : 'int',
+            value : 2000,
+            min : 1000,
+            max : 100000,
+            step : 100
         },
         color : {
-            value : 'rgba(0, 255, 0, 0.5)',
+            value : '',
+            hueZero : 1,
+            satZero : 1,
+            lumZero : 0,
+
+            alpZero : 0.1,
+
             name : 'color',
             type : 'color'
         },

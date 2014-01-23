@@ -41,8 +41,9 @@ canvas {
     display:none;
     background-color:#555;
     line-height:20px;
-    min-height: 200px;
-    min-width: 200px;
+    /*min-height: 200px;
+    min-width: 200px;*/
+    /*width: 365px;*/
     -moz-box-shadow: 5px 3px 5px #000000;
     -webkit-box-shadow: 5px 3px 5px #000000;
     box-shadow: 5px 3px 5px #000000;
@@ -62,4 +63,142 @@ canvas {
 }
 #jmvcCEpanel div.panel div.inner{
     
+}
+#jmvcCEpanel div.panel ul.tools li {
+    float:left;
+    width:40px;
+    height:40px;
+    border:1px dotted #111;
+    margin-right:10px;
+    margin-bottom:10px;
+    cursor:pointer;
+    overflow:hidden;
+
+}
+div#toolOptions>ul>li{
+    border-top:1px dotted #aaa;
+}
+
+input[type=range] {
+    width:300px;
+    position:relative;
+    top:7px;
+}
+
+/* COLORPICKER */
+div.colorpicker div.hue{
+    width : 360px;
+    height : 17px;
+    background-color : transparent;
+    position:relative;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+    overflow:hidden;
+}
+div.colorpicker div.hue input[type=range] {
+    position:absolute;
+    top:-3px;
+    left:0px;
+    width:100%;
+} 
+div.colorpicker div.hue div.huethick{
+    float:left;
+    height:20px;
+    width:1px;
+}
+div.colorwrap{
+    float:left;
+    background-color:white;
+    margin-top:10px;
+    margin-left:10px;
+}
+div.colorpicker div.color{
+    width:60px;
+    height:60px;
+    margin:2px;
+    border:1px solid #aaa;
+}
+div.colorpicker li{
+    line-height:20px;
+}
+div.colorpicker input[type=range]{
+    width:264px;
+    margin:0px;
+    padding:0px;
+    height:20px;
+}
+div.colorpicker span{
+    line-height:20px;
+}
+div.colorpicker ul{
+    float:left;
+
+}
+/*---------------*/
+
+button {
+    border : 1px solid white;
+    background-color : black;
+    color:white;
+    font-weight:bold;
+    height:22px;
+    cursor:pointer;
+}
+.round-right {
+    -moz-border-radius-topright:5px;
+    -moz-border-radius-bottomright:5px;
+    -webkit-border-top-right-radius:5px;
+    -webkit-border-bottom-right-radius:5px;
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+}
+.round-left {
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-bottomleft:5px;
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-bottom-left-radius:5px;
+    border-top-left-radius:5px;
+    border-bottom-left-radius:5px;
+}
+.round{
+    -moz-border-radius-:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;   
+}
+.strong{
+    font-weight:bold;
+}
+div.selection {
+    background-color:white;
+    border:1px dashed #555;
+    opacity: 0.5;
+    cursor: move;
+    position:absolute;
+}
+ul.effectlist {
+    
+}
+ul.effectlist li.effect{
+    cursor:pointer;
+    padding:3px;
+}
+ul.effectlist li.effect:hover{
+    background-color:#333;
+}
+div.loadingspinner{
+    display:none;
+    border:1px solid #aaa;
+    border-top:0px;
+    width:79px;
+    height:79px;
+    margin:0 auto;
+    background-image : url(app/extensions/canvas/editorNEXT/css/spinnerbig.gif);
+    background-repeat: no-repeat;
+    -moz-border-radius-bottomleft:40px;
+    -moz-border-radius-bottomright:40px;
+    -webkit-border-bottom-left-radius:40px;
+    -webkit-border-bottom-right-radius:40px;
+    border-bottom-left-radius:40px;
+    border-bottom-right-radius:40px;
 }

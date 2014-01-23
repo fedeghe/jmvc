@@ -84,13 +84,13 @@ JMVC.canvas.Editor.getPanelManager = function (instance, options) {
                     JMVC.css.style(panel, {top : '0px', right : '0px'});
                 }
             );
-/*
+
             JMVC.events.bind(panel, 'mouseleave',
                 function () {
                     JMVC.css.style(panel, {top : size_pos.topClosed + 'px', right : size_pos.rightClosed + 'px'});
                 }
             );
-*/
+
             return this;
         }
 

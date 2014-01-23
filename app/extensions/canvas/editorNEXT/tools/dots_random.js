@@ -6,9 +6,9 @@ JMVC.extend('canvas.editortools.dots_random', {
             clientX, clientY, timeout,
             density = 40;
 
-        el.onmousedown = el.onmousemove = el.onmousemove = null;
+        el.onmousedown = el.onmousemove = el.onmouseup = null;
 
-        ctx.fillStyle = self.options.color.value;
+        ctx.fillStyle = 'hsla('+self.options.color.hueZero+', ' + (self.options.color.satZero * 100) + '% ,' + (self.options.color.lumZero * 100) + '%, ' + (self.options.color.alpZero) + ')'; 
 
         function getRandomFloat(min, max) {
             return Math.random() * (max - min) + min;
@@ -45,6 +45,7 @@ JMVC.extend('canvas.editortools.dots_random', {
         };
 
         el.onmouseup = function() {
+            JMVC.canvas.Editor.undoredoManager.save();
             clearTimeout(timeout);
         };
     },
@@ -57,7 +58,13 @@ JMVC.extend('canvas.editortools.dots_random', {
             value : 30
         },
         color : {
-            value : 'rgba(0, 0, 255, 1)',
+            value : '',
+
+            hueZero : 1,
+            satZero : 1,
+            lumZero : 0.5,
+
+            alpZero : 1,
             name : 'color',
             type : 'color'
         },

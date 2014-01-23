@@ -5,26 +5,42 @@ JMVC.extend('canvas.Editor.fields.integerinput', {
         if (!options.node) {
             throw new Error('ERROR: required node');
         }
-        var field,
+        var ctx = options.ctx,
+            field,
             value = options.value || 0,
             node = options.node,
+            min = options.min || 0,
+            max = options.max || 100,
+            step = options.step || 10,
             onchange = null;
 
         return {
 
             render : function () {
 
-                field = JMVC.dom.create('input', {type : 'range', min : 0, max : 100, step : 0.5, value : value});
+                field = JMVC.dom.create('input', {
+                    type : 'range',
+                    min : min,
+                    max : max,
+                    step : step,
+                    value : value
+                });
 
                 JMVC.dom.append(node, field);
 
-                JMVC.events.bind(field, 'change', function (e) {
-                    t = JMVC.events.eventTarget(e);
-                    
+                var change = function (e) {
+                    var t = JMVC.events.eventTarget(e);
                     onchange && onchange(field.value);
-                });
+                };
+
+                JMVC.events.bind(field, 'change', change);
+                JMVC.events.bind(field, 'click', change);
             },
-            onChange : function (f){onchange = f; }
+            unbind : function () {
+                JMVC.events.unbind(field, 'change');
+                JMVC.events.unbind(field, 'click');
+            },
+            onChange : function (f) {onchange = f; }
         };
         
     }
