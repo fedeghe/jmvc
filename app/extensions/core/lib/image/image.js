@@ -22,7 +22,7 @@ flt.filterImage(flt.filters.grayscale);
 // 
 JMVC.extend('image', {
 
-    createFilter : function (imgtag) {  
+    createFilter : function (imgtag, beforeFilter, afterFilter) {  
         "use strict";
 
         function getPxVector(pixels) {
@@ -67,24 +67,38 @@ JMVC.extend('image', {
         }
 
 
-        function filteredImage(imgt) {
-
-            this.tag = imgt;
+        /**
+         * should even work with a canvas element
+         * @param  {[type]} el [description]
+         * @return {[type]}      [description]
+         */
+        function filteredImage(el, bf, af) {
+            this.tag = el;
             this.canvas = JMVC.WD.createElement('canvas');
             this.ctx = this.canvas.getContext('2d');
-            this.canvas.width = imgt.width;
-            this.canvas.height = imgt.height;
-            
-            JMVC.dom.insertAfter(this.canvas, this.tag);
-            this.tag.style.display = 'none';
-            
-            this.canvas.style.display = '';
-            //should work with img and canvas tooo
-            this.ctx.drawImage(this.tag, 0, 0);
-            this.active = true;
+            this.canvas.width = el.width;
+            this.canvas.height = el.height;
+            this.beforeFilter = false;
+            this.afterFilter = false;
         }
 
+
         filteredImage.prototype = {
+            setBeforeFilter : function (f) {
+                this.beforeFilter = f;
+            },
+            setAfterFilter : function (f) {
+                this.afterFilter = f;
+            },
+            prepare : function () {
+                JMVC.dom.insertAfter(this.canvas, this.tag);
+                this.tag.style.display = 'none';
+                
+                this.canvas.style.display = '';
+                //should work with img and canvas tooo
+                this.ctx.drawImage(this.tag, 0, 0);
+                this.active = true;
+            },
             /**
              * [reset description]
              * @return {[type]} [description]
@@ -92,6 +106,13 @@ JMVC.extend('image', {
             reset : function () {
                 this.ctx.drawImage(this.tag, 0, 0);
                 this.disable();
+            },
+
+            //use for canvas case
+            replace : function () {
+                this.tag.getContext('2d').drawImage(this.canvas, 0, 0);
+                this.tag.style.display = '';
+                this.canvas.style.display = 'none';
             },
 
             /**
@@ -120,7 +141,9 @@ JMVC.extend('image', {
              * @param  {[type]} var_args [description]
              * @return {[type]}          [description]
              */
-            filterImage : function (filter, var_args) {
+            filterImage : function (filter) {
+                var self = this;
+                (function (){self.beforeFilter && self.beforeFilter(); })();
                 if (! this.active) {
                     this.reset();
                     this.enable();
@@ -132,6 +155,7 @@ JMVC.extend('image', {
                     args.push(arguments[i]);
                 }
                 this.ctx.putImageData(filter.apply(this, args), 0, 0);
+                (function (){self.afterFilter && self.afterFilter(); })();
             },
 
             /**
@@ -264,7 +288,7 @@ JMVC.extend('image', {
         };
 
 
-        return imgtag ? new filteredImage(imgtag) : false;
+        return imgtag ? new filteredImage(imgtag, beforeFilter, afterFilter) : false;
     },
 
     
