@@ -1,6 +1,6 @@
 JMVC.extend('iscroll', {
 	init : function () {
-		JMVC.require('event_scroll/event_scroll', 'core/fx/fx', 'core/css/css');
+		JMVC.require('event_scroll/event_scroll', 'core/fx/fx');
 		console.debug('infinite scroll initialized')
 	},
 	create : function (node, ajurl, num) {

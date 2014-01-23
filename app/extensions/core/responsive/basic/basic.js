@@ -3,7 +3,6 @@
  *
  * Based on resize event, rewrites some global css rules
  */
-JMVC.require('core/css/css');
 JMVC.extend('responsive', {
 
 	/**

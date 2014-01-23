@@ -1,4 +1,3 @@
-JMVC.require('core/css/css');
 JMVC.extend('jmap',{
 	init : function () {
 		JMVC.head.addstyle(JMVC.vars.extensions + 'lib/jmap/css/default.css', true, false);

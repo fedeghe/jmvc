@@ -14,7 +14,6 @@ JMVC.controllers.snow = function () {
 		JMVC.require(
 			'core/mobile/mobile',
 			'core/color/color',
-			'core/css/css',
 			'core/dim/dim',
 			'core/cookie/cookie',
 			'vendors/google/analytics/analytics',

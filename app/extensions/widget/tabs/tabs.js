@@ -1,4 +1,3 @@
-JMVC.require('core/css/css');
 JMVC.extend('tabs', {
 	counter : 0,
 	vert_css : false,

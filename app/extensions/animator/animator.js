@@ -3,9 +3,7 @@
  */
 JMVC.extend('animator', {
 
-	init : function (){
-		JMVC.require('core/css/css');	
-	},
+	init : function (){},
 
 	//follow implicit path
 	follow_ipath : function (that, func, prange, options) {

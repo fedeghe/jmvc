@@ -17,7 +17,6 @@ JMVC.controllers.index = function () {
 			, 'core/responsive/basic/basic'
 			, 'core/mobile/mobile'
 			, 'core/color/color'
-			, 'core/css/css'
 			, 'core/dim/dim'
 			, 'core/cookie/cookie'
 			, 'vendors/google/analytics/analytics'
@@ -118,7 +117,7 @@ JMVC.controllers.index = function () {
 					dims = JMVC.dim.getViewportSize();
 					mapid = 'map';
 					body = JMVC.dom.body();
-					JMVC.dom.append(b, JMVC.dom.create('div', {id : mapid, style : 'opacity:0.8;position:absolute;z-index:1;top:0px;left:0px;width:' + dims.width + 'px;height:' + dims.height + 'px'}));
+					JMVC.dom.append(body, JMVC.dom.create('div', {id : mapid, style : 'opacity:0.8;position:absolute;z-index:1;top:0px;left:0px;width:' + dims.width + 'px;height:' + dims.height + 'px'}));
 					
 					JMVC.gmap2.initialize(function () {
 						JMVC.gmap2.mapme('via Maggio 18, Lugano, Svizzera', function(latlng){

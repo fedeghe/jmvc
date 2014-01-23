@@ -1,4 +1,3 @@
-JMVC.require('core/css/css');
 JMVC.extend('fx',{
 	speed : 10,
 	

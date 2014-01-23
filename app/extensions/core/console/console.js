@@ -1,5 +1,4 @@
 JMVC.require(
-	'core/css/css',
 	'core/dim/dim',
 	'core/lib/grind/grind',
 	'event_scroll/event_scroll'

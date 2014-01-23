@@ -5,8 +5,7 @@ JMVC.controllers.pub = function () {
 		JMVC.require(
 			'core/codeview/codehl/codehl',
 			'core/codeview/script/script',
-			'core/pub/xvents/xvents',
-			'core/css/css'
+			'core/pub/xvents/xvents'
 		);
 
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/pub.css');

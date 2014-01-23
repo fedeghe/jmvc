@@ -1,7 +1,5 @@
 JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/widget/snow/snow.css', true);
 
-JMVC.require('core/css/css');
-
 //
 JMVC.extend('snow', {
 	'vars' : {

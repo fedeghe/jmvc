@@ -9,7 +9,6 @@ JMVC.controllers.info = function () {
 			,'core/sniffer/sniffer'
 			,'core/mobile/mobile'
 			,'core/dim/dim'
-			,'core/css/css'
 			,'vendors/github/forkme/forkme'
 		);
 		var main  = JMVC.getView('info/info'),

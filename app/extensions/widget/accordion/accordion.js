@@ -1,7 +1,7 @@
 // load widget style related
 JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/widget/accordion/accordion.css', true);
 
-JMVC.require('core/fx/fx', 'core/css/css', 'core/cookie/cookie');
+JMVC.require('core/fx/fx', 'core/cookie/cookie');
 
 JMVC.widget.Accordion = function (h, slide, theme) {
 	this.theme = theme || 'default'

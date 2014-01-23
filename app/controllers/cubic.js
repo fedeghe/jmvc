@@ -1,7 +1,6 @@
 JMVC.require(
 	'core/lib/border/border',
 	'widget/snow/snow/snow',
-	'core/css/css',
 	'core/dim/dim'
 );
 JMVC.controllers.cubic = function () {

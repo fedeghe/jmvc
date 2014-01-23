@@ -1,7 +1,6 @@
 JMVC.extend('widget.divrot', {
 
     init : function () {
-        JMVC.require('core/css/css');   
         JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/widget/divrot/divrot.css', true);
     },
 
