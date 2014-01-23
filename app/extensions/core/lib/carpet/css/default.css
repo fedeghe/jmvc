@@ -18,7 +18,14 @@ div.jmaps.outerdiv div.jmaps.innerdiv {
 } 
 
 div.jmaps.outerdiv div.jmaps.innerdiv div.tile{
-	-moz-user-select:none;
+	
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+	-moz-user-select: none;     /* Firefox all */
+	-ms-user-select: none;      /* IE 10+ */
+
+	/* No support for these yet, use at own risk */
+	-o-user-select: none;
+	user-select: none;  
 	position:absolute;
 	color: rand;
 	font-family: Verdana, sans-serif;
