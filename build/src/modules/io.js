@@ -18,7 +18,7 @@ _.io = {
         } catch (e1) {
             for (null; i < len; i += 1) {
                 try {
-                    xhr = new ActiveXObject(IEfuckIds[i]);
+                    xhr = new W.ActiveXObject(IEfuckIds[i]);
                 } catch (e2) {continue; }
             }
             if (!xhr) {
@@ -61,7 +61,7 @@ _.io = {
                 return false;
             }
             state = xhr.readyState;
-            if (xhr.readyState === "complete" || (xhr.readyState === 4 && xhr.status === 200)) {
+            if (xhr.readyState === 'complete' || (xhr.readyState === 4 && xhr.status === 200)) {
                 complete = true;
                 if (cback) {
                     res = xhr[targetType];
@@ -82,38 +82,51 @@ _.io = {
                 cb_opened(xhr);
             } else if (xhr.readyState === 1) {
                 switch (method) {
-                    case 'POST':
-                        try {
-                            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                            xhr.send(data || true);
-                        } catch (e1) {}
+                case 'POST':
+                    try {
+                        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        xhr.send(data || true);
+                    } catch (e1) {}
                     break;
-                    case 'GET':
-                        try {
-                            tmp = {
-                                xml : 'text/xml',
-                                html : 'text/html',
-                                json : 'application/json'
-                            }[type] || 'text/html';
+                case 'GET':
+                    try {
+                        tmp = {
+                            xml : 'text/xml',
+                            html : 'text/html',
+                            json : 'application/json'
+                        }[type] || 'text/html';
 
-                            xhr.setRequestHeader("Accept", tmp + "; charset=utf-8");
-                            xhr.send(null);
-                        } catch (e2) {}
-                    break;
-                    default :
-                        alert(method);
+                        xhr.setRequestHeader('Accept', tmp + '; charset=utf-8');
                         xhr.send(null);
+                    } catch (e2) {}
+                    break;
+                default :
+                    alert(method);
+                    xhr.send(null);
                     break;
                 }
             }
             return true;
         };
-        xhr.onerror = function () {cb_error && cb_error.apply(null, arguments); };
-        xhr.onabort = function () {cb_abort && cb_abort.apply(null, arguments); };
+        xhr.onerror = function () {
+            if (cb_error) {
+                cb_error.apply(null, arguments);
+            }
+        };
+        xhr.onabort = function () {
+            if (cb_abort) {
+                cb_abort.apply(null, arguments);
+            }
+        };
         //open request
-        xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data : "")) : uri, sync);
+        xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri, sync);
         //thread abortion
-        W.setTimeout(function () {if (!complete) {complete = true; xhr.abort(); } }, timeout);
+        W.setTimeout(function () {
+            if (!complete) {
+                complete = true;
+                xhr.abort();
+            }
+        }, timeout);
         try {
             return (targetType === 'responseXML') ? xhr[targetType].childNodes[0] : xhr[targetType];
         } catch (e3) {}

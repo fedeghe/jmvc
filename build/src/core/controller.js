@@ -2,7 +2,8 @@
 CONTROLLER          
 --------*/
 // parent controller
-Controller = function () {};
+Controller = function () {
+};
 // for storing vars 
 Controller.prototype.vars = {};
 // this has no sense and must be removed
@@ -41,7 +42,7 @@ Controller.prototype.addRoutes = function (name, val) {
 Controller.prototype.relocate = function (uri, ms) {
     W.setTimeout(
         function () {WDL.href = String(uri); },
-        parseInt(ms * 1, 10) || 0
+        ~~ms || 0
     );
 };
 /**
@@ -51,7 +52,7 @@ Controller.prototype.relocate = function (uri, ms) {
  * @return {[type]}         [description]
  */
 Controller.prototype.render = function (content, cback) {
-    ///allow only cback 
+    // allow only cback 
     if (typeof content === 'function') {
         cback = content;
         content = false;

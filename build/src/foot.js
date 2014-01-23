@@ -5,7 +5,7 @@
  * @param  {[type]} lineNumber [description]
  * @return {[type]}            [description]
  */
-JMVC.W.onerror = function(errorMsg, url, lineNumber) {
+JMVC.W.onerror = function (errorMsg, url, lineNumber) {
     JMVC.debug("Uncaught error " + errorMsg + " in " + url + ", lines " + lineNumber);
 };
 //-----------------------------------------------------------------------------

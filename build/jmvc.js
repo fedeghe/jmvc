@@ -1,17 +1,13 @@
 $$src/head.js$$
-!function (W) {
-    //
+(function (W) {
+    // one for all the build
     'use strict';
     //
     var WD = W.document,    // local reference for window.document
         WDL = WD.location,  // local reference for current window.document.location
-        i, //
-        j, //
-        k, //
-           // some counters
-        l, //
-        m, //
-        n, //
+        i, j, //
+        k, l, // some counters
+        //
         //
         // this function returns the JMVC object, globalized, after doing some stuff
         // @return {object literal} $JMVC inner object 
@@ -35,13 +31,16 @@ $$src/head.js$$
             $$src/core/cleanup.js$$
             return $JMVC;
         })(),
-        _ = {};// private ns for modules
+        _ = {}; // private ns for modules
+    //
     // mandatory modules
     $$src/modules/io.js$$
     $$src/modules/util.js$$
     $$src/modules/dom.js$$
+    $$src/modules/bom.js$$
     $$src/modules/events.js$$
     $$src/modules/head.js$$
+    $$src/modules/css.js$$
     $$src/modules/array.js$$
     $$src/modules/string.js$$
     $$src/modules/object.js$$
@@ -49,4 +48,4 @@ $$src/head.js$$
     $$src/modules/num.js$$
     $$src/core/render.js$$
     $$src/foot.js$$
-}(this);
+})(this);

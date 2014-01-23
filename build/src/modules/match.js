@@ -21,14 +21,16 @@ JMVC.match = {
         return str.match(_.match.rex.url);
     },
     alfa : function (str, min, max) {
-        max && (min > max) && (max = min);
+        if (max && min > max) {
+            max = min;
+        }
         return str.match(new RegExp('^[A-z\s]' + (~~min ? '{' + min + ',' + (~~max ? max : '') + '}' : '*') + '$'));
     },
     alfanum : function (an) {
         return an.match(_.match.rex.alfanum);
     },
     floatnum : function (fn) {
-        return (fn+'').match(_.match.rex.floatnum);
+        return (fn + '').match(_.match.rex.floatnum);
     }
 };
 //-----------------------------------------------------------------------------

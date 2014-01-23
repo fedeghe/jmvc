@@ -10,7 +10,7 @@ _.ajax = {
         'html' : 'text/html',
         'json' : 'application/json'
     },
-    IEfuckIds = ['Msxml2.XMLHTTP', 'Msxml3.XMLHTTP', 'Microsoft.XMLHTTP'],
+    IEfuckIds : ['Msxml2.XMLHTTP', 'Msxml3.XMLHTTP', 'Microsoft.XMLHTTP'],
     /**
      * [modes description]
      * @type {Object}
@@ -33,12 +33,13 @@ _.ajax = {
         } catch (e1) {
             for (null; i < len; i += 1) {
                 try {
-                    xhr = new ActiveXObject(this.IEfuckIds[i]);
+                    xhr = new W.ActiveXObject(this.IEfuckIds[i]);
                 } catch (e2) {continue; }
             }
-            !xhr && JMVC.debug('No way to initialize hxr');
+            if (!xhr) {
+                JMVC.debug('No way to initialize hxr');
+            }
         }
-        JMVC.gc(IEfuckIds, i, len);
         JMVC.ajax.count += 1;
         return xhr;
     },
@@ -52,7 +53,7 @@ _.ajax = {
                 req : this.getxhr(),
                 uri : options && options.uri,
                 method : options && 'method' in options && this.methods[options.method] || 'POST',
-                cback : options && 'cback' in options ? options.cback : function () {} ,
+                cback : options && 'cback' in options ? options.cback : function () {},
                 cb_opened : options && 'opened' in options ? options.opened : function () {},
                 cb_loading : options && 'loading' in options ? options.loading : function () {},
                 cb_error : options && 'error' in options ? options.error : function () {},
@@ -69,40 +70,42 @@ _.ajax = {
                 state : false
             },
             self = this;
-        xhr.req.onerror = function () {xhr.cb_error && xhr.cb_error.apply(null, arguments); };
-        xhr.req.onabort = function () {xhr.cb_abort && xhr.cb_abort.apply(null, arguments); };
+        xhr.req.onerror = function () {if (xhr.cb_error) {xhr.cb_error.apply(null, arguments); }};
+        xhr.req.onabort = function () {if (xhr.cb_abort) {xhr.cb_abort.apply(null, arguments); }};
         xhr.req.onreadystatechange = function () {
-            if (xhr.req.readyState == 1) {
+            if (xhr.req.readyState === 1) {
                 switch (xhr.method) {
-                    case 'POST':
-                        try {
-                            xhr.req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                            xhr.req.send(xhr.data || true);
-                        } catch (e1) {}
+                case 'POST':
+                    try {
+                        xhr.req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        xhr.req.send(xhr.data || true);
+                    } catch (e1) {}
                     break;
-                    case 'GET':
-                        try {
-                            xhr.req.setRequestHeader("Accept", self.types[xhr.type] + "; charset=utf-8");
-                            xhr.req.send(null);
-                        } catch (e2) {}
+                case 'GET':
+                    try {
+                        xhr.req.setRequestHeader('Accept', self.types[xhr.type] + '; charset=utf-8');
+                        xhr.req.send(null);
+                    } catch (e2) {}
                     break;
                 }
-            } else if (xhr.req.readyState == 2) {
+            } else if (xhr.req.readyState === 2) {
                 console.debug('2');
-            } else if (xhr.req.readyState == 3) {
+            } else if (xhr.req.readyState === 3) {
                 console.debug('3');
-            } else if (xhr.req.readyState == 4) {
-
-                if(xhr.req.status !== 200){
+            } else if (xhr.req.readyState === 4) {
+                if (xhr.req.status !== 200) {
                     xhr.req.onerror();
                     xhr.complete = true;
                     return;
-                }
+                }// adasdas 
                 xhr.complete = true;
-                xhr.ret = xhr.type == 'json' ? new Function("return " + xhr.req[xhr.targetType])() : xhr.req[xhr.targetType];
+                xhr.ret = xhr.type === 'json' ? new Function('return ' + xhr.req[xhr.targetType])() : xhr.req[xhr.targetType];
                 //cback
-                xhr.cback && (function (r) {xhr.cback(r); })(xhr.ret);
-                //IE leak ?????
+                //if (xhr.cback) (function (r) {xhr.cback(r); })(xhr.ret);
+                if (xhr.cback) {
+                    xhr.cback.call(xhr, xhr.ret);
+                }
+                //IE leak ????? 
                 W.setTimeout(function () {
                     JMVC.ajax.count -= 1;
                     JMVC.purge(xhr.req);
@@ -110,7 +113,7 @@ _.ajax = {
                 return xhr.ret;
             }
         };
-        xhr.req.open(xhr.method, (xhr.method === 'GET') ? (xhr.uri + ((xhr.data) ? '?' + xhr.data : "")) : xhr.uri, xhr.sync);
+        xhr.req.open(xhr.method, (xhr.method === 'GET') ? (xhr.uri + ((xhr.data) ? '?' + xhr.data : '')) : xhr.uri, xhr.sync);
     }
 };
 // PUBLIC

@@ -113,7 +113,7 @@ var $JMVC,
      * in case some modules need to be always loaded here's the place to set them
      * @type {Array}
      */
-    Modules = ['vendors/google/analytics/analytics', 'core/cookie/cookie', 'core/css/css'],
+    Modules = ['vendors/google/analytics/analytics', 'core/cookie/cookie'],
     //
     /**
      * preloader

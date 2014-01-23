@@ -60,7 +60,8 @@ jmvc = {
      */
     each : function (o, func) {
         var type = ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase(),
-            i, l,
+            i,
+            l,
             ret;
         func.Obreak = false;
         func.Ocontinue = false;
@@ -226,7 +227,9 @@ jmvc = {
             for (i in hooks[hookname]) {
                 dyn = hooks[hookname][i].apply(null, dyn);
                 //be sure is an array for next one
-                !(dyn instanceof Array) && (dyn = [dyn]);
+                if (!(dyn instanceof Array)) {
+                    dyn = [dyn];
+                }
             }
         }
         return dyn;
@@ -302,7 +305,7 @@ jmvc = {
         //r = r.replace(/(\/\/.*\n)/gm, '');
         try {
             return JMVC.W.eval(r);
-        } catch(e) {}
+        } catch (e) {}
         return false;
     },
     /**
@@ -340,7 +343,7 @@ jmvc = {
      * @return {[type]}        [description]
      */
     multi_inherit : function (Childs, Parent) {
-        jmvc.each(Childs, function (ch, i){
+        jmvc.each(Childs, function (ch) {
             jmvc.inherit(ch, Parent);
         });
     },
@@ -361,8 +364,8 @@ jmvc = {
                 els = str.split(chr),
                 l = els.length,
                 ret;
-            (typeof ctx === undef) && (ctx = W);
-            (typeof obj === undef) && (obj = {});
+            if (typeof ctx === undef) {ctx = W; }
+            if (typeof obj === undef) {obj = {}; }
             //
             if (!ctx[els[0]]) {
                 ctx[els[0]] = (l === 1) ? obj : {};
@@ -397,7 +400,7 @@ jmvc = {
      * @return {[type]}     [description]
      */
     parselang : function (cnt) {
-        var RXlng = "\\[L\\[([\\S\\s]*?)\\]\\]",
+        var RXlng = '\\[L\\[([\\S\\s]*?)\\]\\]',
             lang = true,
             tmp,
             limit = 1E5,
@@ -445,7 +448,9 @@ jmvc = {
             }
         }
         for (p in obj) {
-            obj.hasOwnProperty(p) && (el.prototype[p] = obj[p]);
+            if (obj.hasOwnProperty(p)) {
+                el.prototype[p] = obj[p];
+            }
         }
     },
     /**
@@ -455,12 +460,12 @@ jmvc = {
      */
     purge : function (o) {
         var t;
-        try{
-            for(t in o){
+        try {
+            for (t in o) {
                 o[t] = null;
                 delete o[t];
             }
-        } catch(e){}
+        } catch (e) {}
     },
     /**
      * render function
@@ -493,49 +498,51 @@ jmvc = {
             //
             // parameters are set as variables of the controller
             for (i in $JMVC.p) {
-                $JMVC.p.hasOwnProperty(i) && ctrl.set(i, decodeURI($JMVC.p[i]));
+                if ($JMVC.p.hasOwnProperty(i)) {
+                    ctrl.set(i, decodeURI($JMVC.p[i]));
+                }
             }
             /***************************/
             // BEFORE HOOKS?
             // 
             // @global hook
-            'before' in ctrl
-            && typeof ctrl.before === 'function'
-            && ctrl.before($JMVC.p);
+            if ('before' in ctrl && typeof ctrl.before === 'function') {
+                ctrl.before($JMVC.p);
+            }
             //
             // @action hook
-            'before_' + $JMVC.a in ctrl
-            && typeof ctrl['before_' + $JMVC.a] === 'function'
-            && ctrl['before_' + $JMVC.a]($JMVC.p);
+            if ('before_' + $JMVC.a in ctrl && typeof ctrl['before_' + $JMVC.a] === 'function') {
+                ctrl['before_' + $JMVC.a]($JMVC.p);
+            }
             /***************************/
             // REAL ACTION
             // check actual action
-            ('action_' + $JMVC.a in ctrl && typeof ctrl['action_' + $JMVC.a] === 'function') ?
-               ctrl['action_' + $JMVC.a]($JMVC.p)
-               :
-               /* maybe a action wild is in the controller */
-               ('action' in ctrl && typeof ctrl['action'] === 'function') ?
-               ctrl['action']($JMVC.a, $JMVC.p, $JMVC.p)
-               :
-               /* or go to 404 */
-               $JMVC.a.toLowerCase() !== JMVC_DEFAULT.action
-               && WDL.replace(US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a);
+            if ('action_' + $JMVC.a in ctrl && typeof ctrl['action_' + $JMVC.a] === 'function') {
+                ctrl['action_' + $JMVC.a]($JMVC.p);
+            } else if ('action' in ctrl && typeof ctrl.action === 'function') {
+
+                ctrl.action($JMVC.a, $JMVC.p, $JMVC.p);
+            } else if ($JMVC.a.toLowerCase() !== JMVC_DEFAULT.action) {
+                WDL.replace(US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a);
+            }
+
             /***************************/
             // AFTER HOOKS?
             //
             // @action hook 
-            'after_' + $JMVC.a in ctrl
-            && typeof ctrl['after_' + $JMVC.a] === 'function'
-            && ctrl['after_' + $JMVC.a]($JMVC.p);
+            if ('after_' + $JMVC.a in ctrl && typeof ctrl['after_' + $JMVC.a] === 'function') {
+                ctrl['after_' + $JMVC.a]($JMVC.p);
+            }
             //
             // @global hook
-            'after' in ctrl
-            && typeof ctrl.after === 'function'
-            && ctrl.after($JMVC.p);
+            if ('after' in ctrl && typeof ctrl.after === 'function') {
+                ctrl.after($JMVC.p);
+            }
             //////////////////////////
         } else {
-            $JMVC.c.toLowerCase() !== JMVC_DEFAULT.controller
-            && WDL.replace(US + '404' + US + 'msg' + US + 'cnt' + US + $JMVC.c);
+            if ($JMVC.c.toLowerCase() !== JMVC_DEFAULT.controller) {
+                WDL.replace(US + '404' + US + 'msg' + US + 'cnt' + US + $JMVC.c);
+            }
         }
         if (cback && typeof cback === 'function') {
             cback.call($JMVC);
@@ -551,7 +558,7 @@ jmvc = {
         var path, extNS, extNSlength, extname, s,
             i = 0,
             arg = arguments,
-            lArg = arg.length,    
+            lArg = arg.length,
             head = JMVC.WD.getElementsByTagName('head').item(0);
         //
         while (i < lArg) {
@@ -560,8 +567,8 @@ jmvc = {
                 // 
                 if (arg[i].match(/\/$/)) {
                     $JMVC.io.getJson(JMVC.vars.baseurl + PATH.ext + arg[i] + 'require.json', function (json) {
-                        for (j in json.require){
-                            jmvc.require( arg[i] + json.require[j] );
+                        for (var j in json.require) {
+                            jmvc.require(arg[i] + json.require[j]);
                         }
                     }, false);
                 } else {
@@ -569,7 +576,7 @@ jmvc = {
                     extNSlength = extNS.length;
                     extname = extNS[extNSlength - 1];
                     path = JMVC.vars.baseurl +
-                        PATH[(arg[i] === 'testsuite' ? 'test' : 'ext' )] +
+                        PATH[(arg[i] === 'testsuite' ? 'test' : 'ext')] +
                         arg[i] + (JMVC_PACKED || '') + '.js';
 
                     if (getmode === 'ajax') {
@@ -625,7 +632,9 @@ jmvc = {
             ret = $JMVC.views[name];
         } else if (type === 'model' && typeof $JMVC.models[name] === 'function') {
             o = new $JMVC.models[name]();
-            params && $JMVC.models[name].apply(o, params);
+            if (params) {
+                $JMVC.models[name].apply(o, params);
+            }
             o.vars = {};
             ret = o;
         } else {
@@ -633,27 +642,31 @@ jmvc = {
                 path,
                 function cback(res) {
                     switch (type) {
-                        case 'view':
-                            $JMVC.views[name] = new View(res);
-                            ret =  $JMVC.views[name];
+                    case 'view':
+                        $JMVC.views[name] = new View(res);
+                        ret =  $JMVC.views[name];
                         break;
-                        case 'controller':
+                    case 'controller':
+                        jmvc.jeval(res);
+                        jmvc.inherit($JMVC[type + 's'][name], Controller);
+                        break;
+                    case 'model':
+                        jmvc.jeval(res);
+                        jmvc.model_inherit($JMVC[type + 's'][name]);
+                        o = new $JMVC.models[name]();
+                        if (params) {
+                            $JMVC.models[name].apply(o, params);
+                        }
+                        o.vars = {};
+                        ret = o;
+                        break;
+                    case 'interface':
+                        if (!(name in JMVC.interfaces)) {
                             jmvc.jeval(res);
-                            jmvc.inherit($JMVC[type + 's'][name], Controller);
-                        break;
-                        case 'model':
-                            jmvc.jeval(res);
-                            jmvc.model_inherit($JMVC[type + 's'][name]);
-                            o = new $JMVC.models[name]();
-                            params && $JMVC.models[name].apply(o, params);
-                            o.vars = {};
-                            ret = o;
-                        break;
-                        case 'interface':
-                            !(name in JMVC.interfaces) && jmvc.jeval(res);
+                        }
                         break;
                     }
-                },                
+                },
                 false // be asynchronous
             );
         }

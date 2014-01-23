@@ -26,9 +26,9 @@ JMVC.util = {
      */
     getLink : function (cnt, act, prms) {
         var path = [];
-        cnt && path.push(cnt);
-        act && path.push(act);
-        prms && path.push(prms);
+        if (cnt) {path.push(cnt); }
+        if (act) {path.push(act); }
+        if (prms) {path.push(prms); }
         return JMVC.vars.baseurl + JMVC.US + path.join(JMVC.US);
     },
     /**
@@ -151,7 +151,6 @@ JMVC.util = {
     range : function (start, end) {
         if (start > end) {
             throw new JMVC.Errors.BadParams('ERROR: JMVC.util.range function #badparams (' + start + ', ' + end + ')');
-            return false;
         }
         var ret = [];
         while (end - start + 1) {
@@ -168,8 +167,9 @@ JMVC.util = {
             self = this;
         this.prefix = 'JMVCID';
         this.toString = function () {
-            return  self.prefix + ++count;
-        }
+            ++count;
+            return  self.prefix + count;
+        };
     }
 };
 //-----------------------------------------------------------------------------

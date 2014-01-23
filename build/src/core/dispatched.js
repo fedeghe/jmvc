@@ -16,7 +16,7 @@ dispatched = (function () {
         },
         //
         // adjust extensions
-        els = mid.path.replace(new RegExp('\\.' + URL_ALLOWED_EXTENSIONS.join('|\\.'), 'gm'), "").substr(1).split(US),
+        els = mid.path.replace(new RegExp('\\.' + URL_ALLOWED_EXTENSIONS.join('|\\.'), 'gm'), '').substr(1).split(US),
         controller = false,
         controller_prepath = '',
         controller_prepath_parts = [],
@@ -27,7 +27,9 @@ dispatched = (function () {
         len = 0,
         baseurl = WDL.protocol + US + US + WDL.hostname;
     // maybe is the case to load testsuite
-    els[0].match(/test_/) && Modules.push('testsuite');
+    if (els[0].match(/test_/)) {
+        Modules.push('testsuite');
+    }
     //
     controller = els.shift() || JMVC_DEFAULT.controller;
     //
@@ -47,7 +49,7 @@ dispatched = (function () {
     }
     //
     // even hash for GET params
-    if (mid.search !== "") {
+    if (mid.search !== '') {
         // splitting an empty string give an array with one empty string
         els = mid.search.substr(1).split('&');
 
@@ -61,9 +63,9 @@ dispatched = (function () {
     }
     //
     return {
-        controller : controller.replace(/\//g, ""),
+        controller : controller.replace(/\//g, ''),
         controller_prepath : controller_prepath,
-        action : action.replace(/\//g, ""),
+        action : action.replace(/\//g, ''),
         params : params,
         baseurl : baseurl,
         port : mid.port,

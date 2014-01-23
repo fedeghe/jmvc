@@ -76,7 +76,7 @@ $JMVC = {
     require : jmvc.require,
     lang : jmvc.lang,
     //
-    set : jmvc.set,    
+    set : jmvc.set,
     get : jmvc.get,
     del : jmvc.del,
     //
@@ -88,10 +88,23 @@ $JMVC = {
     htmlspecialchars : jmvc.htmlspecialchars,
     htmlspecialchars_decode : jmvc.htmlspecialchars_decode,
     //
-    gc : function () {var i = 0, a = arguments, l = a.length; for (null; i < l; i += 1) {a[i] = null; } },
-    getView : function (n) {return jmvc.factory_method('view', n); },
-    getModel : function (n, params) {return jmvc.factory_method('model', n, params); },
-    loadInterfaces : function (n, params) {return jmvc.factory_method('interface', n, params); },
+    gc : function () {
+        var i = 0,
+            a = arguments,
+            l = a.length;
+        for (null; i < l; i += 1) {
+            a[i] = null;
+        }
+    },
+    getView : function (n) {
+        return jmvc.factory_method('view', n);
+    },
+    getModel : function (n, params) {
+        return jmvc.factory_method('model', n, params);
+    },
+    loadInterfaces : function (n, params) {
+        return jmvc.factory_method('interface', n, params);
+    },
     //
     implement : jmvc.implement,
     //getController :   function(n) {return jmvc.factory_method('controller', n); }
@@ -103,8 +116,8 @@ $JMVC = {
      * [console description]
      * @return {[type]} [description]
      */
-    console : function(){
-        if(! ('core/console' in $JMVC.extensions)){
+    console : function () {
+        if (!('core/console' in $JMVC.extensions)) {
             $JMVC.require('core/console/console');
         }
         JMVC.console.toggle();
@@ -114,11 +127,13 @@ $JMVC = {
      * @param  {[type]} ext [description]
      * @return {[type]}     [description]
      */
-    xdoc : function(ext){
+    xdoc : function (ext) {
         if (!('elements' in JMVC.xdoc)) {
             JMVC.xdoc.elements = {};
         }
-        !('core/xdoc/xdoc' in $JMVC.extensions) && $JMVC.require('core/xdoc/xdoc');
+        if (!('core/xdoc/xdoc' in $JMVC.extensions)) {
+            $JMVC.require('core/xdoc/xdoc');
+        }
         if (!(ext in JMVC.xdoc.elements)) {
             try {
                 JMVC.io.ajcall(
@@ -127,12 +142,12 @@ $JMVC = {
                         type : 'xml',
                         cback : function (doc) {
                             JMVC.xdoc.elements[ext] = doc;
-                            console.debug('doc : ' + doc)
+                            console.debug('doc : ' + doc);
                         },
-                        error : function (e) {alert('errore'); }
+                        error : function () {alert('errore'); }
                     }
                 );
-            } catch (e){}
+            } catch (e) {}
         }
         JMVC.xdoc.toggle(ext);
     },
@@ -151,8 +166,10 @@ $JMVC = {
         try {
             document.getElementById('JMVCisloading').style.display = 'block';
             document.getElementById('JMVCloading').style.width =  ~~intperc + '%';
-            msg && (document.getElementById('JMVCloadingmessage').innerHTML = msg);
-        } catch(e) {}
+            if (msg) {
+                document.getElementById('JMVCloadingmessage').innerHTML = msg;
+            }
+        } catch (e) {}
     }
 };
 //-----------------------------------------------------------------------------

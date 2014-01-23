@@ -9,6 +9,10 @@ if (l) {
         i += 1;
     }
 }
-JMVC.p.lang && JMVC.cookie.set('lang', JMVC.p.lang);
-W.JMVCshut || JMVC.render();
+if (JMVC.p.lang) {
+    JMVC.cookie.set('lang', JMVC.p.lang);
+}
+if (!W.JMVCshut) {
+    JMVC.render();
+}
 //-----------------------------------------------------------------------------

@@ -7,13 +7,12 @@ OBJECT sub-module
  */
 _.object = {
     /**
-     * [walkout description]
+     * [map description]
      * @param  {[type]}   o  [description]
      * @param  {Function} fn [description]
      * @return {[type]}      [description]
      */
-    walkout : function (o, fn) {
-        "use strict";
+    map : function (o, fn) {
         var ret = '', j;
         for (j in o) {
             if (o.hasOwnProperty(j)) {
@@ -27,6 +26,7 @@ _.object = {
  * [object description]
  * @type {Object}
  */
+
 JMVC.object = {
     /**
      * Clones an object
@@ -35,7 +35,6 @@ JMVC.object = {
      * @returns cloned Object
      */
     clone : function (obj) {
-        "use strict";
         var temp,
             key;
         if (obj === null || typeof obj !== 'object') {
@@ -58,10 +57,9 @@ JMVC.object = {
      * @return {[type]}      [description]
      */
     compare : function (obj1, obj2, ret, i) {
-        "use strict";
-        (ret == undefined) && (ret = true);
+        if (typeof ret === 'undefined') {ret = true; }
         if (!ret) {return 0; }
-        if (obj1+'' != obj2+'') {
+        if (obj1 + '' !== obj2 + '') {
             return false;
         }
         for (i in obj1) {
@@ -81,8 +79,7 @@ JMVC.object = {
      * @return {[type]}        [description]
      */
     contains : function (obj, field) {
-        "use strict";
-        return (typeof obj === 'object' && filed in obj);
+        return (typeof obj === 'object' && field in obj);
     },
     /**
      * [ description]
@@ -91,7 +88,6 @@ JMVC.object = {
      * @return {[type]}     [description]
      */
     extend : function (o, ext) {
-        "use strict";
         var obj = this.clone(o), j;
         for (j in ext) {
             if (ext.hasOwnProperty(j) && !(j in obj)) {
@@ -107,8 +103,19 @@ JMVC.object = {
      * @return {[type]}      [description]
      */
     jCompare : function (obj1, obj2) {
-        "use strict";
         return JSON.stringify(obj1) === JSON.stringify(obj2);
+    },
+    /**
+     * [keys description]
+     * @param  {[type]} obj [description]
+     * @return {[type]}     [description]
+     */
+    keys : function (obj) {
+        var res = [], i;
+        for (i in obj) {
+            res.push(i);
+        }
+        return res;
     },
     /**
      * [ description]
@@ -116,8 +123,7 @@ JMVC.object = {
      * @return {[type]}   [description]
      */
     toAttr : function (obj) {
-        "use strict";
-        return _.object.walkout(obj, function (o, i) {
+        return _.object.map(obj, function (o, i) {
             return ' ' + i + (o[i] ? '="' + o[i] + '"' : '');
         });
     },
@@ -127,26 +133,24 @@ JMVC.object = {
      * @return {[type]}   [description]
      */
     toCss : function (obj, straight) {
-        "use strict";
-        return _.object.walkout(obj, function (ob, i) {
-                return !!straight ?
-                    i + '{' + ob[i] + '} '
-                    :
-                    i + ' {' + _.object.walkout(ob[i], 
-                        function (o, j) {
-                            return j + ':' + o[j] + ';';
-                        }
-                    ) + '} ';
+        return _.object.map(obj, function (ob, i) {
+            return !!straight ?
+                i + '{' + ob[i] + '} '
+            :
+                i + ' {' + _.object.map(ob[i],
+                    function (o, j) {
+                        return j + ':' + o[j] + ';';
+                    }
+                ) + '} ';
         });
-    },  
+    },
     /**
      * [ description]
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
     toQs : function (obj) {
-        "use strict";
-        return _.object.walkout(obj, function (o, i, r) {
+        return _.object.map(obj, function (o, i, r) {
             return (r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i]);
         });
     },
@@ -156,10 +160,21 @@ JMVC.object = {
      * @return {[type]}     [description]
      */
     toStr : function (obj) {
-        "use strict";
-        return _.object.walkout(obj, function (o, i) {
+        return _.object.map(obj, function (o, i) {
             return i + ':' + o[i] + ';';
         });
-    }
+    },
+    /**
+     * [values description]
+     * @param  {[type]} obj [description]
+     * @return {[type]}     [description]
+     */
+    values : function (obj) {
+        var res = [], i;
+        for (i in obj) {
+            res.push(obj[i]);
+        }
+        return res;
+    },
 };
 //-----------------------------------------------------------------------------

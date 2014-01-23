@@ -30,14 +30,14 @@ View.prototype.parse = function (obj) {
         if (obj) {
             for (j in obj.vars) {
                 if (obj.vars.hasOwnProperty(j)) {
-                    this.content = this.content.replace(new RegExp("\\$" + j + "\\$", 'g'), obj.get(j) || '');
+                    this.content = this.content.replace(new RegExp('\\$' + j + '\\$', 'g'), obj.get(j) || '');
                 }
             }
         }
         // now jmvc parse vars
         for (j in $JMVC.vars) {
             if ($JMVC.vars.hasOwnProperty(j)) {
-                this.content = this.content.replace(new RegExp("\\$" + j + "\\$", 'gm'), $JMVC.vars[j] || '');
+                this.content = this.content.replace(new RegExp('\\$' + j + '\\$', 'gm'), $JMVC.vars[j] || '');
             }
         }
     }
@@ -104,7 +104,7 @@ View.prototype.render = function (pars) {
         cont = this.content,
         //
         // regexp for variables, do NOT use here new RegExp
-        pattvar = "\\$(.[^\\$\\s}]*)\\$",
+        pattvar = '\\$(.[^\\$\\s}]*)\\$',
         //
         // variables found
         resvar,
@@ -130,7 +130,7 @@ View.prototype.render = function (pars) {
     }
     cont = Parser.parse(cont);
     this.content = cont;
-    if(!$JMVC.loaded){
+    if (!$JMVC.loaded) {
         //
         // books rendering in body or elsewhere, on load
         $JMVC.events.bind(W, 'load', function () {
@@ -154,7 +154,9 @@ View.prototype.render = function (pars) {
             jmvc.hook_check('onAfterRender', [that.content]);
             //
             // may be a callback? 
-            cback && cback.apply(this, argz || []);
+            if (cback) {
+                cback.apply(this, argz || []);
+            }
             //trigger end of render queue
             $JMVC.events.endRender();
         });
@@ -164,7 +166,9 @@ View.prototype.render = function (pars) {
         may_trg = target ? $JMVC.dom.find(target) : false;
         trg = may_trg || WD.body;
         $JMVC.dom.html(trg, that.content);
-        cback && cback.apply(this, !!argz ? argz : []);
+        if (cback) {
+            cback.apply(this, !!argz ? argz : []);
+        }
     }
     // allow chain
     return this;
@@ -189,15 +193,15 @@ View.prototype.get = Model.prototype.get = Controller.prototype.get = function (
 View.prototype.set = Model.prototype.set = Controller.prototype.set = function (vname, vval, force) {
     var i;
     switch (typeof vname) {
-        case 'string':
-            if (!this.vars[vname] || force) {this.vars[vname] = vval; }
+    case 'string':
+        if (!this.vars[vname] || force) {this.vars[vname] = vval; }
         break;
-        case 'object':
-            for (i in vname) {
-                if (vname.hasOwnProperty(i) && (!this.vars[i] || vval || force)) {
-                    this.vars[i] = vname[i];
-                }
+    case 'object':
+        for (i in vname) {
+            if (vname.hasOwnProperty(i) && (!this.vars[i] || vval || force)) {
+                this.vars[i] = vname[i];
             }
+        }
         break;
     }
     return this;
@@ -213,7 +217,7 @@ View.prototype.del = Model.prototype.del = Controller.prototype.del = function (
 };
 //////////////////////
 View.prototype.clone  = function (name) {
-    var ret = false; 
+    var ret = false;
     if (typeof name !== 'undefined') {
         $JMVC.views[name] = new View(this.ocontent);
         ret = $JMVC.views[name];

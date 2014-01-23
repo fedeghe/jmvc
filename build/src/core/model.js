@@ -1,7 +1,8 @@
 /*---
 MODEL
 ---*/
-Model = function () {};
+Model = function () {
+};
 Model.prototype.vars = {};
 /**
  * [reset description]

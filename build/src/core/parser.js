@@ -45,16 +45,16 @@ Parser = {
             RX = {
                 //
                 // for hunting view placeholders
-                'patt' : "{{(.[^\\}]*)}}",
+                patt : '{{(.[^\\}]*)}}',
                 //
                 // for getting explicit params passed within view placeholders
-                'pattpar' : "\\s(.[A-z]*)=`(.[^/`]*)`",
+                pattpar : '\\s(.[A-z]*)=`(.[^/`]*)`',
                 //
                 // for variables
-                'pattvar' : "\\$(.[^\\$\\s}]*)\\$",
+                pattvar : '\\$(.[^\\$\\s}]*)\\$',
                 //
                 // for getting only the viewname
-                'viewname' : "^(.[A-z_\/]*)\\s"
+                viewname : '^(.[A-z_\/]*)\\s'
             },
             //
             // some loop counters
@@ -112,7 +112,7 @@ Parser = {
                         if (tmp1) {
                             // add to temporary register
                             register[tmp1[1]] = tmp1[2];
-                            tmp2 = tmp2.replace(' ' + tmp1[1] + '=`' + tmp1[2] + '`', "");
+                            tmp2 = tmp2.replace(' ' + tmp1[1] + '=`' + tmp1[2] + '`', '');
                         } else {
                             go_ahead = false;
                         }

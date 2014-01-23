@@ -13,7 +13,7 @@ _.array = {
         var ret = NaN;
         try {
             ret = (new Function('return ' + a.join(op) + ';'))();
-        }catch(e){}
+        } catch (e) {}
         return ret;
     }
 };
@@ -34,13 +34,16 @@ JMVC.array = {
      * @return {[type]}      [description]
      */
     coll2array : function (coll) {
-        var ret = [];
-        try{
+        var ret = [],
+            i = 0;
+        try {
             ret = [].slice.call(coll, 0);
-        } catch(e){
+        } catch (e) {
             // what if coll[i] element is false? loop breaks
             // but this is not the case since collection has no falsy values
-            for (var i = 0; coll[i]; ret[i] = coll[i++]);    
+            for (null; coll[i]; i++) {
+                ret[i] = coll[i];
+            }
         }
         return ret;
     },
@@ -66,8 +69,8 @@ JMVC.array = {
         if ('indexOf' in arr) {
             return arr.indexOf(mvar);
         }
-        var l = arr.length;
-        while (l-- && arr[l] !== mvar);
+        var l = arr.length - 1;
+        while (arr[l] !== mvar) {l--; }
         return l;
     },
     /**
@@ -83,8 +86,7 @@ JMVC.array = {
         for (null; i < len; i += 1) {
             is_obj_or_array = {}.toString.call(arr[i]).match(/\[object\s(Array|Object)\]/);
             if (
-                (is_obj_or_array && JSON.stringify(arr[i]) === JSON.stringify(v))
-                ||
+                (is_obj_or_array && JSON.stringify(arr[i]) === JSON.stringify(v)) ||
                 (!is_obj_or_array && arr[i].toString() === v.toString())
             ) {
                 return i;
@@ -140,10 +142,10 @@ JMVC.array = {
      * @param  {[type]} item [description]
      * @return {[type]}      [description]
      */
-    remove : function (arr,item){
-        var i = arr.length
-        while(i--) {
-            if(arr[i] === item) {
+    remove : function (arr, item) {
+        var i = arr.length;
+        while (i--) {
+            if (arr[i] === item) {
                 arr.splice(i, 1);
             }
         }
@@ -154,13 +156,15 @@ JMVC.array = {
      * @return {[type]}     [description]
      */
     shuffle : function (arr) {
-        return arr.sort(function(){return 0.5 - Math.random(); });
+        return arr.sort(function () {return 0.5 - Math.random(); });
     },
     /**
      * [sum description]
      * @param  {[type]} a [description]
      * @return {[type]}   [description]
      */
-    sum : function (a) {return _.array.op(a, '+');}
+    sum : function (a) {
+        return _.array.op(a, '+');
+    }
 };
 //-----------------------------------------------------------------------------

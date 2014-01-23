@@ -3,16 +3,14 @@
  * @param {[type]} n [description]
  */
 Channel = (function () {
-    
     var channels = {},
 
-        _Channel = function () {
+        P_Channel = function () {
             this.topic2cbs = {};
             this.enabled = true;
         };
 
-
-    _Channel.prototype = {
+    P_Channel.prototype = {
         /**
          * enable cb execution on publish
          * @return {undefined}
@@ -104,7 +102,7 @@ Channel = (function () {
         if (name in channels) {
             return channels[name];
         }
-        channels[name] = new _Channel();
+        channels[name] = new P_Channel();
         return channels[name];
     };
 })();
