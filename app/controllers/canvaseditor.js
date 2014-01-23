@@ -5,15 +5,15 @@ JMVC.controllers.canvaseditor = function () {
         var default_version = 0,
             version = p['v'] || 0,
             editors = [
-                'canvas/editor/editor',
+                'canvas/editorNEXT/editor',
                 //'canvas/editorNEW/editor',
-                'canvas/editorNEXT/editor'
+                'canvas/editor/editor'
             ],
             screen_size,
             editorContainerId = 'canvasEditorContainerId';
 
         if (version >= editors.length) {
-            alert('out of version, loading version ' + default_version);
+            alert('out of versions, loading version ' + default_version);
             version = default_version;
         }
 
@@ -53,7 +53,7 @@ JMVC.controllers.canvaseditor = function () {
                     node : JMVC.dom.find('#' + editorContainerId),
                     width : screen_size[0],
                     height : screen_size[1]-1
-                }).init().render();
+                }).init().render().bind();
                 
             });
     };
