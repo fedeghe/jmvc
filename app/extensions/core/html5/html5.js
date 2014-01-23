@@ -3,7 +3,7 @@ JMVC.extend('html5', {
 		"use strict";
 		JMVC.html5._ = {
 			mimemap : {
-				//ogv : 'ogg' 
+				ogv : 'ogg' 
 			}
 		}
 	},
@@ -88,5 +88,9 @@ JMVC.extend('html5', {
 		attr = attr || {};
 		if (!('max' in attr)){attr.max = 100;}
 		return '<progress '+JMVC.object.toAttr(attr)+' value="'+progress+'"></progress>';
+	},
+	geolocation : function (posCB, errCB) {
+		"use strict";
+		navigator.geolocation.getCurrentPosition(posCB, errCB || function () {});
 	}
 });
