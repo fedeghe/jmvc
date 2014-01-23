@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.3 (rev. 0)
+ * @version :  3.3 (rev. 2)
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *         glued with 32 files on 14/1/2014 at 12:22:37
+ *         glued with 34 files on 23/1/2014 at 1:5:22
  *
  * All rights reserved.
  *
@@ -36,19 +36,15 @@
  *
  * 
  */
-!function (W) {
-    //
+(function (W) {
+    // one for all the build
     'use strict';
     //
     var WD = W.document,    // local reference for window.document
         WDL = WD.location,  // local reference for current window.document.location
-        i, //
-        j, //
-        k, //
-           // some counters
-        l, //
-        m, //
-        n, //
+        i, j, //
+        k, l, // some counters
+        //
         //
         // this function returns the JMVC object, globalized, after doing some stuff
         // @return {object literal} $JMVC inner object 
@@ -65,7 +61,7 @@
                 JMVC_VERSION = '3.3',
                 //
                 // review (vars.json)
-                JMVC_REVIEW = '0',
+                JMVC_REVIEW = '2',
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -168,7 +164,7 @@
                  * in case some modules need to be always loaded here's the place to set them
                  * @type {Array}
                  */
-                Modules = ['vendors/google/analytics/analytics', 'core/cookie/cookie', 'core/css/css'],
+                Modules = ['vendors/google/analytics/analytics', 'core/cookie/cookie'],
                 //
                 /**
                  * preloader
@@ -268,7 +264,8 @@
                  */
                 each : function (o, func) {
                     var type = ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase(),
-                        i, l,
+                        i,
+                        l,
                         ret;
                     func.Obreak = false;
                     func.Ocontinue = false;
@@ -434,7 +431,9 @@
                         for (i in hooks[hookname]) {
                             dyn = hooks[hookname][i].apply(null, dyn);
                             //be sure is an array for next one
-                            !(dyn instanceof Array) && (dyn = [dyn]);
+                            if (!(dyn instanceof Array)) {
+                                dyn = [dyn];
+                            }
                         }
                     }
                     return dyn;
@@ -510,7 +509,7 @@
                     //r = r.replace(/(\/\/.*\n)/gm, '');
                     try {
                         return JMVC.W.eval(r);
-                    } catch(e) {}
+                    } catch (e) {}
                     return false;
                 },
                 /**
@@ -548,7 +547,7 @@
                  * @return {[type]}        [description]
                  */
                 multi_inherit : function (Childs, Parent) {
-                    jmvc.each(Childs, function (ch, i){
+                    jmvc.each(Childs, function (ch) {
                         jmvc.inherit(ch, Parent);
                     });
                 },
@@ -569,8 +568,8 @@
                             els = str.split(chr),
                             l = els.length,
                             ret;
-                        (typeof ctx === undef) && (ctx = W);
-                        (typeof obj === undef) && (obj = {});
+                        if (typeof ctx === undef) {ctx = W; }
+                        if (typeof obj === undef) {obj = {}; }
                         //
                         if (!ctx[els[0]]) {
                             ctx[els[0]] = (l === 1) ? obj : {};
@@ -605,7 +604,7 @@
                  * @return {[type]}     [description]
                  */
                 parselang : function (cnt) {
-                    var RXlng = "\\[L\\[([\\S\\s]*?)\\]\\]",
+                    var RXlng = '\\[L\\[([\\S\\s]*?)\\]\\]',
                         lang = true,
                         tmp,
                         limit = 1E5,
@@ -653,7 +652,9 @@
                         }
                     }
                     for (p in obj) {
-                        obj.hasOwnProperty(p) && (el.prototype[p] = obj[p]);
+                        if (obj.hasOwnProperty(p)) {
+                            el.prototype[p] = obj[p];
+                        }
                     }
                 },
                 /**
@@ -663,12 +664,12 @@
                  */
                 purge : function (o) {
                     var t;
-                    try{
-                        for(t in o){
+                    try {
+                        for (t in o) {
                             o[t] = null;
                             delete o[t];
                         }
-                    } catch(e){}
+                    } catch (e) {}
                 },
                 /**
                  * render function
@@ -701,49 +702,51 @@
                         //
                         // parameters are set as variables of the controller
                         for (i in $JMVC.p) {
-                            $JMVC.p.hasOwnProperty(i) && ctrl.set(i, decodeURI($JMVC.p[i]));
+                            if ($JMVC.p.hasOwnProperty(i)) {
+                                ctrl.set(i, decodeURI($JMVC.p[i]));
+                            }
                         }
                         /***************************/
                         // BEFORE HOOKS?
                         // 
                         // @global hook
-                        'before' in ctrl
-                        && typeof ctrl.before === 'function'
-                        && ctrl.before($JMVC.p);
+                        if ('before' in ctrl && typeof ctrl.before === 'function') {
+                            ctrl.before($JMVC.p);
+                        }
                         //
                         // @action hook
-                        'before_' + $JMVC.a in ctrl
-                        && typeof ctrl['before_' + $JMVC.a] === 'function'
-                        && ctrl['before_' + $JMVC.a]($JMVC.p);
+                        if ('before_' + $JMVC.a in ctrl && typeof ctrl['before_' + $JMVC.a] === 'function') {
+                            ctrl['before_' + $JMVC.a]($JMVC.p);
+                        }
                         /***************************/
                         // REAL ACTION
                         // check actual action
-                        ('action_' + $JMVC.a in ctrl && typeof ctrl['action_' + $JMVC.a] === 'function') ?
-                           ctrl['action_' + $JMVC.a]($JMVC.p)
-                           :
-                           /* maybe a action wild is in the controller */
-                           ('action' in ctrl && typeof ctrl['action'] === 'function') ?
-                           ctrl['action']($JMVC.a, $JMVC.p, $JMVC.p)
-                           :
-                           /* or go to 404 */
-                           $JMVC.a.toLowerCase() !== JMVC_DEFAULT.action
-                           && WDL.replace(US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a);
+                        if ('action_' + $JMVC.a in ctrl && typeof ctrl['action_' + $JMVC.a] === 'function') {
+                            ctrl['action_' + $JMVC.a]($JMVC.p);
+                        } else if ('action' in ctrl && typeof ctrl.action === 'function') {
+            
+                            ctrl.action($JMVC.a, $JMVC.p, $JMVC.p);
+                        } else if ($JMVC.a.toLowerCase() !== JMVC_DEFAULT.action) {
+                            WDL.replace(US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a);
+                        }
+            
                         /***************************/
                         // AFTER HOOKS?
                         //
                         // @action hook 
-                        'after_' + $JMVC.a in ctrl
-                        && typeof ctrl['after_' + $JMVC.a] === 'function'
-                        && ctrl['after_' + $JMVC.a]($JMVC.p);
+                        if ('after_' + $JMVC.a in ctrl && typeof ctrl['after_' + $JMVC.a] === 'function') {
+                            ctrl['after_' + $JMVC.a]($JMVC.p);
+                        }
                         //
                         // @global hook
-                        'after' in ctrl
-                        && typeof ctrl.after === 'function'
-                        && ctrl.after($JMVC.p);
+                        if ('after' in ctrl && typeof ctrl.after === 'function') {
+                            ctrl.after($JMVC.p);
+                        }
                         //////////////////////////
                     } else {
-                        $JMVC.c.toLowerCase() !== JMVC_DEFAULT.controller
-                        && WDL.replace(US + '404' + US + 'msg' + US + 'cnt' + US + $JMVC.c);
+                        if ($JMVC.c.toLowerCase() !== JMVC_DEFAULT.controller) {
+                            WDL.replace(US + '404' + US + 'msg' + US + 'cnt' + US + $JMVC.c);
+                        }
                     }
                     if (cback && typeof cback === 'function') {
                         cback.call($JMVC);
@@ -759,7 +762,7 @@
                     var path, extNS, extNSlength, extname, s,
                         i = 0,
                         arg = arguments,
-                        lArg = arg.length,    
+                        lArg = arg.length,
                         head = JMVC.WD.getElementsByTagName('head').item(0);
                     //
                     while (i < lArg) {
@@ -768,8 +771,8 @@
                             // 
                             if (arg[i].match(/\/$/)) {
                                 $JMVC.io.getJson(JMVC.vars.baseurl + PATH.ext + arg[i] + 'require.json', function (json) {
-                                    for (j in json.require){
-                                        jmvc.require( arg[i] + json.require[j] );
+                                    for (var j in json.require) {
+                                        jmvc.require(arg[i] + json.require[j]);
                                     }
                                 }, false);
                             } else {
@@ -777,7 +780,7 @@
                                 extNSlength = extNS.length;
                                 extname = extNS[extNSlength - 1];
                                 path = JMVC.vars.baseurl +
-                                    PATH[(arg[i] === 'testsuite' ? 'test' : 'ext' )] +
+                                    PATH[(arg[i] === 'testsuite' ? 'test' : 'ext')] +
                                     arg[i] + (JMVC_PACKED || '') + '.js';
             
                                 if (getmode === 'ajax') {
@@ -833,7 +836,9 @@
                         ret = $JMVC.views[name];
                     } else if (type === 'model' && typeof $JMVC.models[name] === 'function') {
                         o = new $JMVC.models[name]();
-                        params && $JMVC.models[name].apply(o, params);
+                        if (params) {
+                            $JMVC.models[name].apply(o, params);
+                        }
                         o.vars = {};
                         ret = o;
                     } else {
@@ -841,27 +846,31 @@
                             path,
                             function cback(res) {
                                 switch (type) {
-                                    case 'view':
-                                        $JMVC.views[name] = new View(res);
-                                        ret =  $JMVC.views[name];
+                                case 'view':
+                                    $JMVC.views[name] = new View(res);
+                                    ret =  $JMVC.views[name];
                                     break;
-                                    case 'controller':
+                                case 'controller':
+                                    jmvc.jeval(res);
+                                    jmvc.inherit($JMVC[type + 's'][name], Controller);
+                                    break;
+                                case 'model':
+                                    jmvc.jeval(res);
+                                    jmvc.model_inherit($JMVC[type + 's'][name]);
+                                    o = new $JMVC.models[name]();
+                                    if (params) {
+                                        $JMVC.models[name].apply(o, params);
+                                    }
+                                    o.vars = {};
+                                    ret = o;
+                                    break;
+                                case 'interface':
+                                    if (!(name in JMVC.interfaces)) {
                                         jmvc.jeval(res);
-                                        jmvc.inherit($JMVC[type + 's'][name], Controller);
-                                    break;
-                                    case 'model':
-                                        jmvc.jeval(res);
-                                        jmvc.model_inherit($JMVC[type + 's'][name]);
-                                        o = new $JMVC.models[name]();
-                                        params && $JMVC.models[name].apply(o, params);
-                                        o.vars = {};
-                                        ret = o;
-                                    break;
-                                    case 'interface':
-                                        !(name in JMVC.interfaces) && jmvc.jeval(res);
+                                    }
                                     break;
                                 }
-                            },                
+                            },
                             false // be asynchronous
                         );
                     }
@@ -983,16 +992,16 @@
                         RX = {
                             //
                             // for hunting view placeholders
-                            'patt' : "{{(.[^\\}]*)}}",
+                            patt : '{{(.[^\\}]*)}}',
                             //
                             // for getting explicit params passed within view placeholders
-                            'pattpar' : "\\s(.[A-z]*)=`(.[^/`]*)`",
+                            pattpar : '\\s(.[A-z]*)=`(.[^/`]*)`',
                             //
                             // for variables
-                            'pattvar' : "\\$(.[^\\$\\s}]*)\\$",
+                            pattvar : '\\$(.[^\\$\\s}]*)\\$',
                             //
                             // for getting only the viewname
-                            'viewname' : "^(.[A-z_\/]*)\\s"
+                            viewname : '^(.[A-z_\/]*)\\s'
                         },
                         //
                         // some loop counters
@@ -1050,7 +1059,7 @@
                                     if (tmp1) {
                                         // add to temporary register
                                         register[tmp1[1]] = tmp1[2];
-                                        tmp2 = tmp2.replace(' ' + tmp1[1] + '=`' + tmp1[2] + '`', "");
+                                        tmp2 = tmp2.replace(' ' + tmp1[1] + '=`' + tmp1[2] + '`', '');
                                     } else {
                                         go_ahead = false;
                                     }
@@ -1133,7 +1142,7 @@
                  * @param  {[type]} listener [description]
                  * @return {[type]}          [description]
                  */
-                'attach' : function (listener) {
+                attach : function (listener) {
                     this.listeners.push(listener);
                 },
                 /**
@@ -1141,7 +1150,7 @@
                  * @param  {[type]} args [description]
                  * @return {[type]}      [description]
                  */
-                'notify' : function (args) {
+                notify : function (args) {
                     var i = 0,
                         l = this.listeners.length;
                     while (i < l) {
@@ -1155,16 +1164,14 @@
              * @param {[type]} n [description]
              */
             Channel = (function () {
-                
                 var channels = {},
             
-                    _Channel = function () {
+                    P_Channel = function () {
                         this.topic2cbs = {};
                         this.enabled = true;
                     };
             
-            
-                _Channel.prototype = {
+                P_Channel.prototype = {
                     /**
                      * enable cb execution on publish
                      * @return {undefined}
@@ -1256,7 +1263,7 @@
                     if (name in channels) {
                         return channels[name];
                     }
-                    channels[name] = new _Channel();
+                    channels[name] = new P_Channel();
                     return channels[name];
                 };
             })();
@@ -1393,6 +1400,21 @@
             };
             //-----------------------------------------------------------------------------
             /**
+             * [checkInterface description]
+             * @param  {[type]} f [description]
+             * @return {[type]}   [description]
+             */
+            function checkInterface(f) {
+                var r = f.toString()
+                    .match(/function\s(.*)\((.*)\)\s?{return\s[\'\"]?(.*)[\'\"]?;}/);
+                return r instanceof Array && r.length === 4 ? {
+                    name : r[1],
+                    params : !!r[2] ? r[2].replace(/\s/g, '').split(',') : false,
+                    ret : !!r[3] ? r[3]  : false
+                } : false;
+            }
+            
+            /**
              * INTERFACE
              * =========
              * [Interface description]
@@ -1400,8 +1422,7 @@
              * @param {[type]} a    [description]
              */
             Interface = function (name, a) {
-                var i,
-                    l;
+                var i, l;
                 this.name = name;
                 this.mthds = [];
                 if (!(a instanceof Array)) {
@@ -1425,35 +1446,21 @@
             Interface.checkImplements = function (obj) {
                 var m,
                     i = 0,
-                    arg = Array.prototype.slice.call(arguments);
+                    arg = Array.prototype.slice.call(arguments),
                     l = arg.length;
             
                 //skip 0 being it obj
-                while (++i < l){
+                while (++i < l) {
                     for (m in arg[i].mthds) {
                         if (typeof obj[arg[i].mthds[m]] !== 'function') {
-                            throw new Error("Function Interface.checkImplements: object "
-                              + "does not implement the " + arg[i].name
-                              + " interface. Method " + arg[i].mthds[m] + " was not found.");
+                            throw new Error('Function Interface.checkImplements: object ' +
+                            'does not implement the ' + arg[i].name +
+                            ' interface. Method ' + arg[i].mthds[m] + ' was not found.');
                         }
                     }
                 }
                 return obj;
             };
-            /**
-             * [checkInterface description]
-             * @param  {[type]} f [description]
-             * @return {[type]}   [description]
-             */
-            function checkInterface(f) {
-                var r = f.toString()
-                    .match(/function\s(.*)\((.*)\)\s?{return\s[\'\"]?(.*)[\'\"]?;}/);
-                return r instanceof Array && r.length == 4? {
-                    name : r[1],
-                    params : !!r[2] ? r[2].replace(/\s/g, '').split(',') : false,
-                    ret : !!r[3] ? r[3]  : false
-                } : false;
-            }
             /*
             function tee(func, obj, str) {return 'obj';}
             
@@ -1477,29 +1484,32 @@
                 this.queue = [];
             };
             FunctionQueue.prototype.add = function (f) {
-                this.queue.push(f)
+                this.queue.push(f);
             };
-            FunctionQueue.prototype.run = function() {
+            FunctionQueue.prototype.run = function () {
                 var i = 0,
                     l = this.queue.length,
                     args = [].slice.call(arguments, 0),
                     f;
-                while (i < l){
+                while (i < l) {
                     f = this.queue[i++];
-                    (args instanceof Array) || (args = [args]);
+                    if (! (args instanceof Array)) {
+                        args = [args];
+                    }
                     args = f.apply(null, args);
                 }
-                return args;    
+                return args;
             };
             FunctionQueue.prototype.reset = function () {
                 this.queue.length = 0;
-            }
+            };
             //-----------------------------------------------------------------------------
             /*--------
             CONTROLLER          
             --------*/
             // parent controller
-            Controller = function () {};
+            Controller = function () {
+            };
             // for storing vars 
             Controller.prototype.vars = {};
             // this has no sense and must be removed
@@ -1538,7 +1548,7 @@
             Controller.prototype.relocate = function (uri, ms) {
                 W.setTimeout(
                     function () {WDL.href = String(uri); },
-                    parseInt(ms * 1, 10) || 0
+                    ~~ms || 0
                 );
             };
             /**
@@ -1548,7 +1558,7 @@
              * @return {[type]}         [description]
              */
             Controller.prototype.render = function (content, cback) {
-                ///allow only cback 
+                // allow only cback 
                 if (typeof content === 'function') {
                     cback = content;
                     content = false;
@@ -1571,7 +1581,8 @@
             /*---
             MODEL
             ---*/
-            Model = function () {};
+            Model = function () {
+            };
             Model.prototype.vars = {};
             /**
              * [reset description]
@@ -1619,14 +1630,14 @@
                     if (obj) {
                         for (j in obj.vars) {
                             if (obj.vars.hasOwnProperty(j)) {
-                                this.content = this.content.replace(new RegExp("\\$" + j + "\\$", 'g'), obj.get(j) || '');
+                                this.content = this.content.replace(new RegExp('\\$' + j + '\\$', 'g'), obj.get(j) || '');
                             }
                         }
                     }
                     // now jmvc parse vars
                     for (j in $JMVC.vars) {
                         if ($JMVC.vars.hasOwnProperty(j)) {
-                            this.content = this.content.replace(new RegExp("\\$" + j + "\\$", 'gm'), $JMVC.vars[j] || '');
+                            this.content = this.content.replace(new RegExp('\\$' + j + '\\$', 'gm'), $JMVC.vars[j] || '');
                         }
                     }
                 }
@@ -1693,7 +1704,7 @@
                     cont = this.content,
                     //
                     // regexp for variables, do NOT use here new RegExp
-                    pattvar = "\\$(.[^\\$\\s}]*)\\$",
+                    pattvar = '\\$(.[^\\$\\s}]*)\\$',
                     //
                     // variables found
                     resvar,
@@ -1719,7 +1730,7 @@
                 }
                 cont = Parser.parse(cont);
                 this.content = cont;
-                if(!$JMVC.loaded){
+                if (!$JMVC.loaded) {
                     //
                     // books rendering in body or elsewhere, on load
                     $JMVC.events.bind(W, 'load', function () {
@@ -1743,7 +1754,9 @@
                         jmvc.hook_check('onAfterRender', [that.content]);
                         //
                         // may be a callback? 
-                        cback && cback.apply(this, argz || []);
+                        if (cback) {
+                            cback.apply(this, argz || []);
+                        }
                         //trigger end of render queue
                         $JMVC.events.endRender();
                     });
@@ -1753,7 +1766,9 @@
                     may_trg = target ? $JMVC.dom.find(target) : false;
                     trg = may_trg || WD.body;
                     $JMVC.dom.html(trg, that.content);
-                    cback && cback.apply(this, !!argz ? argz : []);
+                    if (cback) {
+                        cback.apply(this, !!argz ? argz : []);
+                    }
                 }
                 // allow chain
                 return this;
@@ -1778,15 +1793,15 @@
             View.prototype.set = Model.prototype.set = Controller.prototype.set = function (vname, vval, force) {
                 var i;
                 switch (typeof vname) {
-                    case 'string':
-                        if (!this.vars[vname] || force) {this.vars[vname] = vval; }
+                case 'string':
+                    if (!this.vars[vname] || force) {this.vars[vname] = vval; }
                     break;
-                    case 'object':
-                        for (i in vname) {
-                            if (vname.hasOwnProperty(i) && (!this.vars[i] || vval || force)) {
-                                this.vars[i] = vname[i];
-                            }
+                case 'object':
+                    for (i in vname) {
+                        if (vname.hasOwnProperty(i) && (!this.vars[i] || vval || force)) {
+                            this.vars[i] = vname[i];
                         }
+                    }
                     break;
                 }
                 return this;
@@ -1802,7 +1817,7 @@
             };
             //////////////////////
             View.prototype.clone  = function (name) {
-                var ret = false; 
+                var ret = false;
                 if (typeof name !== 'undefined') {
                     $JMVC.views[name] = new View(this.ocontent);
                     ret = $JMVC.views[name];
@@ -1830,7 +1845,7 @@
                     },
                     //
                     // adjust extensions
-                    els = mid.path.replace(new RegExp('\\.' + URL_ALLOWED_EXTENSIONS.join('|\\.'), 'gm'), "").substr(1).split(US),
+                    els = mid.path.replace(new RegExp('\\.' + URL_ALLOWED_EXTENSIONS.join('|\\.'), 'gm'), '').substr(1).split(US),
                     controller = false,
                     controller_prepath = '',
                     controller_prepath_parts = [],
@@ -1841,7 +1856,9 @@
                     len = 0,
                     baseurl = WDL.protocol + US + US + WDL.hostname;
                 // maybe is the case to load testsuite
-                els[0].match(/test_/) && Modules.push('testsuite');
+                if (els[0].match(/test_/)) {
+                    Modules.push('testsuite');
+                }
                 //
                 controller = els.shift() || JMVC_DEFAULT.controller;
                 //
@@ -1861,7 +1878,7 @@
                 }
                 //
                 // even hash for GET params
-                if (mid.search !== "") {
+                if (mid.search !== '') {
                     // splitting an empty string give an array with one empty string
                     els = mid.search.substr(1).split('&');
             
@@ -1875,9 +1892,9 @@
                 }
                 //
                 return {
-                    controller : controller.replace(/\//g, ""),
+                    controller : controller.replace(/\//g, ''),
                     controller_prepath : controller_prepath,
-                    action : action.replace(/\//g, ""),
+                    action : action.replace(/\//g, ''),
                     params : params,
                     baseurl : baseurl,
                     port : mid.port,
@@ -1964,7 +1981,7 @@
                 require : jmvc.require,
                 lang : jmvc.lang,
                 //
-                set : jmvc.set,    
+                set : jmvc.set,
                 get : jmvc.get,
                 del : jmvc.del,
                 //
@@ -1976,10 +1993,23 @@
                 htmlspecialchars : jmvc.htmlspecialchars,
                 htmlspecialchars_decode : jmvc.htmlspecialchars_decode,
                 //
-                gc : function () {var i = 0, a = arguments, l = a.length; for (null; i < l; i += 1) {a[i] = null; } },
-                getView : function (n) {return jmvc.factory_method('view', n); },
-                getModel : function (n, params) {return jmvc.factory_method('model', n, params); },
-                loadInterfaces : function (n, params) {return jmvc.factory_method('interface', n, params); },
+                gc : function () {
+                    var i = 0,
+                        a = arguments,
+                        l = a.length;
+                    for (null; i < l; i += 1) {
+                        a[i] = null;
+                    }
+                },
+                getView : function (n) {
+                    return jmvc.factory_method('view', n);
+                },
+                getModel : function (n, params) {
+                    return jmvc.factory_method('model', n, params);
+                },
+                loadInterfaces : function (n, params) {
+                    return jmvc.factory_method('interface', n, params);
+                },
                 //
                 implement : jmvc.implement,
                 //getController :   function(n) {return jmvc.factory_method('controller', n); }
@@ -1991,8 +2021,8 @@
                  * [console description]
                  * @return {[type]} [description]
                  */
-                console : function(){
-                    if(! ('core/console' in $JMVC.extensions)){
+                console : function () {
+                    if (!('core/console' in $JMVC.extensions)) {
                         $JMVC.require('core/console/console');
                     }
                     JMVC.console.toggle();
@@ -2002,11 +2032,13 @@
                  * @param  {[type]} ext [description]
                  * @return {[type]}     [description]
                  */
-                xdoc : function(ext){
+                xdoc : function (ext) {
                     if (!('elements' in JMVC.xdoc)) {
                         JMVC.xdoc.elements = {};
                     }
-                    !('core/xdoc/xdoc' in $JMVC.extensions) && $JMVC.require('core/xdoc/xdoc');
+                    if (!('core/xdoc/xdoc' in $JMVC.extensions)) {
+                        $JMVC.require('core/xdoc/xdoc');
+                    }
                     if (!(ext in JMVC.xdoc.elements)) {
                         try {
                             JMVC.io.ajcall(
@@ -2015,12 +2047,12 @@
                                     type : 'xml',
                                     cback : function (doc) {
                                         JMVC.xdoc.elements[ext] = doc;
-                                        console.debug('doc : ' + doc)
+                                        console.debug('doc : ' + doc);
                                     },
-                                    error : function (e) {alert('errore'); }
+                                    error : function () {alert('errore'); }
                                 }
                             );
-                        } catch (e){}
+                        } catch (e) {}
                     }
                     JMVC.xdoc.toggle(ext);
                 },
@@ -2039,8 +2071,10 @@
                     try {
                         document.getElementById('JMVCisloading').style.display = 'block';
                         document.getElementById('JMVCloading').style.width =  ~~intperc + '%';
-                        msg && (document.getElementById('JMVCloadingmessage').innerHTML = msg);
-                    } catch(e) {}
+                        if (msg) {
+                            document.getElementById('JMVCloadingmessage').innerHTML = msg;
+                        }
+                    } catch (e) {}
                 }
             };
             //-----------------------------------------------------------------------------
@@ -2060,7 +2094,8 @@
             //-----------------------------------------------------------------------------
             return $JMVC;
         })(),
-        _ = {};// private ns for modules
+        _ = {}; // private ns for modules
+    //
     // mandatory modules
     /*-------------
     AJAX sub-module
@@ -2082,7 +2117,7 @@
             } catch (e1) {
                 for (null; i < len; i += 1) {
                     try {
-                        xhr = new ActiveXObject(IEfuckIds[i]);
+                        xhr = new W.ActiveXObject(IEfuckIds[i]);
                     } catch (e2) {continue; }
                 }
                 if (!xhr) {
@@ -2125,7 +2160,7 @@
                     return false;
                 }
                 state = xhr.readyState;
-                if (xhr.readyState === "complete" || (xhr.readyState === 4 && xhr.status === 200)) {
+                if (xhr.readyState === 'complete' || (xhr.readyState === 4 && xhr.status === 200)) {
                     complete = true;
                     if (cback) {
                         res = xhr[targetType];
@@ -2146,38 +2181,51 @@
                     cb_opened(xhr);
                 } else if (xhr.readyState === 1) {
                     switch (method) {
-                        case 'POST':
-                            try {
-                                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                                xhr.send(data || true);
-                            } catch (e1) {}
+                    case 'POST':
+                        try {
+                            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                            xhr.send(data || true);
+                        } catch (e1) {}
                         break;
-                        case 'GET':
-                            try {
-                                tmp = {
-                                    xml : 'text/xml',
-                                    html : 'text/html',
-                                    json : 'application/json'
-                                }[type] || 'text/html';
+                    case 'GET':
+                        try {
+                            tmp = {
+                                xml : 'text/xml',
+                                html : 'text/html',
+                                json : 'application/json'
+                            }[type] || 'text/html';
     
-                                xhr.setRequestHeader("Accept", tmp + "; charset=utf-8");
-                                xhr.send(null);
-                            } catch (e2) {}
-                        break;
-                        default :
-                            alert(method);
+                            xhr.setRequestHeader('Accept', tmp + '; charset=utf-8');
                             xhr.send(null);
+                        } catch (e2) {}
+                        break;
+                    default :
+                        alert(method);
+                        xhr.send(null);
                         break;
                     }
                 }
                 return true;
             };
-            xhr.onerror = function () {cb_error && cb_error.apply(null, arguments); };
-            xhr.onabort = function () {cb_abort && cb_abort.apply(null, arguments); };
+            xhr.onerror = function () {
+                if (cb_error) {
+                    cb_error.apply(null, arguments);
+                }
+            };
+            xhr.onabort = function () {
+                if (cb_abort) {
+                    cb_abort.apply(null, arguments);
+                }
+            };
             //open request
-            xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data : "")) : uri, sync);
+            xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri, sync);
             //thread abortion
-            W.setTimeout(function () {if (!complete) {complete = true; xhr.abort(); } }, timeout);
+            W.setTimeout(function () {
+                if (!complete) {
+                    complete = true;
+                    xhr.abort();
+                }
+            }, timeout);
             try {
                 return (targetType === 'responseXML') ? xhr[targetType].childNodes[0] : xhr[targetType];
             } catch (e3) {}
@@ -2310,9 +2358,9 @@
          */
         getLink : function (cnt, act, prms) {
             var path = [];
-            cnt && path.push(cnt);
-            act && path.push(act);
-            prms && path.push(prms);
+            if (cnt) {path.push(cnt); }
+            if (act) {path.push(act); }
+            if (prms) {path.push(prms); }
             return JMVC.vars.baseurl + JMVC.US + path.join(JMVC.US);
         },
         /**
@@ -2435,7 +2483,6 @@
         range : function (start, end) {
             if (start > end) {
                 throw new JMVC.Errors.BadParams('ERROR: JMVC.util.range function #badparams (' + start + ', ' + end + ')');
-                return false;
             }
             var ret = [];
             while (end - start + 1) {
@@ -2452,8 +2499,9 @@
                 self = this;
             this.prefix = 'JMVCID';
             this.toString = function () {
-                return  self.prefix + ++count;
-            }
+                ++count;
+                return  self.prefix + count;
+            };
         }
     };
     //-----------------------------------------------------------------------------
@@ -2462,7 +2510,7 @@
     ------------*/
     // private section
     _.dom = {
-        qsall : function (a){
+        qsall : function (a) {
             return ('querySelectorAll' in JMVC.WD) ? JMVC.WD.querySelectorAll(a) : false;
         }
     };
@@ -2493,7 +2541,7 @@
                     JMVC.dom.addClass(elem[i], addingClass);
                 }
                 return;
-            } 
+            }
             var cls = !!(elem.className) ? elem.className.split(' ') : [];
             if (JMVC.array.find(cls, addingClass) < 0) {
                 cls.push(addingClass);
@@ -2532,7 +2580,7 @@
                 i = 0,
                 result,
                 is_obj = false;
-            try {elem.nodeType; } catch (e) {
+            try {k = elem.nodeType; } catch (e) {
                 return false;
             }
             if (elem.nodeType === 3 || elem.nodeType === 8) {return 'undefined'; }
@@ -2544,10 +2592,12 @@
                     elem.setAttribute(i, name[i]);
                 }
                 return true;
-            } 
+            }
             //
             // Make sure that avalid name was provided, here cannot be an object
-            if (!name || name.constructor !== String) {return ""; }
+            if (!name || name.constructor !== String) {
+                return '';
+            }
             //
             // If the user is setting a value
             if (typeof value !== 'undefined') {
@@ -2592,8 +2642,8 @@
          * returns a crearer node
          * @return {[type]} [description]
          */
-        clearer : function (){
-            return this.create('br', {'class':'clearer'});
+        clearer : function () {
+            return this.create('br', {'class': 'clearer'});
         },
         /**
          * [ description]
@@ -2601,7 +2651,7 @@
          * @param  {[type]} deep [description]
          * @return {[type]}      [description]
          */
-        clone : function(n, deep){
+        clone : function (n, deep) {
             return n.cloneNode(!!deep);
         },
         /**
@@ -2635,7 +2685,7 @@
          * @param  {[type]} text [description]
          * @return {[type]}      [description]
          */
-        createText : function(text){
+        createText : function (text) {
             return JMVC.WD.createTextNode(text);
         },
         /**
@@ -2661,8 +2711,8 @@
          * @param  {[type]} b [description]
          * @return {[type]}   [description]
          */
-        find : function (a, b) {  
-            var sel = "getElement",
+        find : function (a, b) {
+            var sel = 'getElement',
                 toArr = true,
                 ret = false,
                 isArr = false;
@@ -2673,23 +2723,31 @@
                 //look for no word before something consistent
                 a = a.match(/^(\W)?([A-z0-9-_]*)/);
                 switch (a[1] || '=') {
-                    case '#': sel += 'ById';
-                        toArr = false;
+                case '#':
+                    sel += 'ById';
+                    toArr = false;
                     break;
-                    case '.': sel += "sByClassName"; break;
-                    case '@': sel += "sByName"; break;
-                    case '=': sel += "sByTagName"; break;
-                    default: return [];
+                case '.':
+                    sel += 'sByClassName';
+                    break;
+                case '@':
+                    sel += 'sByName';
+                    break;
+                case '=':
+                    sel += 'sByTagName';
+                    break;
+                default:
+                    return [];
                 }
                 ret = (b || JMVC.WD)[sel](a[2]);
             }
             ret = toArr ? JMVC.array.coll2array(ret) : ret;
             isArr = ret instanceof Array;
-            return (isArr && ret.length == 1) ? ret[0] : ret;
+            return (isArr && ret.length === 1) ? ret[0] : ret;
         },
         find2 : function (a, b) {
             if (a.nodeType === 1) {return a; }
-            var sel = "getElement",
+            var sel = 'getElement',
                 toArr = 0,
                 ret = 0;
             //ret = _.dom.qsall(a);
@@ -2697,7 +2755,7 @@
             //look for no word before something
             a = a.match(/^(\W)?([A-z0-9-_]*)/);
             a[1] = a[1] || '=';
-            toArr = a[1] !== '#'; 
+            toArr = a[1] !== '#';
             ret = (b || JMVC.WD)[sel + ({
                 '#' : 'ById',
                 '.' : 'ByClassName',
@@ -2705,7 +2763,7 @@
                 '=' : 'sByTagName'
             }[a[1]])](a[2]);
             ret = toArr ? JMVC.array.coll2array(ret) : ret;
-            return ret instanceof Array ?  (ret.length == 1 ? ret[0] :  ret) : ret;
+            return ret instanceof Array ?  (ret.length === 1 ? ret[0] :  ret) : ret;
         },
         /**
          * [ description]
@@ -2716,7 +2774,7 @@
         findInnerByClass : function (ctx, cname) {
             var a = [],
                 re = new RegExp('\\b' + cname + '\\b'),
-                els = ctx.getElementsByTagName("*"),
+                els = ctx.getElementsByTagName('*'),
                 i = 0,
                 l = els.length;
             for (null; i < l; i += 1) {
@@ -2737,15 +2795,15 @@
             var ret = [],
                 whole = [],
                 val,
-                tof = (value == undefined),
+                tof = (value === undefined),
                 isRootArray = root instanceof Array,
                 i;
             root = isRootArray ? root : root || JMVC.WD.body;
             whole = isRootArray ? root : root.all ? root.all : root.getElementsByTagName('*');
-            for(i = whole.length; i--; ) {
+            for (i = whole.length; i--;) {
                 val = whole[i].getAttribute(attr);
-                if (typeof val == "string" && (tof || val == value)) {
-                  ret.push(whole[i]);
+                if (typeof val === 'string' && (tof || val === value)) {
+                    ret.push(whole[i]);
                 }
             }
             return ret;
@@ -2756,8 +2814,11 @@
          * @param  {[type]} tagName [description]
          * @return {[type]}         [description]
          */
-        firstAncestor : function(el, tagName) {
-            while (el = el.parentNode, el && (el.tagName != tagName.toUpperCase()));
+        firstAncestor : function (el, tagName) {
+            do {
+                el = el.parentNode;
+            }
+            while (el && el.tagName !== tagName.toUpperCase());
             return el;
         },
         /**
@@ -2805,12 +2866,14 @@
          * @return {[type]}      [description]
          */
         html : function (el, html) {
-            if (!el) {return this; }
-            var t = "";
+            if (!el) {
+                return this;
+            }
+            var t = '';
             if (typeof html !== 'undefined') {
                 if (el) {
                     try {
-                        if(this.isElement(html)){
+                        if (this.isElement(html)) {
                             this.empty(el);
                             this.append(el, html);
                         } else {
@@ -2856,12 +2919,12 @@
          */
         isElement : function (o) {
             return (
-                typeof HTMLElement === "object" ?
+                typeof HTMLElement === 'object' ?
                     o instanceof HTMLElement
                 : //DOM2
-                    o && typeof o === "object" &&
+                    o && typeof o === 'object' &&
                     typeof o.nodeType !== undefined && o.nodeType === 1 &&
-                    typeof o.nodeName === "string"
+                    typeof o.nodeName === 'string'
             );
         },
         //thx to http://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
@@ -2874,8 +2937,9 @@
          */
         isNode : function (o) {
             return (
-                typeof Node === "object" ? o instanceof Node : 
-                o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName==="string"
+                typeof Node === 'object' ? o instanceof Node
+                :
+                o && typeof o === 'object' && typeof o.nodeType === 'number' && typeof o.nodeName === 'string'
             );
         },
         /**
@@ -2925,7 +2989,9 @@
          */
         preloadImage : function (src, fn) {
             var i = new W.Image();
-            typeof fn === 'function' && (i.onload = fn(i));
+            if (typeof fn === 'function') {
+                i.onload = fn(i);
+            }
             i.src = src;
             return i;
         },
@@ -2935,7 +3001,7 @@
          * @return {[type]}      [description]
          */
         parent : function (node) {
-            return (node.parentNode && node.parentNode.nodeType != 11) ?
+            return (node.parentNode && node.parentNode.nodeType !== 11) ?
                 node.parentNode : false;
         },
         /**
@@ -2955,17 +3021,19 @@
          * @return {[type]}    [description]
          */
         remove : function (el, afterFreeMem) {
-            if (!el) {return false;}
+            if (!el) {
+                return false;
+            }
     
             if (afterFreeMem) {
                 JMVC.events.free(el);
             }
     
             var parent;
-            if(typeof el === 'string'){
+            if (typeof el === 'string') {
                 el = this.find(el);
             }
-            if(JMVC.util.isArray(el)){
+            if (JMVC.util.isArray(el)) {
                 for (var i  = 0, l = el.length; i < l; i++) {
                     this.remove(el[i]);
                 }
@@ -2982,7 +3050,7 @@
          * @param  {[type]} mode   [description]
          * @return {[type]}        [description]
          */
-        removeAttribute : function (el, valore, mode) {
+        removeAttribute : function (el, valore) {
             el.removeAttribute(valore);
             return el;
         },
@@ -2993,14 +3061,16 @@
          * @return {[type]}     [description]
          */
         removeClass : function (el, cls) {
+            var i,
+                l;
             if (JMVC.util.isArray(el)) {
-                for (var i = 0, l = el.length; i < l; i++) {
+                for (i = 0, l = el.length; i < l; i++) {
                     JMVC.dom.removeClass(el[i], cls);
                 }
                 return;
             }
             if (JMVC.util.isArray(cls)) {
-                for (var i = 0, l = cls.length; i < l; i++) {
+                for (i = 0, l = cls.length; i < l; i++) {
                     JMVC.dom.removeClass(el, cls[i]);
                 }
                 return;
@@ -3057,16 +3127,22 @@
          * @param  {[type]} func [description]
          * @return {[type]}      [description]
          */
-        walk : function (node,func) {
+        walk : function (node, func) {
             func(node);                     //What does this do?
             node = node.firstChild;
             while (node) {
-                this.walk(node,func);
+                this.walk(node, func);
                 node = node.nextSibling;
             }
         }
     };
     //-----------------------------------------------------------------------------
+    _.bom = {
+    
+    };
+    JMVC.bom = {
+    
+    };
     /*--------------
     EVENT sub-module
     --------------*/
@@ -3112,8 +3188,8 @@
          * @param  {[type]} id [description]
          * @return {[type]}    [description]
          */
-        nodeidInverse : function (id) {
-            return id in _.events.nodeidMap ? _.events.nodeidMap[id] : false;
+        nodeidInverse : function (i) {
+            return i in _.events.nodeidMap ? _.events.nodeidMap[i] : false;
         },
         /**
          * obtain a uniqueid for a node if not assigned
@@ -3160,10 +3236,11 @@
             _.events.bindings[evnt][nid].push(cb);
             return true;
         },*/
-        bind : (function (){
+        bind : (function () {
+            var fn;
     
             function store(el, evnt, cb) {
-                var nid = _.events.nodeid(el); 
+                var nid = _.events.nodeid(el);
                 if (!(evnt in _.events.bindings)) {
                     _.events.bindings[evnt] = {};
                 }
@@ -3175,20 +3252,23 @@
                 return true;
             }
             if ('addEventListener' in W) {
-                return function (el, evnt, cb) {
+                fn = function (el, evnt, cb) {
                     // cb = _.events.fixCurrentTarget(cb, el);
                     el.addEventListener.apply(el, [evnt, cb, false]);
                     store(el, evnt, cb);
                 };
             } else if ('attachEvent' in W) {
-                return function (el, evnt, cb) {
+                fn = function (el, evnt, cb) {
                     // cb = _.events.fixCurrentTarget(cb, el);
                     el.attachEvent.apply(el, ['on' + evnt, cb]);
                     store(el, evnt, cb);
                 };
             } else {
-                throw new Error('No straight way to bind an event');
+                fn = function () {
+                    throw new Error('No straight way to bind an event');
+                };
             }
+            return fn;
         })(),
     
         /**
@@ -3212,7 +3292,7 @@
                 i = JMVC.array.find(_.events.cbs, wrapf);
             if (i > -1) {
                 return _.events.cbs[i];
-            } else { 
+            } else {
                 _.events.cbs.push(wrapf);
             }
             return wrapf;
@@ -3230,7 +3310,6 @@
          */
         
         unbind : function (el, evnt, cb) {
-    
             function unstore(evnt, nodeid, index) {
                 Array.prototype.splice.call(_.events.bindings[evnt][nodeid], index, 1);
             }
@@ -3239,10 +3318,9 @@
     
             var nodeid = _.events.nodeid(el),
                 index, tmp, l;
-            
             try {
-                var ___ = _.events.bindings[evnt][nodeid];
-            }catch(e){
+                k = _.events.bindings[evnt][nodeid];
+            } catch (e) {
                 //JMVC.debug(evnt + ': binding not found');
                 return false;
             }
@@ -3263,14 +3341,14 @@
             JMVC.W.exp = _.events.bindings;
             index = JMVC.array.find(_.events.bindings[evnt][nodeid], cb);
             
-            if (index == -1) {
+            if (index === -1) {
                 return false;
             }
             
             if (el.removeEventListener) {
                 el.removeEventListener(evnt, cb, false);
             } else if (el.detachEvent) {
-                el.detachEvent("on" + evnt, cb);
+                el.detachEvent('on' + evnt, cb);
             }
             //remove it from private bindings register
             unstore(evnt, nodeid, index);
@@ -3290,7 +3368,7 @@
         bind : function (el, tipo, fn) {
             var res = true;
             if (el instanceof Array) {
-                for (var i = 0, l = el.length; i < l; i++) {    
+                for (var i = 0, l = el.length; i < l; i++) {
                     res = res & _.events.bind(el[i], tipo, fn);
                     //res = res & _.events.bind(el[i], tipo, _.events.fixCurrentTarget(fn, el[i]));
                 }
@@ -3309,17 +3387,16 @@
          * || var tr = JMVC.dom.find('#extralogo');
          * || JMVC.events.clickout(tr, function (){console.debug('out')});
          */
-        clickout : function (el, cb) {
+        onEventOut : function (evnt, el, cb) {
             var self = this,
                 root = JMVC.dom.body();
     
-            this.bind(root, 'click', function f(e) {
-                
+            this.bind(root, evnt, function f(e) {
                 var trg = self.eventTarget(e);
                 while (trg !== el) {
                     trg = JMVC.dom.parent(trg);
-                    if (trg == root) {
-                        self.unbind(root, 'click', f);
+                    if (trg === root) {
+                        self.unbind(root, evnt, f);
                         return cb();
                     }
                 }
@@ -3354,9 +3431,11 @@
          * @return {[type]} [description]
          */
         disableRightClick : function () {
+            var self = this;
             JMVC.dom.attr(JMVC.WD.body, 'oncontextmenu', 'return false');
             this.bind(JMVC.WD, 'mousedown', function (e) {
-                if(e.button == 2) {
+                if (e.button === 2) {
+                    self.preventDefault(e);
                     return false;
                 }
             });
@@ -3387,14 +3466,26 @@
          */
         eventTarget : function (e) {
             e = e ? e : JMVC.W.event;
-            var targetElement = e.currentTarget || (typeof e.target !== "undefined") ? e.target : e.srcElement;
+            var targetElement = e.currentTarget || (typeof e.target !== 'undefined') ? e.target : e.srcElement;
             if (!targetElement) {
                 return false;
             }
-            while (targetElement.nodeType == 3 && targetElement.parentNode != null) {
+            while (targetElement.nodeType === 3 && targetElement.parentNode !== null) {
                 targetElement = targetElement.parentNode;
             }
             return targetElement;
+        },
+        /**
+         * NOCROSS
+         * @param  {[type]} el   [description]
+         * @param  {[type]} evnt [description]
+         * @return {[type]}      [description]
+         */
+        fire : function (el, evnt) {
+            var evt = el[evnt];
+            if (typeof evt === 'function') {
+                el[evnt]();
+            }
         },
         /**
          * [free description]
@@ -3490,6 +3581,20 @@
             });
         },
         /**
+         * [onRight description]
+         * @param  {[type]} el [description]
+         * @param  {[type]} f  [description]
+         * @return {[type]}    [description]
+         */
+        onRight : function (el, f) {
+            this.disableRightClick();
+            this.bind(el, 'mousedown', function (e) {
+                if (e.button === 2) {
+                    f.call(el, e);
+                }
+            });
+        },
+        /**
          * [ description]
          * @param  {[type]} e [description]
          * @return {[type]}   [description]
@@ -3525,24 +3630,46 @@
          * @param  {[type]} func [description]
          * @return {[type]}      [description]
          */
-        ready : function (func) {
+        readyold : function (f) {
             // if called when the dom is already loaded
             // execute immediately
             if (JMVC.loaded) {
-                return func.call();
+                return f.call();
             }
             var e = null;
-            if(WD.addEventListener){
-                e = WD.addEventListener('DOMContentLoaded', func, false);
-            }else if(W.addEventListener){
-                e = W.addEventListener('load', func, false )
-            }else if(WD.attachEvent){
-                e = WD.attachEvent("onreadystatechange", func);
-            }else if(W.attachEvent){
-                e = W.attachEvent("onload", func);
+            if (WD.addEventListener) {
+                e = WD.addEventListener('DOMContentLoaded', f, false);
+            } else if (W.addEventListener) {
+                e = W.addEventListener('load', f, false);
+            } else if (WD.attachEvent) {
+                e = WD.attachEvent('onreadystatechange', f);
+            } else if (W.attachEvent) {
+                e = W.attachEvent('onload', f);
             }
             return e;
         },
+        ready : (function () {
+            function may_go(f) {
+                return JMVC.loaded ? f.call() : false;
+            }
+            if (WD.addEventListener) {
+                return function (f) {
+                    return may_go(f) || WD.addEventListener('DOMContentLoaded', f, false);
+                };
+            } else if (W.addEventListener) {
+                return function (f) {
+                    return may_go(f) || W.addEventListener('load', f, false);
+                };
+            } else if (WD.attachEvent) {
+                return function (f) {
+                    return may_go(f) || WD.attachEvent('onreadystatechange', f);
+                };
+            } else if (W.attachEvent) {
+                return function (f) {
+                    return may_go(f) || W.attachEvent('onload', f);
+                };
+            }
+        })(),
         /**
          * [ description]
          * @param  {[type]} f [description]
@@ -3571,7 +3698,7 @@
             if (e.stopPropagation) {
                 e.stopPropagation();
             }
-            if (e.cancelBubble!=null) {
+            if (e.cancelBubble !== null) {
                 e.cancelBubble = true;
             }
         },
@@ -3606,13 +3733,13 @@
             var touches = [],
                 i = 0,
                 ect = e.touches,
-                len = ect.length;
+                l = ect.length;
                 
-            for (null; i < len; i += 1) {
+            for (null; i < l; i += 1) {
                 touches.push({
                     x : ect[i].pageX,
                     y : ect[i].pageY
-                })
+                });
             }
             return touches;
         },
@@ -3683,23 +3810,23 @@
                 if (explicit) {
                     //script_content = JMVC.parse(src/* in this case is mean to be the content */);
                     script_content = JMVC.parse(src, true);
-                    script = JMVC.dom.create('script', {type : 'text/javascript', defer:'defer'}, script_content);
+                    script = JMVC.dom.create('script', {type: 'text/javascript', defer: 'defer'}, script_content);
                     head = that.element;
                     head.appendChild(script);
                 } else {
                     /* get css content, async */
                     tmp = JMVC.io.get(src, function (script_content) {
                         script_content = JMVC.parse(script_content, true);
-                        script = JMVC.dom.create('script', {type : 'text/javascript', defer:'defer'}, script_content);
+                        script = JMVC.dom.create('script', {type: 'text/javascript', defer: 'defer'}, script_content);
                         head = that.element;
                         head.appendChild(script);
                     }, postmode, async);
                 }
             } else {
                 script = explicit ?
-                    JMVC.dom.create('script', {type : 'text/javascript', defer:'defer'}, src)
+                    JMVC.dom.create('script', {type: 'text/javascript', defer: 'defer'}, src)
                     :
-                    JMVC.dom.create('script', {type : 'text/javascript', defer:'defer', src : src}, ' ');
+                    JMVC.dom.create('script', {type: 'text/javascript', defer: 'defer', src: src}, ' ');
                 head = this.element;
                 head.appendChild(script);
             }
@@ -3711,7 +3838,7 @@
          * @param  {[type]} explicit [description]
          * @return {[type]}          [description]
          */
-        addstyle : function (src, parse, explicit, id) {
+        addstyle : function (src, parse, explicit, idn) {
             var style,
                 head,
                 tmp,
@@ -3735,8 +3862,8 @@
                     } else {
                         style.appendChild(rules);
                     }
-                    if (id) {
-                        style.id = id;
+                    if (idn) {
+                        JMVC.dom.attr(style, 'id', idn);
                     }
                     head.appendChild(style);
                 } else {
@@ -3753,8 +3880,8 @@
                         } else {
                             style.appendChild(rules);
                         }
-                        if (id) {
-                            style.id = id;
+                        if (idn) {
+                            JMVC.dom.attr(style, 'id', idn);
                         }
                         head.appendChild(style);
                         //
@@ -3785,7 +3912,7 @@
          */
         favicon : function (file) {
             this.link('icon', {
-                rel : "shortcut icon",
+                rel : 'shortcut icon',
                 href : JMVC.vars.baseurl + file
             });
         },
@@ -3796,11 +3923,11 @@
          * @param  {[type]} prms [description]
          * @return {[type]}      [description]
          */
-        goto : function (cnt, act, prms) {
+        'goto' : function (cnt, act, prms) {
             var path = [];
-            cnt && path.push(cnt);
-            act && path.push(act);
-            prms && path.push(prms);
+            if (cnt) {path.push(cnt); }
+            if (act) {path.push(act); }
+            if (prms) {path.push(prms); }
             
             WD.location.href = JMVC.vars.baseurl + JMVC.US + path.join(JMVC.US);
         },
@@ -3812,13 +3939,15 @@
         lastmodified : function (d) {
             var meta = this.element.getElementsByTagName('meta'),
                 newmeta = JMVC.dom.create(
-                    'meta', {
-                        'http-equiv' : 'last-modified',
-                        'content' : (d || JMVC.vars.last_modified || new Date()).toString()
-                    }
+                    'meta',
+                    {'http-equiv': 'last-modified', 'content': (d || JMVC.vars.last_modified || new Date()).toString()}
                 ),
                 len = meta.length;
-            len ? JMVC.dom.insertAfter(newmeta, meta.item(len - 1)) : this.element.appendChild(newmeta);
+            if (len) {
+                JMVC.dom.insertAfter(newmeta, meta.item(len - 1));
+            } else {
+                this.element.appendChild(newmeta);
+            }
         },
         /**
          * [lib description]
@@ -3830,7 +3959,9 @@
                 'jquery' : 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js',
                 'jsapi' : 'https://www.google.com/jsapi'
             };
-            (l in libs) && this.addscript(libs[l]);
+            if (l in libs) {
+                this.addscript(libs[l]);
+            }
         },
         /**
          * [link description]
@@ -3865,7 +3996,7 @@
                 newmeta = JMVC.dom.create('meta', {'name' : name, 'content' : value}),
                 len = meta.length;
             return len ? JMVC.dom.insertAfter(newmeta, meta.item(len - 1)) : this.element.appendChild(newmeta);
-        },  
+        },
         /**
          * return all document meta tags
          * @return {[type]} [description]
@@ -3896,6 +4027,260 @@
         }
     };
     //-----------------------------------------------------------------------------
+    _.css = {
+        opera : navigator.userAgent.match(/opera\/([^\s]*)/i),
+        mappedStyles : {},
+        css2js_rule : function (s) {
+            'use strict';
+            return s[0] === '-' ? s : s.replace(/-(\w)/g, function (str, $1) {return $1.toUpperCase(); });
+        }
+    };
+    /*,
+    css_propertymap : {
+    'background-attachment' : 'backgroundAttachment',
+    'background-color' : 'backgroundColor',
+    'background-image' : 'backgroundImage',
+    'background-position' : 'backgroundPosition',
+    'background-repeat' : 'backgroundRepeat',
+    'border-bottom' : 'borderBottom',
+    'border-bottom-color' : 'borderBottomColor',
+    'border-bottom-style' : 'borderBottomStyle',
+    'border-bottom-width' : 'borderBottomWidth',
+    'border-color' : 'borderColor',
+    'border-left' : 'borderLeft',
+    'border-left-color' : 'borderLeftColor',
+    'border-left-style' : 'borderLeftStyle',
+    'border-left-width' : 'borderLeftWidth',
+    'border-right' : 'borderRight',
+    'border-right-color' : 'borderRightColor',
+    'border-right-style' : 'borderRightStyle',
+    'border-right-width' : 'borderRightWidth',
+    'border-style' : 'borderStyle',
+    'border-top' : 'borderTop',
+    'border-top-color' : 'borderTopColor',
+    'border-top-style' : 'borderTopStyle',
+    'border-top-width' : 'borderTopWidth',
+    'border-width' : 'borderWidth',
+    'font-family' : 'fontFamily',
+    'font-size' : 'fontSize',
+    'font-variant' : 'fontVariant',
+    'font-weight' : 'fontWeight',
+    'letter-spacing' : 'letterSpacing',
+    'line-height' : 'lineHeight',
+    'list-style' : 'listStyle',
+    'list-style-image' : 'listStyleImage',
+    'list-style-position' : 'listStylePosition',
+    'list-style-type' : 'listStyleType',
+    'margin-bottom' : 'marginBottom',
+    'margin-left' : 'marginLeft',
+    'margin-right' : 'marginRight',
+    'margin-top' : 'marginTop',
+    'padding-bottom' : 'paddingBottom',
+    'padding-left' : 'paddingLeft',
+    'padding-right' : 'paddingRight',
+    'padding-top' : 'paddingTop',
+    'page-break-after' : 'pageBreakAfter',
+    'page-break-before' : 'pageBreakBefore',
+    'text-align' : 'textAlign',
+    'text-decoration' : 'textDecoration',
+    'text-indent' : 'textIndent',
+    'text-transform' : 'textTransform',
+    'vertical-align' : 'verticalAlign',
+    'z-index ' : 'zIndex',
+    'z-Index ' : 'zIndex'
+    },*/
+    
+    
+    JMVC.css = {
+    
+        addRule : function (sheet, selector, rules, index) {
+            if (sheet.insertRule) {
+                sheet.insertRule(selector + '{' + rules + '}', index);
+            } else {
+                sheet.addRule(selector, rules, index);
+            }
+        },
+    
+        mappedStyle : function (idn, style) {
+            var t = JMVC.dom.find('#' + idn);
+            if (t) {
+                JMVC.dom.remove(t);
+            }
+            _.css.mappedStyles[idn] = JMVC.dom.create('style', {'id' : idn, type : 'text/css'}, style);
+            JMVC.dom.append(JMVC.head.element, _.css.mappedStyles[idn]);
+        },
+    
+        style : function (el, prop, val) {
+    
+            var prop_is_obj = (typeof prop === 'object' && typeof val === 'undefined'),
+                ret = false,
+                newval,
+                k;
+    
+            if (!prop_is_obj && typeof val === 'undefined') {
+                /* opera may use currentStyle or getComputedStyle */
+                //ret = (el.currentStyle) ? el.currentStyle[_.css.css_propertymap[prop] || prop + ""] : el.style[prop]; 
+                ret = (el.currentStyle) ? el.currentStyle[_.css.css2js_rule(prop)] : el.style[prop];
+                return (ret === '' || ret === 'auto') ? JMVC.css.getComputedStyle(el, prop) : ret;
+            }
+    
+            if (prop_is_obj) {
+                for (k in prop) {
+                    if ((prop[k] + '').search(/rand/) !== -1) {
+                        newval = JMVC.nsCheck('JMVC.core.color') ?
+                            JMVC.core.color.getRandomColor() : '#000000';
+                        prop[k] =  prop[k].replace(/rand/, newval);
+                    }
+                    if (JMVC.array.find(this.css3_map, k) + 1) {
+                        el.style.cssText += ';' + k + ' : ' + prop[k];
+                    } else {
+                        //el.style[_.css.css_propertymap[k] || k + ""] = prop[k];
+                        el.style[_.css.css2js_rule(k)] = prop[k];
+                    }
+                }
+            } else if (typeof val !== 'undefined') {
+                val += '';
+                if (val.search(/rand/) !== -1) {
+                    newval = JMVC.nsCheck('JMVC.core.color') ?
+                       JMVC.core.color.getRandomColor() : '#000000';
+                    val =  val.replace(/rand/, newval);
+                }
+                if (JMVC.array.find(this.css3_map, prop) + 1) {
+                    el.style.cssText += ';' + prop + ' : ' + val;
+                } else {
+                    //el.style[_.css.css_propertymap[prop] || prop + ""] = val;
+                    el.style[_.css.css2js_rule(prop)] = val;
+                    
+                    if (prop === 'opacity') {
+                        el.style.filter = 'alpha(opacity = ' + (~~(100 * JMVC.num.getFloat(val))) + ')';
+                    }/* IE */
+                }
+            }
+            return this;
+        },
+    
+        show : function (el) {
+            if (el instanceof Array) {
+                for (var i = 0, l = el.length; i < l; i += 1) {
+                    this.show(el[i]);
+                }
+                return;
+            }
+            JMVC.css.style(el, 'display', 'block');
+        },
+    
+        hide : function (el) {
+            if (el instanceof Array) {
+                for (var i = 0, l = el.length; i < l; i += 1) {
+                    this.hide(el[i]);
+                }
+                return;
+            }
+            JMVC.css.style(el, 'display', 'none');
+        },
+    
+        width : function (el) {
+            return el.offsetWidth || el.scrollWidth || JMVC.css.getComputedStyle(el, 'width');
+        },
+    
+        height : function (el) {
+            return el.offsetHeight || el.scrollHeight || JMVC.css.getComputedStyle(el, 'height');
+        },
+    
+        getComputedStyle : function (el, styleProperty) {
+            if (_.css.opera) {
+                return  JMVC.W.getComputedStyle(el, null).getPropertyValue(styleProperty);
+            }
+            var computedStyle = null;
+            if (typeof el.currentStyle !== 'undefined') {
+                computedStyle = el.currentStyle;
+            } else {
+                computedStyle = JMVC.WD.defaultView.getComputedStyle(el, null);
+            }
+            //return computedStyle[_.css.css_propertymap[styleProperty] || styleProperty]; 
+            return computedStyle[_.css.css2js_rule(styleProperty)];
+        },
+    
+        //
+        // http://www.quirksmode.org/js/findpos.html
+        //
+        getPosition : function (el) {
+            var curleft = 0,
+                curtop = 0;
+            if (el.offsetParent) {
+                do {
+                    curleft += el.offsetLeft;
+                    curtop += el.offsetTop;
+    
+                    el = el.offsetParent;
+                } while (el);
+    
+                //} while (el = el.offsetParent);
+            }
+            return [curleft, curtop];
+        },
+    
+        css3_map : ['-o-transform', '-moz-transform'],
+        //
+        reset : function () {
+            // http://meyerweb.com/eric/tools/css/reset/
+            var style = 'html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}' +
+            'article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}' +
+            'body{line-height:1;}' +
+            'ol,ul{list-style:none;}' +
+            'blockquote,q{quotes:none;}' +
+            'blockquote:before,blockquote:after,q:before,q:after{content:\'\';content:none;}' +
+            'table{border-collapse:collapse;border-spacing:0;}';
+            JMVC.head.addstyle(style, true, true);
+        },
+    /*
+    	json2css : function (json) {
+    		var out = '',
+    			i;
+    		for (i in json) {
+    			if (json.hasOwnProperty(i)) {
+    				out += i + '{' + json[i] + '}' + "\n";
+    			}
+    		}
+    		return out;
+    	},
+    */
+        clearer : JMVC.dom.create('br', {'class' : 'clearer'})
+    };
+    
+    /*
+    DISABLE/ENABLE TEXT SELECTION in a element
+    
+    disableSelection : function(target) {
+    if (typeof target.onselectstart != "undefined") { //IE route
+    target.onselectstart=function(){return false; }
+    }
+    else if (typeof target.style.MozUserSelect!="undefined") { //Firefox route
+    target.style.MozUserSelect = "none";
+    }
+    else{ //All other route (ie: Opera)
+    target.onmousedown=function(){return false; }
+    }
+    target.style.cursor = "default";
+    },
+    enableSelection : function(target) {
+    if (typeof target.onselectstart != "undefined") { //IE route
+    target.onselectstart=function(){}
+    }
+    else if (typeof target.style.MozUserSelect!="undefined") { //Firefox route
+    target.style.MozUserSelect = "default";
+    }
+    else{ //All other route (ie: Opera)
+    target.onmousedown=function(){ }
+    }
+    target.style.cursor = "default";
+    }
+    */
+    
+    
+    
+    
+    
     /*--------------
     ARRAY sub-module
     --------------*/
@@ -3911,7 +4296,7 @@
             var ret = NaN;
             try {
                 ret = (new Function('return ' + a.join(op) + ';'))();
-            }catch(e){}
+            } catch (e) {}
             return ret;
         }
     };
@@ -3932,13 +4317,16 @@
          * @return {[type]}      [description]
          */
         coll2array : function (coll) {
-            var ret = [];
-            try{
+            var ret = [],
+                i = 0;
+            try {
                 ret = [].slice.call(coll, 0);
-            } catch(e){
+            } catch (e) {
                 // what if coll[i] element is false? loop breaks
                 // but this is not the case since collection has no falsy values
-                for (var i = 0; coll[i]; ret[i] = coll[i++]);    
+                for (null; coll[i]; i++) {
+                    ret[i] = coll[i];
+                }
             }
             return ret;
         },
@@ -3964,8 +4352,8 @@
             if ('indexOf' in arr) {
                 return arr.indexOf(mvar);
             }
-            var l = arr.length;
-            while (l-- && arr[l] !== mvar);
+            var l = arr.length - 1;
+            while (arr[l] !== mvar) {l--; }
             return l;
         },
         /**
@@ -3981,8 +4369,7 @@
             for (null; i < len; i += 1) {
                 is_obj_or_array = {}.toString.call(arr[i]).match(/\[object\s(Array|Object)\]/);
                 if (
-                    (is_obj_or_array && JSON.stringify(arr[i]) === JSON.stringify(v))
-                    ||
+                    (is_obj_or_array && JSON.stringify(arr[i]) === JSON.stringify(v)) ||
                     (!is_obj_or_array && arr[i].toString() === v.toString())
                 ) {
                     return i;
@@ -4038,10 +4425,10 @@
          * @param  {[type]} item [description]
          * @return {[type]}      [description]
          */
-        remove : function (arr,item){
-            var i = arr.length
-            while(i--) {
-                if(arr[i] === item) {
+        remove : function (arr, item) {
+            var i = arr.length;
+            while (i--) {
+                if (arr[i] === item) {
                     arr.splice(i, 1);
                 }
             }
@@ -4052,14 +4439,16 @@
          * @return {[type]}     [description]
          */
         shuffle : function (arr) {
-            return arr.sort(function(){return 0.5 - Math.random(); });
+            return arr.sort(function () {return 0.5 - Math.random(); });
         },
         /**
          * [sum description]
          * @param  {[type]} a [description]
          * @return {[type]}   [description]
          */
-        sum : function (a) {return _.array.op(a, '+');}
+        sum : function (a) {
+            return _.array.op(a, '+');
+        }
     };
     //-----------------------------------------------------------------------------
     /*---------------
@@ -4069,38 +4458,38 @@
     _.string = {
         charToEntity : {},
         entities : { __proto__: null,
-            apos:0x0027,quot:0x0022,amp:0x0026,lt:0x003C,gt:0x003E,nbsp:0x00A0,iexcl:0x00A1,cent:0x00A2,pound:0x00A3,
-            curren:0x00A4,yen:0x00A5,brvbar:0x00A6,sect:0x00A7,uml:0x00A8,copy:0x00A9,ordf:0x00AA,laquo:0x00AB,
-            not:0x00AC,shy:0x00AD,reg:0x00AE,macr:0x00AF,deg:0x00B0,plusmn:0x00B1,sup2:0x00B2,sup3:0x00B3,
-            acute:0x00B4,micro:0x00B5,para:0x00B6,middot:0x00B7,cedil:0x00B8,sup1:0x00B9,ordm:0x00BA,raquo:0x00BB,
-            frac14:0x00BC,frac12:0x00BD,frac34:0x00BE,iquest:0x00BF,Agrave:0x00C0,Aacute:0x00C1,Acirc:0x00C2,Atilde:0x00C3,
-            Auml:0x00C4,Aring:0x00C5,AElig:0x00C6,Ccedil:0x00C7,Egrave:0x00C8,Eacute:0x00C9,Ecirc:0x00CA,Euml:0x00CB,
-            Igrave:0x00CC,Iacute:0x00CD,Icirc:0x00CE,Iuml:0x00CF,ETH:0x00D0,Ntilde:0x00D1,Ograve:0x00D2,Oacute:0x00D3,
-            Ocirc:0x00D4,Otilde:0x00D5,Ouml:0x00D6,times:0x00D7,Oslash:0x00D8,Ugrave:0x00D9,Uacute:0x00DA,Ucirc:0x00DB,
-            Uuml:0x00DC,Yacute:0x00DD,THORN:0x00DE,szlig:0x00DF,agrave:0x00E0,aacute:0x00E1,acirc:0x00E2,atilde:0x00E3,
-            auml:0x00E4,aring:0x00E5,aelig:0x00E6,ccedil:0x00E7,egrave:0x00E8,eacute:0x00E9,ecirc:0x00EA,euml:0x00EB,
-            igrave:0x00EC,iacute:0x00ED,icirc:0x00EE,iuml:0x00EF,eth:0x00F0,ntilde:0x00F1,ograve:0x00F2,oacute:0x00F3,
-            ocirc:0x00F4,otilde:0x00F5,ouml:0x00F6,divide:0x00F7,oslash:0x00F8,ugrave:0x00F9,uacute:0x00FA,ucirc:0x00FB,
-            uuml:0x00FC,yacute:0x00FD,thorn:0x00FE,yuml:0x00FF,OElig:0x0152,oelig:0x0153,Scaron:0x0160,scaron:0x0161,
-            Yuml:0x0178,fnof:0x0192,circ:0x02C6,tilde:0x02DC,Alpha:0x0391,Beta:0x0392,Gamma:0x0393,Delta:0x0394,
-            Epsilon:0x0395,Zeta:0x0396,Eta:0x0397,Theta:0x0398,Iota:0x0399,Kappa:0x039A,Lambda:0x039B,Mu:0x039C,
-            Nu:0x039D,Xi:0x039E,Omicron:0x039F,Pi:0x03A0,Rho:0x03A1,Sigma:0x03A3,Tau:0x03A4,Upsilon:0x03A5,
-            Phi:0x03A6,Chi:0x03A7,Psi:0x03A8,Omega:0x03A9,alpha:0x03B1,beta:0x03B2,gamma:0x03B3,delta:0x03B4,
-            epsilon:0x03B5,zeta:0x03B6,eta:0x03B7,theta:0x03B8,iota:0x03B9,kappa:0x03BA,lambda:0x03BB,mu:0x03BC,
-            nu:0x03BD,xi:0x03BE,omicron:0x03BF,pi:0x03C0,rho:0x03C1,sigmaf:0x03C2,sigma:0x03C3,tau:0x03C4,
-            upsilon:0x03C5,phi:0x03C6,chi:0x03C7,psi:0x03C8,omega:0x03C9,thetasym:0x03D1,upsih:0x03D2,piv:0x03D6,
-            ensp:0x2002,emsp:0x2003,thinsp:0x2009,zwnj:0x200C,zwj:0x200D,lrm:0x200E,rlm:0x200F,ndash:0x2013,
-            mdash:0x2014,lsquo:0x2018,rsquo:0x2019,sbquo:0x201A,ldquo:0x201C,rdquo:0x201D,bdquo:0x201E,dagger:0x2020,
-            Dagger:0x2021,bull:0x2022,hellip:0x2026,permil:0x2030,prime:0x2032,Prime:0x2033,lsaquo:0x2039,rsaquo:0x203A,
-            oline:0x203E,frasl:0x2044,euro:0x20AC,image:0x2111,weierp:0x2118,real:0x211C,trade:0x2122,alefsym:0x2135,
-            larr:0x2190,uarr:0x2191,rarr:0x2192,darr:0x2193,harr:0x2194,crarr:0x21B5,lArr:0x21D0,uArr:0x21D1,
-            rArr:0x21D2,dArr:0x21D3,hArr:0x21D4,forall:0x2200,part:0x2202,exist:0x2203,empty:0x2205,nabla:0x2207,
-            isin:0x2208,notin:0x2209,ni:0x220B,prod:0x220F,sum:0x2211,minus:0x2212,lowast:0x2217,radic:0x221A,
-            prop:0x221D,infin:0x221E,ang:0x2220,and:0x2227,or:0x2228,cap:0x2229,cup:0x222A,int:0x222B,
-            there4:0x2234,sim:0x223C,cong:0x2245,asymp:0x2248,ne:0x2260,equiv:0x2261,le:0x2264,ge:0x2265,
-            sub:0x2282,sup:0x2283,nsub:0x2284,sube:0x2286,supe:0x2287,oplus:0x2295,otimes:0x2297,perp:0x22A5,
-            sdot:0x22C5,lceil:0x2308,rceil:0x2309,lfloor:0x230A,rfloor:0x230B,lang:0x2329,rang:0x232A,loz:0x25CA,
-            spades:0x2660,clubs:0x2663,hearts:0x2665,diams:0x2666
+            apos: 0x0027, quot: 0x0022, amp: 0x0026, lt: 0x003C, gt: 0x003E, nbsp: 0x00A0, iexcl: 0x00A1, cent: 0x00A2, pound: 0x00A3,
+            curren: 0x00A4, yen: 0x00A5, brvbar: 0x00A6, sect: 0x00A7, uml: 0x00A8, copy: 0x00A9, ordf: 0x00AA, laquo: 0x00AB,
+            not: 0x00AC, shy: 0x00AD, reg: 0x00AE, macr: 0x00AF, deg: 0x00B0, plusmn: 0x00B1, sup2: 0x00B2, sup3: 0x00B3,
+            acute: 0x00B4, micro: 0x00B5, para: 0x00B6, middot: 0x00B7, cedil: 0x00B8, sup1: 0x00B9, ordm: 0x00BA, raquo: 0x00BB,
+            frac14: 0x00BC, frac12: 0x00BD, frac34: 0x00BE, iquest: 0x00BF, Agrave: 0x00C0, Aacute: 0x00C1, Acirc: 0x00C2, Atilde: 0x00C3,
+            Auml: 0x00C4, Aring: 0x00C5, AElig: 0x00C6, Ccedil: 0x00C7, Egrave: 0x00C8, Eacute: 0x00C9, Ecirc: 0x00CA, Euml: 0x00CB,
+            Igrave: 0x00CC, Iacute: 0x00CD, Icirc: 0x00CE, Iuml: 0x00CF, ETH: 0x00D0, Ntilde: 0x00D1, Ograve: 0x00D2, Oacute: 0x00D3,
+            Ocirc: 0x00D4, Otilde: 0x00D5, Ouml: 0x00D6, times: 0x00D7, Oslash: 0x00D8, Ugrave: 0x00D9, Uacute: 0x00DA, Ucirc: 0x00DB,
+            Uuml: 0x00DC, Yacute: 0x00DD, THORN: 0x00DE, szlig: 0x00DF, agrave: 0x00E0, aacute: 0x00E1, acirc: 0x00E2, atilde: 0x00E3,
+            auml: 0x00E4, aring: 0x00E5, aelig: 0x00E6, ccedil: 0x00E7, egrave: 0x00E8, eacute: 0x00E9, ecirc: 0x00EA, euml: 0x00EB,
+            igrave: 0x00EC, iacute: 0x00ED, icirc: 0x00EE, iuml: 0x00EF, eth: 0x00F0, ntilde: 0x00F1, ograve: 0x00F2, oacute: 0x00F3,
+            ocirc: 0x00F4, otilde: 0x00F5, ouml: 0x00F6, divide: 0x00F7, oslash: 0x00F8, ugrave: 0x00F9, uacute: 0x00FA, ucirc: 0x00FB,
+            uuml: 0x00FC, yacute: 0x00FD, thorn: 0x00FE, yuml: 0x00FF, OElig: 0x0152, oelig: 0x0153, Scaron: 0x0160, scaron: 0x0161,
+            Yuml: 0x0178, fnof: 0x0192, circ: 0x02C6, tilde: 0x02DC, Alpha: 0x0391, Beta: 0x0392, Gamma: 0x0393, Delta: 0x0394,
+            Epsilon: 0x0395, Zeta: 0x0396, Eta: 0x0397, Theta: 0x0398, Iota: 0x0399, Kappa: 0x039A, Lambda: 0x039B, Mu: 0x039C,
+            Nu: 0x039D, Xi: 0x039E, Omicron: 0x039F, Pi: 0x03A0, Rho: 0x03A1, Sigma: 0x03A3, Tau: 0x03A4, Upsilon: 0x03A5,
+            Phi: 0x03A6, Chi: 0x03A7, Psi: 0x03A8, Omega: 0x03A9, alpha: 0x03B1, beta: 0x03B2, gamma: 0x03B3, delta: 0x03B4,
+            epsilon: 0x03B5, zeta: 0x03B6, eta: 0x03B7, theta: 0x03B8, iota: 0x03B9, kappa: 0x03BA, lambda: 0x03BB, mu: 0x03BC,
+            nu: 0x03BD, xi: 0x03BE, omicron: 0x03BF, pi: 0x03C0, rho: 0x03C1, sigmaf: 0x03C2, sigma: 0x03C3, tau: 0x03C4,
+            upsilon: 0x03C5, phi: 0x03C6, chi: 0x03C7, psi: 0x03C8, omega: 0x03C9, thetasym: 0x03D1, upsih: 0x03D2, piv: 0x03D6,
+            ensp: 0x2002, emsp: 0x2003, thinsp: 0x2009, zwnj: 0x200C, zwj: 0x200D, lrm: 0x200E, rlm: 0x200F, ndash: 0x2013,
+            mdash: 0x2014, lsquo: 0x2018, rsquo: 0x2019, sbquo: 0x201A, ldquo: 0x201C, rdquo: 0x201D, bdquo: 0x201E, dagger: 0x2020,
+            Dagger: 0x2021, bull: 0x2022, hellip: 0x2026, permil: 0x2030, prime: 0x2032, Prime: 0x2033, lsaquo: 0x2039, rsaquo: 0x203A,
+            oline: 0x203E, frasl: 0x2044, euro: 0x20AC, image: 0x2111, weierp: 0x2118, real: 0x211C, trade: 0x2122, alefsym: 0x2135,
+            larr: 0x2190, uarr: 0x2191, rarr: 0x2192, darr: 0x2193, harr: 0x2194, crarr: 0x21B5, lArr: 0x21D0, uArr: 0x21D1,
+            rArr: 0x21D2, dArr: 0x21D3, hArr: 0x21D4, forall: 0x2200, part: 0x2202, exist: 0x2203, empty: 0x2205, nabla: 0x2207,
+            isin: 0x2208, notin: 0x2209, ni: 0x220B, prod: 0x220F, sum: 0x2211, minus: 0x2212, lowast: 0x2217, radic: 0x221A,
+            prop: 0x221D, infin: 0x221E, ang: 0x2220, and: 0x2227, or: 0x2228, cap: 0x2229, cup: 0x222A, 'int': 0x222B,
+            there4: 0x2234, sim: 0x223C, cong: 0x2245, asymp: 0x2248, ne: 0x2260, equiv: 0x2261, le: 0x2264, ge: 0x2265,
+            sub: 0x2282, sup: 0x2283, nsub: 0x2284, sube: 0x2286, supe: 0x2287, oplus: 0x2295, otimes: 0x2297, perp: 0x22A5,
+            sdot: 0x22C5, lceil: 0x2308, rceil: 0x2309, lfloor: 0x230A, rfloor: 0x230B, lang: 0x2329, rang: 0x232A, loz: 0x25CA,
+            spades: 0x2660, clubs: 0x2663, hearts: 0x2665, diams: 0x2666
         }
     };
     // public section
@@ -4137,9 +4526,9 @@
          * @param  {[type]} o   [description]
          * @return {[type]}     [description]
          */
-        multireplace : function (cnt, o, _i) {
-            for (_i in o) {
-                cnt = cnt.replace(o[_i], _i);
+        multireplace : function (cnt, o) {
+            for (var i in o) {
+                cnt = cnt.replace(o[i], i);
             }
             return cnt;
         },
@@ -4154,7 +4543,7 @@
         padme : function (val, el, pos, len) {
             var l = val.length;
             len = len || 2;
-            pos = pos ||'post';
+            pos = pos || 'post';
             if (len <= l) {
                 return val;
             }
@@ -4172,7 +4561,7 @@
          * http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
          */
         regEscape : function (str) {
-            return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+            return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
         },
         /**
          * [ description]
@@ -4181,7 +4570,7 @@
          * @return {[type]}     [description]
          */
         repeat : function (str, n) {
-            return new Array(n+1).join(str);
+            return new Array(n + 1).join(str);
         },
         /** 
          * [ description]
@@ -4204,14 +4593,14 @@
          * 
          */
         replaceall : function (tpl, obj, start, end, fb) {
-            start || (start = '%');
-            end || (end = '%');
+            if (!start) {start = '%'; }
+            if (!end) {end = '%'; }
             //start = this.regEscape(start);
             //end = this.regEscape(end);
             var reg = new RegExp(start + '([A-z0-9-_]*)' + end, 'g'),
                 straight = true,
                 str, tmp;
-            fb = fb || false;
+            //fb = fb || false;
             while (straight) {
                 if (!(tpl.match(reg))) {
                     return tpl;
@@ -4219,21 +4608,21 @@
                 tpl = tpl.replace(reg, function (str, $1) {
                     switch (true) {
                         // 
-                        case typeof obj === 'function' :
-                            // avoid silly infiloops
-                            tmp = obj($1);
-                            return (tmp !== start + $1 + end) ? obj($1)  : $1;
-                        break;
+                    case typeof obj === 'function' :
+                        // avoid silly infiloops
+                        tmp = obj($1);
+                        return (tmp !== start + $1 + end) ? obj($1)  : $1;
                         // the label matches a obj literal element
                         // use it
-                        case $1 in obj : return obj[$1]; break;
+                    case $1 in obj :
+                        return obj[$1];
                         // not a function and not found in literal
                         // use fallback if passed or get back the placeholder
                         // switching off before returning
-                        default:
-                            straight = false;
-                            return fb || start + $1 + end;    
-                        break;
+                    default:
+                        straight = false;
+                        return fb || start + $1 + end;
+    
                     }
                 });
             }
@@ -4282,7 +4671,7 @@
                 l = str.length;
             while (i < l) {
                 out.push(str.charCodeAt(i));
-                i += 1;   
+                i += 1;
             }
             return out;
         },
@@ -4305,11 +4694,10 @@
          * [UnescapeEntities description]
          * @param {[type]} str [description]
          */
-        UnescapeEntities : function (str){ 
-            var self = this;
+        UnescapeEntities : function (str) {
             return str.replace(/&(.+?);/g,
-                function(str, ent){
-                    return String.fromCharCode( ent[0] !== '#' ? _.string.entities[ent] : ent[1] === 'x' ? parseInt(ent.substr(2), 16): parseInt(ent.substr(1), 10) );
+                function (str, ent) {
+                    return String.fromCharCode(ent[0] !== '#' ? _.string.entities[ent] : ent[1] === 'x' ? parseInt(ent.substr(2), 16): parseInt(ent.substr(1), 10));
                 }
             );
         },
@@ -4317,15 +4705,15 @@
          * [EscapeEntities description]
          * @param {[type]} str [description]
          */
-        EscapeEntities : function (str){
+        EscapeEntities : function (str) {
             return str.replace(/[^\x20-\x7E]/g,
-                function(str) {
-                    return _.string.charToEntity[str] ? '&'+ _.string.charToEntity[str]+';' : str;
+                function (str) {
+                    return _.string.charToEntity[str] ? '&' + _.string.charToEntity[str] + ';' : str;
                 }
             );
         }
     };
-    for ( var entityName in _.string.entities ){
+    for (var entityName in _.string.entities ) {
         _.string.charToEntity[String.fromCharCode(_.string.entities[entityName])] = entityName;
     }
     //-----------------------------------------------------------------------------
@@ -4338,13 +4726,12 @@
      */
     _.object = {
         /**
-         * [walkout description]
+         * [map description]
          * @param  {[type]}   o  [description]
          * @param  {Function} fn [description]
          * @return {[type]}      [description]
          */
-        walkout : function (o, fn) {
-            "use strict";
+        map : function (o, fn) {
             var ret = '', j;
             for (j in o) {
                 if (o.hasOwnProperty(j)) {
@@ -4358,6 +4745,7 @@
      * [object description]
      * @type {Object}
      */
+    
     JMVC.object = {
         /**
          * Clones an object
@@ -4366,7 +4754,6 @@
          * @returns cloned Object
          */
         clone : function (obj) {
-            "use strict";
             var temp,
                 key;
             if (obj === null || typeof obj !== 'object') {
@@ -4389,10 +4776,9 @@
          * @return {[type]}      [description]
          */
         compare : function (obj1, obj2, ret, i) {
-            "use strict";
-            (ret == undefined) && (ret = true);
+            if (typeof ret === 'undefined') {ret = true; }
             if (!ret) {return 0; }
-            if (obj1+'' != obj2+'') {
+            if (obj1 + '' !== obj2 + '') {
                 return false;
             }
             for (i in obj1) {
@@ -4412,8 +4798,7 @@
          * @return {[type]}        [description]
          */
         contains : function (obj, field) {
-            "use strict";
-            return (typeof obj === 'object' && filed in obj);
+            return (typeof obj === 'object' && field in obj);
         },
         /**
          * [ description]
@@ -4422,7 +4807,6 @@
          * @return {[type]}     [description]
          */
         extend : function (o, ext) {
-            "use strict";
             var obj = this.clone(o), j;
             for (j in ext) {
                 if (ext.hasOwnProperty(j) && !(j in obj)) {
@@ -4438,8 +4822,19 @@
          * @return {[type]}      [description]
          */
         jCompare : function (obj1, obj2) {
-            "use strict";
             return JSON.stringify(obj1) === JSON.stringify(obj2);
+        },
+        /**
+         * [keys description]
+         * @param  {[type]} obj [description]
+         * @return {[type]}     [description]
+         */
+        keys : function (obj) {
+            var res = [], i;
+            for (i in obj) {
+                res.push(i);
+            }
+            return res;
         },
         /**
          * [ description]
@@ -4447,8 +4842,7 @@
          * @return {[type]}   [description]
          */
         toAttr : function (obj) {
-            "use strict";
-            return _.object.walkout(obj, function (o, i) {
+            return _.object.map(obj, function (o, i) {
                 return ' ' + i + (o[i] ? '="' + o[i] + '"' : '');
             });
         },
@@ -4458,26 +4852,24 @@
          * @return {[type]}   [description]
          */
         toCss : function (obj, straight) {
-            "use strict";
-            return _.object.walkout(obj, function (ob, i) {
-                    return !!straight ?
-                        i + '{' + ob[i] + '} '
-                        :
-                        i + ' {' + _.object.walkout(ob[i], 
-                            function (o, j) {
-                                return j + ':' + o[j] + ';';
-                            }
-                        ) + '} ';
+            return _.object.map(obj, function (ob, i) {
+                return !!straight ?
+                    i + '{' + ob[i] + '} '
+                :
+                    i + ' {' + _.object.map(ob[i],
+                        function (o, j) {
+                            return j + ':' + o[j] + ';';
+                        }
+                    ) + '} ';
             });
-        },  
+        },
         /**
          * [ description]
          * @param  {[type]} o [description]
          * @return {[type]}   [description]
          */
         toQs : function (obj) {
-            "use strict";
-            return _.object.walkout(obj, function (o, i, r) {
+            return _.object.map(obj, function (o, i, r) {
                 return (r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i]);
             });
         },
@@ -4487,11 +4879,22 @@
          * @return {[type]}     [description]
          */
         toStr : function (obj) {
-            "use strict";
-            return _.object.walkout(obj, function (o, i) {
+            return _.object.map(obj, function (o, i) {
                 return i + ':' + o[i] + ';';
             });
-        }
+        },
+        /**
+         * [values description]
+         * @param  {[type]} obj [description]
+         * @return {[type]}     [description]
+         */
+        values : function (obj) {
+            var res = [], i;
+            for (i in obj) {
+                res.push(obj[i]);
+            }
+            return res;
+        },
     };
     //-----------------------------------------------------------------------------
     /*--------------
@@ -4517,14 +4920,16 @@
             return str.match(_.match.rex.url);
         },
         alfa : function (str, min, max) {
-            max && (min > max) && (max = min);
+            if (max && min > max) {
+                max = min;
+            }
             return str.match(new RegExp('^[A-z\s]' + (~~min ? '{' + min + ',' + (~~max ? max : '') + '}' : '*') + '$'));
         },
         alfanum : function (an) {
             return an.match(_.match.rex.alfanum);
         },
         floatnum : function (fn) {
-            return (fn+'').match(_.match.rex.floatnum);
+            return (fn + '').match(_.match.rex.floatnum);
         }
     };
     //-----------------------------------------------------------------------------
@@ -4556,8 +4961,12 @@
             i += 1;
         }
     }
-    JMVC.p.lang && JMVC.cookie.set('lang', JMVC.p.lang);
-    W.JMVCshut || JMVC.render();
+    if (JMVC.p.lang) {
+        JMVC.cookie.set('lang', JMVC.p.lang);
+    }
+    if (!W.JMVCshut) {
+        JMVC.render();
+    }
     //-----------------------------------------------------------------------------
     /**
      * [onerror description]
@@ -4566,8 +4975,8 @@
      * @param  {[type]} lineNumber [description]
      * @return {[type]}            [description]
      */
-    JMVC.W.onerror = function(errorMsg, url, lineNumber) {
+    JMVC.W.onerror = function (errorMsg, url, lineNumber) {
         JMVC.debug("Uncaught error " + errorMsg + " in " + url + ", lines " + lineNumber);
     };
     //-----------------------------------------------------------------------------
-}(this);
+})(this);
