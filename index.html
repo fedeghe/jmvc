@@ -3,7 +3,7 @@ The basic jmvc lib can be found at 			: http://www.jmvc.org/app/jmvc.js
 full code of this minisite can be found at 	: https://github.com/fedeghe/jmvc
 -->
 <!DOCTYPE html>
-<html>
+<html manifest="/cache.manifest">
 <head>
 	<meta charset="UTF-8">
 	<meta name="copyright" content="&copy; 2013 Federico Ghedina">
@@ -13,10 +13,11 @@ full code of this minisite can be found at 	: https://github.com/fedeghe/jmvc
 	<meta name="fragment" content="!">
 	<title>JMVC : pure javascript MVC</title>
 	<link rel="stylesheet" type="text/css" href="/media/css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="/media/css/core/jmvc.css" />
 </head>
 <body>
 	<div style="text-align: center;margin-top:50px"><img src="/media/img/spinner.gif"/></div>
 	<!-- <script>var JMVCshut = true;</script> -->
-	<script src="/app/jmvc.min.js" data-params="{langs:['en', 'nl', 'de', 'jp', 'it']}" id="jmvcscript"></script>
+	<script src="/app/jmvc.min.js" data-params="{langs:['en', 'de', 'jp', 'it', 'nl']}" id="jmvcscript"></script>
 </body>
 </html>
