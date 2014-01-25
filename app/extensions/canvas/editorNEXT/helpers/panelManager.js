@@ -60,6 +60,7 @@ JMVC.canvas.Editor.getPanelManager = function (instance) {
         commandsNodes = {};
 
     JMVC.Channel('canvaseditor').sub('UNDOREDO_EVENT', function (topic, elem, status) {
+
         JMVC.dom.removeClass(commandsNodes[elem], ['active','unactive']);
         JMVC.dom.addClass(commandsNodes[elem], status ? 'active' : 'unactive');
     });
@@ -200,14 +201,12 @@ JMVC.canvas.Editor.getPanelManager = function (instance) {
             exportManager.bind();
 
             JMVC.events.bind(sections, 'click', function (e) {
-                
-                var trg = this, //JMVC.events.eventTarget(e),
+
+                var trg = this,// JMVC.events.eventTarget(e),
                     trgPos = JMVC.css.getPosition(trg),
                     trgWidth = parseInt(JMVC.css.getComputedStyle(trg, 'width'), 10),
                     trgHeight = parseInt(JMVC.css.getComputedStyle(trg, 'height'), 10);
  
-                // console.debug(trg); 
-
                 // break if is unactive
                 if (JMVC.dom.hasClass(trg, 'unactive')) {
                     return false;
