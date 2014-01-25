@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.3.1 (rev. 2)
+ * @version :  3.3.1 (rev. 3)
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *         glued with 34 files on 25/1/2014 at 17:47:34
+ *         glued with 34 files on 25/1/2014 at 19:36:32
  *
  * All rights reserved.
  *
@@ -58,7 +58,7 @@
                 JMVC_VERSION = '3.3.1',
                 //
                 // review (vars.json)
-                JMVC_REVIEW = '2',
+                JMVC_REVIEW = '3',
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -3120,6 +3120,7 @@
          * @type {Object}
          */
         nodeidMap : {},
+        disabledRightClick : false,
         /**
          * function used to get back node from id
          * @param  {[type]} id [description]
@@ -3253,7 +3254,7 @@
             var nodeid = _.events.nodeid(el),
                 index, tmp, l;
             try {
-                k = _.events.bindings[evnt][nodeid];
+                var k = _.events.bindings[evnt][nodeid];
             } catch (e) {
                 //JMVC.debug(evnt + ': binding not found');
                 return false;
@@ -3275,6 +3276,7 @@
             JMVC.W.exp = _.events.bindings;
             index = JMVC.array.find(_.events.bindings[evnt][nodeid], cb);
             
+    
             if (index === -1) {
                 return false;
             }
@@ -3365,10 +3367,12 @@
          * @return {[type]} [description]
          */
         disableRightClick : function () {
+            if (_.events.disabledRightClick) {return false;}
+            _.events.disabledRightClick = true;
             var self = this;
             JMVC.dom.attr(JMVC.WD.body, 'oncontextmenu', 'return false');
             this.bind(JMVC.WD, 'mousedown', function (e) {
-                if (e.button === 2) {
+                if (~~(e.button) === 2) {
                     self.preventDefault(e);
                     return false;
                 }
@@ -3400,8 +3404,7 @@
          */
         eventTarget : function (e) {
             e = e ? e : JMVC.W.event;
-            //var targetElement = e.currentTarget || (typeof e.target !== 'undefined') ? e.target : e.srcElement;
-            var targetElement = e.currentTarget ? e.currentTarget : (typeof e.target !== 'undefined') ? e.target : e.srcElement;
+            var targetElement = e.currentTarget || (typeof e.target !== 'undefined') ? e.target : e.srcElement;
             if (!targetElement) {
                 return false;
             }
@@ -3427,6 +3430,7 @@
          * @return {[type]}      [description]
          */
         free : function (node, evnt) {
+            node = node || JMVC.WD;
             if (typeof evnt === 'undefined') {
                 for (var j in _.events.bindings) {
                     this.free(node, j);
@@ -3481,7 +3485,7 @@
                         function (j) {
                             WD.body.style.opacity = j;
                             WD.body.style.filter = 'alpha(opacity=' + (j * 100) + ')';
-                            if (j > top || isNaN(j)) {
+                            if (j >= top || isNaN(j)) {
                                 WD.body.style.opacity = 1;
                                 WD.body.style.filter = 'alpha(opacity=' + 100 + ')';
                                 //W.clearTimeout(to);
@@ -3523,7 +3527,8 @@
         onRight : function (el, f) {
             this.disableRightClick();
             this.bind(el, 'mousedown', function (e) {
-                if (e.button === 2) {
+    
+                if (~~(e.button) === 2) {
                     f.call(el, e);
                 }
             });
