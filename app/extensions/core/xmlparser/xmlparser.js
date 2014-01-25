@@ -16,7 +16,7 @@ JMVC.extend('xmlparser', {
 			this.xmlDoc = false;
 
 			if (JMVC.W.DOMParser) {
-				parser=new DOMParser();
+				parser = new DOMParser();
 				xmlDoc = parser.parseFromString(txt, "text/xml");
 			} else { // IE
 				xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
