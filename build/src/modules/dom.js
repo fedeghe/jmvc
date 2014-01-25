@@ -68,15 +68,18 @@ JMVC.dom = {
         if (!elem) {
             return '';
         }
+        if (!('nodeType' in elem)) {
+            return false;
+        }
+        if (elem.nodeType === 3 || elem.nodeType === 8) {
+            return undefined;
+        }
+
         var attrs = false,
             l = false,
             i = 0,
             result,
             is_obj = false;
-        try {k = elem.nodeType; } catch (e) {
-            return false;
-        }
-        if (elem.nodeType === 3 || elem.nodeType === 8) {return 'undefined'; }
 
         is_obj = JMVC.util.isObject(name);
         
