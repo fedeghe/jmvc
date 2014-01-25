@@ -1,14 +1,19 @@
 JMVC.controllers['404'] = function () {
-	
-	"use strict";
-	
-	this.action_msg = function () {		
-
+	'use strict';
+	this.action_msg = function () {
 		var seconds2redirection = 5,
 			V404 = JMVC.getView('core/404'),
 			d = new Date(),
+			format = '%Y%/%m%/%d% %H%:%i%:%s%',
 			data = {
-				date :  d.getFullYear() + '/' + d.getMonth() + '/' + d.getDay() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds(),
+				date : JMVC.string.replaceall(format, {
+					Y : d.getFullYear(),
+					m : 1 + d.getMonth(),
+					d : d.getDay(),
+					H : d.getHours(),
+					i : d.getMinutes(),
+					s : d.getSeconds()
+				}),
 				url : JMVC.WD.referrer,
 				agent : JMVC.W.navigator.userAgent,
 				secToRedir : seconds2redirection
