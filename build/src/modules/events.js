@@ -318,13 +318,15 @@ JMVC.events = {
      */
     eventTarget : function (e) {
         e = e ? e : JMVC.W.event;
-        var targetElement = e.currentTarget || (typeof e.target !== 'undefined') ? e.target : e.srcElement;
+        //var targetElement = e.currentTarget || (typeof e.target !== 'undefined') ? e.target : e.srcElement;
+        var targetElement = e.currentTarget ? e.currentTarget : (typeof e.target !== 'undefined') ? e.target : e.srcElement;
         if (!targetElement) {
             return false;
         }
-        while (targetElement.nodeType === 3 && targetElement.parentNode !== null) {
+        while (targetElement.nodeType == 3 && targetElement.parentNode !== null) {
             targetElement = targetElement.parentNode;
         }
+        
         return targetElement;
     },
     /**
