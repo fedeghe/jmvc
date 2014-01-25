@@ -25,7 +25,8 @@
      //
     "predef" : [
         "JMVC",
-        "ActiveXObject"
+        "ActiveXObject",
+        "google"
     ],
      
      
@@ -50,11 +51,11 @@
     "eqeqeq" :      true,  // Require triple equals i.e. `===`.
     "eqnull" :      false, // Tolerate use of `== null`.
     "evil" :        true,  // Tolerate use of `eval`.
-    "expr" :        false, // Tolerate `ExpressionStatement` as Programs.
+    "expr" :        true, // Tolerate `ExpressionStatement` as Programs.
     "forin" :       false, // Tolerate `for in` loops without `hasOwnPrototype`.
     "immed" :       true,  // Require immediate invocations to be wrapped in parens e.g. `( function(){}() );`
     "latedef" :     true,  // Prohipit variable use before definition.
-    "loopfunc" :    true, // Allow functions to be defined within loops.
+    "loopfunc" :    true,  // Allow functions to be defined within loops.
     "noarg" :       true,  // Prohibit use of `arguments.caller` and `arguments.callee`.
     "regexp" :      true,  // Prohibit `.` and `[^...]` in regular expressions.
     "regexdash" :   false, // Tolerate unescaped last dash i.e. `[-...]`.
@@ -74,7 +75,14 @@
     "plusplus" :    false, // Prohibit use of `++` & `--`.
     "sub" :         false, // Tolerate all forms of subscript notation besides dot notation e.g. `dict['key']` instead of `dict.key`.
     "trailing" :    true,  // Prohibit trailing whitespaces.
-    "white" :       true, // Check against strict whitespace and indentation rules.
-    "indent" :      4      // Specify indentation spacing
+    "white" :       true, // Check against strict whitespace and indentation rules. (hei Doug!)
+    "indent" :      4,     // Specify indentation spacing
+
+
+    "freeze" :      true,  // This options prohibits overwriting prototypes of native objects such as Array, Date and so on.
+    "maxdepth" :    6,     // 
+    "maxstatements" : 50,
+    "maxcomplexity" : 10
+
 
 }
