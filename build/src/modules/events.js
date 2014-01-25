@@ -38,6 +38,7 @@ _.events = {
      * @type {Object}
      */
     nodeidMap : {},
+    disabledRightClick : false,
     /**
      * function used to get back node from id
      * @param  {[type]} id [description]
@@ -171,7 +172,7 @@ _.events = {
         var nodeid = _.events.nodeid(el),
             index, tmp, l;
         try {
-            k = _.events.bindings[evnt][nodeid];
+            var k = _.events.bindings[evnt][nodeid];
         } catch (e) {
             //JMVC.debug(evnt + ': binding not found');
             return false;
@@ -193,6 +194,7 @@ _.events = {
         JMVC.W.exp = _.events.bindings;
         index = JMVC.array.find(_.events.bindings[evnt][nodeid], cb);
         
+
         if (index === -1) {
             return false;
         }
@@ -283,10 +285,12 @@ JMVC.events = {
      * @return {[type]} [description]
      */
     disableRightClick : function () {
+        if (_.events.disabledRightClick) {return false;}
+        _.events.disabledRightClick = true;
         var self = this;
         JMVC.dom.attr(JMVC.WD.body, 'oncontextmenu', 'return false');
         this.bind(JMVC.WD, 'mousedown', function (e) {
-            if (e.button === 2) {
+            if (~~(e.button) === 2) {
                 self.preventDefault(e);
                 return false;
             }
@@ -318,8 +322,7 @@ JMVC.events = {
      */
     eventTarget : function (e) {
         e = e ? e : JMVC.W.event;
-        //var targetElement = e.currentTarget || (typeof e.target !== 'undefined') ? e.target : e.srcElement;
-        var targetElement = e.currentTarget ? e.currentTarget : (typeof e.target !== 'undefined') ? e.target : e.srcElement;
+        var targetElement = e.currentTarget || (typeof e.target !== 'undefined') ? e.target : e.srcElement;
         if (!targetElement) {
             return false;
         }
@@ -345,6 +348,7 @@ JMVC.events = {
      * @return {[type]}      [description]
      */
     free : function (node, evnt) {
+        node = node || JMVC.WD;
         if (typeof evnt === 'undefined') {
             for (var j in _.events.bindings) {
                 this.free(node, j);
@@ -399,7 +403,7 @@ JMVC.events = {
                     function (j) {
                         WD.body.style.opacity = j;
                         WD.body.style.filter = 'alpha(opacity=' + (j * 100) + ')';
-                        if (j > top || isNaN(j)) {
+                        if (j >= top || isNaN(j)) {
                             WD.body.style.opacity = 1;
                             WD.body.style.filter = 'alpha(opacity=' + 100 + ')';
                             //W.clearTimeout(to);
@@ -441,7 +445,8 @@ JMVC.events = {
     onRight : function (el, f) {
         this.disableRightClick();
         this.bind(el, 'mousedown', function (e) {
-            if (e.button === 2) {
+
+            if (~~(e.button) === 2) {
                 f.call(el, e);
             }
         });
