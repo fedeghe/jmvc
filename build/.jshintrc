@@ -29,7 +29,6 @@
         "Parser","Pipe","Event","Promise","Errors","Channel","Extension","FunctionQueue","Modules","preload","hooks",
         "defaultlang","currentlang","time_begin","undef","getmode", 
         "W","WD","WDL",
-        "i","j","k","l",
         "_",
         "ActiveXObject"
     ],
@@ -56,7 +55,7 @@
     "eqeqeq" :      true,  // Require triple equals i.e. `===`.
     "eqnull" :      false, // Tolerate use of `== null`.
     "evil" :        true,  // Tolerate use of `eval`.
-    "expr" :        false, // Tolerate `ExpressionStatement` as Programs.
+    "expr" :        true, // Tolerate `ExpressionStatement` as Programs.
     "forin" :       false, // Tolerate `for in` loops without `hasOwnPrototype`.
     "immed" :       true,  // Require immediate invocations to be wrapped in parens e.g. `( function(){}() );`
     "latedef" :     true,  // Prohipit variable use before definition.
