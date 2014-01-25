@@ -135,8 +135,8 @@ JMVC.extend('core.color', {
 				return p;
 			}
 			 
-			var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-			var p = 2 * l - q;
+			var q = l < 0.5 ? l * (1 + s) : l + s - l * s,
+				p = 2 * l - q;
 			 
 			r = hue2rgb(p, q, h + 1/3);
 			g = hue2rgb(p, q, h);
@@ -212,10 +212,8 @@ JMVC.extend('core.color', {
 		 
 		return [~~(r * 255), ~~(g * 255), ~~(b * 255)];
 	},
-	////////////////
-	///
-	///
-	//http://codeitdown.com/hsl-vs-hsb-vs-hsv/
+
+	// http://codeitdown.com/hsl-vs-hsb-vs-hsv/
 	hsv2hsl : function (hsv){
 		// determine the lightness in the range [0,100]
 		var l = (2 - hsv.s / 100) * hsv.v / 2;
@@ -231,6 +229,7 @@ JMVC.extend('core.color', {
 		if (isNaN(hsl.s)) hsl.s = 0;
 		return hsl;
 	},
+
 	hsl2hsv : function (hsl){
 		// determine the brightness in the range [0,100]
 		var v = hsl.l + hsl.s * (hsl.l < 50 ? hsl.l * 2 : 200 - hsl.l * 2) / 200;
@@ -246,7 +245,6 @@ JMVC.extend('core.color', {
 		if (isNaN(hsv.s)) hsv.s = 0;
 		return hsv;
 	},
-
 
 	test2col : function (rgb1, rgb2) {
 		var m = Math,
