@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.3.1 (rev. 1)
+ * @version :  3.3.1 (rev. 2)
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *         glued with 34 files on 25/1/2014 at 16:53:31
+ *         glued with 34 files on 25/1/2014 at 17:47:34
  *
  * All rights reserved.
  *
@@ -58,7 +58,7 @@
                 JMVC_VERSION = '3.3.1',
                 //
                 // review (vars.json)
-                JMVC_REVIEW = '1',
+                JMVC_REVIEW = '2',
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -2522,15 +2522,18 @@
             if (!elem) {
                 return '';
             }
+            if (!('nodeType' in elem)) {
+                return false;
+            }
+            if (elem.nodeType === 3 || elem.nodeType === 8) {
+                return undefined;
+            }
+    
             var attrs = false,
                 l = false,
                 i = 0,
                 result,
                 is_obj = false;
-            try {k = elem.nodeType; } catch (e) {
-                return false;
-            }
-            if (elem.nodeType === 3 || elem.nodeType === 8) {return 'undefined'; }
     
             is_obj = JMVC.util.isObject(name);
             
@@ -3397,13 +3400,15 @@
          */
         eventTarget : function (e) {
             e = e ? e : JMVC.W.event;
-            var targetElement = e.currentTarget || (typeof e.target !== 'undefined') ? e.target : e.srcElement;
+            //var targetElement = e.currentTarget || (typeof e.target !== 'undefined') ? e.target : e.srcElement;
+            var targetElement = e.currentTarget ? e.currentTarget : (typeof e.target !== 'undefined') ? e.target : e.srcElement;
             if (!targetElement) {
                 return false;
             }
-            while (targetElement.nodeType === 3 && targetElement.parentNode !== null) {
+            while (targetElement.nodeType == 3 && targetElement.parentNode !== null) {
                 targetElement = targetElement.parentNode;
             }
+            
             return targetElement;
         },
         /**
