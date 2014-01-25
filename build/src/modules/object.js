@@ -15,9 +15,7 @@ _.object = {
     map : function (o, fn) {
         var ret = '', j;
         for (j in o) {
-            if (o.hasOwnProperty(j)) {
-                ret += fn(o, j, ret);
-            }
+            o.hasOwnProperty(j) && (ret += fn(o, j, ret));
         }
         return ret;
     }
@@ -42,9 +40,7 @@ JMVC.object = {
         }
         temp = obj.constructor();
         for (key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                temp[key] = this.clone(obj[key]);
-            }
+            obj.hasOwnProperty(key) && (temp[key] = this.clone(obj[key]));
         }
         return temp;
     },
@@ -90,9 +86,9 @@ JMVC.object = {
     extend : function (o, ext) {
         var obj = this.clone(o), j;
         for (j in ext) {
-            if (ext.hasOwnProperty(j) && !(j in obj)) {
-                obj[j] = ext[j];
-            }
+            ext.hasOwnProperty(j) &&
+            !(j in obj) &&
+            (obj[j] = ext[j]);
         }
         return obj;
     },

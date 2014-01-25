@@ -128,12 +128,8 @@ $JMVC = {
      * @return {[type]}     [description]
      */
     xdoc : function (ext) {
-        if (!('elements' in JMVC.xdoc)) {
-            JMVC.xdoc.elements = {};
-        }
-        if (!('core/xdoc/xdoc' in $JMVC.extensions)) {
-            $JMVC.require('core/xdoc/xdoc');
-        }
+        !('elements' in JMVC.xdoc) && (JMVC.xdoc.elements = {});
+        !('core/xdoc/xdoc' in $JMVC.extensions) && $JMVC.require('core/xdoc/xdoc');
         if (!(ext in JMVC.xdoc.elements)) {
             try {
                 JMVC.io.ajcall(

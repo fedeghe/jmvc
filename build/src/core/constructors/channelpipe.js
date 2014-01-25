@@ -86,9 +86,7 @@ Channel = (function () {
                 return this;
             }
             for (null; i < l; i += 1) {
-                if (ts[i] in this.topic2cbs) {
-                    this.topic2cbs[ts[i]] = [];
-                }
+                ts[i] in this.topic2cbs && (this.topic2cbs[ts[i]] = []);
             }
             return this;
         }

@@ -81,9 +81,7 @@ JMVC.head = {
                 } else {
                     style.appendChild(rules);
                 }
-                if (idn) {
-                    JMVC.dom.attr(style, 'id', idn);
-                }
+                idn && JMVC.dom.attr(style, 'id', idn);
                 head.appendChild(style);
             } else {
                 /* get css content, async */
@@ -99,9 +97,7 @@ JMVC.head = {
                     } else {
                         style.appendChild(rules);
                     }
-                    if (idn) {
-                        JMVC.dom.attr(style, 'id', idn);
-                    }
+                    idn && JMVC.dom.attr(style, 'id', idn);
                     head.appendChild(style);
                     //
                 }, postmode, sync);
@@ -144,9 +140,9 @@ JMVC.head = {
      */
     'goto' : function (cnt, act, prms) {
         var path = [];
-        if (cnt) {path.push(cnt); }
-        if (act) {path.push(act); }
-        if (prms) {path.push(prms); }
+        cnt && path.push(cnt);
+        act && path.push(act);
+        prms && path.push(prms);
         
         WD.location.href = JMVC.vars.baseurl + JMVC.US + path.join(JMVC.US);
     },
@@ -178,9 +174,7 @@ JMVC.head = {
             'jquery' : 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js',
             'jsapi' : 'https://www.google.com/jsapi'
         };
-        if (l in libs) {
-            this.addscript(libs[l]);
-        }
+        l in libs && this.addscript(libs[l]);
     },
     /**
      * [link description]

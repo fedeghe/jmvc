@@ -120,9 +120,7 @@ jmvc = {
         (function (t, o) {
             var j;
             for (j in o) {
-                if (o.hasOwnProperty(j) && t[j] === undefined) {
-                    t[j] = o[j];
-                }
+                o.hasOwnProperty(j) && t[j] === undefined && (t[j] = o[j]);
             }
         })(trg, obj);
         //
@@ -155,9 +153,8 @@ jmvc = {
         }
         //
         // need to do this because of the special case when a c_prepath is used
-        if (type === 'controller') {
-            path_absolute += $JMVC.c_prepath;
-        }
+        type === 'controller' && (path_absolute += $JMVC.c_prepath);
+
         path_absolute += (path ? path + US : '') + name;
         t = t.match(/(view|model|controller|interface)/);
         if (!t || t[0] !== type) {
@@ -227,9 +224,7 @@ jmvc = {
             for (i in hooks[hookname]) {
                 dyn = hooks[hookname][i].apply(null, dyn);
                 //be sure is an array for next one
-                if (!(dyn instanceof Array)) {
-                    dyn = [dyn];
-                }
+                !(dyn instanceof Array) && (dyn = [dyn]);
             }
         }
         return dyn;
@@ -317,9 +312,7 @@ jmvc = {
             i = 0,
             l = lng.length;
         while (i < l) {
-            if (!JMVC.i18n[lng[i]]) {
-                JMVC.i18n[lng[i]] = true;
-            }
+            !JMVC.i18n[lng[i]] && (JMVC.i18n[lng[i]] = true);
             i += 1;
         }
     },
@@ -364,8 +357,8 @@ jmvc = {
                 els = str.split(chr),
                 l = els.length,
                 ret;
-            if (typeof ctx === undef) {ctx = W; }
-            if (typeof obj === undef) {obj = {}; }
+            typeof ctx === undef && (ctx = W);
+            typeof obj === undef && (obj = {});
             //
             if (!ctx[els[0]]) {
                 ctx[els[0]] = (l === 1) ? obj : {};
@@ -506,43 +499,42 @@ jmvc = {
             // BEFORE HOOKS?
             // 
             // @global hook
-            if ('before' in ctrl && typeof ctrl.before === 'function') {
-                ctrl.before($JMVC.p);
-            }
+            'before' in ctrl && typeof ctrl.before === 'function' &&
+            (ctrl.before($JMVC.p));
             //
             // @action hook
-            if ('before_' + $JMVC.a in ctrl && typeof ctrl['before_' + $JMVC.a] === 'function') {
-                ctrl['before_' + $JMVC.a]($JMVC.p);
-            }
+            'before_' + $JMVC.a in ctrl && typeof ctrl['before_' + $JMVC.a] === 'function' &&
+            (ctrl['before_' + $JMVC.a]($JMVC.p));
             /***************************/
             // REAL ACTION
             // check actual action
             if ('action_' + $JMVC.a in ctrl && typeof ctrl['action_' + $JMVC.a] === 'function') {
+
                 ctrl['action_' + $JMVC.a]($JMVC.p);
+
             } else if ('action' in ctrl && typeof ctrl.action === 'function') {
 
                 ctrl.action($JMVC.a, $JMVC.p, $JMVC.p);
+
             } else if ($JMVC.a.toLowerCase() !== JMVC_DEFAULT.action) {
+
                 WDL.replace(US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a);
+
             }
 
             /***************************/
             // AFTER HOOKS?
             //
             // @action hook 
-            if ('after_' + $JMVC.a in ctrl && typeof ctrl['after_' + $JMVC.a] === 'function') {
-                ctrl['after_' + $JMVC.a]($JMVC.p);
-            }
+            'after_' + $JMVC.a in ctrl && typeof ctrl['after_' + $JMVC.a] === 'function' &&
+            (ctrl['after_' + $JMVC.a]($JMVC.p));
             //
             // @global hook
-            if ('after' in ctrl && typeof ctrl.after === 'function') {
-                ctrl.after($JMVC.p);
-            }
+            'after' in ctrl && typeof ctrl.after === 'function' &&
+            (ctrl.after($JMVC.p));
             //////////////////////////
         } else {
-            if ($JMVC.c.toLowerCase() !== JMVC_DEFAULT.controller) {
-                WDL.replace(US + '404' + US + 'msg' + US + 'cnt' + US + $JMVC.c);
-            }
+            $JMVC.c.toLowerCase() !== JMVC_DEFAULT.controller && WDL.replace(US + '404' + US + 'msg' + US + 'cnt' + US + $JMVC.c);
         }
         if (cback && typeof cback === 'function') {
             cback.call($JMVC);
@@ -588,9 +580,7 @@ jmvc = {
                         s.type = 'text/javascript';
                         s.src = path;
                         head.appendChild(s);
-                        if (getmode === 'scriptghost') {
-                            head.removeChild(s);
-                        }
+                        getmode === 'scriptghost' && head.removeChild(s);
                     }
 
                     $JMVC.extensions[arg[i]] = arg[i];
@@ -654,16 +644,12 @@ jmvc = {
                         jmvc.jeval(res);
                         jmvc.model_inherit($JMVC[type + 's'][name]);
                         o = new $JMVC.models[name]();
-                        if (params) {
-                            $JMVC.models[name].apply(o, params);
-                        }
+                        params && $JMVC.models[name].apply(o, params);
                         o.vars = {};
                         ret = o;
                         break;
                     case 'interface':
-                        if (!(name in JMVC.interfaces)) {
-                            jmvc.jeval(res);
-                        }
+                        !(name in JMVC.interfaces) && jmvc.jeval(res);
                         break;
                     }
                 },

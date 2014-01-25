@@ -139,9 +139,7 @@ Parser = {
                 // will do the rest
                 if (register !== false) {
                     for (k in register) {
-                        if (register.hasOwnProperty(k)) {
-                            myview.set(k, register[k]);
-                        }
+                        register.hasOwnProperty(k) && myview.set(k, register[k]);
                     }
                 }
                 //
@@ -151,9 +149,7 @@ Parser = {
                 tmp1 = true;
                 while (tmp1) {
                     tmp1 = new RegExp(RX.pattvar, 'gm').exec(myview.content);
-                    if (tmp1) {
-                        myview.content = myview.content.replace('$' + tmp1[1] + '$', myview.get(tmp1[1]));
-                    }
+                    tmp1 && (myview.content = myview.content.replace('$' + tmp1[1] + '$', myview.get(tmp1[1])));
                 }
                 //
                 // now the whole view
@@ -164,9 +160,8 @@ Parser = {
         }
         // now $JMVC.vars parse
         for (j in $JMVC.vars) {
-            if ($JMVC.vars.hasOwnProperty(j)) {
-                cont = cont.replace(new RegExp("\\$" + j + "\\$", 'g'), $JMVC.vars[j]);
-            }
+            $JMVC.vars.hasOwnProperty(j) &&
+            (cont = cont.replace(new RegExp('\\$' + j + '\\$', 'g'), $JMVC.vars[j]));
         }
         //
         // use Resig microtemplating function on final content

@@ -1,6 +1,6 @@
 JMVC.controllers.api = function () {
 
-	"use strict";
+	'use strict';
 
 	this.action_index = function () {
 		JMVC.require(
@@ -14,20 +14,20 @@ JMVC.controllers.api = function () {
 		);
 		JMVC.events.loadify(500);
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/core/api.css', true, false);// parsed
-		JMVC.head.favicon("/media/favicon.ico");
+		JMVC.head.favicon('/media/favicon.ico');
 		
 		var main  = JMVC.getView('vacuum'),
 			doc_tpl = JMVC.getView('api/doctpl'),
 			apintro = JMVC.getView('api/apintro'),
 			func_model = JMVC.getModel('api/function'),
-			field_model = JMVC.getModel('api/field'),
+			//field_model = JMVC.getModel('api/field'),
 			tab_ext = new JMVC.tabs.tab(/*'o'*/),
 			tabs_inner = {},
 			sections = [
-				'jmvc', 'constructors'/*, 'errors'*/, 'model', 'view'
-				, 'controller', 'dom', 'events', 'head'
-				, 'io', 'array', 'object', 'string'
-				, 'util', 'match'
+				'jmvc', 'constructors', 'model', 'view',
+				'controller', 'dom', 'events', 'head',
+				'io', 'array', 'object', 'string',
+				'util', 'match'
 			];
 			
 			
@@ -68,7 +68,7 @@ JMVC.controllers.api = function () {
 							sample = 'no sample code given yet';
 
 							if (section['function'][i].params.param instanceof Array) {
-								for (t=0, len = section['function'][i].params.param.length; t < len; t += 1) {
+								for (t = 0, len = section['function'][i].params.param.length; t < len; t += 1) {
 									section['function'][i].params.param[t]['@attributes'].default && (default_param_val = section['function'][i].params.param[t]['@attributes'].default);
 
 									params += '<label>' +
@@ -77,6 +77,7 @@ JMVC.controllers.api = function () {
 										section['function'][i].params.param[t]['#text'] +
 										(default_param_val ? '&nbsp;(default: ' + default_param_val + ')' : '') +
 									'<br />';
+
 									default_param_val = false;
 								}
 							} else {
@@ -91,7 +92,7 @@ JMVC.controllers.api = function () {
 
 
 							func_model.set('parameters', params);
-							!!sample && func_model.set('sample', sample);
+							sample && func_model.set('sample', sample);
 							func_model.set('returns', section['function'][i].returns['#text']);
 							tabs_inner[strsection].add(
 								section['function'][i].signature['@attributes'].name,
@@ -109,12 +110,12 @@ JMVC.controllers.api = function () {
 						
 						
 						/* reset params */
-						params ='';
+						params = '';
 						sample = 'no sample code';
 						testlink = section['function'].testlink ? section['function'].testlink['#text'] : false;
 
 						if (section['function'].params.param instanceof Array) {
-							for(t = 0, len = section['function'].params.param.length; t < len; t += 1) {
+							for (t = 0, len = section['function'].params.param.length; t < len; t += 1) {
 								params += '<label>' + section['function'].params.param[t]['@attributes'].name + '</label> : ' + section['function'].params.param[t]['#text'] + '<br />';
 							}
 						} else {
@@ -126,12 +127,8 @@ JMVC.controllers.api = function () {
 						
 						func_model.set('testlink', testlink ? '<a href="' + JMVC.vars.baseurl + JMVC.US + testlink + '">test</a>' : false);
 						
-
-
 						func_model.set('parameters', params);
 						
-
-
 						!!sample && func_model.set('sample', sample);
 						func_model.set('returns', section['function'].returns['#text']);
 						tabs_inner[strsection].add(
@@ -139,11 +136,8 @@ JMVC.controllers.api = function () {
 							doc_tpl.reset().parse(func_model).content
 						);
 					}
-
 				};
 
-			
-			
 			JMVC.each(sections, function (t) {
 				var y;
 				parser.pointer(parser.xmlDoc.getElementsByTagName(t)[0]);
@@ -153,8 +147,8 @@ JMVC.controllers.api = function () {
 				add_all(y, t);
 			});
 			
-			main.setFromUrl('nome', 'Guest');	
-			
+			main.setFromUrl('nome', 'Guest');
+
 		}, false);
 		
 		apintro.set('postmessage', 'Thank You');
@@ -178,8 +172,6 @@ JMVC.controllers.api = function () {
 			}, 0);
 
 			JMVC.tabs.render();
-
-		});	
+		});
 	};
-	
-}
+};

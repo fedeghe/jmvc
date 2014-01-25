@@ -160,9 +160,7 @@ JMVC.dom = {
             att;
         attrs = attrs || {};
         for (att in attrs) {
-            if (attrs.hasOwnProperty(att)) {
-                node.setAttribute(String(att),  String(attrs[att]));
-            }
+            attrs.hasOwnProperty(att) && node.setAttribute(String(att),  String(attrs[att]));
         }
         if (typeof inner !== 'undefined') {
             if (inner.hasOwnProperty('nodeType') && inner.nodeType === 1) {
@@ -271,9 +269,7 @@ JMVC.dom = {
             i = 0,
             l = els.length;
         for (null; i < l; i += 1) {
-            if (re.test(els[i].className)) {
-                a.push(els[i]);
-            }
+            re.test(els[i].className) && a.push(els[i]);
         }
         return a;
     },
@@ -329,8 +325,8 @@ JMVC.dom = {
                 node = node.offsetParent;
             }
         } else {
-            if (node.x) {res.x += node.x; }
-            if (node.y) {res.y += node.y; }
+            node.x && (res.x += node.x);
+            node.y && (res.y += node.y);
         }
         return res;
     },
@@ -482,9 +478,7 @@ JMVC.dom = {
      */
     preloadImage : function (src, fn) {
         var i = new W.Image();
-        if (typeof fn === 'function') {
-            i.onload = fn(i);
-        }
+        typeof fn === 'function' && (i.onload = fn(i));
         i.src = src;
         return i;
     },
@@ -518,14 +512,11 @@ JMVC.dom = {
             return false;
         }
 
-        if (afterFreeMem) {
-            JMVC.events.free(el);
-        }
+        afterFreeMem && JMVC.events.free(el);
 
         var parent;
-        if (typeof el === 'string') {
-            el = this.find(el);
-        }
+        typeof el === 'string' && (el = this.find(el));
+
         if (JMVC.util.isArray(el)) {
             for (var i  = 0, l = el.length; i < l; i++) {
                 this.remove(el[i]);
@@ -576,9 +567,7 @@ JMVC.dom = {
         var display = coming.style.display;
         coming.style.display = 'none';
         this.insertAfter(coming, going);
-        if (this.remove(going)) {
-            coming.style.display = display;
-        }
+        this.remove(going) && (coming.style.display = display);
     },
     /**
      * [ description]
@@ -590,9 +579,7 @@ JMVC.dom = {
     switchClass : function (el, oldclass, newclass) {
         if (this.hasClass(el, oldclass)) {
             this.removeClass(el, oldclass);
-            if (!this.hasClass(el, newclass)) {
-                this.addClass(el, newclass);
-            }
+            !this.hasClass(el, newclass) && this.addClass(el, newclass);
         }
         return el;
     },

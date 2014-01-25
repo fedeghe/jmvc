@@ -21,9 +21,7 @@ _.io = {
                     xhr = new W.ActiveXObject(IEfuckIds[i]);
                 } catch (e2) {continue; }
             }
-            if (!xhr) {
-                JMVC.debug('No way to initialize XHR');
-            }
+            !xhr && JMVC.debug('No way to initialize XHR');
         }
         JMVC.gc(IEfuckIds, i, len);
         return xhr;
@@ -109,14 +107,10 @@ _.io = {
             return true;
         };
         xhr.onerror = function () {
-            if (cb_error) {
-                cb_error.apply(null, arguments);
-            }
+            cb_error && cb_error.apply(null, arguments);
         };
         xhr.onabort = function () {
-            if (cb_abort) {
-                cb_abort.apply(null, arguments);
-            }
+            cb_abort && cb_abort.apply(null, arguments);
         };
         //open request
         xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri, sync);

@@ -145,9 +145,7 @@ JMVC.array = {
     remove : function (arr, item) {
         var i = arr.length;
         while (i--) {
-            if (arr[i] === item) {
-                arr.splice(i, 1);
-            }
+            arr[i] === item && arr.splice(i, 1);
         }
     },
     /**
@@ -156,7 +154,9 @@ JMVC.array = {
      * @return {[type]}     [description]
      */
     shuffle : function (arr) {
-        return arr.sort(function () {return 0.5 - Math.random(); });
+        return arr.sort(function () {
+            return 0.5 - Math.random();
+        });
     },
     /**
      * [sum description]

@@ -96,12 +96,9 @@ _.events = {
 
         function store(el, evnt, cb) {
             var nid = _.events.nodeid(el);
-            if (!(evnt in _.events.bindings)) {
-                _.events.bindings[evnt] = {};
-            }
-            if (!(nid in _.events.bindings[evnt])) {
-                _.events.bindings[evnt][nid] = [];
-            }
+            !(evnt in _.events.bindings) && (_.events.bindings[evnt] = {});
+
+            !(nid in _.events.bindings[evnt]) && (_.events.bindings[evnt][nid] = []);
             //store for unbinding
             _.events.bindings[evnt][nid].push(cb);
             return true;
@@ -338,9 +335,7 @@ JMVC.events = {
      */
     fire : function (el, evnt) {
         var evt = el[evnt];
-        if (typeof evt === 'function') {
-            el[evnt]();
-        }
+        typeof evt === 'function' && (el[evnt]());
     },
     /**
      * [free description]

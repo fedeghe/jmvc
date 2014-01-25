@@ -14,9 +14,7 @@ FunctionQueue.prototype.run = function () {
         f;
     while (i < l) {
         f = this.queue[i++];
-        if (! (args instanceof Array)) {
-            args = [args];
-        }
+        !(args instanceof Array) && (args = [args]);
         args = f.apply(null, args);
     }
     return args;

@@ -27,9 +27,8 @@ dispatched = (function () {
         len = 0,
         baseurl = WDL.protocol + US + US + WDL.hostname;
     // maybe is the case to load testsuite
-    if (els[0].match(/test_/)) {
-        Modules.push('testsuite');
-    }
+    els[0].match(/test_/) && Modules.push('testsuite');
+
     //
     controller = els.shift() || JMVC_DEFAULT.controller;
     //
@@ -56,9 +55,7 @@ dispatched = (function () {
         for (i = 0, len = els.length; i < len; i += 1) {
             lab_val = els[i].split('=');
             // do not override extra path params
-            if (!params[lab_val[0]]) {
-                params[lab_val[0]] = lab_val[1];
-            }
+            !params[lab_val[0]] && (params[lab_val[0]] = lab_val[1]);
         }
     }
     //

@@ -162,12 +162,8 @@ JMVC.css = {
         if (_.css.opera) {
             return  JMVC.W.getComputedStyle(el, null).getPropertyValue(styleProperty);
         }
-        var computedStyle = null;
-        if (typeof el.currentStyle !== 'undefined') {
-            computedStyle = el.currentStyle;
-        } else {
-            computedStyle = JMVC.WD.defaultView.getComputedStyle(el, null);
-        }
+        var computedStyle = typeof el.currentStyle !== 'undefined' ? el.currentStyle : JMVC.WD.defaultView.getComputedStyle(el, null);
+        
         //return computedStyle[_.css.css_propertymap[styleProperty] || styleProperty]; 
         return computedStyle[_.css.css2js_rule(styleProperty)];
     },
@@ -182,7 +178,6 @@ JMVC.css = {
             do {
                 curleft += el.offsetLeft;
                 curtop += el.offsetTop;
-
                 el = el.offsetParent;
             } while (el);
 
@@ -204,18 +199,6 @@ JMVC.css = {
         'table{border-collapse:collapse;border-spacing:0;}';
         JMVC.head.addstyle(style, true, true);
     },
-/*
-	json2css : function (json) {
-		var out = '',
-			i;
-		for (i in json) {
-			if (json.hasOwnProperty(i)) {
-				out += i + '{' + json[i] + '}' + "\n";
-			}
-		}
-		return out;
-	},
-*/
     clearer : JMVC.dom.create('br', {'class' : 'clearer'})
 };
 

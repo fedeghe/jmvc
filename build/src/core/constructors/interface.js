@@ -21,18 +21,16 @@ function checkInterface(f) {
  * @param {[type]} a    [description]
  */
 Interface = function (name, a) {
-    var i, l;
+    var i = 0,
+        l;
     this.name = name;
     this.mthds = [];
     if (!(a instanceof Array)) {
         throw new Error('An array of strings must be passed to the Interface constructor');
     }
-    i = 0;
     l = a.length;
     for (null; i < l; i += 1) {
-        if (typeof a[i] === 'string') {
-            this.mthds.push(a[i]);
-        }
+        typeof a[i] === 'string' && (this.mthds.push(a[i]));
         console.debug(checkInterface(a[i]));
     }
 };

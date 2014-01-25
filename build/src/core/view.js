@@ -29,16 +29,14 @@ View.prototype.parse = function (obj) {
     if (!!this.content) {
         if (obj) {
             for (j in obj.vars) {
-                if (obj.vars.hasOwnProperty(j)) {
-                    this.content = this.content.replace(new RegExp('\\$' + j + '\\$', 'g'), obj.get(j) || '');
-                }
+                obj.vars.hasOwnProperty(j) &&
+                (this.content = this.content.replace(new RegExp('\\$' + j + '\\$', 'g'), obj.get(j) || ''));
             }
         }
         // now jmvc parse vars
         for (j in $JMVC.vars) {
-            if ($JMVC.vars.hasOwnProperty(j)) {
-                this.content = this.content.replace(new RegExp('\\$' + j + '\\$', 'gm'), $JMVC.vars[j] || '');
-            }
+            $JMVC.vars.hasOwnProperty(j) &&
+            (this.content = this.content.replace(new RegExp('\\$' + j + '\\$', 'gm'), $JMVC.vars[j] || ''));
         }
     }
     // allow chain
@@ -114,9 +112,7 @@ View.prototype.render = function (pars) {
         trg,
         may_trg;
     //let pars be the callback function
-    if (typeof pars === 'function') {
-        cback = pars;
-    }
+    typeof pars === 'function' && (cback = pars);
     // look for / substitute  vars
     // in the view (these belongs to the view)
     //
@@ -154,9 +150,7 @@ View.prototype.render = function (pars) {
             jmvc.hook_check('onAfterRender', [that.content]);
             //
             // may be a callback? 
-            if (cback) {
-                cback.apply(this, argz || []);
-            }
+            cback && cback.apply(this, argz || []);
             //trigger end of render queue
             $JMVC.events.endRender();
         });
@@ -166,9 +160,7 @@ View.prototype.render = function (pars) {
         may_trg = target ? $JMVC.dom.find(target) : false;
         trg = may_trg || WD.body;
         $JMVC.dom.html(trg, that.content);
-        if (cback) {
-            cback.apply(this, !!argz ? argz : []);
-        }
+        cback && cback.apply(this, !!argz ? argz : []);
     }
     // allow chain
     return this;
@@ -198,9 +190,8 @@ View.prototype.set = Model.prototype.set = Controller.prototype.set = function (
         break;
     case 'object':
         for (i in vname) {
-            if (vname.hasOwnProperty(i) && (!this.vars[i] || vval || force)) {
-                this.vars[i] = vname[i];
-            }
+            vname.hasOwnProperty(i) && (!this.vars[i] || vval || force) &&
+            (this.vars[i] = vname[i]);
         }
         break;
     }
@@ -212,7 +203,7 @@ View.prototype.set = Model.prototype.set = Controller.prototype.set = function (
  * @return {[type]}   [description]
  */
 View.prototype.del = Model.prototype.del = Controller.prototype.del = function (n) {
-    if (!!this.vars[n]) {this.vars[n] = null; }
+    !!this.vars[n] && (this.vars[n] = null);
     return this;
 };
 //////////////////////

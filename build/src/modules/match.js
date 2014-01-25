@@ -21,9 +21,7 @@ JMVC.match = {
         return str.match(_.match.rex.url);
     },
     alfa : function (str, min, max) {
-        if (max && min > max) {
-            max = min;
-        }
+        max && min > max && (max = min);
         return str.match(new RegExp('^[A-z\s]' + (~~min ? '{' + min + ',' + (~~max ? max : '') + '}' : '*') + '$'));
     },
     alfanum : function (an) {

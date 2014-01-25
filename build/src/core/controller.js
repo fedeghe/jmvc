@@ -22,14 +22,12 @@ Controller.prototype.index = function () {
  */
 Controller.prototype.addRoutes = function (name, val) {
     var j;
-    if (typeof name === 'string') {
-        this.jmvc_routes[name] = val;
-    }
+    
+    typeof name === 'string' && (this.jmvc_routes[name] = val);
+
     if (typeof name === 'object') {
         for (j in name) {
-            if (name.hasOwnProperty(j)) {
-                this.addRoutes(j, name[j]);
-            }
+            name.hasOwnProperty(j) && this.addRoutes(j, name[j]);
         }
     }
 };
