@@ -1,6 +1,8 @@
 google993844ec39359f3c.html
 sub.php
 /srv/config.json
-/tags/*
-/script/*
 /build/node_modules
+project.properties
+tags
+script
+nbproject
