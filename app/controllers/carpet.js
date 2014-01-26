@@ -1,5 +1,5 @@
 JMVC.controllers.carpet = function () {
-	"use strict";
+	'use strict';
 	/* default action */
 	this.action_index = function () {
 
@@ -45,11 +45,11 @@ JMVC.controllers.carpet = function () {
 		this.action_index(function () {
 			//console.debug(that);
 			var jmap = that.get('jmap');
-				jmap.beforeAdd(function (i) {console.debug('adding ID: ' + i); });
-				jmap.afterAdd(function (i) {console.debug('added ID: ' + i); });
-				jmap.beforeRemove(function (i) {console.debug('removing ID: ' + i); });
-				jmap.afterRemove(function (i) {console.debug('removed ID: ' + i); });
+			jmap.beforeAdd(function (i) {console.debug('adding ID: ' + i); });
+			jmap.afterAdd(function (i) {console.debug('added ID: ' + i); });
+			jmap.beforeRemove(function (i) {console.debug('removing ID: ' + i); });
+			jmap.afterRemove(function (i) {console.debug('removed ID: ' + i); });
 			console.debug(jmap);
 		});
 	};
-}
+};

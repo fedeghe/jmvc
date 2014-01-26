@@ -1,6 +1,8 @@
 JMVC.controllers.demo = function () {
+
+	'use strict';
 	
-	/* test a route */ 
+	/* test a route */
 	this.addRoutes({
 		'ndl' : 'flag',
 		f : 'flag'
@@ -11,41 +13,40 @@ JMVC.controllers.demo = function () {
 	};
 
 	this.before = function () {
-		this.startController = +new Date;
-
-	}
+		this.startController = JMVC.util.now();
+	};
 
 	this.before_index = this.before_flag = function () {
-		this.startAction = +new Date;	
-	}
+		this.startAction = JMVC.util.now();
+	};
 
 	this.after_index = this.after_flag = function () {
-		this.endAction = +new Date;
-	}
+		this.endAction = JMVC.util.now();
+	};
 
 	this.after = function () {
-		this.endController = +new Date;
+		this.endController = JMVC.util.now();
 		JMVC.debug('Controller Time: ' + ((this.endController - this.startController) || 0));
 		JMVC.debug('Action Time: ' + ((this.endAction - this.startAction) || 0));
 
 		JMVC.events.disableRightClick();
 		
-		JMVC.events.onRight(JMVC.WD, function (){
+		JMVC.events.onRight(JMVC.WD, function () {
 			console.debug('right');
 		});
 		JMVC.debug('disabled right click');
-	}
+	};
 
 
 	this.action_index = function () {
 		JMVC.require(
-			'vendors/google/analytics/analytics'
-			, 'core/responsive/basic/basic'
+			'vendors/google/analytics/analytics',
+			'core/responsive/basic/basic'
 			//, 'affix'
 		);
 		
 		JMVC.events.loadify(500);
-		JMVC.dom.preloadImage(JMVC.vars.baseurl + "/media/img/jmvc_m1.svg");
+		JMVC.dom.preloadImage(JMVC.vars.baseurl + '/media/img/jmvc_m1.svg');
 
 		//var newlogo = JMVC.dom.create('img', {src : JMVC.vars.baseurl + '/media/img/jmvc_m1.svg'});
 
@@ -62,8 +63,8 @@ JMVC.controllers.demo = function () {
 				'Canvas editor (old layout)' : 'canvaseditor?v=1',
 				'6 Divs Cube css3 tranformations ' : 'demo/divrot.js',
 				
-				'Console':'console',
-				'Console atom (fullscreen)':'console/index?fullscreen=true&h=%3Cdiv%20class%3D%22container%22%3E%0A%09%3Cdiv%20class%3D%22wrap%22%3E%0A%09%09%3Cdiv%20class%3D%22circle%20horizontal%20c1%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%09%3Cdiv%20class%3D%22circle%20vertical%20c1%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%09%3Cdiv%20class%3D%22wrap%20r%22%3E%0A%09%09%3Cdiv%20class%3D%22circle%20horizontal%20c2%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%09%3Cdiv%20class%3D%22circle%20vertical%20c2%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%09%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%09%3Cdiv%20class%3D%22circle%20center%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%3C%2Fdiv%3E%0A%0A%0A%0A%0A%0A%0A%0A&j=%2F*%20no%20javascript%20content%20*%2F&c=body%20%7B%0A%20%20background%3A%20%23222%3B%0A%7D%0A.container%20%7B%0A%20%20position%3A%20relative%3B%0A%20%20margin%3A%20auto%3B%0A%20%20width%3A%20250px%3B%0A%7D%0A.wrap%2C%0A.circle%20%7B%0A%20%20-webkit-transition%3A%20-webkit-transform%20500ms%20linear%3B%0A%20%20-webkit-transform-style%3A%20preserve-3d%3B%0A%20%20-moz-transition%3A%20-moz-transform%20500ms%20linear%3B%0A%20%20-moz-transform-style%3A%20preserve-3d%3B%0A%20%20width%3A%20250px%3B%0A%20%20height%3A%20250px%3B%0A%20%20margin%3A%20auto%3B%0A%20%20margin-top%3A%2050px%3B%0A%20%20position%3A%20absolute%3B%0A%7D%0A.circle%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20border%3A%203px%20solid%20%23aaaaaa%3B%0A%20%20border-radius%3A%20250px%3B%0A%20%20margin%3A%20auto%3B%0A%7D%0A.circle.c2%2C%0A.circle.center%20%7B%0A%20%20border%3A%202px%20solid%20%23666666%3B%0A%20%20width%3A%20140px%3B%0A%20%20height%3A%20140px%3B%0A%20%20top%3A%2055px%3B%0A%20%20left%3A%2055px%3B%0A%7D%0A.circle.center%20%7B%0A%20%20background%3A%20%23ffffff%3B%0A%20%20width%3A%2030px%3B%0A%20%20height%3A%2030px%3B%0A%20%20top%3A%20110px%3B%0A%20%20left%3A%20110px%3B%0A%20%20box-shadow%3A%200%200%205px%20%23fff%3B%0A%7D%0A.wrap-electron%20%7B%0A%20%20border%3A%200px%20solid%20%20%23fff%3B%0A%20%20position%3A%20absolute%3B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%20100%25%3B%0A%20%20-webkit-animation%3A%20electron%203s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20electron%203s%20linear%20infinite%3B%0A%7D%0A.electron%20%7B%0A%20%20width%3A%2012px%3B%0A%20%20height%3A%2012px%3B%0A%20%20background%3A%20%23aaaaaa%3B%0A%20%20left%3A%2050%25%3B%0A%20%20margin-left%3A%20-8px%3B%0A%20%20border%3A%20none%3B%0A%20%20top%3A%20-7px%3B%0A%20%20-webkit-transform-origin%3A%2050%25%2050%25%3B%0A%7D%0A.c2%20.wrap-electron%20%7B%0A%20%20-webkit-animation%3A%20electron%202s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20electron%202s%20linear%20infinite%3B%0A%7D%0A.c2%20.electron%20%7B%0A%20%20top%3A%20-6px%3B%0A%7D%0A.wrap%20%7B%0A%20%20border%3A%200px%20solid%20%23aaaaaa%3B%0A%20%20-webkit-animation%3A%20lateral%2015s%20ease-in-out%20infinite%3B%0A%20%20-moz-animation%3A%20lateral%2015s%20ease-in-out%20infinite%3B%0A%7D%0A.wrap.r%20%7B%0A%20%20-webkit-animation%3A%20lateralRevert%208s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20lateralRevert%208s%20linear%20infinite%3B%0A%7D%0A.vertical%20%7B%0A%20%20-webkit-animation%3A%20vertical%208s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20vertical%208s%20linear%20infinite%3B%0A%7D%0A.horizontal%20%7B%0A%20%20-webkit-animation%3A%20horizontalRevert%206s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20horizontalRevert%206s%20linear%20infinite%3B%0A%7D%0A.vertical.c2%20%7B%0A%20%20-webkit-animation%3A%20vertical%204s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20vertical%204s%20linear%20infinite%3B%0A%7D%0A.horizontal.c2%20%7B%0A%20%20-webkit-animation%3A%20horizontalRevert%203s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20horizontalRevert%203s%20linear%20infinite%3B%0A%7D%0A%40-webkit-keyframes%20electron%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20horizontal%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20horizontalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20vertical%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20verticalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20lateral%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20lateralRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20electron%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20horizontal%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20horizontalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20vertical%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20verticalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20lateral%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20lateralRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%7D%0A&l=#preview',
+				'Console' : 'console',
+				'Console atom (fullscreen)' : 'console/index?fullscreen=true&h=%3Cdiv%20class%3D%22container%22%3E%0A%09%3Cdiv%20class%3D%22wrap%22%3E%0A%09%09%3Cdiv%20class%3D%22circle%20horizontal%20c1%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%09%3Cdiv%20class%3D%22circle%20vertical%20c1%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%09%3Cdiv%20class%3D%22wrap%20r%22%3E%0A%09%09%3Cdiv%20class%3D%22circle%20horizontal%20c2%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%09%3Cdiv%20class%3D%22circle%20vertical%20c2%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%09%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%09%3Cdiv%20class%3D%22circle%20center%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%3C%2Fdiv%3E%0A%0A%0A%0A%0A%0A%0A%0A&j=%2F*%20no%20javascript%20content%20*%2F&c=body%20%7B%0A%20%20background%3A%20%23222%3B%0A%7D%0A.container%20%7B%0A%20%20position%3A%20relative%3B%0A%20%20margin%3A%20auto%3B%0A%20%20width%3A%20250px%3B%0A%7D%0A.wrap%2C%0A.circle%20%7B%0A%20%20-webkit-transition%3A%20-webkit-transform%20500ms%20linear%3B%0A%20%20-webkit-transform-style%3A%20preserve-3d%3B%0A%20%20-moz-transition%3A%20-moz-transform%20500ms%20linear%3B%0A%20%20-moz-transform-style%3A%20preserve-3d%3B%0A%20%20width%3A%20250px%3B%0A%20%20height%3A%20250px%3B%0A%20%20margin%3A%20auto%3B%0A%20%20margin-top%3A%2050px%3B%0A%20%20position%3A%20absolute%3B%0A%7D%0A.circle%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20border%3A%203px%20solid%20%23aaaaaa%3B%0A%20%20border-radius%3A%20250px%3B%0A%20%20margin%3A%20auto%3B%0A%7D%0A.circle.c2%2C%0A.circle.center%20%7B%0A%20%20border%3A%202px%20solid%20%23666666%3B%0A%20%20width%3A%20140px%3B%0A%20%20height%3A%20140px%3B%0A%20%20top%3A%2055px%3B%0A%20%20left%3A%2055px%3B%0A%7D%0A.circle.center%20%7B%0A%20%20background%3A%20%23ffffff%3B%0A%20%20width%3A%2030px%3B%0A%20%20height%3A%2030px%3B%0A%20%20top%3A%20110px%3B%0A%20%20left%3A%20110px%3B%0A%20%20box-shadow%3A%200%200%205px%20%23fff%3B%0A%7D%0A.wrap-electron%20%7B%0A%20%20border%3A%200px%20solid%20%20%23fff%3B%0A%20%20position%3A%20absolute%3B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%20100%25%3B%0A%20%20-webkit-animation%3A%20electron%203s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20electron%203s%20linear%20infinite%3B%0A%7D%0A.electron%20%7B%0A%20%20width%3A%2012px%3B%0A%20%20height%3A%2012px%3B%0A%20%20background%3A%20%23aaaaaa%3B%0A%20%20left%3A%2050%25%3B%0A%20%20margin-left%3A%20-8px%3B%0A%20%20border%3A%20none%3B%0A%20%20top%3A%20-7px%3B%0A%20%20-webkit-transform-origin%3A%2050%25%2050%25%3B%0A%7D%0A.c2%20.wrap-electron%20%7B%0A%20%20-webkit-animation%3A%20electron%202s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20electron%202s%20linear%20infinite%3B%0A%7D%0A.c2%20.electron%20%7B%0A%20%20top%3A%20-6px%3B%0A%7D%0A.wrap%20%7B%0A%20%20border%3A%200px%20solid%20%23aaaaaa%3B%0A%20%20-webkit-animation%3A%20lateral%2015s%20ease-in-out%20infinite%3B%0A%20%20-moz-animation%3A%20lateral%2015s%20ease-in-out%20infinite%3B%0A%7D%0A.wrap.r%20%7B%0A%20%20-webkit-animation%3A%20lateralRevert%208s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20lateralRevert%208s%20linear%20infinite%3B%0A%7D%0A.vertical%20%7B%0A%20%20-webkit-animation%3A%20vertical%208s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20vertical%208s%20linear%20infinite%3B%0A%7D%0A.horizontal%20%7B%0A%20%20-webkit-animation%3A%20horizontalRevert%206s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20horizontalRevert%206s%20linear%20infinite%3B%0A%7D%0A.vertical.c2%20%7B%0A%20%20-webkit-animation%3A%20vertical%204s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20vertical%204s%20linear%20infinite%3B%0A%7D%0A.horizontal.c2%20%7B%0A%20%20-webkit-animation%3A%20horizontalRevert%203s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20horizontalRevert%203s%20linear%20infinite%3B%0A%7D%0A%40-webkit-keyframes%20electron%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20horizontal%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20horizontalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20vertical%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20verticalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20lateral%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20lateralRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20electron%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20horizontal%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20horizontalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20vertical%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20verticalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20lateral%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20lateralRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%7D%0A&l=#preview',
 				'Console cs' : 'demo/cs/',
 				'Some widgets' : 'test_widget',
 				'Wcave game' : 'wcave.jmvc',
@@ -107,7 +108,7 @@ JMVC.controllers.demo = function () {
 					'background-color' : '#fff',
 					'color' : '#000',
 					'padding' : '0px 30px',
-					'padding-bottom':'100px',
+					'padding-bottom' : '100px',
 					'border-left' : '50px solid gray'
 				},
 				'ul' : {
@@ -126,11 +127,11 @@ JMVC.controllers.demo = function () {
 					'color' : 'red'
 				},
 				'#samples' : {
-					'background-color':'#ff6600',
-					'font-size':'20px',
-					'line-height':'20px',
-					'padding':'10px',
-					'margin-bottom':'20px'
+					'background-color' : '#ff6600',
+					'font-size' : '20px',
+					'line-height' : '20px',
+					'padding' : '10px',
+					'margin-bottom' : '20px'
 				}
 			},
 			tpl = '<li><a href="%base_url%/%path%">$index$ %label%</a></li>',
@@ -140,8 +141,7 @@ JMVC.controllers.demo = function () {
 		
 		for (i in links) {
 			out += JMVC.string.replaceall(tpl, {'base_url' : bu, 'path' : links[i], 'label' : i});
-		}	
-			
+		}
 		content += '<ul>' + out + '</ul>';
 		content += '<br /><b>* real test</b>';
 		
@@ -155,9 +155,9 @@ JMVC.controllers.demo = function () {
 		});
 
 		v.render(function () {
-			var fromtop = 20;
 			JMVC.head.title('- Foo me a sample -');
 			/*
+			var fromtop = 20;
 			JMVC.affix.add({
 				html:'<strong>Affix</strong><p>Try o scroll, this will stop scrolling at ' + fromtop + 'px from top</p>',
 				init : 68,
@@ -179,9 +179,9 @@ JMVC.controllers.demo = function () {
 	/* test a VIEW*/
 	this.action_view = function () {
 		var v = JMVC.getView('test'),
-			v1= JMVC.factory('view', 'test1'),
-			v2= JMVC.factory('view', 'test2'),
-			v3= v2.clone('test3');
+			v1 = JMVC.factory('view', 'test1'),
+			v2 = JMVC.factory('view', 'test2'),
+			v3 = v2.clone('test3');
 
 		v1.set('result', 'ok1');
 		v2.set('result', 'ok2');
@@ -198,10 +198,10 @@ JMVC.controllers.demo = function () {
 
 
 	/* test some MODELs */
-	this.action_model = function() {
-		var _p1 = JMVC.getModel('xxx/Persona'),
-			_p2 = JMVC.getModel('Persona'),
-			_p3 = JMVC.getModel('Persona2'),
+	this.action_model = function () {
+		var p1 = JMVC.getModel('xxx/Persona'),
+			p2 = JMVC.getModel('Persona'),
+			p3 = JMVC.getModel('Persona2'),
 			tpl,
 			al = '',
 			v = JMVC.getView('vacuum');
@@ -210,15 +210,15 @@ JMVC.controllers.demo = function () {
 		get model instance
 		_p1.set('cognome','Ghedina').set('n',1);
 		*/
-		_p1.set({'cognome' : 'Ghedina', 'n' : 1});/*.set('cognome','Spaceman',true); */
-		_p2.set('cognome', 'Ghedi').set('n', 2);
-		_p3.set('cognome', 'Ghe').set('n', 3);
+		p1.set({'cognome' : 'Ghedina', 'n' : 1});/*.set('cognome','Spaceman',true); */
+		p2.set('cognome', 'Ghedi').set('n', 2);
+		p3.set('cognome', 'Ghe').set('n', 3);
 		
 		/*	console.debug(_p1); */
 		tpl = 'Modello n°%n%: %nome% %cognome%<br />';
-		al += tpl.replace('%n%', _p1.get('n')).replace('%nome%', _p1.name).replace('%cognome%', _p1.get('cognome'));
-		al += tpl.replace('%n%', _p2.get('n')).replace('%nome%', _p2.name).replace('%cognome%', _p2.get('cognome'));
-		al += tpl.replace('%n%', _p3.get('n')).replace('%nome%', _p3.name).replace('%cognome%', _p3.get('cognome'));
+		al += tpl.replace('%n%', p1.get('n')).replace('%nome%', p1.name).replace('%cognome%', p1.get('cognome'));
+		al += tpl.replace('%n%', p2.get('n')).replace('%nome%', p2.name).replace('%cognome%', p2.get('cognome'));
+		al += tpl.replace('%n%', p3.get('n')).replace('%nome%', p3.name).replace('%cognome%', p3.get('cognome'));
 		
 		
 		v.set('content', al);
@@ -233,7 +233,7 @@ JMVC.controllers.demo = function () {
 
 
 
-	this.action_modelviewparse = function() {
+	this.action_modelviewparse = function () {
 		var p = JMVC.getModel('Persona'),
 			v = JMVC.getView('parse');
 		p.set('name', 'Fredrich');
@@ -245,8 +245,8 @@ JMVC.controllers.demo = function () {
 
 
 	/* test a CONTROLLER */
-	this.action_controller = function() {
-		this.set('nome','Federico');
+	this.action_controller = function () {
+		this.set('nome', 'Federico');
 		alert(this.get('nome'));
 	};
 
@@ -254,15 +254,15 @@ JMVC.controllers.demo = function () {
 
 
 
-	this.action_controller2 = function() {
-		this.set('nome','Federico2');
+	this.action_controller2 = function () {
+		this.set('nome', 'Federico2');
 		alert(this.get('nome'));
 	};
 	
 
 
 	/* just to celebrate a better time */
-	this.action_flag = function(p) {
+	this.action_flag = function (p) {
 
 		/* color extension is needed */
 		JMVC.require('core/color/color');
@@ -281,7 +281,7 @@ JMVC.controllers.demo = function () {
 					w : 7,
 					h : 5,
 					strat : function (i) {
-						return (JMVC.array.find([10,16,17,18,24], i) >= 0) ? 'white' : 'red';
+						return (JMVC.array.find([10, 16, 17, 18, 24], i) >= 0) ? 'white' : 'red';
 					}
 				},
 
@@ -297,25 +297,25 @@ JMVC.controllers.demo = function () {
 			links = [],
 			style = {
 				'#links span' : {
-					'font-family':'Verdana, sans-serif',
+					'font-family' : 'Verdana, sans-serif',
 					'font-size' : '10px',
 					color : '#666',
 					margin: '10px 10px;',
 					'text-decoration' : 'none',
-					padding:'5px',
+					padding : '5px',
 					'line-height' : '20px',
 					cursor : 'pointer',
 					'font-weight' : 'bold'
 				},
 				'#links span.active' : {
 					color : '#aaa',
-					'background-color':'#333',
-					'-moz-border-radius-bottomleft':'5px',
-					'-moz-border-radius-bottomright':'5px',
-					'-webkit-border-bottom-left-radius':'5px',
-					'-webkit-border-bottom-right-radius':'5px',
-					'border-bottom-left-radius':'5px',
-					'border-bottom-right-radius':'5px'
+					'background-color' : '#333',
+					'-moz-border-radius-bottomleft' : '5px',
+					'-moz-border-radius-bottomright' : '5px',
+					'-webkit-border-bottom-left-radius' : '5px',
+					'-webkit-border-bottom-right-radius' : '5px',
+					'border-bottom-left-radius' : '5px',
+					'border-bottom-right-radius' : '5px'
 				}
 			};
 
@@ -328,15 +328,15 @@ JMVC.controllers.demo = function () {
 		var v = JMVC.getView('flag'),
 			mode = 'grow',
 			box_size = 1,
-			factor = .8,
+			factor = 0.8,
 			top_fact = 80,
 			els_top = [],
 			i = 0,
 			w = opt.w,
-			h = opt.h
+			h = opt.h,
 			l = w * h,
-			recall = function(ll) {
-				for(var g = 0; g < ll; g++) {
+			recall = function (ll) {
+				for (var g = 0; g < ll; g++) {
 					els_top[g] = JMVC.util.rand(10, top_fact - 5);
 				}
 			},
@@ -355,10 +355,10 @@ JMVC.controllers.demo = function () {
 
 			var basesize = s || box_size,
 				f = document.getElementById('flag'),
-				boxes = [],
-				tmp, j,
+				j,
 				fact,
-				opac = Math.sqrt(basesize / (box_size * top_fact));
+				opac = Math.sqrt(basesize / (box_size * top_fact)),
+				tmp;
 
 			JMVC.css.style(f, {
 				width : (basesize * w) + 'px',
@@ -366,14 +366,14 @@ JMVC.controllers.demo = function () {
 				margin : '0 auto',
 				zoom : 1,
 				opacity : opac,
-				'-ms-filter' : "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + (~~(100 * opac)) + ")",
-				filter : "alpha(opacity=" + (~~(100 * opac)) + ")",
+				'-ms-filter' : 'progid:DXImageTransform.Microsoft.Alpha(Opacity=' + (~~(100 * opac)) + ')',
+				filter : 'alpha(opacity=' + (~~(100 * opac)) + ')',
 				marginTop : basesize + 'px'
 			});
 			
 			j = 0;
 			for (i = 0, l = h * w; i < l; i += 1) {
-				j += 1;					
+				j += 1;
 				tmp = JMVC.dom.create('div', {'style' : 'float:left;width:' + basesize + 'px; height:' + basesize + 'px;', 'class' : 'box'}, '&nbsp;');
 
 				JMVC.dom.append(f, tmp);
@@ -381,21 +381,21 @@ JMVC.controllers.demo = function () {
 				JMVC.css.style(tmp, {
 					'background-color' : (basesize > els_top[i]) ? opt.strat(i) : JMVC.core.color.getRandomColor(true)
 				});
-				if (j % w == 0) {
+				if (j % w === 0) {
 					tmp = JMVC.dom.clearer();
 					JMVC.dom.append(f, tmp);
 				}
 			}
 
-			if (basesize > box_size * top_fact) {				
+			if (basesize > box_size * top_fact) {
 				mode = 'shrink';
 				recall(l);
 			}
 			if (basesize < box_size) {
-				mode = 'grow';					
+				mode = 'grow';
 				recall(l);
-			}				
-			fact = (mode == 'grow') ? factor : -factor;
+			}
+			fact = (mode === 'grow') ? factor : -factor;
 			
 			window.setTimeout(
 				function () {
@@ -411,7 +411,7 @@ JMVC.controllers.demo = function () {
 
 				var os = {},
 					tag;
-				if (j == nation) {os['class'] = 'active'; }
+				if (j === nation) {os['class'] = 'active'; }
 				tag = JMVC.dom.create('span', os, j);
 
 				(function (y, tg) {
@@ -435,7 +435,7 @@ JMVC.controllers.demo = function () {
 	this.action_direct = function () {
 		JMVC.head.title('Crypto image');
 		
-		JMVC.head.addstyle(JMVC.object.toCss({'body' : {'background-color':'black'}}), true, true);
+		JMVC.head.addstyle(JMVC.object.toCss({'body' : {'background-color' : 'black'}}), true, true);
 		JMVC.require('core/lib/crypt/crypt');
 		this.render(
 			'<div style="margin:50px"><span style="color:green;cursor:pointer;font-family:Verdana, sans-serif" id="see">reveal the image</span></div>',
@@ -452,7 +452,7 @@ JMVC.controllers.demo = function () {
 				// 
 				// OR
 				// executing cryp = JMVC.security.crypt(imgdata, 'unsafe'),
-				var cryp = '×ÚĐÃÍÙéòùÿóâúĈçÖÚÿéâçåÚÚéâêÃËďêåçÕîÜêâ÷ÙÚďýæèÕêÞêòûÛÛďğêèċüàêĘÞßÜďēîëåÑëíĉëäÞêéõìüĐðíę÷õßêéóí×ÞñïĉĝøáĐàćëČüāòäïùãÚğĆîČÐÇÚĘèØÚéýçèåüßêĘÚÝÜÙÜĆìÖÞíðĉÚùáĀÜĆîüÍýðĉÚùáĀÜĆîüÍýðĉÚùáĀÜĆîüÍýðĉÚùáĀÜĆîüÍýðĉÚùáĀÜĆîüÍýðĉÚùáĀßÐĝÕÚêëâéÃÚäàåççâÙéĉëÖÚĐíãÕÌêÙðĘçÕÚéýãçåÞÚéòëÕÚÙéâçÕÚÙéâë×ÚďùçèûüáëòĕàÈÐùâĚæÚÙéĈëØÚďñæçċîÞêâ÷ÕÚÙîÚçåâÜéâ÷æÛêñĉóéÞßíÒìüÛđòęìØäÚēĂëÝâÈóęĝæïëØćçÿæÊòĚčûĄãîĉĉíàêėčðýüćóôĕÄçìāÔõØĄÎùÑøÚëăČêùéĉìþçüëïÉĐûýāçăĂøĀĂúßĔĒĉÇëÉČďĊÈþðęåĎÝðßĐÕďÞĂĈóõĒÞðïĔÖďîĆĉóċĖßðąĘ×ďĄĊĊóěĚàðÊĜØďÉĎċôåĞáñßĠÙĐÞĒČôõ×âñïÙÚĐîËčðĊÚ¿íĄÝĖČăÏýĚęÞĊéÈáćĈÇÄèĖ×ÕÌêÙðĘëÕÚďíãçåÞÚéòëÖÚééâçÕÚÙéâë×ÚďùçèûüáëòĕàÈÐùâĚæÞÙéĈë×ÛÙùåèÕüÞêâ÷ÕÚéòÔçÕÞÛéęëÙÛëíęèüãÚýòĊüüêõĊóăÞáîæñæĈúðãéçæĒýėçêòĆôóéüòăöðëĀÑêċúíæĈąòĚčĄäĂýÓôĎĀÍ÷ČôÙëíĂéùÙąãýÒøêïĄČúýêĉĂĂèüāóÊĐđćĂçÈČùĀÇþàĔ×čăèÝĐúćÜĂáĕìđĄèíĔûćìĆâĕĂĕąèăĘĂćĂĊãĕĒęĆèÈĜăćÇĎäĕ×ĝćéÝĠĄĈÜĒåĖìÖĈéíÙąĈìËæĖĂÚĉéăÝĆĈĂÏçĖĒÞĊéÈáćĈÇÄèĖ×ÕÍĈÙìâóÖÚÙñóçČÞÙøĘêÊďĐđĈÚĄæÈØĎęûßçóõöĊĂăòèóÉáàĞùô¿ãèîąĒăčÍìăùÃèÐĕôĝČĀĉ÷ęÕäĂĀĝĘÖĆćëíēčÿČÙéĄîÞÏþýÒēìèĎĉñĈÖÈæĞÕĒáúĄĕèĉāďáôċĞüýĐÛÌĖčãäĞôÝ÷ÐûĖØĕØóÚĠÐěþáÌÙěĒÃÿĒÛ÷ğÌÉĊĖĆÙéýĉĢĄĞÆéýýÙüõèÐßóò÷üäïëí÷ÝãďéÑĈñæøÒĘèåÃĉøõÆĎăČĐęĀđĂïãÖÊćÎþÙÜÞüđôďÛþēÉÝ××õčüüĖÿêúçó÷ĕċÈďêØèÊÉčċíîÄāßġĖčøàîØñøüĒÜüĔÿÊÎÇí÷ÚÞóýóÚþćÍêðăÙÄĂêĘÚÖîÐÉėøČþċïÜđííÌÏĖĄóĂüćĊďØÖßîĢĉÿÍĊæéÚÜÌÐÈøÕđÖĂááõĚ×êÞĠÖđÝēă×ôĚþïþðøđëąăĔĚîàÄòáÒçãüÃáñē×đÉĘêîùĆßúó×äÎÐþÖøąñĐôĖíÞßĆĊììÍñèöĄÝùÄæöĄěĀòßßÙĚèËðĒçùÉāñáĚĔĊÐùíûċêßàÓÑ×îçÏÜĖÖëÊËêēØáĄüùðúìāæĠĒüÉýÝčćĊĎéÑĀïóáĊýĝõùÉĆďØñýĆÈÌē×ĀÙæïàĄęČÏûìçÿãĈþíċûÜĒČĜĂĕûéêđĄēĉÛùúåĠĂáĎùûìÜÿĊûĖõÉÉÞáÕĜÅĒÌÓ÷ĘćĈèàâĀĆßčČòěÉćâĔĖĀìãÎÝĄ×Öâý÷ĕüÆòÍÝïçĆĄĐēĚċæĄÈĘíçîĊčïÌĈÆĉÏûâÞéÚìêÓõãĐĉþòĖÜãÍęĒęăÚĐßÒðÜąčáâîÄÑùĉćÖÚàìþõüöčúøõÛĆąāĝê×čýĐğãýÅÐÝėĒÑÞçòĜĕëÄÎÏęÕĈăÝČĀÒôùÛÎ×ĒûĉĈðØÚÛãÎüÝèðÉÐÜÓčĈäăĂĠãöąÊÐğíÿüÛÚþ÷õêÄČċĒÜćüĆòēðĉÎéĐăöéÒêĢôì¿üăÝđĐÌÞÈğďïĎîÿûčęßüûĕčîčĀåĢúßąĀÐğúĞāĈĈòąĠÙÞÑóæèíþúðâÜúðăàÖĞþãâ÷ñýąĈçÿ×ĊąÿčÝÖôÕßĈôčĚÊÎñēćýĈĊÊĝÕòĉĐïĢĖîÝòæĔøĞÄáĎĀðĞÕÑÃÓìĚåæñĊĉøûÒÙĉæéàçĒîÖûËđÚĜÌÖÈÌÜėĂčßćÈöăđéîîÚĐđëæÚĠĈôûÒêûĚćùÛĆĒĊēáĐßýÚęÄÉÿáĒÙèĉÌęïĚãēéóęďÌăĆòđéëēďüøğøèçóċĈèăĂîâýáĈċĠéûÄÉċċÙđêĊĆüÓïĄăùċÔúÚÚïõÑó÷ýþĘòýÝèéóėĔèÌĐØÐùāčĈßĈĊØêÞđČýÞĉËĕïĐÕēîĒØêÝÝÈöâęîÛÈÿĈòÜÉÇÓãðÍĊÐáÌñëĈðàçĜÛĊëúÓęáĀãēēðĀÎèęðĝĆďúĝ÷ÿöðïþÔüÚëëĠûĐûåÏĕėĔþđîĚçÙąĎĉûÔìÇüæõĄđÞććęÚ÷ÖïĒāêčýĀÐØĔĝËáĊúëĈĈÉĐþÐùċĈČõæÞĂĆĈĂøûøāíéúûĈČÎáĔ×éąĀČóĝĊßüíęĐ÷ýċÙ÷ēþîĆÚĐçÉĎðċèĞýĈĄìĔċĀûÈĜđíÅçëġċûÌÉÙā×òÝđďéóďĆîîĘêøÿĈùÚêĕÝÊçČĈėÉÞĉďċĕáîÙāÙìüãċêäĔĆëûğôòÝàü÷ã×ÈċĈāäĖÝĒÚüØÑÆìïġČïÍäÚÚîČçóĎóĎéĆĒÿÝĘñÊêãēČćĉāÚýċïĆēÃ÷×óêÉÈüĔüßáÍÿÐĖìûÃîđ×ĉčãêÕêÝËÛĞđÕĂçÙØøößáúØđĜÿÈÍĠ÷ÖĆĀÈĕÑĊØđéõđÑçéìà×ê×ÝÎþăØÕćÉėÓßûÛéêôìćéùēÌĠĆÏîčìç÷ÉąØąùõÚãùĕĎÅđąēĂ×ÕéáÞÒĕÖÛĂĖÙÜ×ĈĐďöçîĉČêÐĊăçćĝĆēßÉČĞéÞÊíñĜäçËÌÌēÔĚĊòÃíØēçþèĢïÙčĈĈÞçěăēÏċćĠĆÎÐôÖĒêêÚĜëÝøäÑğÌôáíĎÜêĊÅéÃęďøýéðęėÕćÊýîóęäçđìěúĀĎòĕÐĖÌđÊĊãÑøíëõõđÕáèĚ÷ýċñãàĄĉêóÐĜĔĐÍúéġîðÞćçùìê×đÃàõÜÌïáĢĉċØËæìÔëîñÿàÑçåďßûîçāĆĊëĘÛöċíÞðĘ÷ĄÇûĉĖÿîûÜĐè×ĉßÚòçØĀÉõçïåÎÚî÷Ġ÷äðéãîçċÞĞąòČąĀĒĐćÖăÏċéĘÿÊýþĊ×ĊâßéęĐäÊĉóêĝèóßáòċÇçïòēĊÿčÊĠÑïčÝéöéēëčđěĎĖçæĎðëðčäÎĞÕċìäĎ÷öòÝÚÌĠČđÉãÚÞúÜøäÌĞęñËĉýġïĠĉÛèÿĕČÈüđĘñÚąăîĀĘéĉÑÜĜďîâÚčĘ×ėéđÉêÐíāßûþðĝčæÑÓÚó÷üíîæĀÜàùĉäõÅéáÜđěÇăèčĈèáòÍėÓčÍÏüĖâÜÄÌáĠĈĉéÚãéòĉÈÎĈóðċãæāēëíúúÿêõÖĎëĐÞöčäċêĖçéÕÐúÜďýØÏĂÜìĜăĄäĊÕĒÙĊÿČÚĜÞēÃïĂÑùûæÿČěÕćûĖēþÄÌÌđÒíČÉĒûëĈþîûĕãĜÇóéČùğ×æÛĞďñċĂîČûÿÕÞãïëĞýĊăùĕĐëÚïØĉÙäĀÙìëßÊÎÃàÒõÊúòĖċÚÛþÚÿđĘćËéíÐĎĎēðöùüČåăĚèĎÝÒĀÙĒ÷ÞãČþėüíČđàöďõĐÃöěéąÉùüùëàĎÏôéĚÊÛĂÙĒĒÞÝãïÓčáíĆðĕ÷ÖÉæĚćēíóĂāÙĊąìÍĝđĕĀÌæĝęÕëĉèêÚėÜąòĂîĈĈčúčĒÜöčċĀćçÈÐíéċĐàďïĚĉèÌćÚĚðČëčêēð×îæñęñüÝĉÇöëüØăèù÷ýćĈäēěĘĊñÙòÖöìĂÿĂĒýÅÈĉĂúóÞČÌÝĘêìþÃëÚĀĊċÎþăùÍĄðāĐÑìÎûíÒĞÙçĄČôóíÍúýõčÍàéĊøþÇċíØ÷ĈčÊĎñĊğĀáîĐÒÜÄĀäøę÷ÄÉÊĔÒî÷äčîČßÃċîĎÕùëóąàõĖáċòíôõÆèÇñęÕãĎąÓêÖõñËĐ×ØĀòÿõČčÉáþöûĔċēÉìôßØÊÙĠùÛßĒËĂæĉöäçþÖÚĎÄæõåÖÅđÉáęûèýãĕČíáÎÞùČÞøđéýîÿÌîÈÓėÛÄċà÷ĆéõèĉÜ×ûÕëČĒēØĄæûàéĚèĂćá×ćùÛÿďÑçßÝÏÜđéåþûØĆĒÕÛà÷ìçÕÒèęĂóÉûąĔêğæìÝĂ×ÖÝÝüÓðđüíďĠĂĕ×ëąßéïËÿãÛÌôùìïúîüÊÄÍďøñûÎèĞùĈùçĎïïĚÈĀċüđÖ÷ÛÊîĘğčáÃîĉĔÜÑÐþĘïàáîĜĖéÕßÍĢõĒąĒÛáąĞýëāÿØÑĀîĈñëÿÅÈüĠìĝÜûĎÿČĞÖòÜĒÑėîîéčďîÊÊáðïùĄüđðäØąċÎíÑØäìĈûÐēçìàøĐõûċĈĂãíÕàãĚ÷ýÌĎÌíöñĊåàďìõÍâÝòĐûäąËûØøýĎąĔóĀàëÿÚäóÌÎĊôÑěãèçõôğÃäÇā÷ęÆāĂĝêĠÜĄÙĕĎĎĂãùĠÕČÙËòėċĚäòüóĘĐĄïÏéĘĝýČèċĄ×ÆþĊÛĊýÿďĄûĒċæĐùęóþéíăàĊĎûóýēĘćĂàÎĜÖñăéðČù÷æđßāĊøÍāûáĘñÝÝßÚåĝæăĊýĘïþûÑÛĈĘÊþĄëâčÌóąöćêăĂúÝõěéÑþÿĖòĉĈÏČăÝçóÏČĚÝĆæĉġćþøĄþĢēĚäáÞěíĔåáüčĊøËČÇđñÞõđþĐēĖ×ÏÿØçÙãĉåýæĎĀÛáÜăíÕéÍ×đúÕÒèēñðĎÏąėèßÃðĈðĒðĎĀÐàÚĎåîåòèúÅáæñĄÛĎĆÿÝÐñûĄăàúÜéÚÚÝÕîëĆăčđĠçĄýĔêċĀÚÚĢďçÃÜĀüęďĀÚÎČìéØćāďãìĎĎÎØėúĈìÏċæĉÌÉàĒëô×ÚÐÚąĀĄáÛêõđĂĂĊĜÔĈĆÜÌĕëöāßûõñĝÜçùÚĉòõÌíėñíæîËĒðØçËÝíÙđîÞâùċČþăüÞéÖăâċċÔò÷āìÙĒïìËçëĆñĄñÏĕð÷ąèÇööĀĄáÐĞëĕÖßÊ×ĘèêâÚéðêÄßåØĒýõÜñÛÙÖäĆĀêČðāČąÙòĠèßÍïÕèċéýĜęôċĀĐĖñĚþĂăĠčĖúÞÈþĘĕÖĂåĂéîäßùčċÑÞÐëÚċĊÇíþďæÞøúÌĚöÝîĒëāĘØúêÛĕĂúöñÝċďÝÈÞòÞûĖÕýìĚĎęĄċĄēćðĈĉáÚóęüËÌĢùöåÌÈĜēôÉüĀĢØ×ćĐĉöďðÊÝÞĂèĘÆÑçàĒĀÕìËüďĖåÛĊÚøĖÉàÈøĚċāÝïėĕÕĀÞñĜċðÜçûĀđďĉĎéüČêþçúõíó÷đÐěîĐĆêÚÚèęçàðùėòČćýġíčøđĆòéÜêÉïďÓćÆąĊ÷ĔĉåăāĉõëõĀûāâîäÎÍĚĎðÉóćáñęăÉČĂēĐúâûÓøēøďàïõÑâýĀāäćÜíÌñđĞýëîÝéĖÿĄÇÙđĕõáåċĕûöòæøăĘûÜćĒďôáòĀðñĚçýÙċöÝÞĉçáâéØÑãëîēÿÐÈė×ÖÕäÚĠôč÷ÍĐüëðÙăàĢĔèèíüğêěëĄððÒĕÕąñĊóđÅÜÏõÓüëĈðÙä×ÿÍÝġÐĔçĉûÚÕÛÌÊþĢĐçÌĊÐø×ØÍąçĐúÛÕéĊĀĕîüĎÇěĕýĈïêÜÑđØÚÝęÕêÕÈĆĀěċÌĎÉěÖÛĆÉäÜôćÇèÇđäéČýĎēăĖ¿ßâíĔĊÈÐċĞĔþýäÏďâéăãÛýâîÕÛÍðÙÜċÚÞĂąěäċðėñĞĄčÉĐÒě×ÍíďĆĀöăááĘùßÑÑÛúğØĂÿúåĉëĉÐěĐĔÖÏāěĎÜþÊýġĖçĈĐÐĐĊõâĉìĕĖčêĆâýîéæðĀċèìĆýîĔåĐÕÍáßöčæĒĂġěđÿĉäċïÑÚÜđĢîčîÎĈáÔĈÉäËðďęÄÚÜøèÙäîĂêĒðĆĎđÛĉûßÝËøïçĎàâÙø÷öåéÛêÙÜąāõâüíÈċÚÖĚċàčÝÔċéăĆòěďĉĉÈÓØĎáòÛéð÷ãþçóđćċýďþĈõ÷ÒùéìßüàĎëåÖÉĊÉāìĞĂËÌÜěĔâïÏøÚØĆááęØĖÃÌāÜÖÛÕÚćéÚòÌåÇôđÕÖÍÎÙĐěåæÜĒēýöÍúêùúĀîÃĔùþäçíõóĐčííĂęĐĆēéĠÚÜþåñÜě÷áüìĢĊĐÝÏÈĠòÖþûñÓõùçëðñÕëîçÙëĔÙäßåēďéÞĎâęïÚËćâ×ąēąýÉððğáéãĊČûÕüüÜÚÞèċúĂċĎÿâñĂØ×ČîĆđÓÜĀăÊÓąčÃðčėÙù¿ßòĚÓÚáāĂċÐĎìæËøĉéøèêëÕÕ×āÛõÒĊùďďÝûòĄĎĎĚöčÌëùđãÕċÚþüæÕëĂðğØóüÍĂċâċÅêæėĔďÃÌĀáĂÿüãëìęĔāďëĎĈòõêìÓêØĀćÌčïČÿēðĔĘČĉþèûĖĝ¿ÞăáÙöÚÒĉĜĔÛÉûÍĠÓĞÊÉÿĂ×ĔÌûÌà×ĎöýÐùÐ×âþíĞêûÞãèĀĐñÍăÃöČòþÐÜõóÞĄāã×òĐĂÄČčîÙăËđČðĒÞĂêčĉïíċĐĢØüąÄðñÑÿÖĐûàąõõÎđØĖĝÿĂăĒċöâýÚĊ×ĖÙĂĉÓâČöçáĂåĉõÝÍÚäùąćÈÝĒñàĐÌĘðøÝāçčĘÜêĈìĉěéùïñéċĘêçÑĉöóÕćÙÞÙûûåăöČïÚÜêĒĄöéîĒýĐ÷ąćýêÑÜêáÚĚìîþèïß÷ûÅéíĐêØÚââöâëèÍďęē×äìČĚĘßöÿùòéÿÌãÜïùÿþÊÏĎÑĘāîąôěĎåýĒÝÐéĊïĎĐēĕĊćýðĕþĀäúàøĘÖðĐÙćÝÇÒÚùĕ÷âÝď×ďÑĎÊèñÌĚìãÜÙÚćĄÏÙėïčĄÎÍ×øĘöăÊÝĒđéëåčðñýóĉēúÿÊïßğĚĉùčåëÔĖÌþìĞïþêòÿĖìėúìćôöĈíđíĝó÷ÕÍÃÞåôÕÞòÞęĐÌĊñĢąÞÌîąàÚĐåÛâÝïěČÈÉāđĘëçăğĘÖåÈãē÷ÕëćúÓñċûÜÚĜéÖÅĐþÛäĔÊċíìÌîĈãñàĘĖĂÈüęÙþċÛāĔÔÑăĈéðĚĎÖûìĀãÚËÑāĝĔÞâðÑßđôÉÝäéÕÞÊÎüĊĆòÜñûÝęÕëĈÏëñúÍèèĕĖÕÆąĄÞĄìéÈĐęÚĕëĉàýñďÜÍüìĒėæċĉíð×ÕæþĠĊđÝÄĂĎéíýăðöåđćÉÍĝêĎĉĀâßĕĐĄÄçóÌĊøóČĂíċÊąĀĖċćãïÛù×ëíâèĘù×ÖèïôăčãúÌĚÕĎ¿ÝñøæĊĉûąÙÓĝõĄÿÜăîčĒÃĠÚÕùĊùíćö÷ĊċĞìđÙÝĈýíþèĀÚùĆĒõðĉÚąĞĄÊÌáċċċéÚøèĉáăûĎēÙĆçąđöÛäÛĉĊåø×ÊÊÜãíÊĈĒøêøċÈÚęèċâąÍêØÖÅÞñðãĉÄāĄÞÒĔÿïċĔĔÿÊóĉüØùĎĄĉĐÌĖâîÌØČĒāðßñïïÉèÙėãðäÍîÞĉÚÙÄßöÒĊ¿ñýĉÙýĈĈçėĉî¿ČúÞÌĒÕăãÓéÙüĂÃÙ×ÝêòáġĔñĂæċßåÛêáÑüùÖäĈÊĖøØþÏÝáďç×âćÜøğëÏċċĄđÅñÈđěĚøèČñØýĎčÈďĉ÷÷äćÞÌÛÍúòÜÒ×ÙúúÜî×ùÑäĊćòćÎüĞÒØÌïëþĈøÉÐÐ÷ØÖÇćĀĕÔÿĈÑÎďĒ÷èÏîĞėÞÕăðĒÐçÝâÉğøíāđêõęèÖēăðđþăÄĆÓëĊâĎíñčĒÌĎéāěěÈēÑóôÿĎîòĉĂėÿĎÚĠöęöđĒôėĎÿðêüÑñÜüÜÓ÷ñýÈĎ÷ĎñíßĈúĕĐÚçàùĎĖøĈãċÒíæÏíéîÿéÌĈüÓĠèÜãéâëÃĀãĀĄøĎćæòÐñþĉăá×çØüþûĈěÆèČóõđÿÉÈĖçéÕÄüíÓÑéëĂĞÌĊãÑàÛìø¿éÑíĎö¿ċëáċõçÿêęđþ÷ÎîøíûĂĄûĕĐÕØÌèđùúüËÐáĄČĂìéĒØôçîÞùò÷ùäßéêğÖēîìõùČčñġõĔÉëîĜôċãËùěóĠĊăúğċĖÇĂýġìúĆÎîØĈÕ÷ēćøĎû¿ÈĉóÙèÌíÃðÚúÌèËĒøēăĐÏýěÞÿĊĂÝéîąÝðØÖėêÎòĉąĈúúüùĖïËþäěùõ×ÌÈðĄÑċċĒĒęôÈĒĂÙðĊøçÿØãĔćàçðĖĘčâĄċúÛßĈçùćČâìďøãĘĈÑÍñééÅÉèďØĝÖÍĀàôóÿĊéïěęþĒúđĄëÕăÇéèøÅçüĀĐÑăÄÙČëÞéāäĞĘ×ùßæÜÓĠèæðûïěĊÌÜØéïÍíðĜÓēĎðïėøûøđĈěÙûÄàçøìï¿ñÊğðĔÄĈċďðùÌàÃéÚîÌçćìãëöĂÏĠÙÖÌĐđċÌÙĄÄÞČąìÙþåĖ××íðæýÚó×ąâéÕìãĐÚïĐìùúÇĜæÜĎÒĂàèôĄČúēñċçäĀğĆĝãíÇéæĘÄþÌĎĚĕþâËùåðĆÎÈÓñõĄìðĕĖ÷ëÎúñòđûóÇÿČØâááÿöĝþāíċÙČĎċìđÒðÖáČēċÿĈăÿďÒĎÆĄĆġĈĀÜÛÙöø÷ùÝÎÓĕ÷áčďÞÖėÛąËúčęàĎùòäċûûĈÓçĊîĈþĠïĜÝËîĊÌéãÎíċăĎÌċþÜ÷ĝáÏĀěÖîçĊÊûēÛÖâæëúîÄÿÌčÙüõçĊĉĉòùÿđÝĔĉČĒûðÙêÇċòČîêãÝāĞĎíÄĎĈāèêČĎîāąéØĂčÞÙöúÞìýØðéĂčðæÜØăÍ×ÙćąÍàěãèÍäñúěĠČñâÞćÞÕÞÜüăĔÕćāčîßčĉđó×éċÊþüăÞØÐæČĐĞÃĎăÜñÜÄñÙĜďíãäéÜÖèĄÎß÷ĆĔĄđììÒöÊÉÈéæĐÞĉÛúÔÜéÞÈØČċĈæÜÝĊēíĄÐÝÌĚÞĈÐġęċÝčæēĄĐõčđĕćĠÚëċċÐÕĆĊĄċîüĀëÉêãüċëĂÚÖėéÛÑěĂćāåîîñûßèĆØēìÌýýôíîċćĈÛďúÕíðĒÐÜýÚàĔċÜĂÉĈÛĉÕìÛýĉéĖíčûøĆþêĈăġĉčåĊÇóäùõÎúĀÐçÕìÃęÔĈìþćÛďĔĎéËÞâêÄßíûċĎĈåÉĞöČÙðĉĞĒýĈíąĉ÷ēäąêÜÌùáüăêóØöÌĊĘđïåÑêýúïöÎìĝöĔäČďĢØĊèðæęùĎ¿ñéôčĀÙäđóØè×ÝËáĒÙöíüôăčÉÝòÓöëþĀÑõĒÙĆÉèĜöęØéąĜčĒčāíÝÌÝćüúĜĖċøĉÙÜ×çíéĎÿñėÛċùĒÕðĉòüýÑėæÍÿßĈùÆÎàßĕĝúÍüĞúÑÈċĈğĈğ×îÃùēÖ÷ÒĂġ÷ïÜáéċ÷čùãäĉÑ×èîúčÔēìýßďåìêàËĚÑïäÉĐûòîąćÿðęĜĄáĂïěÕ÷èäčÐĐìæČěęÑíáÉðĒñÊóăóéĔĆñą÷ĊċÕċúüĎĐĊýæĖĂéîüåĒíĝêēðĎ×ĀąÞċĞÌčÇĈÛÛĊòÿąþĝĔöëċìéċ×ąòâĊôóČĐāęøÿ¿ĀÞĎìîýÈîĐēČýĎÏĞêØÇêÚġĔþ¿ÏçáĆØúčÚčêØÄăďÚïôĈðñĀèĕÿĈïïóĚþáËĒÐïêÑÐÚâÜćþèü×üàáñĞòĔõÄÜēäĘÈäĀéĄĔÚóÎÜě×âðúčòçËñÎÜĒøÆÜîġĚĒüăËĠööčČåĖĈ×íðÚÝÖíùÌÙêäĒÆÛÎíäęÍîäěęÙÙÞÐÜãÜéÚïđċçÍçËĎĊđêēđ÷ìčçèñõïđĆûċĒãðąđäóØĕ×ÏâĞěčćèÑëâČÜæíñðĉúìČóÑ×ëúæďóï÷Äčċ÷ĐËāČÝĚñééĂîîêĊÒâàăćĄúúùûğÌÿìĉÖğáÿĒĚĔôáÑüĉąĉÝßčØîòúÌĄÝçċÞĉãğñèąúçÞĄîÉíÿØùç¿ĂäóÐęĆËáøĂÙÙüćáâċúĒĉþĎçĆĐþûïČāčäĘëïëäçĖĄĊÊÐÏùėëøÊþęúúĎäāßĚċāëĆðÚćĄæê×Úđ¹ÌÜĝďęõÿý',	
+				var cryp = '×ÚĐÃÍÙéòùÿóâúĈçÖÚÿéâçåÚÚéâêÃËďêåçÕîÜêâ÷ÙÚďýæèÕêÞêòûÛÛďğêèċüàêĘÞßÜďēîëåÑëíĉëäÞêéõìüĐðíę÷õßêéóí×ÞñïĉĝøáĐàćëČüāòäïùãÚğĆîČÐÇÚĘèØÚéýçèåüßêĘÚÝÜÙÜĆìÖÞíðĉÚùáĀÜĆîüÍýðĉÚùáĀÜĆîüÍýðĉÚùáĀÜĆîüÍýðĉÚùáĀÜĆîüÍýðĉÚùáĀÜĆîüÍýðĉÚùáĀßÐĝÕÚêëâéÃÚäàåççâÙéĉëÖÚĐíãÕÌêÙðĘçÕÚéýãçåÞÚéòëÕÚÙéâçÕÚÙéâë×ÚďùçèûüáëòĕàÈÐùâĚæÚÙéĈëØÚďñæçċîÞêâ÷ÕÚÙîÚçåâÜéâ÷æÛêñĉóéÞßíÒìüÛđòęìØäÚēĂëÝâÈóęĝæïëØćçÿæÊòĚčûĄãîĉĉíàêėčðýüćóôĕÄçìāÔõØĄÎùÑøÚëăČêùéĉìþçüëïÉĐûýāçăĂøĀĂúßĔĒĉÇëÉČďĊÈþðęåĎÝðßĐÕďÞĂĈóõĒÞðïĔÖďîĆĉóċĖßðąĘ×ďĄĊĊóěĚàðÊĜØďÉĎċôåĞáñßĠÙĐÞĒČôõ×âñïÙÚĐîËčðĊÚ¿íĄÝĖČăÏýĚęÞĊéÈáćĈÇÄèĖ×ÕÌêÙðĘëÕÚďíãçåÞÚéòëÖÚééâçÕÚÙéâë×ÚďùçèûüáëòĕàÈÐùâĚæÞÙéĈë×ÛÙùåèÕüÞêâ÷ÕÚéòÔçÕÞÛéęëÙÛëíęèüãÚýòĊüüêõĊóăÞáîæñæĈúðãéçæĒýėçêòĆôóéüòăöðëĀÑêċúíæĈąòĚčĄäĂýÓôĎĀÍ÷ČôÙëíĂéùÙąãýÒøêïĄČúýêĉĂĂèüāóÊĐđćĂçÈČùĀÇþàĔ×čăèÝĐúćÜĂáĕìđĄèíĔûćìĆâĕĂĕąèăĘĂćĂĊãĕĒęĆèÈĜăćÇĎäĕ×ĝćéÝĠĄĈÜĒåĖìÖĈéíÙąĈìËæĖĂÚĉéăÝĆĈĂÏçĖĒÞĊéÈáćĈÇÄèĖ×ÕÍĈÙìâóÖÚÙñóçČÞÙøĘêÊďĐđĈÚĄæÈØĎęûßçóõöĊĂăòèóÉáàĞùô¿ãèîąĒăčÍìăùÃèÐĕôĝČĀĉ÷ęÕäĂĀĝĘÖĆćëíēčÿČÙéĄîÞÏþýÒēìèĎĉñĈÖÈæĞÕĒáúĄĕèĉāďáôċĞüýĐÛÌĖčãäĞôÝ÷ÐûĖØĕØóÚĠÐěþáÌÙěĒÃÿĒÛ÷ğÌÉĊĖĆÙéýĉĢĄĞÆéýýÙüõèÐßóò÷üäïëí÷ÝãďéÑĈñæøÒĘèåÃĉøõÆĎăČĐęĀđĂïãÖÊćÎþÙÜÞüđôďÛþēÉÝ××õčüüĖÿêúçó÷ĕċÈďêØèÊÉčċíîÄāßġĖčøàîØñøüĒÜüĔÿÊÎÇí÷ÚÞóýóÚþćÍêðăÙÄĂêĘÚÖîÐÉėøČþċïÜđííÌÏĖĄóĂüćĊďØÖßîĢĉÿÍĊæéÚÜÌÐÈøÕđÖĂááõĚ×êÞĠÖđÝēă×ôĚþïþðøđëąăĔĚîàÄòáÒçãüÃáñē×đÉĘêîùĆßúó×äÎÐþÖøąñĐôĖíÞßĆĊììÍñèöĄÝùÄæöĄěĀòßßÙĚèËðĒçùÉāñáĚĔĊÐùíûċêßàÓÑ×îçÏÜĖÖëÊËêēØáĄüùðúìāæĠĒüÉýÝčćĊĎéÑĀïóáĊýĝõùÉĆďØñýĆÈÌē×ĀÙæïàĄęČÏûìçÿãĈþíċûÜĒČĜĂĕûéêđĄēĉÛùúåĠĂáĎùûìÜÿĊûĖõÉÉÞáÕĜÅĒÌÓ÷ĘćĈèàâĀĆßčČòěÉćâĔĖĀìãÎÝĄ×Öâý÷ĕüÆòÍÝïçĆĄĐēĚċæĄÈĘíçîĊčïÌĈÆĉÏûâÞéÚìêÓõãĐĉþòĖÜãÍęĒęăÚĐßÒðÜąčáâîÄÑùĉćÖÚàìþõüöčúøõÛĆąāĝê×čýĐğãýÅÐÝėĒÑÞçòĜĕëÄÎÏęÕĈăÝČĀÒôùÛÎ×ĒûĉĈðØÚÛãÎüÝèðÉÐÜÓčĈäăĂĠãöąÊÐğíÿüÛÚþ÷õêÄČċĒÜćüĆòēðĉÎéĐăöéÒêĢôì¿üăÝđĐÌÞÈğďïĎîÿûčęßüûĕčîčĀåĢúßąĀÐğúĞāĈĈòąĠÙÞÑóæèíþúðâÜúðăàÖĞþãâ÷ñýąĈçÿ×ĊąÿčÝÖôÕßĈôčĚÊÎñēćýĈĊÊĝÕòĉĐïĢĖîÝòæĔøĞÄáĎĀðĞÕÑÃÓìĚåæñĊĉøûÒÙĉæéàçĒîÖûËđÚĜÌÖÈÌÜėĂčßćÈöăđéîîÚĐđëæÚĠĈôûÒêûĚćùÛĆĒĊēáĐßýÚęÄÉÿáĒÙèĉÌęïĚãēéóęďÌăĆòđéëēďüøğøèçóċĈèăĂîâýáĈċĠéûÄÉċċÙđêĊĆüÓïĄăùċÔúÚÚïõÑó÷ýþĘòýÝèéóėĔèÌĐØÐùāčĈßĈĊØêÞđČýÞĉËĕïĐÕēîĒØêÝÝÈöâęîÛÈÿĈòÜÉÇÓãðÍĊÐáÌñëĈðàçĜÛĊëúÓęáĀãēēðĀÎèęðĝĆďúĝ÷ÿöðïþÔüÚëëĠûĐûåÏĕėĔþđîĚçÙąĎĉûÔìÇüæõĄđÞććęÚ÷ÖïĒāêčýĀÐØĔĝËáĊúëĈĈÉĐþÐùċĈČõæÞĂĆĈĂøûøāíéúûĈČÎáĔ×éąĀČóĝĊßüíęĐ÷ýċÙ÷ēþîĆÚĐçÉĎðċèĞýĈĄìĔċĀûÈĜđíÅçëġċûÌÉÙā×òÝđďéóďĆîîĘêøÿĈùÚêĕÝÊçČĈėÉÞĉďċĕáîÙāÙìüãċêäĔĆëûğôòÝàü÷ã×ÈċĈāäĖÝĒÚüØÑÆìïġČïÍäÚÚîČçóĎóĎéĆĒÿÝĘñÊêãēČćĉāÚýċïĆēÃ÷×óêÉÈüĔüßáÍÿÐĖìûÃîđ×ĉčãêÕêÝËÛĞđÕĂçÙØøößáúØđĜÿÈÍĠ÷ÖĆĀÈĕÑĊØđéõđÑçéìà×ê×ÝÎþăØÕćÉėÓßûÛéêôìćéùēÌĠĆÏîčìç÷ÉąØąùõÚãùĕĎÅđąēĂ×ÕéáÞÒĕÖÛĂĖÙÜ×ĈĐďöçîĉČêÐĊăçćĝĆēßÉČĞéÞÊíñĜäçËÌÌēÔĚĊòÃíØēçþèĢïÙčĈĈÞçěăēÏċćĠĆÎÐôÖĒêêÚĜëÝøäÑğÌôáíĎÜêĊÅéÃęďøýéðęėÕćÊýîóęäçđìěúĀĎòĕÐĖÌđÊĊãÑøíëõõđÕáèĚ÷ýċñãàĄĉêóÐĜĔĐÍúéġîðÞćçùìê×đÃàõÜÌïáĢĉċØËæìÔëîñÿàÑçåďßûîçāĆĊëĘÛöċíÞðĘ÷ĄÇûĉĖÿîûÜĐè×ĉßÚòçØĀÉõçïåÎÚî÷Ġ÷äðéãîçċÞĞąòČąĀĒĐćÖăÏċéĘÿÊýþĊ×ĊâßéęĐäÊĉóêĝèóßáòċÇçïòēĊÿčÊĠÑïčÝéöéēëčđěĎĖçæĎðëðčäÎĞÕċìäĎ÷öòÝÚÌĠČđÉãÚÞúÜøäÌĞęñËĉýġïĠĉÛèÿĕČÈüđĘñÚąăîĀĘéĉÑÜĜďîâÚčĘ×ėéđÉêÐíāßûþðĝčæÑÓÚó÷üíîæĀÜàùĉäõÅéáÜđěÇăèčĈèáòÍėÓčÍÏüĖâÜÄÌáĠĈĉéÚãéòĉÈÎĈóðċãæāēëíúúÿêõÖĎëĐÞöčäċêĖçéÕÐúÜďýØÏĂÜìĜăĄäĊÕĒÙĊÿČÚĜÞēÃïĂÑùûæÿČěÕćûĖēþÄÌÌđÒíČÉĒûëĈþîûĕãĜÇóéČùğ×æÛĞďñċĂîČûÿÕÞãïëĞýĊăùĕĐëÚïØĉÙäĀÙìëßÊÎÃàÒõÊúòĖċÚÛþÚÿđĘćËéíÐĎĎēðöùüČåăĚèĎÝÒĀÙĒ÷ÞãČþėüíČđàöďõĐÃöěéąÉùüùëàĎÏôéĚÊÛĂÙĒĒÞÝãïÓčáíĆðĕ÷ÖÉæĚćēíóĂāÙĊąìÍĝđĕĀÌæĝęÕëĉèêÚėÜąòĂîĈĈčúčĒÜöčċĀćçÈÐíéċĐàďïĚĉèÌćÚĚðČëčêēð×îæñęñüÝĉÇöëüØăèù÷ýćĈäēěĘĊñÙòÖöìĂÿĂĒýÅÈĉĂúóÞČÌÝĘêìþÃëÚĀĊċÎþăùÍĄðāĐÑìÎûíÒĞÙçĄČôóíÍúýõčÍàéĊøþÇċíØ÷ĈčÊĎñĊğĀáîĐÒÜÄĀäøę÷ÄÉÊĔÒî÷äčîČßÃċîĎÕùëóąàõĖáċòíôõÆèÇñęÕãĎąÓêÖõñËĐ×ØĀòÿõČčÉáþöûĔċēÉìôßØÊÙĠùÛßĒËĂæĉöäçþÖÚĎÄæõåÖÅđÉáęûèýãĕČíáÎÞùČÞøđéýîÿÌîÈÓėÛÄċà÷ĆéõèĉÜ×ûÕëČĒēØĄæûàéĚèĂćá×ćùÛÿďÑçßÝÏÜđéåþûØĆĒÕÛà÷ìçÕÒèęĂóÉûąĔêğæìÝĂ×ÖÝÝüÓðđüíďĠĂĕ×ëąßéïËÿãÛÌôùìïúîüÊÄÍďøñûÎèĞùĈùçĎïïĚÈĀċüđÖ÷ÛÊîĘğčáÃîĉĔÜÑÐþĘïàáîĜĖéÕßÍĢõĒąĒÛáąĞýëāÿØÑĀîĈñëÿÅÈüĠìĝÜûĎÿČĞÖòÜĒÑėîîéčďîÊÊáðïùĄüđðäØąċÎíÑØäìĈûÐēçìàøĐõûċĈĂãíÕàãĚ÷ýÌĎÌíöñĊåàďìõÍâÝòĐûäąËûØøýĎąĔóĀàëÿÚäóÌÎĊôÑěãèçõôğÃäÇā÷ęÆāĂĝêĠÜĄÙĕĎĎĂãùĠÕČÙËòėċĚäòüóĘĐĄïÏéĘĝýČèċĄ×ÆþĊÛĊýÿďĄûĒċæĐùęóþéíăàĊĎûóýēĘćĂàÎĜÖñăéðČù÷æđßāĊøÍāûáĘñÝÝßÚåĝæăĊýĘïþûÑÛĈĘÊþĄëâčÌóąöćêăĂúÝõěéÑþÿĖòĉĈÏČăÝçóÏČĚÝĆæĉġćþøĄþĢēĚäáÞěíĔåáüčĊøËČÇđñÞõđþĐēĖ×ÏÿØçÙãĉåýæĎĀÛáÜăíÕéÍ×đúÕÒèēñðĎÏąėèßÃðĈðĒðĎĀÐàÚĎåîåòèúÅáæñĄÛĎĆÿÝÐñûĄăàúÜéÚÚÝÕîëĆăčđĠçĄýĔêċĀÚÚĢďçÃÜĀüęďĀÚÎČìéØćāďãìĎĎÎØėúĈìÏċæĉÌÉàĒëô×ÚÐÚąĀĄáÛêõđĂĂĊĜÔĈĆÜÌĕëöāßûõñĝÜçùÚĉòõÌíėñíæîËĒðØçËÝíÙđîÞâùċČþăüÞéÖăâċċÔò÷āìÙĒïìËçëĆñĄñÏĕð÷ąèÇööĀĄáÐĞëĕÖßÊ×ĘèêâÚéðêÄßåØĒýõÜñÛÙÖäĆĀêČðāČąÙòĠèßÍïÕèċéýĜęôċĀĐĖñĚþĂăĠčĖúÞÈþĘĕÖĂåĂéîäßùčċÑÞÐëÚċĊÇíþďæÞøúÌĚöÝîĒëāĘØúêÛĕĂúöñÝċďÝÈÞòÞûĖÕýìĚĎęĄċĄēćðĈĉáÚóęüËÌĢùöåÌÈĜēôÉüĀĢØ×ćĐĉöďðÊÝÞĂèĘÆÑçàĒĀÕìËüďĖåÛĊÚøĖÉàÈøĚċāÝïėĕÕĀÞñĜċðÜçûĀđďĉĎéüČêþçúõíó÷đÐěîĐĆêÚÚèęçàðùėòČćýġíčøđĆòéÜêÉïďÓćÆąĊ÷ĔĉåăāĉõëõĀûāâîäÎÍĚĎðÉóćáñęăÉČĂēĐúâûÓøēøďàïõÑâýĀāäćÜíÌñđĞýëîÝéĖÿĄÇÙđĕõáåċĕûöòæøăĘûÜćĒďôáòĀðñĚçýÙċöÝÞĉçáâéØÑãëîēÿÐÈė×ÖÕäÚĠôč÷ÍĐüëðÙăàĢĔèèíüğêěëĄððÒĕÕąñĊóđÅÜÏõÓüëĈðÙä×ÿÍÝġÐĔçĉûÚÕÛÌÊþĢĐçÌĊÐø×ØÍąçĐúÛÕéĊĀĕîüĎÇěĕýĈïêÜÑđØÚÝęÕêÕÈĆĀěċÌĎÉěÖÛĆÉäÜôćÇèÇđäéČýĎēăĖ¿ßâíĔĊÈÐċĞĔþýäÏďâéăãÛýâîÕÛÍðÙÜċÚÞĂąěäċðėñĞĄčÉĐÒě×ÍíďĆĀöăááĘùßÑÑÛúğØĂÿúåĉëĉÐěĐĔÖÏāěĎÜþÊýġĖçĈĐÐĐĊõâĉìĕĖčêĆâýîéæðĀċèìĆýîĔåĐÕÍáßöčæĒĂġěđÿĉäċïÑÚÜđĢîčîÎĈáÔĈÉäËðďęÄÚÜøèÙäîĂêĒðĆĎđÛĉûßÝËøïçĎàâÙø÷öåéÛêÙÜąāõâüíÈċÚÖĚċàčÝÔċéăĆòěďĉĉÈÓØĎáòÛéð÷ãþçóđćċýďþĈõ÷ÒùéìßüàĎëåÖÉĊÉāìĞĂËÌÜěĔâïÏøÚØĆááęØĖÃÌāÜÖÛÕÚćéÚòÌåÇôđÕÖÍÎÙĐěåæÜĒēýöÍúêùúĀîÃĔùþäçíõóĐčííĂęĐĆēéĠÚÜþåñÜě÷áüìĢĊĐÝÏÈĠòÖþûñÓõùçëðñÕëîçÙëĔÙäßåēďéÞĎâęïÚËćâ×ąēąýÉððğáéãĊČûÕüüÜÚÞèċúĂċĎÿâñĂØ×ČîĆđÓÜĀăÊÓąčÃðčėÙù¿ßòĚÓÚáāĂċÐĎìæËøĉéøèêëÕÕ×āÛõÒĊùďďÝûòĄĎĎĚöčÌëùđãÕċÚþüæÕëĂðğØóüÍĂċâċÅêæėĔďÃÌĀáĂÿüãëìęĔāďëĎĈòõêìÓêØĀćÌčïČÿēðĔĘČĉþèûĖĝ¿ÞăáÙöÚÒĉĜĔÛÉûÍĠÓĞÊÉÿĂ×ĔÌûÌà×ĎöýÐùÐ×âþíĞêûÞãèĀĐñÍăÃöČòþÐÜõóÞĄāã×òĐĂÄČčîÙăËđČðĒÞĂêčĉïíċĐĢØüąÄðñÑÿÖĐûàąõõÎđØĖĝÿĂăĒċöâýÚĊ×ĖÙĂĉÓâČöçáĂåĉõÝÍÚäùąćÈÝĒñàĐÌĘðøÝāçčĘÜêĈìĉěéùïñéċĘêçÑĉöóÕćÙÞÙûûåăöČïÚÜêĒĄöéîĒýĐ÷ąćýêÑÜêáÚĚìîþèïß÷ûÅéíĐêØÚââöâëèÍďęē×äìČĚĘßöÿùòéÿÌãÜïùÿþÊÏĎÑĘāîąôěĎåýĒÝÐéĊïĎĐēĕĊćýðĕþĀäúàøĘÖðĐÙćÝÇÒÚùĕ÷âÝď×ďÑĎÊèñÌĚìãÜÙÚćĄÏÙėïčĄÎÍ×øĘöăÊÝĒđéëåčðñýóĉēúÿÊïßğĚĉùčåëÔĖÌþìĞïþêòÿĖìėúìćôöĈíđíĝó÷ÕÍÃÞåôÕÞòÞęĐÌĊñĢąÞÌîąàÚĐåÛâÝïěČÈÉāđĘëçăğĘÖåÈãē÷ÕëćúÓñċûÜÚĜéÖÅĐþÛäĔÊċíìÌîĈãñàĘĖĂÈüęÙþċÛāĔÔÑăĈéðĚĎÖûìĀãÚËÑāĝĔÞâðÑßđôÉÝäéÕÞÊÎüĊĆòÜñûÝęÕëĈÏëñúÍèèĕĖÕÆąĄÞĄìéÈĐęÚĕëĉàýñďÜÍüìĒėæċĉíð×ÕæþĠĊđÝÄĂĎéíýăðöåđćÉÍĝêĎĉĀâßĕĐĄÄçóÌĊøóČĂíċÊąĀĖċćãïÛù×ëíâèĘù×ÖèïôăčãúÌĚÕĎ¿ÝñøæĊĉûąÙÓĝõĄÿÜăîčĒÃĠÚÕùĊùíćö÷ĊċĞìđÙÝĈýíþèĀÚùĆĒõðĉÚąĞĄÊÌáċċċéÚøèĉáăûĎēÙĆçąđöÛäÛĉĊåø×ÊÊÜãíÊĈĒøêøċÈÚęèċâąÍêØÖÅÞñðãĉÄāĄÞÒĔÿïċĔĔÿÊóĉüØùĎĄĉĐÌĖâîÌØČĒāðßñïïÉèÙėãðäÍîÞĉÚÙÄßöÒĊ¿ñýĉÙýĈĈçėĉî¿ČúÞÌĒÕăãÓéÙüĂÃÙ×ÝêòáġĔñĂæċßåÛêáÑüùÖäĈÊĖøØþÏÝáďç×âćÜøğëÏċċĄđÅñÈđěĚøèČñØýĎčÈďĉ÷÷äćÞÌÛÍúòÜÒ×ÙúúÜî×ùÑäĊćòćÎüĞÒØÌïëþĈøÉÐÐ÷ØÖÇćĀĕÔÿĈÑÎďĒ÷èÏîĞėÞÕăðĒÐçÝâÉğøíāđêõęèÖēăðđþăÄĆÓëĊâĎíñčĒÌĎéāěěÈēÑóôÿĎîòĉĂėÿĎÚĠöęöđĒôėĎÿðêüÑñÜüÜÓ÷ñýÈĎ÷ĎñíßĈúĕĐÚçàùĎĖøĈãċÒíæÏíéîÿéÌĈüÓĠèÜãéâëÃĀãĀĄøĎćæòÐñþĉăá×çØüþûĈěÆèČóõđÿÉÈĖçéÕÄüíÓÑéëĂĞÌĊãÑàÛìø¿éÑíĎö¿ċëáċõçÿêęđþ÷ÎîøíûĂĄûĕĐÕØÌèđùúüËÐáĄČĂìéĒØôçîÞùò÷ùäßéêğÖēîìõùČčñġõĔÉëîĜôċãËùěóĠĊăúğċĖÇĂýġìúĆÎîØĈÕ÷ēćøĎû¿ÈĉóÙèÌíÃðÚúÌèËĒøēăĐÏýěÞÿĊĂÝéîąÝðØÖėêÎòĉąĈúúüùĖïËþäěùõ×ÌÈðĄÑċċĒĒęôÈĒĂÙðĊøçÿØãĔćàçðĖĘčâĄċúÛßĈçùćČâìďøãĘĈÑÍñééÅÉèďØĝÖÍĀàôóÿĊéïěęþĒúđĄëÕăÇéèøÅçüĀĐÑăÄÙČëÞéāäĞĘ×ùßæÜÓĠèæðûïěĊÌÜØéïÍíðĜÓēĎðïėøûøđĈěÙûÄàçøìï¿ñÊğðĔÄĈċďðùÌàÃéÚîÌçćìãëöĂÏĠÙÖÌĐđċÌÙĄÄÞČąìÙþåĖ××íðæýÚó×ąâéÕìãĐÚïĐìùúÇĜæÜĎÒĂàèôĄČúēñċçäĀğĆĝãíÇéæĘÄþÌĎĚĕþâËùåðĆÎÈÓñõĄìðĕĖ÷ëÎúñòđûóÇÿČØâááÿöĝþāíċÙČĎċìđÒðÖáČēċÿĈăÿďÒĎÆĄĆġĈĀÜÛÙöø÷ùÝÎÓĕ÷áčďÞÖėÛąËúčęàĎùòäċûûĈÓçĊîĈþĠïĜÝËîĊÌéãÎíċăĎÌċþÜ÷ĝáÏĀěÖîçĊÊûēÛÖâæëúîÄÿÌčÙüõçĊĉĉòùÿđÝĔĉČĒûðÙêÇċòČîêãÝāĞĎíÄĎĈāèêČĎîāąéØĂčÞÙöúÞìýØðéĂčðæÜØăÍ×ÙćąÍàěãèÍäñúěĠČñâÞćÞÕÞÜüăĔÕćāčîßčĉđó×éċÊþüăÞØÐæČĐĞÃĎăÜñÜÄñÙĜďíãäéÜÖèĄÎß÷ĆĔĄđììÒöÊÉÈéæĐÞĉÛúÔÜéÞÈØČċĈæÜÝĊēíĄÐÝÌĚÞĈÐġęċÝčæēĄĐõčđĕćĠÚëċċÐÕĆĊĄċîüĀëÉêãüċëĂÚÖėéÛÑěĂćāåîîñûßèĆØēìÌýýôíîċćĈÛďúÕíðĒÐÜýÚàĔċÜĂÉĈÛĉÕìÛýĉéĖíčûøĆþêĈăġĉčåĊÇóäùõÎúĀÐçÕìÃęÔĈìþćÛďĔĎéËÞâêÄßíûċĎĈåÉĞöČÙðĉĞĒýĈíąĉ÷ēäąêÜÌùáüăêóØöÌĊĘđïåÑêýúïöÎìĝöĔäČďĢØĊèðæęùĎ¿ñéôčĀÙäđóØè×ÝËáĒÙöíüôăčÉÝòÓöëþĀÑõĒÙĆÉèĜöęØéąĜčĒčāíÝÌÝćüúĜĖċøĉÙÜ×çíéĎÿñėÛċùĒÕðĉòüýÑėæÍÿßĈùÆÎàßĕĝúÍüĞúÑÈċĈğĈğ×îÃùēÖ÷ÒĂġ÷ïÜáéċ÷čùãäĉÑ×èîúčÔēìýßďåìêàËĚÑïäÉĐûòîąćÿðęĜĄáĂïěÕ÷èäčÐĐìæČěęÑíáÉðĒñÊóăóéĔĆñą÷ĊċÕċúüĎĐĊýæĖĂéîüåĒíĝêēðĎ×ĀąÞċĞÌčÇĈÛÛĊòÿąþĝĔöëċìéċ×ąòâĊôóČĐāęøÿ¿ĀÞĎìîýÈîĐēČýĎÏĞêØÇêÚġĔþ¿ÏçáĆØúčÚčêØÄăďÚïôĈðñĀèĕÿĈïïóĚþáËĒÐïêÑÐÚâÜćþèü×üàáñĞòĔõÄÜēäĘÈäĀéĄĔÚóÎÜě×âðúčòçËñÎÜĒøÆÜîġĚĒüăËĠööčČåĖĈ×íðÚÝÖíùÌÙêäĒÆÛÎíäęÍîäěęÙÙÞÐÜãÜéÚïđċçÍçËĎĊđêēđ÷ìčçèñõïđĆûċĒãðąđäóØĕ×ÏâĞěčćèÑëâČÜæíñðĉúìČóÑ×ëúæďóï÷Äčċ÷ĐËāČÝĚñééĂîîêĊÒâàăćĄúúùûğÌÿìĉÖğáÿĒĚĔôáÑüĉąĉÝßčØîòúÌĄÝçċÞĉãğñèąúçÞĄîÉíÿØùç¿ĂäóÐęĆËáøĂÙÙüćáâċúĒĉþĎçĆĐþûïČāčäĘëïëäçĖĄĊÊÐÏùėëøÊþęúúĎäāßĚċāëĆðÚćĄæê×Úđ¹ÌÜĝďęõÿý',
 					img = '<img src="data:image/jpg;base64,%imgdata%" alt="Red dot" />';
 
 				JMVC.events.bind(JMVC.dom.find('#see'), 'click', function () {
@@ -477,57 +477,60 @@ JMVC.controllers.demo = function () {
 		JMVC.head.addstyle(JMVC.object.toCss({
 			'body' : {'font-family' : 'Verdana, sans-serif'},
 			'button' : {'border' : 'none', 'margin-right' : '5px', 'cursor' : 'pointer'},
-			'button.flt:hover' : {'background-color' : 'green', 'color':'white'},
-			'div.filters':{'margin' : '10px', 'width' : '900px'},
+			'button.flt:hover' : {'background-color' : 'green', 'color' : 'white'},
+			'div.filters' : {'margin' : '10px', 'width' : '900px'},
 			'#done' : {'margin-left' : '10px'},
-			'#done li' : {'padding-left':'10px','border-left':'3px solid lime','font-size' : '11px','line-height' : '13px','margin-bottom' : '5px'},
-			'#reset' : {'color' : 'red','font-weight' : 'bold','margin' : '5px 0px'},
+			'#done li' : {
+				'padding-left' : '10px',
+				'border-left' : '3px solid lime',
+				'font-size' : '11px',
+				'line-height' : '13px',
+				'margin-bottom' : '5px'
+			},
+			'#reset' : {'color' : 'red', 'font-weight' : 'bold', 'margin' : '5px 0px'},
 			'#realimg' : {'margin-left' : '10px'}
 		}), true, true);
 		
 		var that = this,
 			img = 'gabpattinaggio.jpg';
-			//img = 'fgk.jpg';
-			//img = 'marscula.jpg';
-			//img = 'demo_small.png';
 		
 		JMVC.dom.preloadImage(JMVC.vars.baseurl + '/media/img/' + img, function () {
 			var elements = [
-					{id:'brightness', label : 'Brightness'},
-					{id:'threshold', label : 'Threshold'},
-					{id:'grayscale', label : 'Grayscale'},
-					{id:'invert', label : 'Invert'},
-					{id:'blur', label : 'Blur'},
-					{id:'emboss', label : 'Emboss'},
-					{id:'sharpen', label : 'Sharpen'},
-					{id:'laplace', label : 'Laplace'},
-					{id:'sobeloriz', label : 'Sobel oriz'},
-					{id:'sobelvert', label:' Sobel vert'},
-					{id:'red', label:' Remove RED channel'},
-					{id:'green', label:'Remove GREEN channel'},
-					{id:'blue', label:'Remove BLUE channel'},
-					{id:'x', label:'x'},
-					{id:'mblur', label:'Mblur'}
+					{id : 'brightness', label : 'Brightness'},
+					{id : 'threshold', label : 'Threshold'},
+					{id : 'grayscale', label : 'Grayscale'},
+					{id : 'invert', label : 'Invert'},
+					{id : 'blur', label : 'Blur'},
+					{id : 'emboss', label : 'Emboss'},
+					{id : 'sharpen', label : 'Sharpen'},
+					{id : 'laplace', label : 'Laplace'},
+					{id : 'sobeloriz', label : 'Sobel oriz'},
+					{id : 'sobelvert', label : 'Sobel vert'},
+					{id : 'red', label : 'Remove RED channel'},
+					{id : 'green', label : 'Remove GREEN channel'},
+					{id : 'blue', label : 'Remove BLUE channel'},
+					{id : 'x', label : 'x'},
+					{id : 'mblur', label : 'Mblur'}
 				],
 				butts = '';
 
-			for(var i =0, l = elements.length; i < l; i += 1) {
+			for (var i = 0, l = elements.length; i < l; i += 1) {
 				butts += JMVC.string.replaceall('<button id="%id%" class="flt">%label%</button>', elements[i]);
 			}
 
 			function track(msg) {
-				JMVC.dom.append(JMVC.dom.find('#done'), JMVC.dom.create('li',{},msg));
+				JMVC.dom.append(JMVC.dom.find('#done'), JMVC.dom.create('li', {}, msg));
 			}
 			track.reset = function () {
-				JMVC.dom.empty(JMVC.dom.find('#done'));	
-			}
+				JMVC.dom.empty(JMVC.dom.find('#done'));
+			};
 
 			that.render(
 				'<div class="filters">Filters : ' + butts +
 				'<br /><button id="reset">RESET</button></div>' +
-				'<div style="float:left" id="realimg"><img src="'+ JMVC.vars.baseurl + '/media/img/' + img + '" /></div>'+
+				'<div style="float:left" id="realimg"><img src="' + JMVC.vars.baseurl + '/media/img/' + img + '" /></div>' +
 				'<div style="float:left"><ol id="done"></ol></div>',
-				function (){
+				function () {
 					JMVC.events.delay(function () {
 						var img = JMVC.dom.find('img'),
 							flt = JMVC.image.createFilter(img);
@@ -563,27 +566,26 @@ JMVC.controllers.demo = function () {
 	this.action_viewplus = function () {
 		JMVC.head.title('Hello');
 		var sv = JMVC.getView('superview');
-		var _v = JMVC.getView('sv');
-		_v.set('goal', ', I said hellooooooo !!!');
+		var v = JMVC.getView('sv');
+		v.set('goal', ', I said hellooooooo !!!');
 		sv.set('hello', ' yeah hello');
-		_v.render();
+		v.render();
 	};
 	
 
 
-	this.action_logo = function(){
+	this.action_logo = function () {
 		JMVC.events.loadify(1000);
 		JMVC.require('plotter/plotter', 'core/obj/bucket/bucket');
 		var M = Math,
 			v = JMVC.getView('vacuum');
-		
 		v.set({
 			'style' : 'font-family:verdana;margin:0 auto;width:450px;height:150px;margin-top:80px;position:relative',
 			'content' : '&nbsp;',
 			'id' : 'extralogo'
 		});
 		
-		JMVC.head.addstyle(JMVC.vars.baseurl+'/media/css/logo.css');
+		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/logo.css');
 		
 		v.render({cback : function () {
 			var newlogo = document.getElementById('extralogo'),
@@ -592,51 +594,51 @@ JMVC.controllers.demo = function () {
 				v = new JMVC.plotter.symbol('v', 22, 260),
 				c = new JMVC.plotter.symbol('c', 22, 320);
 
-			j.line(0,4, 22,4, 2);
-			j.line(0,4, 0,26, 2);
-			j.line(0,26, 22, 26, 2);
-			j.line(22,4, 22,26, 2);
-			j.line(0,36,0,56, 2);
-			j.line(0,36,30,36, 3);
-			j.line(0,56,30,56, 3);
-			j.line(87,0,107,1, 2);
-			j.arc(38,-16, 72,72,  -M.PI / 26	, M.PI / 2, 12);
-			j.arc(38,-16, 52,52,  -M.PI / 20	, M.PI / 2	, 9);
+			j.line(0, 4, 22, 4, 2);
+			j.line(0, 4, 0, 26, 2);
+			j.line(0, 26, 22, 26, 2);
+			j.line(22, 4, 22, 26, 2);
+			j.line(0, 36, 0, 56, 2);
+			j.line(0, 36, 30, 36, 3);
+			j.line(0, 56, 30, 56, 3);
+			j.line(87, 0, 107, 1, 2);
+			j.arc(38, -16, 72, 72, -M.PI / 26, M.PI / 2, 12);
+			j.arc(38, -16, 52, 52, -M.PI / 20, M.PI / 2, 9);
 
-			m.line(0,0, 0,24, 2);
-			m.line(0,0, 60,0, 7);
-			m.line(0,24, 60,24, 7);
-			m.line(60,0, 60,24, 2);
-			m.arc(60,34, 53,53, -M.PI / 20	, -M.PI	, 11);
-			m.arc(60,34, 30,30, -M.PI / 10	, -M.PI	, 6);
-			m.arc(60,84, 53,53, -M.PI / 20	, -JMVC.util.deg2rad(163), 12);
-			m.arc(60,84, 30,30, -M.PI / 12	, -M.PI	, 7);
-			m.line(60,64, 60,87, 2);
-			m.line(60,114, 60,137, 2);
+			m.line(0, 0, 0, 24, 2);
+			m.line(0, 0, 60, 0, 7);
+			m.line(0, 24, 60, 24, 7);
+			m.line(60, 0, 60, 24, 2);
+			m.arc(60, 34, 53, 53, -M.PI / 20, -M.PI	, 11);
+			m.arc(60, 34, 30, 30, -M.PI / 10, -M.PI	, 6);
+			m.arc(60, 84, 53, 53, -M.PI / 20, -JMVC.util.deg2rad(163), 12);
+			m.arc(60, 84, 30, 30, -M.PI / 12, -M.PI	, 7);
+			m.line(60, 64, 60, 87, 2);
+			m.line(60, 114, 60, 137, 2);
 
-			v.line(0,45,0,69, 2);
-			v.line(0,45, 45,45, 4);
-			v.line(0,69, 45,69, 4);
-			v.arc(45,23, 22,22, -M.PI / 8	, M.PI / 2	, 3);
-			v.arc(45,23, 46,46, -M.PI / 18	, M.PI / 2	, 8);
-			v.line(60,38, 88, 38, 2);
-			v.line(60,28, 88,28, 2);
-			v.line(60,0, 88,28, 3);
-			v.line(60,0, 48,12, 1);
-			v.line(60,28, 48,12, 1);
+			v.line(0, 45, 0, 69, 2);
+			v.line(0, 45, 45, 45, 4);
+			v.line(0, 69, 45, 69, 4);
+			v.arc(45, 23, 22, 22, -M.PI / 8, M.PI / 2, 3);
+			v.arc(45, 23, 46, 46, -M.PI / 18, M.PI / 2, 8);
+			v.line(60, 38, 88, 38, 2);
+			v.line(60, 28, 88, 28, 2);
+			v.line(60, 0, 88, 28, 3);
+			v.line(60, 0, 48, 12, 1);
+			v.line(60, 28, 48, 12, 1);
 
-			c.line(0,80, 22,80, 2);
-			c.line(0,80, 0,58, 2);
-			c.line(22,80, 22,58, 2);
-			c.arc(36,58, 12,12, -M.PI / 6	, M.PI * 3 / 2	, 3);
-			c.arc(36,58, 36,36, -M.PI / 14	, M.PI * 3 / 2	, 7);
-			c.line(44,22, 51,22, 0);
-			c.line(44,46, 51,46, 0);
-			c.line(58,22, 58,46, 2);
-			c.line(66,22, 66,66, 5);
-			c.line(66,66, 88,66, 2);
-			c.line(88,44, 88,66, 2);
-			c.arc(66,44, 22,22, -M.PI / 8, 0, 4);
+			c.line(0, 80, 22, 80, 2);
+			c.line(0, 80, 0, 58, 2);
+			c.line(22, 80, 22, 58, 2);
+			c.arc(36, 58, 12, 12, -M.PI / 6, M.PI * 3 / 2, 3);
+			c.arc(36, 58, 36, 36, -M.PI / 14, M.PI * 3 / 2, 7);
+			c.line(44, 22, 51, 22, 0);
+			c.line(44, 46, 51, 46, 0);
+			c.line(58, 22, 58, 46, 2);
+			c.line(66, 22, 66, 66, 5);
+			c.line(66, 66, 88, 66, 2);
+			c.line(88, 44, 88, 66, 2);
+			c.arc(66, 44, 22, 22, -M.PI / 8, 0, 4);
 
 			j.plot(newlogo);
 			m.plot(newlogo);
@@ -645,31 +647,31 @@ JMVC.controllers.demo = function () {
 
 			var a = newlogo.childNodes,
 				i = 0,
-				T1=20, T2 =10,
-				bucket = new JMVC.bucket.create(JMVC.util.range(0, a.length - 1)),
-				t = window.setInterval(function(){
-					/* var trg = JMVC.util.rand(1,a.length-1); */
-					if (!bucket.hasMore()) {
-						bucket.recover();
-					}
-					var trg =  bucket.next() || 1;
-					try {
-						var c = a[trg].style.color;
-					}catch(e){
-						JMVC.debug(trg);
-					}
-					window.setTimeout(
-						function (t1) {
-							a[t1].style.color = 'white';
-							a[t1].style.fontSize = '8px';
-							window.setTimeout(
-								function (t2) {
-									a[t2].style.color = c;
-								}, T1, t1
-							);
-						},0, trg
-					);
-				}, T2);
+				T1 = 20, T2 = 10,
+				bucket = new JMVC.bucket.create(JMVC.util.range(0, a.length - 1));
+			window.setInterval(function () {
+				/* var trg = JMVC.util.rand(1,a.length-1); */
+				if (!bucket.hasMore()) {
+					bucket.recover();
+				}
+				var trg =  bucket.next() || 1;
+				try {
+					var c = a[trg].style.color;
+				} catch (e) {
+					JMVC.debug(trg);
+				}
+				window.setTimeout(
+					function (t1) {
+						a[t1].style.color = 'white';
+						a[t1].style.fontSize = '8px';
+						window.setTimeout(
+							function (t2) {
+								a[t2].style.color = c;
+							}, T1, t1
+						);
+					}, 0, trg
+				);
+			}, T2);
 		}});
 		/*
 		if enabled will not allow that logo to be se in a frame or iframe
@@ -686,7 +688,7 @@ JMVC.controllers.demo = function () {
 			return {
 				name : JMVC.xmlparser._text(node.childNodes[0]),
 				surname : JMVC.xmlparser._text(node.childNodes[1]),
-				sex : JMVC.xmlparser._attribute(node.childNodes[0],'sex')
+				sex : JMVC.xmlparser._attribute(node.childNodes[0], 'sex')
 			}
 		});
 		t = d.extractor(0);
@@ -905,23 +907,17 @@ JMVC.controllers.demo = function () {
 				node : dstNode,
 				bott : '<div class="inner">Bottom</div>',
 				front : '<div class="inner">Front</div>',
-				right :'<div class="inner">Right</div>',
+				right : '<div class="inner">Right</div>',
 				left : '<div class="inner">Left</div>',
 				back : '<div class="inner">Back</div>',
 				top : '<div class="inner">Top</div>'
 			});
 			JMVC.dom.add(dstNode, 'h2', {}, 'Use arrow keys to flip around');
-			if(JMVC.p.aberrate) {
-				JMVC.dom.add(dstNode, 'a', {href : JMVC.util.getLink('demo','divrot')}, 'Default cube');
-			} else{
-				JMVC.dom.add(dstNode, 'a', {href : JMVC.util.getLink('demo','divrot','?aberrate=true')}, 'Inner cube');
+			if (JMVC.p.aberrate) {
+				JMVC.dom.add(dstNode, 'a', {href : JMVC.util.getLink('demo', 'divrot')}, 'Default cube');
+			} else {
+				JMVC.dom.add(dstNode, 'a', {href : JMVC.util.getLink('demo', 'divrot', '?aberrate=true')}, 'Inner cube');
 			}
 		});
-	};
-
-
-
-
-
-	
+	};	
 };

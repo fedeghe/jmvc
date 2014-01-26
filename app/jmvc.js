@@ -8,7 +8,7 @@
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.0 & a love heap
- *         glued with 34 files on 25/1/2014 at 19:36:32
+ *         glued with 34 files on 25/1/2014 at 22:58:51
  *
  * All rights reserved.
  *
@@ -3254,7 +3254,7 @@
             var nodeid = _.events.nodeid(el),
                 index, tmp, l;
             try {
-                var k = _.events.bindings[evnt][nodeid];
+                tmp = _.events.bindings[evnt][nodeid];
             } catch (e) {
                 //JMVC.debug(evnt + ': binding not found');
                 return false;
@@ -3367,7 +3367,7 @@
          * @return {[type]} [description]
          */
         disableRightClick : function () {
-            if (_.events.disabledRightClick) {return false;}
+            if (_.events.disabledRightClick) {return false; }
             _.events.disabledRightClick = true;
             var self = this;
             JMVC.dom.attr(JMVC.WD.body, 'oncontextmenu', 'return false');
@@ -3408,7 +3408,8 @@
             if (!targetElement) {
                 return false;
             }
-            while (targetElement.nodeType == 3 && targetElement.parentNode !== null) {
+    
+            while (targetElement.nodeType === 3 && targetElement.parentNode !== null) {
                 targetElement = targetElement.parentNode;
             }
             
@@ -3544,10 +3545,7 @@
                 e.cancelBubble = true;
                 e.returnValue = false;
             }
-            if (e.stopPropagation) {
-                e.stopPropagation();
-                e.preventDefault();
-            }
+            'stopPropagation' in e && e.stopPropagation() && e.preventDefault();
             return false;
         },
         /**
@@ -3575,15 +3573,14 @@
             if (JMVC.loaded) {
                 return f.call();
             }
-            var e = null;
             if (WD.addEventListener) {
-                e = WD.addEventListener('DOMContentLoaded', f, false);
+                return WD.addEventListener('DOMContentLoaded', f, false);
             } else if (W.addEventListener) {
-                e = W.addEventListener('load', f, false);
+                return W.addEventListener('load', f, false);
             } else if (WD.attachEvent) {
-                e = WD.attachEvent('onreadystatechange', f);
+                return WD.attachEvent('onreadystatechange', f);
             } else if (W.attachEvent) {
-                e = W.attachEvent('onload', f);
+                return W.attachEvent('onload', f);
             }
             return e;
         },

@@ -21,7 +21,8 @@ JMVC.controllers.index = function () {
 			'vendors/google/analytics/analytics',
 			'core/fx/fx',
 			'widget/lang/lang',
-			'vendors/github/forkme/forkme'
+			'vendors/github/forkme/forkme',
+			'widget/snow/snow/snow'
 		);
 		
 		
@@ -198,6 +199,11 @@ JMVC.controllers.index = function () {
 						
 					}, {sensor : 'false'});
 				}
+
+				if (JMVC.p.snow && JMVC.p.snow === 'true') {
+					JMVC.snow.start(JMVC.dom.body());
+				}
+
 			}
 		);
 	};

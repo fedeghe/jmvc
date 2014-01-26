@@ -1,4 +1,5 @@
 JMVC.controllers.form = function () {
+	'use strict';
 	this.action_index = function () {
 		
 		JMVC.events.loadify(500);
@@ -8,9 +9,9 @@ JMVC.controllers.form = function () {
 		
 		var index = JMVC.getView('form'),
 			rules = {
-				'name':'string',
-				'option':'string',
-				'tarea':'string'
+				'name' : 'string',
+				'option' : 'string',
+				'tarea' : 'string'
 			};
 			
 			
@@ -35,12 +36,7 @@ JMVC.controllers.form = function () {
 		JMVC.events.loadify(500);
 		JMVC.require('core/validation/validation');
 
-		var index = JMVC.getView('form'),
-			rules = {
-				'name':'string',
-				'option':'string',
-				'tarea':'string'
-			};
+		var index = JMVC.getView('form');
 
 		index.render(function () {
 			var submit = JMVC.dom.find('#save'),

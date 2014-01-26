@@ -1,9 +1,9 @@
 JMVC.controllers.canvaseditor = function () {
-    
+    'use strict';
     this.action_index = function (p) {
 
         var default_version = 0,
-            version = p['v'] || 0,
+            version = p.v || 0,
             editors = [
                 'canvas/editorNEXT/editor',
                 //'canvas/editorNEW/editor',
@@ -52,7 +52,7 @@ JMVC.controllers.canvaseditor = function () {
                 new JMVC.canvas.Editor({
                     node : JMVC.dom.find('#' + editorContainerId),
                     width : screen_size[0],
-                    height : screen_size[1]-1
+                    height : screen_size[1] - 1
                 }).init().render().bind();
                 
             });

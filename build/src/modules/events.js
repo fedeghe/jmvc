@@ -172,7 +172,7 @@ _.events = {
         var nodeid = _.events.nodeid(el),
             index, tmp, l;
         try {
-            var k = _.events.bindings[evnt][nodeid];
+            tmp = _.events.bindings[evnt][nodeid];
         } catch (e) {
             //JMVC.debug(evnt + ': binding not found');
             return false;
@@ -285,7 +285,7 @@ JMVC.events = {
      * @return {[type]} [description]
      */
     disableRightClick : function () {
-        if (_.events.disabledRightClick) {return false;}
+        if (_.events.disabledRightClick) {return false; }
         _.events.disabledRightClick = true;
         var self = this;
         JMVC.dom.attr(JMVC.WD.body, 'oncontextmenu', 'return false');
@@ -326,7 +326,8 @@ JMVC.events = {
         if (!targetElement) {
             return false;
         }
-        while (targetElement.nodeType == 3 && targetElement.parentNode !== null) {
+
+        while (targetElement.nodeType === 3 && targetElement.parentNode !== null) {
             targetElement = targetElement.parentNode;
         }
         
@@ -462,10 +463,7 @@ JMVC.events = {
             e.cancelBubble = true;
             e.returnValue = false;
         }
-        if (e.stopPropagation) {
-            e.stopPropagation();
-            e.preventDefault();
-        }
+        'stopPropagation' in e && e.stopPropagation() && e.preventDefault();
         return false;
     },
     /**
@@ -493,15 +491,14 @@ JMVC.events = {
         if (JMVC.loaded) {
             return f.call();
         }
-        var e = null;
         if (WD.addEventListener) {
-            e = WD.addEventListener('DOMContentLoaded', f, false);
+            return WD.addEventListener('DOMContentLoaded', f, false);
         } else if (W.addEventListener) {
-            e = W.addEventListener('load', f, false);
+            return W.addEventListener('load', f, false);
         } else if (WD.attachEvent) {
-            e = WD.attachEvent('onreadystatechange', f);
+            return WD.attachEvent('onreadystatechange', f);
         } else if (W.attachEvent) {
-            e = W.attachEvent('onload', f);
+            return W.attachEvent('onload', f);
         }
         return e;
     },

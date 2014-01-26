@@ -81,7 +81,7 @@
 
     "freeze" :      true,  // This options prohibits overwriting prototypes of native objects such as Array, Date and so on.
     "maxdepth" :    6,     // 
-    "maxstatements" : 50,
+    "maxstatements" : 100,
     "maxcomplexity" : 10
 
 

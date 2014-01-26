@@ -1,19 +1,15 @@
 JMVC.controllers.wcave = function () {
-	
-	this.action_index = function () {	
-		
+	'use strict';
+	this.action_index = function () {
 		JMVC.require('games/wcave/wcave', 'core/screen/screen');
 		JMVC.events.loadify(500);
-
 		var v = JMVC.getView('vacuum'),
 			containerID = 'container';
-
-		v.set({'id':containerID}).render(function (){
+		v.set({'id' : containerID}).render(function () {
 			Wcave.call(JMVC.W, {
 				'id' : containerID,
 				'size' : 'auto'
 			});
 		});
-		
-	}
-}
+	};
+};

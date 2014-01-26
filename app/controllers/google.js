@@ -1,10 +1,9 @@
 JMVC.controllers.google = function () {
-
+	'use strict';
 	this.action_index = function () {
-
 		JMVC.events.loadify(1000);
 		JMVC.require('plotter/plotter', 'core/obj/bucket/bucket');
-		JMVC.head.meta("generator", "jmvc resident in your machine");
+		JMVC.head.meta('generator', 'jmvc resident in your machine');
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/logoogle.css');
 
 		var M = Math,
@@ -40,7 +39,7 @@ JMVC.controllers.google = function () {
 			G.line(31, 8, 31, 20, 1);
 			G.line(31, 20, 42, 20, 1);
 
-			G.line(-4,22, -8,29, 1);
+			G.line(-4, 22, -8, 29, 1);
 			
 			o1.arc(0, 0, 22, 22, 2 * M.PI / 25, 0, 25);
 			o1.arc(1, 1, 11, 16, 2 * M.PI / 17, 0, 17, -M.PI * 0.44);
@@ -59,7 +58,7 @@ JMVC.controllers.google = function () {
 
 			g.dot(18, 0);
 			g.dot(22, 2);
-			g.beizer(12, 10, 17, 7, 20, 9, 31, 19, 6);   
+			g.beizer(12, 10, 17, 7, 20, 9, 31, 19, 6);
 
 
 			l.line(0, 1, 52, 1, 7);
@@ -90,7 +89,7 @@ JMVC.controllers.google = function () {
 			
 			
 			
-			var animate = true, a, i, T1, T2, nums, bucket, t, c, s, trg, dotsize, maxsize,
+			var animate = true, a, i, T1, T2, nums, bucket, t, c, s, dotsize, maxsize,
 				aberrate = that.get('aberrate');
 			if (animate) {
 				a = newlogo.childNodes;
@@ -102,8 +101,9 @@ JMVC.controllers.google = function () {
 				nums = JMVC.util.range(1, a.length - 1);
 				bucket = new JMVC.bucket.create(nums);
 				t = window.setInterval(function () {
+					var trg;
 					if (that.get('flash')) {
-						var trg = i;
+						trg = i;
 					} else {
 						if (!bucket.hasMore()) {
 							if (aberrate) {
@@ -114,22 +114,22 @@ JMVC.controllers.google = function () {
 						trg =  bucket.next() || 1;
 					}
 
-					try {c = a.item(trg).style.color, s = a.item(trg).style.fontSize; } catch(e){}
+					try {c = a.item(trg).style.color, s = a.item(trg).style.fontSize; } catch (e) {}
 
 					window.setTimeout(
 						function (t1) {
 							a.item(t1).style.color = 'white';
-							a.item(t1).style.fontSize = aberrate ? dotsize*2 + 'px' : '10px';	
+							a.item(t1).style.fontSize = aberrate ? dotsize * 2 + 'px' : '10px';
 							window.setTimeout(
 								function (t2) {
 									a.item(t2).style.color = c;
 									a.item(t2).style.fontSize = dotsize + 'px';
 								}, T1, t1
 							);
-						},0, trg
+						}, 0, trg
 					);
 					if (that.get('flash')) {
-						i = (i + 1)%(a.length);
+						i = (i + 1) % (a.length);
 						i = i ? i : 1;
 					}
 				}, T2);
@@ -138,4 +138,4 @@ JMVC.controllers.google = function () {
 			
 		});
 	};
-}
+};

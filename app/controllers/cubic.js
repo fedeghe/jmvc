@@ -4,7 +4,7 @@ JMVC.require(
 	'core/dim/dim'
 );
 JMVC.controllers.cubic = function () {
-	"use strict";
+	'use strict';
 	this.action_index = function () {
 		JMVC.events.loadify(500);
 		
@@ -25,9 +25,8 @@ JMVC.controllers.cubic = function () {
 			true
 		);
 		
-		var t = JMVC.getView('test/indextbl'),
-			that = this;
-	
+		var t = JMVC.getView('test/indextbl');
+
 		t.render(function () {
 			
 			var baseAttrs = {'class' : 'gbox'},
@@ -42,7 +41,6 @@ JMVC.controllers.cubic = function () {
 			JMVC.dom.append(C, [JMVC.border.xtop(10, 200, -50, -80, '#aa0'), JMVC.border.xleft(200, 50, -10, -70, '#660')]);
 			
 			JMVC.snow.start(JMVC.dom.body());
-		});	
-	}
+		});
+	};
 };
-

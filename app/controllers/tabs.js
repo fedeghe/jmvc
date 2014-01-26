@@ -1,4 +1,6 @@
 JMVC.controllers.tabs = function () {
+	'use strict';
+
 	this.action_one = this.index = function () {
 		JMVC.require(
 			'core/responsive/basic/basic',
@@ -11,16 +13,17 @@ JMVC.controllers.tabs = function () {
 			tab = new JMVC.tabs.tab('v'),
 			tab2 = new JMVC.tabs.tab('v'),
 			ids;
+
 		JMVC.lang('jp', 'en');
 
 		JMVC.responsive.onChange(
 			function (w) {
 				if (w < 800) {
 					//JMVC.dom.addClass(JMVC.WD.body, 'mini');
-					JMVC.responsive.allow('mobi')
+					JMVC.responsive.allow('mobi');
 				} else {
 					//JMVC.dom.removeClass(JMVC.WD.body, 'mini');
-					JMVC.responsive.allow('dskt')
+					JMVC.responsive.allow('dskt');
 				}
 			}
 		);
@@ -29,12 +32,12 @@ JMVC.controllers.tabs = function () {
 		index.setFromUrl('i_say', 'No one');
 		//
 		tab.add('Basic', 'Contenuto di prova1<br/><br/><br/><br/><br/><br/>kk');
-		tab.add('Logo', '<iframe width="100%" height="300px" frameborder="0" src="' + JMVC.vars.baseurl + '/demo/logo"></iframe> ');
+		tab.add('Logo', '<iframe width="100%" height="300px" frameborder="0" src="' + JMVC.vars.baseurl + '/demo/logo"></iframe>');
 		tab.add('view', '{{sv goal=`mygoal`}}<br/><br/><br/>');
 		 //
 		tab2.add('Direct2', 'Contenuto di prova2');
 		tab2.add('Param view', '{{sv goal=`mygoal`}}');
-		tab2.add('Prova Flag', '<iframe width="100%" height="600px" frameborder="0" src="' + JMVC.vars.baseurl + '/demo/flag"></iframe> ');
+		tab2.add('Prova Flag', '<iframe width="100%" height="600px" frameborder="0" src="' + JMVC.vars.baseurl + '/demo/flag"></iframe>');
 		//
 		index.render({cback : function () {
 			ids = tab.render('cent', 'ciccio');
@@ -43,4 +46,4 @@ JMVC.controllers.tabs = function () {
 			JMVC.tabs.render();
 		}});
 	};
-}
+};

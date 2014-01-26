@@ -1,5 +1,5 @@
 JMVC.controllers.exm = function () {
-	"use strict";
+	'use strict';
 	this.action_index = function () {
 		JMVC.events.loadify(1000);
 		JMVC.require('plotter/plotter', 'core/obj/bucket/bucket');
@@ -33,8 +33,8 @@ JMVC.controllers.exm = function () {
 			e.line(69, 14, 69, 65, 10);
 			e.plot(newlogo);
 			
-			x.line(0,0,35,27,7);
-			x.line(35,27,69,0,7);
+			x.line(0, 0, 35, 27, 7);
+			x.line(35, 27, 69, 0, 7);
 			x.plot(newlogo);
 
 			
