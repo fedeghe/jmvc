@@ -5,8 +5,11 @@ DOM sub-module
 _.dom = {
     qsall : function (a) {
         return ('querySelectorAll' in JMVC.WD) ? JMVC.WD.querySelectorAll(a) : false;
-    }
+    },
+    nodeidMap : {},
+    nodeAttrForIndex : '__ownid__'
 };
+
 // public section
 JMVC.dom = {
     /**
@@ -382,6 +385,22 @@ JMVC.dom = {
         return t.trim();
     },
     /**
+     * [idize description]
+     * @param  {[type]} el   [description]
+     * @param  {[type]} prop [description]
+     * @return {[type]}      [description]
+     */
+    idize : function (el, prop) {
+        prop = prop || _.dom.nodeAttrForIndex;
+        if (!el.hasOwnProperty(prop)) {
+            var nid = JMVC.util.uniqueid + '';
+            el[prop] = nid;
+            //save inverse
+            _.dom.nodeidMap[nid] = el;
+        }
+        return el[prop];
+    },
+    /**
      * [ description]
      * @param  {[type]} node          [description]
      * @param  {[type]} referenceNode [description]
@@ -433,6 +452,9 @@ JMVC.dom = {
             :
             o && typeof o === 'object' && typeof o.nodeType === 'number' && typeof o.nodeName === 'string'
         );
+    },
+    nodeFromId : function (id) {
+        return _.dom.nodeidMap[id];
     },
     /**
      * [ description]

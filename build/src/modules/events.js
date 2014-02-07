@@ -26,42 +26,11 @@ _.events = {
      */
     Eend : [],
     /**
-     * property name used for indexind functions
-     * attached to a node starting form event
-     * in bindings
-     * bindings[event][node__ownid__] = [func1, func2, ...]
-     * @type {String}
-     */
-    nodeAttrForIndex : '__ownid__',
-    /**
      * map used to get back a node from an id
      * @type {Object}
      */
-    nodeidMap : {},
+    //nodeidMap : {},
     disabledRightClick : false,
-    /**
-     * function used to get back node from id
-     * @param  {[type]} id [description]
-     * @return {[type]}    [description]
-     */
-    nodeidInverse : function (i) {
-        return i in _.events.nodeidMap ? _.events.nodeidMap[i] : false;
-    },
-    /**
-     * obtain a uniqueid for a node if not assigned
-     * or the previously one assigned
-     * @param  {DOM node} el the node for which the id is requested
-     * @return {String} unique id for the DOM node
-     */
-    nodeid : function (el) {
-        if (!el.hasOwnProperty(_.events.nodeAttrForIndex)) {
-            var nid = JMVC.util.uniqueid + '';
-            el[_.events.nodeAttrForIndex] = nid;
-            // store for inverse search
-            _.events.nodeidMap[nid] = el;
-        }
-        return el[_.events.nodeAttrForIndex];
-    },
     /**
      * bind exactly one domnode event to a function
      * @param  {DOM node}   el the dom node where the event must be attached
@@ -69,34 +38,11 @@ _.events = {
      * @param  {Function} cb   the callback executed when event is fired on node
      * @return {undefined}
      */
-    /*
-    bind : function (el, evnt, cb) {
-        //basic delegation
-        var nid = _.events.nodeid(el); 
-
-        if (W.addEventListener) {
-            el.addEventListener(evnt, cb, false);
-        } else if (W.attachEvent) {
-            el.attachEvent('on' + evnt, cb);
-        } else {
-            el['on' + evnt] = cb;
-        }
-
-        if (!(evnt in _.events.bindings)) {
-            _.events.bindings[evnt] = {};
-        }
-        if (!(nid in _.events.bindings[evnt])) {
-            _.events.bindings[evnt][nid] = [];
-        }
-        //store for unbinding
-        _.events.bindings[evnt][nid].push(cb);
-        return true;
-    },*/
     bind : (function () {
         var fn;
 
         function store(el, evnt, cb) {
-            var nid = _.events.nodeid(el);
+            var nid = JMVC.dom.idize(el);// _.events.nodeid(el);
             !(evnt in _.events.bindings) && (_.events.bindings[evnt] = {});
 
             !(nid in _.events.bindings[evnt]) && (_.events.bindings[evnt][nid] = []);
@@ -169,7 +115,7 @@ _.events = {
 
         //cb && (cb = this.fixCurrentTarget(cb, el));
 
-        var nodeid = _.events.nodeid(el),
+        var nodeid = JMVC.dom.idize(el),//_.events.nodeid(el),
             index, tmp, l;
         try {
             tmp = _.events.bindings[evnt][nodeid];
@@ -230,31 +176,6 @@ JMVC.events = {
         }
         return _.events.bind(el, tipo, fn);
         //return _.events.bind(el, tipo, _.events.fixCurrentTarget(fn, el));
-    },
-    /**
-     * Very experimental function to bind a function to
-     * a click triggered outside of a node tree 
-     * @param  {[type]}   el [description]
-     * @param  {Function} cb [description]
-     * @return {[type]}      [description]
-     * @sample http://www.jmvc.dev
-     * || var tr = JMVC.dom.find('#extralogo');
-     * || JMVC.events.clickout(tr, function (){console.debug('out')});
-     */
-    onEventOut : function (evnt, el, cb) {
-        var self = this,
-            root = JMVC.dom.body();
-
-        this.bind(root, evnt, function f(e) {
-            var trg = self.eventTarget(e);
-            while (trg !== el) {
-                trg = JMVC.dom.parent(trg);
-                if (trg === root) {
-                    self.unbind(root, evnt, f);
-                    return cb();
-                }
-            }
-        });
     },
     /**
      * [code description]
@@ -435,6 +356,31 @@ JMVC.events = {
         this.bind(el, tipo, function f(e) {
             fn(e);
             self.unbind(el, tipo, f);
+        });
+    },
+    /**
+     * Very experimental function to bind a function to
+     * a click triggered outside of a node tree 
+     * @param  {[type]}   el [description]
+     * @param  {Function} cb [description]
+     * @return {[type]}      [description]
+     * @sample http://www.jmvc.dev
+     * || var tr = JMVC.dom.find('#extralogo');
+     * || JMVC.events.clickout(tr, function (){console.debug('out')});
+     */
+    onEventOut : function (evnt, el, cb) {
+        var self = this,
+            root = JMVC.dom.body();
+
+        this.bind(root, evnt, function f(e) {
+            var trg = self.eventTarget(e);
+            while (trg !== el) {
+                trg = JMVC.dom.parent(trg);
+                if (trg === root) {
+                    self.unbind(root, evnt, f);
+                    return cb();
+                }
+            }
         });
     },
     /**
@@ -626,10 +572,14 @@ var el = JMVC.dom.find('#extralogo'),
     },
     cb3 = function () {
         console.debug('3', arguments);
+        console.debug(JMVC.dom.nodeFromId('JMVCID6'));
     };
+JMVC.events.free(el);
 JMVC.events.bind(el, 'click', cb1);
 JMVC.events.bind(el, 'click', cb2);
 JMVC.events.bind(el, 'mouseenter', cb3);
-//JMVC.events.free(JMVC.WD.body);
+JMVC.events.unbind(el, 'click', cb2);
+
+JMVC.events.free(JMVC.WD.body);
 
  */
