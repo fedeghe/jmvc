@@ -2,18 +2,9 @@
 JMVC inner
 --------*/
 jmvc = {
-    get2 : function (ns) {
-        return jmvc.ns.check(ns, JMVC.vars);
-    },
-    set2 : function (ns, val) {
-        jmvc.ns.make(ns, val, JMVC.vars);
-    },
-    del2 : function (ns) {
-        jmvc.purge(jmvc.get2(ns));
-    },
     /**
-     * the self-proclaimed ninja SUCKS
-     *                           -----
+     * the self-proclaimed ninja debug fucntion SUCKS
+     *                                          -----
      * @return {[type]} [description]
      */
     debug : function (m) {
@@ -39,7 +30,7 @@ jmvc = {
         return $JMVC;
     },
     /**
-     * [description]
+     * Returns a new function having as context the passed object
      * @param  {[type]} func [description]
      * @param  {[type]} ctx  [description]
      * @return {[type]}      [description]
@@ -67,6 +58,7 @@ jmvc = {
         func.Ocontinue = false;
         func['break'] = /*func.exit = */function () {func.Obreak = true; };
         func['continue'] = /*func.skip = */function () {func.Ocontinue = true; };
+
         if (type === 'array') {
             ret = [];
             i = 0;
@@ -105,6 +97,14 @@ jmvc = {
         //
         //let the literal straigth inherith from Extension Object
         Extension.call(trg);
+        //
+        // if is a function return its execution
+        if (typeof obj === 'function') {
+            trg = obj();
+            //jmvc.ns.make('JMVC.' + label, trg);
+            jmvc.extend(label, trg);
+            return trg;
+        }
         //
         // and set a flag, that can be switched off as far as
         // if the object passed has a initCheck function
@@ -157,6 +157,7 @@ jmvc = {
 
         path_absolute += (path ? path + US : '') + name;
         t = t.match(/(view|model|controller|interface)/);
+
         if (!t || t[0] !== type) {
             return false;
         }
@@ -485,53 +486,48 @@ jmvc = {
             $JMVC.controllers[$JMVC.c] = ctrl;
             //
             // manage routes
-            if ('jmvc_routes' in ctrl) {
-                $JMVC.a = ctrl.jmvc_routes[$JMVC.a] || $JMVC.a;
-            }
+            'jmvc_routes' in ctrl && ($JMVC.a = ctrl.jmvc_routes[$JMVC.a] || $JMVC.a);
             //
             // parameters are set as variables of the controller
             for (i in $JMVC.p) {
-                if ($JMVC.p.hasOwnProperty(i)) {
-                    ctrl.set(i, decodeURI($JMVC.p[i]));
-                }
+                $JMVC.p.hasOwnProperty(i) && (ctrl.set(i, decodeURI($JMVC.p[i])));
             }
             /***************************/
             // BEFORE HOOKS?
             // 
             // @global hook
-            'before' in ctrl && typeof ctrl.before === 'function' &&
-            (ctrl.before($JMVC.p));
+            if ('before' in ctrl && typeof ctrl.before === 'function') {
+                ctrl.before($JMVC.p); 
+            }
             //
             // @action hook
-            'before_' + $JMVC.a in ctrl && typeof ctrl['before_' + $JMVC.a] === 'function' &&
-            (ctrl['before_' + $JMVC.a]($JMVC.p));
+            if ('before_' + $JMVC.a in ctrl && typeof ctrl['before_' + $JMVC.a] === 'function') {
+                ctrl['before_' + $JMVC.a]($JMVC.p);
+            }
             /***************************/
             // REAL ACTION
             // check actual action
             if ('action_' + $JMVC.a in ctrl && typeof ctrl['action_' + $JMVC.a] === 'function') {
-
                 ctrl['action_' + $JMVC.a]($JMVC.p);
-
             } else if ('action' in ctrl && typeof ctrl.action === 'function') {
-
                 ctrl.action($JMVC.a, $JMVC.p, $JMVC.p);
-
             } else if ($JMVC.a.toLowerCase() !== JMVC_DEFAULT.action) {
-
                 WDL.replace(US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a);
-
             }
 
             /***************************/
             // AFTER HOOKS?
             //
             // @action hook 
-            'after_' + $JMVC.a in ctrl && typeof ctrl['after_' + $JMVC.a] === 'function' &&
-            (ctrl['after_' + $JMVC.a]($JMVC.p));
+            if ('after_' + $JMVC.a in ctrl && typeof ctrl['after_' + $JMVC.a] === 'function') {
+                ctrl['after_' + $JMVC.a]($JMVC.p);
+            }
             //
             // @global hook
-            'after' in ctrl && typeof ctrl.after === 'function' &&
-            (ctrl.after($JMVC.p));
+            if ('after' in ctrl && typeof ctrl.after === 'function') {
+                ctrl.after($JMVC.p);
+            }
+
             //////////////////////////
         } else {
             $JMVC.c.toLowerCase() !== JMVC_DEFAULT.controller && WDL.replace(US + '404' + US + 'msg' + US + 'cnt' + US + $JMVC.c);
@@ -657,6 +653,9 @@ jmvc = {
             );
         }
         return ret;
-    }
+    },
+    get2 : function (ns) {return jmvc.ns.check(ns, JMVC.vars); },
+    set2 : function (ns, val) {jmvc.ns.make(ns, val, JMVC.vars); },
+    del2 : function (ns) {jmvc.purge(jmvc.get2(ns)); }
 };
 //-----------------------------------------------------------------------------
