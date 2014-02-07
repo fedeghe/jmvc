@@ -256,13 +256,13 @@ JMVC.controllers.index = function () {
 	};
 
 	this.action_codes = function () {
+		var content = '';
 		if (confirm('That may hang your browser! ...continue?')) {
-			var content = '',
-				i = 10;
+			var i = 10;
 			for (null; i < 2<<15; i += 1) {
-				if (/[\x00-\x1F]/.test(String.fromCharCode(i))) {
-					content += i + ' : &#' + i + ';<br />';
-				}
+				
+				content += i + ' : &#' + i + ';<br />';
+				
 				//content += i + ' : ' + String.fromCharCode(i) + '<br />';
 			}
 			this.render(content, function () {
@@ -282,7 +282,11 @@ JMVC.controllers.index = function () {
 				3000
 			);
 		}
+		this.render(content);
 	};
+
+
+
 	this.action_ascii = function () {
 		var content = '', i = 0;
 		for (null; i < 256; i += 1) {
