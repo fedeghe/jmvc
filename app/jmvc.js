@@ -7,8 +7,8 @@
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
- * @file : built with Malta v.1.0.0 & a love heap
- *         glued with 34 files on 25/1/2014 at 22:58:51
+ * @file : built with Malta v.1.0.2 & a love heap
+ *         glued with 34 files on 8/2/2014 at 0:32:58
  *
  * All rights reserved.
  *
@@ -203,18 +203,9 @@
             JMVC inner
             --------*/
             jmvc = {
-                get2 : function (ns) {
-                    return jmvc.ns.check(ns, JMVC.vars);
-                },
-                set2 : function (ns, val) {
-                    jmvc.ns.make(ns, val, JMVC.vars);
-                },
-                del2 : function (ns) {
-                    jmvc.purge(jmvc.get2(ns));
-                },
                 /**
-                 * the self-proclaimed ninja SUCKS
-                 *                           -----
+                 * the self-proclaimed ninja debug fucntion SUCKS
+                 *                                          -----
                  * @return {[type]} [description]
                  */
                 debug : function (m) {
@@ -240,7 +231,7 @@
                     return $JMVC;
                 },
                 /**
-                 * [description]
+                 * Returns a new function having as context the passed object
                  * @param  {[type]} func [description]
                  * @param  {[type]} ctx  [description]
                  * @return {[type]}      [description]
@@ -268,6 +259,7 @@
                     func.Ocontinue = false;
                     func['break'] = /*func.exit = */function () {func.Obreak = true; };
                     func['continue'] = /*func.skip = */function () {func.Ocontinue = true; };
+            
                     if (type === 'array') {
                         ret = [];
                         i = 0;
@@ -306,6 +298,14 @@
                     //
                     //let the literal straigth inherith from Extension Object
                     Extension.call(trg);
+                    //
+                    // if is a function return its execution
+                    if (typeof obj === 'function') {
+                        trg = obj();
+                        //jmvc.ns.make('JMVC.' + label, trg);
+                        jmvc.extend(label, trg);
+                        return trg;
+                    }
                     //
                     // and set a flag, that can be switched off as far as
                     // if the object passed has a initCheck function
@@ -358,6 +358,7 @@
             
                     path_absolute += (path ? path + US : '') + name;
                     t = t.match(/(view|model|controller|interface)/);
+            
                     if (!t || t[0] !== type) {
                         return false;
                     }
@@ -677,62 +678,57 @@
                     if ($JMVC.c in $JMVC.controllers) {
                         //
                         // grant basic ineritance from parent Controller
-                        jmvc.inherit(JMVC.controllers[JMVC.c], Controller);
+                        jmvc.inherit($JMVC.controllers[$JMVC.c], Controller);
                         //
                         // make an instance
-                        ctrl = new JMVC.controllers[JMVC.c]();
+                        ctrl = new $JMVC.controllers[$JMVC.c]();
                         //
                         // store it
-                        JMVC.controllers[JMVC.c] = ctrl;
+                        $JMVC.controllers[$JMVC.c] = ctrl;
                         //
                         // manage routes
-                        if ('jmvc_routes' in ctrl) {
-                            $JMVC.a = ctrl.jmvc_routes[$JMVC.a] || $JMVC.a;
-                        }
+                        'jmvc_routes' in ctrl && ($JMVC.a = ctrl.jmvc_routes[$JMVC.a] || $JMVC.a);
                         //
                         // parameters are set as variables of the controller
                         for (i in $JMVC.p) {
-                            if ($JMVC.p.hasOwnProperty(i)) {
-                                ctrl.set(i, decodeURI($JMVC.p[i]));
-                            }
+                            $JMVC.p.hasOwnProperty(i) && (ctrl.set(i, decodeURI($JMVC.p[i])));
                         }
                         /***************************/
                         // BEFORE HOOKS?
                         // 
                         // @global hook
-                        'before' in ctrl && typeof ctrl.before === 'function' &&
-                        (ctrl.before($JMVC.p));
+                        if ('before' in ctrl && typeof ctrl.before === 'function') {
+                            ctrl.before($JMVC.p); 
+                        }
                         //
                         // @action hook
-                        'before_' + $JMVC.a in ctrl && typeof ctrl['before_' + $JMVC.a] === 'function' &&
-                        (ctrl['before_' + $JMVC.a]($JMVC.p));
+                        if ('before_' + $JMVC.a in ctrl && typeof ctrl['before_' + $JMVC.a] === 'function') {
+                            ctrl['before_' + $JMVC.a]($JMVC.p);
+                        }
                         /***************************/
                         // REAL ACTION
                         // check actual action
                         if ('action_' + $JMVC.a in ctrl && typeof ctrl['action_' + $JMVC.a] === 'function') {
-            
                             ctrl['action_' + $JMVC.a]($JMVC.p);
-            
                         } else if ('action' in ctrl && typeof ctrl.action === 'function') {
-            
                             ctrl.action($JMVC.a, $JMVC.p, $JMVC.p);
-            
                         } else if ($JMVC.a.toLowerCase() !== JMVC_DEFAULT.action) {
-            
                             WDL.replace(US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a);
-            
                         }
             
                         /***************************/
                         // AFTER HOOKS?
                         //
                         // @action hook 
-                        'after_' + $JMVC.a in ctrl && typeof ctrl['after_' + $JMVC.a] === 'function' &&
-                        (ctrl['after_' + $JMVC.a]($JMVC.p));
+                        if ('after_' + $JMVC.a in ctrl && typeof ctrl['after_' + $JMVC.a] === 'function') {
+                            ctrl['after_' + $JMVC.a]($JMVC.p);
+                        }
                         //
                         // @global hook
-                        'after' in ctrl && typeof ctrl.after === 'function' &&
-                        (ctrl.after($JMVC.p));
+                        if ('after' in ctrl && typeof ctrl.after === 'function') {
+                            ctrl.after($JMVC.p);
+                        }
+            
                         //////////////////////////
                     } else {
                         $JMVC.c.toLowerCase() !== JMVC_DEFAULT.controller && WDL.replace(US + '404' + US + 'msg' + US + 'cnt' + US + $JMVC.c);
@@ -858,7 +854,10 @@
                         );
                     }
                     return ret;
-                }
+                },
+                get2 : function (ns) {return jmvc.ns.check(ns, JMVC.vars); },
+                set2 : function (ns, val) {jmvc.ns.make(ns, val, JMVC.vars); },
+                del2 : function (ns) {jmvc.purge(jmvc.get2(ns)); }
             };
             //-----------------------------------------------------------------------------
             //
@@ -1584,7 +1583,7 @@
                 };
             };
             //
-            // meat to receive a model, all name
+            // meat to receive a model, all $name$
             // placeholders in the view content
             // will be replaced with the model
             // variable value if exists
@@ -1630,7 +1629,7 @@
              * @param {[type]} alt   [description]
              */
             View.prototype.setFromUrl = function (vname, alt) {
-                this.set(String(vname), JMVC.controllers[JMVC.c].get(vname) || alt || 'unset');
+                this.set(String(vname), $JMVC.controllers[$JMVC.c].get(vname) || alt || 'unset');
                 // allow chain
                 return this;
             };
@@ -1640,7 +1639,7 @@
              * @param {[type]} alt   [description]
              */
             View.prototype.getFromUrl = function (vname) {
-                return JMVC.controllers[JMVC.c].get(vname) || false;
+                return $JMVC.controllers[$JMVC.c].get(vname) || false;
             };
             // render the view parsing for variable&view placeholders
             /**
@@ -1698,9 +1697,9 @@
                 if (!$JMVC.loaded) {
                     //
                     // books rendering in body or elsewhere, on load
-                    $JMVC.events.bind(W, 'load', function () {
+                    // @ @ //$JMVC.events.bind(W, 'load', function () {
                         //  
-                        //call before render
+                        // call before render
                         $JMVC.events.startRender();
                         //
                         $JMVC.loaded = true;
@@ -1715,14 +1714,16 @@
                         // render
                         $JMVC.dom.html(trg, that.content);
                         //
-                        // after render
-                        jmvc.hook_check('onAfterRender', [that.content]);
-                        //
                         // may be a callback? 
                         cback && cback.apply(this, argz || []);
-                        //trigger end of render queue
+                        //
+                        // after render
+                        that.content = jmvc.hook_check('onAfterRender', [that.content]) || that.content;
+                        // 
+                        // trigger end of render queue
                         $JMVC.events.endRender();
-                    });
+                    // @ @ //});
+                //
                 // happend after load... so can render a view from a render cback 
                 // of a main view
                 } else {
@@ -1775,7 +1776,11 @@
                 !!this.vars[n] && (this.vars[n] = null);
                 return this;
             };
-            //////////////////////
+            /**
+             * [clone description]
+             * @param  {[type]} name [description]
+             * @return {[type]}      [description]
+             */
             View.prototype.clone  = function (name) {
                 var ret = false;
                 if (typeof name !== 'undefined') {
@@ -2459,8 +2464,11 @@
     _.dom = {
         qsall : function (a) {
             return ('querySelectorAll' in JMVC.WD) ? JMVC.WD.querySelectorAll(a) : false;
-        }
+        },
+        nodeidMap : {},
+        nodeAttrForIndex : '__ownid__'
     };
+    
     // public section
     JMVC.dom = {
         /**
@@ -2836,6 +2844,22 @@
             return t.trim();
         },
         /**
+         * [idize description]
+         * @param  {[type]} el   [description]
+         * @param  {[type]} prop [description]
+         * @return {[type]}      [description]
+         */
+        idize : function (el, prop) {
+            prop = prop || _.dom.nodeAttrForIndex;
+            if (!el.hasOwnProperty(prop)) {
+                var nid = JMVC.util.uniqueid + '';
+                el[prop] = nid;
+                //save inverse
+                _.dom.nodeidMap[nid] = el;
+            }
+            return el[prop];
+        },
+        /**
          * [ description]
          * @param  {[type]} node          [description]
          * @param  {[type]} referenceNode [description]
@@ -2887,6 +2911,9 @@
                 :
                 o && typeof o === 'object' && typeof o.nodeType === 'number' && typeof o.nodeName === 'string'
             );
+        },
+        nodeFromId : function (id) {
+            return _.dom.nodeidMap[id];
         },
         /**
          * [ description]
@@ -3108,42 +3135,11 @@
          */
         Eend : [],
         /**
-         * property name used for indexind functions
-         * attached to a node starting form event
-         * in bindings
-         * bindings[event][node__ownid__] = [func1, func2, ...]
-         * @type {String}
-         */
-        nodeAttrForIndex : '__ownid__',
-        /**
          * map used to get back a node from an id
          * @type {Object}
          */
-        nodeidMap : {},
+        //nodeidMap : {},
         disabledRightClick : false,
-        /**
-         * function used to get back node from id
-         * @param  {[type]} id [description]
-         * @return {[type]}    [description]
-         */
-        nodeidInverse : function (i) {
-            return i in _.events.nodeidMap ? _.events.nodeidMap[i] : false;
-        },
-        /**
-         * obtain a uniqueid for a node if not assigned
-         * or the previously one assigned
-         * @param  {DOM node} el the node for which the id is requested
-         * @return {String} unique id for the DOM node
-         */
-        nodeid : function (el) {
-            if (!el.hasOwnProperty(_.events.nodeAttrForIndex)) {
-                var nid = JMVC.util.uniqueid + '';
-                el[_.events.nodeAttrForIndex] = nid;
-                // store for inverse search
-                _.events.nodeidMap[nid] = el;
-            }
-            return el[_.events.nodeAttrForIndex];
-        },
         /**
          * bind exactly one domnode event to a function
          * @param  {DOM node}   el the dom node where the event must be attached
@@ -3151,34 +3147,11 @@
          * @param  {Function} cb   the callback executed when event is fired on node
          * @return {undefined}
          */
-        /*
-        bind : function (el, evnt, cb) {
-            //basic delegation
-            var nid = _.events.nodeid(el); 
-    
-            if (W.addEventListener) {
-                el.addEventListener(evnt, cb, false);
-            } else if (W.attachEvent) {
-                el.attachEvent('on' + evnt, cb);
-            } else {
-                el['on' + evnt] = cb;
-            }
-    
-            if (!(evnt in _.events.bindings)) {
-                _.events.bindings[evnt] = {};
-            }
-            if (!(nid in _.events.bindings[evnt])) {
-                _.events.bindings[evnt][nid] = [];
-            }
-            //store for unbinding
-            _.events.bindings[evnt][nid].push(cb);
-            return true;
-        },*/
         bind : (function () {
             var fn;
     
             function store(el, evnt, cb) {
-                var nid = _.events.nodeid(el);
+                var nid = JMVC.dom.idize(el);// _.events.nodeid(el);
                 !(evnt in _.events.bindings) && (_.events.bindings[evnt] = {});
     
                 !(nid in _.events.bindings[evnt]) && (_.events.bindings[evnt][nid] = []);
@@ -3251,7 +3224,7 @@
     
             //cb && (cb = this.fixCurrentTarget(cb, el));
     
-            var nodeid = _.events.nodeid(el),
+            var nodeid = JMVC.dom.idize(el),//_.events.nodeid(el),
                 index, tmp, l;
             try {
                 tmp = _.events.bindings[evnt][nodeid];
@@ -3312,31 +3285,6 @@
             }
             return _.events.bind(el, tipo, fn);
             //return _.events.bind(el, tipo, _.events.fixCurrentTarget(fn, el));
-        },
-        /**
-         * Very experimental function to bind a function to
-         * a click triggered outside of a node tree 
-         * @param  {[type]}   el [description]
-         * @param  {Function} cb [description]
-         * @return {[type]}      [description]
-         * @sample http://www.jmvc.dev
-         * || var tr = JMVC.dom.find('#extralogo');
-         * || JMVC.events.clickout(tr, function (){console.debug('out')});
-         */
-        onEventOut : function (evnt, el, cb) {
-            var self = this,
-                root = JMVC.dom.body();
-    
-            this.bind(root, evnt, function f(e) {
-                var trg = self.eventTarget(e);
-                while (trg !== el) {
-                    trg = JMVC.dom.parent(trg);
-                    if (trg === root) {
-                        self.unbind(root, evnt, f);
-                        return cb();
-                    }
-                }
-            });
         },
         /**
          * [code description]
@@ -3517,6 +3465,31 @@
             this.bind(el, tipo, function f(e) {
                 fn(e);
                 self.unbind(el, tipo, f);
+            });
+        },
+        /**
+         * Very experimental function to bind a function to
+         * a click triggered outside of a node tree 
+         * @param  {[type]}   el [description]
+         * @param  {Function} cb [description]
+         * @return {[type]}      [description]
+         * @sample http://www.jmvc.dev
+         * || var tr = JMVC.dom.find('#extralogo');
+         * || JMVC.events.clickout(tr, function (){console.debug('out')});
+         */
+        onEventOut : function (evnt, el, cb) {
+            var self = this,
+                root = JMVC.dom.body();
+    
+            this.bind(root, evnt, function f(e) {
+                var trg = self.eventTarget(e);
+                while (trg !== el) {
+                    trg = JMVC.dom.parent(trg);
+                    if (trg === root) {
+                        self.unbind(root, evnt, f);
+                        return cb();
+                    }
+                }
             });
         },
         /**
@@ -3708,11 +3681,15 @@
         },
         cb3 = function () {
             console.debug('3', arguments);
+            console.debug(JMVC.dom.nodeFromId('JMVCID6'));
         };
+    JMVC.events.free(el);
     JMVC.events.bind(el, 'click', cb1);
     JMVC.events.bind(el, 'click', cb2);
     JMVC.events.bind(el, 'mouseenter', cb3);
-    //JMVC.events.free(JMVC.WD.body);
+    JMVC.events.unbind(el, 'click', cb2);
+    
+    JMVC.events.free(JMVC.WD.body);
     
      */
     /*-------------
@@ -4343,6 +4320,7 @@
             while (i--) {
                 arr[i] === item && arr.splice(i, 1);
             }
+            return arr;
         },
         /**
          * [shuffle description]
@@ -4739,11 +4717,22 @@
          * @return {[type]}     [description]
          */
         keys : function (obj) {
-            var res = [], i;
-            for (i in obj) {
-                res.push(i);
-            }
+            var res = [],
+                i;
+            for (i in obj) res.push(i);
             return res;
+        },
+    
+        order : function (obj) {
+            var k = [],
+                i,
+                out = {};
+            for (i in obj) k.push(i);
+            k.sort();
+            for (var j = 0, l = k.length; j < l; j++) {
+                out[k[j]] = obj[k[j]];
+            }
+            return out;
         },
         /**
          * [ description]
