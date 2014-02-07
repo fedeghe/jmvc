@@ -13,9 +13,6 @@ JMVC.extend('screen',{
 		} else {
 			size = [JMVC.WD.getElementsByTagName('body')[0].clientWidth, JMVC.WD.getElementsByTagName('body')[0].clientHeight]; 
 		}
-
-
-		
 		return size; 
 	},
 	bodySize : function(){
