@@ -107,11 +107,22 @@ JMVC.object = {
      * @return {[type]}     [description]
      */
     keys : function (obj) {
-        var res = [], i;
-        for (i in obj) {
-            res.push(i);
-        }
+        var res = [],
+            i;
+        for (i in obj) res.push(i);
         return res;
+    },
+
+    order : function (obj) {
+        var k = [],
+            i,
+            out = {};
+        for (i in obj) k.push(i);
+        k.sort();
+        for (var j = 0, l = k.length; j < l; j++) {
+            out[k[j]] = obj[k[j]];
+        }
+        return out;
     },
     /**
      * [ description]
