@@ -129,9 +129,9 @@ View.prototype.render = function (pars) {
     if (!$JMVC.loaded) {
         //
         // books rendering in body or elsewhere, on load
-        $JMVC.events.bind(W, 'load', function () {
+        // @ @ //$JMVC.events.bind(W, 'load', function () {
             //  
-            //call before render
+            // call before render
             $JMVC.events.startRender();
             //
             $JMVC.loaded = true;
@@ -146,14 +146,16 @@ View.prototype.render = function (pars) {
             // render
             $JMVC.dom.html(trg, that.content);
             //
-            // after render
-            jmvc.hook_check('onAfterRender', [that.content]);
-            //
             // may be a callback? 
             cback && cback.apply(this, argz || []);
-            //trigger end of render queue
+            //
+            // after render
+            that.content = jmvc.hook_check('onAfterRender', [that.content]) || that.content;
+            // 
+            // trigger end of render queue
             $JMVC.events.endRender();
-        });
+        // @ @ //});
+    //
     // happend after load... so can render a view from a render cback 
     // of a main view
     } else {
@@ -206,7 +208,11 @@ View.prototype.del = Model.prototype.del = Controller.prototype.del = function (
     !!this.vars[n] && (this.vars[n] = null);
     return this;
 };
-//////////////////////
+/**
+ * [clone description]
+ * @param  {[type]} name [description]
+ * @return {[type]}      [description]
+ */
 View.prototype.clone  = function (name) {
     var ret = false;
     if (typeof name !== 'undefined') {
