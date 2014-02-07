@@ -147,6 +147,7 @@ JMVC.array = {
         while (i--) {
             arr[i] === item && arr.splice(i, 1);
         }
+        return arr;
     },
     /**
      * [shuffle description]
