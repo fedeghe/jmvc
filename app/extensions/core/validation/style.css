@@ -1,7 +1,8 @@
 .jmvc_notify_err{
-    color:red;
-    font-size:14px;
-    line-height:14px;
+    color: red;
+    font-size: 14px;
+    line-height: 14px;
     font-family: verdana, sans-serif;
-    padding:2px;
+    padding: 2px;
+    cursor: help;
 }
