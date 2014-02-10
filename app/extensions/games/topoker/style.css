@@ -1,0 +1,48 @@
+.card{
+    width: 20px;
+    height: 40px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    background-color: white;
+    position: relative;
+    font-family: verdana, sans-serif;
+    text-align: center;
+    margin:3px;
+    display: inline-block;
+
+
+    -moz-box-shadow: 1px 1px 2px #aaa;
+    -webkit-box-shadow: 1px 1px 2px #aaa;
+    box-shadow: 1px 1px 2px #aaa;
+
+
+}
+.sm_c, .sm_q{
+    color: red;
+}
+.sm_f, .sm_p{
+    color: black;
+}
+
+
+.card span{
+    display: block;
+    position: absolute;
+    
+    text-align: center;
+    width: inherit;
+    
+}
+/* semen */
+
+.card span.num{
+    top: 2px;
+    font-size: 16px;  
+}
+
+.card span.sm{
+    bottom: 2px;
+    font-size: 24px;
+}

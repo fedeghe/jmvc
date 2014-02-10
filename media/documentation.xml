@@ -34,9 +34,9 @@ _/    _/  _/      _/    _/  _/    _/
 			</params>
 			<returns>void (undefined)</returns>
 			<sample>&#10;
-var arr = [1,2,3,4,5],&#10; 
-	obj =  {name : "Federico", surname : "Ghedina", say : "WAT"},&#10;
-	foo = function (){alert('foo'); };&#10;
+var arr = [1,2,3,4,5],&#10;
+    obj =  {name : "Federico", surname : "Ghedina", say : "WAT"},&#10;
+    foo = function (){alert('foo'); };&#10;
 JMVC.debug(arr, obj, foo);
 </sample>
 			<status>testing</status>
@@ -1457,6 +1457,23 @@ _/          _/  _/    _/        _/    _/    _/          _/_/
 			<returns>void (undefined)</returns>
 			<status>incomplete</status>
 		</function>
+
+	
+		<function>
+			<signature name="onEventOut">JMVC.events.onEventOut(String type, Element el, Javascript function cb)</signature>
+			<description>Triggers a callback as the specified event is fired outside the specified element</description>
+			<params>
+				<param name="*type">the event string</param>
+				<param name="el*">dom element target</param>
+				<param name="*func">Javascript function callback</param>
+			</params>
+			<returns>void (undefined)</returns>
+			<status>testing</status>
+		</function>
+		
+
+
+
 		<function>
 			<signature name="preventDefault">JMVC.events.preventDefault(Element el, String type, Javascript function fun)</signature>
 			<description>binds only once a callback to an event fired from an element</description>

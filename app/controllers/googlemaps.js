@@ -1,5 +1,42 @@
 JMVC.controllers.googlemaps = function () {
 	'use strict';
+	
+
+
+	this.action_3_14 = function () {
+		
+		JMVC.require('vendors/google/gmaps-v.3.14/gmaps-v.3.14');
+
+		var v = JMVC.getView('vacuum'),
+			gm = JMVC.gmaps.create(),
+			that = this;
+
+		v.set({
+			'style' : 'font-family:verdana, sans-serif;margin-top:80px;width:800px; height:400px;',
+			'content' : '&nbsp;',
+			'id' : 'container'
+		});
+
+		v.render(function () {
+
+			gm.initialize(function () {
+				
+				gm.render(JMVC.dom.find('#container'));
+
+			}, {
+				sensor : false
+			});
+		});
+	};
+
+
+
+
+
+
+
+
+
 	this.action_index = function () {
 
 		JMVC.events.loadify(1000);
