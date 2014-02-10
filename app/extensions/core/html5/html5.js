@@ -39,17 +39,7 @@ JMVC.extend('html5', {
 
 	audio : function (options) {
 		"use strict";
-		/*
-		
-		<audio src="http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg" autoplay>
-			Your browser does not support the <code>audio</code> element.
-		</audio>
-		
-		<audio controls="controls">
-			Your browser does not support the <code>audio</code> element.
-			<source src="foo.wav" type="audio/wav">
-		</audio>
-		*/
+
 		if (!('src' in options)) throw new Error('No src passed for video');
 
 		var audio,
