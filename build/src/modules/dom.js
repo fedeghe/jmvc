@@ -247,8 +247,6 @@ JMVC.dom = {
         var sel = 'getElement',
             toArr = 0,
             ret = 0;
-        //ret = _.dom.qsall(a);
-        //if (ret) {return ret; }
         //look for no word before something
         a = a.match(/^(\W)?([A-z0-9-_]*)/);
         a[1] = a[1] || '=';
@@ -437,6 +435,16 @@ JMVC.dom = {
                 typeof o.nodeType !== undefined && o.nodeType === 1 &&
                 typeof o.nodeName === 'string'
         );
+    },
+    /**
+     * [isNodeList description]
+     * @param  {[type]}  el [description]
+     * @return {Boolean}    [description]
+     */
+    isNodeList : function (el) {
+        return !('value' in el)
+        && (typeof el.length == 'number')
+        && (typeof el.item == 'function');
     },
     //thx to http://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
     //for the following 2 mthds
