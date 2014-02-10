@@ -33,11 +33,11 @@ JMVC.controllers.form = function () {
 			var submit = JMVC.dom.find('#save'),
 				validator = JMVC.validation.create();
 
-			validator.add(JMVC.dom.find('#name'), {'required' : true, 'type' : 'integer', 'min' : 3, 'max' : 5});
-			validator.add(JMVC.dom.find('#option'), {'required' : true, msg : 'these dicks'});
-			validator.add(JMVC.dom.find('#tarea'), {'required' : true});
-			validator.add(JMVC.dom.find('#chk'), {'required' : true});
-
+			validator.add(JMVC.dom.find('#name'), {'required' : true, 'type' : 'integer', 'min' : 3, 'max' : 5})
+				.add(JMVC.dom.find('#option'), {'required' : true})
+				.add(JMVC.dom.find('#tarea'), {'required' : true})
+				.add(JMVC.dom.find('#chk'), {'required' : true})
+				.add(JMVC.dom.find('form').rad, {'required' : true});
 
 			JMVC.events.bind(submit, 'click', function (e) {
 				validator.validate() || JMVC.events.preventDefault(e);
