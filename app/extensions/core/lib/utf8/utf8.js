@@ -13,8 +13,6 @@ JMVC.extend('utf8', {
 		var m = encodeURIComponent(s).match(/%[89ABab]/g);
 		return s.length + (m ? m.length : 0);
 	},
-	
-	
 	encodeUtf8 : function (s) {
 		for(
 			var c, i = -1, l = (s = s.split("")).length, o = String.fromCharCode;
