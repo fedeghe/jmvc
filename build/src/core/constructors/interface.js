@@ -31,7 +31,7 @@ Interface = function (name, a) {
     l = a.length;
     for (null; i < l; i += 1) {
         typeof a[i] === 'string' && (this.mthds.push(a[i]));
-        console.debug(checkInterface(a[i]));
+        //console.debug(checkInterface(a[i]));
     }
 };
 /**

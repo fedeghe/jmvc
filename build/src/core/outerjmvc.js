@@ -138,7 +138,7 @@ $JMVC = {
                         type : 'xml',
                         cback : function (doc) {
                             JMVC.xdoc.elements[ext] = doc;
-                            console.debug('doc : ' + doc);
+                            //JMVC.debug('doc : ' + doc);
                         },
                         error : function () {alert('errore'); }
                     }
