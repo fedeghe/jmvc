@@ -17,7 +17,7 @@ JMVC.controllers.info = function () {
 			features = JMVC.getView('info/features'),
 			info_intro = JMVC.getView('info/info_intro'),
 			infoutro = JMVC.getView('info/info_outro'),
-			backtotop = '<a href="#top">go to top &uparrow;</a>',
+			backtotop = '<a href="#top">go to top</a>',
 			toplinks = [],
 			toplinksdata = {
 				intro : 'Introduction',
@@ -54,7 +54,8 @@ JMVC.controllers.info = function () {
 			'githublink' : 'https://github.com/fedeghe/jmvc',
 			'legend': '<b>*</b> : mandatory parameter',
 			'backtotop' : backtotop,
-			'toplinks' : toplinks.join(' ~ ')
+			'toplinks' : toplinks.join(' ~ '),
+			'logo' : 'jmvc_m1.png'
 		});
 		info_intro.set({
 			'review' : JMVC.vars.review,

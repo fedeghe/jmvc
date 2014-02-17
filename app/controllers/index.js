@@ -1,3 +1,19 @@
+JMVC.require(
+	//'core/sniffer/sniffer',
+	'core/obj/date/date',
+	'core/i18n/i18n',
+	'core/responsive/basic/basic',
+	'core/mobile/mobile',
+	'core/color/color',
+	'core/dim/dim',
+	'core/cookie/cookie',
+	'vendors/google/analytics/analytics',
+	'core/fx/fx',
+	'widget/lang/lang',
+	'vendors/github/forkme/forkme',
+	'widget/snow/snow/snow'
+);
+
 JMVC.controllers.index = function () {
 	'use strict';
 
@@ -8,23 +24,7 @@ JMVC.controllers.index = function () {
 	this.action_index = function () {
 
 		
-
-		var logoimg = 'jmvc_m1.svg';
-		JMVC.require(
-			'core/obj/date/date',
-			'core/i18n/i18n',
-			'core/responsive/basic/basic',
-			'core/mobile/mobile',
-			'core/color/color',
-			'core/dim/dim',
-			'core/cookie/cookie',
-			'vendors/google/analytics/analytics',
-			'core/fx/fx',
-			'widget/lang/lang',
-			'vendors/github/forkme/forkme',
-			'widget/snow/snow/snow'
-		);
-		
+		var logoimg = 'jmvc_m1.png';
 		
 
 		JMVC.dom.preloadImage(JMVC.vars.baseurl + '/media/img/' + logoimg
@@ -237,7 +237,7 @@ JMVC.controllers.index = function () {
 				autoplay : 'autoplay',
 				controls : true
 			});
-		console.debug(audio);
+		
 
 		index.set('i_say', 'Sample audio');
 
