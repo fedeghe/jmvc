@@ -16,21 +16,21 @@ JMVC.controllers.demo = function () {
 
 	this.before = function () {
 		self.startController = JMVC.util.now();
-		console.debug(-2)
+		JMVC.debug(-2)
 	};
 
 	this.before_index = this.before_flag = function () {
 		self.startAction = JMVC.util.now();
-		console.debug(-1)
+		JMVC.debug(-1)
 	};
 
 	this.after_index = this.after_flag = function () {
 		self.endAction = JMVC.util.now();
-		console.debug(1)
+		JMVC.debug(1)
 	};
 
 	this.after = function () {
-		console.debug(2)
+		JMVC.debug(2)
 		self.endController = JMVC.util.now();
 		JMVC.debug('Controller Time: ' + ((self.endController - self.startController) || 0));
 		JMVC.debug('Action Time: ' + ((self.endAction - self.startAction) || 0));
@@ -38,7 +38,7 @@ JMVC.controllers.demo = function () {
 		JMVC.events.disableRightClick();
 		
 		JMVC.events.onRight(JMVC.WD, function () {
-			console.debug('right');
+			JMVC.debug('right');
 		});
 		JMVC.debug('disabled right click');
 
@@ -52,7 +52,7 @@ JMVC.controllers.demo = function () {
 
 
 	this.action_index = function () {
-		console.debug('0-')
+		JMVC.debug('0-')
 		JMVC.require(
 			'vendors/google/analytics/analytics',
 			'core/responsive/basic/basic'
@@ -167,9 +167,9 @@ JMVC.controllers.demo = function () {
 			content : content,
 			index : '&#9826;'
 		});
-		console.debug('0')
+		JMVC.debug('0')
 		v.render(function () {
-			console.debug('render view')
+			JMVC.debug('render view')
 			JMVC.head.title('- Foo me a sample -');
 			/*
 			var fromtop = 20;
@@ -182,7 +182,7 @@ JMVC.controllers.demo = function () {
 				where : '#content'
 			});*/
 		});
-		console.debug('0+')
+		JMVC.debug('0+')
 				
 	};
 

@@ -49,7 +49,7 @@ JMVC.controllers.carpet = function () {
 			jmap.afterAdd(function (i) {console.debug('added ID: ' + i); });
 			jmap.beforeRemove(function (i) {console.debug('removing ID: ' + i); });
 			jmap.afterRemove(function (i) {console.debug('removed ID: ' + i); });
-			console.debug(jmap);
+			JMVC.debug(jmap);
 		});
 	};
 };
