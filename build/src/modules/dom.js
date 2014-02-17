@@ -166,10 +166,11 @@ JMVC.dom = {
             att;
         attrs = attrs || {};
         for (att in attrs) {
-            attrs.hasOwnProperty(att) && node.setAttribute(String(att),  String(attrs[att]));
+            attrs.hasOwnProperty(att) && node.setAttribute(String(att), String(attrs[att]));
         }
         if (typeof inner !== 'undefined') {
-            if (inner.hasOwnProperty('nodeType') && inner.nodeType === 1) {
+            if (inner.nodeType && inner.nodeType === 1) {
+            //if (Object.prototype.hasOwnProperty.call(inner, 'nodeType') && inner.nodeType === 1) {
                 this.append(node, inner);
             } else {
                 this.html(node, inner);
@@ -390,7 +391,8 @@ JMVC.dom = {
      */
     idize : function (el, prop) {
         prop = prop || _.dom.nodeAttrForIndex;
-        if (!el.hasOwnProperty(prop)) {
+        //if (!el.hasOwnProperty(prop)) {
+        if (!el.prop) {
             var nid = JMVC.util.uniqueid + '';
             el[prop] = nid;
             //save inverse
