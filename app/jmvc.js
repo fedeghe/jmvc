@@ -3,12 +3,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.3.2 (rev. 3)
+ * @version :  3.3.4 (rev. 3)
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.2 & a love heap
- *         glued with 34 files on 11/2/2014 at 0:48:25
+ *         glued with 34 files on 18/2/2014 at 0:35:34
  *
  * All rights reserved.
  *
@@ -55,7 +55,7 @@
             var $JMVC,
                 //
                 // version (vars.json)
-                JMVC_VERSION = '3.3.2',
+                JMVC_VERSION = '3.3.4',
                 //
                 // review (vars.json)
                 JMVC_REVIEW = '3',
@@ -1407,7 +1407,7 @@
                 l = a.length;
                 for (null; i < l; i += 1) {
                     typeof a[i] === 'string' && (this.mthds.push(a[i]));
-                    console.debug(checkInterface(a[i]));
+                    //console.debug(checkInterface(a[i]));
                 }
             };
             /**
@@ -2005,7 +2005,7 @@
                                     type : 'xml',
                                     cback : function (doc) {
                                         JMVC.xdoc.elements[ext] = doc;
-                                        console.debug('doc : ' + doc);
+                                        //JMVC.debug('doc : ' + doc);
                                     },
                                     error : function () {alert('errore'); }
                                 }
@@ -2625,10 +2625,11 @@
                 att;
             attrs = attrs || {};
             for (att in attrs) {
-                attrs.hasOwnProperty(att) && node.setAttribute(String(att),  String(attrs[att]));
+                attrs.hasOwnProperty(att) && node.setAttribute(String(att), String(attrs[att]));
             }
             if (typeof inner !== 'undefined') {
-                if (inner.hasOwnProperty('nodeType') && inner.nodeType === 1) {
+                if (inner.nodeType && inner.nodeType === 1) {
+                //if (Object.prototype.hasOwnProperty.call(inner, 'nodeType') && inner.nodeType === 1) {
                     this.append(node, inner);
                 } else {
                     this.html(node, inner);
@@ -2849,7 +2850,8 @@
          */
         idize : function (el, prop) {
             prop = prop || _.dom.nodeAttrForIndex;
-            if (!el.hasOwnProperty(prop)) {
+            //if (!el.hasOwnProperty(prop)) {
+            if (!el.prop) {
                 var nid = JMVC.util.uniqueid + '';
                 el[prop] = nid;
                 //save inverse
@@ -4800,7 +4802,7 @@
                 res.push(obj[i]);
             }
             return res;
-        },
+        }
     };
     //-----------------------------------------------------------------------------
     /*--------------
