@@ -392,7 +392,7 @@ JMVC.dom = {
     idize : function (el, prop) {
         prop = prop || _.dom.nodeAttrForIndex;
         //if (!el.hasOwnProperty(prop)) {
-        if (!el.prop) {
+        if (!(prop in el)) {
             var nid = JMVC.util.uniqueid + '';
             el[prop] = nid;
             //save inverse

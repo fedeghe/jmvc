@@ -1,14 +1,17 @@
+/*
+[MALTA] /src/head.js
+*/
 /**
  * 
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.3.4 (rev. 3)
+ * @version :  3.3.5 (rev. 3)
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
- * @file : built with Malta v.1.0.2 & a love heap
- *         glued with 34 files on 18/2/2014 at 0:35:34
+ * @file : built with Malta v.1.0.8 & a love heap
+ *         glued with 34 files on 25/2/2014 at 1:18:58
  *
  * All rights reserved.
  *
@@ -46,6 +49,9 @@
         // this function returns the JMVC object, globalized, after doing some stuff
         // @return {object literal} $JMVC inner object 
         JMVC = W.JMVC = (function () {
+            /*
+            [MALTA] /src/core/init.js
+            */
             /*--
             INIT
             --*/
@@ -55,7 +61,7 @@
             var $JMVC,
                 //
                 // version (vars.json)
-                JMVC_VERSION = '3.3.4',
+                JMVC_VERSION = '3.3.5',
                 //
                 // review (vars.json)
                 JMVC_REVIEW = '3',
@@ -199,6 +205,9 @@
                 // ===========================================
                 //
                 //-----------------------------------------------------------------------------
+            /*
+            [MALTA] /src/core/innerjmvc.js
+            */
             /*--------
             JMVC inner
             --------*/
@@ -860,6 +869,9 @@
                 del2 : function (ns) {jmvc.purge(jmvc.get2(ns)); }
             };
             //-----------------------------------------------------------------------------
+            /*
+            [MALTA] /src/core/preload.js
+            */
             //
             // preloadign function                                
             preload = function (url) {
@@ -893,6 +905,9 @@
                 }, 0);
             };
             //-----------------------------------------------------------------------------
+            /*
+            [MALTA] /src/core/constructors/errors.js
+            */
             /*----
             ERRORS
             ------
@@ -927,6 +942,9 @@
             };
             jmvc.multi_inherit(Errors, Error);
             //-----------------------------------------------------------------------------
+            /*
+            [MALTA] /src/core/parser.js
+            */
             /*----
             PARSER
             ----*/
@@ -1106,6 +1124,9 @@
             //
             //-----------------------------------------------------------------------------
             /*
+            [MALTA] /src/core/constructors/event.js
+            */
+            /*
             Event JMVC object
             use mainly for observers
             */
@@ -1136,6 +1157,9 @@
                 }
             };
             //-----------------------------------------------------------------------------
+            /*
+            [MALTA] /src/core/constructors/channelpipe.js
+            */
             /**
              * [Channel description]
              * @param {[type]} n [description]
@@ -1317,6 +1341,9 @@
              */
             //-----------------------------------------------------------------------------
             /*
+            [MALTA] /src/core/constructors/extension.js
+            */
+            /*
             Extension
             This is intended to be the base class for any element loaded via the require function.
             Now empty
@@ -1326,6 +1353,9 @@
             };
             Extension.prototype = {};
             //-----------------------------------------------------------------------------
+            /*
+            [MALTA] /src/core/constructors/promise.js
+            */
             /*-----
             PROMISE
             -----*/
@@ -1374,6 +1404,9 @@
                 return this;
             };
             //-----------------------------------------------------------------------------
+            /*
+            [MALTA] /src/core/constructors/interface.js
+            */
             /**
              * [checkInterface description]
              * @param  {[type]} f [description]
@@ -1450,6 +1483,9 @@
             console.dir(checkInterface(tee));
              */
             //-----------------------------------------------------------------------------
+            /*
+            [MALTA] /src/core/constructors/functionqueue.js
+            */
             /*------------
             Function queue
             ------------*/
@@ -1475,6 +1511,9 @@
                 this.queue.length = 0;
             };
             //-----------------------------------------------------------------------------
+            /*
+            [MALTA] /src/core/controller.js
+            */
             /*--------
             CONTROLLER          
             --------*/
@@ -1547,6 +1586,9 @@
                 return this;
             };
             //-----------------------------------------------------------------------------
+            /*
+            [MALTA] /src/core/model.js
+            */
             /*---
             MODEL
             ---*/
@@ -1566,6 +1608,9 @@
              */
             Model.prototype.constructor = 'model';
             //-----------------------------------------------------------------------------
+            /*
+            [MALTA] /src/core/view.js
+            */
             /*--
             VIEW
             --*/
@@ -1792,6 +1837,9 @@
                 return ret;
             };
             //-----------------------------------------------------------------------------
+            /*
+            [MALTA] /src/core/dispatched.js
+            */
             /*--------
             DISPATCHED
             --------*/
@@ -1865,6 +1913,9 @@
                 };
             })();
             //-----------------------------------------------------------------------------
+            /*
+            [MALTA] /src/core/outerjmvc.js
+            */
             /*--------
             JMVC outer
             --------*/
@@ -2036,6 +2087,9 @@
                 }
             };
             //-----------------------------------------------------------------------------
+            /*
+            [MALTA] /src/core/cleanup.js
+            */
             // $JMVC is DONE, clean up
             $JMVC.gc(
                 DEV_URL,
@@ -2055,6 +2109,9 @@
         _ = {}; // private ns for modules
     //
     // mandatory modules
+    /*
+    [MALTA] /src/modules/io.js
+    */
     /*-------------
     AJAX sub-module
     -------------*/
@@ -2282,6 +2339,9 @@
         }
     };
     //-----------------------------------------------------------------------------
+    /*
+    [MALTA] /src/modules/util.js
+    */
     /*-------------
     UTIL sub-module
     -------------*/
@@ -2457,6 +2517,9 @@
         }
     };
     //-----------------------------------------------------------------------------
+    /*
+    [MALTA] /src/modules/dom.js
+    */
     /*------------
     DOM sub-module
     ------------*/
@@ -2851,7 +2914,7 @@
         idize : function (el, prop) {
             prop = prop || _.dom.nodeAttrForIndex;
             //if (!el.hasOwnProperty(prop)) {
-            if (!el.prop) {
+            if (!(prop in el)) {
                 var nid = JMVC.util.uniqueid + '';
                 el[prop] = nid;
                 //save inverse
@@ -3111,12 +3174,18 @@
         }
     };
     //-----------------------------------------------------------------------------
+    /*
+    [MALTA] /src/modules/bom.js
+    */
     _.bom = {
     
     };
     JMVC.bom = {
     
     };
+    /*
+    [MALTA] /src/modules/events.js
+    */
     /*--------------
     EVENT sub-module
     --------------*/
@@ -3161,6 +3230,7 @@
             var fn;
     
             function store(el, evnt, cb) {
+    
                 var nid = JMVC.dom.idize(el);// _.events.nodeid(el);
                 !(evnt in _.events.bindings) && (_.events.bindings[evnt] = {});
     
@@ -3264,11 +3334,13 @@
                 return false;
             }
             
+    
             if (el.removeEventListener) {
                 el.removeEventListener(evnt, cb, false);
             } else if (el.detachEvent) {
                 el.detachEvent('on' + evnt, cb);
             }
+    
             //remove it from private bindings register
             unstore(evnt, nodeid, index);
             return true;
@@ -3702,6 +3774,9 @@
     JMVC.events.free(JMVC.WD.body);
     
      */
+    /*
+    [MALTA] /src/modules/head.js
+    */
     /*-------------
     HEAD sub-module
     -------------*/
@@ -3944,6 +4019,9 @@
         }
     };
     //-----------------------------------------------------------------------------
+    /*
+    [MALTA] /src/modules/css.js
+    */
     _.css = {
         opera : navigator.userAgent.match(/opera\/([^\s]*)/i),
         mappedStyles : {},
@@ -4181,6 +4259,9 @@
     
     
     
+    /*
+    [MALTA] /src/modules/array.js
+    */
     /*--------------
     ARRAY sub-module
     --------------*/
@@ -4352,6 +4433,9 @@
         }
     };
     //-----------------------------------------------------------------------------
+    /*
+    [MALTA] /src/modules/string.js
+    */
     /*---------------
     STRING sub-module
     ---------------*/
@@ -4432,6 +4516,14 @@
                 cnt = cnt.replace(o[i], i);
             }
             return cnt;
+        },
+        /**
+         * [nl2br description]
+         * @param  {[type]} str [description]
+         * @return {[type]}     [description]
+         */
+        nl2br : function (str) {
+            return str.replace(/\/n/gm, '<br />');
         },
         /**
          * [padme description]
@@ -4618,6 +4710,9 @@
         _.string.charToEntity[String.fromCharCode(_.string.entities[entityName])] = entityName;
     }
     //-----------------------------------------------------------------------------
+    /*
+    [MALTA] /src/modules/object.js
+    */
     /*---------------
     OBJECT sub-module
     ---------------*/
@@ -4805,6 +4900,9 @@
         }
     };
     //-----------------------------------------------------------------------------
+    /*
+    [MALTA] /src/modules/match.js
+    */
     /*--------------
     MATCH sub-module
     --------------*/
@@ -4839,6 +4937,9 @@
         }
     };
     //-----------------------------------------------------------------------------
+    /*
+    [MALTA] /src/modules/num.js
+    */
     /*------------
     NUM sub-module
     ------------*/
@@ -4856,6 +4957,9 @@
     	num : function (n) {return parseFloat(n.toFixed(10), 10); }
     };
     //-----------------------------------------------------------------------------
+    /*
+    [MALTA] /src/core/render.js
+    */
     /*----
     RENDER
     ----*/
@@ -4871,9 +4975,17 @@
         if (JMVC.p.lang) {
             JMVC.cookie.set('lang', JMVC.p.lang);
         }
+        if (JMVC.p.debug) {
+            alert('debug');
+            debugger;
+        }
+    
         !W.JMVCshut && JMVC.render();
     })();
     //-----------------------------------------------------------------------------
+    /*
+    [MALTA] /src/foot.js
+    */
     /**
      * [onerror description]
      * @param  {[type]} errorMsg   [description]
