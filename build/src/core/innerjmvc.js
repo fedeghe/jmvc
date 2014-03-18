@@ -110,6 +110,7 @@ jmvc = {
         // if the object passed has a initCheck function
         // the extension will take place only if the initCheck
         // return truly value
+        // 
         if (typeof obj.initCheck === 'function') {
             if (!obj.initCheck.call($JMVC)) {
                 return false;
@@ -235,9 +236,9 @@ jmvc = {
      * @param  {[type]} text [description]
      * @return {[type]}      [description]
      */
-    htmlspecialchars : function (text) {
+    htmlchars : function (text) {
         return text
-            .replace(/&/g, '&amp;')
+            .replace(/&(?![\w\#]+;)/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
@@ -248,7 +249,7 @@ jmvc = {
      * @param  {[type]} html [description]
      * @return {[type]}      [description]
      */
-    htmlspecialchars_decode : function (html) {
+    htmlchars_decode : function (html) {
         return html
             .replace(/&amp;/g, '&')
             .replace(/&lt;/g, '<')
@@ -355,7 +356,7 @@ jmvc = {
          */
         make : function (str, obj, ctx) {
             var chr = '.',
-                els = str.split(chr),
+                els = str.split(/\.|\//),
                 l = els.length,
                 ret;
             typeof ctx === undef && (ctx = W);
@@ -547,9 +548,13 @@ jmvc = {
             i = 0,
             arg = arguments,
             lArg = arg.length,
-            head = JMVC.WD.getElementsByTagName('head').item(0);
+            head = JMVC.WD.getElementsByTagName('head').item(0),
+            cb = null;
         //
         while (i < lArg) {
+            if (typeof arg[i] === 'function') {
+                cb = arg[i];
+            }
             if (typeof arg[i] === 'string' && !$JMVC.extensions[arg[i]]) {
                 // check if the required end with /, in this case
                 // 
@@ -578,12 +583,12 @@ jmvc = {
                         head.appendChild(s);
                         getmode === 'scriptghost' && head.removeChild(s);
                     }
-
                     $JMVC.extensions[arg[i]] = arg[i];
                 }
             }
             i += 1;
         }
+        cb && cb();
     },
     /* 
     * setter, getter, unsetter for $JMVC vars
