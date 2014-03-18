@@ -166,6 +166,39 @@ JMVC.array = {
      */
     sum : function (a) {
         return _.array.op(a, '+');
+    },
+
+    /**
+     * [unique description]
+     * @param  {[type]} a [description]
+     * @return {[type]}   [description]
+     */
+    unique2 : function (a) {
+        var r = [],
+            l = a.length,
+            i = 0, j;
+        for (i = 0; i < l; i++) {
+            for (j = i + 1; j < l; j++) 
+                if (a[i] == a[j]) j = ++i;
+            r.push(a[i]);
+        }
+        return r;
+    },
+/*
+[1,2,3,4,5,6,7,8,9]
+ i
+ j
+ */
+    unique : function (a) {    
+        var r = [],
+            l = a.length,
+            i = 0, j;
+        for (i = 0; i < l; i++) {
+            for (j = i + 1; j < l; j++) 
+                if (a[i] === a[j]) j = ++i;
+            r.push(a[i]);
+        }
+        return r;
     }
 };
 //-----------------------------------------------------------------------------
