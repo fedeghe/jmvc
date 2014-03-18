@@ -1,0 +1,10 @@
+<function>
+    <signature name="addRoutes">addRoutes(Mixed var, String val)</signature>
+    <description>Add action routes.</description>
+    <params>
+        <param name="*content">the content to render</param>
+        <param name="callback">a function that will be invoked after content is set</param>
+    </params>
+    <returns>the Controller instance</returns>
+    <status>incomplete</status>
+</function>

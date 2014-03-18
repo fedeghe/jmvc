@@ -1,0 +1,10 @@
+<function>
+    <signature name="delay">JMVC.events.delay(Javascript function func, Integer ms)</signature>
+    <description>Delay the execution of a function</description>
+    <params>
+        <param name="*func">Javascript function to be called</param>
+        <param name="*ms">Milliseconds to delayed call</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>

@@ -1,0 +1,20 @@
+<events>
+    $$src/events/bind.xml$$
+    $$src/events/delay.xml$$
+    $$src/events/end.xml$$
+    $$src/events/endRender.xml$$
+    $$src/events/eventTarget.xml$$
+    $$src/events/getCoord.xml$$
+    $$src/events/kill.xml$$
+    $$src/events/loadify.xml$$
+    $$src/events/one.xml$$
+    $$src/events/onEventOut.xml$$
+    $$src/events/preventDefault.xml$$
+    $$src/events/ready.xml$$
+    $$src/events/start.xml$$
+    $$src/events/scrollBy.xml$$
+    $$src/events/scrollTo.xml$$
+    $$src/events/startRender.xml$$
+    $$src/events/touch.xml$$
+    $$src/events/unbind.xml$$
+</events>

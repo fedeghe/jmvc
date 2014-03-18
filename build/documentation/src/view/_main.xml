@@ -1,0 +1,10 @@
+<view>
+    $$src/view/clone.xml$$
+    $$src/view/del.xml$$
+    $$src/view/get.xml$$
+    $$src/view/getFromUrl.xml$$
+    $$src/view/parse.xml$$
+    $$src/view/render.xml$$
+    $$src/view/set.xml$$
+    $$src/view/setFromUrl.xml$$
+</view>

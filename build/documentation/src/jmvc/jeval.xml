@@ -1,0 +1,10 @@
+<function>
+    <signature name="jeval">JMVC.jeval(String code)</signature>
+    <description>A stupid wrappper around eval function</description>
+    <params>
+        <param name="*code">the code to be evaluated</param>
+    </params>
+    <returns>what is returned by code evaluation</returns>
+    <status>incomplete</status>
+    <sample>var t  = JMVC.jeval('return "yess";');&#10;console.debug(t);</sample>
+</function>

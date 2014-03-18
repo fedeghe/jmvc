@@ -1,0 +1,14 @@
+<function>
+    <signature name="getModel">JMVC.getModel(String name [, Array params])</signature>
+    <description>This is a shortcut call for JMVC.factory, with the first parameter preset to 'model'</description>
+    <params>
+        <param name="*name">the name of the model that should be returned, even on a subfolder</param>
+        <param name="params">all parameters for the object constructor call</param>
+    </params>
+    <returns>the model instance, or false</returns>
+    <status>testing</status>
+    <sample>var me = JMVC.getModel('Persona', ['Federico', 35]),&#10;
+    you = JMVC.getModel('Persona', ['Frances', 4]);&#10;
+console.debug(me.hello());&#10;
+console.debug(you.hello());</sample>
+</function>

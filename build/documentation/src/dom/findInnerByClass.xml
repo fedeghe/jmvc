@@ -1,0 +1,11 @@
+<function>
+    <signature name="findInnerByClass">JMVC.dom.findInnerByClass(String tag, Literal attrs,String inner)</signature>
+    <description>creates a DOM node.</description>
+    <params>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">txt content</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>

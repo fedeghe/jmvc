@@ -1,0 +1,15 @@
+<function>
+    <signature name="debug">JMVC.debug(Mixed el)</signature>
+    <description>Debugs on console any element passed, degrading to the alert</description>
+    <params>
+        <param name="el">all parameters to be debugged</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <sample>&#10;
+var arr = [1,2,3,4,5],&#10;
+    obj =  {name : "Federico", surname : "Ghedina", say : "WAT"},&#10;
+    foo = function (){alert('foo'); };&#10;
+JMVC.debug(arr, obj, foo);
+</sample>
+    <status>testing</status>
+</function>

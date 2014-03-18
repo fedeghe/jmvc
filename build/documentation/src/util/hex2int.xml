@@ -1,0 +1,11 @@
+<function>
+    <signature name="hex2int">JMVC.util.hex2int(str, obj, ctx)</signature>
+    <description>Check a namspace</description>
+    <params>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>

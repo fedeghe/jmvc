@@ -1,0 +1,10 @@
+<function>
+    <signature name="insertAfter">JMVC.dom.insertAfter(Element newNode, Element referenceNode)</signature>
+    <description>inserts a sibling node after another one</description>
+    <params>
+        <param name="*newNode">the brand new node</param>
+        <param name="*referenceNode">the existing node where postpend the sibling</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>

@@ -1,0 +1,6 @@
+<io>
+    $$src/io/post.xml$$
+    $$src/io/get.xml$$
+    $$src/io/getJson.xml$$
+    $$src/io/getXML.xml$$
+</io>

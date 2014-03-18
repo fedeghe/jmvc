@@ -1,0 +1,10 @@
+<function>
+    <signature name="getCoord">JMVC.events.getCoord(Element el, Event e)</signature>
+    <description>given an element and a event, try to get event firing coordinates relative to the element</description>
+    <params>
+        <param name="*el">dom element target</param>
+        <param name="*e">the event</param>
+    </params>
+    <returns>Array [x, y]</returns>
+    <status>incomplete</status>
+</function>

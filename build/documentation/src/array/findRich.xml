@@ -1,0 +1,11 @@
+<function>
+    <signature name="findRich">JMVC.array.findRich(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <testlink>test_api_array_inarrayrich</testlink>
+    <status>incomplete</status>
+</function>

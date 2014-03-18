@@ -1,0 +1,10 @@
+<function>
+    <signature name="get">JMVC.get(String name)</signature>
+    <description>Retrieves a variable from the global JMVC scope</description>
+    <params>
+        <param name="*name">the name of the new variable to be retrieved</param>
+    </params>
+    <returns>the variable reference or value if found, or undefined</returns>
+    <sample>JMVC.set('a', 10);&#10;console.debug(JMVC.get('a'));</sample>
+    <status>testing</status>
+</function>

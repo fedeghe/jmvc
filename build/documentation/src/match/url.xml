@@ -1,0 +1,11 @@
+<function>
+    <signature name="url">JMVC.match.url(String url)</signature>
+    <description>Check if a the passed string represents a valid url</description>
+    <params>
+        <param name="url*">The string url that must be checked</param>
+    </params>
+    <returns>boolean</returns>
+    <sample>var t = JMVC.match.url('http://www.jmvc.org?map=true');</sample>
+    <status>incomplete</status>
+    <testlink></testlink>           
+</function>

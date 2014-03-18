@@ -1,0 +1,9 @@
+<function>
+    <signature name="scrollBy">JMVC.events.scrollBy(Javascript function func)</signature>
+    <description>binds a callback to document load event</description>
+    <params>
+        <param name="*func">Javascript function callback</param>
+    </params>
+    <returns></returns>
+    <status>incomplete</status>
+</function>

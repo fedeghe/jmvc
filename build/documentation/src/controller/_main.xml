@@ -1,0 +1,9 @@
+<controller>
+    $$src/controller/addRoutes.xml$$
+    $$src/controller/del.xml$$
+    $$src/controller/get.xml$$
+    $$src/controller/relocate.xml$$
+    $$src/controller/render.xml$$
+    $$src/controller/reset.xml$$
+    $$src/controller/set.xml$$
+</controller>

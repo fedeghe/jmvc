@@ -1,0 +1,10 @@
+<function>
+    <signature name="Interface">JMVC.Interface(String name, [Strings] methods)</signature>
+    <description>Create an interface object</description>
+    <params>
+        <param name="*name">the name for the interface (used in case of error)</param>
+        <param name="*methods">an array of strings</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>

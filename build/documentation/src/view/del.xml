@@ -1,0 +1,9 @@
+<function>
+    <signature name="del">del(String varname)</signature>
+    <description>If exists deletes a variable from the View registry.</description>
+    <params>
+        <param name="*varname">the name of the variable to be deleted</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>

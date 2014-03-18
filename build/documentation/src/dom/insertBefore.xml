@@ -1,0 +1,10 @@
+<function>
+    <signature name="insertBefore">JMVC.dom.insertBefore(Element newNode, Element referenceNode)</signature>
+    <description>inserts a sibling node before another one</description>
+    <params>
+        <param name="*newNode">the brand new node</param>
+        <param name="*referenceNode">the existing node where prepend the sibling</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>

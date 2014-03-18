@@ -1,0 +1,11 @@
+<function>
+    <signature name="extend">JMVC.object.extend(obj, extension)</signature>
+    <description>Check a namspace</description>
+    <params>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+    </params>
+    <returns>Object</returns>
+    <status>incomplete</status>
+</function>

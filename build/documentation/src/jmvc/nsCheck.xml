@@ -1,0 +1,16 @@
+<function>
+    <signature name="nsCheck">JMVC.nsCheck(String ns [,Object ctx])</signature>
+    <description>Returns a namespace if exists</description>
+    <params>
+        <param name="*ns">The namespace to check, a String dot glued</param>
+        <param name="ctx" default="Window">The root namespace</param>
+    </params>
+    <returns>namespace || false</returns>
+    <sample>&#10;
+var loaded_extensions = JMVC.nsCheck('extensions', JMVC),&#10;
+    // or&#10; 
+    loadedExtensions =  JMVC.nsCheck('JMVC.extensions'),&#10;
+    foo = JMVC.nsCheck('foo', JMVC); //false</sample>
+    <status>complete</status>
+    <testlink>test_api_jmvc_checkns</testlink>
+</function>

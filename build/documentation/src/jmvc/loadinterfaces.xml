@@ -1,0 +1,10 @@
+<function>
+    <signature name="loadinterfaces">JMVC.loadinterfaces(String name)</signature>
+    <description>This is a shortcut call for the factory, with the first parameter preset to 'interface'</description>
+    <params>
+        <param name="*name">the name of the interface that must be loaded</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>testing</status>
+    <sample>var me = JMVC.loadinterfaces('loader')</sample>
+</function>

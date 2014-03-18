@@ -1,0 +1,9 @@
+<function>
+    <signature name="eventTarget">JMVC.events.eventTarget(Event e)</signature>
+    <description>given an event sholud retrieve the original target for that event</description>
+    <params>
+        <param name="*e">the event</param>
+    </params>
+    <returns>DOM Element</returns>
+    <status>incomplete</status>
+</function>

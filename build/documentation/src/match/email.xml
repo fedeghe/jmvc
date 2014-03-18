@@ -1,0 +1,11 @@
+<function>
+    <signature name="email">JMVC.match.email(String email)</signature>
+    <description>Check if a the passed string represents a valid email</description>
+    <params>
+        <param name="email*">The string email that must be checked</param>
+    </params>
+    <returns>boolean</returns>
+    <sample>var t = JMVC.match.email('fedeghe@gmail.com');</sample>
+    <status>incomplete</status>
+    <testlink></testlink>           
+</function>

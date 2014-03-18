@@ -1,0 +1,11 @@
+<function>
+    <signature name="addscript">JMVC.head.addscript(String src, Boolean parse, Boolean explicit)</signature>
+    <description>Add a script in the head section</description>
+    <params>
+        <param name="*src">this can be the url of the script or the script content (you can even use \{\{myscript name=`hello` ... \{\} )</param>
+        <param name="parse">set true if You mean to use JMVC.vars variables placeholders in the script</param>
+        <param name="explicit">set true if You mean to pass the script content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>

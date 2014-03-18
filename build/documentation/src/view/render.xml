@@ -1,0 +1,11 @@
+<function>
+    <signature name="render">render(Literal pars{Javascript function cback, Array argz, String target})</signature>
+    <description>This is the function intended to be used to render the document or a part of it. You can optionally pass three elements within a literal object.</description>
+    <params>
+        <param name="cback">a callback function that will be executed after rendering</param>
+        <param name="argz">an array of parameters that will be passed to the callback</param>
+        <param name="target">the default target is document.body but if you pass a string containing the id attribute of an element that is in the\n\t\t\t\t\tDOM (set from previous render with the default target) the content will be set in that element.</param>
+    </params>
+    <returns>the View instance</returns>
+    <status>incomplete</status>
+</function>

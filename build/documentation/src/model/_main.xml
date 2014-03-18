@@ -1,0 +1,6 @@
+<model>
+    $$src/model/del.xml$$
+    $$src/model/get.xml$$
+    $$src/model/reset.xml$$
+    $$src/model/set.xml$$
+</model>

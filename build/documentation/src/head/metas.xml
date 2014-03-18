@@ -1,0 +1,9 @@
+<function>
+    <signature name="metas">JMVC.head.metas()</signature>
+    <description>Get all the document meta tags</description>
+    <params>
+        <param name="noparams">this function needs no parameters</param>
+    </params>
+    <returns>Nodes Array</returns>
+    <status>incomplete</status>
+</function>

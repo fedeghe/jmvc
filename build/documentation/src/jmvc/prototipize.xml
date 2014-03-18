@@ -1,0 +1,41 @@
+<function>
+    <signature name="prototipize">JMVC.prototipize(Constructor func, Enanching Literal)</signature>
+    <description>Allows to add properties and methods to the prototype of a constructor</description>
+    <params>
+        <param name="*unc">the constructor to be enanched</param>
+        <param name="*name">the literal object that contains wanted properties and methods</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+    <sample>function Complex(re, im) {&#10;
+    this._re = re;&#10;
+    this._im = im;&#10;
+    this._rho = Math.sqrt(re * re + im * im, 2);&#10;
+    this._theta = Math.atan2(im, re);&#10;
+    this._mod = null;&#10;
+    this.toString = function (){&#10;
+        return this._re +&#10;
+            (this._im >= 0 ? ' + ' : ' - ') +&#10;
+            Math.abs(this._im) +'i';&#10;
+    }&#10;
+};&#10;
+JMVC.prototipize(Complex, {&#10;
+    'mod' : function () {&#10;
+        this._mod = Math.sqrt(&#10;
+            this._re * this._re +&#10;
+            this._im * this._im&#10;
+        );&#10;
+        return this._mod;&#10;
+    },&#10;
+    'add' : function (cplx) {&#10;
+        return new Complex(&#10;
+            this._re + cplx._re,&#10;
+            this._im + cplx._im&#10;
+        );&#10;
+    }&#10;
+});&#10;
+var c1 = new Complex(3, 4),&#10;
+    c2 = new Complex(7, 2);&#10;
+console.debug(c1.mod());&#10;
+console.debug(c1.add(c2) + '');&#10;</sample>
+</function>

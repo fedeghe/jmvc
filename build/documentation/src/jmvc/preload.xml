@@ -1,0 +1,12 @@
+<function>
+    <signature name="preload">JMVC.preload(String url)</signature>
+    <description>Appends a 1px square iframe to the body, loading the specified url (from the same origin), and removes it as far as the content is loaded. That will speed up dramatically the loading time of the page pointed by the url</description>
+    <params>
+        <param name="*url">the url that must be loaded</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+    <sample>//open console and execute&#10;
+console.clear();&#10;
+JMVC.preload(JMVC.vars.baseurl + '/demo');</sample>
+</function>

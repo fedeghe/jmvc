@@ -1,0 +1,11 @@
+<function>
+    <signature name="implement">JMVC.implement(Object o, Array interf)</signature>
+    <description>Gets a model instance, even on a subfolder</description>
+    <params>
+        <param name="*o">the Object to check</param>
+        <param name="*interf">an array of target functions that caracterize the interface</param>
+    </params>
+    <returns>boolean</returns>
+    <status>complete</status>
+    <testlink>test_api_jmvc_implement</testlink>
+</function>

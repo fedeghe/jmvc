@@ -1,0 +1,10 @@
+<function>
+    <signature name="append">JMVC.dom.append(Element where, Element what)</signature>
+    <description>appends an DOM node inside another one</description>
+    <params>
+        <param name="*where">DOM target node</param>
+        <param name="*what">DOM node to append</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>

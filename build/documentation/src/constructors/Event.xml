@@ -1,0 +1,30 @@
+<function>
+    <signature name="Event">JMVC.Event(sender)</signature>
+    <description>Event is a special constructor to get an Event object with an attach and notify method</description>
+    <params>
+        <param name="*sender">The sender object</param>
+    </params>
+    <returns>the breand new object</returns>
+    <sample>&#10;
+var list = {&#10;
+        els : [],&#10;
+        addedItem : new JMVC.Event(list),&#10;
+        deletedItem : new JMVC.Event(list),&#10;
+        add : function (s) {&#10;
+        this.els.push(s) &amp;&amp;&#10;
+        this.addedItem.notify({item : s});&#10;
+    },&#10;
+    del : function (i) {&#10;
+    this.els.splice(i, 1) &amp;&amp;&#10;
+    this.deletedItem.notify({index : i});&#10;
+    }&#10;
+};&#10;
+list.addedItem.attach(function () {console.debug(arguments)});&#10;
+list.deletedItem.attach(function () {console.debug(arguments)});&#10;
+list.add('a');&#10;
+list.add('b');&#10;
+list.add('c');&#10;
+list.del(1);&#10;
+list.els;</sample>
+    <status>incomplete</status>
+</function>

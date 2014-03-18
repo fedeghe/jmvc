@@ -1,0 +1,10 @@
+<function>
+    <signature name="unique">JMVC.array.unique(Array a)</signature>
+    <description>Return the passed array free of duplicated</description>
+    <params>
+        <param name="a">The array to clean</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <testlink>test_api_array_unique</testlink>
+    <status>incomplete</status>
+</function>

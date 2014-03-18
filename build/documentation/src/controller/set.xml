@@ -1,0 +1,10 @@
+<function>
+    <signature name="set">set(String varname, Mixed value)</signature>
+    <description>Add a variable to the Controller registry.</description>
+    <params>
+        <param name="*varname">the name of the variable</param>
+        <param name="*value">the value for the variable</param>
+    </params>
+    <returns>the controller instance</returns>
+    <status>incomplete</status>
+</function>

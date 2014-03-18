@@ -1,0 +1,9 @@
+<function>
+    <signature name="getXML">JMVC.io.getXML(String uri)</signature>
+    <description>Evaluate a json and return it</description>
+    <params>
+        <param name="uri">The resource to get</param>
+    </params>
+    <returns>The evaluated object or false</returns>
+    <status>incomplete</status>
+</function>

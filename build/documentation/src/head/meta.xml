@@ -1,0 +1,10 @@
+<function>
+    <signature name="meta">JMVC.head.meta(String name, String value, String mode)</signature>
+    <description>Add</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>

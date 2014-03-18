@@ -1,0 +1,10 @@
+<function>
+    <signature name="getView">JMVC.getView(String name)</signature>
+    <description>This is a shortcut call for JMVC.factory, with the first parameter preset to 'view'</description>
+    <params>
+        <param name="*name">the name of the new view</param>
+    </params>
+    <returns>the view instance or false</returns>
+    <status>testing</status>
+    <sample>var me = JMVC.getView('foot');&#10;console.debug(me.content);</sample>
+</function>

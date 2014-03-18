@@ -1,0 +1,9 @@
+<function>
+    <signature name="clone">JMVC.array.clone(Array arr)</signature>
+    <description>Clones an array</description>
+    <params>
+        <param name="arr">The array to be cloned</param>
+    </params>
+    <returns>The cloned array (Array)</returns>
+    <status>incomplete</status>
+</function>

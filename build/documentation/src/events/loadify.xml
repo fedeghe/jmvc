@@ -1,0 +1,11 @@
+<function>
+    <signature name="loadify">JMVC.events.loadify(Element el, String type, Javascript function fun)</signature>
+    <description>binds a callback to an event fired from an element</description>
+    <params>
+        <param name="el*">dom element target</param>
+        <param name="*type">the event string</param>
+        <param name="*func">Javascript function callback</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>

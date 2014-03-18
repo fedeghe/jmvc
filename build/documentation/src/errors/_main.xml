@@ -1,0 +1,8 @@
+<errors>
+    $$src/errors/ActionNotFound.xml$$
+    $$src/errors/BadImplement.xml$$
+    $$src/errors/BadName.xml$$
+    $$src/errors/BadParams.xml$$
+    $$src/errors/ControllerNotFound.xml$$
+    $$src/errors/Network.xml$$
+</errors>

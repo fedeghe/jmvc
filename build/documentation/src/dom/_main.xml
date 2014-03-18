@@ -1,0 +1,35 @@
+<dom>
+    $$src/dom/add.xml$$
+    $$src/dom/addClass.xml$$
+    $$src/dom/append.xml$$
+    $$src/dom/attr.xml$$
+    $$src/dom/body.xml$$
+    $$src/dom/childs.xml$$
+    $$src/dom/clone.xml$$
+    $$src/dom/create.xml$$
+    $$src/dom/createText.xml$$
+    $$src/dom/createNS.xml$$
+    $$src/dom/empty.xml$$
+    $$src/dom/find.xml$$
+    $$src/dom/findInnerByClass.xml$$
+    $$src/dom/findByAttribute.xml$$
+    $$src/dom/findAncestor.xml$$
+    $$src/dom/hasAttribute.xml$$
+    $$src/dom/hasClass.xml$$
+    $$src/dom/html.xml$$
+    $$src/dom/insertAfter.xml$$
+    $$src/dom/insertBefore.xml$$
+    $$src/dom/isElement.xml$$
+    $$src/dom/isNode.xml$$
+    $$src/dom/nodeTypeString.xml$$
+    $$src/dom/nthchild.xml$$
+    $$src/dom/preloadImage.xml$$
+    $$src/dom/parent.xml$$
+    $$src/dom/prepend.xml$$
+    $$src/dom/remove.xml$$
+    $$src/dom/removeAttribute.xml$$
+    $$src/dom/removeClass.xml$$
+    $$src/dom/swap.xml$$
+    $$src/dom/switchClass.xml$$
+    $$src/dom/val.xml$$
+</dom>

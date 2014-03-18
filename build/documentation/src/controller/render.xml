@@ -1,0 +1,10 @@
+<function>
+    <signature name="render">render(String content, Javascript function callback)</signature>
+    <description>Renders directly something from the controller, optionally invokes a callback at the end.</description>
+    <params>
+        <param name="*content">the content to render</param>
+        <param name="callback">a function that will be invoked after content is set</param>
+    </params>
+    <returns>the Controller instance</returns>
+    <status>incomplete</status>
+</function>

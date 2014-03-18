@@ -1,0 +1,12 @@
+<function>
+    <signature name="add">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>

@@ -1,0 +1,9 @@
+<function>
+    <signature name="end">JMVC.events.end(Javascript function func)</signature>
+    <description>add a function to the end render queue</description>
+    <params>
+        <param name="*func">Javascript function callback</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>

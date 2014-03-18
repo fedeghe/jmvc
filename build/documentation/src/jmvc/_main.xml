@@ -1,0 +1,34 @@
+<jmvc>
+    $$src/jmvc/console.xml$$
+    $$src/jmvc/debug.xml$$
+    $$src/jmvc/del.xml$$
+    $$src/jmvc/delegate.xml$$
+    $$src/jmvc/each.xml$$
+    $$src/jmvc/extend.xml$$
+    $$src/jmvc/factory.xml$$
+    $$src/jmvc/get.xml$$
+    $$src/jmvc/getModel.xml$$
+    $$src/jmvc/getView.xml$$
+    $$src/jmvc/hook.xml$$
+    $$src/jmvc/hookCheck.xml$$
+    $$src/jmvc/htmlchars.xml$$
+    $$src/jmvc/htmlchars_decode.xml$$
+    $$src/jmvc/implement.xml$$
+    $$src/jmvc/inherit.xml$$
+    $$src/jmvc/jeval.xml$$
+    $$src/jmvc/lang.xml$$
+    $$src/jmvc/loadinterfaces.xml$$
+    $$src/jmvc/nsCheck.xml$$
+    $$src/jmvc/nsMake.xml$$
+    $$src/jmvc/parselang.xml$$
+    $$src/jmvc/preload.xml$$
+    $$src/jmvc/prototipize.xml$$
+    $$src/jmvc/purge.xml$$
+    $$src/jmvc/require.xml$$
+    $$src/jmvc/set.xml$$
+    <param>
+        <name>W</name>
+        <type>reference</type>
+        <description>JMVC.W is a reference to th current window object</description>
+    </param>
+</jmvc>

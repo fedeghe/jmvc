@@ -1,0 +1,9 @@
+<function>
+    <signature name="endRender">JMVC.events.endrender()</signature>
+    <description>executes the end render queue</description>
+    <params>
+        <param name="">no params</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>

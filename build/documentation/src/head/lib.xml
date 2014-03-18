@@ -1,0 +1,10 @@
+<function>
+    <signature name="lib">JMVC.head.lib(String lib)</signature>
+    <description>Loads an external library</description>
+    <params>
+        <param name="lib">Library name, now only 'jquery' is available (use CDN)</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+    <sample>JMVC.head.lib('jquery');</sample>
+</function>

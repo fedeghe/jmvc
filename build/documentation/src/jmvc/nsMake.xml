@@ -1,0 +1,13 @@
+<function>
+    <signature name="nsMake">JMVC.nsMake(String str, Literal obj, var ctx)</signature>
+    <description>Creates a namspace</description>
+    <params>
+        <param name="*str">Dot separated wished namespace</param>
+        <param name="obj" default="{}">The inner object of the namespace</param>
+        <param name="ctx" default="window">The root for the namespace</param>
+    </params>
+    <returns>the brand new ns</returns>
+    <status>incomplete</status>
+    <sample>JMVC.nsMake('y.d',{name:'Fred'}, JMVC);&#10;console.debug(JMVC.y.d.name);&#10;//&#10;
+JMVC.nsMake('y.d');&#10;console.debug(y.d);</sample>
+</function>

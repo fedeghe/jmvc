@@ -1,0 +1,13 @@
+<head>
+    $$src/head/addscript.xml$$
+    $$src/head/addstyle.xml$$
+    $$src/head/denyiXrame.xml$$
+    $$src/head/goto.xml$$
+    $$src/head/lastmodified.xml$$
+    $$src/head/lib.xml$$
+    $$src/head/link.xml$$
+    $$src/head/meta.xml$$
+    $$src/head/metas.xml$$
+    $$src/head/reload.xml$$
+    $$src/head/title.xml$$
+</head>

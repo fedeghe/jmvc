@@ -1,0 +1,19 @@
+<function>
+    <signature name="hook">JMVC.hook(ObjLit hooks [, boolean force])</signature>
+    <description>That function allows to add a function to four inner predefined hook queues; it is possible to define through that method even new hooks and trigger execution anywhere in your code using the function hookCheck.
+        Note that 'onBeforeRender', 'onAfterRender', 'onBeforeParse', 'onAfterParse' are existent inner hooks used at parse and render time.</description>
+    <params>
+        <param name="*hooks">the object literal containing hooked functions</param>
+        <param name="force">hook the function even if the hook is not in the expected set ['onBeforeRender', 'onAfterRender', 'onBeforeParse', 'onAfterParse']</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>testing</status>
+    <sample>// INNER HOOK&#10;
+JMVC.hook({'onAfterRender': function (){alert('You`ll never see that message booking that function from the console!!!'); }});&#10;
+// USER DEFINED HOOK&#10;
+function foo() {&#10;
+    JMVC.hookCheck('myhook', [1,2,3]);&#10;
+};&#10;
+JMVC.hook({'myhook': function () {console.debug(arguments); }}, true);&#10;
+foo();</sample>
+</function>

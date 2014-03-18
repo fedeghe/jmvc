@@ -1,0 +1,10 @@
+<function>
+    <signature name="html">JMVC.dom.html(Element el, String html)</signature>
+    <description>sets or returns the html into an existing element.</description>
+    <params>
+        <param name="*el">dom element target</param>
+        <param name="html">html to set in target, otherwise gets it</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>

@@ -1,0 +1,9 @@
+<function>
+    <signature name="title">JMVC.head.title(String title)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="title">The string You want to be set as document title</param>
+    </params>
+    <returns>the title if no param is passed</returns>
+    <status>incomplete</status>
+</function>

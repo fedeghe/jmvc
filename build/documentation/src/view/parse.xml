@@ -1,0 +1,9 @@
+<function>
+    <signature name="parse">parse(Model object)</signature>
+    <description>If the view has some &#36;var&#36; placeholders within and these variables are stored in a model instance with the right names, that method get values from model instance and uses them in the placeholders content substitution.</description>
+    <params>
+        <param name="object">Is a Model instance which should contain variables that the view will render through placeholders substitution.</param>
+    </params>
+    <returns>the View instance (to access the content use .content attribute)</returns>
+    <status>incomplete</status>
+</function>

@@ -1,0 +1,14 @@
+<util>
+    $$src/util/deg2rad.xml$$
+    $$src/util/getParameters.xml$$
+    $$src/util/getType.xml$$
+    $$src/util/hex2int.xml$$
+    $$src/util/int2hex.xml$$
+    $$src/util/isArray.xml$$
+    $$src/util/isObject.xml$$
+    $$src/util/isSet.xml$$
+    $$src/util/isTypeOf.xml$$
+    $$src/util/now.xml$$
+    $$src/util/rad2deg.xml$$
+    $$src/util/range.xml$$
+</util>

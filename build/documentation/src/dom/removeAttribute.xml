@@ -1,0 +1,11 @@
+<function>
+    <signature name="removeAttribute">JMVC.dom.removeAttribute(Element node, int  num [, Array types ])</signature>
+    <description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+    <params>
+        <param name="node">The parent where search n-th child</param>
+        <param name="num">Starting from 0 the number of the child needed</param>
+        <param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>

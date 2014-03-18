@@ -1,0 +1,9 @@
+<function>
+    <signature name="get">get(String varname)</signature>
+    <description>If exists retrieve a variable from the View registry.</description>
+    <params>
+        <param name="*varname">the name of the variable needed</param>
+    </params>
+    <returns>the variable value if exists or false</returns>
+    <status>incomplete</status>
+</function>

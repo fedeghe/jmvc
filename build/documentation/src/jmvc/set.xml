@@ -1,0 +1,13 @@
+<function>
+    <signature name="set">JMVC.set(String name, String value)</signature>
+    <description>Adds a variable that You can use anywhere</description>
+    <params>
+        <param name="*name">the name of the new variable, use it typing &#36;thename&#36;</param>
+        <param name="*value">the value of the variable</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+    <sample>JMVC.set('a', 10);&#10;
+var t = JMVC.get('a');&#10;
+JMVC.del('a');</sample>
+</function>

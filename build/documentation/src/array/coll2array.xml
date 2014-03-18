@@ -1,0 +1,13 @@
+<function>
+    <signature name="coll2array">JMVC.array.coll2array(HTMLCollection coll)</signature>
+    <description>Get an array from an HTMLCollection</description>
+    <params>
+        <param name="coll">The HTMLCollection</param>
+    </params>
+    <returns>array containing the HTMLCollection elements (array)</returns>
+    <testlink>test_api_array_coll2array</testlink>
+    <sample>&#10;
+var a = JMVC.array.coll2array(document.getElementsByTagName('div'));&#10;
+console.debug(JMVC.util.getType(a));</sample>
+    <status>testing</status>
+</function>

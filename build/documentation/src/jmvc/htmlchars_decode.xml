@@ -1,0 +1,9 @@
+<function>
+    <signature name="htmlchars_decode">JMVC.htmlchars_decode(String str)</signature>
+    <description>Gets a view instance, even on a subfolder</description>
+    <params>
+        <param name="*str">the string that must be changed</param>
+    </params>
+    <returns>the string with substituted char</returns>
+    <status>complete</status>
+</function>

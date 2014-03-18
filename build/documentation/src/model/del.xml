@@ -1,0 +1,9 @@
+<function>
+    <signature name="del">del(String varname)</signature>
+    <description>removes from a model a variable</description>
+    <params>
+        <param name="*varname">the variablethat must be removed</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>

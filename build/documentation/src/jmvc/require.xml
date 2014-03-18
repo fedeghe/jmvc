@@ -1,0 +1,10 @@
+<function>
+    <signature name="require">JMVC.require(String extension1, String extension2, ...)</signature>
+    <description>Loads one or more extensions into the JMVC object</description>
+    <params>
+        <param name="*extension1">the name of the javascript file (must be in extensions folder) to be loaded. That file will use JMVC.extend function (see the `More` section)</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+    <sample>JMVC.require('animator','tricks');&#10;JMVC.tricks.makeEditable();&#10;alert('Now try to edit the document');</sample>
+</function>

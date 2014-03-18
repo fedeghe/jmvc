@@ -1,0 +1,10 @@
+<function>
+    <signature name="unbind">JMVC.events.unbind(Element el, String type)</signature>
+    <description>unbinds an existing binding</description>
+    <params>
+        <param name="*el">dom element target</param>
+        <param name="*type">the event string</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>

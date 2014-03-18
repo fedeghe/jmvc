@@ -1,0 +1,13 @@
+<function>
+    <signature name="purge">JMVC.purge(obj Literal)</signature>
+    <description>Nullifies tha object passed as parameter</description>
+    <params>
+        <param name="*obj">the literal</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+    <sample>var t = {name:'Jhon', surname:'foo'};&#10;
+console.log(t);&#10;
+JMVC.purge(t);&#10;
+console.log(t);</sample>
+</function>

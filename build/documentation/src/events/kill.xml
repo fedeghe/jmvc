@@ -1,0 +1,9 @@
+<function>
+    <signature name="kill">JMVC.events.kill(Event e)</signature>
+    <description>kills an event</description>
+    <params>
+        <param name="*e">the event</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>

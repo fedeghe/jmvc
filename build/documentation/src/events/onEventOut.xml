@@ -1,0 +1,11 @@
+<function>
+    <signature name="onEventOut">JMVC.events.onEventOut(String type, Element el, Javascript function cb)</signature>
+    <description>Triggers a callback as the specified event is fired outside the specified element</description>
+    <params>
+        <param name="*type">the event string</param>
+        <param name="el*">dom element target</param>
+        <param name="*func">Javascript function callback</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>testing</status>
+</function>

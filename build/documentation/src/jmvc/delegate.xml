@@ -1,0 +1,14 @@
+<function>
+    <signature name="delegate">JMVC.delegate(Function func, Object obj)</signature>
+    <description>Get a function with a delegated context</description>
+    <params>
+        <param name="*func">the function that must be binded to the object</param>
+        <param name="*obj">the object where the function must be binded</param>
+    </params>
+    <returns>the function binded</returns>
+    <sample>var y = {type:'literal'},&#10;
+    t = JMVC.delegate(function(){console.debug(this.type);}, y);&#10;
+t(); // literal&#10;</sample>
+    <status>complete</status>
+    <testlink>test_api_jmvc_delegate</testlink>
+</function>

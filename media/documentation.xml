@@ -1,478 +1,527 @@
 <?xml version="1.0"?>
 <api>
 <!--
-
-	
-
-                                                
-         _/  _/      _/  _/      _/    _/_/_/   
-        _/  _/_/  _/_/  _/      _/  _/          
-       _/  _/  _/  _/  _/      _/  _/           
-_/    _/  _/      _/    _/  _/    _/            
- _/_/    _/      _/      _/        _/_/_/       
-
-
+[MALTA] /src/jmvc/_main.xml
 -->
-
-	<jmvc>
-		<function>
-			<signature name="console">JMVC.console()</signature>
-			<description>Toggles html+css+js+preview console</description>
-			<params>
-				<param name="">this function needs no parameters</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<sample>JMVC.console();</sample>
-			<status>testing</status>
-		</function>
-
-		<function>
-			<signature name="debug">JMVC.debug(String name)</signature>
-			<description>Debugs on console any element passed, degrading to the alert</description>
-			<params>
-				<param name="...">all parameters to be debugged</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<sample>&#10;
+<jmvc>
+<!--
+[MALTA] /src/jmvc/console.xml
+-->
+<function>
+    <signature name="console">JMVC.console()</signature>
+    <description>Toggles html+css+js+preview console</description>
+    <params>
+        <param name="">this function needs no parameters</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <sample>JMVC.console();</sample>
+    <status>testing</status>
+</function>
+<!--
+[MALTA] /src/jmvc/debug.xml
+-->
+<function>
+    <signature name="debug">JMVC.debug(Mixed el)</signature>
+    <description>Debugs on console any element passed, degrading to the alert</description>
+    <params>
+        <param name="el">all parameters to be debugged</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <sample>&#10;
 var arr = [1,2,3,4,5],&#10;
     obj =  {name : "Federico", surname : "Ghedina", say : "WAT"},&#10;
     foo = function (){alert('foo'); };&#10;
 JMVC.debug(arr, obj, foo);
 </sample>
-			<status>testing</status>
-		</function>
-		<function>
-			<signature name="del">JMVC.del(String name)</signature>
-			<description>Removes a variable from the global JMVC register</description>
-			<params>
-				<param name="*name">the name of the new variable to be removed</param>
-			</params>
-			<returns>JMVC</returns>
-			<sample>JMVC.set('a', 10);&#10;
+    <status>testing</status>
+</function>
+<!--
+[MALTA] /src/jmvc/del.xml
+-->
+<function>
+    <signature name="del">JMVC.del(String name)</signature>
+    <description>Removes a variable from the global JMVC register</description>
+    <params>
+        <param name="*name">the name of the new variable to be removed</param>
+    </params>
+    <returns>JMVC</returns>
+    <sample>JMVC.set('a', 10);&#10;
 var t = JMVC.get('a');&#10;
-JMVC.del('a');
-			</sample>
-			<status>testing</status>
-		</function>
-
-		
-		<function>
-			<signature name="delegate">JMVC.delegate(Function func, Object obj)</signature>
-			<description>Get a function with a delegated context</description>
-			<params>
-				<param name="*func">the function that must be binded to the object</param>
-				<param name="*obj">the object where the function must be binded</param>
-			</params>
-			<returns>the function binded</returns>
-			<sample>var y = {type:'literal'},&#10;
+JMVC.del('a');</sample>
+    <status>testing</status>
+</function>
+<!--
+[MALTA] /src/jmvc/delegate.xml
+-->
+<function>
+    <signature name="delegate">JMVC.delegate(Function func, Object obj)</signature>
+    <description>Get a function with a delegated context</description>
+    <params>
+        <param name="*func">the function that must be binded to the object</param>
+        <param name="*obj">the object where the function must be binded</param>
+    </params>
+    <returns>the function binded</returns>
+    <sample>var y = {type:'literal'},&#10;
     t = JMVC.delegate(function(){console.debug(this.type);}, y);&#10;
 t(); // literal&#10;</sample>
-			<status>complete</status>
-			<testlink>test_api_jmvc_delegate</testlink>
-		</function>
-
-
-		<function>
-			<signature name="each">JMVC.each(obj, fn)</signature>
-			<description>Loop over an object literal or Array, the callback at each cycle will receive the object and his index. As far as the callback has a name, the two `continue` and `break` function are available</description>
-			<params>
-				<param name="*obj">the object to loop Object literal or Array</param>
-				<param name="*fn">the loop callback</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<sample>&#10;
+    <status>complete</status>
+    <testlink>test_api_jmvc_delegate</testlink>
+</function>
+<!--
+[MALTA] /src/jmvc/each.xml
+-->
+<function>
+    <signature name="each">JMVC.each(obj, fn)</signature>
+    <description>Loop over an object literal or Array, the callback at each cycle will receive the object and his index. As far as the callback has a name, the two `continue` and `break` function are available</description>
+    <params>
+        <param name="*obj">the object to loop Object literal or Array</param>
+        <param name="*fn">the loop callback</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <sample>&#10;
 var obj = {name:'Federico', surname : 'Ghedina', says : 'wat'},&#10;
-	arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],&#10;
-	objAfter = JMVC.each(obj, function (el, i) {&#10;
-		console.debug(i, el);&#10;
-	}),&#10;
-	arrAfter = JMVC.each(arr, function f(el, i) {&#10;
-		if (i % 2) { //will skip odd indexed elements&#10;
-			f.continue();&#10;
-		}&#10;
-		return i;&#10;
-	});&#10;
+    arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],&#10;
+    objAfter = JMVC.each(obj, function (el, i) {&#10;
+        console.debug(i, el);&#10;
+    }),&#10;
+    arrAfter = JMVC.each(arr, function f(el, i) {&#10;
+        if (i % 2) { //will skip odd indexed elements&#10;
+            f.continue();&#10;
+        }&#10;
+        return i;&#10;
+    });&#10;
 console.debug(obj, objAfter);&#10;
 console.debug(arr, arrAfter);&#10;</sample>
-			<status>testing</status>
-			<testlink>test_api_jmvc_each</testlink>>
-		</function>
-
-		<function>
-			<signature name="extend">JMVC.extend(String section, Literal extension)</signature>
-			<description>Extends JMVC object with Your objects</description>
-			<params>
-				<param name="*section">	that parameter is needed to set the namespace under which Your functions will be added toJMVC; valid values are `foo` or even `foo1.foo2.foo3`</param>
-				<param name="*extension">this object literal defines all the functions in your extension (JMVC is in that scope, so You can use it)</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>testing</status>
-			<sample>JMVC.extend('fooWidget', {&#10;
-	// if specified, will lock the extension&#10;
-	// for any value returned but true&#10;
-	initCheck : function () {&#10;
-		console.debug('init check');&#10;
-		return true;&#10;
-	},&#10;
-	// if specified, will be executed immediately&#10;
-	init : function () {&#10;
-		console.debug('init fooWidget');&#10;
-	},&#10;
-	// ... specify your methods&#10;
-	start : function () {&#10;
-		console.debug('doing foo');&#10;
-	}&#10;
-	// ...&#10;
+    <status>testing</status>
+    <testlink>test_api_jmvc_each</testlink>>
+</function>
+<!--
+[MALTA] /src/jmvc/extend.xml
+-->
+<function>
+    <signature name="extend">JMVC.extend(String section, Literal extension)</signature>
+    <description>Extends JMVC object with Your objects</description>
+    <params>
+        <param name="*section"> that parameter is needed to set the namespace under which Your functions will be added to JMVC; valid values are `foo` or even `foo1.foo2.foo3`</param>
+        <param name="*extension">this object literal defines all the functions in your extension (JMVC is in that scope, so You can use it)</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>testing</status>
+    <sample>JMVC.extend('fooWidget', {&#10;
+    // if specified, will lock the extension&#10;
+    // for any value returned but true&#10;
+    initCheck : function () {&#10;
+        console.debug('init check');&#10;
+        return true;&#10;
+    },&#10;
+    // if specified, will be executed immediately&#10;
+    init : function () {&#10;
+        console.debug('init fooWidget');&#10;
+    },&#10;
+    // ... specify your methods&#10;
+    start : function () {&#10;
+        console.debug('doing foo');&#10;
+    }&#10;
+    // ...&#10;
 });&#10;
 JMVC.fooWidget.start();
-			</sample>
-		</function>
-		<function>
-			<signature name="factory">JMVC.factory(String type, String name[, Array params])</signature>
-			<description>Get a Model, View or Interface</description>
-			<params>
-				<param name="*type">specify the kind of object should be returned, accepted values area 'view', 'model', 'controller' and 'interface'</param>
-				<param name="*name">the name for the object, that will be used in the xhr path. Will be searched in the Models dir, so is possible to use a relative path as objects/person to get the model within the /app/models/objects/person.js file</param>
-				<param name="params">all parameters for the object constructor call</param>
-			</params>
-			<returns>the requested instance, or false</returns>
-			<status>testing</status>
-			<sample>var me = JMVC.factory('model', 'Persona', ['Fred', 35]),&#10;
+    </sample>
+</function>
+<!--
+[MALTA] /src/jmvc/factory.xml
+-->
+<function>
+    <signature name="factory">JMVC.factory(String type, String name[, Array params])</signature>
+    <description>Get a Model, View or Interface</description>
+    <params>
+        <param name="*type">specify the kind of object should be returned, accepted values area 'view', 'model', 'controller' and 'interface'</param>
+        <param name="*name">the name for the object, that will be used in the xhr path. Will be searched in the Models dir, so is possible to use a relative path as objects/person to get the model within the /app/models/objects/person.js file</param>
+        <param name="params">all parameters for the object constructor call</param>
+    </params>
+    <returns>the requested instance, or false</returns>
+    <status>testing</status>
+    <sample>var me = JMVC.factory('model', 'Persona', ['Fred', 35]),&#10;
     you = JMVC.factory('model', 'Persona', ['Jenny', 23]);&#10;
 console.debug(me.hello());&#10;
 console.debug(you.hello());</sample>
-		</function>
-		<function>
-			<signature name="get">JMVC.get(String name)</signature>
-			<description>Retrieves a variable from the global JMVC scope</description>
-			<params>
-				<param name="*name">the name of the new variable to be retrieved</param>
-			</params>
-			<returns>the variable reference or value if found, or undefined</returns>
-			<sample>JMVC.set('a', 10);&#10;console.debug(JMVC.get('a'));</sample>
-			<status>testing</status>
-		</function>
-		<function>
-			<signature name="getModel">JMVC.getModel(String name [, Array params])</signature>
-			<description>This is a shortcut call for the factory, with the first parameter preset to 'model'</description>
-			<params>
-				<param name="*name">the name of the model that should be returned, even on a subfolder</param>
-				<param name="params">all parameters for the object constructor call</param>
-			</params>
-			<returns>the model instance, or false</returns>
-			<status>testing</status>
-			<sample>var me = JMVC.getModel('Persona', ['Federico', 35]),&#10;
+</function>
+<!--
+[MALTA] /src/jmvc/get.xml
+-->
+<function>
+    <signature name="get">JMVC.get(String name)</signature>
+    <description>Retrieves a variable from the global JMVC scope</description>
+    <params>
+        <param name="*name">the name of the new variable to be retrieved</param>
+    </params>
+    <returns>the variable reference or value if found, or undefined</returns>
+    <sample>JMVC.set('a', 10);&#10;console.debug(JMVC.get('a'));</sample>
+    <status>testing</status>
+</function>
+<!--
+[MALTA] /src/jmvc/getModel.xml
+-->
+<function>
+    <signature name="getModel">JMVC.getModel(String name [, Array params])</signature>
+    <description>This is a shortcut call for JMVC.factory, with the first parameter preset to 'model'</description>
+    <params>
+        <param name="*name">the name of the model that should be returned, even on a subfolder</param>
+        <param name="params">all parameters for the object constructor call</param>
+    </params>
+    <returns>the model instance, or false</returns>
+    <status>testing</status>
+    <sample>var me = JMVC.getModel('Persona', ['Federico', 35]),&#10;
     you = JMVC.getModel('Persona', ['Frances', 4]);&#10;
 console.debug(me.hello());&#10;
 console.debug(you.hello());</sample>
-		</function>
-		<function>
-			<signature name="getView">JMVC.getView(String name)</signature>
-			<description>This is a shortcut call for the factory, with the first parameter preset to 'view'</description>
-			<params>
-				<param name="*name">the name of the new view</param>
-			</params>
-			<returns>the view instance or false</returns>
-			<status>testing</status>
-			<sample>var me = JMVC.getView('foot');&#10;console.debug(me.content);</sample>
-		</function>
-		<function>
-			<signature name="hook">JMVC.hook(ObjLit hooks [, boolean force])</signature>
-			<description>That function allows to add a function to four inner predefined hook queues; it is possible to define through that method even new hooks and trigger execution anywhere in your code using the function hookCheck. Note that 'onBeforeRender', 'onAfterRender', 'onBeforeParse', 'onAfterParse' are existent inner hooks used at parse and render time.</description>
-			<params>
-				<param name="*hooks">the object literal containing hooked functions</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>testing</status>
-			<sample>// INNER HOOK&#10;
+</function>
+<!--
+[MALTA] /src/jmvc/getView.xml
+-->
+<function>
+    <signature name="getView">JMVC.getView(String name)</signature>
+    <description>This is a shortcut call for JMVC.factory, with the first parameter preset to 'view'</description>
+    <params>
+        <param name="*name">the name of the new view</param>
+    </params>
+    <returns>the view instance or false</returns>
+    <status>testing</status>
+    <sample>var me = JMVC.getView('foot');&#10;console.debug(me.content);</sample>
+</function>
+<!--
+[MALTA] /src/jmvc/hook.xml
+-->
+<function>
+    <signature name="hook">JMVC.hook(ObjLit hooks [, boolean force])</signature>
+    <description>That function allows to add a function to four inner predefined hook queues; it is possible to define through that method even new hooks and trigger execution anywhere in your code using the function hookCheck.
+        Note that 'onBeforeRender', 'onAfterRender', 'onBeforeParse', 'onAfterParse' are existent inner hooks used at parse and render time.</description>
+    <params>
+        <param name="*hooks">the object literal containing hooked functions</param>
+        <param name="force">hook the function even if the hook is not in the expected set ['onBeforeRender', 'onAfterRender', 'onBeforeParse', 'onAfterParse']</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>testing</status>
+    <sample>// INNER HOOK&#10;
 JMVC.hook({'onAfterRender': function (){alert('You`ll never see that message booking that function from the console!!!'); }});&#10;
 // USER DEFINED HOOK&#10;
 function foo() {&#10;
-	JMVC.hookCheck('myhook', [1,2,3]);&#10;
+    JMVC.hookCheck('myhook', [1,2,3]);&#10;
 };&#10;
 JMVC.hook({'myhook': function () {console.debug(arguments); }}, true);&#10;
-foo();
-			</sample>
-		</function>
-		<function>
-			<signature name="hookCheck">JMVC.hookCheck(String hookname [, Array params])</signature>
-			<description>That function is strictly coupled with the JMVC.hook function, triggering a named hook. As far as many functions can </description>
-			<params>
-				<param name="*hookname">the name of the hook queue that must be executed</param>
-				<param name="params">parameters array for the hooked functions; chained, being a queue the first function specified will pass his returning values as parameters for the second function in the queue, an so on. The sample code clarifies.</param>
-			</params>
-			<returns>the variable reference or value</returns>
-			<status>testing</status>
-			<sample>function foo() {&#10;
-	JMVC.hookCheck('myhook', [1,2,3]);&#10;
+foo();</sample>
+</function>
+<!--
+[MALTA] /src/jmvc/hookCheck.xml
+-->
+<function>
+    <signature name="hookCheck">JMVC.hookCheck(String hookname [, Array params])</signature>
+    <description>That function is strictly coupled with the JMVC.hook function, triggering a named hook.</description>
+    <params>
+        <param name="*hookname">the name of the hook queue that must be executed</param>
+        <param name="params">parameters array for the hooked functions; chained, being a queue the first function specified will pass his returning values as parameters for the second function in the queue, an so on. The sample code clarifies.</param>
+    </params>
+    <returns>the element returned from the last fucntion</returns>
+    <status>testing</status>
+    <sample>function foo() {&#10;
+    return JMVC.hookCheck('myhook', [1,2,3]);&#10;
 };&#10;
-JMVC.hook({'myhook': function () {var a = Array.prototype.slice.call(arguments, 1); console.debug(a); return a; }}, true);&#10;
-JMVC.hook({'myhook': function () {var a = Array.prototype.slice.call(arguments, 1); console.debug(a); return a; }}, true);&#10;
-foo();
-			</sample>
-		</function>
-
-		<function>
-			<signature name="htmlspecialchars">JMVC.htmlspecialchars(String str)</signature>
-			<description>Gets a view instance, even on a subfolder</description>
-			<params>
-				<param name="*str">the string that must be changed</param>
-			</params>
-			<returns>the string with substituted char</returns>
-			<status>complete</status>
-		</function>
-
-		<function>
-			<signature name="implement">JMVC.implement(Object o, Array interf)</signature>
-			<description>Gets a model instance, even on a subfolder</description>
-			<params>
-				<param name="*o">the Object to check</param>
-				<param name="*interf">an array of target functions that caracterize the interface</param>
-			</params>
-			<returns>boolean</returns>
-			<status>complete</status>
-			<testlink>test_api_jmvc_implement</testlink>
-		</function>
-		<function>
-			<signature name="inherit">JMVC.inherit(Object child, Object parent)</signature>
-			<description>Implements a true inheritance (D.C. way if you prefer)</description>
-			<params>
-				<param name="*child">the child object that must inherit</param>
-				<param name="*parent">the parent object that will share his prototype with the `foo middle object`</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>complete</status>
-			<testlink>test_api_jmvc_inherit</testlink>
-		</function>
-		<function>
-			<signature name="jeval">JMVC.jeval(String code)</signature>
-			<description>A stupid wrappper around eval function</description>
-			<params>
-				<param name="*code">the code to be evaluated</param>
-			</params>
-			<returns>what is returned by code evaluation</returns>
-			<status>incomplete</status>
-			<sample>var t  = JMVC.jeval('return "yess";');&#10;console.debug(t);</sample>
-		</function>
-		<function>
-			<signature name="lang">JMVC.lang(String name, ...)</signature>
-			<description>As far as `core/i18n/i18n` is loaded with JMVC.require an `onBeforeRender` hook queues a call to the JMVC.parselang which will look and replace lang placeholders. The JMVC.lang function add one or more language file to the set of files that can be used.</description>
-			<params>
-				<param name="*name">the name of the lang file</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-			<sample>JMVC.require('core/i18n/i18n');&#10;
+JMVC.hook({'myhook': function () {&#10;
+    var a = Array.prototype.slice.call(arguments, 1);&#10;
+    console.debug('inner 1: ', a);&#10;
+    return a;&#10;
+}}, true);&#10;
+//&#10;
+// add another function to the hook queue&#10;
+JMVC.hook({'myhook': function () {&#10;
+    var a = Array.prototype.slice.call(arguments, 1);&#10;
+    console.debug('inner 2: ', a);&#10;
+    return a;&#10;
+}}, true);&#10;
+console.debug(foo());</sample>
+</function>
+<!--
+[MALTA] /src/jmvc/htmlchars.xml
+-->
+<function>
+    <signature name="htmlchars">JMVC.htmlchars(String str)</signature>
+    <description>Gets a view instance, even on a subfolder</description>
+    <params>
+        <param name="*str">the string that must be changed</param>
+    </params>
+    <returns>the string with substituted char</returns>
+    <status>complete</status>
+</function>
+<!--
+[MALTA] /src/jmvc/htmlchars_decode.xml
+-->
+<function>
+    <signature name="htmlchars_decode">JMVC.htmlchars_decode(String str)</signature>
+    <description>Gets a view instance, even on a subfolder</description>
+    <params>
+        <param name="*str">the string that must be changed</param>
+    </params>
+    <returns>the string with substituted char</returns>
+    <status>complete</status>
+</function>
+<!--
+[MALTA] /src/jmvc/implement.xml
+-->
+<function>
+    <signature name="implement">JMVC.implement(Object o, Array interf)</signature>
+    <description>Gets a model instance, even on a subfolder</description>
+    <params>
+        <param name="*o">the Object to check</param>
+        <param name="*interf">an array of target functions that caracterize the interface</param>
+    </params>
+    <returns>boolean</returns>
+    <status>complete</status>
+    <testlink>test_api_jmvc_implement</testlink>
+</function>
+<!--
+[MALTA] /src/jmvc/inherit.xml
+-->
+<function>
+    <signature name="inherit">JMVC.inherit(Object child, Object parent)</signature>
+    <description>Implements a true inheritance (D.C. way if you prefer)</description>
+    <params>
+        <param name="*child">the child object that must inherit</param>
+        <param name="*parent">the parent object that will share his prototype with the `foo middle object`</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>complete</status>
+    <testlink>test_api_jmvc_inherit</testlink>
+</function>
+<!--
+[MALTA] /src/jmvc/jeval.xml
+-->
+<function>
+    <signature name="jeval">JMVC.jeval(String code)</signature>
+    <description>A stupid wrappper around eval function</description>
+    <params>
+        <param name="*code">the code to be evaluated</param>
+    </params>
+    <returns>what is returned by code evaluation</returns>
+    <status>incomplete</status>
+    <sample>var t  = JMVC.jeval('return "yess";');&#10;console.debug(t);</sample>
+</function>
+<!--
+[MALTA] /src/jmvc/lang.xml
+-->
+<function>
+    <signature name="lang">JMVC.lang(String name, ...)</signature>
+    <description>As far as `core/i18n/i18n` is loaded with JMVC.require an `onBeforeRender` hook queues a call to the JMVC.parselang which will look and replace lang placeholders. The JMVC.lang function add one or more language file to the set of files that can be used.</description>
+    <params>
+        <param name="*name">the name of the lang file</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+    <sample>JMVC.require('core/i18n/i18n');&#10;
 var t  = JMVC.lang('it', 'en');&#10;
 // now if the rendered content contains language placeholders, they will&#10;
-// be replaced with the active language (cookie or get)&#10;
-</sample>
-		</function>
-		<function>
-			<signature name="loadinterfaces">JMVC.loadinterfaces(String name)</signature>
-			<description>This is a shortcut call for the factory, with the first parameter preset to 'interface'</description>
-			<params>
-				<param name="*name">the name of the interface that must be loaded</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>testing</status>
-			<sample>var me = JMVC.loadinterfaces('loader')</sample>
-		</function>
-		<function>
-			<signature name="nsCheck">JMVC.nsCheck(String ns [,Object ctx])</signature>
-			<description>Returns a namespace if exists</description>
-			<params>
-				<param name="*ns">The namespace to check, a String dot glued</param>
-				<param name="ctx" default="Window">The root namespace</param>
-			</params>
-			<returns>namespace || false</returns>
-			<sample>&#10;
+// be replaced with the active language (cookie or get)&#10;</sample>
+</function>
+<!--
+[MALTA] /src/jmvc/loadinterfaces.xml
+-->
+<function>
+    <signature name="loadinterfaces">JMVC.loadinterfaces(String name)</signature>
+    <description>This is a shortcut call for the factory, with the first parameter preset to 'interface'</description>
+    <params>
+        <param name="*name">the name of the interface that must be loaded</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>testing</status>
+    <sample>var me = JMVC.loadinterfaces('loader')</sample>
+</function>
+<!--
+[MALTA] /src/jmvc/nsCheck.xml
+-->
+<function>
+    <signature name="nsCheck">JMVC.nsCheck(String ns [,Object ctx])</signature>
+    <description>Returns a namespace if exists</description>
+    <params>
+        <param name="*ns">The namespace to check, a String dot glued</param>
+        <param name="ctx" default="Window">The root namespace</param>
+    </params>
+    <returns>namespace || false</returns>
+    <sample>&#10;
 var loaded_extensions = JMVC.nsCheck('extensions', JMVC),&#10;
-	// or&#10; 
-	loadedExtensions =  JMVC.nsCheck('JMVC.extensions'),&#10;
-	foo = JMVC.nsCheck('foo', JMVC); //false
-			</sample>
-			<status>complete</status>
-			<testlink>test_api_jmvc_checkns</testlink>
-		</function>
-		<function>
-			<signature name="nsMake">JMVC.nsMake(String str, Literal obj, var ctx)</signature>
-			<description>Creates a namspace</description>
-			<params>
-				<param name="*str">Dot separated wished namespace</param>
-				<param name="obj" default="{}">The inner object of the namespace</param>
-				<param name="ctx" default="window">The root for the namespace</param>
-			</params>
-			<returns>the brand new ns</returns>
-			<status>incomplete</status>
-			<sample>JMVC.nsMake('y.d',{name:'Fred'}, JMVC);&#10;console.debug(JMVC.y.d.name);&#10;//&#10;
+    // or&#10; 
+    loadedExtensions =  JMVC.nsCheck('JMVC.extensions'),&#10;
+    foo = JMVC.nsCheck('foo', JMVC); //false</sample>
+    <status>complete</status>
+    <testlink>test_api_jmvc_checkns</testlink>
+</function>
+<!--
+[MALTA] /src/jmvc/nsMake.xml
+-->
+<function>
+    <signature name="nsMake">JMVC.nsMake(String str, Literal obj, var ctx)</signature>
+    <description>Creates a namspace</description>
+    <params>
+        <param name="*str">Dot separated wished namespace</param>
+        <param name="obj" default="{}">The inner object of the namespace</param>
+        <param name="ctx" default="window">The root for the namespace</param>
+    </params>
+    <returns>the brand new ns</returns>
+    <status>incomplete</status>
+    <sample>JMVC.nsMake('y.d',{name:'Fred'}, JMVC);&#10;console.debug(JMVC.y.d.name);&#10;//&#10;
 JMVC.nsMake('y.d');&#10;console.debug(y.d);</sample>
-		</function>
-		<function>
-			<signature name="parselang">JMVC.parselang(String cnt)</signature>
-			<description>Parses cnt looking for language placeholders [L[label]] and replacing them with the current(or default) language translation given in the app/i18n/XX.js lang file. That function is not mean to be called manually, it will be called by JMVC as a `onBeforeRender` hook as far as 'core/i18n' is required</description>
-			<params>
-				<param name="*cnt">the content to be parsed</param>
-			</params>
-			<returns>the parsed content</returns>
-			<status>incomplete</status>
-			<sample>var txt = '[L[ciao]] Federico, [L[come stai]]?';&#10;
+</function>
+<!--
+[MALTA] /src/jmvc/parselang.xml
+-->
+<function>
+    <signature name="parselang">JMVC.parselang(String cnt)</signature>
+    <description>Parses cnt looking for language placeholders [L[label]] and replacing them with the current(or default) language translation given in the app/i18n/XX.js lang file. That function is not mean to be called manually, it will be called by JMVC as a `onBeforeRender` hook as far as 'core/i18n' is required</description>
+    <params>
+        <param name="*cnt">the content to be parsed</param>
+    </params>
+    <returns>the parsed content</returns>
+    <status>incomplete</status>
+    <sample>var txt = '[L[ciao]] Federico, [L[come stai]]?';&#10;
 //default lang is en, and app/i18n/en.js contains tha translations&#10;
 console.debug(JMVC.parselang(txt));&#10;
 //but You set any language es: app/i18n/jp.js&#10;
 JMVC.cookie.set('lang',"jp");&#10;
 console.debug(JMVC.parselang(txt));</sample>
-		</function>
-		<function>
-			<signature name="preload">JMVC.preload(String url)</signature>
-			<description>Appends a 1px square iframe to the body, loading the specified url (from the same origin), and removes it as far as the content is loaded. That will speed up dramatically the loading time of the page pointed by the url</description>
-			<params>
-				<param name="*url">the url that must be loaded</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-			<sample>//open console and execute&#10;
+</function>
+<!--
+[MALTA] /src/jmvc/preload.xml
+-->
+<function>
+    <signature name="preload">JMVC.preload(String url)</signature>
+    <description>Appends a 1px square iframe to the body, loading the specified url (from the same origin), and removes it as far as the content is loaded. That will speed up dramatically the loading time of the page pointed by the url</description>
+    <params>
+        <param name="*url">the url that must be loaded</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+    <sample>//open console and execute&#10;
 console.clear();&#10;
 JMVC.preload(JMVC.vars.baseurl + '/demo');</sample>
-		</function>
-
-
-
-
-
-		<function>
-			<signature name="prototipize">JMVC.prototipize(Constructor func, Enanching Literal)</signature>
-			<description>Allows to add properties and methods to the prototype of a constructor</description>
-			<params>
-				<param name="*unc">the constructor to be enanched</param>
-				<param name="*name">the literal object that contains wanted properties and methods</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-			<sample>function Complex(re, im) {&#10;
-	this._re = re;&#10;
-	this._im = im;&#10;
-	this._rho = Math.sqrt(re * re + im * im, 2);&#10;
-	this._theta = Math.atan2(im, re);&#10;
-	this._mod = null;&#10;
-	this.toString = function (){&#10;
-		return this._re +&#10;
-			(this._im >= 0 ? ' + ' : ' - ') +&#10;
-			Math.abs(this._im) +'i';&#10;
-	}&#10;
+</function>
+<!--
+[MALTA] /src/jmvc/prototipize.xml
+-->
+<function>
+    <signature name="prototipize">JMVC.prototipize(Constructor func, Enanching Literal)</signature>
+    <description>Allows to add properties and methods to the prototype of a constructor</description>
+    <params>
+        <param name="*unc">the constructor to be enanched</param>
+        <param name="*name">the literal object that contains wanted properties and methods</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+    <sample>function Complex(re, im) {&#10;
+    this._re = re;&#10;
+    this._im = im;&#10;
+    this._rho = Math.sqrt(re * re + im * im, 2);&#10;
+    this._theta = Math.atan2(im, re);&#10;
+    this._mod = null;&#10;
+    this.toString = function (){&#10;
+        return this._re +&#10;
+            (this._im >= 0 ? ' + ' : ' - ') +&#10;
+            Math.abs(this._im) +'i';&#10;
+    }&#10;
 };&#10;
 JMVC.prototipize(Complex, {&#10;
-	'mod' : function () {&#10;
-		this._mod = Math.sqrt(&#10;
-			this._re * this._re +&#10;
-			this._im * this._im&#10;
-		);&#10;
-		return this._mod;&#10;
-	},&#10;
-	'add' : function (cplx) {&#10;
-		return new Complex(&#10;
-			this._re + cplx._re,&#10;
-			this._im + cplx._im&#10;
-		);&#10;
-	}&#10;
+    'mod' : function () {&#10;
+        this._mod = Math.sqrt(&#10;
+            this._re * this._re +&#10;
+            this._im * this._im&#10;
+        );&#10;
+        return this._mod;&#10;
+    },&#10;
+    'add' : function (cplx) {&#10;
+        return new Complex(&#10;
+            this._re + cplx._re,&#10;
+            this._im + cplx._im&#10;
+        );&#10;
+    }&#10;
 });&#10;
 var c1 = new Complex(3, 4),&#10;
-	c2 = new Complex(7, 2);&#10;
+    c2 = new Complex(7, 2);&#10;
 console.debug(c1.mod());&#10;
-console.debug(c1.add(c2) + '');&#10;
-</sample>
-		</function>
-		<function>
-			<signature name="purge">JMVC.purge(obj Literal)</signature>
-			<description>Nullifies tha object passed as parameter</description>
-			<params>
-				<param name="*obj">the literal</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-			<sample>var t = {name:'Jhon', surname:'foo'};&#10;
+console.debug(c1.add(c2) + '');&#10;</sample>
+</function>
+<!--
+[MALTA] /src/jmvc/purge.xml
+-->
+<function>
+    <signature name="purge">JMVC.purge(obj Literal)</signature>
+    <description>Nullifies tha object passed as parameter</description>
+    <params>
+        <param name="*obj">the literal</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+    <sample>var t = {name:'Jhon', surname:'foo'};&#10;
 console.log(t);&#10;
 JMVC.purge(t);&#10;
 console.log(t);</sample>
-		</function>
-		
-		<function>
-			<signature name="require">JMVC.require(String extension1, String extension2, ...)</signature>
-			<description>Loads one or more extensions into the JMVC object</description>
-			<params>
-				<param name="*extension1">the name of the javascript file (must be in extensions folder) to be loaded. That file will use JMVC.extend function (see the `More` section)</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-			<sample>JMVC.require('animator','tricks');&#10;JMVC.tricks.makeEditable();&#10;alert('Now try to edit the document');</sample>
-		</function>
-		<function>
-			<signature name="set">JMVC.set(String name, String value)</signature>
-			<description>Adds a variable that You can use anywhere</description>
-			<params>
-				<param name="*name">the name of the new variable, use it typing &#36;thename&#36;</param>
-				<param name="*value">the value of the variable</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-			<sample>JMVC.set('a', 10);&#10;
+</function>
+<!--
+[MALTA] /src/jmvc/require.xml
+-->
+<function>
+    <signature name="require">JMVC.require(String extension1, String extension2, ...)</signature>
+    <description>Loads one or more extensions into the JMVC object</description>
+    <params>
+        <param name="*extension1">the name of the javascript file (must be in extensions folder) to be loaded. That file will use JMVC.extend function (see the `More` section)</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+    <sample>JMVC.require('animator','tricks');&#10;JMVC.tricks.makeEditable();&#10;alert('Now try to edit the document');</sample>
+</function>
+<!--
+[MALTA] /src/jmvc/set.xml
+-->
+<function>
+    <signature name="set">JMVC.set(String name, String value)</signature>
+    <description>Adds a variable that You can use anywhere</description>
+    <params>
+        <param name="*name">the name of the new variable, use it typing &#36;thename&#36;</param>
+        <param name="*value">the value of the variable</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+    <sample>JMVC.set('a', 10);&#10;
 var t = JMVC.get('a');&#10;
 JMVC.del('a');</sample>
-		</function>
-
-		<param>
-			<name>W</name>
-			<type>reference</type>
-			<description>JMVC.W is a reference to th current window object</description>
-		</param>
-	</jmvc>	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</function>
+    <param>
+        <name>W</name>
+        <type>reference</type>
+        <description>JMVC.W is a reference to th current window object</description>
+    </param>
+</jmvc>
 <!--
-                                             _/                                      _/                                    
-    _/_/_/    _/_/    _/_/_/      _/_/_/  _/_/_/_/  _/  _/_/  _/    _/    _/_/_/  _/_/_/_/    _/_/    _/  _/_/    _/_/_/   
- _/        _/    _/  _/    _/  _/_/        _/      _/_/      _/    _/  _/          _/      _/    _/  _/_/      _/_/        
-_/        _/    _/  _/    _/      _/_/    _/      _/        _/    _/  _/          _/      _/    _/  _/            _/_/     
- _/_/_/    _/_/    _/    _/  _/_/_/        _/_/  _/          _/_/_/    _/_/_/      _/_/    _/_/    _/        _/_/_/
- 
+[MALTA] /src/constructors/_main.xml
 -->
-	<constructors>
-		<function>
-			<signature name="Event">JMVC.Event(sender)</signature>
-			<description>Event is a special constructor to get an Event object with an attach and notify method</description>
-			<params>
-				<param name="*sender">The sender object</param>
-			</params>
-			<returns>the breand new object</returns>
-			<sample>&#10;
+<constructors>
+<!--
+[MALTA] /src/constructors/Event.xml
+-->
+<function>
+    <signature name="Event">JMVC.Event(sender)</signature>
+    <description>Event is a special constructor to get an Event object with an attach and notify method</description>
+    <params>
+        <param name="*sender">The sender object</param>
+    </params>
+    <returns>the breand new object</returns>
+    <sample>&#10;
 var list = {&#10;
-    els : [],&#10;
-    addedItem : new JMVC.Event(list),&#10;
-    deletedItem : new JMVC.Event(list),&#10;
-    add : function (s) {&#10;
+        els : [],&#10;
+        addedItem : new JMVC.Event(list),&#10;
+        deletedItem : new JMVC.Event(list),&#10;
+        add : function (s) {&#10;
         this.els.push(s) &amp;&amp;&#10;
         this.addedItem.notify({item : s});&#10;
     },&#10;
     del : function (i) {&#10;
-        this.els.splice(i, 1) &amp;&amp;&#10;
-        this.deletedItem.notify({index : i});&#10;
+    this.els.splice(i, 1) &amp;&amp;&#10;
+    this.deletedItem.notify({index : i});&#10;
     }&#10;
 };&#10;
 list.addedItem.attach(function () {console.debug(arguments)});&#10;
@@ -481,1889 +530,1859 @@ list.add('a');&#10;
 list.add('b');&#10;
 list.add('c');&#10;
 list.del(1);&#10;
-list.els;	</sample>
-			<status>incomplete</status>
-		</function>
-
-		<function>
-			<signature name="Interface">JMVC.Interface(String name, [Strings] methods)</signature>
-			<description>Create an interface object</description>
-			<params>
-				<param name="*name">the name for the interface (used in case of error)</param>
-				<param name="*methods">an array of strings</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-
-		<function>
-			<signature name="Promise">JMVC.Promise(String name)</signature>
-			<description>Retrieves a variable from the global JMVC scope</description>
-			<params>
-				<param name="*name">the name of the new variable to be removed</param>
-			</params>
-			<returns>the variable reference or value</returns>
-			<status>incomplete</status>
-			<sample>function t(){&#10;
-	var p = new JMVC.Promise();&#10;
-	window.setTimeout(function () {&#10;
-		console.debug('uan');&#10;
-		p.done();&#10;
-	}, 2000);&#10;
-	return p;&#10;
+list.els;</sample>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/constructors/Interface.xml
+-->
+<function>
+    <signature name="Interface">JMVC.Interface(String name, [Strings] methods)</signature>
+    <description>Create an interface object</description>
+    <params>
+        <param name="*name">the name for the interface (used in case of error)</param>
+        <param name="*methods">an array of strings</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/constructors/Promise.xml
+-->
+<function>
+    <signature name="Promise">JMVC.Promise(String name)</signature>
+    <description>Retrieves a variable from the global JMVC scope</description>
+    <params>
+        <param name="*name">the name of the new variable to be removed</param>
+    </params>
+    <returns>the variable reference or value</returns>
+    <status>incomplete</status>
+    <sample>function t(){&#10;
+var p = new JMVC.Promise();&#10;
+window.setTimeout(function () {&#10;
+console.debug('uan');&#10;
+p.done();&#10;
+}, 2000);&#10;
+return p;&#10;
 };&#10;
 t()&#10;
 .then(function(){console.debug('two');})&#10;
 .then(function(){console.debug('tree');});</sample>
-		</function>
-	</constructors>
-
-
-
-
-
-	<errors>
-		<function>
-			<signature name="ActionNotFound">JMVC.Promise(String name)</signature>
-			<description>Retrieves a variable from the global JMVC scope</description>
-			<params>
-				<param name="*name">the name of the new variable to be removed</param>
-			</params>
-			<returns>the variable reference or value</returns>
-			<status>incomplete</status>
-			<sample>function t(){&#10;
-	var p = new JMVC.Promise();&#10;
-	window.setTimeout(function () {&#10;
-		console.debug('uan');&#10;
-		p.done();&#10;
-	}, 2000);&#10;
-	return p;&#10;
+</function>
+</constructors>    
+<!--
+[MALTA] /src/errors/_main.xml
+-->
+<errors>
+<!--
+[MALTA] /src/errors/ActionNotFound.xml
+-->
+<function>
+    <signature name="ActionNotFound">JMVC.Promise(String name)</signature>
+    <description>Retrieves a variable from the global JMVC scope</description>
+    <params>
+        <param name="*name">the name of the new variable to be removed</param>
+    </params>
+    <returns>the variable reference or value</returns>
+    <status>incomplete</status>
+    <sample>function t(){&#10;
+var p = new JMVC.Promise();&#10;
+window.setTimeout(function () {&#10;
+    console.debug('uan');&#10;
+    p.done();&#10;
+}, 2000);&#10;
+return p;&#10;
 };&#10;
 t()&#10;
 .then(function(){console.debug('two');})&#10;
 .then(function(){console.debug('tree');});</sample>
-		</function>
-		<function>
-			<signature name="BadImplement">JMVC.Promise(String name)</signature>
-			<description>Retrieves a variable from the global JMVC scope</description>
-			<params>
-				<param name="*name">the name of the new variable to be removed</param>
-			</params>
-			<returns>the variable reference or value</returns>
-			<status>incomplete</status>
-			<sample>function t(){&#10;
-	var p = new JMVC.Promise();&#10;
-	window.setTimeout(function () {&#10;
-		console.debug('uan');&#10;
-		p.done();&#10;
-	}, 2000);&#10;
-	return p;&#10;
+</function>
+<!--
+[MALTA] /src/errors/BadImplement.xml
+-->
+<function>
+    <signature name="BadImplement">JMVC.Promise(String name)</signature>
+    <description>Retrieves a variable from the global JMVC scope</description>
+    <params>
+        <param name="*name">the name of the new variable to be removed</param>
+    </params>
+    <returns>the variable reference or value</returns>
+    <status>incomplete</status>
+    <sample>function t(){&#10;
+var p = new JMVC.Promise();&#10;
+window.setTimeout(function () {&#10;
+    console.debug('uan');&#10;
+    p.done();&#10;
+}, 2000);&#10;
+return p;&#10;
 };&#10;
 t()&#10;
 .then(function(){console.debug('two');})&#10;
 .then(function(){console.debug('tree');});</sample>
-		</function>
-		<function>
-			<signature name="BadName">JMVC.Promise(String name)</signature>
-			<description>Retrieves a variable from the global JMVC scope</description>
-			<params>
-				<param name="*name">the name of the new variable to be removed</param>
-			</params>
-			<returns>the variable reference or value</returns>
-			<status>incomplete</status>
-			<sample>function t(){&#10;
-	var p = new JMVC.Promise();&#10;
-	window.setTimeout(function () {&#10;
-		console.debug('uan');&#10;
-		p.done();&#10;
-	}, 2000);&#10;
-	return p;&#10;
+</function>
+<!--
+[MALTA] /src/errors/BadName.xml
+-->
+<function>
+    <signature name="BadName">JMVC.Promise(String name)</signature>
+    <description>Retrieves a variable from the global JMVC scope</description>
+    <params>
+        <param name="*name">the name of the new variable to be removed</param>
+    </params>
+    <returns>the variable reference or value</returns>
+    <status>incomplete</status>
+    <sample>function t(){&#10;
+var p = new JMVC.Promise();&#10;
+window.setTimeout(function () {&#10;
+    console.debug('uan');&#10;
+    p.done();&#10;
+}, 2000);&#10;
+return p;&#10;
 };&#10;
 t()&#10;
 .then(function(){console.debug('two');})&#10;
 .then(function(){console.debug('tree');});</sample>
-		</function>
-		<function>
-			<signature name="BadParams">JMVC.Promise(String name)</signature>
-			<description>Retrieves a variable from the global JMVC scope</description>
-			<params>
-				<param name="*name">the name of the new variable to be removed</param>
-			</params>
-			<returns>the variable reference or value</returns>
-			<status>incomplete</status>
-			<sample>function t(){&#10;
-	var p = new JMVC.Promise();&#10;
-	window.setTimeout(function () {&#10;
-		console.debug('uan');&#10;
-		p.done();&#10;
-	}, 2000);&#10;
-	return p;&#10;
+</function>
+<!--
+[MALTA] /src/errors/BadParams.xml
+-->
+<function>
+    <signature name="BadParams">JMVC.Promise(String name)</signature>
+    <description>Retrieves a variable from the global JMVC scope</description>
+    <params>
+        <param name="*name">the name of the new variable to be removed</param>
+    </params>
+    <returns>the variable reference or value</returns>
+    <status>incomplete</status>
+    <sample>function t(){&#10;
+var p = new JMVC.Promise();&#10;
+window.setTimeout(function () {&#10;
+    console.debug('uan');&#10;
+    p.done();&#10;
+}, 2000);&#10;
+return p;&#10;
 };&#10;
 t()&#10;
 .then(function(){console.debug('two');})&#10;
 .then(function(){console.debug('tree');});</sample>
-		</function>
-		<function>
-			<signature name="ControllerNotFound">JMVC.Promise(String name)</signature>
-			<description>Retrieves a variable from the global JMVC scope</description>
-			<params>
-				<param name="*name">the name of the new variable to be removed</param>
-			</params>
-			<returns>the variable reference or value</returns>
-			<status>incomplete</status>
-			<sample>function t(){&#10;
-	var p = new JMVC.Promise();&#10;
-	window.setTimeout(function () {&#10;
-		console.debug('uan');&#10;
-		p.done();&#10;
-	}, 2000);&#10;
-	return p;&#10;
+</function> 
+<!--
+[MALTA] /src/errors/ControllerNotFound.xml
+-->
+<function>
+    <signature name="ControllerNotFound">JMVC.Promise(String name)</signature>
+    <description>Retrieves a variable from the global JMVC scope</description>
+    <params>
+        <param name="*name">the name of the new variable to be removed</param>
+    </params>
+    <returns>the variable reference or value</returns>
+    <status>incomplete</status>
+    <sample>function t(){&#10;
+var p = new JMVC.Promise();&#10;
+window.setTimeout(function () {&#10;
+    console.debug('uan');&#10;
+    p.done();&#10;
+}, 2000);&#10;
+return p;&#10;
 };&#10;
 t()&#10;
 .then(function(){console.debug('two');})&#10;
 .then(function(){console.debug('tree');});</sample>
-		</function>
-		<function>
-			<signature name="Network">JMVC.Promise(String name)</signature>
-			<description>Retrieves a variable from the global JMVC scope</description>
-			<params>
-				<param name="*name">the name of the new variable to be removed</param>
-			</params>
-			<returns>the variable reference or value</returns>
-			<status>incomplete</status>
-			<sample>function t(){&#10;
-	var p = new JMVC.Promise();&#10;
-	window.setTimeout(function () {&#10;
-		console.debug('uan');&#10;
-		p.done();&#10;
-	}, 2000);&#10;
-	return p;&#10;
+</function>
+<!--
+[MALTA] /src/errors/Network.xml
+-->
+   <function>
+        <signature name="Network">JMVC.Promise(String name)</signature>
+        <description>Retrieves a variable from the global JMVC scope</description>
+        <params>
+            <param name="*name">the name of the new variable to be removed</param>
+        </params>
+        <returns>the variable reference or value</returns>
+        <status>incomplete</status>
+        <sample>function t(){&#10;
+var p = new JMVC.Promise();&#10;
+window.setTimeout(function () {&#10;
+    console.debug('uan');&#10;
+    p.done();&#10;
+}, 2000);&#10;
+return p;&#10;
 };&#10;
 t()&#10;
 .then(function(){console.debug('two');})&#10;
 .then(function(){console.debug('tree');});</sample>
-		</function>
-	</errors>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    </function>
+</errors>
+<!--
+[MALTA] /src/model/_main.xml
+-->
+<model>
+<!--
+[MALTA] /src/model/del.xml
+-->
+<function>
+    <signature name="del">del(String varname)</signature>
+    <description>removes from a model a variable</description>
+    <params>
+        <param name="*varname">the variablethat must be removed</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/model/get.xml
+-->
+<function>
+    <signature name="get">get(String varname)</signature>
+    <description>If exists retrieve a variable from the Model registry.</description>
+    <params>
+        <param name="*varname">the name of the variable needed</param>
+    </params>
+    <returns>the variable value if exists or false</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/model/reset.xml
+-->
+<function>
+    <signature name="reset">reset()</signature>
+    <description>Deletes all variables from the Model registry.</description>
+    <params>
+        <param name="noparams">this function needs no parameters</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/model/set.xml
+-->
+<function>
+    <signature name="set">set(String varname, Mixed value)</signature>
+    <description>Add a variable to the Model registry.</description>
+    <params>
+        <param name="*varname">the name of the variable</param>
+        <param name="*value">the value for the variable</param>
+    </params>
+    <returns>the model instance</returns>
+    <status>incomplete</status>
+</function>
+</model>
+<!--
+[MALTA] /src/view/_main.xml
+-->
+<view>
+<!--
+[MALTA] /src/view/clone.xml
+-->
+<function>
+    <signature name="clone">clone(String varname)</signature>
+    <description>If exists deletes a variable from the View registry.</description>
+    <params>
+        <param name="*varname">the name of the variable to be deleted</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/view/del.xml
+-->
+<function>
+    <signature name="del">del(String varname)</signature>
+    <description>If exists deletes a variable from the View registry.</description>
+    <params>
+        <param name="*varname">the name of the variable to be deleted</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/view/get.xml
+-->
+<function>
+    <signature name="get">get(String varname)</signature>
+    <description>If exists retrieve a variable from the View registry.</description>
+    <params>
+        <param name="*varname">the name of the variable needed</param>
+    </params>
+    <returns>the variable value if exists or false</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/view/getFromUrl.xml
+-->
+<function>
+    <signature name="getFromUrl">parse(Model object)</signature>
+    <description>If the view has some &#36;var&#36; placeholders within and these variables are stored in a model instance with the right names, that method get values from model instance and uses them in the placeholders content substitution.</description>
+    <params>
+        <param name="object">Is a Model instance which should contain variables that the view will render through placeholders substitution.</param>
+    </params>
+    <returns>the View instance (to access the content use .content attribute)</returns>
+    <status>incomplete</status>
+</function> 
+<!--
+[MALTA] /src/view/parse.xml
+-->
+<function>
+    <signature name="parse">parse(Model object)</signature>
+    <description>If the view has some &#36;var&#36; placeholders within and these variables are stored in a model instance with the right names, that method get values from model instance and uses them in the placeholders content substitution.</description>
+    <params>
+        <param name="object">Is a Model instance which should contain variables that the view will render through placeholders substitution.</param>
+    </params>
+    <returns>the View instance (to access the content use .content attribute)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/view/render.xml
+-->
+<function>
+    <signature name="render">render(Literal pars{Javascript function cback, Array argz, String target})</signature>
+    <description>This is the function intended to be used to render the document or a part of it. You can optionally pass three elements within a literal object.</description>
+    <params>
+        <param name="cback">a callback function that will be executed after rendering</param>
+        <param name="argz">an array of parameters that will be passed to the callback</param>
+        <param name="target">the default target is document.body but if you pass a string containing the id attribute of an element that is in the\n\t\t\t\t\tDOM (set from previous render with the default target) the content will be set in that element.</param>
+    </params>
+    <returns>the View instance</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/view/set.xml
+-->
+<function>
+    <signature name="set">set(String varname, Mixed value);</signature>
+    <description>Add a variable to the View registry.</description>
+    <params>
+        <param name="*varname">the name of the variable</param>
+        <param name="*value">the value for the variable</param>
+    </params>
+    <returns></returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/view/setFromUrl.xml
+-->
+<function>
+    <signature name="setFromUrl">parse(Model object)</signature>
+    <description>If the view has some &#36;var&#36; placeholders within and these variables are stored in a model instance with the right names, that method get values from model instance and uses them in the placeholders content substitution.</description>
+    <params>
+        <param name="object">Is a Model instance which should contain variables that the view will render through placeholders substitution.</param>
+    </params>
+    <returns>the View instance (to access the content use .content attribute)</returns>
+    <status>incomplete</status>
+</function>
+</view>
+<!--
+[MALTA] /src/controller/_main.xml
+-->
+<controller>
+<!--
+[MALTA] /src/controller/addRoutes.xml
+-->
+<function>
+    <signature name="addRoutes">addRoutes(Mixed var, String val)</signature>
+    <description>Add action routes.</description>
+    <params>
+        <param name="*content">the content to render</param>
+        <param name="callback">a function that will be invoked after content is set</param>
+    </params>
+    <returns>the Controller instance</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/controller/del.xml
+-->
+<function>
+    <signature name="del">del(String varname)</signature>
+    <description>If exists deletes a variable from the Controller registry.</description>
+    <params>
+        <param name="*varname">the name of the variable to be deleted</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/controller/get.xml
+-->
+<function>
+    <signature name="get">get(String varname)</signature>
+    <description>If exists retrieve a variable from the Controller registry.</description>
+    <params>
+        <param name="*varname">the name of the variable needed</param>
+    </params>
+    <returns>the variable value if exists or false</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/controller/relocate.xml
+-->
+<function>
+    <signature name="relocate">relocate(String url, int ms)</signature>
+    <description>Redirects to a specified location.</description>
+    <params>
+        <param name="*url">the location to be redirected to</param>
+        <param name="ms" default="0">after how many ms</param>
+    </params>
+    <returns></returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/controller/render.xml
+-->
+<function>
+    <signature name="render">render(String content, Javascript function callback)</signature>
+    <description>Renders directly something from the controller, optionally invokes a callback at the end.</description>
+    <params>
+        <param name="*content">the content to render</param>
+        <param name="callback">a function that will be invoked after content is set</param>
+    </params>
+    <returns>the Controller instance</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/controller/reset.xml
+-->
+<function>
+    <signature name="reset">reset()</signature>
+    <description>Deletes all variables from the Controller registry.</description>
+    <params>
+        <param name="no params">this function needs no parameters</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/controller/set.xml
+-->
+<function>
+    <signature name="set">set(String varname, Mixed value)</signature>
+    <description>Add a variable to the Controller registry.</description>
+    <params>
+        <param name="*varname">the name of the variable</param>
+        <param name="*value">the value for the variable</param>
+    </params>
+    <returns>the controller instance</returns>
+    <status>incomplete</status>
+</function>
+</controller>
+<!--
+[MALTA] /src/dom/_main.xml
+-->
+<dom>
+<!--
+[MALTA] /src/dom/add.xml
+-->
+<function>
+    <signature name="add">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/addClass.xml
+-->
+<function>
+    <signature name="addClass">JMVC.dom.addClass(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/append.xml
+-->
+<function>
+    <signature name="append">JMVC.dom.append(Element where, Element what)</signature>
+    <description>appends an DOM node inside another one</description>
+    <params>
+        <param name="*where">DOM target node</param>
+        <param name="*what">DOM node to append</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/attr.xml
+-->
+<function>
+    <signature name="attr">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/body.xml
+-->
+<function>
+    <signature name="body">JMVC.dom.body()</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/childs.xml
+-->
+<function>
+    <signature name="childs">JMVC.dom.childs(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/clone.xml
+-->
+<function>
+    <signature name="clone">JMVC.dom.clone(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/create.xml
+-->
+<function>
+    <signature name="create">JMVC.dom.create(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/createText.xml
+-->
+<function>
+    <signature name="createText">JMVC.dom.cretaText(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/createNS.xml
+-->
+<function>
+    <signature name="createNS">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/empty.xml
+-->
+<function>
+    <signature name="empty">JMVC.dom.empty(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/find.xml
+-->
+<function>
+    <signature name="find">JMVC.dom.find(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/findInnerByClass.xml
+-->
+<function>
+    <signature name="findInnerByClass">JMVC.dom.findInnerByClass(String tag, Literal attrs,String inner)</signature>
+    <description>creates a DOM node.</description>
+    <params>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">txt content</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/findByAttribute.xml
+-->
+<function>
+    <signature name="findByAttribute">JMVC.dom.findByAttribute(String selector)</signature>
+    <description>Finds a node by id (#id) a class (.class) or a tag (tag).</description>
+    <params>
+        <param name="*selector">the selector</param>
+    </params>
+    <returns>the found node or false</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/findAncestor.xml
+-->
+<function>
+    <signature name="firstAncestor">JMVC.dom.firstAncestor(String selector)</signature>
+    <description>Finds a node by id (#id) a class (.class) or a tag (tag).</description>
+    <params>
+        <param name="*selector">the selector</param>
+    </params>
+    <returns>the found node or false</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/hasAttribute.xml
+-->
+<function>
+    <signature name="hasAttribute">JMVC.dom.hasAttribute(String selector)</signature>
+    <description>Finds a node by id (#id) a class (.class) or a tag (tag).</description>
+    <params>
+        <param name="*selector">the selector</param>
+    </params>
+    <returns>the found node or false</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/hasClass.xml
+-->
+<function>
+    <signature name="hasClass">JMVC.dom.hasClass(String selector)</signature>
+    <description>Finds a node by id (#id) a class (.class) or a tag (tag).</description>
+    <params>
+        <param name="*selector">the selector</param>
+    </params>
+    <returns>the found node or false</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/html.xml
+-->
+<function>
+    <signature name="html">JMVC.dom.html(Element el, String html)</signature>
+    <description>sets or returns the html into an existing element.</description>
+    <params>
+        <param name="*el">dom element target</param>
+        <param name="html">html to set in target, otherwise gets it</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/insertAfter.xml
+-->
+<function>
+    <signature name="insertAfter">JMVC.dom.insertAfter(Element newNode, Element referenceNode)</signature>
+    <description>inserts a sibling node after another one</description>
+    <params>
+        <param name="*newNode">the brand new node</param>
+        <param name="*referenceNode">the existing node where postpend the sibling</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/insertBefore.xml
+-->
+<function>
+    <signature name="insertBefore">JMVC.dom.insertBefore(Element newNode, Element referenceNode)</signature>
+    <description>inserts a sibling node before another one</description>
+    <params>
+        <param name="*newNode">the brand new node</param>
+        <param name="*referenceNode">the existing node where prepend the sibling</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/isElement.xml
+-->
+<function>
+    <signature name="isElement">JMVC.dom.isElement(Element newNode, Element referenceNode)</signature>
+    <description>inserts a sibling node before another one</description>
+    <params>
+        <param name="*newNode">the brand new node</param>
+        <param name="*referenceNode">the existing node where prepend the sibling</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/isNode.xml
+-->
+<function>
+    <signature name="isNode">JMVC.dom.isNode(Element newNode, Element referenceNode)</signature>
+    <description>inserts a sibling node before another one</description>
+    <params>
+        <param name="*newNode">the brand new node</param>
+        <param name="*referenceNode">the existing node where prepend the sibling</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/nodeTypeString.xml
+-->
+<function>
+    <signature name="nodeTypeString">JMVC.dom.nodeTypeString(Element newNode, Element referenceNode)</signature>
+    <description>inserts a sibling node before another one</description>
+    <params>
+        <param name="*newNode">the brand new node</param>
+        <param name="*referenceNode">the existing node where prepend the sibling</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/nthchild.xml
+-->
+<function>
+    <signature name="nthchild">JMVC.dom.nthchild(Element node, int  num [, Array types ])</signature>
+    <description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+    <params>
+        <param name="node">The parent where search n-th child</param>
+        <param name="num">Starting from 0 the number of the child needed</param>
+        <param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/preloadImage.xml
+-->
+<function>
+    <signature name="preloadImage">JMVC.dom.preloadImage(Element node, int  num [, Array types ])</signature>
+    <description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+    <params>
+        <param name="node">The parent where search n-th child</param>
+        <param name="num">Starting from 0 the number of the child needed</param>
+        <param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/parent.xml
+-->
+<function>
+    <signature name="parent">JMVC.dom.parent(Element node, int  num [, Array types ])</signature>
+    <description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+    <params>
+        <param name="node">The parent where search n-th child</param>
+        <param name="num">Starting from 0 the number of the child needed</param>
+        <param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/prepend.xml
+-->
+<function>
+    <signature name="prepend">JMVC.dom.prepend(Element node, int  num [, Array types ])</signature>
+    <description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+    <params>
+        <param name="node">The parent where search n-th child</param>
+        <param name="num">Starting from 0 the number of the child needed</param>
+        <param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/remove.xml
+-->
+<function>
+    <signature name="remove">JMVC.dom.remove(Element node, int  num [, Array types ])</signature>
+    <description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+    <params>
+        <param name="node">The parent where search n-th child</param>
+        <param name="num">Starting from 0 the number of the child needed</param>
+        <param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/removeAttribute.xml
+-->
+<function>
+    <signature name="removeAttribute">JMVC.dom.removeAttribute(Element node, int  num [, Array types ])</signature>
+    <description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+    <params>
+        <param name="node">The parent where search n-th child</param>
+        <param name="num">Starting from 0 the number of the child needed</param>
+        <param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/removeClass.xml
+-->
+<function>
+    <signature name="removeClass">JMVC.dom.removeClass(Element node, int  num [, Array types ])</signature>
+    <description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+    <params>
+        <param name="node">The parent where search n-th child</param>
+        <param name="num">Starting from 0 the number of the child needed</param>
+        <param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/swap.xml
+-->
+<function>
+    <signature name="swap">JMVC.dom.swap(Element outNode, Element inNode)</signature>
+    <description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+    <params>
+        <param name="node">The parent where search n-th child</param>
+        <param name="num">Starting from 0 the number of the child needed</param>
+        <param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/switchClass.xml
+-->
+<function>
+    <signature name="switchClass">JMVC.dom.switchClass(Element node, int  num [, Array types ])</signature>
+    <description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+    <params>
+        <param name="node">The parent where search n-th child</param>
+        <param name="num">Starting from 0 the number of the child needed</param>
+        <param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/dom/val.xml
+-->
+<function>
+    <signature name="val">JMVC.dom.val(Element node, int  num [, Array types ])</signature>
+    <description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
+    <params>
+        <param name="node">The parent where search n-th child</param>
+        <param name="num">Starting from 0 the number of the child needed</param>
+        <param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
+    </params>
+    <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+</dom>
+<!--
+[MALTA] /src/events/_main.xml
+-->
+<events>
+<!--
+[MALTA] /src/events/bind.xml
+-->
+<function>
+    <signature name="bind">JMVC.events.bind(Element el, String type, Javascript function func)</signature>
+    <description>binds a callback to an event fired from an element</description>
+    <params>
+        <param name="el*">dom element target</param>
+        <param name="*type">the event string</param>
+        <param name="*func">Javascript function callback</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/events/delay.xml
+-->
+<function>
+    <signature name="delay">JMVC.events.delay(Javascript function func, Integer ms)</signature>
+    <description>Delay the execution of a function</description>
+    <params>
+        <param name="*func">Javascript function to be called</param>
+        <param name="*ms">Milliseconds to delayed call</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/events/end.xml
+-->
+<function>
+    <signature name="end">JMVC.events.end(Javascript function func)</signature>
+    <description>add a function to the end render queue</description>
+    <params>
+        <param name="*func">Javascript function callback</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/events/endRender.xml
+-->
+<function>
+    <signature name="endRender">JMVC.events.endrender()</signature>
+    <description>executes the end render queue</description>
+    <params>
+        <param name="">no params</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/events/eventTarget.xml
+-->
+<function>
+    <signature name="eventTarget">JMVC.events.eventTarget(Event e)</signature>
+    <description>given an event sholud retrieve the original target for that event</description>
+    <params>
+        <param name="*e">the event</param>
+    </params>
+    <returns>DOM Element</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/events/getCoord.xml
+-->
+<function>
+    <signature name="getCoord">JMVC.events.getCoord(Element el, Event e)</signature>
+    <description>given an element and a event, try to get event firing coordinates relative to the element</description>
+    <params>
+        <param name="*el">dom element target</param>
+        <param name="*e">the event</param>
+    </params>
+    <returns>Array [x, y]</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/events/kill.xml
+-->
+<function>
+    <signature name="kill">JMVC.events.kill(Event e)</signature>
+    <description>kills an event</description>
+    <params>
+        <param name="*e">the event</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/events/loadify.xml
+-->
+<function>
+    <signature name="loadify">JMVC.events.loadify(Element el, String type, Javascript function fun)</signature>
+    <description>binds a callback to an event fired from an element</description>
+    <params>
+        <param name="el*">dom element target</param>
+        <param name="*type">the event string</param>
+        <param name="*func">Javascript function callback</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/events/one.xml
+-->
+<function>
+    <signature name="one">JMVC.events.one(Element el, String type, Javascript function fun)</signature>
+    <description>binds only once a callback to an event fired from an element</description>
+    <params>
+        <param name="el*">dom element target</param>
+        <param name="*type">the event string</param>
+        <param name="*func">Javascript function callback</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/events/onEventOut.xml
+-->
+<function>
+    <signature name="onEventOut">JMVC.events.onEventOut(String type, Element el, Javascript function cb)</signature>
+    <description>Triggers a callback as the specified event is fired outside the specified element</description>
+    <params>
+        <param name="*type">the event string</param>
+        <param name="el*">dom element target</param>
+        <param name="*func">Javascript function callback</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>testing</status>
+</function>
+<!--
+[MALTA] /src/events/preventDefault.xml
+-->
+<function>
+    <signature name="preventDefault">JMVC.events.preventDefault(Element el, String type, Javascript function fun)</signature>
+    <description>binds only once a callback to an event fired from an element</description>
+    <params>
+        <param name="el*">dom element target</param>
+        <param name="*type">the event string</param>
+        <param name="*func">Javascript function callback</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/events/ready.xml
+-->
+<function>
+    <signature name="ready">JMVC.events.ready(Javascript function func)</signature>
+    <description>binds a callback to document load event</description>
+    <params>
+        <param name="*func">Javascript function callback</param>
+    </params>
+    <returns></returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/events/start.xml
+-->
+<function>
+    <signature name="start">JMVC.events.start(Javascript function func)</signature>
+    <description>binds a callback to document load event</description>
+    <params>
+        <param name="*func">Javascript function callback</param>
+    </params>
+    <returns></returns>
+    <status>incomplete</status>
+</function>
 
 <!--
-
-
-
-
-
-                                    _/            _/   
-   _/_/_/  _/_/      _/_/      _/_/_/    _/_/    _/    
-  _/    _/    _/  _/    _/  _/    _/  _/_/_/_/  _/     
- _/    _/    _/  _/    _/  _/    _/  _/        _/      
-_/    _/    _/    _/_/      _/_/_/    _/_/_/  _/       
-
-#####################################################
+[MALTA] /src/events/scrollBy.xml
 -->
-	<model>	
-		<function>
-			<signature name="del">del(String varname)</signature>
-			<description>removes from a model a variable</description>
-			<params>
-				<param name="*varname">the variablethat must be removed</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="get">get(String varname)</signature>
-			<description>If exists retrieve a variable from the Model registry.</description>
-			<params>
-				<param name="*varname">the name of the variable needed</param>
-			</params>
-			<returns>the variable value if exists or false</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="reset">reset()</signature>
-			<description>Deletes all variables from the Model registry.</description>
-			<params>
-				<param name="noparams">this function needs no parameters</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="set">set(String varname, Mixed value)</signature>
-			<description>Add a variable to the Model registry.</description>
-			<params>
-				<param name="*varname">the name of the variable</param>
-				<param name="*value">the value for the variable</param>
-			</params>
-			<returns>the model instance</returns>
-			<status>incomplete</status>
-		</function>
-	</model>
-
-
-
-
-
+<function>
+    <signature name="scrollBy">JMVC.events.scrollBy(Javascript function func)</signature>
+    <description>binds a callback to document load event</description>
+    <params>
+        <param name="*func">Javascript function callback</param>
+    </params>
+    <returns></returns>
+    <status>incomplete</status>
+</function>
 <!--
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	                                                
-	              _/                                
-	 _/      _/        _/_/    _/      _/      _/   
-	_/      _/  _/  _/_/_/_/  _/      _/      _/    
-	 _/  _/    _/  _/          _/  _/  _/  _/       
-	  _/      _/    _/_/_/      _/      _/          
-	                                                
-##################################################
+[MALTA] /src/events/scrollTo.xml
 -->
-	<view>
-		<function>
-			<signature name="clone">clone(String varname)</signature>
-			<description>If exists deletes a variable from the View registry.</description>
-			<params>
-				<param name="*varname">the name of the variable to be deleted</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="del">del(String varname)</signature>
-			<description>If exists deletes a variable from the View registry.</description>
-			<params>
-				<param name="*varname">the name of the variable to be deleted</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="get">get(String varname)</signature>
-			<description>If exists retrieve a variable from the View registry.</description>
-			<params>
-				<param name="*varname">the name of the variable needed</param>
-			</params>
-			<returns>the variable value if exists or false</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="getFromUrl">parse(Model object)</signature>
-			<description>If the view has some &#36;var&#36; placeholders within and these variables are stored in a model instance with the right names, that method get values from model instance and uses them in the placeholders content substitution.</description>
-			<params>
-				<param name="object">Is a Model instance which should contain variables that the view will render through placeholders substitution.</param>
-			</params>
-			<returns>the View instance (to access the content use .content attribute)</returns>
-			<status>incomplete</status>
-		</function>	
-		<function>
-			<signature name="parse">parse(Model object)</signature>
-			<description>If the view has some &#36;var&#36; placeholders within and these variables are stored in a model instance with the right names, that method get values from model instance and uses them in the placeholders content substitution.</description>
-			<params>
-				<param name="object">Is a Model instance which should contain variables that the view will render through placeholders substitution.</param>
-			</params>
-			<returns>the View instance (to access the content use .content attribute)</returns>
-			<status>incomplete</status>
-		</function>			
-		<function>
-			<signature name="render">render(Literal pars{Javascript function cback, Array argz, String target})</signature>
-			<description>This is the function intended to be used to render the document or a part of it. You can optionally pass three elements within a literal object.</description>
-			<params>
-				<param name="cback">a callback function that will be executed after rendering</param>
-				<param name="argz">an array of parameters that will be passed to the callback</param>
-				<param name="target">the default target is document.body but if you pass a string containing the id attribute of an element that is in the\n\t\t\t\t\tDOM (set from previous render with the default target) the content will be set in that element.</param>
-			</params>
-			<returns>the View instance</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="set">set(String varname, Mixed value);</signature>
-			<description>Add a variable to the View registry.</description>
-			<params>
-				<param name="*varname">the name of the variable</param>
-				<param name="*value">the value for the variable</param>
-			</params>
-			<returns></returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="setFromUrl">parse(Model object)</signature>
-			<description>If the view has some &#36;var&#36; placeholders within and these variables are stored in a model instance with the right names, that method get values from model instance and uses them in the placeholders content substitution.</description>
-			<params>
-				<param name="object">Is a Model instance which should contain variables that the view will render through placeholders substitution.</param>
-			</params>
-			<returns>the View instance (to access the content use .content attribute)</returns>
-			<status>incomplete</status>
-		</function>
-	</view>
+<function>
+    <signature name="scrollTo">JMVC.events.scrollTo(Javascript function func)</signature>
+    <description>binds a callback to document load event</description>
+    <params>
+        <param name="*func">Javascript function callback</param>
+    </params>
+    <returns></returns>
+    <status>incomplete</status>
+</function>
 <!--
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                   _/                          _/  _/    
-    _/_/_/    _/_/    _/_/_/    _/_/_/_/  _/  _/_/    _/_/    _/  _/       _/_/    _/  _/_/
- _/        _/    _/  _/    _/    _/      _/_/      _/    _/  _/  _/     _/_/_/_/  _/_/
-_/        _/    _/  _/    _/    _/      _/        _/    _/  _/  _/     _/        _/
- _/_/_/    _/_/    _/    _/      _/_/  _/          _/_/    _/  _/       _/_/_/  _/
-
-##########################################################################################
+[MALTA] /src/events/startRender.xml
 -->
-	<controller>
-		<function>
-			<signature name="addRoutes">addRoutes(Mixed var, String val)</signature>
-			<description>Add action routes.</description>
-			<params>
-				<param name="*content">the content to render</param>
-				<param name="callback">a function that will be invoked after content is set</param>
-			</params>
-			<returns>the Controller instance</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="del">del(String varname)</signature>
-			<description>If exists deletes a variable from the Controller registry.</description>
-			<params>
-				<param name="*varname">the name of the variable to be deleted</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="get">get(String varname)</signature>
-			<description>If exists retrieve a variable from the Controller registry.</description>
-			<params>
-				<param name="*varname">the name of the variable needed</param>
-			</params>
-			<returns>the variable value if exists or false</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="relocate">relocate(String url, int ms)</signature>
-			<description>Redirects to a specified location.</description>
-			<params>
-				<param name="*url">the location to be redirected to</param>
-				<param name="ms" default="0">after how many ms</param>
-			</params>
-			<returns></returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="render">render(String content, Javascript function callback)</signature>
-			<description>Renders directly something from the controller, optionally invokes a callback at the end.</description>
-			<params>
-				<param name="*content">the content to render</param>
-				<param name="callback">a function that will be invoked after content is set</param>
-			</params>
-			<returns>the Controller instance</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="reset">reset()</signature>
-			<description>Deletes all variables from the Controller registry.</description>
-			<params>
-				<param name="no params">this function needs no parameters</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="set">set(String varname, Mixed value)</signature>
-			<description>Add a variable to the Controller registry.</description>
-			<params>
-				<param name="*varname">the name of the variable</param>
-				<param name="*value">the value for the variable</param>
-			</params>
-			<returns>the controller instance</returns>
-			<status>incomplete</status>
-		</function>
-	</controller>
-
-
+<function>
+    <signature name="startRender">JMVC.events.startrender(Javascript function func)</signature>
+    <description>binds a callback to document load event</description>
+    <params>
+        <param name="*func">Javascript function callback</param>
+    </params>
+    <returns></returns>
+    <status>incomplete</status>
+</function>
 <!--
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	         _/                           
-	    _/_/_/    _/_/    _/_/_/  _/_/    
-	 _/    _/  _/    _/  _/    _/    _/   
-	_/    _/  _/    _/  _/    _/    _/    
-	 _/_/_/    _/_/    _/    _/    _/     
-
-#######################################
+[MALTA] /src/events/touch.xml
 -->
-	<dom>
-
-		<function>
-			<signature name="add">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
-			<description>this is a shortcut that merges create+append</description>
-			<params>
-				<param name="*where">dom element target</param>
-				<param name="*tag">tag to be created</param>
-				<param name="attrs">object literal for attributes</param>
-				<param name="inner">html content</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-
-		<function>
-			<signature name="addClass">JMVC.dom.addClass(Element where, String tag, Literal attrs, String inner)</signature>
-			<description>this is a shortcut that merges create+append</description>
-			<params>
-				<param name="*where">dom element target</param>
-				<param name="*tag">tag to be created</param>
-				<param name="attrs">object literal for attributes</param>
-				<param name="inner">html content</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="append">JMVC.dom.append(Element where, Element what)</signature>
-			<description>appends an DOM node inside another one</description>
-			<params>
-				<param name="*where">DOM target node</param>
-				<param name="*what">DOM node to append</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="attr">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
-			<description>this is a shortcut that merges create+append</description>
-			<params>
-				<param name="*where">dom element target</param>
-				<param name="*tag">tag to be created</param>
-				<param name="attrs">object literal for attributes</param>
-				<param name="inner">html content</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="body">JMVC.dom.body()</signature>
-			<description>this is a shortcut that merges create+append</description>
-			<params>
-				<param name="*where">dom element target</param>
-				<param name="*tag">tag to be created</param>
-				<param name="attrs">object literal for attributes</param>
-				<param name="inner">html content</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="childs">JMVC.dom.childs(Element where, String tag, Literal attrs, String inner)</signature>
-			<description>this is a shortcut that merges create+append</description>
-			<params>
-				<param name="*where">dom element target</param>
-				<param name="*tag">tag to be created</param>
-				<param name="attrs">object literal for attributes</param>
-				<param name="inner">html content</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="clone">JMVC.dom.clone(Element where, String tag, Literal attrs, String inner)</signature>
-			<description>this is a shortcut that merges create+append</description>
-			<params>
-				<param name="*where">dom element target</param>
-				<param name="*tag">tag to be created</param>
-				<param name="attrs">object literal for attributes</param>
-				<param name="inner">html content</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="create">JMVC.dom.create(Element where, String tag, Literal attrs, String inner)</signature>
-			<description>this is a shortcut that merges create+append</description>
-			<params>
-				<param name="*where">dom element target</param>
-				<param name="*tag">tag to be created</param>
-				<param name="attrs">object literal for attributes</param>
-				<param name="inner">html content</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="createText">JMVC.dom.cretaText(Element where, String tag, Literal attrs, String inner)</signature>
-			<description>this is a shortcut that merges create+append</description>
-			<params>
-				<param name="*where">dom element target</param>
-				<param name="*tag">tag to be created</param>
-				<param name="attrs">object literal for attributes</param>
-				<param name="inner">html content</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="createNS">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
-			<description>this is a shortcut that merges create+append</description>
-			<params>
-				<param name="*where">dom element target</param>
-				<param name="*tag">tag to be created</param>
-				<param name="attrs">object literal for attributes</param>
-				<param name="inner">html content</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="empty">JMVC.dom.empty(Element where, String tag, Literal attrs, String inner)</signature>
-			<description>this is a shortcut that merges create+append</description>
-			<params>
-				<param name="*where">dom element target</param>
-				<param name="*tag">tag to be created</param>
-				<param name="attrs">object literal for attributes</param>
-				<param name="inner">html content</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="find">JMVC.dom.find(Element where, String tag, Literal attrs, String inner)</signature>
-			<description>this is a shortcut that merges create+append</description>
-			<params>
-				<param name="*where">dom element target</param>
-				<param name="*tag">tag to be created</param>
-				<param name="attrs">object literal for attributes</param>
-				<param name="inner">html content</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="findInnerByClass">JMVC.dom.findInnerByClass(String tag, Literal attrs,String inner)</signature>
-			<description>creates a DOM node.</description>
-			<params>
-				<param name="*tag">tag to be created</param>
-				<param name="attrs">object literal for attributes</param>
-				<param name="inner">txt content</param>
-			</params>
-			<returns>the brand new node</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="findByAttribute">JMVC.dom.findByAttribute(String selector)</signature>
-			<description>Finds a node by id (#id) a class (.class) or a tag (tag).</description>
-			<params>
-				<param name="*selector">the selector</param>
-			</params>
-			<returns>the found node or false</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="firstAncestor">JMVC.dom.firstAncestor(String selector)</signature>
-			<description>Finds a node by id (#id) a class (.class) or a tag (tag).</description>
-			<params>
-				<param name="*selector">the selector</param>
-			</params>
-			<returns>the found node or false</returns>
-			<status>incomplete</status>
-		</function>
-		
-		<function>
-			<signature name="hasAttribute">JMVC.dom.hasAttribute(String selector)</signature>
-			<description>Finds a node by id (#id) a class (.class) or a tag (tag).</description>
-			<params>
-				<param name="*selector">the selector</param>
-			</params>
-			<returns>the found node or false</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="hasClass">JMVC.dom.hasClass(String selector)</signature>
-			<description>Finds a node by id (#id) a class (.class) or a tag (tag).</description>
-			<params>
-				<param name="*selector">the selector</param>
-			</params>
-			<returns>the found node or false</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="html">JMVC.dom.html(Element el, String html)</signature>
-			<description>sets or returns the html into an existing element.</description>
-			<params>
-				<param name="*el">dom element target</param>
-				<param name="html">html to set in target, otherwise gets it</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="insertAfter">JMVC.dom.insertAfter(Element newNode, Element referenceNode)</signature>
-			<description>inserts a sibling node after another one</description>
-			<params>
-				<param name="*newNode">the brand new node</param>
-				<param name="*referenceNode">the existing node where postpend the sibling</param>
-			</params>
-			<returns>the brand new node</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="insertBefore">JMVC.dom.insertBefore(Element newNode, Element referenceNode)</signature>
-			<description>inserts a sibling node before another one</description>
-			<params>
-				<param name="*newNode">the brand new node</param>
-				<param name="*referenceNode">the existing node where prepend the sibling</param>
-			</params>
-			<returns>the brand new node</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="isElement">JMVC.dom.isElement(Element newNode, Element referenceNode)</signature>
-			<description>inserts a sibling node before another one</description>
-			<params>
-				<param name="*newNode">the brand new node</param>
-				<param name="*referenceNode">the existing node where prepend the sibling</param>
-			</params>
-			<returns>the brand new node</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="isNode">JMVC.dom.isNode(Element newNode, Element referenceNode)</signature>
-			<description>inserts a sibling node before another one</description>
-			<params>
-				<param name="*newNode">the brand new node</param>
-				<param name="*referenceNode">the existing node where prepend the sibling</param>
-			</params>
-			<returns>the brand new node</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="nodeTypeString">JMVC.dom.nodeTypeString(Element newNode, Element referenceNode)</signature>
-			<description>inserts a sibling node before another one</description>
-			<params>
-				<param name="*newNode">the brand new node</param>
-				<param name="*referenceNode">the existing node where prepend the sibling</param>
-			</params>
-			<returns>the brand new node</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="nthchild">JMVC.dom.nthchild(Element node, int  num [, Array types ])</signature>
-			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
-			<params>
-				<param name="node">The parent where search n-th child</param>
-				<param name="num">Starting from 0 the number of the child needed</param>
-				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
-			</params>
-			<returns>the brand new node</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="preloadImage">JMVC.dom.preloadImage(Element node, int  num [, Array types ])</signature>
-			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
-			<params>
-				<param name="node">The parent where search n-th child</param>
-				<param name="num">Starting from 0 the number of the child needed</param>
-				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
-			</params>
-			<returns>the brand new node</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="parent">JMVC.dom.parent(Element node, int  num [, Array types ])</signature>
-			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
-			<params>
-				<param name="node">The parent where search n-th child</param>
-				<param name="num">Starting from 0 the number of the child needed</param>
-				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
-			</params>
-			<returns>the brand new node</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="prepend">JMVC.dom.prepend(Element node, int  num [, Array types ])</signature>
-			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
-			<params>
-				<param name="node">The parent where search n-th child</param>
-				<param name="num">Starting from 0 the number of the child needed</param>
-				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
-			</params>
-			<returns>the brand new node</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="remove">JMVC.dom.remove(Element node, int  num [, Array types ])</signature>
-			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
-			<params>
-				<param name="node">The parent where search n-th child</param>
-				<param name="num">Starting from 0 the number of the child needed</param>
-				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
-			</params>
-			<returns>the brand new node</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="removeAttribute">JMVC.dom.removeAttribute(Element node, int  num [, Array types ])</signature>
-			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
-			<params>
-				<param name="node">The parent where search n-th child</param>
-				<param name="num">Starting from 0 the number of the child needed</param>
-				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
-			</params>
-			<returns>the brand new node</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="removeClass">JMVC.dom.removeClass(Element node, int  num [, Array types ])</signature>
-			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
-			<params>
-				<param name="node">The parent where search n-th child</param>
-				<param name="num">Starting from 0 the number of the child needed</param>
-				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
-			</params>
-			<returns>the brand new node</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="swap">JMVC.dom.swap(Element outNode, Element inNode)</signature>
-			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
-			<params>
-				<param name="node">The parent where search n-th child</param>
-				<param name="num">Starting from 0 the number of the child needed</param>
-				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
-			</params>
-			<returns>the brand new node</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="switchClass">JMVC.dom.switchClass(Element node, int  num [, Array types ])</signature>
-			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
-			<params>
-				<param name="node">The parent where search n-th child</param>
-				<param name="num">Starting from 0 the number of the child needed</param>
-				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
-			</params>
-			<returns>the brand new node</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="val">JMVC.dom.val(Element node, int  num [, Array types ])</signature>
-			<description>Get the n-th child of a given node; by default considers only TEXT_NODE types but You can specify any set</description>
-			<params>
-				<param name="node">The parent where search n-th child</param>
-				<param name="num">Starting from 0 the number of the child needed</param>
-				<param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
-			</params>
-			<returns>the brand new node</returns>
-			<status>incomplete</status>
-		</function>
-	</dom>
+<function>
+    <signature name="touch">JMVC.events.touch(Javascript function func)</signature>
+    <description>binds a callback to document load event</description>
+    <params>
+        <param name="*func">Javascript function callback</param>
+    </params>
+    <returns></returns>
+    <status>incomplete</status>
+</function>
 <!--
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                               _/                
-    _/_/    _/      _/    _/_/    _/_/_/    _/_/_/_/    _/_/_/   
- _/_/_/_/  _/      _/  _/_/_/_/  _/    _/    _/      _/_/        
-_/          _/  _/    _/        _/    _/    _/          _/_/     
- _/_/_/      _/        _/_/_/  _/    _/      _/_/  _/_/_/        
-
-###############################################################  
+[MALTA] /src/events/unbind.xml
 -->
-	<events>
-		<function>
-			<signature name="bind">JMVC.events.bind(Element el, String type, Javascript function func)</signature>
-			<description>binds a callback to an event fired from an element</description>
-			<params>
-				<param name="el*">dom element target</param>
-				<param name="*type">the event string</param>
-				<param name="*func">Javascript function callback</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="delay">JMVC.events.delay(Javascript function func, Integer ms)</signature>
-			<description>Delay the execution of a function</description>
-			<params>
-				<param name="*func">Javascript function to be called</param>
-				<param name="*ms">Milliseconds to delayed call</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="end">JMVC.events.end(Javascript function func)</signature>
-			<description>add a function to the end render queue</description>
-			<params>
-				<param name="*func">Javascript function callback</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="endRender">JMVC.events.endrender()</signature>
-			<description>executes the end render queue</description>
-			<params>
-				<param name="">no params</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-
-		<function>
-			<signature name="eventTarget">JMVC.events.eventTarget(Event e)</signature>
-			<description>given an event sholud retrieve the original target for that event</description>
-			<params>
-				<param name="*e">the event</param>
-			</params>
-			<returns>DOM Element</returns>
-			<status>incomplete</status>
-		</function>
-
-		<function>
-			<signature name="getCoord">JMVC.events.getCoord(Element el, Event e)</signature>
-			<description>given an element and a event, try to get event firing coordinates relative to the element</description>
-			<params>
-				<param name="*el">dom element target</param>
-				<param name="*e">the event</param>
-			</params>
-			<returns>Array [x, y]</returns>
-			<status>incomplete</status>
-		</function>
-
-		<function>
-			<signature name="kill">JMVC.events.kill(Event e)</signature>
-			<description>kills an event</description>
-			<params>
-				<param name="*e">the event</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="loadify">JMVC.events.loadify(Element el, String type, Javascript function fun)</signature>
-			<description>binds a callback to an event fired from an element</description>
-			<params>
-				<param name="el*">dom element target</param>
-				<param name="*type">the event string</param>
-				<param name="*func">Javascript function callback</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="one">JMVC.events.one(Element el, String type, Javascript function fun)</signature>
-			<description>binds only once a callback to an event fired from an element</description>
-			<params>
-				<param name="el*">dom element target</param>
-				<param name="*type">the event string</param>
-				<param name="*func">Javascript function callback</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-
-	
-		<function>
-			<signature name="onEventOut">JMVC.events.onEventOut(String type, Element el, Javascript function cb)</signature>
-			<description>Triggers a callback as the specified event is fired outside the specified element</description>
-			<params>
-				<param name="*type">the event string</param>
-				<param name="el*">dom element target</param>
-				<param name="*func">Javascript function callback</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>testing</status>
-		</function>
-		
-
-
-
-		<function>
-			<signature name="preventDefault">JMVC.events.preventDefault(Element el, String type, Javascript function fun)</signature>
-			<description>binds only once a callback to an event fired from an element</description>
-			<params>
-				<param name="el*">dom element target</param>
-				<param name="*type">the event string</param>
-				<param name="*func">Javascript function callback</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="ready">JMVC.events.ready(Javascript function func)</signature>
-			<description>binds a callback to document load event</description>
-			<params>
-				<param name="*func">Javascript function callback</param>
-			</params>
-			<returns></returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="start">JMVC.events.start(Javascript function func)</signature>
-			<description>binds a callback to document load event</description>
-			<params>
-				<param name="*func">Javascript function callback</param>
-			</params>
-			<returns></returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="scrollBy">JMVC.events.scrollBy(Javascript function func)</signature>
-			<description>binds a callback to document load event</description>
-			<params>
-				<param name="*func">Javascript function callback</param>
-			</params>
-			<returns></returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="scrollTo">JMVC.events.scrollTo(Javascript function func)</signature>
-			<description>binds a callback to document load event</description>
-			<params>
-				<param name="*func">Javascript function callback</param>
-			</params>
-			<returns></returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="startRender">JMVC.events.startrender(Javascript function func)</signature>
-			<description>binds a callback to document load event</description>
-			<params>
-				<param name="*func">Javascript function callback</param>
-			</params>
-			<returns></returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="touch">JMVC.events.touch(Javascript function func)</signature>
-			<description>binds a callback to document load event</description>
-			<params>
-				<param name="*func">Javascript function callback</param>
-			</params>
-			<returns></returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="unbind">JMVC.events.unbind(Element el, String type)</signature>
-			<description>unbinds an existing binding</description>
-			<params>
-				<param name="*el">dom element target</param>
-				<param name="*type">the event string</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-	</events>
+<function>
+    <signature name="unbind">JMVC.events.unbind(Element el, String type)</signature>
+    <description>unbinds an existing binding</description>
+    <params>
+        <param name="*el">dom element target</param>
+        <param name="*type">the event string</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+</events>
 <!--
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	                                             
-    _/                                  _/
-   _/_/_/      _/_/      _/_/_/    _/_/_/
-  _/    _/  _/_/_/_/  _/    _/  _/    _/
- _/    _/  _/        _/    _/  _/    _/
-_/    _/    _/_/_/    _/_/_/    _/_/_/
-
-###############################################	                                             
+[MALTA] /src/head/_main.xml
 -->
-	<head>
-		<function>
-			<signature name="addscript">JMVC.head.addscript(String src, Boolean parse, Boolean explicit)</signature>
-			<description>Add a script in the head section</description>
-			<params>
-				<param name="*src">this can be the url of the script or the script content (you can even use \{\{myscript name=`hello` ... \{\} )</param>
-				<param name="parse">set true if You mean to use JMVC.vars variables placeholders in the script</param>
-				<param name="explicit">set true if You mean to pass the script content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="addstyle">JMVC.head.addstyle(String src, Boolean parse, Boolean explicit)</signature>
-			<description>Add a stylesheet in the head section</description>
-			<params>
-				<param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>
-				<param name="parse">set true if You mean to use JMVC.vars variables placeholders in the stylesheet</param>
-				<param name="explicit">set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="denyiXrame">JMVC.head.denyiXrame(String src, Boolean parse, Boolean explicit)</signature>
-			<description>Add a stylesheet in the head section</description>
-			<params>
-				<param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>
-				<param name="parse">set true if You mean to use JMVC.vars variables placeholders in the stylesheet</param>
-				<param name="explicit">set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="goto">JMVC.head.goto(String cnt, String act, String prms)</signature>
-			<description>Add a stylesheet in the head section</description>
-			<params>
-				<param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>
-				<param name="parse">set true if You mean to use JMVC.vars variables placeholders in the stylesheet</param>
-				<param name="explicit">set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="lastmodified">JMVC.head.lastmodified(String src, Boolean parse, Boolean explicit)</signature>
-			<description>Add a stylesheet in the head section</description>
-			<params>
-				<param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>
-				<param name="parse">set true if You mean to use JMVC.vars variables placeholders in the stylesheet</param>
-				<param name="explicit">set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="lib">JMVC.head.lib(String lib)</signature>
-			<description>Loads an external library</description>
-			<params>
-				<param name="lib">Library name, now only 'jquery' is available (use CDN)</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-			<sample>JMVC.head.lib('jquery');</sample>
-		</function>
-		<function>
-			<signature name="link">JMVC.head.link(String src, Boolean parse, Boolean explicit)</signature>
-			<description>Add a stylesheet in the head section</description>
-			<params>
-				<param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>
-				<param name="parse">set true if You mean to use JMVC.vars variables placeholders in the stylesheet</param>
-				<param name="explicit">set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="meta">JMVC.head.meta(String name, String value, String mode)</signature>
-			<description>Add</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="metas">JMVC.head.metas()</signature>
-			<description>Get all the document meta tags</description>
-			<params>
-				<param name="noparams">this function needs no parameters</param>
-			</params>
-			<returns>Nodes Array</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="reload">JMVC.head.reload(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="title">JMVC.head.title(String title)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="title">The string You want to be set as document title</param>
-			</params>
-			<returns>the title if no param is passed</returns>
-			<status>incomplete</status>
-		</function>
-	</head>
-
-
-
+<head>
 <!--
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	    _/           
-	         _/_/    
-	  _/  _/    _/   
-	 _/  _/    _/    
-	_/    _/_/     
-
-###################
+[MALTA] /src/head/addscript.xml
 -->
-	<io>
-		<function>
-			<signature name="post">JMVC.io.post(String uri, function cback, boolean sync, Object data, boolean cache)</signature>
-			<description>Performs an ajax post call</description>
-			<params>
-				<param name="*uri">The resource to get</param>
-				<param name="*cback">The function that will receive the response and will consume it</param>
-				<param name="p" default="false">If true method will be POST</param>
-				<param name="sync">If true the call will be synchronous</param>
-			</params>
-			<returns hint="the response">String</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="get">JMVC.io.get(String uri, function cback, boolean p, boolean sync)</signature>
-			<description>Performs an ajax call</description>
-			<params>
-				<param name="*uri">The resource to get</param>
-				<param name="*cback">The function that will receive the response and will consume it</param>
-				<param name="p" default="false">If true method will be POST</param>
-				<param name="sync">If true the call will be synchronous</param>
-			</params>
-			<status>incomplete</status>
-			<returns hint="the response">String</returns>
-		</function>
-		<function>
-			<signature name="getJson">JMVC.io.getJson(String uri)</signature>
-			<description>Evaluate a json and return it</description>
-			<params>
-				<param name="uri">The resource to get</param>
-			</params>
-			<returns>The evaluated object or false</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="getXML">JMVC.io.getXML(String uri)</signature>
-			<description>Evaluate a json and return it</description>
-			<params>
-				<param name="uri">The resource to get</param>
-			</params>
-			<returns>The evaluated object or false</returns>
-			<status>incomplete</status>
-		</function>
-	</io>
+<function>
+    <signature name="addscript">JMVC.head.addscript(String src, Boolean parse, Boolean explicit)</signature>
+    <description>Add a script in the head section</description>
+    <params>
+        <param name="*src">this can be the url of the script or the script content (you can even use \{\{myscript name=`hello` ... \{\} )</param>
+        <param name="parse">set true if You mean to use JMVC.vars variables placeholders in the script</param>
+        <param name="explicit">set true if You mean to pass the script content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
 <!--
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                          
-	                _/                _/                      
-	     _/_/_/  _/_/_/_/  _/  _/_/      _/_/_/      _/_/_/   
-	  _/_/        _/      _/_/      _/  _/    _/  _/    _/    
-	     _/_/    _/      _/        _/  _/    _/  _/    _/     
-	_/_/_/        _/_/  _/        _/  _/    _/    _/_/_/      
-	                                                 _/       
-	                                            _/_/
-############################################################
+[MALTA] /src/head/addstyle.xml
 -->
-	<string>
-		<function>
-			<signature name="code2str">JMVC.string.code2str(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="htmlEntities">JMVC.string.htmlEntities(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="ltrim">JMVC.string.ltrim(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="multireplace">JMVC.string.multireplace(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="padme">JMVC.string.padme(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="replaceall">JMVC.string.replaceall(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="rtrim">JMVC.string.rtrim(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="str2code">JMVC.string.str2code(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="repeat">JMVC.string.repeat(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="trim">JMVC.string.trim(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-	</string>
+<function>
+    <signature name="addstyle">JMVC.head.addstyle(String src, Boolean parse, Boolean explicit)</signature>
+    <description>Add a stylesheet in the head section</description>
+    <params>
+        <param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>
+        <param name="parse">set true if You mean to use JMVC.vars variables placeholders in the stylesheet</param>
+        <param name="explicit">set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
 <!--
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                         
-	             _/        _/                        _/      
-	    _/_/    _/_/_/          _/_/      _/_/_/  _/_/_/_/   
-	 _/    _/  _/    _/  _/  _/_/_/_/  _/          _/        
-	_/    _/  _/    _/  _/  _/        _/          _/         
-	 _/_/    _/_/_/    _/    _/_/_/    _/_/_/      _/_/      
-	                  _/                                     
-	               _/                                       
-
-############################################################
+[MALTA] /src/head/denyiXrame.xml
 -->
-	<object>
-		<function>
-			<signature name="clone">JMVC.object.clone(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="extend">JMVC.object.extend(obj, extension)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>Object</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="compare">JMVC.object.compare(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="contains">JMVC.object.contains(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="jCompare">JMVC.object.jCompare(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="toAttr">JMVC.object.toAttr(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="toCss">JMVC.object.toCss(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="toQs">JMVC.object.toQs(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-	</object>
-
-
+<function>
+    <signature name="denyiXrame">JMVC.head.denyiXrame(String src, Boolean parse, Boolean explicit)</signature>
+    <description>Add a stylesheet in the head section</description>
+    <params>
+        <param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>
+        <param name="parse">set true if You mean to use JMVC.vars variables placeholders in the stylesheet</param>
+        <param name="explicit">set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
 <!--
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	                                                     
-	    _/_/_/  _/  _/_/  _/  _/_/    _/_/_/  _/    _/   
-	 _/    _/  _/_/      _/_/      _/    _/  _/    _/    
-	_/    _/  _/        _/        _/    _/  _/    _/     
-	 _/_/_/  _/        _/          _/_/_/    _/_/_/      
-	                                            _/       
-	                                       _/_/
-
-######################################################
+[MALTA] /src/head/goto.xml
 -->
-	<array>
-		<function>
-			<signature name="clone">JMVC.array.clone(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="coll2array">JMVC.array.coll2array(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<testlink>test_api_array_coll2array</testlink>
-			<sample>&#10;
-				ciao</sample>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="find">JMVC.array.find(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<testlink>test_api_array_inarray</testlink>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="findRich">JMVC.array.findRich(String name, String value)</signature>
-			<description>Gets/sets document title</description>
-			<params>
-				<param name="name">The name of the meta You want to add</param>
-				<param name="value">The value of the meta You want to add</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<testlink>test_api_array_inarrayrich</testlink>
-			<status>incomplete</status>
-		</function>
-	</array>
+<function>
+    <signature name="goto">JMVC.head.goto(String cnt, String act, String prms)</signature>
+    <description>Add a stylesheet in the head section</description>
+    <params>
+        <param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>
+        <param name="parse">set true if You mean to use JMVC.vars variables placeholders in the stylesheet</param>
+        <param name="explicit">set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
 <!--
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	     
-
-	               _/      _/  _/   
-	  _/    _/  _/_/_/_/      _/    
-	 _/    _/    _/      _/  _/     
-	_/    _/    _/      _/  _/      
-	 _/_/_/      _/_/  _/  _/     
-
-##################################
+[MALTA] /src/head/lastmodified.xml
 -->
-	<util>
-		<function>
-			<signature name="deg2rad">JMVC.util.deg2rad(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="getParameters">JMVC.util.getParameters(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="getType">JMVC.util.getType(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="hex2int">JMVC.util.hex2int(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="int2hex">JMVC.util.int2hex(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="isArray">JMVC.util.isArray(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="isObject">JMVC.util.isObject(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="isSet">JMVC.util.isSet(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="isTypeOf">JMVC.util.isTypeOf(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="now">JMVC.util.now(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		
-		<function>
-			<signature name="rad2deg">JMVC.util.rad2deg(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-		<function>
-			<signature name="range">JMVC.util.range(str, obj, ctx)</signature>
-			<description>Check a namspace</description>
-			<params>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-				<param name="name">The variable to check</param>
-			</params>
-			<returns>void (undefined)</returns>
-			<status>incomplete</status>
-		</function>
-	</util>
-	<!--
-	<num>
-
-		getNum : function (str) {return parseInt(str, 10); },
-        getFloat : function (str) {return parseFloat(str, 10); },
-        pFloat : function (f) {return 1 * f; },
-        pInt : function (i) {return i >> 0; },
-        mRound : function (n) {return (n + 0.5) >> 0; },
-        mFloor : function (n) {(n > 0 ? n : n + 1) >> 0; },
-        mCeil : function (n) {return (n + (n > 0 && !!(n % 1))) >> 0; },
-        num : function (n) {return parseFloat(n.toFixed(10), 10); },
-		<function>
-			<signature name="post">JMVC.num.getNum(String num)</signature>
-			<description>ParseInt a string (base 10)</description>
-			<params>
-				<param name="*num">The string to be parsed</param>
-			</params>
-			<returns hint="the response">An integer or NaN</returns>
-		</function>
-		<function>
-			<signature name="sss">JMVC.io.post(String uri, function cback, boolean sync, Object data, boolean cache)</signature>
-			<description>Performs an ajax post call</description>
-			<params>
-				<param name="*uri">The resource to get</param>
-				<param name="*cback">The function that will receive the response and will consume it</param>
-				<param name="p" default="false">If true method will be POST</param>
-				<param name="sync">If true the call will be synchronous</param>
-			</params>
-			<returns hint="the response">String</returns>
-		</function>
-	</num>
-	-->
-
-
-	<!--
-	                                _/                _/       
-	   _/_/_/  _/_/      _/_/_/  _/_/_/_/    _/_/_/  _/_/_/    
-	  _/    _/    _/  _/    _/    _/      _/        _/    _/   
-	 _/    _/    _/  _/    _/    _/      _/        _/    _/    
-	_/    _/    _/    _/_/_/      _/_/    _/_/_/  _/    _/ 
-	-->
-	<match>
-		<function>
-			<signature name="email">JMVC.match.email(String email)</signature>
-			<description>Check if a the passed string represents a valid email</description>
-			<params>
-				<param name="email*">The string email that must be checked</param>
-			</params>
-			<returns>boolean</returns>
-			<sample>var t = JMVC.match.email('fedeghe@gmail.com');</sample>
-			<status>incomplete</status>
-			<testlink></testlink>
-			
-		</function>
-		<function>
-			<signature name="url">JMVC.match.url(String url)</signature>
-			<description>Check if a the passed string represents a valid url</description>
-			<params>
-				<param name="url*">The string url that must be checked</param>
-			</params>
-			<returns>boolean</returns>
-			<sample>var t = JMVC.match.url('http://www.jmvc.org?map=true');</sample>
-			<status>incomplete</status>
-			<testlink></testlink>
-			
-		</function>
-	</match>
-</api>	
+<function>
+    <signature name="lastmodified">JMVC.head.lastmodified(String src, Boolean parse, Boolean explicit)</signature>
+    <description>Add a stylesheet in the head section</description>
+    <params>
+        <param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>
+        <param name="parse">set true if You mean to use JMVC.vars variables placeholders in the stylesheet</param>
+        <param name="explicit">set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/head/lib.xml
+-->
+<function>
+    <signature name="lib">JMVC.head.lib(String lib)</signature>
+    <description>Loads an external library</description>
+    <params>
+        <param name="lib">Library name, now only 'jquery' is available (use CDN)</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+    <sample>JMVC.head.lib('jquery');</sample>
+</function>
+<!--
+[MALTA] /src/head/link.xml
+-->
+<function>
+    <signature name="link">JMVC.head.link(String src, Boolean parse, Boolean explicit)</signature>
+    <description>Add a stylesheet in the head section</description>
+    <params>
+        <param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>
+        <param name="parse">set true if You mean to use JMVC.vars variables placeholders in the stylesheet</param>
+        <param name="explicit">set true if You mean to pass the stylesheet content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/head/meta.xml
+-->
+<function>
+    <signature name="meta">JMVC.head.meta(String name, String value, String mode)</signature>
+    <description>Add</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/head/metas.xml
+-->
+<function>
+    <signature name="metas">JMVC.head.metas()</signature>
+    <description>Get all the document meta tags</description>
+    <params>
+        <param name="noparams">this function needs no parameters</param>
+    </params>
+    <returns>Nodes Array</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/head/reload.xml
+-->
+<function>
+    <signature name="reload">JMVC.head.reload(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/head/title.xml
+-->
+<function>
+    <signature name="title">JMVC.head.title(String title)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="title">The string You want to be set as document title</param>
+    </params>
+    <returns>the title if no param is passed</returns>
+    <status>incomplete</status>
+</function>
+</head>
+<!--
+[MALTA] /src/io/_main.xml
+-->
+<io>
+<!--
+[MALTA] /src/io/post.xml
+-->
+<function>
+    <signature name="post">JMVC.io.post(String uri, function cback, boolean sync, Object data, boolean cache)</signature>
+    <description>Performs an ajax post call</description>
+    <params>
+        <param name="*uri">The resource to get</param>
+        <param name="*cback">The function that will receive the response and will consume it</param>
+        <param name="p" default="false">If true method will be POST</param>
+        <param name="sync">If true the call will be synchronous</param>
+    </params>
+    <returns hint="the response">String</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/io/get.xml
+-->
+<function>
+    <signature name="get">JMVC.io.get(String uri, function cback, boolean p, boolean sync)</signature>
+    <description>Performs an ajax call</description>
+    <params>
+        <param name="*uri">The resource to get</param>
+        <param name="*cback">The function that will receive the response and will consume it</param>
+        <param name="p" default="false">If true method will be POST</param>
+        <param name="sync">If true the call will be synchronous</param>
+    </params>
+    <status>incomplete</status>
+    <returns hint="the response">String</returns>
+</function>
+<!--
+[MALTA] /src/io/getJson.xml
+-->
+<function>
+    <signature name="getJson">JMVC.io.getJson(String uri)</signature>
+    <description>Evaluate a json and return it</description>
+    <params>
+        <param name="uri">The resource to get</param>
+    </params>
+    <returns>The evaluated object or false</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/io/getXML.xml
+-->
+<function>
+    <signature name="getXML">JMVC.io.getXML(String uri)</signature>
+    <description>Evaluate a json and return it</description>
+    <params>
+        <param name="uri">The resource to get</param>
+    </params>
+    <returns>The evaluated object or false</returns>
+    <status>incomplete</status>
+</function>
+</io>
+<!--
+[MALTA] /src/string/_main.xml
+-->
+<string>
+<!--
+[MALTA] /src/string/code2str.xml
+-->
+<function>
+    <signature name="code2str">JMVC.string.code2str(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/string/ltrim.xml
+-->
+<function>
+    <signature name="ltrim">JMVC.string.ltrim(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/string/multireplace.xml
+-->
+<function>
+    <signature name="multireplace">JMVC.string.multireplace(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/string/padme.xml
+-->
+<function>
+    <signature name="padme">JMVC.string.padme(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/string/replaceall.xml
+-->
+<function>
+    <signature name="replaceall">JMVC.string.replaceall(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/string/rtrim.xml
+-->
+<function>
+    <signature name="rtrim">JMVC.string.rtrim(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/string/str2code.xml
+-->
+<function>
+    <signature name="str2code">JMVC.string.str2code(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/string/repeat.xml
+-->
+<function>
+    <signature name="repeat">JMVC.string.repeat(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/string/trim.xml
+-->
+<function>
+    <signature name="trim">JMVC.string.trim(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+</string>
+<!--
+[MALTA] /src/object/_main.xml
+-->
+<object>
+<!--
+[MALTA] /src/object/clone.xml
+-->
+<function>
+    <signature name="clone">JMVC.object.clone(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/object/extend.xml
+-->
+<function>
+    <signature name="extend">JMVC.object.extend(obj, extension)</signature>
+    <description>Check a namspace</description>
+    <params>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+    </params>
+    <returns>Object</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/object/compare.xml
+-->
+<function>
+    <signature name="compare">JMVC.object.compare(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/object/contains.xml
+-->
+<function>
+    <signature name="contains">JMVC.object.contains(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/object/jCompare.xml
+-->
+<function>
+    <signature name="jCompare">JMVC.object.jCompare(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/object/toAttr.xml
+-->
+<function>
+    <signature name="toAttr">JMVC.object.toAttr(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/object/toCss.xml
+-->
+<function>
+    <signature name="toCss">JMVC.object.toCss(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/object/toQs.xml
+-->
+<function>
+    <signature name="toQs">JMVC.object.toQs(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+</object>
+<!--
+[MALTA] /src/array/_main.xml
+-->
+<array>
+<!--
+[MALTA] /src/array/clone.xml
+-->
+<function>
+    <signature name="clone">JMVC.array.clone(Array arr)</signature>
+    <description>Clones an array</description>
+    <params>
+        <param name="arr">The array to be cloned</param>
+    </params>
+    <returns>The cloned array (Array)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/array/coll2array.xml
+-->
+<function>
+    <signature name="coll2array">JMVC.array.coll2array(HTMLCollection coll)</signature>
+    <description>Get an array from an HTMLCollection</description>
+    <params>
+        <param name="coll">The HTMLCollection</param>
+    </params>
+    <returns>array containing the HTMLCollection elements (array)</returns>
+    <testlink>test_api_array_coll2array</testlink>
+    <sample>&#10;
+var a = JMVC.array.coll2array(document.getElementsByTagName('div'));&#10;
+console.debug(JMVC.util.getType(a));</sample>
+    <status>testing</status>
+</function>
+<!--
+[MALTA] /src/array/find.xml
+-->
+<function>
+    <signature name="find">JMVC.array.find(Array arr, Mixed el)</signature>
+    <description>Look for an element in a array</description>
+    <params>
+        <param name="arr">The Array where the element presence will be checked</param>
+        <param name="el">The element searched</param>
+    </params>
+    <returns>The index of the element if found or -1 (integer)</returns>
+    <testlink>test_api_array_inarray</testlink>
+    <status>testing</status>
+</function>
+<!--
+[MALTA] /src/array/findRich.xml
+-->
+<function>
+    <signature name="findRich">JMVC.array.findRich(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <testlink>test_api_array_inarrayrich</testlink>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/array/unique.xml
+-->
+<function>
+    <signature name="unique">JMVC.array.unique(Array a)</signature>
+    <description>Return the passed array free of duplicated</description>
+    <params>
+        <param name="a">The array to clean</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <testlink>test_api_array_unique</testlink>
+    <status>incomplete</status>
+</function>
+</array>
+<!--
+[MALTA] /src/util/_main.xml
+-->
+<util>
+<!--
+[MALTA] /src/util/deg2rad.xml
+-->
+<function>
+    <signature name="deg2rad">JMVC.util.deg2rad(str, obj, ctx)</signature>
+    <description>Check a namspace</description>
+    <params>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/util/getParameters.xml
+-->
+<function>
+    <signature name="getParameters">JMVC.util.getParameters(str, obj, ctx)</signature>
+    <description>Check a namspace</description>
+    <params>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/util/getType.xml
+-->
+<function>
+    <signature name="getType">JMVC.util.getType(str, obj, ctx)</signature>
+    <description>Check a namspace</description>
+    <params>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/util/hex2int.xml
+-->
+<function>
+    <signature name="hex2int">JMVC.util.hex2int(str, obj, ctx)</signature>
+    <description>Check a namspace</description>
+    <params>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/util/int2hex.xml
+-->
+<function>
+    <signature name="int2hex">JMVC.util.int2hex(str, obj, ctx)</signature>
+    <description>Check a namspace</description>
+    <params>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/util/isArray.xml
+-->
+<function>
+    <signature name="isArray">JMVC.util.isArray(str, obj, ctx)</signature>
+    <description>Check a namspace</description>
+    <params>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/util/isObject.xml
+-->
+<function>
+    <signature name="isObject">JMVC.util.isObject(str, obj, ctx)</signature>
+    <description>Check a namspace</description>
+    <params>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/util/isSet.xml
+-->
+<function>
+    <signature name="isSet">JMVC.util.isSet(str, obj, ctx)</signature>
+    <description>Check a namspace</description>
+    <params>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/util/isTypeOf.xml
+-->
+<function>
+    <signature name="isTypeOf">JMVC.util.isTypeOf(str, obj, ctx)</signature>
+    <description>Check a namspace</description>
+    <params>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/util/now.xml
+-->
+<function>
+    <signature name="now">JMVC.util.now(str, obj, ctx)</signature>
+    <description>Check a namspace</description>
+    <params>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/util/rad2deg.xml
+-->
+<function>
+    <signature name="rad2deg">JMVC.util.rad2deg(str, obj, ctx)</signature>
+    <description>Check a namspace</description>
+    <params>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] /src/util/range.xml
+-->
+<function>
+    <signature name="range">JMVC.util.range(str, obj, ctx)</signature>
+    <description>Check a namspace</description>
+    <params>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+        <param name="name">The variable to check</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+</util>
+<!--
+[MALTA] /src/match/_main.xml
+-->
+<match>
+<!--
+[MALTA] /src/match/email.xml
+-->
+<function>
+    <signature name="email">JMVC.match.email(String email)</signature>
+    <description>Check if a the passed string represents a valid email</description>
+    <params>
+        <param name="email*">The string email that must be checked</param>
+    </params>
+    <returns>boolean</returns>
+    <sample>var t = JMVC.match.email('fedeghe@gmail.com');</sample>
+    <status>incomplete</status>
+    <testlink></testlink>           
+</function>
+<!--
+[MALTA] /src/match/url.xml
+-->
+<function>
+    <signature name="url">JMVC.match.url(String url)</signature>
+    <description>Check if a the passed string represents a valid url</description>
+    <params>
+        <param name="url*">The string url that must be checked</param>
+    </params>
+    <returns>boolean</returns>
+    <sample>var t = JMVC.match.url('http://www.jmvc.org?map=true');</sample>
+    <status>incomplete</status>
+    <testlink></testlink>           
+</function>
+</match>
+</api>  

@@ -1,0 +1,10 @@
+<function>
+    <signature name="relocate">relocate(String url, int ms)</signature>
+    <description>Redirects to a specified location.</description>
+    <params>
+        <param name="*url">the location to be redirected to</param>
+        <param name="ms" default="0">after how many ms</param>
+    </params>
+    <returns></returns>
+    <status>incomplete</status>
+</function>

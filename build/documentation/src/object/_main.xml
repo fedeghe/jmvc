@@ -1,0 +1,10 @@
+<object>
+    $$src/object/clone.xml$$
+    $$src/object/extend.xml$$
+    $$src/object/compare.xml$$
+    $$src/object/contains.xml$$
+    $$src/object/jCompare.xml$$
+    $$src/object/toAttr.xml$$
+    $$src/object/toCss.xml$$
+    $$src/object/toQs.xml$$
+</object>

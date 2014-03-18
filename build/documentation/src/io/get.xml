@@ -1,0 +1,12 @@
+<function>
+    <signature name="get">JMVC.io.get(String uri, function cback, boolean p, boolean sync)</signature>
+    <description>Performs an ajax call</description>
+    <params>
+        <param name="*uri">The resource to get</param>
+        <param name="*cback">The function that will receive the response and will consume it</param>
+        <param name="p" default="false">If true method will be POST</param>
+        <param name="sync">If true the call will be synchronous</param>
+    </params>
+    <status>incomplete</status>
+    <returns hint="the response">String</returns>
+</function>

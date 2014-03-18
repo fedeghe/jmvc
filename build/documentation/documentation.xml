@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<api>
+    $$src/jmvc/_main.xml$$
+    $$src/constructors/_main.xml$$    
+    $$src/errors/_main.xml$$
+    $$src/model/_main.xml$$
+    $$src/view/_main.xml$$
+    $$src/controller/_main.xml$$
+    $$src/dom/_main.xml$$
+    $$src/events/_main.xml$$
+    $$src/head/_main.xml$$
+    $$src/io/_main.xml$$
+    $$src/string/_main.xml$$
+    $$src/object/_main.xml$$
+    $$src/array/_main.xml$$
+    $$src/util/_main.xml$$
+    $$src/match/_main.xml$$
+</api>  

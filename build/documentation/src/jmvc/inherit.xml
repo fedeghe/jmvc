@@ -1,0 +1,11 @@
+<function>
+    <signature name="inherit">JMVC.inherit(Object child, Object parent)</signature>
+    <description>Implements a true inheritance (D.C. way if you prefer)</description>
+    <params>
+        <param name="*child">the child object that must inherit</param>
+        <param name="*parent">the parent object that will share his prototype with the `foo middle object`</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>complete</status>
+    <testlink>test_api_jmvc_inherit</testlink>
+</function>
