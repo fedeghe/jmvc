@@ -99,6 +99,7 @@ JMVC.extend('tabs', {
 			for(i = 0, l = that.elements['li'].length; i < l; i += 1){
 				JMVC.events.bind(that.elements['li'][i], 'click', function(e){
 
+					//anchor up
 					document.location.hash = anchorName;
 
 					//hide all tabs

@@ -2,9 +2,15 @@
  *    TEST SUITE
  *    sightly basedon the work of Angus Croll checking pros/cons of strict mode 
  *    http://javascriptweblog.wordpress.com/2011/05/03/javascript-strict-mode/
+ *    thank You Angus
  */
 
 JMVC.extend('test', {
+
+    /**
+     * [vars description]
+     * @type {Object}
+     */
     vars : {
         'HTML_MODE' : 1,
         'CONSOLE_MODE' : 2,
@@ -22,7 +28,11 @@ JMVC.extend('test', {
         'outCode' : false,
         'debug_id' : 0
     },
-    //
+
+    /**
+     * [init description]
+     * @return {[type]} [description]
+     */
     init : function () {
         'use strict';
         JMVC.require(
@@ -32,6 +42,11 @@ JMVC.extend('test', {
         );
     },
 
+    /**
+     * [initialize description]
+     * @param  {[type]} outcode [description]
+     * @return {[type]}         [description]
+     */
     initialize : function (outcode) {
         'use strict';
         if (outcode !== undefined && outcode) {
@@ -41,6 +56,12 @@ JMVC.extend('test', {
         JMVC.head.addstyle(JMVC.test.vars.css_path + JMVC.US + JMVC.test.vars.css_code);
         JMVC.test.vars.banner = JMVC.dom.add(JMVC.dom.body(), 'div', {id : 'results'});
     },
+
+    /**
+     * [describe description]
+     * @param  {[type]} html [description]
+     * @return {[type]}      [description]
+     */
     describe : function (html) {
         'use strict';
         if (JMVC.test.vars.mode == JMVC.test.vars.HTML_MODE) {
@@ -48,21 +69,55 @@ JMVC.extend('test', {
         }
     },
 
+    /**
+     * [code description]
+     * @param  {[type]} code [description]
+     * @return {[type]}      [description]
+     */
     code : function (code) {
         'use strict';
         var lines = code.split(/\n/),
             outline = '<li><span class="nline">%nline%</span>%line%</li>',
             out = '',
-            l,
-            i = 1;
-        for (l in lines) {
-            out += JMVC.string.replaceall(outline, {nline : i, line : JMVC.shl.parse(lines[l]) || ' '}, '%', '%');
+            l = lines.length,
+            j = 0,
+            i = 1,
+            min = Infinity;
+
+        // get the minimum spaces at the beginning of lines, but 0
+        // used to remove these spaces from code
+        //
+        
+        for (j = 0; j < l; j++) {
+            var tmp = lines[j].match(/^(\s*)/)[0].length;
+
+            // 0 cen be ignored
+            // 
+            if (tmp && tmp < min) {
+                min = tmp;
+            }
+        }
+        
+        // loop lines
+        // 
+        for (j = 0; j < l; j++) {
+            // remove the right number of spaces at line begin
+            lines[j] = lines[j].replace(new RegExp("^\\\s{" + min + "}"), '');
+            out += JMVC.string.replaceall(outline, {
+                nline : i,
+                line : JMVC.htmlchars(JMVC.shl.parse(lines[j]) || ' ')
+            }, '%', '%');
             i += 1;
         }
+        
         JMVC.dom.add(JMVC.test.vars.banner, 'code', {'class' : 'debug fiveround'}, '<ul>' + out + '</ul>');
-        //console.debug('<ul>' + out + '</ul>');
     },
 
+    /**
+     * [message description]
+     * @param  {[type]} msg [description]
+     * @return {[type]}     [description]
+     */
     message : function (msg) {
         'use strict';
         if (JMVC.test.vars.mode == JMVC.test.vars.CONSOLE_MODE) {
@@ -72,6 +127,12 @@ JMVC.extend('test', {
         }
     },
 
+    /**
+     * [outDebug description]
+     * @param  {[type]} kind [description]
+     * @param  {[type]} opts [description]
+     * @return {[type]}      [description]
+     */
     outDebug : function (kind, opts) {
         'use strict';
         JMVC.test.vars.debug_id += 1;
@@ -97,6 +158,13 @@ JMVC.extend('test', {
         return [JMVC.test.vars.debug_id, JMVC.string.replaceall(tpl, pars)];
     },
 
+    /**
+     * [testException description]
+     * @param  {[type]} testName      [description]
+     * @param  {[type]} code          [description]
+     * @param  {[type]} expectedError [description]
+     * @return {[type]}               [description]
+     */
     testException : function (testName, code, expectedError) {
         /*
         EvalError        An error in the eval() function has occurred.
@@ -118,7 +186,6 @@ JMVC.extend('test', {
         JMVC.test.startTest(testName);
         var res = true,
             debuginfo = false;
-
         try {
             expectedError == SyntaxError ? eval(code) : code();
             res = false;
@@ -132,6 +199,12 @@ JMVC.extend('test', {
         JMVC.test.finishTest(res, debuginfo);
     },
 
+    /**
+     * [testAssertion description]
+     * @param  {[type]} testName [description]
+     * @param  {[type]} value    [description]
+     * @return {[type]}          [description]
+     */
     testAssertion : function (testName, value) {
         'use strict';
         var res = false, debuginfo = false;
@@ -143,6 +216,14 @@ JMVC.extend('test', {
         JMVC.test.finishTest(res, debuginfo);
     },
 
+    /**
+     * [testValue description]
+     * @param  {[type]}   testName      [description]
+     * @param  {Function} fn            [description]
+     * @param  {[type]}   expectedValue [description]
+     * @param  {[type]}   options       [description]
+     * @return {[type]}                 [description]
+     */
     testValue : function (testName, fn, expectedValue, options) {
         'use strict';
         var res = true,
@@ -160,8 +241,16 @@ JMVC.extend('test', {
         JMVC.test.finishTest(res, debuginfo);
     },
     
-    
-    
+
+    testimes : [],
+    /**
+     * [testTime description]
+     * @param  {[type]}   testName [description]
+     * @param  {Function} fn       [description]
+     * @param  {[type]}   times    [description]
+     * @param  {[type]}   options  [description]
+     * @return {[type]}            [description]
+     */
     testTime : function (testName, fn, times, options) {
         'use strict';    
         JMVC.test.startTest(testName);
@@ -170,10 +259,14 @@ JMVC.extend('test', {
             times -= 1;
         }
         // this is the real time
-        JMVC.test.finishTest(true);
+        this.testimes.push([testName, JMVC.test.finishTest(true)]);
     },
-    
 
+    /**
+     * [startTest description]
+     * @param  {[type]} testName [description]
+     * @return {[type]}          [description]
+     */
     startTest : function (testName) {
         'use strict';
         if (JMVC.test.vars.mode == JMVC.test.vars.CONSOLE_MODE) {
@@ -184,6 +277,12 @@ JMVC.extend('test', {
         JMVC.test.vars.start_time = +new Date;
     },
 
+    /**
+     * [finishTest description]
+     * @param  {[type]} passed    [description]
+     * @param  {[type]} debuginfo [description]
+     * @return {[type]}           [description]
+     */
     finishTest : function (passed, debuginfo) {
         'use strict';
         var time = 0,
@@ -206,8 +305,13 @@ JMVC.extend('test', {
             }
         }
         JMVC.test.vars.cur_timer += 1;
+        return time;
     },
 
+    /**
+     * [startAll description]
+     * @return {[type]} [description]
+     */
     startAll : function () {
         'use strict';
         var togglespec_visibility = false,
@@ -233,7 +337,12 @@ JMVC.extend('test', {
             }
         }
     },
-    
+
+    /**
+     * [finishAll description]
+     * @param  {[type]} code [description]
+     * @return {[type]}      [description]
+     */
     finishAll : function (code) {
         'use strict';
         var result = ["","(", JMVC.test.vars.testsPassed, "out of", JMVC.test.vars.totalTests, "tests passed", ")"].join(' '),
@@ -257,8 +366,26 @@ JMVC.extend('test', {
 
         JMVC.head.link('icon', {type : "image/vnd.microsoft.icon", href : JMVC.vars.baseurl + "/media/favicon.ico"});
     },
+
+    /**
+     * [pause description]
+     * @return {[type]} [description]
+     */
     pause : function () {
         'use strict';
         JMVC.dom.add(JMVC.test.vars.banner, 'hr', {'class' : 'pause fiveround'});
+    },
+
+    timeSummary : function () {
+        this.describe('<h2>Times summary</h2>');
+        //order
+        this.testimes = this.testimes.sort(function (a, b) {
+            return a[1] < b[1];
+        });
+        
+        for (var k = 0, l = this.testimes.length; k < l; k++) {
+            
+            JMVC.dom.add(JMVC.test.vars.banner, 'p', {}, '<strong>' + this.testimes[k][1] + '</strong>:' + this.testimes[k][0]);
+        }
     }
 });
