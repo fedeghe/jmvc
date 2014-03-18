@@ -5,6 +5,7 @@ body{
 	width:900px;
 	margin:0 auto;
 	margin-top:1em;
+	padding:30px;
 	/*background-image: url($baseurl$/media/img/oy.png);*/
 } 
 p{
