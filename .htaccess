@@ -64,6 +64,11 @@ AddType text/cache-manifest .manifest
 	#CORS, {*, null, or exact domain(http://ws.jmvc.org)}
 	Header set Access-Control-Allow-Origin "*"
 
+	# 0
+	<FilesMatch "jmvc(\.min)?\.js$">
+		Header unset Cache-Control
+	</FilesMatch>
+
 	# year
 	<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|svg|swf|mp3|mp4)$">
 		Header set Cache-Control "max-age=31104000, must-revalidate"
