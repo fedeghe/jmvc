@@ -171,8 +171,10 @@ JMVC.head = {
      */
     lib : function (l) {
         var libs = {
-            'jquery' : 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js',
-            'jsapi' : 'https://www.google.com/jsapi'
+            jQuery : '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js',
+            jsapi : 'https://www.google.com/jsapi',
+            underscore : 'http://underscorejs.org/underscore-min.js',
+            'prototype' : 'https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js'
         };
         l in libs && this.addscript(libs[l]);
     },
