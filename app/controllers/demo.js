@@ -44,8 +44,8 @@ JMVC.controllers.demo = function () {
 
 
 
-		JMVC.require('widget/screensaver/screensaver');
-		JMVC.screensaver.on(5000);
+		//JMVC.require('widget/screensaver/screensaver');
+		//JMVC.screensaver.on(5000);
 		
 
 	};
@@ -74,7 +74,7 @@ JMVC.controllers.demo = function () {
 				//'Controller' : 'demo/controller',
 				//'View' : 'demo/view',
 				'Canvas editor (WorkInProgress)' : 'canvaseditor',
-				'Canvas editor (old layout)' : 'canvaseditor?v=1',
+				//'Canvas editor (old layout)' : 'canvaseditor?v=1',
 				'6 Divs Cube css3 tranformations ' : 'demo/divrot.js',
 				
 				'Console' : 'console',
@@ -115,7 +115,8 @@ JMVC.controllers.demo = function () {
 				'* obj/date' : 'test_date',
 				'* lib/array' : 'test_array',
 				'* JMVC.util.findRich' : 'test_arrayOp',
-				'* lib/crypt' : 'test_crypt'
+				'* lib/crypt' : 'test_crypt',
+				'* FizzBuzz perf' : 'test_fizzbuzz'
 			},
 			style = {
 				'body' : {
