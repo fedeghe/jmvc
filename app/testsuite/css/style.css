@@ -206,9 +206,10 @@ div.timesummary{
 }
 div.timesummary li.head{
 	color:white;
-	font-size:30px;
-	line-height:50px;
-	height:50px;
+	font-size:24px;
+	line-height:48px;
+	height:48px;
+	font-weight:bold;
 }
 div.timesummary li strong{
 	display:inline-block;
