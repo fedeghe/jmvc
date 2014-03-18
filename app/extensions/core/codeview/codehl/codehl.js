@@ -50,7 +50,7 @@ JMVC.hook({'onBeforeRender' : function(cnt){
 					html = new RegExp(RX.html, 'gm').exec(cnt);
 					tmp = '';
 					if (html) {
-						tmp = hl(JMVC.htmlspecialchars(html[1]));
+						tmp = hl(JMVC.htmlchars(html[1]));
 						cnt = cnt.replace(html[0], tmp);
 					} else {
 						html = false;
