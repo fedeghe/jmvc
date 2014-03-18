@@ -15,7 +15,7 @@ JMVC.hook({'onBeforeRender' : function(cnt){
 					html = new RegExp(RX.html, 'gm').exec(cnt),
 						tmp = '';
 					if (html) {
-						tmp = '<pre><code>' + JMVC.htmlspecialchars(html[1]) + '</code></pre>';
+						tmp = '<pre><code>' + JMVC.htmlchars(html[1]) + '</code></pre>';
 						cnt = cnt.replace(html[0], tmp);
 					} else {
 						html = false;
