@@ -49,17 +49,6 @@ JMVC.string = {
     code2str : function (code) {
         return String.fromCharCode.apply(null, code);
     },
-     /**
-     * [ description]
-     * @param  {[type]} html [description]
-     * @return {[type]}      [description]
-     */
-    htmlEntities : function (html) {
-        return html
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/&(?![\w\#]+;)/g, '&amp;');
-    },
     /**
      * [ description]
      * @param  {[type]} s){return s.replace(/^\s+/g [description]
@@ -78,6 +67,14 @@ JMVC.string = {
             cnt = cnt.replace(o[i], i);
         }
         return cnt;
+    },
+    /**
+     * [nl2br description]
+     * @param  {[type]} str [description]
+     * @return {[type]}     [description]
+     */
+    nl2br : function (str) {
+        return str.replace(/\/n/gm, '<br />');
     },
     /**
      * [padme description]
@@ -163,9 +160,11 @@ JMVC.string = {
                     // use it
                 case $1 in obj :
                     return obj[$1];
-                    // not a function and not found in literal
-                    // use fallback if passed or get back the placeholder
-                    // switching off before returning
+                    /**
+                     * not a function and not found in literal
+                     * use fallback if passed or get back the placeholder
+                     * switching off before returning
+                     */
                 default:
                     straight = false;
                     return fb || start + $1 + end;
