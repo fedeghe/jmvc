@@ -85,8 +85,8 @@ $JMVC = {
     get2 : jmvc.get2,
     del2 : jmvc.del2,
     //
-    htmlspecialchars : jmvc.htmlspecialchars,
-    htmlspecialchars_decode : jmvc.htmlspecialchars_decode,
+    htmlchars : jmvc.htmlchars,
+    htmlchars_decode : jmvc.htmlchars_decode,
     //
     gc : function () {
         var i = 0,
