@@ -96,6 +96,8 @@ at the end there is an execution <a href="#times">time comparison</a>:');
 			JMVC.test.testTime('JMVC.array.origNearest', JMVC.array.origNearest, times, [rn, a]);
 			JMVC.test.testTime('JMVC.array.fastNearest', JMVC.array.fastNearest, times, [rn, a]);
 			
+
+			JMVC.test.timeSummary();
 			
 			JMVC.test.finishAll();			
 			
