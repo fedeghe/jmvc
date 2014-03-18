@@ -1,4 +1,5 @@
 JMVC.nsMake('JMVC.canvas');
+
 JMVC.require(
     'core/fx/fx',
     'core/color/color'
@@ -8,52 +9,107 @@ JMVC.require(
 JMVC.Channel('canvaseditor');
 
 /**
- * [Editor description]
+ * Basic constuctor for editor
  * @param {[type]} options [description]
  */
 JMVC.canvas.Editor = function (options) {
+    // reference for callbacks
     var self = this;
+
+    /**
+     * check if a node is passed as options, it is necessay
+     * too see where to rendere the editor
+     */
     if (!options.hasOwnProperty('node')) {
         throw new Error('A node is needed to create a Editor in it');
         return false;
     }
+
+    /**
+     * Bas path for the editor
+     * @type {String}
+     */
     this.basepath = JMVC.vars.baseurl + '/app/extensions/canvas/editorNEXT/';
+
+    /**
+     * Configuration that will be taken from config.json
+     * @type {Object}
+     */
     this.config = {};
+
+    /**
+     * The node where the editor will be created
+     * @type {DOMnode}
+     */
     this.node = options.node;
+
+    /**
+     * Width for the editor, in px
+     * @type {Integer}
+     */
     this.width = options.width || 200;
+
+    /**
+     * Height for the editor
+     * @type {Integer}
+     */
     this.height = options.height || 200;
 
+    /**
+     * every editor has a panelManager
+     * @type {Object}
+     */
     this.panelManager = null;
-    
+
+    /**
+     * get the configuration
+     */
     JMVC.io.getJson(this.basepath + 'config.json', function (json) {
         self.config = json;
     });
 };
 /**
- * [prototype description]
+ * Editor prototype definition
  * @type {Object}
  */
 JMVC.canvas.Editor.prototype = {
+
+    /**
+     * Init function 
+     * @return {[type]} [description]
+     */
     init: function () {
         // Basic editor style
         JMVC.head.addstyle(this.basepath + 'css/editor.css', true);
         JMVC.head.addstyle(this.basepath + 'css/tooltip.css', true);
         JMVC.head.addstyle(this.basepath + 'css/' + this.config.sprite, true);  
         
+        // create and initialize the panelMAnager
+        // 
         this.panelManager = JMVC.canvas.Editor.getPanelManager(this);
         this.panelManager.init();
+
+        // disable right click
+        //
         JMVC.events.disableRightClick();
 
+        // chain
         return this;
     },
     render: function () {
-        // ad the panel
+        // render the panel 
+        // 
         this.panelManager.render();
-        // JMVC.canvas.Editor.eventManager.init();
+
+        // chain
         return this;
     },
     bind : function () {
+        // chain the panel
+        // 
         this.panelManager.bind();
+
+        // chain
         return this;
     }
 };
@@ -62,6 +118,3 @@ JMVC.canvas.Editor.prototype = {
 JMVC.require('canvas/editorNEXT/helpers/');
 //
 JMVC.nsMake('JMVC.canvas.Editor.fields');
-//
-//
-//
