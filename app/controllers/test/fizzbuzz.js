@@ -1,0 +1,86 @@
+JMVC.controllers.fizzbuzz = function() {
+
+    this.action_index = function(sunday){
+
+        function fb1(n) {
+            var res = '',
+                max = n || 1E5,
+                inner = function (j) {
+                    return (j % 3 ? '' : 'Fizz') + (j % 5 ? '' : 'Buzz') || j;
+                }
+            for (var i = 1, out = ''; i < max; i++, out = '') {
+                inner(i);
+            }
+            return true;
+        }
+
+        function fb2(n) {
+            var acc = 810092048,
+                aMillion = n || 1E5,
+                number = 1,
+                bitwiseFizzBuzz = function (i) {
+                    var c = acc & 3,
+                        a = 'FizzBuzz';
+                    if (c === 0) {
+                        a = i;
+                    } else if (c === 1) {
+                        a = 'Fizz';
+                    } else if (c === 2) {
+                        a = 'Buzz';
+                    }
+                    acc = acc >> 2 | c << 28;
+                    return a;
+                },
+                end;
+             
+            while (number <= aMillion) {
+              bitwiseFizzBuzz(number)
+              number++;
+            }
+            return true;
+        }
+
+        function fb3(n) {
+            var messages = [null, "Fizz", "Buzz", "FizzBuzz"],
+                acc = 810092048, //11 00 00 01 00 10 01 00 00 01 10 00 01 00 00
+                c = 0,
+                result;
+            for (var i=1; i <= n; ++i)  {
+                c = acc & 3;
+                result += (c > 0) ? messages[c] : i + ", ";
+                acc = acc >> 2 | c << 28;
+            }
+        }
+
+        this.render(function test(){
+            "use strict";
+            
+            JMVC.test.initialize(true);
+            JMVC.test.startAll();
+            
+            JMVC.events.loadify(1000);
+            
+            JMVC.test.describe('FizzBuzz time comparison');
+
+            JMVC.test.message('First version');
+            JMVC.test.code(fb1.toString());
+
+            JMVC.test.message('Fast version');
+            JMVC.test.code(fb2.toString());
+
+            JMVC.test.message('X version');
+            JMVC.test.code(fb3.toString());
+
+            var times = 10,
+                top = 1E7;
+            JMVC.test.describe('<h2>Times comparison</h2>here the 2 functions are executed ' + times + ' times with the same input : '+ top);
+
+            JMVC.test.testTime('fb1', fb1, times, [top]);
+            JMVC.test.testTime('fb2', fb2, times, [top]);
+            JMVC.test.testTime('fb3', fb3, times, [top]);
+            
+            JMVC.test.finishAll();
+        });
+    };
+    
+};
