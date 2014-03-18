@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.3.5 (rev. 3)
+ * @version :  3.3.6 (rev. 1) build: 480
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
- * @file : built with Malta v.1.0.8 & a love heap
- *         glued with 34 files on 25/2/2014 at 1:18:58
+ * @file : built with Malta v.1.0.13 & a love heap
+ *         glued with 35 files on 18/3/2014 at 12:9:57
  *
  * All rights reserved.
  *
@@ -37,14 +37,18 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * 
  */
+//
+//
 (function (W) {
+    // 
     // one for all the build
     'use strict';
     //
-    var WD = W.document,    // local reference for window.document
-        WDL = WD.location,  // local reference for current window.document.location
+    // local reference for window.document
+    // local reference for current window.document.location
+    var WD = W.document,
+        WDL = WD.location,
         //
         // this function returns the JMVC object, globalized, after doing some stuff
         // @return {object literal} $JMVC inner object 
@@ -61,10 +65,10 @@
             var $JMVC,
                 //
                 // version (vars.json)
-                JMVC_VERSION = '3.3.5',
+                JMVC_VERSION = '3.3.6',
                 //
                 // review (vars.json)
-                JMVC_REVIEW = '3',
+                JMVC_REVIEW = '1',
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -320,6 +324,7 @@
                     // if the object passed has a initCheck function
                     // the extension will take place only if the initCheck
                     // return truly value
+                    // 
                     if (typeof obj.initCheck === 'function') {
                         if (!obj.initCheck.call($JMVC)) {
                             return false;
@@ -445,9 +450,9 @@
                  * @param  {[type]} text [description]
                  * @return {[type]}      [description]
                  */
-                htmlspecialchars : function (text) {
+                htmlchars : function (text) {
                     return text
-                        .replace(/&/g, '&amp;')
+                        .replace(/&(?![\w\#]+;)/g, '&amp;')
                         .replace(/</g, '&lt;')
                         .replace(/>/g, '&gt;')
                         .replace(/"/g, '&quot;')
@@ -458,7 +463,7 @@
                  * @param  {[type]} html [description]
                  * @return {[type]}      [description]
                  */
-                htmlspecialchars_decode : function (html) {
+                htmlchars_decode : function (html) {
                     return html
                         .replace(/&amp;/g, '&')
                         .replace(/&lt;/g, '<')
@@ -565,7 +570,7 @@
                      */
                     make : function (str, obj, ctx) {
                         var chr = '.',
-                            els = str.split(chr),
+                            els = str.split(/\.|\//),
                             l = els.length,
                             ret;
                         typeof ctx === undef && (ctx = W);
@@ -757,9 +762,13 @@
                         i = 0,
                         arg = arguments,
                         lArg = arg.length,
-                        head = JMVC.WD.getElementsByTagName('head').item(0);
+                        head = JMVC.WD.getElementsByTagName('head').item(0),
+                        cb = null;
                     //
                     while (i < lArg) {
+                        if (typeof arg[i] === 'function') {
+                            cb = arg[i];
+                        }
                         if (typeof arg[i] === 'string' && !$JMVC.extensions[arg[i]]) {
                             // check if the required end with /, in this case
                             // 
@@ -788,12 +797,12 @@
                                     head.appendChild(s);
                                     getmode === 'scriptghost' && head.removeChild(s);
                                 }
-            
                                 $JMVC.extensions[arg[i]] = arg[i];
                             }
                         }
                         i += 1;
                     }
+                    cb && cb();
                 },
                 /* 
                 * setter, getter, unsetter for $JMVC vars
@@ -941,187 +950,6 @@
                 }
             };
             jmvc.multi_inherit(Errors, Error);
-            //-----------------------------------------------------------------------------
-            /*
-            [MALTA] /src/core/parser.js
-            */
-            /*----
-            PARSER
-            ----*/
-            Parser = {
-                /**
-                 * microtemplating function
-                 * Based on the work of a self-professed javascript ninja 
-                 * http://ejohn.org/blog/javascript-micro-templating/
-                 * 
-                 * Parses a string looking for  
-                 * @param  {string} content the content that must be parsed
-                 * @return {string}         parsed content
-                 */
-                tpl : function (content) {
-                    return (content.match(/\<%/)) ?
-                    (function (str) {
-                        var fn = new Function('obj',
-                            "var p=[]; p.push('" +
-                            str.replace(/[\r\t\n]/g, " ")
-                            .split("<%").join("\t")
-                            .replace(/((^|%>)[^\t]*)'/g, "$1\r")
-                            .replace(/\t=(.*?)%>/g, "',$1,'")
-                            .split("\t").join("');")
-                            .split("%>").join("p.push('")
-                            .split("\r").join("\\'") + "');  return p.join('');"
-                            );
-                        return fn(str);
-                    })(content) : content;
-                },
-                /**
-                 * This function get a content and substitute jmvc.vars
-                 * and direct view placeholders like {{viewname .... }}
-                 * returns parsed content
-                 * 
-                 * @param  {[type]} content [description]
-                 * @return {[type]}         [description]
-                 */
-                parse : function (content) {
-                    if (typeof content === undef) {
-                        return '';
-                    }
-                    //
-                    // the view content
-                    var cont = content,
-                        RX = {
-                            //
-                            // for hunting view placeholders
-                            patt : '{{(.[^\\}]*)}}',
-                            //
-                            // for getting explicit params passed within view placeholders
-                            pattpar : '\\s(.[A-z]*)=`(.[^/`]*)`',
-                            //
-                            // for variables
-                            pattvar : '\\$(.[^\\$\\s}]*)\\$',
-                            //
-                            // for getting only the viewname
-                            viewname : '^(.[A-z_\/]*)\\s'
-                        },
-                        //
-                        // some loop counters
-                        i = 0, j, k,
-                        //
-                        // recursion limit for replacement
-                        limit = 100,
-                        //
-                        // flag to stop parsing
-                        go_ahead = true,
-                        //
-                        // only the view name
-                        viewname,
-                        //
-                        // original content of {{}} stored for final replacement
-                        orig,
-                        //
-                        // to store inner variables found in the placeholder
-                        register,
-                        //
-                        // results of view hunt 
-                        res,
-                        //
-                        // the view instance
-                        myview,
-                        //
-                        // two temporary variables for regexp results
-                        tmp1, tmp2;
-                    //
-                    // check
-                    // beforeParse hook
-                    jmvc.hook_check('onBeforeParse', [cont]);
-                    //
-                    while (i < limit) {
-                        i += 1;
-                        res = new RegExp(RX.patt, 'gm').exec(cont);
-                        //   
-                        if (res) {
-                            viewname = orig = res[1];
-                            register = false;
-                            //
-                            // got params within ?
-                            if (new RegExp(RX.pattpar, 'gm').test(res[1])) {
-                                // register becomes an object and flags result for later check
-                                register = {};
-                                //
-                                // get only the view name, ingoring parameters
-                                tmp2  = (new RegExp(RX.viewname)).exec(res[1]);
-                                viewname = tmp2[1];
-                                tmp2 = res[1];
-                                while (go_ahead) {
-                                    // this is exactly pattpar but if I use it does not work
-                                    tmp1 = (new RegExp(RX.pattpar, 'gm')).exec(tmp2);
-                                    //
-                                    if (tmp1) {
-                                        // add to temporary register
-                                        register[tmp1[1]] = tmp1[2];
-                                        tmp2 = tmp2.replace(' ' + tmp1[1] + '=`' + tmp1[2] + '`', '');
-                                    } else {
-                                        go_ahead = false;
-                                    }
-                                }
-                            }
-                            // if not loaded give an alert
-                            if (!$JMVC.views[viewname]) {
-                                // here the view is requested but not explicitly loaded with the $JMVC.getView method.
-                                // You should use that method, and you'll do for sure if You mean to use View's variable
-                                // but if You just load a view as a simple chunk with {{myview}} placeholder inside another one
-                                // then $JMVC will load it automatically (take care to not loop, parsing stops after 100 replacements)
-                                /*
-                                    alert('`'+viewname+'` view not loaded.\nUse Factory in the controller to get it. \n\njmvc will'+
-                                        ' load it for you but variables are\n lost and will not be replaced.');
-                                */
-                                myview = $JMVC.factory('view', viewname);
-                            } else {
-                                myview = $JMVC.views[viewname];
-                            }
-                            //
-                            // in case there are some vars in placeholder
-                            // register will hold values obtained above
-                            // and we give'em to the view, the parse method
-                            // will do the rest
-                            if (register !== false) {
-                                for (k in register) {
-                                    register.hasOwnProperty(k) && myview.set(k, register[k]);
-                                }
-                            }
-                            //
-                            // before view substitution,
-                            // look for variables, these have to be set with set method on view instance,
-                            // (and that cannot be done using {{viewname}} placeholder )
-                            tmp1 = true;
-                            while (tmp1) {
-                                tmp1 = new RegExp(RX.pattvar, 'gm').exec(myview.content);
-                                tmp1 && (myview.content = myview.content.replace('$' + tmp1[1] + '$', myview.get(tmp1[1])));
-                            }
-                            //
-                            // now the whole view
-                            cont = cont.replace('{{' + orig + '}}', myview.content);
-                        } else {
-                            i = limit;
-                        }
-                    }
-                    // now $JMVC.vars parse
-                    for (j in $JMVC.vars) {
-                        $JMVC.vars.hasOwnProperty(j) &&
-                        (cont = cont.replace(new RegExp('\\$' + j + '\\$', 'g'), $JMVC.vars[j]));
-                    }
-                    //
-                    // use Resig microtemplating function on final content
-                    cont = Parser.tpl(cont);
-                    //
-                    // afterParse hook
-                    jmvc.hook_check('onAfterParse', [cont]);
-                    return cont;
-                }
-            };
-            //
-            // END PARSER
-            //
             //-----------------------------------------------------------------------------
             /*
             [MALTA] /src/core/constructors/event.js
@@ -1510,6 +1338,187 @@
             FunctionQueue.prototype.reset = function () {
                 this.queue.length = 0;
             };
+            //-----------------------------------------------------------------------------
+            /*
+            [MALTA] /src/core/parser.js
+            */
+            /*----
+            PARSER
+            ----*/
+            Parser = {
+                /**
+                 * microtemplating function
+                 * Based on the work of a self-professed javascript ninja 
+                 * http://ejohn.org/blog/javascript-micro-templating/
+                 * 
+                 * Parses a string looking for  
+                 * @param  {string} content the content that must be parsed
+                 * @return {string}         parsed content
+                 */
+                tpl : function (content) {
+                    return (content.match(/\<%/)) ?
+                    (function (str) {
+                        var fn = new Function('obj',
+                            "var p=[]; p.push('" +
+                            str.replace(/[\r\t\n]/g, " ")
+                            .split("<%").join("\t")
+                            .replace(/((^|%>)[^\t]*)'/g, "$1\r")
+                            .replace(/\t=(.*?)%>/g, "',$1,'")
+                            .split("\t").join("');")
+                            .split("%>").join("p.push('")
+                            .split("\r").join("\\'") + "');  return p.join('');"
+                            );
+                        return fn(str);
+                    })(content) : content;
+                },
+                /**
+                 * This function get a content and substitute jmvc.vars
+                 * and direct view placeholders like {{viewname .... }}
+                 * returns parsed content
+                 * 
+                 * @param  {[type]} content [description]
+                 * @return {[type]}         [description]
+                 */
+                parse : function (content) {
+                    if (typeof content === undef) {
+                        return '';
+                    }
+                    //
+                    // the view content
+                    var cont = content,
+                        RX = {
+                            //
+                            // for hunting view placeholders
+                            patt : '{{(.[^\\}]*)}}',
+                            //
+                            // for getting explicit params passed within view placeholders
+                            pattpar : '\\s(.[A-z]*)=`(.[^/`]*)`',
+                            //
+                            // for variables
+                            pattvar : '\\$(.[^\\$\\s}]*)\\$',
+                            //
+                            // for getting only the viewname
+                            viewname : '^(.[A-z_\/]*)\\s'
+                        },
+                        //
+                        // some loop counters
+                        i = 0, j, k,
+                        //
+                        // recursion limit for replacement
+                        limit = 100,
+                        //
+                        // flag to stop parsing
+                        go_ahead = true,
+                        //
+                        // only the view name
+                        viewname,
+                        //
+                        // original content of {{}} stored for final replacement
+                        orig,
+                        //
+                        // to store inner variables found in the placeholder
+                        register,
+                        //
+                        // results of view hunt 
+                        res,
+                        //
+                        // the view instance
+                        myview,
+                        //
+                        // two temporary variables for regexp results
+                        tmp1, tmp2;
+                    //
+                    // check
+                    // beforeParse hook
+                    jmvc.hook_check('onBeforeParse', [cont]);
+                    //
+                    while (i < limit) {
+                        i += 1;
+                        res = new RegExp(RX.patt, 'gm').exec(cont);
+                        //   
+                        if (res) {
+                            viewname = orig = res[1];
+                            register = false;
+                            //
+                            // got params within ?
+                            if (new RegExp(RX.pattpar, 'gm').test(res[1])) {
+                                // register becomes an object and flags result for later check
+                                register = {};
+                                //
+                                // get only the view name, ingoring parameters
+                                tmp2  = (new RegExp(RX.viewname)).exec(res[1]);
+                                viewname = tmp2[1];
+                                tmp2 = res[1];
+                                while (go_ahead) {
+                                    // this is exactly pattpar but if I use it does not work
+                                    tmp1 = (new RegExp(RX.pattpar, 'gm')).exec(tmp2);
+                                    //
+                                    if (tmp1) {
+                                        // add to temporary register
+                                        register[tmp1[1]] = tmp1[2];
+                                        tmp2 = tmp2.replace(' ' + tmp1[1] + '=`' + tmp1[2] + '`', '');
+                                    } else {
+                                        go_ahead = false;
+                                    }
+                                }
+                            }
+                            // if not loaded give an alert
+                            if (!$JMVC.views[viewname]) {
+                                // here the view is requested but not explicitly loaded with the $JMVC.getView method.
+                                // You should use that method, and you'll do for sure if You mean to use View's variable
+                                // but if You just load a view as a simple chunk with {{myview}} placeholder inside another one
+                                // then $JMVC will load it automatically (take care to not loop, parsing stops after 100 replacements)
+                                /*
+                                    alert('`'+viewname+'` view not loaded.\nUse Factory in the controller to get it. \n\njmvc will'+
+                                        ' load it for you but variables are\n lost and will not be replaced.');
+                                */
+                                myview = $JMVC.factory('view', viewname);
+                            } else {
+                                myview = $JMVC.views[viewname];
+                            }
+                            //
+                            // in case there are some vars in placeholder
+                            // register will hold values obtained above
+                            // and we give'em to the view, the parse method
+                            // will do the rest
+                            if (register !== false) {
+                                for (k in register) {
+                                    register.hasOwnProperty(k) && myview.set(k, register[k]);
+                                }
+                            }
+                            //
+                            // before view substitution,
+                            // look for variables, these have to be set with set method on view instance,
+                            // (and that cannot be done using {{viewname}} placeholder )
+                            tmp1 = true;
+                            while (tmp1) {
+                                tmp1 = new RegExp(RX.pattvar, 'gm').exec(myview.content);
+                                tmp1 && (myview.content = myview.content.replace('$' + tmp1[1] + '$', myview.get(tmp1[1])));
+                            }
+                            //
+                            // now the whole view
+                            cont = cont.replace('{{' + orig + '}}', myview.content);
+                        } else {
+                            i = limit;
+                        }
+                    }
+                    // now $JMVC.vars parse
+                    for (j in $JMVC.vars) {
+                        $JMVC.vars.hasOwnProperty(j) &&
+                        (cont = cont.replace(new RegExp('\\$' + j + '\\$', 'g'), $JMVC.vars[j]));
+                    }
+                    //
+                    // use Resig microtemplating function on final content
+                    cont = Parser.tpl(cont);
+                    //
+                    // afterParse hook
+                    jmvc.hook_check('onAfterParse', [cont]);
+                    return cont;
+                }
+            };
+            //
+            // END PARSER
+            //
             //-----------------------------------------------------------------------------
             /*
             [MALTA] /src/core/controller.js
@@ -2003,8 +2012,8 @@
                 get2 : jmvc.get2,
                 del2 : jmvc.del2,
                 //
-                htmlspecialchars : jmvc.htmlspecialchars,
-                htmlspecialchars_decode : jmvc.htmlspecialchars_decode,
+                htmlchars : jmvc.htmlchars,
+                htmlchars_decode : jmvc.htmlchars_decode,
                 //
                 gc : function () {
                     var i = 0,
@@ -2104,9 +2113,14 @@
                 time_begin
             );
             //-----------------------------------------------------------------------------
+            /*
+            [MALTA] /src/core/end.js
+            */
             return $JMVC;
         })(),
-        _ = {}; // private ns for modules
+        //
+        // private ns for modules
+        _ = {};
     //
     // mandatory modules
     /*
@@ -3950,8 +3964,10 @@
          */
         lib : function (l) {
             var libs = {
-                'jquery' : 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js',
-                'jsapi' : 'https://www.google.com/jsapi'
+                jQuery : '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js',
+                jsapi : 'https://www.google.com/jsapi',
+                underscore : 'http://underscorejs.org/underscore-min.js',
+                'prototype' : 'https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js'
             };
             l in libs && this.addscript(libs[l]);
         },
@@ -4430,6 +4446,39 @@
          */
         sum : function (a) {
             return _.array.op(a, '+');
+        },
+    
+        /**
+         * [unique description]
+         * @param  {[type]} a [description]
+         * @return {[type]}   [description]
+         */
+        unique2 : function (a) {
+            var r = [],
+                l = a.length,
+                i = 0, j;
+            for (i = 0; i < l; i++) {
+                for (j = i + 1; j < l; j++) 
+                    if (a[i] == a[j]) j = ++i;
+                r.push(a[i]);
+            }
+            return r;
+        },
+    /*
+    [1,2,3,4,5,6,7,8,9]
+     i
+     j
+     */
+        unique : function (a) {    
+            var r = [],
+                l = a.length,
+                i = 0, j;
+            for (i = 0; i < l; i++) {
+                for (j = i + 1; j < l; j++) 
+                    if (a[i] === a[j]) j = ++i;
+                r.push(a[i]);
+            }
+            return r;
         }
     };
     //-----------------------------------------------------------------------------
@@ -4486,17 +4535,6 @@
          */
         code2str : function (code) {
             return String.fromCharCode.apply(null, code);
-        },
-         /**
-         * [ description]
-         * @param  {[type]} html [description]
-         * @return {[type]}      [description]
-         */
-        htmlEntities : function (html) {
-            return html
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/&(?![\w\#]+;)/g, '&amp;');
         },
         /**
          * [ description]
@@ -4609,9 +4647,11 @@
                         // use it
                     case $1 in obj :
                         return obj[$1];
-                        // not a function and not found in literal
-                        // use fallback if passed or get back the placeholder
-                        // switching off before returning
+                        /**
+                         * not a function and not found in literal
+                         * use fallback if passed or get back the placeholder
+                         * switching off before returning
+                         */
                     default:
                         straight = false;
                         return fb || start + $1 + end;
@@ -4952,11 +4992,22 @@
     	pFloat : function (f) {return 1 * f; },
     	pInt : function (i) {return i >> 0; },
     	mRound : function (n) {return (n + 0.5) >> 0; },
-    	mFloor : function (n) {(n > 0 ? n : n + 1) >> 0; },
-    	mCeil : function (n) {return (n + (n > 0 && !!(n % 1))) >> 0; },
-    	num : function (n) {return parseFloat(n.toFixed(10), 10); }
+        //mFloor : function (n) {return ~~n; },
+    	mFloor : function (n) {return n >> 0; },
+        mCeil : function (n) {return (n + (n > 0 && !!(n % 1))) >> 0; },
+    	//mCeil : function (n) {return (n >> 0) + (n > 0 ? 1 : -1); },
+    	num : function (n) {return parseFloat(n.toFixed(10), 10); },
+        dec2Bin : function (dec){
+            if(dec > 0) return dec.toString(2)>>>0;
+            dec = Math.abs(dec);
+            var res = dec ^ parseInt((new Array(dec.toString(2).length+1)).join("1"),2);
+            return (res+1).toString(2)>>>0;
+        },
+        bin2Dec : function (b) {return parseInt(b>>>0, 2); }
     };
     //-----------------------------------------------------------------------------
+    //
+    // render
     /*
     [MALTA] /src/core/render.js
     */
@@ -4975,11 +5026,6 @@
         if (JMVC.p.lang) {
             JMVC.cookie.set('lang', JMVC.p.lang);
         }
-        if (JMVC.p.debug) {
-            alert('debug');
-            debugger;
-        }
-    
         !W.JMVCshut && JMVC.render();
     })();
     //-----------------------------------------------------------------------------
@@ -4996,5 +5042,9 @@
     JMVC.W.onerror = function (errorMsg, url, lineNumber) {
         JMVC.debug("Uncaught error " + errorMsg + " in " + url + ", lines " + lineNumber);
     };
-    //-----------------------------------------------------------------------------
+    //-------------------------------------------------------------------------[ THE END ]
+    
+
+//
 })(this);
+//
