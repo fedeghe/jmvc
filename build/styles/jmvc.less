@@ -1,0 +1,170 @@
+.generate-opa(@n, @value: 1) when (@value =< @n) {
+	.opa@{value} {
+		@opaPerc : @value * 10;
+		@opaFloat : @value / 10;
+	  	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=@{opaPerc})";/* IE 8 */
+		filter: alpha(opacity=@opaPerc);/* IE 5-7 */
+		-moz-opacity: @opaFloat;/* Netscape */
+		-khtml-opacity: @opaFloat;/* Safari 1.x */
+		opacity: @opaFloat;/* Good browsers */
+	}
+	.generate-opa(@n, (@value + 1));
+}
+.generate-round(@n, @value: 2) when (@value =< @n) {
+	.round@{value} {
+		-moz-border-radius:1px * @value;
+		-webkit-border-radius:1px * @value;
+		border-radius:1px * @value;
+	}
+	.generate-round(@n, (@value + 2));
+}
+/*
+ * //
+ * 
+ */
+.clearer{
+	clear: both;
+	display: block;
+	zoom: 1;
+	height: 0;
+	font-size: 0;
+	width: 0;
+	line-height: 0;
+	visibility: hidden;
+	overflow: hidden;
+	content: ".";
+}
+
+strong, b{
+	font-weight:bold !important;
+}
+
+i{
+	font-style: italic !important;
+}
+
+body{
+	max-width:100% !important;
+}
+
+@media screen {
+	img {	
+		/*width: auto !important; /* for ie 8 */
+	}
+}
+
+img {
+	max-width: 100% !important;
+	height: auto !important;
+}
+
+sup, sub{font-size:0.7em;}
+
+sup{vertical-align: super;}
+
+sub{vertical-align: sub;}
+
+.floatl{float:left;}
+
+.floatr{float:right;}
+
+h1,h2,h3,h4,h5,h6{font-weight:bold;}
+h1{font-size:24px; line-height:48px; padding:24px 0px 12px;}
+h2{font-size:18px; line-height:36px; padding:18px 0px 9px;}
+h3{font-size:14px; line-height:28px; padding:14px 0px 7px;}
+h4{font-size:12px; line-height:24px; padding:12px 0px 6px;}
+h5{font-size:10px; line-height:20px; padding:10px 0px 5px;}
+h6{font-size:8px; line-height:16px; padding:8px 0px 4px;}
+/*
+*, *:before, *:after {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+*/
+/* less parametric mixins */
+.generate-opa(9);
+.generate-round(14);
+
+.round-side-vars(@side) when(@side = "top"){
+	@sideA1 : bottomleft;
+	@sideA2 : bottomright;
+	@sideB1 : bottom-left;
+	@sideB2 : bottom-right;
+}
+.round-side-vars(@side) when(@side = "bottom"){
+	@sideA1 : topleft;
+	@sideA2 : topright;
+	@sideB1 : top-left;
+	@sideB2 : top-right;
+}
+.round-side-vars(@side) when(@side = "left"){
+	@sideA1 : topright;
+	@sideA2 : bottomright;
+	@sideB1 : top-right;
+	@sideB2 : bottom-right;
+}
+.round-side-vars(@side) when(@side = "right"){
+	@sideA1 : topleft;
+	@sideA2 : bottomleft;
+	@sideB1 : top-left;
+	@sideB2 : bottom-left;
+}
+.round-side(@side){
+	.round-side-vars(@side);
+	-moz-border-radius-@{sideA1}: 0px;
+	-moz-border-radius-@{sideA2}:0px;
+	-webkit-border-@{sideB1}-radius:0px;
+	-webkit-border-@{sideB2}-radius:0px;
+	border-@{sideB1}-radius:0px;
+	border-@{sideB2}-radius:0px;
+}
+.roundtop{.round-side("top");}
+.roundbottom{.round-side("bottom");}
+.roundleft{.round-side("left");}
+.roundright{.round-side("right");}
+
+.roundtopleft{
+	-moz-border-radius-topright:0px;
+	-moz-border-radius-bottomleft:0px;
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-top-right-radius:0px;
+	-webkit-border-bottom-left-radius:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-top-right-radius:0px;
+	border-bottom-left-radius:0px;
+	border-bottom-right-radius:0px;
+}
+.roundtopright{
+	-moz-border-radius-topleft:0px;
+	-moz-border-radius-bottomleft:0px;
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-top-left-radius:0px;
+	-webkit-border-bottom-left-radius:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-top-left-radius:0px;
+	border-bottom-left-radius:0px;
+	border-bottom-right-radius:0px;
+}
+.roundbottomleft{
+	-moz-border-radius-topright:0px;
+	-moz-border-radius-topleft:0px;
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-top-right-radius:0px;
+	-webkit-border-top-left-radius:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-top-right-radius:0px;
+	border-top-left-radius:0px;
+	border-bottom-right-radius:0px;
+}
+.roundbottomright{
+	-moz-border-radius-topright:0px;
+	-moz-border-radius-topleft:0px;
+	-moz-border-radius-bottomleft:0px;
+	-webkit-border-top-right-radius:0px;
+	-webkit-border-top-left-radius:0px;
+	-webkit-border-bottom-left-radius:0px;
+	border-top-right-radius:0px;
+	border-top-left-radius:0px;
+	border-bottom-left-radius:0px;
+}
