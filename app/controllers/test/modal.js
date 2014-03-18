@@ -14,11 +14,10 @@ JMVC.controllers.modal = function() {
 			JMVC.test.startAll();
 			
 			JMVC.test.describe(JMVC.string.repeat('<br />', 20) + '<input type="button" id="openmodal" value="Open modal" style="cursor:pointer" />' + JMVC.string.repeat('<br />', 40));
-			//JMVC.test.describe('<input type="button" id="openmodal" value="Open modal" style="cursor:pointer" />');
-
+			
 			JMVC.events.bind(JMVC.dom.find('#openmodal'), 'click', function () {
 				var t = JMVC.dom.create('span', {}, 'Here is some content');
-				JMVC.modal.open(t, 'Titolo del modal', 200, 80, {bgcolor:'#777', shadow : true});
+				JMVC.modal.open(t, {title : 'Titolo del modal', bgcolor:'#777', shadow : true});
 			});
 
 			JMVC.test.finishAll();

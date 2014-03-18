@@ -1,15 +1,12 @@
 
 div.jmvc_modal_content_bg{
 	text-align:center;
-	z-index:100;
 	position:absolute;
 	top:0px;
 	left:0px;
-	opacity:0.8;
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 }
 div.jmvc_modal_content{
-	z-index:200;
 	margin:0 auto;
 	border:2px solid #222;
 	background-color:white;
@@ -22,6 +19,44 @@ div.jmvc_modal_content{
     -webkit-border-radius:5px;
     border-radius:5px;
 }
+div.jmvc_modal_content div.drag,
+div.jmvc_modal_content div.cnt{
+	position:absolute;
+}
+div.jmvc_modal_content div.drag *{
+	z-index:900;
+}
+div.jmvc_modal_content div.drag .tl,
+div.jmvc_modal_content div.drag .tr,
+div.jmvc_modal_content div.drag .bl,
+div.jmvc_modal_content div.drag .br{
+	position:absolute;
+	width:10px;
+	height:10px;
+	
+}
+div.jmvc_modal_content div.drag .t,
+div.jmvc_modal_content div.drag .b{
+	position:absolute;
+	height:10px;
+	cursor:ns-resize;
+}
+div.jmvc_modal_content div.drag .t{
+	top:0px;
+}
+
+div.jmvc_modal_content div.drag .l,
+div.jmvc_modal_content div.drag .r{
+	position:absolute;
+	width:10px;
+	cursor:ew-resize;
+}
+div.jmvc_modal_content div.drag .tl{cursor:nw-resize;left:0px;top:0px;}
+div.jmvc_modal_content div.drag .tr{cursor:ne-resize;right:0px;top:0px;}
+div.jmvc_modal_content div.drag .bl{cursor:sw-resize;left:0px;bottom:0px;}
+div.jmvc_modal_content div.drag .br{cursor:se-resize;right:0px;bottom:0px;}
+
+
 div.jmvc_modal_content.shadow{
 	-moz-box-shadow: 6px 6px 5px #555;
     -webkit-box-shadow: 6px 6px 5px #555;
@@ -32,36 +67,40 @@ div.jmvc_modal_content .topbar{
 	-moz-border-radius:3px;
     -webkit-border-radius:3px;
     border-radius:3px;
-	/*border:1px solid gray;*/
+
 	background-color:black;
 	color:white;
 	line-height:20px;
 	padding:0px 5px;
+	padding-right:2px;
 }
 div.jmvc_modal_content .topbar .jmvc_modal_title{
 	float:left;
 	font-weight:bold;
 	
 	position:relative;
-	top:2px;
+	top:0px;
 
 }
-div.jmvc_modal_content .topbar .jmvc_modal_close{
+div.jmvc_modal_content .topbar .jmvc_modal_close,
+div.jmvc_modal_content .topbar .jmvc_modal_maximize{
 	float:right;
 	border:1px solid black;
-	line-height:12px;
-	padding:0px 2px;
-	margin:3px 0px;
+	line-height:13px;
+	height:15px;
+	width:15px;
+	margin:2px 0px;
 	text-align:center;
 	cursor:pointer;
 	background-color:white;
-	-moz-border-radius:2px;
-    -webkit-border-radius:2px;
-    border-radius:2px;
+	-moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    border-radius:3px;
 	font-weight:bold;
 	color:black;
-	font-size:12px;
+	font-size:13px;
 	font-family:"Verdana", sans-serif;
+	margin-left:2px;
 }
 div.jmvc_modal_content .topbar .jmvc_modal_close:hover{
 	background-color:#eee;
