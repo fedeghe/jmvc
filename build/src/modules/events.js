@@ -563,6 +563,16 @@ JMVC.events = {
         _.events.unbind(el, tipo, fn);
     }
 };
+if (!Event.prototype.preventDefault) {
+    Event.prototype.preventDefault = function() {
+        this.returnValue = false;
+    };
+}
+if (!Event.prototype.stopPropagation) {
+    Event.prototype.stopPropagation = function() {
+        this.cancelBubble = true;
+    };
+}
 //-----------------------------------------------------------------------------
 // in home
 /*
