@@ -3,7 +3,7 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  $version$ (rev. $review$)
+ * @version :  $version$ (rev. $review$) build: __BUILDNUMBER__
  * @copyright : __YEAR__, $author$ <fedeghe@gmail.com>
  * @author : $author$ <$email$>
  * @url : http://www.jmvc.org
