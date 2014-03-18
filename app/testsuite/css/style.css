@@ -192,5 +192,33 @@ hr.pause{
     -webkit-border-radius:5px;
     border-radius:5px;*/
 }
+div.timesummary{
+	background-color:#131;
+	color:#5d5;
+	border:1px solid #575;
+	border-top:1px solid #5a5;
+	border-left:3px solid #5d5;
+
+	letter-spacing: 1px;
+    line-height: 20px;
+    margin-bottom: 10px;
+    padding: 5px 5px 5px 25px;
+}
+div.timesummary li.head{
+	color:white;
+	font-size:30px;
+	line-height:50px;
+	height:50px;
+}
+div.timesummary li strong{
+	display:inline-block;
+	width: 50px;
+}
+div.timesummary li.best{
+	
+}
+div.timesummary li.worst{
+	
+}
 
 

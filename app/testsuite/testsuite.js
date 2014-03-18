@@ -38,7 +38,8 @@ JMVC.extend('test', {
         JMVC.require(
             'core/sniffer/sniffer',
             'core/fx/fx',
-            'core/lib/shl/shl'
+            'core/lib/shl/shl',
+            'core/color/color'
         );
     },
 
@@ -377,15 +378,28 @@ JMVC.extend('test', {
     },
 
     timeSummary : function () {
-        this.describe('<h2>Times summary</h2>');
+        
+        var l = this.testimes.length,
+            colors = JMVC.core.color.getGradientArray('#00ff00', '#ff0000', l - 2),
+            list = JMVC.dom.create('ul'),
+            cnt = JMVC.dom.create('div', {'class':'timesummary fiveround'}, list);
+
         //order
         this.testimes = this.testimes.sort(function (a, b) {
-            return a[1] < b[1];
+            return a[1] > b[1];
         });
+        JMVC.dom.add(list, 'li',{'class':'head'}, 'Time summary');
         
-        for (var k = 0, l = this.testimes.length; k < l; k++) {
-            
-            JMVC.dom.add(JMVC.test.vars.banner, 'p', {}, '<strong>' + this.testimes[k][1] + '</strong>:' + this.testimes[k][0]);
+        for (var k = 0; k < l; k++) {
+            var o = {style:'color:' + colors[k]};
+            if (k == 0) {
+                o['class'] = 'best';
+            }
+            if (k == l - 1) {
+                o['class'] = 'worst';
+            }
+            JMVC.dom.add(list, 'li', o, '<strong>' + this.testimes[k][1] + '</strong>:' + this.testimes[k][0]);
         }
+        JMVC.dom.append(JMVC.test.vars.banner, cnt);
     }
 });
