@@ -152,6 +152,7 @@ JMVC.extend('test', {
             break;
         case 'ass':
             pars.tit = 'Asserting';
+            pars.real = 'Returned value : ' + opts.realvalue.toString();
             pars.code = opts.code.toString();
             break;
         default:break;
@@ -206,13 +207,13 @@ JMVC.extend('test', {
      * @param  {[type]} value    [description]
      * @return {[type]}          [description]
      */
-    testAssertion : function (testName, value) {
+    testAssertion : function (testName, valueFn) {
         'use strict';
         var res = false, debuginfo = false;
         JMVC.test.startTest(testName);
-        res = !!value;
+        res = !!valueFn();
         if (JMVC.test.vars.outCode) {
-            debuginfo = JMVC.test.outDebug('ass', {'code' : value});
+            debuginfo = JMVC.test.outDebug('ass', {'realvalue': res, 'code' : valueFn.toString()});
         }
         JMVC.test.finishTest(res, debuginfo);
     },
@@ -302,7 +303,11 @@ JMVC.extend('test', {
             JMVC.dom.add(JMVC.test.vars.currentTestWidget, 'strong', {'class' : 'time'}, time + ' ms' );
             if (debuginfo) {
                 JMVC.dom.add(JMVC.test.vars.currentTestWidget, 'div', {}, JMVC.shl.parse(debuginfo[1]) );
-                JMVC.events.bind(JMVC.dom.find('#toggle_' + debuginfo[0]), 'click', function () {JMVC.fx.toggle(JMVC.dom.find('#spec_' + debuginfo[0])); });
+                JMVC.events.bind(
+                    JMVC.dom.find('#toggle_' + debuginfo[0]),
+                    'click',
+                    function () {JMVC.fx.toggle(JMVC.dom.find('#spec_' + debuginfo[0])); }
+                );
             }
         }
         JMVC.test.vars.cur_timer += 1;

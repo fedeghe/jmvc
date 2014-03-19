@@ -2119,6 +2119,7 @@ t()&#10;
         <param name="arr">The array to be cloned</param>
     </params>
     <returns>The cloned array (Array)</returns>
+    <testlink>test_api_array_arrayclone</testlink>
     <status>incomplete</status>
 </function>
 <!--
