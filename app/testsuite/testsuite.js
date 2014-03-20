@@ -76,6 +76,10 @@ JMVC.extend('test', {
      * @return {[type]}      [description]
      */
     code : function (code) {
+        JMVC.dom.add(JMVC.test.vars.banner, 'code', {'class' : 'debug fiveround'}, this.listCode(code));
+    },
+
+    listCode : function (code, noNumberLines) {
         'use strict';
         var lines = code.split(/\n/),
             outline = '<li><span class="nline">%nline%</span>%line%</li>',
@@ -105,13 +109,13 @@ JMVC.extend('test', {
             // remove the right number of spaces at line begin
             lines[j] = lines[j].replace(new RegExp("^\\\s{" + min + "}"), '');
             out += JMVC.string.replaceall(outline, {
-                nline : i,
-                line : JMVC.htmlchars(JMVC.shl.parse(lines[j]) || ' ')
+                nline : noNumberLines ? '' : i,
+                //line : JMVC.htmlchars(JMVC.shl.parse(lines[j]) || ' ')
+                line : JMVC.htmlchars(lines[j] || ' ')
             }, '%', '%');
             i += 1;
         }
-        
-        JMVC.dom.add(JMVC.test.vars.banner, 'code', {'class' : 'debug fiveround'}, '<ul>' + out + '</ul>');
+        return '<ul>' + out + '</ul>';
     },
 
     /**
@@ -138,22 +142,27 @@ JMVC.extend('test', {
         'use strict';
         JMVC.test.vars.debug_id += 1;
         var tpl  = '<span class="more" id="toggle_%id%">more</span><div class="hideSpec" id="spec_%id%"><h4>%tit%</h4><h4>%real%</h4><pre class="fiveround">%code%</pre></div>',
-            pars = {'id' : JMVC.test.vars.debug_id,'tit' : null, 'code' : null, 'real' : null};
+            pars = {
+                id : JMVC.test.vars.debug_id,
+                tit : null,
+                code : null,
+                real : null
+            };
 
         switch (kind) {
         case 'ex':
             pars.tit = 'Expecting exception : ' + opts.exception.name;
-            pars.code = opts.code.toString();
+            pars.code = this.listCode(opts.code, true); //opts.code.toString();
             break;
         case 'val':
             pars.tit = 'Expecting value : ' + opts.expvalue.toString();
             pars.real = 'Returned value : ' + opts.realvalue.toString();
-            pars.code = opts.code.toString();
+            pars.code = this.listCode(opts.code, true); //opts.code.toString();
             break;
         case 'ass':
             pars.tit = 'Asserting';
             pars.real = 'Returned value : ' + opts.realvalue.toString();
-            pars.code = opts.code.toString();
+            pars.code = this.listCode(opts.code, true); //opts.code.toString();
             break;
         default:break;
         }
@@ -196,7 +205,10 @@ JMVC.extend('test', {
         }
 
         if (JMVC.test.vars.outCode) {
-            debuginfo = JMVC.test.outDebug('ex', {'exception' : expectedError, 'code' : code});
+            debuginfo = JMVC.test.outDebug('ex', {
+                exception : expectedError,
+                code : code
+            });
         }
         JMVC.test.finishTest(res, debuginfo);
     },
@@ -213,7 +225,10 @@ JMVC.extend('test', {
         JMVC.test.startTest(testName);
         res = !!valueFn();
         if (JMVC.test.vars.outCode) {
-            debuginfo = JMVC.test.outDebug('ass', {'realvalue': res, 'code' : valueFn.toString()});
+            debuginfo = JMVC.test.outDebug('ass', {
+                realvalue: res,
+                code : valueFn.toString()
+            });
         }
         JMVC.test.finishTest(res, debuginfo);
     },
@@ -234,11 +249,15 @@ JMVC.extend('test', {
             real;
         options = options || {};
         JMVC.test.startTest(testName);
-        real = fn.apply(options.ctx, options.args || []);
-        res = (real === expectedValue);
+        real = fn.apply(options.ctx || null, options.args || []);
+        res = (real == expectedValue);
         
         if (JMVC.test.vars.outCode) {
-            debuginfo = JMVC.test.outDebug('val', {'realvalue' : real, 'expvalue' : expectedValue != undefined ? expectedValue : 'null', 'code' : fn.toString()});
+            debuginfo = JMVC.test.outDebug('val', {
+                realvalue : real,
+                expvalue : expectedValue != undefined ? expectedValue : 'null',
+                code : fn.toString()
+            });
         }
         JMVC.test.finishTest(res, debuginfo);
     },
@@ -302,7 +321,8 @@ JMVC.extend('test', {
             JMVC.dom.attr(JMVC.test.vars.currentTestWidget, 'class', result + ' fiveround');
             JMVC.dom.add(JMVC.test.vars.currentTestWidget, 'strong', {'class' : 'time'}, time + ' ms' );
             if (debuginfo) {
-                JMVC.dom.add(JMVC.test.vars.currentTestWidget, 'div', {}, JMVC.shl.parse(debuginfo[1]) );
+                
+                JMVC.dom.add(JMVC.test.vars.currentTestWidget, 'div', {}, debuginfo[1] || '');
                 JMVC.events.bind(
                     JMVC.dom.find('#toggle_' + debuginfo[0]),
                     'click',
