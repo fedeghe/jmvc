@@ -16,13 +16,14 @@ JMVC.controllers.coll2array = function() {
             }   
 
             var res = test();
-
-            
             
             JMVC.test.initialize(true);
             JMVC.test.startAll();
             
-            JMVC.test.describe('Get meta tag collection with getElementsByTagName function, loop on that creating an array with indexed item function, and match against the result of JMVC.array.coll2array');
+            JMVC.test.describe('Get meta tag collection with getElementsByTagName function,' +
+                ' loop on that creating an array with indexed item function,' +
+                ' and match against the result of JMVC.array.coll2array');
+
             JMVC.test.code(test.toString() + "\n" + 'var res = test();' );
             
             JMVC.test.testAssertion('test', function () {return res[0].toString() == res[1].toString(); });
