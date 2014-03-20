@@ -87,7 +87,7 @@ JMVC.controllers.api = function () {
 								sample = '<pre class="code">' + section['function'][i].sample['#text'] + '</pre>';
 							}
 							
-							func_model.set('testlink', testlink ? '<a href="' + JMVC.vars.baseurl + JMVC.US + testlink + '">test</a>' : false);
+							func_model.set('testlink', testlink ? '<a target="_blank" class="testLink" href="' + JMVC.vars.baseurl + JMVC.US + testlink + '">test</a>' : false);
 							
 
 
@@ -125,7 +125,7 @@ JMVC.controllers.api = function () {
 							sample = '<pre class="code">' + section['function'].sample['#text'] + '</pre>';
 						}
 						
-						func_model.set('testlink', testlink ? '<a href="' + JMVC.vars.baseurl + JMVC.US + testlink + '">test</a>' : false);
+						func_model.set('testlink', testlink ? '<a target="_blank" class="testLink" href="' + JMVC.vars.baseurl + JMVC.US + testlink + '">test</a>' : false);
 						
 						func_model.set('parameters', params);
 						
@@ -163,7 +163,7 @@ JMVC.controllers.api = function () {
 
 			JMVC.github.forkme('fedeghe');
 			
-			JMVC.widget.countdown.start('#countdown', new Date(2014, 2, 27));
+			JMVC.widget.countdown.start('#countdown', new Date(2014, 3, 27));
 			
 			JMVC.events.delay(function () {
 				for (var j = 0, l = sections.length;  j < l; j++) {
