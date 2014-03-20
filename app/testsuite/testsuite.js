@@ -381,7 +381,8 @@ JMVC.extend('test', {
             JMVC.dom.attr(JMVC.dom.find('#bro'), 'class', res ? 'ok' : 'ko');
             
             if (code != undefined) {
-                JMVC.dom.append(JMVC.dom.find('#globalResult'), JMVC.dom.create('pre', {'style' : 'font-size:12px; color:#afa'}, JMVC.shl.parse(code.toString())));
+                //JMVC.dom.append(JMVC.dom.find('#globalResult'), JMVC.dom.create('pre', {'style' : 'font-size:12px; color:#afa'}, JMVC.shl.parse(code.toString())));
+                JMVC.dom.append(JMVC.dom.find('#globalResult'), JMVC.dom.create('pre', {'style' : 'font-size:12px; color:#afa'}, code.toString()));
             }
             JMVC.head.title('Test '+  wholeResClass.toUpperCase());
             
