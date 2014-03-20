@@ -19,7 +19,7 @@
 	color:#fff;
 	margin-right:10px;
 	margin-left:15px;
-	border-bottom:1px solid #ffffff;
+	/*border-bottom:1px solid #ffffff;*/
 	color:#ddd;
 	text-decoration:none;
 }
@@ -28,6 +28,8 @@
 	background-color: #606060;
 	color:#aaa;
 	opacity:0.6;
+	border-bottom:1px solid #ffffff;
+	height:34px;
 }
 #jmvc-console .console-head a.ablock{
 	text-decoration:none;
@@ -43,6 +45,7 @@
 	color:#0f0;
 	background-color: #808080;
 	height:35px;
+	border-bottom:1px solid #808080;
 }
 #jmvc-console .console-head .ablock.active,
 #jmvc-console .console-head .ablock.active:hover{
@@ -82,8 +85,7 @@ a#preview .text{
 	background-image : url($baseurl$/app/extensions/core/console/previewOC.png);
 	background-repeat:no-repeat;
 	background-position:0px 0px;
-	width: 33px;
-	height:32px;
+	width: 52px;
 	padding-right:10px;
 }
 a#preview.active .text, a#preview:hover .text{
@@ -94,8 +96,7 @@ a#options .text{
 	background-image : url($baseurl$/app/extensions/core/console/gear1.png);
 	background-repeat:no-repeat;
 	background-position:2px 0px;
-	width:12px;
-	height:32px;
+	width:34px;
 }
 button#get-url, button#go-fs{
 	color:#fff;
@@ -112,8 +113,10 @@ button#go-fs{
 	width:0px;
 	border-bottom:31px solid #606060;
 	border-left:20px solid #333;
-	margin-top:-18px;
+	/*margin-top:-18px;*/
+	margin-top:2px;
 }
+
 #jmvc-console .console-head .ablock.active div.tri{
 	border-bottom:32px solid #606060;
 	border-left:20px solid #333;

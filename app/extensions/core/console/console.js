@@ -368,7 +368,8 @@ JMVC.extend('console', {
 			JMVC.events.bind(JMVC.dom.find('.ablock'), 'click', function (e) {
 				var butt = JMVC.dom.find(this),
 					id =  JMVC.dom.attr(butt, 'id') || 'xxx';
-				
+				butt.blur();
+
 				JMVC.each(JMVC.dom.find('.ablock'), function (elbutt){
 					JMVC.dom.removeClass(elbutt, 'active');
 				});
