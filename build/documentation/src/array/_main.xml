@@ -2,6 +2,7 @@
     $$src/array/clone.xml$$
     $$src/array/coll2array.xml$$
     $$src/array/find.xml$$
+    $$src/array/findAll.xml$$
     $$src/array/findRich.xml$$
     $$src/array/unique.xml$$
 </array>

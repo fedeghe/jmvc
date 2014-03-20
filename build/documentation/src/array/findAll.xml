@@ -1,11 +1,11 @@
 <function>
-    <signature name="find">JMVC.array.find(Array arr, Mixed el)</signature>
+    <signature name="findAll">JMVC.array.findAll(Array arr, Mixed el)</signature>
     <description>Look for an element in a array</description>
     <params>
         <param name="arr">The Array where the element presence will be checked</param>
         <param name="el">The element searched</param>
     </params>
     <returns>The index of the element if found or -1 (integer)</returns>
-    <testlink>test_api_array_find</testlink>
+    <testlink>test_api_array_findAll</testlink>
     <status>testing</status>
 </function>

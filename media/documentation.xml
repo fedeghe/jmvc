@@ -15,7 +15,7 @@
     </params>
     <returns>void (undefined)</returns>
     <sample>JMVC.console();</sample>
-    <status>testing</status>
+    <status>complete</status>
 </function>
 <!--
 [MALTA] /src/jmvc/debug.xml
@@ -2149,7 +2149,21 @@ console.debug(JMVC.util.getType(a));</sample>
         <param name="el">The element searched</param>
     </params>
     <returns>The index of the element if found or -1 (integer)</returns>
-    <testlink>test_api_array_inarray</testlink>
+    <testlink>test_api_array_find</testlink>
+    <status>testing</status>
+</function>
+<!--
+[MALTA] /src/array/findAll.xml
+-->
+<function>
+    <signature name="findAll">JMVC.array.findAll(Array arr, Mixed el)</signature>
+    <description>Look for an element in a array</description>
+    <params>
+        <param name="arr">The Array where the element presence will be checked</param>
+        <param name="el">The element searched</param>
+    </params>
+    <returns>The index of the element if found or -1 (integer)</returns>
+    <testlink>test_api_array_findAll</testlink>
     <status>testing</status>
 </function>
 <!--
