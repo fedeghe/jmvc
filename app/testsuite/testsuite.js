@@ -155,8 +155,8 @@ JMVC.extend('test', {
             pars.code = this.listCode(opts.code, true); //opts.code.toString();
             break;
         case 'val':
-            pars.tit = 'Expecting value : ' + opts.expvalue.toString();
-            pars.real = 'Returned value : ' + opts.realvalue.toString();
+            pars.tit = 'Expecting value : ' + (opts.expvalue && opts.expvalue.toString());
+            pars.real = 'Returned value : ' + (opts.realvalue && opts.realvalue.toString());
             pars.code = this.listCode(opts.code, true); //opts.code.toString();
             break;
         case 'ass':
@@ -207,7 +207,7 @@ JMVC.extend('test', {
         if (JMVC.test.vars.outCode) {
             debuginfo = JMVC.test.outDebug('ex', {
                 exception : expectedError,
-                code : code
+                code : typeof code === 'function' ? code.toString() : code 
             });
         }
         JMVC.test.finishTest(res, debuginfo);
