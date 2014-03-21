@@ -22,6 +22,8 @@ $JMVC = {
         extensions : dispatched.baseurl + dispatched.port + PATH.ext, //'/app/extensions',
         devurl : DEV_URL,
         produrl : PROD_URL,
+        devurlstatic : DEV_URLstatic,
+        produrlstatic : PROD_URLstatic,
         version : JMVC_VERSION,
         review :  JMVC_REVIEW,
         last_modified : WD.lastModified,
@@ -116,11 +118,12 @@ $JMVC = {
      * [console description]
      * @return {[type]} [description]
      */
-    console : function () {
+    console : function (opts) {
+        opts = opts || {};
         if (!('core/console' in $JMVC.extensions)) {
             $JMVC.require('core/console/console');
         }
-        JMVC.console.toggle();
+        JMVC.console.toggle(opts.h, opts.j, opts.c, opts.tab);
     },
     /**
      * [xdoc description]
