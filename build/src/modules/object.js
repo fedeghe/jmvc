@@ -158,7 +158,8 @@ JMVC.object = {
      */
     toQs : function (obj) {
         return _.object.map(obj, function (o, i, r) {
-            return (r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i]);
+            //return (r ? '&' : '?') + encodeURIComponent(JMVC.htmlchars(i)) + '=' + encodeURIComponent(JMVC.htmlchars(o[i]));
+            return ((r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i])).replace(/\'/g, '%27');
         });
     },
     /**
