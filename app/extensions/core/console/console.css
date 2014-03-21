@@ -98,7 +98,7 @@ a#options .text{
 	background-position:2px 0px;
 	width:34px;
 }
-button#get-url, button#go-fs{
+button#get-url, button#go-fs, button#reset, button#resetall{
 	color:#fff;
 	background-color:#888;
 	padding:2px;

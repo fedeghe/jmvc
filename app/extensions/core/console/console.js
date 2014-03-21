@@ -21,7 +21,7 @@ JMVC.extend('console', {
 				'</html>',
 			options : '<div class="pad20">'+
 					'<legend>Load external<legend>'+
-					'<select id ="fw">'+
+					'<select id ="content-options">'+
 						'<option value="" selected="selected">No libraries</options>'+
 						'<optgroup label="jQuery">'+
 							'<option value="http://codeorigin.jquery.com/jquery-1.10.2.min.js">jQuery 1.10.2</option>'+
@@ -32,8 +32,9 @@ JMVC.extend('console', {
 		}
 	},
 	
-	toggle : function () {
+	toggle : function (h, j, c, tab) {
 		var fsmode = false,
+			visibleTab,
 			title = JMVC.head.title();
 
 		if (JMVC.console._.status) {
@@ -53,6 +54,7 @@ JMVC.extend('console', {
 				screendata = JMVC.dim.getScreenData(),
 				scrollTop = screendata.scrollTop,
 				triBrdCol = '#606060',
+				
 
 				// main container
 				container = JMVC.dom.create(
@@ -64,9 +66,9 @@ JMVC.extend('console', {
 				),
 
 				content = {
-					h : JMVC.p.h ? decodeURIComponent(JMVC.p.h) : "<div id='hw'>hello world</div>",
-					j : JMVC.p.j ? decodeURIComponent(JMVC.p.j) : "var t = document.getElementById('hw');\nt.onclick = function () {t.innerHTML='clicked'; };",
-					c : JMVC.p.c ? decodeURIComponent(JMVC.p.c) : "#hw{\n\tcolor:red;\n\tfont-family:arial, sans-serif;\n\tpadding:20px;\n\tfont-size:20px\n}"
+					h : h || (JMVC.p.h ? decodeURIComponent(JMVC.p.h) : "<div id='hw'>hello world</div>"),
+					j : j || (JMVC.p.j ? decodeURIComponent(JMVC.p.j) : "var t = document.getElementById('hw');\nt.onclick = function () {t.innerHTML='clicked'; };"),
+					c : c || (JMVC.p.c ? decodeURIComponent(JMVC.p.c) : "#hw{\n\tcolor:red;\n\tfont-family:arial, sans-serif;\n\tpadding:20px;\n\tfont-size:20px\n}")
 				},
 				// triangle = {
 				// 	 tag : "div",
@@ -74,7 +76,7 @@ JMVC.extend('console', {
 				// 	 style  : {"height":"0px","width":"0px","borderBottom":"30px solid " + triBrdCol,"borderLeft":"20px solid #333", "marginTop":"-10px"}
 				// },
 				brd = '<div class=" gbox" style="float: right; height: 0px; width: 0px; border-bottom: 30px solid rgb(96, 96, 96); border-left: 20px solid rgb(51, 51, 51); margin-top: -10px;"></div>',
-				version = 0.3,
+				version = 0.4,
 				defaults = {
 					h : '<!-- no html content -->',
 					j : '/* no javascript content */',
@@ -107,6 +109,18 @@ JMVC.extend('console', {
 								"float":"left",
 								"html":"FullScreen",
 								"attrs" : {"id":"go-fs"},
+								"class" : "round4"
+							},{
+								"tag":"button",
+								"float":"left",
+								"html":"Reset",
+								"attrs" : {"id":"reset"},
+								"class" : "round4"
+							},{
+								"tag":"button",
+								"float":"left",
+								"html":"Reset All",
+								"attrs" : {"id":"resetall"},
 								"class" : "round4"
 							},
 
@@ -259,7 +273,7 @@ JMVC.extend('console', {
 						h : vals[0] || defaults.h,
 						j : vals[1] || defaults.j,
 						c : vals[2] || defaults.c,
-						l : JMVC.dom.find('#fw').value
+						l : JMVC.dom.find('#options').value
 					}) + (hash ? "#" + hash : '');
 				prompt("Copy the following url", url);
 			}
@@ -287,7 +301,7 @@ JMVC.extend('console', {
 					j = vals[1] || defaults.j,
 					c = vals[2] || defaults.c,
 					iframe = JMVC.dom.find('#outarea'),
-					lib = JMVC.dom.find('#fw').value;
+					lib = JMVC.dom.find('#options').value;
 
 				JMVC.dom.find('#outarea').contentDocument.documentElement.innerHTML = JMVC.string.replaceall(
 					JMVC.console._.tpl, {
@@ -303,6 +317,7 @@ JMVC.extend('console', {
 						JMVC.head.title(title);
 						JMVC.css.style(JMVC.dom.find('#outarea'),{'position':'relative'});
 						fsmode = false;
+						update();
 					};
 				}
 				try {
@@ -317,7 +332,7 @@ JMVC.extend('console', {
 			}
 
 			function gofs(){
-				JMVC.head.title('Press esc to exit preview');
+				JMVC.head.title('Press esc to exit preview');	
 				JMVC.css.style(JMVC.dom.find('#outarea'), {
 					position : 'absolute',
 					top :'0px',
@@ -326,7 +341,21 @@ JMVC.extend('console', {
 					height :'100%'
 				});
 				JMVC.dom.find('#outarea').contentDocument.documentElement.focus();
+			
 				fsmode = true;
+				update();
+			}
+
+			function reset(current) {
+				console.debug(current)
+				if (!!current) {
+					JMVC.dom.find('#content-' + visibleTab).value = '';
+				} else {
+					JMVC.dom.find('#content-html').value = 
+					JMVC.dom.find('#content-javascript').value = 
+					JMVC.dom.find('#content-css').value = 
+					JMVC.dom.find('#content-options').value = '';
+				}
 			}
 
 
@@ -347,20 +376,32 @@ JMVC.extend('console', {
 
 			//lib
 			if(JMVC.p.l) {
-				JMVC.dom.find('#fw').value = decodeURIComponent(JMVC.p.l);
+				JMVC.dom.find('#options').value = decodeURIComponent(JMVC.p.l);
 			}
 
-			if (JMVC.hash.match(/html|css|javascript|preview|options/)) {
-				JMVC.dom.addClass(JMVC.dom.find('#' + JMVC.hash), 'active');
-				JMVC.css.show(JMVC.dom.find('#in-' + JMVC.hash));
-				hash = JMVC.hash;
+
+			if (tab && tab.match(/html|css|javascript|preview|options/)) {
+				JMVC.dom.addClass(JMVC.dom.find('#' + tab), 'active');
+				JMVC.css.show(JMVC.dom.find('#in-' + tab));
+				hash = tab;
 			} else {
-				JMVC.dom.addClass(JMVC.dom.find('#html'), 'active');
-				JMVC.css.show(JMVC.dom.find('#in-html'));
+				if (JMVC.hash.match(/html|css|javascript|preview|options/)) {
+					JMVC.dom.addClass(JMVC.dom.find('#' + JMVC.hash), 'active');
+					JMVC.css.show(JMVC.dom.find('#in-' + JMVC.hash));
+					hash = JMVC.hash;
+				} else {
+					JMVC.dom.addClass(JMVC.dom.find('#html'), 'active');
+					JMVC.css.show(JMVC.dom.find('#in-html'));
+				}
 			}
-
 			if (hash == 'preview') {
 				JMVC.css.show(JMVC.dom.find('#go-fs'));
+				JMVC.css.hide(JMVC.dom.find('#reset'));
+				JMVC.css.hide(JMVC.dom.find('#resetall'));
+			} else {
+				JMVC.css.hide(JMVC.dom.find('#go-fs'));
+				JMVC.css.show(JMVC.dom.find('#reset'));
+				JMVC.css.show(JMVC.dom.find('#resetall'));
 			}
 
 
@@ -368,6 +409,8 @@ JMVC.extend('console', {
 			JMVC.events.bind(JMVC.dom.find('.ablock'), 'click', function (e) {
 				var butt = JMVC.dom.find(this),
 					id =  JMVC.dom.attr(butt, 'id') || 'xxx';
+
+				visibleTab = id;
 				butt.blur();
 
 				JMVC.each(JMVC.dom.find('.ablock'), function (elbutt){
@@ -382,9 +425,14 @@ JMVC.extend('console', {
 				JMVC.css.style(JMVC.dom.find('#in-' + id), 'display', 'block');
 
 				if (id == 'preview') {
+					fsmode = false;
 					JMVC.css.show(JMVC.dom.find('#go-fs'));
+					JMVC.css.hide(JMVC.dom.find('#reset'));
+					JMVC.css.hide(JMVC.dom.find('#resetall'));
 				} else {
 					JMVC.css.hide(JMVC.dom.find('#go-fs'));
+					JMVC.css.show(JMVC.dom.find('#reset'));
+					JMVC.css.show(JMVC.dom.find('#resetall'));
 				}
 
 			});
@@ -450,6 +498,8 @@ JMVC.extend('console', {
 			JMVC.events.bind(JMVC.dom.find('#get-url'), 'click', getUrl);
 			JMVC.events.bind(JMVC.dom.find('#go-fs'), 'click', gofs);
 			JMVC.events.bind(JMVC.dom.find('#preview'), 'click', update);
+			JMVC.events.bind(JMVC.dom.find('#resetall'), 'click', function () {reset(); });
+			JMVC.events.bind(JMVC.dom.find('#reset'), 'click', function () {reset(true); });
 
 
 			JMVC.events.delay(function () {update(); }, 0);
