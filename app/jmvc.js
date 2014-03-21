@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.3.6 (rev. 5) build: 587
+ * @version :  3.3.6 (rev. 5) build: 588
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.13 & a love heap
- *         glued with 35 files on 21/3/2014 at 1:24:19
+ *         glued with 35 files on 21/3/2014 at 1:24:48
  *
  * All rights reserved.
  *
@@ -4620,7 +4620,6 @@
         code2str : function (code) {
             return String.fromCharCode.apply(null, code);
         },
-    
         /**
          * [ description]
          * @param  {[type]} s){return s.replace(/^\s+/g [description]
