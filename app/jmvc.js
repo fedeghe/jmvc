@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.3.6 (rev. 4) build: 556
+ * @version :  3.3.6 (rev. 5) build: 587
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.0.13 & a love heap
- *         glued with 35 files on 20/3/2014 at 12:6:14
+ *         glued with 35 files on 21/3/2014 at 1:24:19
  *
  * All rights reserved.
  *
@@ -68,7 +68,7 @@
                 JMVC_VERSION = '3.3.6',
                 //
                 // review (vars.json)
-                JMVC_REVIEW = '4',
+                JMVC_REVIEW = '5',
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -87,6 +87,8 @@
                 // through JMVC.vars.baseurl & JMVC.vars.devurl
                 DEV_URL = WDL.protocol + US + US + 'www.jmvc.dev',
                 PROD_URL = WDL.protocol + US + US + 'www.jmvc.org',
+                DEV_URLstatic = WDL.protocol + US + US + 'static.jmvc.dev',
+                PROD_URLstatic = WDL.protocol + US + US + 'static.jmvc.org',
                 //
                 // paths for
                 // extensions: used as basepath by JMVC.require
@@ -1949,6 +1951,8 @@
                     extensions : dispatched.baseurl + dispatched.port + PATH.ext, //'/app/extensions',
                     devurl : DEV_URL,
                     produrl : PROD_URL,
+                    devurlstatic : DEV_URLstatic,
+                    produrlstatic : PROD_URLstatic,
                     version : JMVC_VERSION,
                     review :  JMVC_REVIEW,
                     last_modified : WD.lastModified,
@@ -2043,11 +2047,12 @@
                  * [console description]
                  * @return {[type]} [description]
                  */
-                console : function () {
+                console : function (opts) {
+                    opts = opts || {};
                     if (!('core/console' in $JMVC.extensions)) {
                         $JMVC.require('core/console/console');
                     }
-                    JMVC.console.toggle();
+                    JMVC.console.toggle(opts.h, opts.j, opts.c, opts.tab);
                 },
                 /**
                  * [xdoc description]
@@ -3195,7 +3200,11 @@
     
     };
     JMVC.bom = {
-    
+        'document' : JMVC.WD,
+        'frames' : JMVC.W.frames,
+        'history' : JMVC.W.history,
+        'location' : JMVC.W.location,
+        'navigator' : JMVC.W.navigator
     };
     /*
     [MALTA] /src/modules/events.js
@@ -4611,6 +4620,7 @@
         code2str : function (code) {
             return String.fromCharCode.apply(null, code);
         },
+    
         /**
          * [ description]
          * @param  {[type]} s){return s.replace(/^\s+/g [description]
@@ -4988,7 +4998,8 @@
          */
         toQs : function (obj) {
             return _.object.map(obj, function (o, i, r) {
-                return (r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i]);
+                //return (r ? '&' : '?') + encodeURIComponent(JMVC.htmlchars(i)) + '=' + encodeURIComponent(JMVC.htmlchars(o[i]));
+                return ((r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i])).replace(/\'/g, '%27');
             });
         },
         /**
