@@ -1,5 +1,5 @@
 JMVC.require(
-	//'core/sniffer/sniffer',
+	'core/sniffer/sniffer',
 	'core/obj/date/date',
 	'core/i18n/i18n',
 	'core/responsive/basic/basic',
@@ -27,7 +27,8 @@ JMVC.controllers.index = function () {
 		var logoimg = 'jmvc_m1.png';
 		
 
-		JMVC.dom.preloadImage(JMVC.vars.baseurl + '/media/img/' + logoimg
+		JMVC.dom.preloadImage(
+			JMVC.vars.baseurl + '/media/img/' + logoimg
 			/*, function (i){console.debug(i, 'loaded')}*/
 		);
 
@@ -255,7 +256,7 @@ JMVC.controllers.index = function () {
 		this.render('<b>yupeeee</b>');
 	};
 
-	this.action_codes = function () {
+	this.action_codesNoworkers = function () {
 		var content = '';
 		if (confirm('That may hang your browser! ...continue?')) {
 			var i = 10;
@@ -282,7 +283,51 @@ JMVC.controllers.index = function () {
 				3000
 			);
 		}
-		this.render(content);
+		//this.render(content);
+	};
+
+	this.action_codes = function () {
+
+
+		//check webWorkers
+		if (!JMVC.sniffer.features.assets.webWorkers) {
+			JMVC.head.goto(JMVC.c, 'codesNoworkers');
+		}
+		
+		var content = '',
+			self = this;
+
+		// clean body
+		this.render(content, function () {
+			var t = [10367, 10431, 10491, 10493, 10494, 10487, 10479, 10463],
+				i = 0,
+				l = t.length;
+			window.setInterval(
+				//function (){JMVC.head.title(String.fromCharCode(JMVC.util.rand(10240, 10495)))},
+				function () {JMVC.head.title(String.fromCharCode(t[i])); i = (i + 1) % l; },
+				100
+			);
+		});
+
+		// create a worker
+		var blobURL = window.URL.createObjectURL(
+				new Blob([
+					"var i = 0, l = 2<<15,"+
+						"loop = setInterval(function () {"+
+							"self.postMessage(i + ' : &#' + (i++) + ';<br />');	"+
+							"if (i == l) {"+
+								"clearInterval(loop);"+
+							"}"+
+						"}, 5);"
+				])
+			),
+			worker = new Worker(blobURL);
+
+		worker.onmessage = function (e) {
+			JMVC.dom.append(self.view.container, JMVC.dom.create('span', {}, e.data));
+			//window.scrollTo(0,document.body.scrollHeight);
+		};
+		
 	};
 
 
