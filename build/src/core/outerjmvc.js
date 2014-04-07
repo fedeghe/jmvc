@@ -27,7 +27,9 @@ $JMVC = {
         version : JMVC_VERSION,
         review :  JMVC_REVIEW,
         last_modified : WD.lastModified,
+        starttime : 0,
         rendertime : 0,
+        endtime : 0,
         retina : W.devicePixelRatio > 1,
         randcolor : new function () {
             var wsafearr = ['00', '33', '66', '99', 'CC', 'FF'];

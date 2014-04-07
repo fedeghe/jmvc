@@ -7,6 +7,7 @@ VIEW
  * @param {[type]} cnt [description]
  */
 View = function (cnt) {
+    this.container = false;
     // original content
     this.ocontent = cnt || '';
     this.content = cnt || '';
@@ -129,7 +130,8 @@ View.prototype.render = function (pars) {
     if (!$JMVC.loaded) {
         //
         // books rendering in body or elsewhere, on load
-        // @ @ //$JMVC.events.bind(W, 'load', function () {
+        // @ @ //
+        //////////////////////////////////////$JMVC.events.bind(W, 'load', function () {
             //  
             // call before render
             $JMVC.events.startRender();
@@ -137,8 +139,15 @@ View.prototype.render = function (pars) {
             $JMVC.loaded = true;
             may_trg = target ? $JMVC.dom.find(target) : false;
             trg = may_trg || WD.body;
+            this.container = trg;
+
             //
-            $JMVC.vars.rendertime = +new Date() - time_begin;
+            // time
+            $JMVC.vars.starttime = time_begin;
+            $JMVC.vars.endtime = +new Date;
+
+            //
+            $JMVC.vars.rendertime = $JMVC.vars.endtime - $JMVC.vars.starttime;
             //
             // before render
             that.content = jmvc.hook_check('onBeforeRender', [that.content]) || that.content;
@@ -154,7 +163,8 @@ View.prototype.render = function (pars) {
             // 
             // trigger end of render queue
             $JMVC.events.endRender();
-        // @ @ //});
+        // @ @ //
+        //////////////////////////////////////});
     //
     // happend after load... so can render a view from a render cback 
     // of a main view

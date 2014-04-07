@@ -7,7 +7,9 @@ JMVC.extend('plotter', {
 			M = Math;
 
 		mod = {
-			adddot : function (x, y) {that.arr.push([x, y]); },
+			adddot : function (x, y) {
+				that.arr.push([x, y]);
+			},
 			addarc : function (centerx, centery, radiusx, radiusy, radstep, radfrom, howmany, rad) {
 				var i = 0,
 					x,

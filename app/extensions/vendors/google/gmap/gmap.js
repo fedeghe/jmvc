@@ -1,5 +1,5 @@
 JMVC.extend('gmap', {
-	'initialize': function (cback, options) {
+	initialize: function (cback, options) {
 		// append main gmaps script,
 		// make public the callback
 		JMVC.W.cb = cback;
@@ -11,12 +11,11 @@ JMVC.extend('gmap', {
 		//extend options with those passed
 		params = JMVC.object.extend(params, options);
 		
-		//JMVC.head.addscript('https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=cb');
 		JMVC.head.addscript('https://maps.google.com/maps/api/js' + JMVC.object.toQs(params));
-		//console.debug('http://maps.google.com/maps/api/js' + JMVC.object.toQs(params));
+		
 	},
 	
-	'mapme' : function (address, cback) {
+	mapme : function (address, cback) {
 		var r;
 		if (JMVC.util.isArray(address)) {
 			cback(new google.maps.LatLng(address[0], address[1]));
@@ -29,23 +28,22 @@ JMVC.extend('gmap', {
 		}
 	},
 	
-	'marker' : function (map, latLngArr, content) {
+	marker : function (map, latLngArr, content) {
+
 		var marker = new google.maps.Marker({
 				position: new google.maps.LatLng(latLngArr[0], latLngArr[1]),
 				map: map
-			}),
-			infoWindow;
-		if (typeof content != undefined) {
-			infowindow = new google.maps.InfoWindow({content: content});
-			google.maps.event.addListener(marker, 'click', function() {
+			});
+
+		if (typeof content !== 'undefined') {	
+			google.maps.event.addListener(marker, 'click', function () {	
+				var infowindow = new google.maps.InfoWindow({content: content});
 				infowindow.open(map, marker);
 			});
 		}
-		
 	},
 
-
-	'animator' : function (map, points) {
+	animator : function (map, points) {
 		//array of {location, speed, duration, *zoom, streetView:{heading: , pitch: ,zoom: } }
 		var i = 0,
 			j = 0,

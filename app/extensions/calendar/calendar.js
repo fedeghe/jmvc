@@ -48,8 +48,6 @@ JMVC.extend('calendar',{
 				contour_before[first] = previousCount-i;
 				i++;
 			}
-			
-			
 		}
 		return {
 			dim : getDaysInMonth,

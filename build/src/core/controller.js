@@ -4,6 +4,8 @@ CONTROLLER
 // parent controller
 Controller = function () {
 };
+// autoview
+Controller.prototype.view = false;
 // for storing vars 
 Controller.prototype.vars = {};
 // this has no sense and must be removed
@@ -56,8 +58,8 @@ Controller.prototype.render = function (content, cback) {
         content = false;
     }
 
-    var tmp_v = new View(content);
-    tmp_v.render(cback && typeof cback === 'function' ? {cback : cback} : null);
+    this.view = new View(content);
+    this.view.render(cback && typeof cback === 'function' ? {cback : cback} : null);
 
     return this;
 };

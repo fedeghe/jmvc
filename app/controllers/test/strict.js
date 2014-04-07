@@ -3,8 +3,8 @@ JMVC.controllers.strict = function() {
 
 	this.action_index = function(){
 
-		this.render(false,function(){
-		
+		this.render(false, function(){
+			"use strict";
 		
 			JMVC.test.initialize(true);
 			
@@ -23,6 +23,7 @@ JMVC.controllers.strict = function() {
 			//create a property in the global object. When a simple assignment occurs within strict
 			//mode code, its LeftHandSide must not evaluate to an unresolvable Reference. If it does
 			//a ReferenceError exception is thrown (8.7.2).
+			
 			JMVC.test.testException(
 				"no implied globals",
 				function () {'use strict'; x = 3;},
@@ -243,12 +244,6 @@ JMVC.controllers.strict = function() {
 
 			JMVC.test.finishAll();			
 
-
-			
-			
-			
-			
-			
 		});
 	}
 	

@@ -93,7 +93,7 @@ JMVC.head = {
                     //
                     style.type = 'text/css';
                     if (style.styleSheet) {
-                        style.styleSheet.cssText = rules.value || rules.nodeValue;
+                        style.styleSheet.cssText = rules.value
                     } else {
                         style.appendChild(rules);
                     }
