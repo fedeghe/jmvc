@@ -113,7 +113,6 @@ JMVC.dom = {
                 l = attrs.length;
                 for (i = 0; i < l; i += 1) {
                     if (attrs[i].nodeName === name) {
-                        //return attrs[i].nodeValue;
                         return attrs[i].value;
                     }
                 }
@@ -214,6 +213,9 @@ JMVC.dom = {
             toArr = true,
             ret = false,
             isArr = false;
+        if (a == '*') {
+            return document.getElementsByTagName('*');
+        }
         if (a.nodeType === 1) {
             return a;
         }
