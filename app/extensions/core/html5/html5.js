@@ -77,10 +77,12 @@ JMVC.extend('html5', {
 		"use strict";
 		attr = attr || {};
 		if (!('max' in attr)){attr.max = 100;}
-		return '<progress '+JMVC.object.toAttr(attr)+' value="'+progress+'"></progress>';
+		return '<progress ' + JMVC.object.toAttr(attr) + ' value="' + progress + '"></progress>';
 	},
 	geolocation : function (posCB, errCB) {
 		"use strict";
-		navigator.geolocation.getCurrentPosition(posCB, errCB || function () {});
+		posCB = posCB || function () {}
+		errCB = errCB || function () {}
+		navigator.geolocation.getCurrentPosition(posCB, errCB);
 	}
 });

@@ -1,7 +1,5 @@
 JMVC.controllers.googlemaps = function () {
-	'use strict';
-	
-
+    'use strict';
 
 	this.action_3_14 = function () {
 		
@@ -9,6 +7,7 @@ JMVC.controllers.googlemaps = function () {
 
 		var v = JMVC.getView('vacuum'),
 			gm = JMVC.gmaps.create(),
+			container,
 			that = this;
 
 		v.set({
@@ -18,23 +17,14 @@ JMVC.controllers.googlemaps = function () {
 		});
 
 		v.render(function () {
-
+			container = JMVC.dom.find('#container');
 			gm.initialize(function () {
-				
-				gm.render(JMVC.dom.find('#container'));
-
+				gm.render(container);
 			}, {
 				sensor : false
 			});
 		});
 	};
-
-
-
-
-
-
-
 
 
 	this.action_index = function () {
@@ -78,8 +68,9 @@ JMVC.controllers.googlemaps = function () {
 								tilt : 45,
 								styles : [{featureType : 'water', stylers : [{lightness : 0}, {saturation : 100}, {hue : '#000000'}, {gamma : 1.0}], elementType : 'geometry'}]
 							});
-						JMVC.gmap.marker(map, [47.366923, 8.543597], '<h1>Zürich</h1>');
-						JMVC.gmap.marker(map, [48.366923, 9.543597], '<h1>Amsterdam</h1>');
+						
+						JMVC.gmap.marker(map, [52.3747158, 4.8986166], '<p>Amsterdam</p>');
+						JMVC.gmap.marker(map, [47.366923, 8.543597], '<p>Zürich</p>');
 					});
 					
 				}, {

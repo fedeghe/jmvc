@@ -26,6 +26,8 @@ Wcave.prototype.restart = function () {
     }
 };
 
+
+
 /**
  * Used to notify to user abount missing
  * init script parameters
@@ -41,9 +43,7 @@ Wcave.prototype.error = function (msg) {
 };
 
 
-/**
- * 
- */
+
 /**
  * called to add to points the bonus given by ppills 
  * 
@@ -54,9 +54,6 @@ Wcave.prototype.ppillsScore = function () {
     vars.feverMode =  vars.feverCount >=  conf.wormLenght;
     vars.score += vars.feverMode ? 2 : 1;
 };
-
-
-
 
 
 
@@ -145,8 +142,6 @@ Wcave.prototype.init = function () {
         );
     }
     vars.freezeBgLength = conf.colors[conf.theme].freezebg.length;
-
-    
 
     //  some checks for mandatory options
     if (!cache.opts) {
@@ -884,7 +879,10 @@ Wcave.prototype.drawBg = function () {
     cg.addColorStop(
         step,
         //vars.freezeDecay ? conf.colors[conf.theme].freezebg[vars.freezeBgIndex] : conf.colors[conf.theme].bg[1]
-        vars.freezeDecay ? conf.colors[conf.theme].freezebg[ ~~(cache.time / conf.blinkrate) % vars.freezeBgLength ] : conf.colors[conf.theme].bg[1]
+        vars.freezeDecay ?
+            conf.colors[conf.theme].freezebg[ ~~(cache.time / conf.blinkrate) % vars.freezeBgLength ]
+            :
+            conf.colors[conf.theme].bg[1]
     );
     cg.addColorStop(2 * step, conf.colors[conf.theme].bg[2]);
     vars.freezeBgIndex += 1;
@@ -901,7 +899,6 @@ Wcave.prototype.drawWorm = function () {
     var i,
         l,
         feverCount = vars.feverCount;
-
 
     for (i = 0, l = conf.wormLenght; i < l; i += 1) {
 
@@ -1406,7 +1403,7 @@ Wcave.prototype.utils = {
             )
         };
     },
-    'replaceall' : function (tpl, o, dD, Dd) {
+    replaceall : function (tpl, o, dD, Dd) {
         var reg = new RegExp((dD || '%') + '([A-z0-9-_]*)' + (Dd || '%'), 'g'),
             str;
         return tpl.replace(reg, function (str, $1) {
@@ -1414,13 +1411,13 @@ Wcave.prototype.utils = {
             return o[$1] || '';
         });
     },
-    'checkpound' : function (color) {
+    checkpound : function (color) {
         return (color.charAt(0) === '#') ? color.substr(1) : color;
     },
-    'getRandomColor' : function () {
+    getRandomColor : function () {
         return '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
     },
-    'getGradientArray' : function (color1, color2, num) {
+    getGradientArray : function (color1, color2, num) {
         var ret = [],
             int1,
             int2,
@@ -1474,7 +1471,7 @@ Wcave.prototype.utils = {
         ret[num] = '#' + color2;
         return ret;
     },
-    'padme' : function (val, el, pos, lngt) {
+    padme : function (val, el, pos, lngt) {
         var len = lngt || 2;
         while ((String(val)).length < len) {
             switch (pos) {
@@ -1488,10 +1485,10 @@ Wcave.prototype.utils = {
         }
         return val;
     },
-    'hex2int' : function (hex) {
+    hex2int : function (hex) {
         return parseInt(hex, 16);
     },
-    'int2hex' : function (i) {
+    int2hex : function (i) {
         return parseInt(i, 10).toString(16);
     },
     rgb2hex : function (r, g, b) {
@@ -1503,7 +1500,7 @@ Wcave.prototype.utils = {
         b.length > 1 || (b = '0' + b);
         return '#' + r + g + b;
     },
-    'hex2rgb' : function (hex) {
+    hex2rgb : function (hex) {
         var strhex = String(hex),
             more = (strhex.charAt(0) === '#') ? 1 : 0;
         return {

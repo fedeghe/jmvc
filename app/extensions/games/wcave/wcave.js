@@ -1824,7 +1824,7 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 			b.length > 1 || (b = '0' + b);
 			return '#' + r + g + b;
 		},
-		'hex2rgb' : function (hex) {
+		hex2rgb : function (hex) {
 			var strhex = String(hex),
 				more = (strhex.charAt(0) === '#') ? 1 : 0;
 			return {
@@ -1847,7 +1847,6 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 		},
 		pdistance : function (p1x, p1y, p2x, p2y) {
 			return Math.max(Math.abs(p2x - p1x), Math.abs(p2y - p1y));
-			//return Math.sqrt((p2x - p1x) * (p2x - p1x) + (p2y - p1y) * (p2y - p1y));
 		},
 		out : function (msg, what) {
 			W.console.debug(msg, what);

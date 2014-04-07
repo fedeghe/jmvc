@@ -3,15 +3,15 @@ JMVC
 
 Description
 -----------
-JMVC is a javascript module that implement the MVC architecture and is enhanced with basic utilities. 
-      
+JMVC is a javascript module that implement the MVC architecture and is enhanced with basic utilities.
+
 Getting started
 ---------------
 Copy the content of the repository in the root of an Apache virtual host,  
  otherwise **absolutely only for development** fire up the inner node minimal dummy server executing  
 `node server.js`  
 from the `srv/` folder, then add  
-`foo.dev    127.0.0.1`  
+/*`foo.dev    127.0.0.1`  *
 to your *hosts* file
 edit the *srv/config.json* file to fill out the true path for the webroot  
 visit *http://www.foo.dev:8080*  
@@ -28,7 +28,7 @@ the <a href="http://www.jmvc.org/demo.jmvc" target="_blank">demo controller</a> 
 
 Api
 ---
-The <a href="http://www.jmvc.org/api" target="_blank">JMVC api</a> section needs to be completed, even some signatures are inconsistent. Soon will be completed and 
+The <a href="http://www.jmvc.org/api" target="_blank">JMVC api</a> section needs to be completed, even some signatures are inconsistent. Soon will be completed and
 even all the test will be available.
 
 Features

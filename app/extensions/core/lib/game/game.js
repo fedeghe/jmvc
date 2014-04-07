@@ -27,21 +27,19 @@ JMVC.extend('game', {
 		})();
 
 		(function() {
-			var onEachFrame;
 			if (JMVC.W.webkitRequestAnimationFrame) {
-				onEachFrame = function (cb) {
+				JMVC.W.onEachFrame = function (cb) {
 					(function _cb_() { cb(); webkitRequestAnimationFrame(_cb_); })();
 				};
 			} else if (JMVC.W.mozRequestAnimationFrame) {
-				onEachFrame = function (cb) {
+				JMVC.W.onEachFrame = function (cb) {
 					(function _cb_() {cb(); mozRequestAnimationFrame(_cb_); })();
 				};
 			} else {
-				onEachFrame = function (cb) {
+				JMVC.W.onEachFrame = function (cb) {
 					setInterval(cb, 1000 / 60);
 				}
 			}
-			JMVC.W.onEachFrame = onEachFrame;
 		})();
 
 		JMVC.W.onEachFrame(self.run);		

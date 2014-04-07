@@ -22,5 +22,8 @@ JMVC.extend('fullscreen', {
             ret = document.webkitExitFullscreen();
         }
         return ret;
-    }
+    },
+    
+    el : document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement,
+    enabled : document.fullscreenEnabled || document.mozFullScreenEnabled || document.webkitFullscreenEnabled
 });
