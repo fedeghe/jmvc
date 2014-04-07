@@ -29,6 +29,8 @@ var $JMVC,
     // through JMVC.vars.baseurl & JMVC.vars.devurl
     DEV_URL = WDL.protocol + US + US + 'www.jmvc.dev',
     PROD_URL = WDL.protocol + US + US + 'www.jmvc.org',
+    DEV_URLstatic = WDL.protocol + US + US + 'static.jmvc.dev',
+    PROD_URLstatic = WDL.protocol + US + US + 'static.jmvc.org',
     //
     // paths for
     // extensions: used as basepath by JMVC.require
