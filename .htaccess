@@ -50,6 +50,7 @@ FileETag MTime Size
 	
 	#1 month
 	<FilesMatch "\.(js|css|json)$">
+		Header append Vary: Accept-Encoding
 		Header set Cache-Control "max-age=2592000, must-revalidate"
 	</FilesMatch>
 	
