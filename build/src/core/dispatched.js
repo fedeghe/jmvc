@@ -20,6 +20,7 @@ dispatched = (function () {
         controller = false,
         controller_prepath = '',
         controller_prepath_parts = [],
+        controller_splitter = /_|-/,
         action = false,
         params = {},
         lab_val,
@@ -33,8 +34,8 @@ dispatched = (function () {
     controller = els.shift() || JMVC_DEFAULT.controller;
     //
     // check extrapath for controller
-    if (!!controller.match(/_/)) {
-        controller_prepath_parts = controller.split('_');
+    if (!!controller.match(controller_splitter)) {
+        controller_prepath_parts = controller.split(controller_splitter);
         controller = controller_prepath_parts.pop();
         controller_prepath = controller_prepath_parts.join(US) + US;
     }
@@ -58,6 +59,7 @@ dispatched = (function () {
             !params[lab_val[0]] && (params[lab_val[0]] = lab_val[1]);
         }
     }
+    
     //
     return {
         controller : controller.replace(/\//g, ''),
