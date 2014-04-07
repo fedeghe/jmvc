@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.3.6 (rev. 5) build: 588
+ * @version :  3.3.7 (rev. 1) build: 786
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
- * @file : built with Malta v.1.0.13 & a love heap
- *         glued with 35 files on 21/3/2014 at 1:24:48
+ * @file : built with Malta v.1.0.14 & a love heap
+ *         glued with 38 files on 8/4/2014 at 0:27:9
  *
  * All rights reserved.
  *
@@ -41,7 +41,7 @@
 //
 //
 (function (W) {
-    // 
+    //
     // one for all the build
     'use strict';
     //
@@ -51,7 +51,7 @@
         WDL = WD.location,
         //
         // this function returns the JMVC object, globalized, after doing some stuff
-        // @return {object literal} $JMVC inner object 
+        // @return {object literal} $JMVC inner object
         JMVC = W.JMVC = (function () {
             /*
             [MALTA] /src/core/init.js
@@ -65,10 +65,10 @@
             var $JMVC,
                 //
                 // version (vars.json)
-                JMVC_VERSION = '3.3.6',
+                JMVC_VERSION = '3.3.7',
                 //
                 // review (vars.json)
-                JMVC_REVIEW = '5',
+                JMVC_REVIEW = '1',
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -219,18 +219,33 @@
             --------*/
             jmvc = {
                 /**
-                 * the self-proclaimed ninja debug fucntion SUCKS
-                 *                                          -----
-                 * @return {[type]} [description]
+                 * [debug description]
+                 * @param  {[type]} msg [description]
+                 * @return {[type]}     [description]
                  */
-                debug : function (m) {
+                debug: function(msg) {
+                    var now = +new Date,
+                        diff = now - ($JMVC.vars.endtime || $JMVC.vars.starttime || now),
+                        ms = diff % 1000,
+                        s = ~~ ((diff % 60000) / 1000),
+                        m = ~~ (diff / 60000),
+                        outmsg = [];
+            
+            
+                    outmsg.push(
+                        (m && (~~m + 'm')) +
+                        (s && (~~s + 's')) +
+                        ms + 'ms :: '
+                    );
+                    outmsg.push(msg);            
+            
                     try {
-                        W.console.log(m);
+                        W.console.log(outmsg);
                     } catch (e1) {
                         try {
-                            W.opera.postError(m);
+                            W.opera.postError(outmsg);
                         } catch (e2) {
-                            W[W.hasOwnProperty('log') ? 'log' : 'alert'](m);
+                            W[W.hasOwnProperty('log') ? 'log' : 'alert'](outmsg);
                         }
                     }
                 },
@@ -239,7 +254,7 @@
                  * @param  {[type]} name [description]
                  * @return {[type]}      [description]
                  */
-                del : function (name) {
+                del: function(name) {
                     if ($JMVC.vars.hasOwnProperty(name)) {
                         $JMVC.vars[name] = null;
                     }
@@ -251,10 +266,10 @@
                  * @param  {[type]} ctx  [description]
                  * @return {[type]}      [description]
                  */
-                delegate : function (func, ctx) {
+                delegate: function(func, ctx) {
                     // get relevant arguments
                     var args = Array.prototype.slice.call(arguments, 2);
-                    return function () {
+                    return function() {
                         return func.apply(ctx || $JMVC, [].concat(args, Array.prototype.slice.call(arguments)));
                     };
                 },
@@ -265,32 +280,50 @@
                  * @param  {[type]} func [description]
                  * @return {[type]}      [description]
                  */
-                each : function (o, func) {
-                    var type = ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase(),
+                each: function(o, func) {
+                    //var type = ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase(),
+                    // speed up
+                    var type = 'length' in o ? 'array' : 'object',
                         i,
                         l,
                         ret;
                     func.Obreak = false;
                     func.Ocontinue = false;
-                    func['break'] = /*func.exit = */function () {func.Obreak = true; };
-                    func['continue'] = /*func.skip = */function () {func.Ocontinue = true; };
+                    func['break'] = /*func.exit = */ function() {
+                        func.Obreak = true;
+                    };
+                    func['continue'] = /*func.skip = */ function() {
+                        func.Ocontinue = true;
+                    };
             
                     if (type === 'array') {
                         ret = [];
                         i = 0;
                         l = o.length;
                         for (null; i < l; i += 1) {
-                            if (func.Ocontinue) {func.Ocontinue = false; continue; }
-                            if (func.Obreak) {break; }
+                            if (func.Ocontinue) {
+                                func.Ocontinue = false;
+                                continue;
+                            }
+                            if (func.Obreak) {
+                                break;
+                            }
                             ret.push(func.call(o, o[i], i));
                         }
                     } else if (type === 'object') {
                         ret = {};
                         for (i in o) {
                             if (o.hasOwnProperty(i)) {
-                                if (func.Ocontinue) {func.Ocontinue = false; continue; }
-                                if (func.Obreak) {break; }
-                                (function (j) {ret[j] = func.call(o, o[j], j); })(i);
+                                if (func.Ocontinue) {
+                                    func.Ocontinue = false;
+                                    continue;
+                                }
+                                if (func.Obreak) {
+                                    break;
+                                }
+                                (function(j) {
+                                    ret[j] = func.call(o, o[j], j);
+                                })(i);
                             }
                         }
                     } else {
@@ -304,9 +337,9 @@
                  * @param  {String} label the label under which JMVC will be extended,
                  *                        here can even be used dots to subspace
                  * @param  {[type]} obj   [description]
-                 * @return {Object|false} The 
+                 * @return {Object|false} The
                  */
-                extend : function (label, obj) {
+                extend: function(label, obj) {
                     //
                     // ensures that the target namespace exists 
                     var trg = jmvc.ns.make('JMVC.' + label);
@@ -334,7 +367,7 @@
                         trg.initCheck = null;
                     }
                     //
-                    (function (t, o) {
+                    (function(t, o) {
                         var j;
                         for (j in o) {
                             o.hasOwnProperty(j) && t[j] === undefined && (t[j] = o[j]);
@@ -357,11 +390,11 @@
                  * @param  {[type]} params [description]
                  * @return {[type]}        [description]
                  */
-                factory_method : function (type, name, params) {
+                factory_method: function(type, name, params) {
                     // using namespace ?
                     var pieces = name.split('/'),
                         path = false,
-                        path_absolute =  $JMVC.vars.baseurl + US + 'app' + US + type + 's/',
+                        path_absolute = $JMVC.vars.baseurl + US + 'app' + US + type + 's/',
                         t = type,
                         ret;
                     if (pieces.length > 1) {
@@ -389,7 +422,7 @@
                  * @param  {[type]} name [description]
                  * @return {[type]}      [description]
                  */
-                get : function (name) {
+                get: function(name) {
                     return $JMVC.vars[name] || undefined;
                 },
                 /**
@@ -398,7 +431,7 @@
                  * @param  {[type]} name [description]
                  * @return {[type]}      [description]
                  */
-                globalize : function (obj, name) {
+                globalize: function(obj, name) {
                     JMVC.W[name] = obj;
                 },
                 /**
@@ -407,7 +440,7 @@
                  * @param  {[type]} force [description]
                  * @return {[type]}       [description]
                  */
-                hook : function (obj, force) {
+                hook: function(obj, force) {
                     var allowed = ['onBeforeRender', 'onAfterRender', 'onBeforeParse', 'onAfterParse'],
                         f = 0;
                     for (f in obj) {
@@ -420,7 +453,7 @@
                                     hooks[f].push(obj[f]);
                                 } else {
                                     throw {
-                                        message : 'EXCEPTION : You`re trying to hook unallowed function "' + f + '"'
+                                        message: 'EXCEPTION : You`re trying to hook unallowed function "' + f + '"'
                                     };
                                 }
                             } catch (e) {
@@ -435,7 +468,7 @@
                  * @param  {[type]} param    [description]
                  * @return {[type]}          [description]
                  */
-                hook_check : function (hookname, params) {
+                hook_check: function(hookname, params) {
                     var dyn = params instanceof Array ? params : false,
                         i;
                     if (dyn && hookname in hooks) {
@@ -452,7 +485,7 @@
                  * @param  {[type]} text [description]
                  * @return {[type]}      [description]
                  */
-                htmlchars : function (text) {
+                htmlchars: function(text) {
                     return text
                         .replace(/&(?![\w\#]+;)/g, '&amp;')
                         .replace(/</g, '&lt;')
@@ -465,7 +498,7 @@
                  * @param  {[type]} html [description]
                  * @return {[type]}      [description]
                  */
-                htmlchars_decode : function (html) {
+                htmlchars_decode: function(html) {
                     return html
                         .replace(/&amp;/g, '&')
                         .replace(/&lt;/g, '<')
@@ -480,14 +513,13 @@
                  * @param  {[type]} s      [description]
                  * @return {[type]}        [description]
                  */
-                implement : function (o, interf) {
+                implement: function(o, interf) {
                     var i = 0,
                         l = interf.length;
             
                     for (null; i < l; i += 1) {
                         if (!(
-                            (o.prototype && interf[i] in o.prototype && typeof o.prototype[interf[i]] === 'function')
-                            ||
+                            (o.prototype && interf[i] in o.prototype && typeof o.prototype[interf[i]] === 'function') ||
                             (interf[i] in o && typeof o[interf[i]] === 'function')
                         )) {
                             return false;
@@ -501,7 +533,7 @@
                  * @param  {[type]} Parent [description]
                  * @return {[type]}        [description]
                  */
-                inherit : function (Child, Parent) {
+                inherit: function(Child, Parent) {
                     function T() {}
                     T.prototype = Parent.prototype;
                     Child.prototype = new T();
@@ -514,7 +546,7 @@
                  * @param  string   code to be evalued
                  * @return void
                  */
-                jeval : function (r) {
+                jeval: function(r) {
                     //r = r.replace(/(\/\/.*\n)/gm, '');
                     try {
                         return JMVC.W.eval(r);
@@ -525,7 +557,7 @@
                  * lang loader
                  * @return {[type]} [description]
                  */
-                lang : function () {
+                lang: function() {
                     var lng = Array.prototype.slice.call(arguments, 0),
                         i = 0,
                         l = lng.length;
@@ -539,7 +571,7 @@
                  * @param  {[type]} m [description]
                  * @return {[type]}   [description]
                  */
-                model_inherit : function (m) {
+                model_inherit: function(m) {
                     m.prototype.get = Model.prototype.get;
                     m.prototype.set = Model.prototype.set;
                     m.prototype.del = Model.prototype.del;
@@ -553,8 +585,8 @@
                  * @param  {[type]} Parent [description]
                  * @return {[type]}        [description]
                  */
-                multi_inherit : function (Childs, Parent) {
-                    jmvc.each(Childs, function (ch) {
+                multi_inherit: function(Childs, Parent) {
+                    jmvc.each(Childs, function(ch) {
                         jmvc.inherit(ch, Parent);
                     });
                 },
@@ -562,7 +594,7 @@
                  * [ns description]
                  * @type {Object}
                  */
-                ns : {
+                ns: {
                     /**
                      * creates a namespace
                      * @param  {[type]} str [description]
@@ -570,7 +602,7 @@
                      * @param  {[type]} ctx [description]
                      * @return {[type]}     [description]
                      */
-                    make : function (str, obj, ctx) {
+                    make: function(str, obj, ctx) {
                         var chr = '.',
                             els = str.split(/\.|\//),
                             l = els.length,
@@ -590,7 +622,7 @@
                      * @param  {[type]} ctx [description]
                      * @return {[type]}     [description]
                      */
-                    check : function (ns, ctx) {
+                    check: function(ns, ctx) {
                         var els = ns.split(/\.|\//),
                             i = 0,
                             l = els.length;
@@ -610,7 +642,7 @@
                  * @param  {[type]} cnt [description]
                  * @return {[type]}     [description]
                  */
-                parselang : function (cnt) {
+                parselang: function(cnt) {
                     var RXlng = '\\[L\\[([\\S\\s]*?)\\]\\]',
                         lang = true,
                         tmp,
@@ -622,7 +654,7 @@
                     if (JMVC.i18n[JMVC.vars.currentlang] === true) {
                         $JMVC.io.get(
                             JMVC.vars.baseurl + PATH.lang + JMVC.vars.currentlang + (JMVC_PACKED || '') + '.js',
-                            function (ln) {
+                            function(ln) {
                                 jmvc.jeval(ln);
                             },
                             false
@@ -633,13 +665,13 @@
                     while (limit) {
                         lang = new RegExp(RXlng, 'gm').exec(cnt);
                         tmp = '';
-                        if (!!lang) {
+                        if ( !! lang) {
                             tmp = ($JMVC.i18n[JMVC.vars.currentlang] && $JMVC.i18n[JMVC.vars.currentlang][lang[1]]) || lang[1];
                             cnt = cnt.replace(lang[0], tmp);
                         } else {
                             break;
                         }
-                        lang = !!lang;
+                        lang = !! lang;
                         limit -= 1;
                     }
                     return cnt;
@@ -650,7 +682,7 @@
                  * @param  {[type]} obj [description]
                  * @return {[type]}     [description]
                  */
-                prototipize : function (el, obj) {
+                prototipize: function(el, obj) {
                     var p, l,
                         i = 0;
                     if (el instanceof Array) {
@@ -669,7 +701,7 @@
                  * @param  {[type]} o [description]
                  * @return {[type]}   [description]
                  */
-                purge : function (o) {
+                purge: function(o) {
                     var t;
                     try {
                         for (t in o) {
@@ -683,7 +715,7 @@
                  * @param  {[type]} cback [description]
                  * @return {[type]}       [description]
                  */
-                render : function (cback) {
+                render: function(cback) {
                     var ctrl,
                         i;
                     //
@@ -714,7 +746,7 @@
                         // 
                         // @global hook
                         if ('before' in ctrl && typeof ctrl.before === 'function') {
-                            ctrl.before($JMVC.p); 
+                            ctrl.before($JMVC.p);
                         }
                         //
                         // @action hook
@@ -724,10 +756,17 @@
                         /***************************/
                         // REAL ACTION
                         // check actual action
+                        // 
+                        // the action exists in the controller
                         if ('action_' + $JMVC.a in ctrl && typeof ctrl['action_' + $JMVC.a] === 'function') {
                             ctrl['action_' + $JMVC.a]($JMVC.p);
+            
+                        // maybe the action do not exists, but the controller contains a fallback
+                        // method called 'action', use it
                         } else if ('action' in ctrl && typeof ctrl.action === 'function') {
-                            ctrl.action($JMVC.a, $JMVC.p, $JMVC.p);
+                            ctrl.action($JMVC.a, $JMVC.p);
+            
+                        // otherwise use the 404 controller
                         } else if ($JMVC.a.toLowerCase() !== JMVC_DEFAULT.action) {
                             WDL.replace(US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a);
                         }
@@ -759,7 +798,7 @@
                  * @param {String} none [description]
                  * @return {void} undefined
                  */
-                require : function () {
+                require: function() {
                     var path, extNS, extNSlength, extname, s,
                         i = 0,
                         arg = arguments,
@@ -775,7 +814,7 @@
                             // check if the required end with /, in this case
                             // 
                             if (arg[i].match(/\/$/)) {
-                                $JMVC.io.getJson(JMVC.vars.baseurl + PATH.ext + arg[i] + 'require.json', function (json) {
+                                $JMVC.io.getJson(JMVC.vars.baseurl + PATH.ext + arg[i] + 'require.json', function(json) {
                                     for (var j in json.require) {
                                         jmvc.require(arg[i] + json.require[j]);
                                     }
@@ -789,7 +828,7 @@
                                     arg[i] + (JMVC_PACKED || '') + '.js';
             
                                 if (getmode === 'ajax') {
-                                    $JMVC.io.get(path, function (jres) {
+                                    $JMVC.io.get(path, function(jres) {
                                         jmvc.jeval(jres);
                                     }, false);
                                 } else if (getmode.match(/script/)) {
@@ -807,14 +846,14 @@
                     cb && cb();
                 },
                 /* 
-                * setter, getter, unsetter for $JMVC vars
-                */
+                 * setter, getter, unsetter for $JMVC vars
+                 */
                 /**
                  * [set description]
                  * @param {[type]} name    [description]
                  * @param {[type]} content [description]
                  */
-                set : function (name, content) {
+                set: function(name, content) {
                     if (JMVC.util.isObject(name)) {
                         for (var i in name) {
                             $JMVC.set(i, name[i]);
@@ -832,7 +871,7 @@
                  * @param  {[type]} params [description]
                  * @return {[type]}        [description]
                  */
-                xhrget : function (path, type, name, params) {
+                xhrget: function(path, type, name, params) {
                     var ret = false,
                         o;
                     if (type === 'view' && typeof $JMVC.views[name] === 'function') {
@@ -849,25 +888,25 @@
                             path,
                             function cback(res) {
                                 switch (type) {
-                                case 'view':
-                                    $JMVC.views[name] = new View(res);
-                                    ret =  $JMVC.views[name];
-                                    break;
-                                case 'controller':
-                                    jmvc.jeval(res);
-                                    jmvc.inherit($JMVC[type + 's'][name], Controller);
-                                    break;
-                                case 'model':
-                                    jmvc.jeval(res);
-                                    jmvc.model_inherit($JMVC[type + 's'][name]);
-                                    o = new $JMVC.models[name]();
-                                    params && $JMVC.models[name].apply(o, params);
-                                    o.vars = {};
-                                    ret = o;
-                                    break;
-                                case 'interface':
-                                    !(name in JMVC.interfaces) && jmvc.jeval(res);
-                                    break;
+                                    case 'view':
+                                        $JMVC.views[name] = new View(res);
+                                        ret = $JMVC.views[name];
+                                        break;
+                                    case 'controller':
+                                        jmvc.jeval(res);
+                                        jmvc.inherit($JMVC[type + 's'][name], Controller);
+                                        break;
+                                    case 'model':
+                                        jmvc.jeval(res);
+                                        jmvc.model_inherit($JMVC[type + 's'][name]);
+                                        o = new $JMVC.models[name]();
+                                        params && $JMVC.models[name].apply(o, params);
+                                        o.vars = {};
+                                        ret = o;
+                                        break;
+                                    case 'interface':
+                                        !(name in JMVC.interfaces) && jmvc.jeval(res);
+                                        break;
                                 }
                             },
                             false // be asynchronous
@@ -875,9 +914,17 @@
                     }
                     return ret;
                 },
-                get2 : function (ns) {return jmvc.ns.check(ns, JMVC.vars); },
-                set2 : function (ns, val) {jmvc.ns.make(ns, val, JMVC.vars); },
-                del2 : function (ns) {jmvc.purge(jmvc.get2(ns)); }
+            
+                // ignore these 3 functions
+                get2: function(ns) {
+                    return jmvc.ns.check(ns, JMVC.vars);
+                },
+                set2: function(ns, val) {
+                    jmvc.ns.make(ns, val, JMVC.vars);
+                },
+                del2: function(ns) {
+                    jmvc.purge(jmvc.get2(ns));
+                }
             };
             //-----------------------------------------------------------------------------
             /*
@@ -1531,6 +1578,8 @@
             // parent controller
             Controller = function () {
             };
+            // autoview
+            Controller.prototype.view = false;
             // for storing vars 
             Controller.prototype.vars = {};
             // this has no sense and must be removed
@@ -1583,8 +1632,8 @@
                     content = false;
                 }
             
-                var tmp_v = new View(content);
-                tmp_v.render(cback && typeof cback === 'function' ? {cback : cback} : null);
+                this.view = new View(content);
+                this.view.render(cback && typeof cback === 'function' ? {cback : cback} : null);
             
                 return this;
             };
@@ -1631,6 +1680,7 @@
              * @param {[type]} cnt [description]
              */
             View = function (cnt) {
+                this.container = false;
                 // original content
                 this.ocontent = cnt || '';
                 this.content = cnt || '';
@@ -1753,7 +1803,8 @@
                 if (!$JMVC.loaded) {
                     //
                     // books rendering in body or elsewhere, on load
-                    // @ @ //$JMVC.events.bind(W, 'load', function () {
+                    // @ @ //
+                    //////////////////////////////////////$JMVC.events.bind(W, 'load', function () {
                         //  
                         // call before render
                         $JMVC.events.startRender();
@@ -1761,8 +1812,15 @@
                         $JMVC.loaded = true;
                         may_trg = target ? $JMVC.dom.find(target) : false;
                         trg = may_trg || WD.body;
+                        this.container = trg;
+            
                         //
-                        $JMVC.vars.rendertime = +new Date() - time_begin;
+                        // time
+                        $JMVC.vars.starttime = time_begin;
+                        $JMVC.vars.endtime = +new Date;
+            
+                        //
+                        $JMVC.vars.rendertime = $JMVC.vars.endtime - $JMVC.vars.starttime;
                         //
                         // before render
                         that.content = jmvc.hook_check('onBeforeRender', [that.content]) || that.content;
@@ -1778,7 +1836,8 @@
                         // 
                         // trigger end of render queue
                         $JMVC.events.endRender();
-                    // @ @ //});
+                    // @ @ //
+                    //////////////////////////////////////});
                 //
                 // happend after load... so can render a view from a render cback 
                 // of a main view
@@ -1873,6 +1932,7 @@
                     controller = false,
                     controller_prepath = '',
                     controller_prepath_parts = [],
+                    controller_splitter = /_|-/,
                     action = false,
                     params = {},
                     lab_val,
@@ -1886,8 +1946,8 @@
                 controller = els.shift() || JMVC_DEFAULT.controller;
                 //
                 // check extrapath for controller
-                if (!!controller.match(/_/)) {
-                    controller_prepath_parts = controller.split('_');
+                if (!!controller.match(controller_splitter)) {
+                    controller_prepath_parts = controller.split(controller_splitter);
                     controller = controller_prepath_parts.pop();
                     controller_prepath = controller_prepath_parts.join(US) + US;
                 }
@@ -1911,6 +1971,7 @@
                         !params[lab_val[0]] && (params[lab_val[0]] = lab_val[1]);
                     }
                 }
+                
                 //
                 return {
                     controller : controller.replace(/\//g, ''),
@@ -1956,7 +2017,9 @@
                     version : JMVC_VERSION,
                     review :  JMVC_REVIEW,
                     last_modified : WD.lastModified,
+                    starttime : 0,
                     rendertime : 0,
+                    endtime : 0,
                     retina : W.devicePixelRatio > 1,
                     randcolor : new function () {
                         var wsafearr = ['00', '33', '66', '99', 'CC', 'FF'];
@@ -2654,7 +2717,6 @@
                     l = attrs.length;
                     for (i = 0; i < l; i += 1) {
                         if (attrs[i].nodeName === name) {
-                            //return attrs[i].nodeValue;
                             return attrs[i].value;
                         }
                     }
@@ -2755,6 +2817,9 @@
                 toArr = true,
                 ret = false,
                 isArr = false;
+            if (a == '*') {
+                return document.getElementsByTagName('*');
+            }
             if (a.nodeType === 1) {
                 return a;
             }
@@ -3197,7 +3262,7 @@
     [MALTA] /src/modules/bom.js
     */
     _.bom = {
-    
+        
     };
     JMVC.bom = {
         'document' : JMVC.WD,
@@ -3206,6 +3271,7 @@
         'location' : JMVC.W.location,
         'navigator' : JMVC.W.navigator
     };
+    
     /*
     [MALTA] /src/modules/events.js
     */
@@ -3218,43 +3284,43 @@
          * storage literal to speed up unbinding
          * @type {Object}
          */
-        bindings : {},
+        bindings: {},
         /**
          * store wrapped callbacks
          * @type {Array}
          */
-        cbs : [],
+        cbs: [],
         /**
-         * wired function queue fired 
+         * wired function queue fired
          * at the beginning of render function
          * @type {Array}
          */
-        Estart : [],
+        Estart: [],
         /**
-         * wired function queue fired 
+         * wired function queue fired
          * at the end of render function
          * @type {Array}
          */
-        Eend : [],
+        Eend: [],
         /**
          * map used to get back a node from an id
          * @type {Object}
          */
         //nodeidMap : {},
-        disabledRightClick : false,
+        disabledRightClick: false,
         /**
          * bind exactly one domnode event to a function
          * @param  {DOM node}   el the dom node where the event must be attached
-         * @param  {String}   evnt the event 
+         * @param  {String}   evnt the event
          * @param  {Function} cb   the callback executed when event is fired on node
          * @return {undefined}
          */
-        bind : (function () {
+        bind: (function() {
             var fn;
     
             function store(el, evnt, cb) {
     
-                var nid = JMVC.dom.idize(el);// _.events.nodeid(el);
+                var nid = JMVC.dom.idize(el); // _.events.nodeid(el);
                 !(evnt in _.events.bindings) && (_.events.bindings[evnt] = {});
     
                 !(nid in _.events.bindings[evnt]) && (_.events.bindings[evnt][nid] = []);
@@ -3263,19 +3329,19 @@
                 return true;
             }
             if ('addEventListener' in W) {
-                fn = function (el, evnt, cb) {
+                fn = function(el, evnt, cb) {
                     // cb = _.events.fixCurrentTarget(cb, el);
                     el.addEventListener.apply(el, [evnt, cb, false]);
                     store(el, evnt, cb);
                 };
             } else if ('attachEvent' in W) {
-                fn = function (el, evnt, cb) {
+                fn = function(el, evnt, cb) {
                     // cb = _.events.fixCurrentTarget(cb, el);
                     el.attachEvent.apply(el, ['on' + evnt, cb]);
                     store(el, evnt, cb);
                 };
             } else {
-                fn = function () {
+                fn = function() {
                     throw new Error('No straight way to bind an event');
                 };
             }
@@ -3286,20 +3352,20 @@
          * [fixCurrentTarget description]
          * @return {[type]} [description]
          */
-        fixCurrentTarget : function (f, el) {
-            var wrapf = function (e) {
-                    // currentTarget (the node where binding has been done) is the core of
-                    // event delegation
-                    // it would be nice to fix currentTarget
-                    // leak in (fuckin)IE7 and (fuckin)IE8
-                    // with something like
-                    // e.currentTarget || (e.currentTarget = el);
-                    //
-                    // a bad WORKING workaround is to pass the current target
-                    // to the
-                    // callback as second parameter and let it to be the context 
-                    return f.call(el, e, el);
-                },
+        fixCurrentTarget: function(f, el) {
+            var wrapf = function(e) {
+                // currentTarget (the node where binding has been done) is the core of
+                // event delegation
+                // it would be nice to fix currentTarget
+                // leak in (fuckin)IE7 and (fuckin)IE8
+                // with something like
+                // e.currentTarget || (e.currentTarget = el);
+                //
+                // a bad WORKING workaround is to pass the current target
+                // to the
+                // callback as second parameter and let it to be the context 
+                return f.call(el, e, el);
+            },
                 i = JMVC.array.find(_.events.cbs, wrapf);
             if (i > -1) {
                 return _.events.cbs[i];
@@ -3309,25 +3375,25 @@
             return wrapf;
         },
         /**
-         * unbind the passed cb or all function 
-         * binded to a node-event pair 
-         * 
-         * @param  {DOM node}   el   the node 
+         * unbind the passed cb or all function
+         * binded to a node-event pair
+         *
+         * @param  {DOM node}   el   the node
          * @param  {String}   tipo   the event
          * @param  {Function|undefined} cb the function that must be unbinded
          *                                 if not passed all functions attached
          *                                 will be unattached
          * @return {boolean}    whether the unbinding succeded
          */
-        
-        unbind : function (el, evnt, cb) {
+    
+        unbind: function(el, evnt, cb) {
             function unstore(evnt, nodeid, index) {
                 Array.prototype.splice.call(_.events.bindings[evnt][nodeid], index, 1);
             }
     
             //cb && (cb = this.fixCurrentTarget(cb, el));
     
-            var nodeid = JMVC.dom.idize(el),//_.events.nodeid(el),
+            var nodeid = JMVC.dom.idize(el), //_.events.nodeid(el),
                 index, tmp, l;
             try {
                 tmp = _.events.bindings[evnt][nodeid];
@@ -3340,7 +3406,9 @@
             //  loop if a function is not given
             if (typeof cb === 'undefined') {
                 tmp = _.events.bindings[evnt][nodeid];
-                if (!tmp) {return false; }
+                if (!tmp) {
+                    return false;
+                }
                 l = tmp.length;
                 /*the element will be removed at the end of the real unbind*/
                 while (l--) {
@@ -3348,15 +3416,15 @@
                 }
                 return true;
             }
-            
+    
             JMVC.W.exp = _.events.bindings;
             index = JMVC.array.find(_.events.bindings[evnt][nodeid], cb);
-            
+    
     
             if (index === -1) {
                 return false;
             }
-            
+    
     
             if (el.removeEventListener) {
                 el.removeEventListener(evnt, cb, false);
@@ -3379,7 +3447,7 @@
          * @param  {Function} fn   [description]
          * @return {[type]}        [description]
          */
-        bind : function (el, tipo, fn) {
+        bind: function(el, tipo, fn) {
             var res = true;
             if (el instanceof Array) {
                 for (var i = 0, l = el.length; i < l; i++) {
@@ -3396,7 +3464,7 @@
          * @param  {[type]} e [description]
          * @return {[type]}   [description]
          */
-        code : function (e) {
+        code: function(e) {
             if (e.keyCode) {
                 return e.keyCode;
             } else if (e.charCode) {
@@ -3412,50 +3480,55 @@
          * @param  {[type]} t [description]
          * @return {[type]}   [description]
          */
-        delay : function (f, t) {
+        delay: function(f, t) {
             W.setTimeout(f, t);
         },
         /**
          * [disableRightClick description]
          * @return {[type]} [description]
          */
-        disableRightClick : function () {
-            if (_.events.disabledRightClick) {return false; }
+        disableRightClick: function() {
+            if (_.events.disabledRightClick) {
+                return false;
+            }
             _.events.disabledRightClick = true;
             var self = this;
             JMVC.dom.attr(JMVC.WD.body, 'oncontextmenu', 'return false');
-            this.bind(JMVC.WD, 'mousedown', function (e) {
+            this.bind(JMVC.WD, 'mousedown', function(e) {
                 if (~~(e.button) === 2) {
                     self.preventDefault(e);
                     return false;
                 }
             });
         },
+    
         /**
          * [ description]
          * @param  {[type]} f [description]
          * @return {[type]}   [description]
          */
-        end : function (f) {
+        end: function(f) {
             _.events.Eend.push(f);
         },
+    
         /**
          * [ description]
          * @return {[type]} [description]
          */
-        endRender : function () {
+        endRender: function() {
             var i = 0,
                 l = _.events.Eend.length;
             for (null; i < l; i += 1) {
                 _.events.Eend[i]();
             }
         },
+    
         /**
          * [eventTarget description]
          * @param  {[type]} e [description]
          * @return {[type]}   [description]
          */
-        eventTarget : function (e) {
+        eventTarget: function(e) {
             e = e ? e : JMVC.W.event;
             var targetElement = e.currentTarget || (typeof e.target !== 'undefined') ? e.target : e.srcElement;
             if (!targetElement) {
@@ -3465,25 +3538,27 @@
             while (targetElement.nodeType === 3 && targetElement.parentNode !== null) {
                 targetElement = targetElement.parentNode;
             }
-            
+    
             return targetElement;
         },
+    
         /**
          * NOCROSS
          * @param  {[type]} el   [description]
          * @param  {[type]} evnt [description]
          * @return {[type]}      [description]
          */
-        fire : function (el, evnt) {
+        fire: function(el, evnt) {
             var evt = el[evnt];
             typeof evt === 'function' && (el[evnt]());
         },
+    
         /**
          * [free description]
          * @param  {[type]} node [description]
          * @return {[type]}      [description]
          */
-        free : function (node, evnt) {
+        free: function(node, evnt) {
             node = node || JMVC.WD;
             if (typeof evnt === 'undefined') {
                 for (var j in _.events.bindings) {
@@ -3491,17 +3566,18 @@
                 }
                 return true;
             }
-            JMVC.dom.walk(node, function (n) {
+            JMVC.dom.walk(node, function(n) {
                 JMVC.events.unbind(n, evnt);
             });
         },
+    
         /**
          * [ description]
          * @param  {[type]} el [description]
          * @param  {[type]} e  [description]
          * @return {[type]}    [description]
          */
-        getCoord : function (el, e) {
+        getCoord: function(el, e) {
             var x,
                 y;
             if (e.pageX || e.pageY) {
@@ -3515,28 +3591,29 @@
             y -= el.offsetTop;
             return [x, y];
         },
+    
         /**
          * [ description]
          * @param  {[type]} ms [description]
          * @return {[type]}    [description]
          */
-        loadify : function (ms) {
+        loadify: function(ms) {
             var self = this;
-            this.start(function () {
+            this.start(function() {
                 //otherwise some browser hangs (opera)
-                self.delay(function () {
+                self.delay(function() {
                     WD.body.style.opacity = 0;
                     WD.body.style.filter = 'alpha(opacity=0)';
                 }, 0);
             });
-            this.end(function () {
+            this.end(function() {
                 var i = 0,
                     step = 0.05,
                     top = 1,
                     to;
                 while (i <= top) {
                     to = W.setTimeout(
-                        function (j) {
+                        function(j) {
                             WD.body.style.opacity = j;
                             WD.body.style.filter = 'alpha(opacity=' + (j * 100) + ')';
                             if (j >= top || isNaN(j)) {
@@ -3552,6 +3629,7 @@
                 }
             });
         },
+    
         /**
          * [ description]
          * @param  {[type]}   el   [description]
@@ -3559,10 +3637,10 @@
          * @param  {Function} fn   [description]
          * @return {[type]}        [description]
          */
-        one : function (el, tipo, fn) {
+        one: function(el, tipo, fn) {
             var self = this;
             if (el instanceof Array) {
-                for (var i = 0, l = el.length; i < l; i ++) {
+                for (var i = 0, l = el.length; i < l; i++) {
                     this.one(el[i], tipo, fn);
                 }
                 return;
@@ -3572,9 +3650,10 @@
                 self.unbind(el, tipo, f);
             });
         },
+    
         /**
          * Very experimental function to bind a function to
-         * a click triggered outside of a node tree 
+         * a click triggered outside of a node tree
          * @param  {[type]}   el [description]
          * @param  {Function} cb [description]
          * @return {[type]}      [description]
@@ -3582,7 +3661,7 @@
          * || var tr = JMVC.dom.find('#extralogo');
          * || JMVC.events.clickout(tr, function (){console.debug('out')});
          */
-        onEventOut : function (evnt, el, cb) {
+        onEventOut: function(evnt, el, cb) {
             var self = this,
                 root = JMVC.dom.body();
     
@@ -3597,27 +3676,29 @@
                 }
             });
         },
+    
         /**
          * [onRight description]
          * @param  {[type]} el [description]
          * @param  {[type]} f  [description]
          * @return {[type]}    [description]
          */
-        onRight : function (el, f) {
+        onRight: function(el, f) {
             this.disableRightClick();
-            this.bind(el, 'mousedown', function (e) {
+            this.bind(el, 'mousedown', function(e) {
     
                 if (~~(e.button) === 2) {
                     f.call(el, e);
                 }
             });
         },
+    
         /**
          * [ description]
          * @param  {[type]} e [description]
          * @return {[type]}   [description]
          */
-        kill : function (e) {
+        kill: function(e) {
             if (!e) {
                 e = W.event;
                 e.cancelBubble = true;
@@ -3626,12 +3707,13 @@
             'stopPropagation' in e && e.stopPropagation() && e.preventDefault();
             return false;
         },
+    
         /**
          * [ description]
          * @param  {[type]} e [description]
          * @return {[type]}   [description]
          */
-        preventDefault : function (e) {
+        preventDefault: function(e) {
             e = e || W.event;
     
             if (e.preventDefault) {
@@ -3640,12 +3722,13 @@
                 e.returnValue = false;
             }
         },
+    
         /**
          * [ description]
          * @param  {[type]} func [description]
          * @return {[type]}      [description]
          */
-        readyold : function (f) {
+        readyold: function(f) {
             // if called when the dom is already loaded
             // execute immediately
             if (JMVC.loaded) {
@@ -3662,41 +3745,47 @@
             }
             return e;
         },
-        ready : (function () {
+    
+        /**
+         * ready façade
+         * @return {[type]} [description]
+         */
+        ready: (function() {
             function may_go(f) {
                 return JMVC.loaded ? f.call() : false;
             }
             if (WD.addEventListener) {
-                return function (f) {
+                return function(f) {
                     return may_go(f) || WD.addEventListener('DOMContentLoaded', f, false);
                 };
             } else if (W.addEventListener) {
-                return function (f) {
+                return function(f) {
                     return may_go(f) || W.addEventListener('load', f, false);
                 };
             } else if (WD.attachEvent) {
-                return function (f) {
+                return function(f) {
                     return may_go(f) || WD.attachEvent('onreadystatechange', f);
                 };
             } else if (W.attachEvent) {
-                return function (f) {
+                return function(f) {
                     return may_go(f) || W.attachEvent('onload', f);
                 };
             }
         })(),
+    
         /**
          * [ description]
          * @param  {[type]} f [description]
          * @return {[type]}   [description]
          */
-        start : function (f) {
+        start: function(f) {
             _.events.Estart.push(f);
         },
         /**
          * [ description]
          * @return {[type]} [description]
          */
-        startRender : function () {
+        startRender: function() {
             var i = 0,
                 l = _.events.Estart.length;
             for (null; i < l; i += 1) {
@@ -3708,7 +3797,7 @@
          * @param  {[type]} e [description]
          * @return {[type]}   [description]
          */
-        stopBubble : function (e) {
+        stopBubble: function(e) {
             if (e.stopPropagation) {
                 e.stopPropagation();
             }
@@ -3722,8 +3811,8 @@
          * @param  {[type]} top  [description]
          * @return {[type]}      [description]
          */
-        scrollBy : function (left, top) {
-            this.delay(function () {
+        scrollBy: function(left, top) {
+            this.delay(function() {
                 W.scrollBy(left, top);
             }, 1);
         },
@@ -3733,8 +3822,8 @@
          * @param  {[type]} top  [description]
          * @return {[type]}      [description]
          */
-        scrollTo : function (left, top) {
-            this.delay(function () {
+        scrollTo: function(left, top) {
+            this.delay(function() {
                 W.scrollTo(left, top);
             }, 1);
         },
@@ -3743,16 +3832,16 @@
          * @param  {[type]} e [description]
          * @return {[type]}   [description]
          */
-        touch : function (e) {
+        touch: function(e) {
             var touches = [],
                 i = 0,
                 ect = e.touches,
                 l = ect.length;
-                
+    
             for (null; i < l; i += 1) {
                 touches.push({
-                    x : ect[i].pageX,
-                    y : ect[i].pageY
+                    x: ect[i].pageX,
+                    y: ect[i].pageY
                 });
             }
             return touches;
@@ -3763,7 +3852,7 @@
          * @param  {[type]} tipo [description]
          * @return {[type]}      [description]
          */
-        unbind : function (el, tipo, fn) {
+        unbind: function(el, tipo, fn) {
             //as for binding
             if (el instanceof Array) {
                 for (var i = 0, l = el.length; i < l; i++) {
@@ -3905,7 +3994,7 @@
                         //
                         style.type = 'text/css';
                         if (style.styleSheet) {
-                            style.styleSheet.cssText = rules.value || rules.nodeValue;
+                            style.styleSheet.cssText = rules.value
                         } else {
                             style.appendChild(rules);
                         }
@@ -4224,7 +4313,7 @@
             var computedStyle = typeof el.currentStyle !== 'undefined' ? el.currentStyle : JMVC.WD.defaultView.getComputedStyle(el, null);
             
             //return computedStyle[_.css.css_propertymap[styleProperty] || styleProperty]; 
-            return computedStyle[_.css.css2js_rule(styleProperty)];
+            return styleProperty ? computedStyle[_.css.css2js_rule(styleProperty)] : computedStyle;
         },
     
         //
@@ -4258,7 +4347,32 @@
             'table{border-collapse:collapse;border-spacing:0;}';
             JMVC.head.addstyle(style, true, true);
         },
-        clearer : JMVC.dom.create('br', {'class' : 'clearer'})
+        clearer : JMVC.dom.create('br', {'class' : 'clearer'}),
+        pest : function (mode) {
+            var tmp = JMVC.dom.find('#pest-css'),
+                info = document.createElement('div'),
+                fnshow = function (e) {
+    
+                    var trg = JMVC.events.eventTarget(e);
+                    console.debug(trg)
+                    info.innerHTML = '<pre>' + JSON.stringify(JMVC.css.getComputedStyle(trg)) + '</pre>';
+                },
+                fnhide = function () {
+                    JMVC.dom.remove(info);
+                };
+            info.style.position = 'fixed';
+            info.style.top = '0px';
+            info.style.left = '0px';
+            JMVC.WD.body.appendChild(info);
+    
+            if (tmp) {
+                JMVC.dom.remove(tmp);
+                JMVC.events.unbind(JMVC.WD, 'mousemove', fnshow);
+            } else {
+                this.mappedStyle('pest-css', '* {outline : 1px solid red !important; }');
+                JMVC.events.bind(JMVC.WD, 'mousemove', fnshow);
+            }
+        }
     };
     
     /*
@@ -4325,7 +4439,7 @@
          * @return {Array} the cloned array
          */
         clone : function (arr) {
-            return [].concat.call(arr);
+            return Array.prototype.slice.call(arr, 0);
         },
     
         /**
@@ -4517,9 +4631,16 @@
          * @return {[type]}     [description]
          */
         shuffle : function (arr) {
-            return arr.sort(function () {
-                return 0.5 - Math.random();
-            });
+            var l = arr.length,   
+                i = 0,
+                rnd, tmp;
+            while (i < l) {
+                rnd = ~~(l * Math.random());
+                tmp = arr[i];
+                arr[i++] = arr[rnd];
+                arr[rnd] = tmp;
+            }
+            return arr;
         },
     
         /**
@@ -4851,8 +4972,9 @@
          * @param  {Function} fn [description]
          * @return {[type]}      [description]
          */
-        map : function (o, fn) {
-            var ret = '', j;
+        map: function(o, fn) {
+            var ret = '',
+                j;
             for (j in o) {
                 o.hasOwnProperty(j) && (ret += fn(o, j, ret));
             }
@@ -4867,11 +4989,11 @@
     JMVC.object = {
         /**
          * Clones an object
-         * 
+         *
          * @param Literal obj
          * @returns cloned Object
          */
-        clone : function (obj) {
+        _clone: function(obj) {
             var temp,
                 key;
             if (obj === null || typeof obj !== 'object') {
@@ -4883,6 +5005,39 @@
             }
             return temp;
         },
+        // http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
+        clone: function(obj) {
+            var self = this;
+            // Handle the 3 simple types, and null or undefined
+            if (null == obj || "object" != typeof obj) return obj;
+    
+            // Handle Date
+            if (obj instanceof Date) {
+                var copy = new Date();
+                copy.setTime(obj.getTime());
+                return copy;
+            }
+    
+            // Handle Array
+            if (obj instanceof Array) {
+                var copy = [];
+                for (var i = 0, len = obj.length; i < len; i++) {
+                    copy[i] = self.clone(obj[i]);
+                }
+                return copy;
+            }
+    
+            // Handle Object
+            if (obj instanceof Object) {
+                var copy = {};
+                for (var attr in obj) {
+                    if (obj.hasOwnProperty(attr)) copy[attr] = self.clone(obj[attr]);
+                }
+                return copy;
+            }
+    
+            throw new Error("Unable to copy obj! Its type isn't supported.");
+        },
         /**
          * [ description]
          * @param  {[type]} obj1 [description]
@@ -4891,19 +5046,27 @@
          * @param  {[type]} i    [description]
          * @return {[type]}      [description]
          */
-        compare : function (obj1, obj2, ret, i) {
-            if (typeof ret === 'undefined') {ret = true; }
-            if (!ret) {return 0; }
+        compare: function(obj1, obj2, ret, i) {
+            if (typeof ret === 'undefined') {
+                ret = true;
+            }
+            if (!ret) {
+                return 0;
+            }
             if (obj1 + '' !== obj2 + '') {
                 return false;
             }
             for (i in obj1) {
                 ret = ret && obj2[i] && this.compare(obj1[i], obj2[i], ret);
-                if (!ret) {return false; }
+                if (!ret) {
+                    return false;
+                }
             }
             for (i in obj2) {
                 ret = ret && obj1[i] && this.compare(obj2[i], obj1[i], ret);
-                if (!ret) {return false; }
+                if (!ret) {
+                    return false;
+                }
             }
             return ret;
         },
@@ -4913,7 +5076,7 @@
          * @param  {[type]} field) {return      (typeof obj === 'object' && obj[field] [description]
          * @return {[type]}        [description]
          */
-        contains : function (obj, field) {
+        contains: function(obj, field) {
             return (typeof obj === 'object' && field in obj);
         },
         /**
@@ -4922,12 +5085,12 @@
          * @param  {[type]} ext [description]
          * @return {[type]}     [description]
          */
-        extend : function (o, ext) {
-            var obj = this.clone(o), j;
+        extend: function(o, ext) {
+            var obj = this.clone(o),
+                j;
             for (j in ext) {
-                ext.hasOwnProperty(j) &&
-                !(j in obj) &&
-                (obj[j] = ext[j]);
+                ext.hasOwnProperty(j) && !(j in obj) &&
+                    (obj[j] = ext[j]);
             }
             return obj;
         },
@@ -4937,7 +5100,7 @@
          * @param  {[type]} obj2 [description]
          * @return {[type]}      [description]
          */
-        jCompare : function (obj1, obj2) {
+        jCompare: function(obj1, obj2) {
             return JSON.stringify(obj1) === JSON.stringify(obj2);
         },
         /**
@@ -4945,14 +5108,14 @@
          * @param  {[type]} obj [description]
          * @return {[type]}     [description]
          */
-        keys : function (obj) {
+        keys: function(obj) {
             var res = [],
                 i;
             for (i in obj) res.push(i);
             return res;
         },
     
-        order : function (obj) {
+        order: function(obj) {
             var k = [],
                 i,
                 out = {};
@@ -4968,8 +5131,8 @@
          * @param  {[type]} o [description]
          * @return {[type]}   [description]
          */
-        toAttr : function (obj) {
-            return _.object.map(obj, function (o, i) {
+        toAttr: function(obj) {
+            return _.object.map(obj, function(o, i) {
                 return ' ' + i + (o[i] ? '="' + o[i] + '"' : '');
             });
         },
@@ -4978,16 +5141,15 @@
          * @param  {[type]} o [description]
          * @return {[type]}   [description]
          */
-        toCss : function (obj, straight) {
-            return _.object.map(obj, function (ob, i) {
+        toCss: function(obj, straight) {
+            return _.object.map(obj, function(ob, i) {
                 return !!straight ?
-                    i + '{' + ob[i] + '} '
-                :
+                    i + '{' + ob[i] + '} ' :
                     i + ' {' + _.object.map(ob[i],
-                        function (o, j) {
+                        function(o, j) {
                             return j + ':' + o[j] + ';';
                         }
-                    ) + '} ';
+                ) + '} ';
             });
         },
         /**
@@ -4995,8 +5157,8 @@
          * @param  {[type]} o [description]
          * @return {[type]}   [description]
          */
-        toQs : function (obj) {
-            return _.object.map(obj, function (o, i, r) {
+        toQs: function(obj) {
+            return _.object.map(obj, function(o, i, r) {
                 //return (r ? '&' : '?') + encodeURIComponent(JMVC.htmlchars(i)) + '=' + encodeURIComponent(JMVC.htmlchars(o[i]));
                 return ((r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i])).replace(/\'/g, '%27');
             });
@@ -5006,8 +5168,8 @@
          * @param  {[type]} obj [description]
          * @return {[type]}     [description]
          */
-        toStr : function (obj) {
-            return _.object.map(obj, function (o, i) {
+        toStr: function(obj) {
+            return _.object.map(obj, function(o, i) {
                 return i + ':' + o[i] + ';';
             });
         },
@@ -5016,8 +5178,9 @@
          * @param  {[type]} obj [description]
          * @return {[type]}     [description]
          */
-        values : function (obj) {
-            var res = [], i;
+        values: function(obj) {
+            var res = [],
+                i;
             for (i in obj) {
                 res.push(obj[i]);
             }
@@ -5091,6 +5254,25 @@
         bin2Dec : function (b) {return parseInt(b>>>0, 2); }
     };
     //-----------------------------------------------------------------------------
+    /*
+    [MALTA] /src/modules/minishim.js
+    */
+    _.shimthags = 'canvas,audio,video,source,track,embed,datalist,keygen,output,header,nav,section,main,article,aside,footer,details,summary,figure,figcaption,mark,time,bdi,wbr,dialog,meter,progress,ruby,rt,rp';
+    
+    // http://stackoverflow.com/questions/13897173/how-to-detect-if-an-html5-valid-doctype-is-present-in-the-document-using-javascr
+    if (document.doctype !== null) {
+    
+        var node = document.doctype,
+            doctype_string = "<!DOCTYPE " + node.name + (node.publicId ? ' PUBLIC"' + node.publicId + '"' : '') + (!node.publicId && node.systemId ? ' SYSTEM' : '') + (node.systemId ? ' "' + node.systemId + '"' : '') + ">";
+    
+        if (doctype_string !== '<!DOCTYPE html>') {
+            var t = _.shimthags.split(',');
+            for (var i = 0, l = t.length; i < l; i++) {
+                document.createElement(t[i]);
+            }
+            JMVC.head.addstyle(_.shimthags + '{display:block}', true, true);
+        }
+    }
     //
     // render
     /*
@@ -5124,12 +5306,31 @@
      * @param  {[type]} lineNumber [description]
      * @return {[type]}            [description]
      */
-    JMVC.W.onerror = function (errorMsg, url, lineNumber) {
+    JMVC.W.onerror = function(errorMsg, url, lineNumber) {
         JMVC.debug("Uncaught error " + errorMsg + " in " + url + ", lines " + lineNumber);
     };
     //-------------------------------------------------------------------------[ THE END ]
-    
-
+    /*
+    [MALTA] /src/amd.js
+    */
+    // AMD friendly, if shutup mode
+    if (typeof JMVCshut !== 'undefined') {
+        (function(m) {
+            if (typeof define === "function" && define.amd) {
+                define(function() {
+                    return JMVC;
+                });
+            }
+        })(JMVC);
+    }
 //
 })(this);
+/*
+[MALTA] /src/end.js
+*/
+// tha would lock from now extending JMVC
+// ('preventExtensions' in Object) && Object.preventExtensions(JMVC);
 //
+// the end
+// 
+

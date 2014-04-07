@@ -2,7 +2,7 @@ $$src/head.js$$
 //
 //
 (function (W) {
-    // 
+    //
     // one for all the build
     'use strict';
     //
@@ -12,7 +12,7 @@ $$src/head.js$$
         WDL = WD.location,
         //
         // this function returns the JMVC object, globalized, after doing some stuff
-        // @return {object literal} $JMVC inner object 
+        // @return {object literal} $JMVC inner object
         JMVC = W.JMVC = (function () {
             $$src/core/init.js$$
             $$src/core/innerjmvc.js$$
@@ -50,11 +50,13 @@ $$src/head.js$$
     $$src/modules/object.js$$
     $$src/modules/match.js$$
     $$src/modules/num.js$$
+    $$src/modules/minishim.js$$
     //
     // render
     $$src/core/render.js$$
     $$src/foot.js$$
-
+    $$src/amd.js$$
 //
 })(this);
-//
+$$src/end.js$$
+
