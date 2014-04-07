@@ -49,7 +49,7 @@ JMVC.widget.Accordion.prototype.render = function (container, open_index, rem) {
 	
 	for(i = 0, len = this.els.length, li = false; i < len; i += 1) {
 		li = JMVC.dom.add(ul, 'li', {'class' : 'accordionElement ' + this.theme});
-		attrs = {'class' : 'content ' + this.theme, 'style':'minHeight:' + this.height + 'px'};
+		attrs = {'class' : 'content ' + this.theme/*, 'style':'minHeight:' + this.height + 'px'*/};
 		
 		if (i !== open_index) {
 			attrs.style = 'display:none';
