@@ -12,8 +12,9 @@ _.object = {
      * @param  {Function} fn [description]
      * @return {[type]}      [description]
      */
-    map : function (o, fn) {
-        var ret = '', j;
+    map: function(o, fn) {
+        var ret = '',
+            j;
         for (j in o) {
             o.hasOwnProperty(j) && (ret += fn(o, j, ret));
         }
@@ -28,11 +29,11 @@ _.object = {
 JMVC.object = {
     /**
      * Clones an object
-     * 
+     *
      * @param Literal obj
      * @returns cloned Object
      */
-    clone : function (obj) {
+    _clone: function(obj) {
         var temp,
             key;
         if (obj === null || typeof obj !== 'object') {
@@ -44,6 +45,39 @@ JMVC.object = {
         }
         return temp;
     },
+    // http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
+    clone: function(obj) {
+        var self = this;
+        // Handle the 3 simple types, and null or undefined
+        if (null == obj || "object" != typeof obj) return obj;
+
+        // Handle Date
+        if (obj instanceof Date) {
+            var copy = new Date();
+            copy.setTime(obj.getTime());
+            return copy;
+        }
+
+        // Handle Array
+        if (obj instanceof Array) {
+            var copy = [];
+            for (var i = 0, len = obj.length; i < len; i++) {
+                copy[i] = self.clone(obj[i]);
+            }
+            return copy;
+        }
+
+        // Handle Object
+        if (obj instanceof Object) {
+            var copy = {};
+            for (var attr in obj) {
+                if (obj.hasOwnProperty(attr)) copy[attr] = self.clone(obj[attr]);
+            }
+            return copy;
+        }
+
+        throw new Error("Unable to copy obj! Its type isn't supported.");
+    },
     /**
      * [ description]
      * @param  {[type]} obj1 [description]
@@ -52,19 +86,27 @@ JMVC.object = {
      * @param  {[type]} i    [description]
      * @return {[type]}      [description]
      */
-    compare : function (obj1, obj2, ret, i) {
-        if (typeof ret === 'undefined') {ret = true; }
-        if (!ret) {return 0; }
+    compare: function(obj1, obj2, ret, i) {
+        if (typeof ret === 'undefined') {
+            ret = true;
+        }
+        if (!ret) {
+            return 0;
+        }
         if (obj1 + '' !== obj2 + '') {
             return false;
         }
         for (i in obj1) {
             ret = ret && obj2[i] && this.compare(obj1[i], obj2[i], ret);
-            if (!ret) {return false; }
+            if (!ret) {
+                return false;
+            }
         }
         for (i in obj2) {
             ret = ret && obj1[i] && this.compare(obj2[i], obj1[i], ret);
-            if (!ret) {return false; }
+            if (!ret) {
+                return false;
+            }
         }
         return ret;
     },
@@ -74,7 +116,7 @@ JMVC.object = {
      * @param  {[type]} field) {return      (typeof obj === 'object' && obj[field] [description]
      * @return {[type]}        [description]
      */
-    contains : function (obj, field) {
+    contains: function(obj, field) {
         return (typeof obj === 'object' && field in obj);
     },
     /**
@@ -83,12 +125,12 @@ JMVC.object = {
      * @param  {[type]} ext [description]
      * @return {[type]}     [description]
      */
-    extend : function (o, ext) {
-        var obj = this.clone(o), j;
+    extend: function(o, ext) {
+        var obj = this.clone(o),
+            j;
         for (j in ext) {
-            ext.hasOwnProperty(j) &&
-            !(j in obj) &&
-            (obj[j] = ext[j]);
+            ext.hasOwnProperty(j) && !(j in obj) &&
+                (obj[j] = ext[j]);
         }
         return obj;
     },
@@ -98,7 +140,7 @@ JMVC.object = {
      * @param  {[type]} obj2 [description]
      * @return {[type]}      [description]
      */
-    jCompare : function (obj1, obj2) {
+    jCompare: function(obj1, obj2) {
         return JSON.stringify(obj1) === JSON.stringify(obj2);
     },
     /**
@@ -106,14 +148,14 @@ JMVC.object = {
      * @param  {[type]} obj [description]
      * @return {[type]}     [description]
      */
-    keys : function (obj) {
+    keys: function(obj) {
         var res = [],
             i;
         for (i in obj) res.push(i);
         return res;
     },
 
-    order : function (obj) {
+    order: function(obj) {
         var k = [],
             i,
             out = {};
@@ -129,8 +171,8 @@ JMVC.object = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    toAttr : function (obj) {
-        return _.object.map(obj, function (o, i) {
+    toAttr: function(obj) {
+        return _.object.map(obj, function(o, i) {
             return ' ' + i + (o[i] ? '="' + o[i] + '"' : '');
         });
     },
@@ -139,16 +181,15 @@ JMVC.object = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    toCss : function (obj, straight) {
-        return _.object.map(obj, function (ob, i) {
+    toCss: function(obj, straight) {
+        return _.object.map(obj, function(ob, i) {
             return !!straight ?
-                i + '{' + ob[i] + '} '
-            :
+                i + '{' + ob[i] + '} ' :
                 i + ' {' + _.object.map(ob[i],
-                    function (o, j) {
+                    function(o, j) {
                         return j + ':' + o[j] + ';';
                     }
-                ) + '} ';
+            ) + '} ';
         });
     },
     /**
@@ -156,8 +197,8 @@ JMVC.object = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    toQs : function (obj) {
-        return _.object.map(obj, function (o, i, r) {
+    toQs: function(obj) {
+        return _.object.map(obj, function(o, i, r) {
             //return (r ? '&' : '?') + encodeURIComponent(JMVC.htmlchars(i)) + '=' + encodeURIComponent(JMVC.htmlchars(o[i]));
             return ((r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i])).replace(/\'/g, '%27');
         });
@@ -167,8 +208,8 @@ JMVC.object = {
      * @param  {[type]} obj [description]
      * @return {[type]}     [description]
      */
-    toStr : function (obj) {
-        return _.object.map(obj, function (o, i) {
+    toStr: function(obj) {
+        return _.object.map(obj, function(o, i) {
             return i + ':' + o[i] + ';';
         });
     },
@@ -177,8 +218,9 @@ JMVC.object = {
      * @param  {[type]} obj [description]
      * @return {[type]}     [description]
      */
-    values : function (obj) {
-        var res = [], i;
+    values: function(obj) {
+        var res = [],
+            i;
         for (i in obj) {
             res.push(obj[i]);
         }
