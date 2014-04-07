@@ -40,7 +40,8 @@ JMVC.extend('bucket', {
 			},
 			shuffle : function (t) {
 				if (t) while (t--) this.shuffle();
-				this.arr.sort(function (a, b) {return .5 - Math.random(); });
+				this.arr = JMVC.array.shuffle(this.arr);
+				//this.arr.sort(function (a, b) {return .5 - Math.random(); });
 			},
 			size : function () {return this.l; },
 			unfill : function (n) {
