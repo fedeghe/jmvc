@@ -1,0 +1,16 @@
++-----+
+| SRV |
++-----+
+listTables ([idTable])
+listPlayers ([idPlayer])
+listMatches ([idMatch])
+startMatch (idTable, idPlayer)
+*addTable
+*removeTable
+*restart
+
++-----+
+| CLI |
++-----+
+listTables ([idTable])
+listTablePlayers (idTable)

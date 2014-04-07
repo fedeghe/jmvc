@@ -1,0 +1,17 @@
+core
+core/sniffer
+core/screen
+core/form
+core/form/validation
+core/xmlparser
+core/widget
+
+
+lib
+    
+
+obj
+    
+
+vendors
+    
