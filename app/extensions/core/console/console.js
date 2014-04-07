@@ -103,25 +103,29 @@ JMVC.extend('console', {
 								"float":"left",
 								"html":"GET URL",
 								"attrs" : {"id":"get-url"},
-								"class" : "round4"
+								"class" : "round4",
+								"style" : {"height":"20px", "line-height":"20px", "padding":"0px 5px"}
 							},{
 								"tag":"button",
 								"float":"left",
 								"html":"FullScreen",
 								"attrs" : {"id":"go-fs"},
-								"class" : "round4"
+								"class" : "round4",
+								"style" : {"height":"20px", "line-height":"20px", "padding":"0px 5px"}
 							},{
 								"tag":"button",
 								"float":"left",
 								"html":"Reset",
 								"attrs" : {"id":"reset"},
-								"class" : "round4"
+								"class" : "round4",
+								"style" : {"height":"20px", "line-height":"20px", "padding":"0px 5px"}
 							},{
 								"tag":"button",
 								"float":"left",
 								"html":"Reset All",
 								"attrs" : {"id":"resetall"},
-								"class" : "round4"
+								"class" : "round4",
+								"style" : {"height":"20px", "line-height":"20px", "padding":"0px 5px"}
 							},
 
 							////////////////////////////////////////

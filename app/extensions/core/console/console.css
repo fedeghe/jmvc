@@ -21,7 +21,7 @@
 	margin-left:15px;
 	/*border-bottom:1px solid #ffffff;*/
 	color:#ddd;
-	text-decoration:none;
+	text-left-decoration:#white
 }
 #jmvc-console .console-head a.ablock div.text{
 	padding:0px 10px;
@@ -45,6 +45,10 @@
 	color:#0f0;
 	background-color: #808080;
 	height:35px;
+	
+	border-top: 1px solid #ccc;
+	border-left: 1px solid #fff;
+	border-right: 1px solid #999;
 	border-bottom:1px solid #808080;
 }
 #jmvc-console .console-head .ablock.active,
@@ -53,7 +57,7 @@
 	cursor:default;
 }
 div.input-divs{
-	border-top:1px solid white;
+	border-top:1px solid #ccc;
 }
 div.input-divs>div{
 	display:none;
@@ -67,9 +71,9 @@ div.input-divs div textarea{
 	color:white;
 	background-color: black;
 	resize:none;
-	line-height:18px;
+	line-height:20px;
 	font-size:14px;
-	padding-left:5px;
+	padding:15px;
 	width:99%;
 	-moz-tab-size:4;
 	-o-tab-size:4;
