@@ -1,7 +1,11 @@
 JMVC.controllers.wcave = function () {
+
 	'use strict';
+
 	this.action_index = function () {
-		JMVC.require('games/wcave/wcave', 'core/screen/screen');
+
+		JMVC.require('games/wcave/wcave');
+
 		JMVC.events.loadify(500);
 		var v = JMVC.getView('vacuum'),
 			containerID = 'container';
