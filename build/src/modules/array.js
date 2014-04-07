@@ -26,7 +26,7 @@ JMVC.array = {
      * @return {Array} the cloned array
      */
     clone : function (arr) {
-        return [].concat.call(arr);
+        return Array.prototype.slice.call(arr, 0);
     },
 
     /**
@@ -218,9 +218,16 @@ JMVC.array = {
      * @return {[type]}     [description]
      */
     shuffle : function (arr) {
-        return arr.sort(function () {
-            return 0.5 - Math.random();
-        });
+        var l = arr.length,   
+            i = 0,
+            rnd, tmp;
+        while (i < l) {
+            rnd = ~~(l * Math.random());
+            tmp = arr[i];
+            arr[i++] = arr[rnd];
+            arr[rnd] = tmp;
+        }
+        return arr;
     },
 
     /**
