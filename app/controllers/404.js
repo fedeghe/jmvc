@@ -1,3 +1,5 @@
+JMVC.require('core/color/color', 'core/dim/dim');
+
 JMVC.controllers['404'] = function () {
 	'use strict';
 	this.action_msg = function () {
@@ -28,7 +30,60 @@ JMVC.controllers['404'] = function () {
 		JMVC.head.addstyle([JMVC.vars.baseurl, 'media', 'css', 'core', 'jmvc.css'].join(JMVC.US));
 		JMVC.events.delay(function () {JMVC.head.goto(); }, seconds2redirection * 1000);
 		
-		V404.set(data).render();
+		// meant to be passed at the view render
+		function bubble(){
+
+			//<canvas id="cnv" width="" height="" style=""></canvas>
+			var cnv = JMVC.dom.create('canvas'),
+				dim = JMVC.dim.getViewportSize(),
+				mainContext = cnv.getContext('2d'),
+				canvasWidth = dim.width,
+				canvasHeight = dim.height,
+				angle = 0,
+				requestAnimationFrame = window.requestAnimationFrame ||
+					window.mozRequestAnimationFrame ||
+					window.webkitRequestAnimationFrame ||
+					window.msRequestAnimationFrame;
+
+			JMVC.dom.attr(cnv, {width : canvasWidth + 'px', height : canvasHeight + 'px'});
+			JMVC.css.style(cnv, {
+				opacity: 0.1,
+				position : 'absolute',
+				top: 0,
+				left: 0,
+				zIndex : -1
+			});
+
+			JMVC.dom.append(JMVC.dom.find('#err404'), cnv);		
+
+			function getRndPoint() {
+				return {
+					x : ~~(Math.random() * canvasWidth),
+					y : ~~(Math.random() * canvasHeight),
+					radius : ~~(200 * Math.random())
+				}
+			}
+
+			mainContext.clearRect(0, 0, canvasWidth, canvasHeight);
+			mainContext.fillStyle = "#fff";
+			mainContext.fillRect(0, 0, canvasWidth, canvasHeight);
+
+			function drawCircle() {
+			    var point = getRndPoint();
+
+			    mainContext.beginPath();
+			    mainContext.arc(point.x, point.y, point.radius, 0, Math.PI * 2, false);
+			    mainContext.closePath();
+			     
+			    mainContext.fillStyle = JMVC.core.color.getRandomColor();
+			    mainContext.fill();
+			    requestAnimationFrame(drawCircle);
+			}
+			drawCircle();
+		}
+
+
+		V404.set(data).render(bubble);
 	};
 	
 };
