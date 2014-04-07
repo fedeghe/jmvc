@@ -117,14 +117,14 @@ JMVC.extend('tabs', {
 
 				
 					//fix content height
-					JMVC.tabs.fixheight();
+					//JMVC.tabs.fixheight();
 
 
 				});
 			}
 			
 
-			JMVC.tabs.fixheight();
+			//JMVC.tabs.fixheight();
 			return ids2return;
 		};
 		
@@ -132,6 +132,7 @@ JMVC.extend('tabs', {
 	fixheight : function () {
 		
 		var tc = JMVC.dom.find('.tabcontainer_v');
+
 	
 		JMVC.each(tc, function (el, i) {
 			var ulid = JMVC.dom.attr(el, 'data-ul'),

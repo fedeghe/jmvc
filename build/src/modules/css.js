@@ -206,7 +206,6 @@ JMVC.css = {
             fnshow = function (e) {
 
                 var trg = JMVC.events.eventTarget(e);
-                console.debug(trg)
                 info.innerHTML = '<pre>' + JSON.stringify(JMVC.css.getComputedStyle(trg)) + '</pre>';
             },
             fnhide = function () {
