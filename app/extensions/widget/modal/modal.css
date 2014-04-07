@@ -83,7 +83,9 @@ div.jmvc_modal_content .topbar .jmvc_modal_title{
 
 }
 div.jmvc_modal_content .topbar .jmvc_modal_close,
-div.jmvc_modal_content .topbar .jmvc_modal_maximize{
+div.jmvc_modal_content .topbar .jmvc_modal_maximize,
+div.jmvc_modal_content .topbar .jmvc_modal_minimize,
+div.jmvc_modal_content .topbar .jmvc_modal_lowerize{
 	float:right;
 	border:1px solid black;
 	line-height:13px;

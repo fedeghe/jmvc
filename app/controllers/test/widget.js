@@ -48,7 +48,7 @@ JMVC.controllers.widget = function () {
 			JMVC.dom.append(container, butt);
 			JMVC.events.bind(JMVC.dom.find('#openmodal'), 'click', function () {
 				var t = JMVC.dom.create('span', {}, 'Here is some content');
-				JMVC.modal.open(t, 'Modal title', 400, 200, {bgcolor:'#777', shadow : true});
+				JMVC.modal.open(t, {title: 'Modal title', width: 600, height : 400, bgcolor:'#777', shadow : true});
 			});
 			
 			

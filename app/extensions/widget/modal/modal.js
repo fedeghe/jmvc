@@ -4,13 +4,9 @@ JMVC.extend('modal',{
 		//get style
 		JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/widget/modal/modal.css', true);
 	},
-	
 	zi_zero  : 900,
-
 	zIndex : 900,
-
 	count : 0,
-
 	tpl : '<div class="jmvc_modal_content shadow" style="z-index: %zindex%; width: %width%px; height: %height%px; left: %left%px; top: %top%px;">'+
 		'<div class="drag" style="height:%height%px;width:%width%px;left:0px;top:0px">' +
 			'<div class="tl"></div>'+
@@ -72,6 +68,8 @@ JMVC.extend('modal',{
 				title : null,
 				close : null,
 				maximize : null,
+				minimize : null,
+				lowerize : null,
 				content_wrapper : null
 			}
 			// bg,
@@ -95,8 +93,6 @@ JMVC.extend('modal',{
 			'style' : 'z-index:' + bg_zindex + ';width:' + bodysize[0] + 'px;height:' + bodysize[1] + 'px;background-color:' + bgcolor + ';'
 		});
 		
-		
-		
 		JMVC.dom.append(JMVC.dom.body(), dom.bg);
 		
 		
@@ -111,12 +107,16 @@ JMVC.extend('modal',{
 		dom.topbar = JMVC.dom.add(dom.modal, 'div', {'class':'topbar'} );
 		dom.title = JMVC.dom.create('div', {'class':'jmvc_modal_title'}, title);
 		dom.close = JMVC.dom.create('div', {'class':'jmvc_modal_close', 'title':'close'}, 'x');
+
 		dom.maximize = JMVC.dom.create('div', {'class':'jmvc_modal_maximize', 'title':'maximize'}, '&square;');
+		dom.minimize = JMVC.dom.create('div', {'class':'jmvc_modal_minimize', 'title':'minimize'}, '<sub>&square;</sub>');
+		dom.lowerize = JMVC.dom.create('div', {'class':'jmvc_modal_lowerize', 'title':'lowerize'}, '_');
+
 
 		dom.close.el = dom.maximize.el = dom.modal;
 		dom.close.bg = dom.bg;
 		
-		JMVC.dom.append(dom.topbar, [dom.title, dom.close, dom.maximize, JMVC.dom.create('br',{'class':'clearer'})]);
+		JMVC.dom.append(dom.topbar, [dom.title, dom.close, dom.maximize, dom.minimize, dom.lowerize, JMVC.dom.create('br',{'class':'clearer'})]);
 		
 
 		//
