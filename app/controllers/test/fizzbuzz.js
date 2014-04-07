@@ -16,7 +16,7 @@ JMVC.controllers.fizzbuzz = function() {
 
         function fb2(n) {
             var acc = 810092048,
-                aMillion = n || 1E5,
+                top = n || 1E5,
                 number = 1,
                 bitwiseFizzBuzz = function (i) {
                     var c = acc & 3,
@@ -33,7 +33,7 @@ JMVC.controllers.fizzbuzz = function() {
                 },
                 end;
              
-            while (number <= aMillion) {
+            while (number <= top) {
               bitwiseFizzBuzz(number)
               number++;
             }
@@ -54,32 +54,37 @@ JMVC.controllers.fizzbuzz = function() {
 
         this.render(function test(){
             "use strict";
+
+            var JT = JMVC.test;
             
-            JMVC.test.initialize(true);
-            JMVC.test.startAll();
+            JT.initialize(true);
+            JT.startAll();
             
             JMVC.events.loadify(1000);
             
-            JMVC.test.describe('FizzBuzz time comparison');
+            JT.describe('FizzBuzz time comparison');
 
-            JMVC.test.message('First version');
-            JMVC.test.code(fb1.toString());
+            JT.message('First version');
+            JT.code(fb1.toString());
 
-            JMVC.test.message('Fast version');
-            JMVC.test.code(fb2.toString());
+            JT.message('Fast version');
+            JT.code(fb2.toString());
 
-            JMVC.test.message('X version');
-            JMVC.test.code(fb3.toString());
+            JT.message('X version');
+            JT.code(fb3.toString());
 
             var times = 10,
-                top = 1E7;
-            JMVC.test.describe('<h2>Times comparison</h2>here the 2 functions are executed ' + times + ' times with the same input : '+ top);
+                top = 1E5;
+            JT.describe('<h2>Times comparison</h2>here the 2 functions are executed ' + times + ' times with the same input : '+ top);
 
-            JMVC.test.testTime('fb1', fb1, times, [top]);
-            JMVC.test.testTime('fb2', fb2, times, [top]);
-            JMVC.test.testTime('fb3', fb3, times, [top]);
+            JT.testTime('fb1', fb1, times, [top]);
+            JT.testTime('fb2', fb2, times, [top]);
+            JT.testTime('fb3', fb3, times, [top]);
+
+
+            JT.timeSummary('Choose the right one');
             
-            JMVC.test.finishAll();
+            JT.finishAll();
         });
     };
     
