@@ -165,7 +165,7 @@ JMVC.css = {
         var computedStyle = typeof el.currentStyle !== 'undefined' ? el.currentStyle : JMVC.WD.defaultView.getComputedStyle(el, null);
         
         //return computedStyle[_.css.css_propertymap[styleProperty] || styleProperty]; 
-        return computedStyle[_.css.css2js_rule(styleProperty)];
+        return styleProperty ? computedStyle[_.css.css2js_rule(styleProperty)] : computedStyle;
     },
 
     //
@@ -199,7 +199,32 @@ JMVC.css = {
         'table{border-collapse:collapse;border-spacing:0;}';
         JMVC.head.addstyle(style, true, true);
     },
-    clearer : JMVC.dom.create('br', {'class' : 'clearer'})
+    clearer : JMVC.dom.create('br', {'class' : 'clearer'}),
+    pest : function (mode) {
+        var tmp = JMVC.dom.find('#pest-css'),
+            info = document.createElement('div'),
+            fnshow = function (e) {
+
+                var trg = JMVC.events.eventTarget(e);
+                console.debug(trg)
+                info.innerHTML = '<pre>' + JSON.stringify(JMVC.css.getComputedStyle(trg)) + '</pre>';
+            },
+            fnhide = function () {
+                JMVC.dom.remove(info);
+            };
+        info.style.position = 'fixed';
+        info.style.top = '0px';
+        info.style.left = '0px';
+        JMVC.WD.body.appendChild(info);
+
+        if (tmp) {
+            JMVC.dom.remove(tmp);
+            JMVC.events.unbind(JMVC.WD, 'mousemove', fnshow);
+        } else {
+            this.mappedStyle('pest-css', '* {outline : 1px solid red !important; }');
+            JMVC.events.bind(JMVC.WD, 'mousemove', fnshow);
+        }
+    }
 };
 
 /*
