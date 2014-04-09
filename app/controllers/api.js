@@ -84,7 +84,7 @@ JMVC.controllers.api = function () {
 								params += '<label>' + section['function'][i].params.param['@attributes'].name + '</label> : ' + section['function'][i].params.param['#text'] + '<br />';
 							}
 							if (section['function'][i].sample) {
-								sample = '<pre class="code">' + section['function'][i].sample['#text'] + '</pre>';
+								sample = '<pre class="code round6 roundright">' + section['function'][i].sample['#text'] + '</pre>';
 							}
 							
 							func_model.set('testlink', testlink ? '<a target="_blank" class="testLink" href="' + JMVC.vars.baseurl + JMVC.US + testlink + '">test</a>' : false);
@@ -122,7 +122,7 @@ JMVC.controllers.api = function () {
 							params += '<label>' + section['function'].params.param['@attributes'].name + '</label> : ' + section['function'].params.param['#text'] + '<br />';
 						}
 						if (section['function'].sample) {
-							sample = '<pre class="code">' + section['function'].sample['#text'] + '</pre>';
+							sample = '<pre class="code round6 roundright">' + section['function'].sample['#text'] + '</pre>';
 						}
 						
 						func_model.set('testlink', testlink ? '<a target="_blank" class="testLink" href="' + JMVC.vars.baseurl + JMVC.US + testlink + '">test</a>' : false);
