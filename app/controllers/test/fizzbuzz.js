@@ -44,8 +44,9 @@ JMVC.controllers.fizzbuzz = function() {
             var messages = [null, "Fizz", "Buzz", "FizzBuzz"],
                 acc = 810092048, //11 00 00 01 00 10 01 00 00 01 10 00 01 00 00
                 c = 0,
-                result;
-            for (var i=1; i <= n; ++i)  {
+                result,
+                i = 0;
+            for (; i <= n; i++)  {
                 c = acc & 3;
                 result += (c > 0) ? messages[c] : i + ", ";
                 acc = acc >> 2 | c << 28;
@@ -54,7 +55,6 @@ JMVC.controllers.fizzbuzz = function() {
 
         this.render(function test(){
             "use strict";
-
             var JT = JMVC.test;
             
             JT.initialize(true);
@@ -81,11 +81,9 @@ JMVC.controllers.fizzbuzz = function() {
             JT.testTime('fb2', fb2, times, [top]);
             JT.testTime('fb3', fb3, times, [top]);
 
-
-            JT.timeSummary('Choose the right one');
+            JT.timeSummary();
             
             JT.finishAll();
         });
     };
-    
 };
