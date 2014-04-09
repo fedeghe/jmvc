@@ -75,6 +75,7 @@ JMVC.extend('array', {
         a[l - 2] = tmp;
         return a;
     },
+    
     mid2: function(a) {
         var l = a.length,
             i = 0,
@@ -140,26 +141,28 @@ JMVC.extend('array', {
             n = array.length,
             i;
 
-        while (n) {
+        while (n--) {
             i = Math.floor(Math.random() * array.length);
             if (i in array) {
                 copy.push(array.splice(i, 1)[0]);;
-                n--;
             }
         }
-        return copy;},
+        return copy;
+    },
+
     shuffleX2: function(array) {
         var copy = [],
             n = array.length,
             i;
-        while (n) {
+        while (n--) {
             i = Math.floor(Math.random() * array.length);
             if (i in array) {
                 copy.push(array.splice(i, 1)[0]);
-                n--;
             }
         }
-        return copy;},
+        return copy;
+    },
+
     shuffleX3: function(array) {
         var copy = [],
             n = array.length,
