@@ -20,7 +20,7 @@ JMVC.canvas.Editor = function (options) {
      * check if a node is passed as options, it is necessay
      * too see where to rendere the editor
      */
-    if (!options.hasOwnProperty('node')) {
+    if (!('node' in options)) {
         throw new Error('A node is needed to create a Editor in it');
         return false;
     }
@@ -80,6 +80,7 @@ JMVC.canvas.Editor.prototype = {
      */
     init: function () {
         // Basic editor style
+        // 
         JMVC.head.addstyle(this.basepath + 'css/editor.css', true);
         JMVC.head.addstyle(this.basepath + 'css/tooltip.css', true);
         JMVC.head.addstyle(this.basepath + 'css/' + this.config.sprite, true);  
@@ -94,6 +95,7 @@ JMVC.canvas.Editor.prototype = {
         JMVC.events.disableRightClick();
 
         // chain
+        // 
         return this;
     },
     render: function () {
@@ -102,10 +104,11 @@ JMVC.canvas.Editor.prototype = {
         this.panelManager.render();
 
         // chain
+        // 
         return this;
     },
     bind : function () {
-        // chain the panel
+        // bind the panel
         // 
         this.panelManager.bind();
 

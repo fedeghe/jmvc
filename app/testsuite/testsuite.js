@@ -531,7 +531,7 @@ JMVC.extend('test', function () {
                     {'class':'timesummary fiveround'},
                     list
                 );
-            title = title || 'Time summary';
+            title = title || 'Times summary';
 
             //order
             this.testimes = this.testimes.sort(function (a, b) {
