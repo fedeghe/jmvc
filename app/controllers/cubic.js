@@ -37,14 +37,14 @@ JMVC.controllers.cubic = function () {
 				E = JMVC.dom.add(JMVC.dom.find('#cellE'), 'div', JMVC.object.extend(baseAttrs, {'style' : 'background-color:#e0e'}), ''),
 				F = JMVC.dom.add(JMVC.dom.find('#cellF'), 'div', JMVC.object.extend(baseAttrs, {'style' : 'background-color:#0ee'}), '');
 
-			JMVC.dom.append(A, [JMVC.border.xbottom(40, 200, 50, 30, '#a00'), JMVC.border.xright(200, 30, 100, 40, '#600')]);
-			JMVC.dom.append(B, [JMVC.border.xbottom(30, 200, -30, -100, '#0a0'), JMVC.border.xleft(200, 30, 70, 30, '#060')]);
+			JMVC.dom.append(A, [JMVC.border.xbottom(40, 200, 100, 40, '#a00'), JMVC.border.xright(200, 40, 100, 40, '#600')]);
+			JMVC.dom.append(B, [JMVC.border.xbottom(40, 200, -40, -100, '#0a0'), JMVC.border.xleft(200, 40, 100, 40, '#060')]);
 
-			JMVC.dom.append(C, [JMVC.border.xright(200, 30, 20, -20, '#00a')]);
-			JMVC.dom.append(D, [JMVC.border.xleft(200, 30, 20, -20, '#aa0')]);
+			JMVC.dom.append(C, [JMVC.border.xright(200, 40, 20, -20, '#00a')]);
+			JMVC.dom.append(D, [JMVC.border.xleft(200, 40, 20, -20, '#aa0')]);
 
-			JMVC.dom.append(E, [JMVC.border.xtop(10, 200, 80, 30, '#a0a'), JMVC.border.xright(200, 30, -10, -70, '#606')]);
-			JMVC.dom.append(F, [JMVC.border.xtop(10, 200, -30, -80, '#0aa'), JMVC.border.xleft(200, 30, -10, -70, '#066')]);
+			JMVC.dom.append(E, [JMVC.border.xtop(40, 200, 100, 40, '#a0a'), JMVC.border.xright(200, 40, -40, -100, '#606')]);
+			JMVC.dom.append(F, [JMVC.border.xtop(40, 200, -40, -100, '#0aa'), JMVC.border.xleft(200, 40, -40, -100, '#066')]);
 			
 			//JMVC.snow.start(JMVC.dom.body());
 		});
