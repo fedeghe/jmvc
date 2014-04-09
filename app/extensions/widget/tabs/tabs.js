@@ -117,14 +117,14 @@ JMVC.extend('tabs', {
 
 				
 					//fix content height
-					//JMVC.tabs.fixheight();
+					JMVC.tabs.fixheight();
 
 
 				});
 			}
 			
 
-			//JMVC.tabs.fixheight();
+			JMVC.events.delay(function () {JMVC.tabs.fixheight(); }, 0);
 			return ids2return;
 		};
 		
@@ -189,7 +189,7 @@ JMVC.extend('tabs', {
 					'ul.tablabels_v li':'display:block; text-align:right;line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;background-color:' + colors.vert.base + ';padding:5px; cursor:pointer;margin-top:5px;left:' + sizes.vert.round + 'px;padding-right:' + 2 * sizes.vert.round + 'px;position:relative;' +
 							'border:solid ' + sizes.vert.border + 'px ' + colors.vert.border + ';-moz-border-radius-topleft: ' + sizes.vert.round + 'px;-moz-border-radius-topright:0px;-moz-border-radius-bottomleft:' + sizes.vert.round + 'px;-moz-border-radius-bottomright:0px;'+
 							'-webkit-border-top-left-radius:' + sizes.vert.round + 'px;-webkit-border-top-right-radius:0px;-webkit-border-bottom-left-radius:' + sizes.vert.round + 'px;-webkit-border-bottom-right-radius:0px;'+
-							'border-top-left-radius:' + sizes.vert.round + 'px;border-top-right-radius:0px;border-bottom-left-radius:' + sizes.vert.round + 'px;border-bottom-right-radius:0px;',
+							'border-top-left-radius:' + sizes.vert.round + 'px;border-top-right-radius:0px;border-bottom-left-radius:' + sizes.vert.round + 'px;border-bottom-right-radius:0px;  border-right:none; left:1px',
 					'ul.tablabels_v li:hover':'color:' + colors.vert.texthover + ';background-color:' + colors.vert.hover + ';',
 					'ul.tablabels_v li.sel':'color:' + colors.vert.textselected + ';border:' + sizes.vert.border + 'px solid ' + colors.vert.border + ';border-right:none; background-color:' + colors.vert.selected + '; z-index:10;position:relative;left:1px',
 					'div.tabcontainer_v' : 'color:' + colors.vert.textcontent +';background-color:' + colors.vert.containerbg +';' + border3 + 'min-height:250px;overflow:hidden; position:relative;line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;border:' + sizes.vert.border + 'px solid ' + colors.vert.border + ';left:-1px;z-index:5; padding:5px;'
