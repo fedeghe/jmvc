@@ -35,7 +35,7 @@ JMVC.extend('border', {
 							'left:0px;top:0px;' +
 							'border-right:' +  -right  + 'px solid transparent;' +
 							'border-bottom:' + brdsize + 'px solid ' + color + ';';
-			break;
+				break;
 			//    /-------/OK
 			case left >= 0 && right >= 0 :
 				left_style = 'width:' + (width / 2 ) + 'px;' +
@@ -47,20 +47,20 @@ JMVC.extend('border', {
 							'top:' + -brdsize + 'px;' +
 							'border-right:' + right + 'px solid transparent;' +
 							'border-top:' + brdsize + 'px solid ' + color + ';';
-			break;
+				break;
 			//    \-------\OK
 			case left <= 0 && right <= 0 :
-				left_style = 'width:' + (width / 2 -right) + 'px;' +
+				left_style = 'width:' + (width / 2 -left) + 'px;' +
 							'left:' + left + 'px;' +
 							'top:0px;' +
 							'border-left:' + -left + 'px solid transparent;' +
 							'border-top:' + brdsize + 'px solid ' + color + ';';
-				right_style = 'width:' + (width / 2 + right) + 'px;' +
+				right_style = 'width:' + (width / 2) + 'px;' +
 							'top:' + -brdsize + 'px;' +
 							'right:0px;' +
 							'border-right:' + -right + 'px solid transparent;' +
 							'border-bottom:' + brdsize + 'px solid ' + color + ';';
-			break;
+				break;
 		}
 
 		dleft = JMVC.dom.create('div', {'style' : left_style, 'class' : 'fleft zerofsize brel'}, '&nbsp;');
@@ -87,19 +87,19 @@ JMVC.extend('border', {
 							'left:0px;top:0px;' +
 							'border-right:' + -right + 'px solid transparent;' +
 							'border-top:' + brdsize + 'px solid ' + color + ';';
-			break;
+				break;
 			//    \-------\
 			case left >= 0 && right >= 0 :
-				left_style = 'width:' + (width / 2 + left) + 'px;' +
+				left_style = 'width:' + (width / 2) + 'px;' +
 							'left:0px;top:0px;' +
 							'border-left:' + left + 'px solid transparent;' +
 							'border-top:' + brdsize + 'px solid ' + color + ';';
-				right_style = 'width:' + (width / 2) + 'px;' +
+				right_style = 'width:' + (width / 2 + right) + 'px;' +
 							'right:' + -right + 'px;' +
 							'top:' + -brdsize + 'px;' +
 							'border-right:' + right + 'px solid transparent;' +
 							'border-bottom:' + brdsize + 'px solid ' + color + ';';
-			break;
+				break;
 			//    /-------/
 			case left <= 0 && right <= 0 :
 				left_style = 'width:' + (width / 2 -left) + 'px;' +
@@ -112,7 +112,7 @@ JMVC.extend('border', {
 							'right:0px;' +
 							'border-right:' + -right + 'px solid transparent;' +
 							'border-top:' + brdsize + 'px solid ' + color + ';';				
-			break;
+				break;
 		}		
 		dleft = JMVC.dom.create('div', {'style':left_style, 'class':'fleft zerofsize brel'}, '&nbsp;');
 		dright = JMVC.dom.create('div', {'style':right_style, 'class':'fright zerofsize brel'}, '&nbsp;');
@@ -143,15 +143,15 @@ JMVC.extend('border', {
 			//		|
 			//		\
 			case top >= 0 && bottom <= 0 :
-				top_style = 'height:'+(height/2 - top)+'px;' +
+				top_style = 'height:'+(height/2)+'px;' +
 							'left:0px;top:0px;' +
 							'border-top:'+top+'px solid transparent;' +
 							'border-right:'+brdsize+'px solid '+color+';';
-				bottom_style = 'height:'+(height/2 + bottom)+'px;' +
+				bottom_style = 'height:'+(height/2)+'px;' +
 							'left:0px;top:0px;' +
 							'border-bottom:'+(-bottom)+'px solid transparent;' +
 							'border-right:'+brdsize+'px solid '+color+';';
-			break;
+				break;
 			//		
 			//		/
 			//		|
@@ -166,8 +166,7 @@ JMVC.extend('border', {
 							'left:0px;top:0px;' +
 							'border-bottom:'+(bottom)+'px solid transparent;' +
 							'border-left:'+brdsize+'px solid '+color+';';
-	
-			break;
+				break;
 			//		
 			//		\
 			//		|
@@ -182,7 +181,7 @@ JMVC.extend('border', {
 							'left:0px;top:'+top+'px;' +
 							'border-bottom:'+(-bottom)+'px solid transparent;' +
 							'border-right:'+brdsize+'px solid '+color+';';
-			break;
+				break;
 		}		
 		dtop = JMVC.dom.create('div', {'style':top_style, 'class':'zerofsize brel'}, '&nbsp;');
 		dbottom = JMVC.dom.create('div', {'style':bottom_style, 'class':'zerofsize brel'}, '&nbsp;');
@@ -203,19 +202,34 @@ JMVC.extend('border', {
 			//		|
 			//		/
 			case top >= 0 && bottom <= 0 :
-				top_style = 'height:'+(height/2 - top)+'px;left:0px;top:0px;border-top:'+top+'px solid transparent;border-left:'+brdsize+'px solid '+color+';';
-				bottom_style = 'height:'+(height/2 + bottom)+'px;left:0px;top:0px;border-bottom:'+(-bottom)+'px solid transparent;border-left:'+brdsize+'px solid '+color+';';
-			break;
+				top_style = 'height:'+(height/2)+'px;'+
+							'left:0px;'+
+							'top:0px;'+
+							'border-top:'+top+'px solid transparent;'+
+							'border-left:'+brdsize+'px solid '+color+';';
+				bottom_style = 'height:'+(height/2)+'px;'+
+							'left:0px;'+
+							'top:0px;'+
+							'border-bottom:'+(-bottom)+'px solid transparent;'+
+							'border-left:'+brdsize+'px solid '+color+';';
+				break;
 			//		
 			//		\
 			//		|
 			//		|
 			//		\OK
 			case top >= 0 && bottom >= 0 :
-				top_style = 'height:'+(height/2)+'px;left:0px;top:0px;border-top:'+top+'px solid transparent;border-left:'+brdsize+'px solid '+color+';';
-				bottom_style = 'height:'+(height/2 + bottom)+'px;left:0px;top:0px;border-bottom:'+(bottom)+'px solid transparent;border-right:'+brdsize+'px solid '+color+';';
-	
-			break;
+				top_style = 'height:'+(height/2)+'px;'+
+							'left:0px;'+
+							'top:0px;'+
+							'border-top:'+top+'px solid transparent;'+
+							'border-left:'+brdsize+'px solid '+color+';';
+				bottom_style = 'height:'+(height/2 + bottom)+'px;'+
+							'left:0px;'+
+							'top:0px;'+
+							'border-bottom:'+(bottom)+'px solid transparent;'+
+							'border-right:'+brdsize+'px solid '+color+';';
+				break;
 			//		
 			//		/
 			//		|
