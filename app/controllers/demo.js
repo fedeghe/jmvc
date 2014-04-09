@@ -62,7 +62,7 @@ JMVC.controllers.demo = function() {
 
 		/* JMVC.require('widget/slider/slider'); */
 		// <img src="media/img/jmvc_m2.svg" />
-		var content = '<h3 id="samples" class="round8 roundbottom">Some samples</h3>',
+		var content = '<h3 id="samples" class="round8 roundbottom">Some JMVC based samples</h3>',
 			bu = JMVC.vars.baseurl,
 			v = JMVC.getView('vacuum'),
 			links = {
