@@ -30,17 +30,23 @@ JMVC.controllers.cubic = function () {
 		t.render(function () {
 			
 			var baseAttrs = {'class' : 'gbox'},
-				J = JMVC.dom.add(JMVC.dom.find('#cellJ'), 'div', JMVC.object.extend(baseAttrs, {'style' : 'background-color:#e00'}), ''),
-				M = JMVC.dom.add(JMVC.dom.find('#cellM'), 'div', JMVC.object.extend(baseAttrs, {'style' : 'background-color:#0e0'}), ''),
-				V = JMVC.dom.add(JMVC.dom.find('#cellV'), 'div', JMVC.object.extend(baseAttrs, {'style' : 'background-color:#00e'}), ''),
-				C = JMVC.dom.add(JMVC.dom.find('#cellC'), 'div', JMVC.object.extend(baseAttrs, {'style' : 'background-color:#ee0'}), '');
+				A = JMVC.dom.add(JMVC.dom.find('#cellA'), 'div', JMVC.object.extend(baseAttrs, {'style' : 'background-color:#e00'}), ''),
+				B = JMVC.dom.add(JMVC.dom.find('#cellB'), 'div', JMVC.object.extend(baseAttrs, {'style' : 'background-color:#0e0'}), ''),
+				C = JMVC.dom.add(JMVC.dom.find('#cellC'), 'div', JMVC.object.extend(baseAttrs, {'style' : 'background-color:#00e'}), ''),
+				D = JMVC.dom.add(JMVC.dom.find('#cellD'), 'div', JMVC.object.extend(baseAttrs, {'style' : 'background-color:#ee0'}), ''),
+				E = JMVC.dom.add(JMVC.dom.find('#cellE'), 'div', JMVC.object.extend(baseAttrs, {'style' : 'background-color:#e0e'}), ''),
+				F = JMVC.dom.add(JMVC.dom.find('#cellF'), 'div', JMVC.object.extend(baseAttrs, {'style' : 'background-color:#0ee'}), '');
 
-			JMVC.dom.append(J, [JMVC.border.xbottom(20, 200, 50, 30, '#a00'), JMVC.border.xright(200, 30, 70, 20, '#600')]);
-			JMVC.dom.append(M, [JMVC.border.xbottom(30, 200, -50, -100, '#0a0'), JMVC.border.xleft(200, 50, 70, 30, '#060')]);
-			JMVC.dom.append(V, [JMVC.border.xtop(10, 200, 80, 50, '#00a'), JMVC.border.xright(200, 50, -10, -70, '#006')]);
-			JMVC.dom.append(C, [JMVC.border.xtop(10, 200, -50, -80, '#aa0'), JMVC.border.xleft(200, 50, -10, -70, '#660')]);
+			JMVC.dom.append(A, [JMVC.border.xbottom(40, 200, 50, 30, '#a00'), JMVC.border.xright(200, 30, 100, 40, '#600')]);
+			JMVC.dom.append(B, [JMVC.border.xbottom(30, 200, -30, -100, '#0a0'), JMVC.border.xleft(200, 30, 70, 30, '#060')]);
+
+			JMVC.dom.append(C, [JMVC.border.xright(200, 30, 20, -20, '#00a')]);
+			JMVC.dom.append(D, [JMVC.border.xleft(200, 30, 20, -20, '#aa0')]);
+
+			JMVC.dom.append(E, [JMVC.border.xtop(10, 200, 80, 30, '#a0a'), JMVC.border.xright(200, 30, -10, -70, '#606')]);
+			JMVC.dom.append(F, [JMVC.border.xtop(10, 200, -30, -80, '#0aa'), JMVC.border.xleft(200, 30, -10, -70, '#066')]);
 			
-			JMVC.snow.start(JMVC.dom.body());
+			//JMVC.snow.start(JMVC.dom.body());
 		});
 	};
 };
