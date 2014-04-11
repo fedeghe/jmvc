@@ -2,7 +2,7 @@
     <signature name="extend">JMVC.extend(String section, Literal extension)</signature>
     <description>Extends JMVC object with Your objects</description>
     <params>
-        <param name="*section"> that parameter is needed to set the namespace under which Your functions will be added to JMVC; valid values are `foo` or even `foo1.foo2.foo3`</param>
+        <param name="*section"> that parameter is needed to set the namespace under which Your functions will be added to JMVC; valid values are `foo` or `foo1.foo2.foo3` or even `foo1/foo2/foo3`</param>
         <param name="*extension">this object literal defines all the functions in your extension (JMVC is in that scope, so You can use it)</param>
     </params>
     <returns>void (undefined)</returns>
@@ -26,4 +26,5 @@
 });&#10;
 JMVC.fooWidget.start();
     </sample>
+    <testlink>test_api_jmvc_extend</testlink>
 </function>
