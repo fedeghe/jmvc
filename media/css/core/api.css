@@ -158,6 +158,7 @@ caption.complete{background-color: green;}
 caption.incomplete{background-color: red;}
 caption.testing{background-color: yellow; color:gray;}
 caption.undefined{background-color: gray;}
+caption.human{background-color: #8f8; color:gray;}
 caption span.testlink{
 	text-align:right;
 }
