@@ -44,95 +44,61 @@ JMVC.controllers.api = function () {
 						sample = false,
 						testlink = false,
 						default_param_val = false,
-						i = 0, t = 0, len = 0;
-					
-					/* more functions =>array of function objects */
-					if (section['function'] instanceof Array) {
-
-						for (i in section['function']) {
-							/* prepare content */
-							func_model.reset();
-							func_model.set('func', section['function'][i].signature['#text']);
-							func_model.set('description', section['function'][i].description['#text']);
-							func_model.set('status', section['function'][i].status ? section['function'][i].status['#text'] : 'undefined');
-							
-							
-							/*
-							func_model.set('bg1', 'bg1');
-							func_model.set('bg2', 'bg2');
-							*/
-							/*reset params*/
-							params = '';
-							default_param_val = false;
-							testlink = section['function'][i].testlink ? section['function'][i].testlink['#text'] : false;
-							sample = 'no sample code given yet';
-
-							if (section['function'][i].params.param instanceof Array) {
-								for (t = 0, len = section['function'][i].params.param.length; t < len; t += 1) {
-									section['function'][i].params.param[t]['@attributes'].default && (default_param_val = section['function'][i].params.param[t]['@attributes'].default);
-
-									params += '<label>' +
-										section['function'][i].params.param[t]['@attributes'].name +
-										'</label> : ' +
-										section['function'][i].params.param[t]['#text'] +
-										(default_param_val ? '&nbsp;(default: ' + default_param_val + ')' : '') +
-									'<br />';
-
-									default_param_val = false;
-								}
-							} else {
-								params += '<label>' + section['function'][i].params.param['@attributes'].name + '</label> : ' + section['function'][i].params.param['#text'] + '<br />';
-							}
-							if (section['function'][i].sample) {
-								sample = '<pre class="code round6 roundright">' + section['function'][i].sample['#text'] + '</pre>';
-							}
-							
-							func_model.set('testlink', testlink ? '<a target="_blank" class="testLink" href="' + JMVC.vars.baseurl + JMVC.US + testlink + '">test</a>' : false);
-							
+						i = 0, t = 0, len = 0,
+						els = section['function'] instanceof Array ?
+							section['function']
+							:
+							[section['function']];
 
 
-							func_model.set('parameters', params);
-							sample && func_model.set('sample', sample);
-							func_model.set('returns', section['function'][i].returns['#text']);
-							tabs_inner[strsection].add(
-								section['function'][i].signature['@attributes'].name,
-								doc_tpl.reset().parse(func_model).content
-							);
-						}
-						
-					/* one function => one function object*/
-					} else if (JMVC.util.isObject(section['function'])) {
-						//prepare content
+					for (i in section['function']) {
+						// prepare content
 						func_model.reset();
-						func_model.set('func', section['function'].signature['#text']);
-						func_model.set('description', section['function'].description['#text']);
-						func_model.set('status', section['function'].status ? section['function'].status['#text'] : 'undefined');
+						func_model.set({
+							'func' : section['function'][i].signature['#text'],
+							'description' : section['function'][i].description['#text'],
+							'status' : section['function'][i].status ? section['function'][i].status['#text'] : 'undefined'
+						});
 						
 						
-						/* reset params */
+						//func_model.set({bg1 : 'bg1', bg2 : 'bg2'});
+						
+						// reset params
 						params = '';
-						sample = 'no sample code';
-						testlink = section['function'].testlink ? section['function'].testlink['#text'] : false;
+						default_param_val = false;
+						testlink = section['function'][i].testlink ? section['function'][i].testlink['#text'] : false;
+						sample = 'no sample code given yet';
 
-						if (section['function'].params.param instanceof Array) {
-							for (t = 0, len = section['function'].params.param.length; t < len; t += 1) {
-								params += '<label>' + section['function'].params.param[t]['@attributes'].name + '</label> : ' + section['function'].params.param[t]['#text'] + '<br />';
+						if (section['function'][i].params.param instanceof Array) {
+							for (t = 0, len = section['function'][i].params.param.length; t < len; t += 1) {
+								section['function'][i].params.param[t]['@attributes'].default && (default_param_val = section['function'][i].params.param[t]['@attributes'].default);
+
+								params += '<label>' +
+									section['function'][i].params.param[t]['@attributes'].name +
+									'</label> : ' +
+									section['function'][i].params.param[t]['#text'] +
+									(default_param_val ? '&nbsp;(default: ' + default_param_val + ')' : '') +
+								'<br />';
+
+								default_param_val = false;
 							}
 						} else {
-							params += '<label>' + section['function'].params.param['@attributes'].name + '</label> : ' + section['function'].params.param['#text'] + '<br />';
+							params += '<label>' + section['function'][i].params.param['@attributes'].name + '</label> : ' + section['function'][i].params.param['#text'] + '<br />';
 						}
-						if (section['function'].sample) {
-							sample = '<pre class="code round6 roundright">' + section['function'].sample['#text'] + '</pre>';
+						if (section['function'][i].sample) {
+							sample = '<pre class="code round6 roundright">' + section['function'][i].sample['#text'] + '</pre>';
 						}
 						
-						func_model.set('testlink', testlink ? '<a target="_blank" class="testLink" href="' + JMVC.vars.baseurl + JMVC.US + testlink + '">test</a>' : false);
+						func_model.set({
+							testlink : testlink ? '<a target="_blank" class="testLink" href="' + JMVC.vars.baseurl + JMVC.US + testlink + '">test</a>' : false,
+							parameters : params,
+							returns : section['function'][i].returns['#text']
+						});
+
+						sample && func_model.set('sample', sample);
 						
-						func_model.set('parameters', params);
-						
-						!!sample && func_model.set('sample', sample);
-						func_model.set('returns', section['function'].returns['#text']);
 						tabs_inner[strsection].add(
-							section['function'].signature['@attributes'].name,
+							section['function'][i].signature['@attributes'].name,
 							doc_tpl.reset().parse(func_model).content
 						);
 					}
