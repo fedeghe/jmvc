@@ -1,0 +1,6 @@
+{
+    "jmvc.js" :  "../app",
+    "documentation/documentation.xml" : "../media",
+    "styles/jmvc.less" : "../media/css/core",
+    "styles/api.css" :  "../media/css/core"
+}
