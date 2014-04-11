@@ -21,10 +21,11 @@ else
     echo -e "\nSTARTED @ $now" >> malta.log
 
     # tasks
-    malta jmvc.js ../app >> malta.log 2>&1 &
-    malta documentation/documentation.xml ../media >> malta.log 2>&1 &
-    malta styles/jmvc.less ../media/css/core >> malta.log 2>&1 &
-    malta styles/api.css ../media/css/core >> malta.log 2>&1 &
+    malta build.json >> malta.log 2>&1 &
+    # malta jmvc.js ../app >> malta.log 2>&1 &
+    # malta documentation/documentation.xml ../media >> malta.log 2>&1 &
+    # malta styles/jmvc.less ../media/css/core >> malta.log 2>&1 &
+    # malta styles/api.css ../media/css/core >> malta.log 2>&1 &
     
     # show live message queue
     # 
