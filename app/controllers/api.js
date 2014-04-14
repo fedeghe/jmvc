@@ -44,11 +44,14 @@ JMVC.controllers.api = function () {
 						sample = false,
 						testlink = false,
 						default_param_val = false,
+						runlabel = '&#8227;',
 						i = 0, t = 0, len = 0,
 						els = section['function'] instanceof Array ?
 							section['function']
 							:
-							[section['function']];
+							[section['function']],
+						trialbutt;
+
 
 
 					for (i in section['function']) {
@@ -68,6 +71,8 @@ JMVC.controllers.api = function () {
 						default_param_val = false;
 						testlink = section['function'][i].testlink ? section['function'][i].testlink['#text'] : false;
 						sample = 'no sample code given yet';
+						trialbutt = '<button class="trynow round8 roundbottom" onclick="%docode%">' + runlabel + '</button>';
+						
 
 						if (section['function'][i].params.param instanceof Array) {
 							for (t = 0, len = section['function'][i].params.param.length; t < len; t += 1) {
@@ -87,6 +92,9 @@ JMVC.controllers.api = function () {
 						}
 						if (section['function'][i].sample) {
 							sample = '<pre class="code round6 roundright">' + section['function'][i].sample['#text'] + '</pre>';
+							if (section['function'][i].code) {
+								sample += JMVC.string.replaceall(trialbutt, {docode :  section['function'][i].code['#text']});
+							}
 						}
 						
 						func_model.set({
