@@ -1,8 +1,8 @@
 // AMD friendly, if shutup mode
 if (typeof JMVCshut !== 'undefined') {
-    (function(m) {
+    (function (m) {
         if (typeof define === "function" && define.amd) {
-            define(function() {
+            define(function () {
                 return JMVC;
             });
         }
