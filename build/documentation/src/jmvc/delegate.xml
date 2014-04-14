@@ -7,8 +7,9 @@
     </params>
     <returns>the function binded</returns>
     <sample>var y = {type:'literal'},&#10;
-    t = JMVC.delegate(function(){console.debug(this.type);}, y);&#10;
+    t = JMVC.delegate(function(){alert(this.type);}, y);&#10;
 t(); // literal&#10;</sample>
     <status>complete</status>
     <testlink>test_api_jmvc_delegate</testlink>
+    <code>var y = {type:'literal'}, t = JMVC.delegate(function(){alert(this.type);}, y);t();</code>
 </function>

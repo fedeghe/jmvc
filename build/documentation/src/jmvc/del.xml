@@ -1,12 +1,23 @@
 <function>
-    <signature name="del">JMVC.del(String name)</signature>
+    <signature name="del">JMVC.del(String name, Obj storage)</signature>
     <description>Removes a variable from the global JMVC register</description>
     <params>
         <param name="*name">the name of the new variable to be removed</param>
+        <param name="storage">meant to be localStorage or sessionStorage</param>
     </params>
     <returns>JMVC</returns>
     <sample>JMVC.set('a', 10);&#10;
 var t = JMVC.get('a');&#10;
-JMVC.del('a');</sample>
+JMVC.del('a');&#10;
+&#10;
+JMVC.set('a', 10, localStorage);&#10;
+var t = JMVC.get('a', localStorage);&#10;
+JMVC.del('a', localStorage);&#10;
+&#10;
+JMVC.set('a', 10, sessionStorage);&#10;
+var t = JMVC.get('a', sessionStorage);&#10;
+JMVC.del('a', sessionStorage);
+</sample>
     <status>testing</status>
+    <testlink>test_api_jmvc_delgetset</testlink>
 </function>

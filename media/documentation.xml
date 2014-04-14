@@ -14,41 +14,56 @@
         <param name="">this function needs no parameters</param>
     </params>
     <returns>void (undefined)</returns>
-    <sample>JMVC.console();</sample>
+    <sample>// show the console &#10;JMVC.console();&#10;// and hide it after 5 seconds &#10;window.setTimeout(function () {JMVC.console(); }, 5000);</sample>
     <status>complete</status>
+    <code>JMVC.console();window.setTimeout(function () {JMVC.console(); }, 5000);</code>
 </function>
 <!--
 [MALTA] src/jmvc/debug.xml
 -->
 <function>
-    <signature name="debug">JMVC.debug(Mixed el)</signature>
+    <signature name="debug">JMVC.debug([el1 [,el2 ...]])</signature>
     <description>Debugs on console any element passed, degrading to the alert</description>
     <params>
         <param name="el">all parameters to be debugged</param>
     </params>
     <returns>void (undefined)</returns>
     <sample>&#10;
+// open the console before running&#10;
+//&#10;
 var arr = [1,2,3,4,5],&#10;
     obj =  {name : "Federico", surname : "Ghedina", say : "WAT"},&#10;
     foo = function (){alert('foo'); };&#10;
 JMVC.debug(arr, obj, foo);
 </sample>
     <status>human</status>
+    <code>var arr = [1,2,3,4,5], obj =  {name : 'Federico', surname : 'Ghedina', say : 'WAT'},foo = function (){alert('foo'); };JMVC.debug(arr, obj, foo)</code>
 </function>
 <!--
 [MALTA] src/jmvc/del.xml
 -->
 <function>
-    <signature name="del">JMVC.del(String name)</signature>
+    <signature name="del">JMVC.del(String name, Obj storage)</signature>
     <description>Removes a variable from the global JMVC register</description>
     <params>
         <param name="*name">the name of the new variable to be removed</param>
+        <param name="storage">meant to be localStorage or sessionStorage</param>
     </params>
     <returns>JMVC</returns>
     <sample>JMVC.set('a', 10);&#10;
 var t = JMVC.get('a');&#10;
-JMVC.del('a');</sample>
+JMVC.del('a');&#10;
+&#10;
+JMVC.set('a', 10, localStorage);&#10;
+var t = JMVC.get('a', localStorage);&#10;
+JMVC.del('a', localStorage);&#10;
+&#10;
+JMVC.set('a', 10, sessionStorage);&#10;
+var t = JMVC.get('a', sessionStorage);&#10;
+JMVC.del('a', sessionStorage);
+</sample>
     <status>testing</status>
+    <testlink>test_api_jmvc_delgetset</testlink>
 </function>
 <!--
 [MALTA] src/jmvc/delegate.xml
@@ -62,10 +77,11 @@ JMVC.del('a');</sample>
     </params>
     <returns>the function binded</returns>
     <sample>var y = {type:'literal'},&#10;
-    t = JMVC.delegate(function(){console.debug(this.type);}, y);&#10;
+    t = JMVC.delegate(function(){alert(this.type);}, y);&#10;
 t(); // literal&#10;</sample>
     <status>complete</status>
     <testlink>test_api_jmvc_delegate</testlink>
+    <code>var y = {type:'literal'}, t = JMVC.delegate(function(){alert(this.type);}, y);t();</code>
 </function>
 <!--
 [MALTA] src/jmvc/each.xml
@@ -150,14 +166,27 @@ console.debug(you.hello());</sample>
 [MALTA] src/jmvc/get.xml
 -->
 <function>
-    <signature name="get">JMVC.get(String name)</signature>
+    <signature name="get">JMVC.get(String name, Obj storage)</signature>
     <description>Retrieves a variable from the global JMVC scope</description>
     <params>
         <param name="*name">the name of the new variable to be retrieved</param>
+        <param name="storage">meant to be localStorage or sessionStorage</param>
     </params>
     <returns>the variable reference or value if found, or undefined</returns>
-    <sample>JMVC.set('a', 10);&#10;console.debug(JMVC.get('a'));</sample>
+        <sample>JMVC.set('a', 10);&#10;
+var t = JMVC.get('a');&#10;
+JMVC.del('a');&#10;
+&#10;
+JMVC.set('a', 10, localStorage);&#10;
+var t = JMVC.get('a', localStorage);&#10;
+JMVC.del('a', localStorage);&#10;
+&#10;
+JMVC.set('a', 10, sessionStorage);&#10;
+var t = JMVC.get('a', sessionStorage);&#10;
+JMVC.del('a', sessionStorage);
+</sample>
     <status>testing</status>
+    <testlink>test_api_jmvc_delgetset</testlink>
 </function>
 <!--
 [MALTA] src/jmvc/getModel.xml
@@ -479,17 +508,28 @@ console.log(t);</sample>
 [MALTA] src/jmvc/set.xml
 -->
 <function>
-    <signature name="set">JMVC.set(String name, String value)</signature>
+    <signature name="set">JMVC.set(String name, String value, Obj storage)</signature>
     <description>Adds a variable that You can use anywhere</description>
     <params>
         <param name="*name">the name of the new variable, use it typing &#36;thename&#36;</param>
         <param name="*value">the value of the variable</param>
+        <param name="storage">meant to be localStorage or sessionStorage</param>
     </params>
     <returns>void (undefined)</returns>
     <status>incomplete</status>
     <sample>JMVC.set('a', 10);&#10;
 var t = JMVC.get('a');&#10;
-JMVC.del('a');</sample>
+JMVC.del('a');&#10;
+&#10;
+JMVC.set('a', 10, localStorage);&#10;
+var t = JMVC.get('a', localStorage);&#10;
+JMVC.del('a', localStorage);&#10;
+&#10;
+JMVC.set('a', 10, sessionStorage);&#10;
+var t = JMVC.get('a', sessionStorage);&#10;
+JMVC.del('a', sessionStorage);
+</sample>
+    <testlink>test_api_jmvc_delgetset</testlink>
 </function>
     <param>
         <name>W</name>

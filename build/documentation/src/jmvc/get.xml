@@ -1,10 +1,23 @@
 <function>
-    <signature name="get">JMVC.get(String name)</signature>
+    <signature name="get">JMVC.get(String name, Obj storage)</signature>
     <description>Retrieves a variable from the global JMVC scope</description>
     <params>
         <param name="*name">the name of the new variable to be retrieved</param>
+        <param name="storage">meant to be localStorage or sessionStorage</param>
     </params>
     <returns>the variable reference or value if found, or undefined</returns>
-    <sample>JMVC.set('a', 10);&#10;console.debug(JMVC.get('a'));</sample>
+        <sample>JMVC.set('a', 10);&#10;
+var t = JMVC.get('a');&#10;
+JMVC.del('a');&#10;
+&#10;
+JMVC.set('a', 10, localStorage);&#10;
+var t = JMVC.get('a', localStorage);&#10;
+JMVC.del('a', localStorage);&#10;
+&#10;
+JMVC.set('a', 10, sessionStorage);&#10;
+var t = JMVC.get('a', sessionStorage);&#10;
+JMVC.del('a', sessionStorage);
+</sample>
     <status>testing</status>
+    <testlink>test_api_jmvc_delgetset</testlink>
 </function>
