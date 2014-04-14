@@ -141,9 +141,9 @@ JMVC.string = {
         if (!end) {end = '%'; }
         //start = this.regEscape(start);
         //end = this.regEscape(end);
-        var reg = new RegExp(start + '([A-z0-9-_]*)' + end, 'g'),
+        var reg = new RegExp(start + '([A-z0-9-_\.]*)' + end, 'g'),
             straight = true,
-            str, tmp;
+            str, tmp, last;
         //fb = fb || false;
         while (straight) {
             if (!(tpl.match(reg))) {
@@ -166,8 +166,17 @@ JMVC.string = {
                      * switching off before returning
                      */
                 default:
+
+                    // at least check for ns, in case of dots
+                    //
+                    if ($1.match(/\./)) {    
+                        last = JMVC.nsCheck($1 ,obj);
+                        if (last) {
+                            return last;
+                        }
+                    }   
                     straight = false;
-                    return fb || start + $1 + end;
+                    return typeof fb !== 'undefined' ? fb : start + $1 + end;
 
                 }
             });
