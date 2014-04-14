@@ -1,6 +1,6 @@
 JMVC.controllers.fizzbuzz = function() {
 
-    this.action_index = function(sunday){
+    this.action_index = function(){
 
         function fb1(n) {
             var res = '',
