@@ -52,7 +52,7 @@ JMVC.controllers.demo = function() {
 		JMVC.require(
 			'vendors/google/analytics/analytics',
 			'core/responsive/basic/basic'
-			//, 'affix'
+			//, 'affix/affix'
 		);
 
 		JMVC.events.loadify(500);
