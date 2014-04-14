@@ -1,4 +1,4 @@
-JMVC.controllers['replaceall-perf'] = function() {
+JMVC.controllers.replaceallPerf = function() {
     this.action_index = function(){
 
         JMVC.events.loadify(1000);
