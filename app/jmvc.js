@@ -1,17 +1,17 @@
 /*
 [MALTA] src/head.js
 */
-/**
+/*!
  * 
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.3.7 (rev. 1) build: 794
+ * @version :  3.3.7 (rev. 1) build: 1167
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
- * @file : built with Malta v.1.0.15 & a love heap
- *         glued with 38 files on 10/4/2014 at 0:18:50
+ * @file : built with Malta v.1.0.20 & a love heap
+ *         glued with 37 files on 15/4/2014 at 1:38:7
  *
  * All rights reserved.
  *
@@ -218,6 +218,13 @@
             JMVC inner
             --------*/
             jmvc = {
+                check : function (f, p) {
+                    try {
+                        f.apply(null, p || []);
+                    } catch (e){
+                        Errors.notify(e);
+                    }
+                },
                 /**
                  * [debug description]
                  * @param  {[type]} msg [description]
@@ -248,15 +255,20 @@
                             W[W.hasOwnProperty('log') ? 'log' : 'alert'](outmsg);
                         }
                     }
+                    return true;
                 },
                 /**
                  * [description]
                  * @param  {[type]} name [description]
                  * @return {[type]}      [description]
                  */
-                del: function(name) {
-                    if ($JMVC.vars.hasOwnProperty(name)) {
-                        $JMVC.vars[name] = null;
+                del: function(name, storage) {
+                    if (storage) {
+                        storage.removeItem(name);
+                    } else {
+                        if (name in $JMVC.vars) {
+                            $JMVC.vars[name] = null;
+                        }
                     }
                     return $JMVC;
                 },
@@ -340,6 +352,12 @@
                  * @return {Object|false} The
                  */
                 extend: function(label, obj) {
+                    if(!label) {
+                        throw new JMVC.Errors.BadParams('Missing first parameter for extend');
+                    }
+                    if (!obj) {
+                        throw new JMVC.Errors.BadParams('Missing object parameter for extend');
+                    }
                     //
                     // ensures that the target namespace exists 
                     var trg = jmvc.ns.make('JMVC.' + label);
@@ -422,8 +440,11 @@
                  * @param  {[type]} name [description]
                  * @return {[type]}      [description]
                  */
-                get: function(name) {
-                    return $JMVC.vars[name] || undefined;
+                get: function(name, storage) {
+                    return storage ?
+                        JSON.parse(storage.getItem(name))
+                        :
+                        ($JMVC.vars[name] || undefined);
                 },
                 /**
                  * [globalize description]
@@ -540,6 +561,7 @@
                     Child.prototype.constructor = Child;
                     Child.superClass = Parent.prototype;
                     Child.baseConstructor = Parent;
+                    //Child.constructor = Child;
                 },
                 /**
                  * eval function wrap
@@ -586,7 +608,7 @@
                  * @return {[type]}        [description]
                  */
                 multi_inherit: function(Childs, Parent) {
-                    jmvc.each(Childs, function(ch) {
+                    jmvc.each(Childs, function (ch) {
                         jmvc.inherit(ch, Parent);
                     });
                 },
@@ -853,14 +875,23 @@
                  * @param {[type]} name    [description]
                  * @param {[type]} content [description]
                  */
-                set: function(name, content) {
+                set: function(name, content, storage) {
+                    /*
                     if (JMVC.util.isObject(name)) {
                         for (var i in name) {
                             $JMVC.set(i, name[i]);
                         }
                         return $JMVC;
                     }
-                    $JMVC.vars[name] = content;
+                    */
+                    if (storage) {
+            
+                        storage.setItem(name, JSON.stringify(content));
+                        
+                    } else {
+                        
+                        $JMVC.vars[name] = content;
+                    }
                     return $JMVC;
                 },
                 /**
@@ -968,37 +999,49 @@
             */
             /*----
             ERRORS
-            ------
+            ------ 
             
             specific classes that will extend the built-in Error Onject
             */
             Errors = {
-                'Network' : function (msg) {
+                Network : function (msg) {
                     this.name = 'Network';
                     this.msg = msg || this.name + ' error';
                 },
-                'BadParams' : function (msg) {
+                BadParams : function (msg) {
                     this.name = 'BadParams';
                     this.msg = msg || this.name + ' error';
                 },
-                'BadName' : function (msg) {
+                BadName : function (msg) {
                     this.name = 'BadName';
                     this.msg = msg || this.name + ' error';
                 },
-                'BadImplement' : function (msg) {
+                BadImplement : function (msg) {
                     this.name = 'BadImplement';
                     this.msg = msg || this.name + ' error';
                 },
-                'ControllerNotFound' : function (msg) {
+                ControllerNotFound : function (msg) {
                     this.name = 'ControllerNotFound';
                     this.msg = msg ||  this.name + ' error';
                 },
-                'ActionNotFound' : function (msg) {
+                ActionNotFound : function (msg) {
                     this.name = 'ActionNotFound';
                     this.msg = msg ||  this.name + ' error';
                 }
             };
-            jmvc.multi_inherit(Errors, Error);
+            
+            jmvc.multi_inherit(Errors, W.Error);
+            
+            
+            
+            
+            //
+            Errors.notify = function (err) {
+                var msg = '[ERROR ' + err.name + ' : ' + err.msg;
+                JMVC.debug(msg) && alert(msg);
+                return false;
+            };
+            
             //-----------------------------------------------------------------------------
             /*
             [MALTA] src/core/constructors/event.js
@@ -2060,6 +2103,7 @@
                 //
                 preload : preload,
                 //
+                check : jmvc.check,
                 hook : jmvc.hook,
                 hooks : hooks,
                 jeval : jmvc.jeval,
@@ -2308,9 +2352,13 @@
             xhr.onabort = function () {
                 cb_abort && cb_abort.apply(null, arguments);
             };
+    
             //open request
+            //
             xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri, sync);
+    
             //thread abortion
+            //
             W.setTimeout(function () {
                 if (!complete) {
                     complete = true;
@@ -2347,6 +2395,7 @@
                 error: err
             });
         },
+    
         /**
          * [ description]
          * @param  {[type]} uri   [description]
@@ -2366,6 +2415,7 @@
                 error : err
             });
         },
+    
         /**
          * [delete description]
          * @param  {[type]} uri   [description]
@@ -2386,6 +2436,7 @@
                 error : err
             });
         },
+    
         /**
          * [ description]
          * @param  {[type]} uri   [description]
@@ -2405,6 +2456,7 @@
                 data : data
             });
         },
+        
         /**
          * [ description]
          * @param  {[type]} uri   [description]
@@ -4832,9 +4884,9 @@
             if (!end) {end = '%'; }
             //start = this.regEscape(start);
             //end = this.regEscape(end);
-            var reg = new RegExp(start + '([A-z0-9-_]*)' + end, 'g'),
+            var reg = new RegExp(start + '([A-z0-9-_\.]*)' + end, 'g'),
                 straight = true,
-                str, tmp;
+                str, tmp, last;
             //fb = fb || false;
             while (straight) {
                 if (!(tpl.match(reg))) {
@@ -4857,8 +4909,17 @@
                          * switching off before returning
                          */
                     default:
+    
+                        // at least check for ns, in case of dots
+                        //
+                        if ($1.match(/\./)) {    
+                            last = JMVC.nsCheck($1 ,obj);
+                            if (last) {
+                                return last;
+                            }
+                        }   
                         straight = false;
-                        return fb || start + $1 + end;
+                        return typeof fb !== 'undefined' ? fb : start + $1 + end;
     
                     }
                 });
@@ -5046,6 +5107,7 @@
          * @return {[type]}      [description]
          */
         compare: function(obj1, obj2, ret, i) {
+            
             if (typeof ret === 'undefined') {
                 ret = true;
             }
@@ -5055,14 +5117,17 @@
             if (obj1 + '' !== obj2 + '') {
                 return false;
             }
+            if (obj1 == obj2) {
+                return true;
+            }
             for (i in obj1) {
-                ret = ret && obj2[i] && this.compare(obj1[i], obj2[i], ret);
+                ret = ret && obj2[i] && JMVC.object.compare(obj1[i], obj2[i], ret);
                 if (!ret) {
                     return false;
                 }
             }
             for (i in obj2) {
-                ret = ret && obj1[i] && this.compare(obj2[i], obj1[i], ret);
+                ret = ret && obj1[i] && JMVC.object.compare(obj2[i], obj1[i], ret);
                 if (!ret) {
                     return false;
                 }
@@ -5277,9 +5342,7 @@
     /*
     [MALTA] src/core/render.js
     */
-    /*----
-    RENDER
-    ----*/
+    // RENDER
     (function () {
         var i = 0,
             l = JMVC.modules.length;
@@ -5292,31 +5355,23 @@
         if (JMVC.p.lang) {
             JMVC.cookie.set('lang', JMVC.p.lang);
         }
-        !W.JMVCshut && JMVC.render();
+    
+        try {
+            !W.JMVCshut && JMVC.render();
+        } catch (e) {
+            return JMVC.Errors.notify(e);
+        } 
+    
     })();
-    //-----------------------------------------------------------------------------
-    /*
-    [MALTA] src/foot.js
-    */
-    /**
-     * [onerror description]
-     * @param  {[type]} errorMsg   [description]
-     * @param  {[type]} url        [description]
-     * @param  {[type]} lineNumber [description]
-     * @return {[type]}            [description]
-     */
-    JMVC.W.onerror = function(errorMsg, url, lineNumber) {
-        JMVC.debug("Uncaught error " + errorMsg + " in " + url + ", lines " + lineNumber);
-    };
-    //-------------------------------------------------------------------------[ THE END ]
+    //==========================================
     /*
     [MALTA] src/amd.js
     */
     // AMD friendly, if shutup mode
     if (typeof JMVCshut !== 'undefined') {
-        (function(m) {
+        (function (m) {
             if (typeof define === "function" && define.amd) {
-                define(function() {
+                define(function () {
                     return JMVC;
                 });
             }
@@ -5325,11 +5380,24 @@
 //
 })(this);
 /*
-[MALTA] src/end.js
+[MALTA] src/foot.js
 */
-// tha would lock from now extending JMVC
-// ('preventExtensions' in Object) && Object.preventExtensions(JMVC);
+// =======================================
+// that would lock from now extending JMVC
 //
-// the end
-// 
+// ('preventExtensions' in Object) &&
+// Object.preventExtensions(JMVC);
+// =======================================
+
+/*
+     _ __  ____     ______ 
+    | |  \/  \ \   / / ___|
+ _  | | |\/| |\ \ / / |    
+| |_| | |  | | \ V /| |___ 
+ \___/|_|  |_|  \_/  \____|
+
+*/
+
+//-------------------------------------------------------------------------[ THE END ]
+
 
