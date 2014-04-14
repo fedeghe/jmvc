@@ -1,4 +1,4 @@
-/**
+/*!
  * 
  * JMVC : A pure Javascript MVC framework
  * ======================================
