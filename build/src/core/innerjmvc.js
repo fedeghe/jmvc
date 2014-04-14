@@ -2,6 +2,13 @@
 JMVC inner
 --------*/
 jmvc = {
+    check : function (f, p) {
+        try {
+            f.apply(null, p || []);
+        } catch (e){
+            Errors.notify(e);
+        }
+    },
     /**
      * [debug description]
      * @param  {[type]} msg [description]
@@ -32,15 +39,20 @@ jmvc = {
                 W[W.hasOwnProperty('log') ? 'log' : 'alert'](outmsg);
             }
         }
+        return true;
     },
     /**
      * [description]
      * @param  {[type]} name [description]
      * @return {[type]}      [description]
      */
-    del: function(name) {
-        if ($JMVC.vars.hasOwnProperty(name)) {
-            $JMVC.vars[name] = null;
+    del: function(name, storage) {
+        if (storage) {
+            storage.removeItem(name);
+        } else {
+            if (name in $JMVC.vars) {
+                $JMVC.vars[name] = null;
+            }
         }
         return $JMVC;
     },
@@ -124,6 +136,12 @@ jmvc = {
      * @return {Object|false} The
      */
     extend: function(label, obj) {
+        if(!label) {
+            throw new JMVC.Errors.BadParams('Missing first parameter for extend');
+        }
+        if (!obj) {
+            throw new JMVC.Errors.BadParams('Missing object parameter for extend');
+        }
         //
         // ensures that the target namespace exists 
         var trg = jmvc.ns.make('JMVC.' + label);
@@ -206,8 +224,11 @@ jmvc = {
      * @param  {[type]} name [description]
      * @return {[type]}      [description]
      */
-    get: function(name) {
-        return $JMVC.vars[name] || undefined;
+    get: function(name, storage) {
+        return storage ?
+            JSON.parse(storage.getItem(name))
+            :
+            ($JMVC.vars[name] || undefined);
     },
     /**
      * [globalize description]
@@ -324,6 +345,7 @@ jmvc = {
         Child.prototype.constructor = Child;
         Child.superClass = Parent.prototype;
         Child.baseConstructor = Parent;
+        //Child.constructor = Child;
     },
     /**
      * eval function wrap
@@ -370,7 +392,7 @@ jmvc = {
      * @return {[type]}        [description]
      */
     multi_inherit: function(Childs, Parent) {
-        jmvc.each(Childs, function(ch) {
+        jmvc.each(Childs, function (ch) {
             jmvc.inherit(ch, Parent);
         });
     },
@@ -637,14 +659,23 @@ jmvc = {
      * @param {[type]} name    [description]
      * @param {[type]} content [description]
      */
-    set: function(name, content) {
+    set: function(name, content, storage) {
+        /*
         if (JMVC.util.isObject(name)) {
             for (var i in name) {
                 $JMVC.set(i, name[i]);
             }
             return $JMVC;
         }
-        $JMVC.vars[name] = content;
+        */
+        if (storage) {
+
+            storage.setItem(name, JSON.stringify(content));
+            
+        } else {
+            
+            $JMVC.vars[name] = content;
+        }
         return $JMVC;
     },
     /**
