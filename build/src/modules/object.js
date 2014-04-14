@@ -87,6 +87,7 @@ JMVC.object = {
      * @return {[type]}      [description]
      */
     compare: function(obj1, obj2, ret, i) {
+        
         if (typeof ret === 'undefined') {
             ret = true;
         }
@@ -96,14 +97,17 @@ JMVC.object = {
         if (obj1 + '' !== obj2 + '') {
             return false;
         }
+        if (obj1 == obj2) {
+            return true;
+        }
         for (i in obj1) {
-            ret = ret && obj2[i] && this.compare(obj1[i], obj2[i], ret);
+            ret = ret && obj2[i] && JMVC.object.compare(obj1[i], obj2[i], ret);
             if (!ret) {
                 return false;
             }
         }
         for (i in obj2) {
-            ret = ret && obj1[i] && this.compare(obj2[i], obj1[i], ret);
+            ret = ret && obj1[i] && JMVC.object.compare(obj2[i], obj1[i], ret);
             if (!ret) {
                 return false;
             }
