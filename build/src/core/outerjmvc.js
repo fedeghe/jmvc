@@ -70,6 +70,7 @@ $JMVC = {
     //
     preload : preload,
     //
+    check : jmvc.check,
     hook : jmvc.hook,
     hooks : hooks,
     jeval : jmvc.jeval,
