@@ -112,9 +112,13 @@ _.io = {
         xhr.onabort = function () {
             cb_abort && cb_abort.apply(null, arguments);
         };
+
         //open request
+        //
         xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri, sync);
+
         //thread abortion
+        //
         W.setTimeout(function () {
             if (!complete) {
                 complete = true;
@@ -151,6 +155,7 @@ JMVC.io = {
             error: err
         });
     },
+
     /**
      * [ description]
      * @param  {[type]} uri   [description]
@@ -170,6 +175,7 @@ JMVC.io = {
             error : err
         });
     },
+
     /**
      * [delete description]
      * @param  {[type]} uri   [description]
@@ -190,6 +196,7 @@ JMVC.io = {
             error : err
         });
     },
+
     /**
      * [ description]
      * @param  {[type]} uri   [description]
@@ -209,6 +216,7 @@ JMVC.io = {
             data : data
         });
     },
+    
     /**
      * [ description]
      * @param  {[type]} uri   [description]
