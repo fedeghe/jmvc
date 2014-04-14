@@ -54,9 +54,8 @@ $$src/head.js$$
     //
     // render
     $$src/core/render.js$$
-    $$src/foot.js$$
     $$src/amd.js$$
 //
 })(this);
-$$src/end.js$$
+$$src/foot.js$$
 
