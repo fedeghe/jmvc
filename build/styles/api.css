@@ -133,6 +133,7 @@ pre.code{
 	white-space: -pre-wrap;      /* Opera 4-6 */
 	white-space: -o-pre-wrap;    /* Opera 7 */
 	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+	z-index:100;
 }
 h1.intro{
 	font-size:40px;
@@ -157,6 +158,7 @@ caption {
 caption.complete{background-color: green;}
 caption.incomplete{background-color: red;}
 caption.testing{background-color: yellow; color:gray;}
+caption.human{background-color: gray; color:yellow;}
 caption.undefined{background-color: gray;}
 caption span.testlink{
 	text-align:right;
@@ -174,4 +176,19 @@ caption.testing div.testlink a:hover{
 caption.testing div.testlink a{
 	font-weight:bold;
 	color: #900;
+}
+button.trynow{
+	border:none;
+	cursor:pointer;
+	background-color: #aaa;
+	width:30px;
+	text-align:center;
+	height:20px;
+	position:relative;
+	top:-4px;
+	color:#fff;
+	font-size:14px;
+}
+button.trynow:hover{
+	background-color: #0f0;
 }
