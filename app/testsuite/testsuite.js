@@ -43,7 +43,6 @@ JMVC.extend('test', function () {
             // get the minimum spaces at the beginning of lines, but 0
             // used to remove these spaces from code
             //
-            
             for (j = 0; j < l; j++) {
                 var tmp = lines[j].match(/^(\s*)/)[0].length;
 
@@ -63,9 +62,7 @@ JMVC.extend('test', function () {
                     outline, {
                         nline : noNumberLines ? '' : i,
                         line : JMVC.htmlchars(lines[j] || ' ')
-                    },
-                    '%',
-                    '%'
+                    }
                 );
                 i += 1;
             }
@@ -172,8 +169,8 @@ JMVC.extend('test', function () {
                 pars.code = listCode(opts.code, true);
                 break;
             case 'val':
-                pars.tit = 'Expecting value : ' + (opts.expvalue && opts.expvalue.toString());
-                pars.real = 'Returned value : ' + (opts.realvalue && opts.realvalue.toString());
+                pars.tit = 'Expecting value : ' + (opts.expvalue && (JMVC.util.isObject(opts.expvalue) ? JSON.stringify(opts.expvalue) : opts.expvalue.toString()));
+                pars.real = 'Returned value : ' + (opts.realvalue && (JMVC.util.isObject(opts.realvalue) ? JSON.stringify(opts.realvalue) : opts.realvalue.toString()));
                 pars.code = listCode(opts.code, true);
                 break;
             case 'ass':
@@ -214,6 +211,7 @@ JMVC.extend('test', function () {
             JMVC.test.startTest(testName);
             var res = true,
                 debuginfo = false,
+                ne = new expectedError(),
                 ex;
             try {
                 expectedError == SyntaxError ? eval(code) : code();
@@ -223,10 +221,12 @@ JMVC.extend('test', function () {
                 res = (e instanceof expectedError);
             }
 
+            
+            
             if (vars.outCode) {
                 debuginfo = JMVC.test.outDebug('ex', {
-                    realvalue : ex instanceof expectedError ? expectedError.name : ex.name,
-                    exception : expectedError,
+                    exception : ne || expectedError,
+                    realvalue : (ex instanceof expectedError ? expectedError.name : ex.name) || ne.name,
                     code : typeof code === 'function' ? code.toString() : code 
                 });
             }
@@ -278,14 +278,14 @@ JMVC.extend('test', function () {
             JMVC.test.startTest(testName);
 
             real = fn.apply(options.ctx || null, options.args || []);
-            res = (real == expectedValue);
+            res = (real == expectedValue) || JMVC.object.compare(real,  expectedValue);
             
             if (vars.outCode) {
                 debuginfo = JMVC.test.outDebug(
                     'val',
                     {
                         realvalue : real,
-                        expvalue : expectedValue != undefined ? expectedValue : 'null',
+                        expvalue : expectedValue, // != undefined ? expectedValue : 'null',
                         code : fn.toString()
                     }
                 );
@@ -309,7 +309,7 @@ JMVC.extend('test', function () {
          * @param  {[type]}   options  [description]
          * @return {[type]}            [description]
          */
-        testTime : function (testName, fn, times, options) {
+        testTime2 : function (testName, fn, times, options) {
             'use strict';
 
             // clone agruments as many times as needed
@@ -318,6 +318,36 @@ JMVC.extend('test', function () {
             var argClones = [],
                 n = times;
             while (n--) argClones.push(JMVC.object.clone(options));
+
+            // now start timing and invocation loop
+            //
+            JMVC.test.startTest(testName);
+            while (times--) {
+                fn.apply(null, argClones[times] || []);
+            }
+
+            // this is the real time
+            // 
+            this.testimes.push([testName, JMVC.test.finishTest(true)]);
+        },
+        testTime : function (testName, fn, times, options) {
+            'use strict';
+
+            // if options is not an array but a function 
+            // then is intended to produce the arguments in lieu of options
+            //
+            var generateParams = typeof options === 'function',
+                argClones = [],
+                n = times;
+
+            // clone agruments as many times as needed
+            //
+            while (n--) argClones.push(
+                generateParams ?
+                    options()
+                    :
+                    JMVC.object.clone(options)
+            );
 
             // now start timing and invocation loop
             //
@@ -377,9 +407,12 @@ JMVC.extend('test', function () {
             result = passed ? "passed" : "failed";
 
             if (vars.mode == vars.CONSOLE_MODE) {
+
                 vars.all_times[vars.cur_timer] = time;
                 JMVC.debug(result + ' in ' + vars.all_times[vars.cur_timer] + ' ms');
+
             } else {
+                
                 JMVC.dom.attr(
                     vars.currentTestWidget,
                     'class',
