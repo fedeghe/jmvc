@@ -27,7 +27,6 @@ JMVC.controllers['404'] = function () {
 		cnt && (data.msg = 'controller `' + this.get('cnt') + '` not found');
 		
 		JMVC.head.title('404 PAGE NOT FOUND');
-		JMVC.head.addstyle([JMVC.vars.baseurl, 'media', 'css', 'core', 'jmvc.css'].join(JMVC.US));
 		JMVC.events.delay(function () {JMVC.head.goto(); }, seconds2redirection * 1000);
 		
 		// meant to be passed at the view render
