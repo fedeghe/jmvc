@@ -1,11 +1,17 @@
-/**
- * [onerror description]
- * @param  {[type]} errorMsg   [description]
- * @param  {[type]} url        [description]
- * @param  {[type]} lineNumber [description]
- * @return {[type]}            [description]
- */
-JMVC.W.onerror = function(errorMsg, url, lineNumber) {
-    JMVC.debug("Uncaught error " + errorMsg + " in " + url + ", lines " + lineNumber);
-};
+// =======================================
+// that would lock from now extending JMVC
+//
+// ('preventExtensions' in Object) &&
+// Object.preventExtensions(JMVC);
+// =======================================
+
+/*
+     _ __  ____     ______ 
+    | |  \/  \ \   / / ___|
+ _  | | |\/| |\ \ / / |    
+| |_| | |  | | \ V /| |___ 
+ \___/|_|  |_|  \_/  \____|
+
+*/
+
 //-------------------------------------------------------------------------[ THE END ]
