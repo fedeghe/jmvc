@@ -82,135 +82,120 @@ JMVC.extend('console', {
 					j : '/* no javascript content */',
 					c : '/* no css content */'
 				},
-				config  = [
-					{
-						"target" : '#jmvc-console',
+				config  = {
+					target : '#jmvc-console',
+					content : [{
 						"tag" : "div",
-						"class" : "console-head",
-						"inner" : [
+						attrs : {"class" : "console-head"},
+						content : [
 							{
 								"tag":"div",
-								"float":"left",
 								"html" : "<a href='" + JMVC.vars.baseurl + "'><img src='/media/img/jmvc_m1.svg' width='60'/></a>",
-								"style" : {"marginTop":"12px", "marginLeft":"10px"}
+								"style" : {"float":"left", "marginTop":"12px", "marginLeft":"10px"}
 							},{
 								"tag":"h5",
-								"float":"left",
 								"html":"web console v." + version,
-								"style" : {"color":"#888", "paddingLeft":"10px"}
+								"style" : {"float":"left", "color":"#888", "paddingLeft":"10px"}
 							},{
 								"tag":"button",
-								"float":"left",
 								"html":"GET URL",
-								"attrs" : {"id":"get-url"},
-								"class" : "round4",
-								"style" : {"height":"20px", "line-height":"20px", "padding":"0px 5px"}
+								"attrs" : {"id":"get-url", "class" : "round4"},
+								"style" : {"float":"left", "height":"20px", "line-height":"20px", "padding":"0px 5px"}
 							},{
 								"tag":"button",
-								"float":"left",
 								"html":"FullScreen",
-								"attrs" : {"id":"go-fs"},
-								"class" : "round4",
-								"style" : {"height":"20px", "line-height":"20px", "padding":"0px 5px"}
+								"attrs" : {"id":"go-fs", "class" : "round4"},
+								"style" : {"float":"left","height":"20px", "line-height":"20px", "padding":"0px 5px"}
 							},{
 								"tag":"button",
-								"float":"left",
 								"html":"Reset",
-								"attrs" : {"id":"reset"},
-								"class" : "round4",
-								"style" : {"height":"20px", "line-height":"20px", "padding":"0px 5px"}
+								"attrs" : {"id":"reset", "class" : "round4"},
+								"style" : {"float":"left", "height":"20px", "line-height":"20px", "padding":"0px 5px"}
 							},{
 								"tag":"button",
-								"float":"left",
 								"html":"Reset All",
-								"attrs" : {"id":"resetall"},
-								"class" : "round4",
-								"style" : {"height":"20px", "line-height":"20px", "padding":"0px 5px"}
+								"attrs" : {"id":"resetall", "class" : "round4"},
+								"style" : {"float":"left", "height":"20px", "line-height":"20px", "padding":"0px 5px"}
 							},
 
 							////////////////////////////////////////
 
 							{
 								"tag":"a",
-								"attrs" : {"id" : "options", "href":"#options"},
-								"class" : "ablock",
-								"float":"right",
-								"inner" : [
+								"attrs" : {"id" : "options", "href":"#options", "class" : "ablock"},
+								style : {"float":"right"},
+								"content" : [
 									{
 										"tag":"div",
-										"class":"round4 roundtop text",
-										"float":"right"
+										attrs : {"class":"round4 roundtop text"},
+										style : {"float":"right"}
 									},{
 										"tag":"div",
-										"float":"right",
-										"class":"tri"
+										style : {"float":"right"},
+										attrs : {"class":"tri"}
 									}
 								]
 							},{
 								"tag":"a",
-								"attrs" : {"id" : "preview", "href":"#preview"},
-								"class" : "ablock",
-								"float":"right",
-								"inner" : [
+								"attrs" : {"id" : "preview", "href":"#preview", "class" : "ablock"},
+								style : {"float":"right"},
+								"content" : [
 									{
 										"tag":"div",
-										"class":"round4 roundtop text",
-										"float":"right"
+										attrs : {"class":"round4 roundtop text"},
+										style : {"float":"right"},
 									},{
 										"tag":"div",
-										"float":"right",
-										"class":"tri"
+										style : {"float":"right"},
+										attrs : {"class":"tri"}
 									}
 								]
 							},{
 								"tag":"a",
-								"attrs" : {"id" : "css", "href":"#css"},
-								"class" : "ablock",
-								"float":"right",
-								"inner" : [
+								"attrs" : {"id" : "css", "href":"#css", "class" : "ablock"},
+								style : {"float":"right"},
+								"content" : [
 									{
 										"tag":"div",
-										"class":"round4 roundtop text",
-										"float":"right",
+										attrs : {"class":"round4 roundtop text"},
+										style : {"float":"right"},
 										"html":"CSS"
 									},{
 										"tag":"div",
-										"float":"right",
-										"class":"tri"
+										style : {"float":"right"},
+										attrs : {"class":"tri"}
 									}
 								]
 							},{
 								"tag":"a",
-								"attrs" : {"id" : "javascript", "href":"#javascript"},
-								"class" : "ablock",
-								"float":"right",
-								"inner" : [
+								"attrs" : {"id" : "javascript", "href":"#javascript", "class" : "ablock"},
+								style : {"float":"right"},
+								"content" : [
 									{
 										"tag":"div",
-										"class":"round4 roundtop text",
-										"float":"right",
+										attrs : {"class":"round4 roundtop text"},
+										style : {"float":"right"},
 										"html":"JAVASCRIPT"
 									},{
 										"tag":"div",
-										"float":"right",
-										"class":"tri"
+										style : {"float":"right"},
+										attrs : {"class":"tri"}
 									}
 								]
 							},{
 								"tag":"a",
-								"attrs" : {"id" : "html", "href":"#html"},
-								"class" : "ablock",
-								"float":"right",
-								"inner" : [
+								"attrs" : {"id" : "html", "href":"#html", "class" : "ablock"},
+								style : {"float":"right"},
+								"content" : [
 									{
 										"tag":"div",
-										"class":"round4 roundtop text",
-										"float":"right",
+										attrs : {"class":"round4 roundtop text"},
+										style : {"float":"right"},
 										"html":"HTML"
 									},{
 										"tag":"div",
-										"float":"right",
-										"class":"tri"
+										style : {"float":"right"},
+										attrs : {"class":"tri"}
 									}
 								]
 							},
@@ -219,13 +204,12 @@ JMVC.extend('console', {
 					},{
 						"tag" : "div",
 						"target" : "#jmvc-console",
-						"class" : "input-divs",
-						"inner" : [
+						attrs : {"class" : "input-divs"},
+						"content" : [
 							{
 								"tag" : "div",
-								"attrs" : {"id" : "in-html"},
-								"class" : "in-html inputdiv",
-								"inner": [{
+								"attrs" : {"id" : "in-html", "class" : "in-html inputdiv"},
+								"content": [{
 									"tag" : "textarea",
 									"attrs" : {"id":"content-html"},
 									"style" : {"height" : (dims.height - 60) + "px", "border":"none"},
@@ -233,9 +217,8 @@ JMVC.extend('console', {
 								}]
 							},{
 								"tag" : "div",
-								"attrs" : {"id" : "in-javascript"},
-								"class" : "in-javascript inputdiv",
-								"inner": [{
+								"attrs" : {"id" : "in-javascript", "class" : "in-javascript inputdiv"},
+								"content": [{
 									"tag" : "textarea",
 									"attrs" : {"id":"content-javascript"},
 									"style" : {"height" : (dims.height - 60) + "px", "border":"none"},
@@ -243,9 +226,8 @@ JMVC.extend('console', {
 								}]
 							},{
 								"tag" : "div",
-								"attrs" : {"id" : "in-css"},
-								"class" : "in-css inputdiv",
-								"inner": [{
+								"attrs" : {"id" : "in-css", "class" : "in-css inputdiv"},
+								"content": [{
 									"tag" : "textarea",
 									"attrs" : {"id":"content-css"},
 									"style" : {"height" : (dims.height - 60) + "px", "border":"none"},
@@ -253,22 +235,21 @@ JMVC.extend('console', {
 								}]
 							},{
 								"tag" : "div",
-								"attrs" : {"id" : "in-preview"},
-								"class" : "in-preview inputdiv",
-								"inner": [{
+								"attrs" : {"id" : "in-preview", "class" : "in-preview inputdiv"},
+								"content": [{
 									"tag":"iframe",
 									//"style" : {"position":"fixed", "top":"0px", "left":"0px", "bottom":"0px", "right":"0px", "width":"100%", "height":"100%", "border":"none", "margin":"0", "padding":"0", "overflow":"hidden", "zIndex":999999},
 									"attrs":{"id":"outarea", "width":"100%","height":(dims.height - 60) + "px"}
 								}]
 							},{
 								"tag" : "div",
-								"attrs" : {"id" : "in-options"},
-								"class" : "in-options inputdiv",
+								"attrs" : {"id" : "in-options", "class" : "in-options inputdiv"},
 								"html": JMVC.console._.options
 							}
 						]
-					}
-				],
+					}]
+
+				},
 				hash = false;
 
 			function getUrl() {

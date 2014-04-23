@@ -1,132 +1,195 @@
-JMVC.require('core/lib/border/border', 'widget/snow/snow');
-JMVC.controllers.grind = function () {
-	'use strict';
 
-	this.action_index = function () {
-		JMVC.events.loadify(500);
-		JMVC.require('core/lib/grind/grind', 'core/dim/dim');
+// http://www.jmvc.dev/grind/index/draw/true
+
+JMVC.require(
+	'core/lib/border/border',
+	'widget/snow/snow',
+	'core/lorem'
+);
+JMVC.controllers.grind = function () {
+	"use strict";
+
+	var drawText = !!JMVC.p.draw,
+		link = drawText ?
+			[JMVC.vars.baseurl, JMVC.c].join(JMVC.US)
+			:
+			[JMVC.vars.baseurl, JMVC.c, 'index', 'draw', 'true'].join(JMVC.US);
+	
+	function lorem(n) {
+		return drawText ? JMVC.string.lorem(n) : '';
+	}
+
+	this.action_index = function (){
+		JMVC.events.loadify(1000);
+		JMVC.require(
+			'core/lib/grind/grind',
+			'core/dim/dim',
+			'core/responsive/basic/basic'
+		);
 		JMVC.head.meta('generator', 'jmvc resident in your machine');
-		
-		var config  = [
-			{
-				'target' : '#extralogo',
-				'attrs' : {
-					'id' : 'head'
-				},
-				'style' : {
-					'backgroundColor' : 'red',
-					'marginTop' : '5px'
-				},
-				'class' : 'round12 roundtop'
-			}, {
-				'target' : '#extralogo',
-				'attrs' : {'id' : 'prova1'},
-				'float' : 'left',
-				'class' : 'p100',
-				'style' : {'backgroundColor' : '#EEE'}
-			}, {
-				'target' : '#extralogo',
-				'attrs' : {'id' : 'prova2'},
-				'float' : 'left',
-				'class' : 'p100',
-				'inner' : [
+
+		document.body.className = 'resp';
+
+		function getConfig() {
+			return {
+				target : "#extralogo",
+				content : [
 					{
-						'attrs' : {'id' : 'prova3'},
-						'float' : 'left',
-						'class' : 'p30',
-						'inner' : [{
-							'style' : {
-								'marginBottom' : '50px',
-								'backgroundColor' : 'green'
-							}
-						}, {
-							'style' : {
-								'marginBottom' : '50px',
-								'backgroundColor' : 'green'
-							}
-						}, {
-							'style' : {
-								'backgroundColor' : 'green'
-							}
-						}]
+						attrs : {
+							id : 'head',
+							'class' : 'round12 roundtop pad5'
+						},
+						style : {
+							backgroundColor : 'red',
+							marginTop : '5px'
+						},
+						html : '<h1>' + lorem(3) + '</h1>'
 					}, {
-						'attrs' : {'id' : 'prova4'},
-						'float' : 'left',
-						'class' : 'p50',
-						'inner' : [
-							{'style' : {
-								'backgroundColor' : 'red',
-								'margin' : '5px',
-								'marginBottom' : '0px'
-							}},
-							{'style' : {
-								'backgroundColor' : 'red',
-								'margin' : '5px'
-							}},
-							{'inner' : [
-								{
-									'class' : 'p30 round8 roundleft',
-									'float' : 'left',
-									'style' : {
-										'margin' : '2.5%',
-										'marginRight' : '0px',
-										'backgroundColor' : '#888'
+						attrs : {id : 'prova1', 'class' : 'p100 pad10 round8 roundbottomleft'},
+						style : {'backgroundColor' : '#EEE', 'float' : 'left'},
+						html : lorem(30)
+					}, {
+						attrs : {'id' : 'prova2', 'class' : 'p100'},
+						style : {'float' : 'left'},
+						content : [
+							{
+								attrs : {'id' : 'prova3', 'class' : 'p30'},
+								style : {'float' : 'left'},
+								content : [
+									{
+										style : {
+											marginTop : '5px',
+											backgroundColor : 'green'
+										},
+										attrs : {'class' : 'pad10 round8'},
+										html : lorem(30)
+									}, {
+										style : {
+											marginTop : '5px',
+											backgroundColor : 'green'
+										},
+										attrs : {'class' : 'pad10 round8'},
+										html : lorem(30)
+									}, {
+										style : {
+											marginTop : '5px',
+											backgroundColor : 'green'
+										},
+										attrs : {'class' : 'pad10 round8'},
+										html : lorem(30)
 									}
-								}, {
-									'class' : 'p30 round4',
-									'float' : 'left',
-									'style' : {
-										'margin' : '2.5%',
-										'marginRight' : '0px',
-										'backgroundColor' : '#888'
+								]
+							}, {
+								attrs : {id : 'prova4', 'class' : 'p50'},
+								style : {'float' : 'left'},
+								content : [
+									{
+										style : {
+											backgroundColor : 'red',
+											margin : '5px',
+											marginBottom : '0px'
+										},
+										attrs : {'class' : 'pad10 round8'},
+										html : lorem(5)
+									}, {
+										style : {
+											backgroundColor : 'red',
+											margin : '5px',
+											marginBottom : '0px'
+										},
+										attrs : {'class' : 'pad10 round8'},
+										html : lorem(5)
+									}, {
+										style : {margin : '5px'},
+										content : [
+											{
+												style : {'float' : 'left',width:'33.3%'},
+												content : [{
+													style : {backgroundColor : '#777', marginRight:'5px'},
+													attrs : {'class' : 'round8 pad10'},
+													html : lorem(60)
+												}]
+											}, {
+												style : {'float' : 'left',width:'33.3%'},
+												content : [{
+													style : {backgroundColor : '#999', marginRight:'5px'},
+													attrs : {'class' : 'round8 pad10'},
+													html : lorem(40)
+												}]
+											}, {
+												style : {'float' : 'left',width:'33.3%'},
+												content : [{
+													style : {backgroundColor : '#bbb'},
+													attrs : {'class' : 'round8 pad10'},
+													html : lorem(20)
+												}]
+											},
+											'clearer'
+										]
 									}
-								}, {
-									'class' : 'p30 round8 roundright',
+								]
+							}, {
+								attrs : { 'class' : 'p20 pad10'},
+								style : {
 									'float' : 'left',
-									'style' : {
-										'margin' : '2.5%',
-										'backgroundColor' : '#888'
-									}
+									minHeight : '140px',
+									backgroundColor : '#eee'
 								},
-								'clearer'
-							]}
+								html : lorem()
+
+							},
+							'clearer'
 						]
-					}, {
-						'class' : 'p20',
-						'float' : 'left',
-						'style' : {'height' : '140px'}
 					},
-					'clearer'
-				]
-			},
-			'clearer',
-			{
-				'target' : '#extralogo',
-				'attrs' : {'id' : 'prova5'},
-				'inner' : [
+					'clearer',
 					{
-						'attrs' : {'id' : 'brd1'},
-						'class' : 'p25 round12 roundbottomright',
-						'float' : 'right'
-					}, {
-						'attrs' : {'id' : 'brd2'},
-						'class' : 'p25 round12 roundbottomleft',
-						'float' : 'left',
-						'style' : {'backgroundColor' : 'none'}
-					}, {
-						'attrs' : {'id' : 'brd3'},
-						'class' : 'p30',
-						'float' : 'right'
+						attrs : {id : 'prova5'},
+						content : [
+							{
+								attrs : {id : 'brd1', 'class' : 'p25 round12 roundleft pad5'},
+								style : {'float' : 'left',backgroundColor : '#eee'},
+								html : lorem(10)
+							}, {
+								attrs : {id : 'brd2', 'class' : 'p50 pad5'},
+								style : {'float' : 'left',backgroundColor : '#eee'},
+								html : lorem(20)
+							}, {
+								attrs : {id : 'brd3', 'class' : 'p25 round12 roundbottomright pad5'},
+								style : {'float' : 'left',backgroundColor : '#eee'},
+								html : lorem(10)
+							},
+							'clearer'
+						]
 					},
-					'clearer'
+					'clearer',
+					{
+						attrs : {'id' : 'prova6'},
+						style : {backgroundColor : 'magenta'}
+					},
+					{
+						target:'body',
+						style:{position:'absolute', top:'0px', left:'5px', color:'white'},
+						content : [{
+							grindID : 'txtButt',
+							tag : 'span',
+							style : {cursor:'pointer', color:'white', textDecoration : 'none', fontFamily: 'verdana', fontSize:'10px'},
+							html : 'toggle text'
+						}],
+						cb : toggleText
+					}
 				]
-			},
-			'clearer',
-			{
-				'target' : '#extralogo',
-				'attrs' : {'id' : 'prova6'}
-			}
-		];
+			};
+		}
+		
+		var config = getConfig();
+
+
+		function toggleText (){
+			JMVC.events.bind(this, 'click', function () {
+				drawText = !drawText;
+				JMVC.grind.render(getConfig(), false, 'b960');
+			});
+		}
 
 		JMVC.getView('vacuum')
 			.set({
@@ -134,87 +197,154 @@ JMVC.controllers.grind = function () {
 				'id' : 'extralogo'
 			}).render(function () {
 				JMVC.css.style(JMVC.dom.body(), 'backgroundColor', '#444');
-				JMVC.grind.render(config, 'b960');
+				JMVC.grind.render(config, function (){console.debug('end'); }, 'b960');
 			});
 	};
+
+
+
+
 
 	this.action_direct = function () {
 		JMVC.events.loadify(500);
 		JMVC.require('core/lib/grind/grind', 'core/dim/dim');
 		JMVC.head.meta('generator', 'jmvc resident in your machine');
 
-				
-
-		var config  = [
-			{
-				'target' : 'body',
-				'attrs' : {'id' : 'head'},
-				'class' : '',
-				'style' : {'backgroundColor' : 'red'}
-			}, {
-				'target' : 'body',
-				'attrs' : {'id' : 'prova1'},
-				'float' : 'left',
-				'class' : 'p25'
-			}, {
-				'target' : 'body',
-				'attrs' : {'id' : 'prova2'},
-				'float' : 'left',
-				'class' : 'p75',
-				'inner' : [
-					{
-						'attrs' : {'id' : 'prova3'},
-						'float' : 'left',
-						'class' : 'p30',
-						'inner' : [
-							{'class' : '', 'style' : {'marginBottom' : '50px'}},
-							{'class' : '', 'style' : {'marginBottom' : '50px'}},
-							{'class' : ''}
-						]
-					}, {
-						'attrs' : {'id' : 'prova4'},
-						'float' : 'left',
-						'class' : 'p60',
-						'inner' : [
-							{'class' : ''},
-							{'class' : ''},
-							{
-								'inner' : [
-									{'class' : 'p30', 'style' : {'marginRight' : '5%'}, 'float' : 'left'},
-									{'class' : 'p30', 'style' : {'marginRight' : '5%'}, 'float' : 'left'},
-									{'class' : 'p30',	'float' : 'left'},
-									'clearer'
-								]
-							}
-						]
-					}, {
-						'class' : 'p10',
-						'float' : 'left',
-						'style' : {'height' : '100px'}
+		var config  = {
+			target : 'body',
+			content : [
+				{
+					attrs : {
+						id : 'head',
+						'class' : 'round12 roundtop pad5'
 					},
-					'clearer'
-				]
-			},
-			'clearer',
-			{
-				'target' : 'body',
-				'attrs' : {'id' : 'prova5'},
-				'inner' : [
-					{'attrs' : {'id' : 'brd1'}, 'class' : 'p25', 'float' : 'right'},
-					{'attrs' : {'id' : 'brd2'}, 'class' : 'p25', 'float' : 'left', 'style' : {'backgroundColor' : 'none'}},
-					{'attrs' : {'id' : 'brd3'}, 'class' : 'p25', 'float' : 'right'},
-					'clearer'
-				]
-			},
-			'clearer',
-			{
-				'target' : 'body',
-				'attrs' : {'id' : 'prova6'},
-				'style': {'position' : 'relative'}
-			}
-		];
+					style : {
+						marginTop : '5px'
+					},
+					html : '<h1>' + lorem(3) + '</h1>'
+				}, {
+					attrs : {id : 'prova1', 'class' : 'p100 pad10 round8 roundbottomleft'},
+					style : {'float' : 'left'},
+					html : lorem(30)
+				}, {
+					attrs : {'id' : 'prova2', 'class' : 'p100'},
+					style : {'float' : 'left'},
+					content : [
+						{
+							attrs : {'id' : 'prova3', 'class' : 'p30'},
+							style : {'float' : 'left'},
+							content : [
+								{
+									style : {
+										marginTop : '5px'
+									},
+									attrs : {'class' : 'pad10 round8'},
+									html : lorem(30)
+								}, {
+									style : {
+										marginTop : '5px'
+									},
+									attrs : {'class' : 'pad10 round8'},
+									html : lorem(30)
+								}, {
+									style : {
+										marginTop : '5px'
+									},
+									attrs : {'class' : 'pad10 round8'},
+									html : lorem(30)
+								}
+							]
+						}, {
+							attrs : {id : 'prova4', 'class' : 'p50'},
+							style : {'float' : 'left'},
+							content : [
+								{
+									style : {
+										margin : '5px',
+										marginBottom : '0px'
+									},
+									attrs : {'class' : 'pad10 round8'},
+									html : lorem(5)
+								}, {
+									style : {
+										margin : '5px',
+										marginBottom : '0px'
+									},
+									attrs : {'class' : 'pad10 round8'},
+									html : lorem(5)
+								}, {
+									style : {margin : '5px'},
+									content : [
+										{
+											attrs : {'class' : 'p33'},
+											style : {'float' : 'left'},
+											content : [{
+												style : {marginRight:'5px'},
+												attrs : {'class' : 'round8 pad10'},
+												html : lorem(60)
+											}]
+										}, {
+											attrs : {'class' : 'p33'},
+											style : {'float' : 'left'},
+											content : [{
+												style : {marginRight:'5px'},
+												attrs : {'class' : 'round8 pad10'},
+												html : lorem(40)
+											}]
+										}, {
+											attrs : {'class' : 'p33'},
+											style : {'float' : 'left'},
+											content : [{
+												attrs : {'class' : 'round8 pad10'},
+												html : lorem(20)
+											}]
+										},
+										'clearer'
+									]
+								}
+							]
+						}, {
+							attrs : { 'class' : 'p20 pad10'},
+							style : {
+								'float' : 'left',
+								minHeight : '140px'
+							},
+							html : lorem()
 
-		this.render(function () {JMVC.grind.render(config, 'b960'); });
+						},
+						'clearer'
+					]
+				},
+				'clearer',
+				{
+					attrs : {id : 'prova5'},
+					content : [
+						{
+							attrs : {id : 'brd1', 'class' : 'p25 round12 roundleft pad5'},
+							style : {'float' : 'left'},
+							html : lorem(10)
+						}, {
+							attrs : {id : 'brd2', 'class' : 'p50 pad5'},
+							style : {'float' : 'left'},
+							html : lorem(20)
+						}, {
+							attrs : {id : 'brd3', 'class' : 'p25 round12 roundbottomright pad5'},
+							style : {'float' : 'left'},
+							html : lorem(10)
+						},
+						'clearer'
+					]
+				},
+				'clearer',
+				{
+					attrs : {'id' : 'prova6'}
+				}
+			]
+		};
+
+		this.render(function () {
+			JMVC.grind.render(config, function (){}, 'b960');
+			JMVC.grind.colorize();
+		});
 	};
 };
-

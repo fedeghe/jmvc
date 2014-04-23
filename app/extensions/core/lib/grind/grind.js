@@ -1,70 +1,107 @@
-JMVC.extend('grind', {
-	
-	init : function () {
-		"use strict";
-		JMVC.head.addstyle(JMVC.vars.extensions + 'core/lib/grind/grind.css');
-	},
-	
-	colorize : function () {
-		JMVC.head.addstyle(JMVC.vars.extensions + 'core/lib/grind/color.css');	
-	},
+JMVC.extend('grind', function () {
+    "use strict";
+    JMVC.head.addstyle(JMVC.vars.extensions + 'core/lib/grind/grind.min.css');
 
-	render : function (conf, bodyClass) {
-		"use strict";
-		bodyClass && JMVC.dom.addClass(document.body, bodyClass);
-		this._render(conf);
-	},
+    function render(config, callback) {
+        
+        var mainTarget = config.target,
+            gotContent = 'content' in config;
 
-	_render : function render(conf, t, trg) {
-		"use strict";
-		var j = ~~t,
-			i,
-			c = conf[j],
-			next = conf[j+1],
-			tag = 'div',
-			s,
-			target = (c['target']&& JMVC.dom.find(c['target'])) || trg,
-			cnt = '';
-		
-		if (c === 'clearer') {
-			tag = 'br';
-			c = {"class":"clearer"};
-			cnt = false;
-		}
-		c.tag && (tag = c.tag);
+        if (gotContent) {
+            config.content.map = {};
+            config.content.getNode = function (id) {
+                return id in config.content.map ? config.content.map[id] : false;
+            }
+        }
 
-		s = document.createElement(tag);
-		s.className =  (!!(c['class']) ? c['class'] : '') + (tag !== 'br' ? ' gbox' : '') ;
-		
-		if (typeof c["float"] !== 'undefined') {
-			s.style.cssFloat = c["float"];
-		}
-		if (typeof c['attrs'] !== 'undefined') {
-			for (i in c['attrs']) {
-				s.setAttribute(i, c['attrs'][i]);
-			}
-		}
-		if (c["style"] !== undefined && tag !== 'br') {
-			for (i in c['style']) {
-				s.style[i] = c['style'][i];
-			}
-		}
-		target.appendChild(s);
-		
+        (JMVC.dom.isNode(mainTarget) ?
+            mainTarget
+            :
+            JMVC.dom.find(mainTarget)).innerHTML = '';
 
-		
-		if (c.inner == undefined) {
-			if (cnt !== false) {
-				s.innerHTML = c.html || cnt;
-			}
-		} else {
-			JMVC.grind._render(c.inner, 0, s);
-		}
-		next && (
-			JMVC.grind._render(conf, j + 1, target)
-		);
-		
-	}
+        for (var i = 0, l = config.content.length; i < l; i++) {
+
+            (function recur(item, parent) {
+
+                var tag,
+                    j = 0;
+
+                if (!parent) {
+                    parent = (JMVC.dom.isNode(mainTarget) ?
+                        mainTarget
+                        :
+                        JMVC.dom.find(item.target || mainTarget)
+                    ) || document.body;                
+                }
+
+                if (item == 'clearer') {
+
+                    tag = document.createElement("br");
+                    tag.className = 'clearer';
+                    parent.appendChild(tag);
+                    
+                } else {
+                    
+                    tag = document.createElement(item.tag || "div");
+                    
+                    if (typeof item.attrs !== 'undefined') { 
+                        for (j in item.attrs) {
+                            if (j !== 'class') {
+                                tag.setAttribute(j, item.attrs[j]);
+                            } else {
+                                tag.className = item.attrs[j];
+                            }
+                        }
+                    }
+                    if (typeof item.style !== 'undefined') { 
+                        for (j in item.style) {
+                            tag.style[j.replace(/^float$/,'cssFloat')] = item.style[j];
+                        }
+                    }
+                    /*
+                    // now in style
+                     
+                    if (typeof item['float'] !== 'undefined') { 
+                        tag.style.cssFloat = item['float'];
+                    }*/
+
+                    if (typeof item.html !== 'undefined') { 
+                        tag.innerHTML = item.html;
+                    }
+                    
+                    parent.appendChild(tag);
+
+                    //save a reference back to json
+                    //
+                    item.node = tag;
+
+                    typeof item.cb === "function" && item.cb.call(tag);
+
+                    if (item.content) {
+                        for (var k = 0, h = item.content.length; k < h; k++) {
+                            recur(item.content[k], tag);
+                        }
+                    }
+
+                    if ('grindID' in item) {
+                        alert(item.grindID)
+                       config.content.map[item.grindID] = tag;
+                    }
+                }
+            })(config.content[i]);
+        }   
+        typeof callback === 'function' && callback.call();
+    }
+
+
+    return {
+        render: function(conf, cb, bodyClass) {
+            bodyClass && JMVC.dom.addClass(document.body, bodyClass);
+            render(conf, cb);
+        },
+        colorize : function () {
+            JMVC.head.addstyle(JMVC.vars.extensions + 'core/lib/grind/color.css');  
+        }
+    };
+
 });
-
-

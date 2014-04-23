@@ -29,7 +29,7 @@ JMVC.controllers.demo = function() {
 		JMVC.debug(1)
 	};
 
-	this.after = function() {
+	this.after = function () {
 		JMVC.debug(2)
 		self.endController = JMVC.util.now();
 		JMVC.debug('Controller Time: ' + ((self.endController - self.startController) || 0));
@@ -46,8 +46,7 @@ JMVC.controllers.demo = function() {
 		//JMVC.screensaver.on(5000);
 	};
 
-
-	this.action_index = function() {
+	this.action_index = function () {
 		JMVC.debug('0-')
 		JMVC.require(
 			'vendors/google/analytics/analytics',
@@ -75,14 +74,14 @@ JMVC.controllers.demo = function() {
 
 				'Console': 'console',
 				'Console atom (fullscreen)': 'console/index?fullscreen=true&h=%3Cdiv%20class%3D%22container%22%3E%0A%09%3Cdiv%20class%3D%22wrap%22%3E%0A%09%09%3Cdiv%20class%3D%22circle%20horizontal%20c1%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%09%3Cdiv%20class%3D%22circle%20vertical%20c1%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%09%3Cdiv%20class%3D%22wrap%20r%22%3E%0A%09%09%3Cdiv%20class%3D%22circle%20horizontal%20c2%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%09%3Cdiv%20class%3D%22circle%20vertical%20c2%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%09%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%09%3Cdiv%20class%3D%22circle%20center%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%3C%2Fdiv%3E%0A%0A%0A%0A%0A%0A%0A%0A&j=%2F*%20no%20javascript%20content%20*%2F&c=body%20%7B%0A%20%20background%3A%20%23222%3B%0A%7D%0A.container%20%7B%0A%20%20position%3A%20relative%3B%0A%20%20margin%3A%20auto%3B%0A%20%20width%3A%20250px%3B%0A%7D%0A.wrap%2C%0A.circle%20%7B%0A%20%20-webkit-transition%3A%20-webkit-transform%20500ms%20linear%3B%0A%20%20-webkit-transform-style%3A%20preserve-3d%3B%0A%20%20-moz-transition%3A%20-moz-transform%20500ms%20linear%3B%0A%20%20-moz-transform-style%3A%20preserve-3d%3B%0A%20%20width%3A%20250px%3B%0A%20%20height%3A%20250px%3B%0A%20%20margin%3A%20auto%3B%0A%20%20margin-top%3A%2050px%3B%0A%20%20position%3A%20absolute%3B%0A%7D%0A.circle%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20border%3A%203px%20solid%20%23aaaaaa%3B%0A%20%20border-radius%3A%20250px%3B%0A%20%20margin%3A%20auto%3B%0A%7D%0A.circle.c2%2C%0A.circle.center%20%7B%0A%20%20border%3A%202px%20solid%20%23666666%3B%0A%20%20width%3A%20140px%3B%0A%20%20height%3A%20140px%3B%0A%20%20top%3A%2055px%3B%0A%20%20left%3A%2055px%3B%0A%7D%0A.circle.center%20%7B%0A%20%20background%3A%20%23ffffff%3B%0A%20%20width%3A%2030px%3B%0A%20%20height%3A%2030px%3B%0A%20%20top%3A%20110px%3B%0A%20%20left%3A%20110px%3B%0A%20%20box-shadow%3A%200%200%205px%20%23fff%3B%0A%7D%0A.wrap-electron%20%7B%0A%20%20border%3A%200px%20solid%20%20%23fff%3B%0A%20%20position%3A%20absolute%3B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%20100%25%3B%0A%20%20-webkit-animation%3A%20electron%203s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20electron%203s%20linear%20infinite%3B%0A%7D%0A.electron%20%7B%0A%20%20width%3A%2012px%3B%0A%20%20height%3A%2012px%3B%0A%20%20background%3A%20%23aaaaaa%3B%0A%20%20left%3A%2050%25%3B%0A%20%20margin-left%3A%20-8px%3B%0A%20%20border%3A%20none%3B%0A%20%20top%3A%20-7px%3B%0A%20%20-webkit-transform-origin%3A%2050%25%2050%25%3B%0A%7D%0A.c2%20.wrap-electron%20%7B%0A%20%20-webkit-animation%3A%20electron%202s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20electron%202s%20linear%20infinite%3B%0A%7D%0A.c2%20.electron%20%7B%0A%20%20top%3A%20-6px%3B%0A%7D%0A.wrap%20%7B%0A%20%20border%3A%200px%20solid%20%23aaaaaa%3B%0A%20%20-webkit-animation%3A%20lateral%2015s%20ease-in-out%20infinite%3B%0A%20%20-moz-animation%3A%20lateral%2015s%20ease-in-out%20infinite%3B%0A%7D%0A.wrap.r%20%7B%0A%20%20-webkit-animation%3A%20lateralRevert%208s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20lateralRevert%208s%20linear%20infinite%3B%0A%7D%0A.vertical%20%7B%0A%20%20-webkit-animation%3A%20vertical%208s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20vertical%208s%20linear%20infinite%3B%0A%7D%0A.horizontal%20%7B%0A%20%20-webkit-animation%3A%20horizontalRevert%206s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20horizontalRevert%206s%20linear%20infinite%3B%0A%7D%0A.vertical.c2%20%7B%0A%20%20-webkit-animation%3A%20vertical%204s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20vertical%204s%20linear%20infinite%3B%0A%7D%0A.horizontal.c2%20%7B%0A%20%20-webkit-animation%3A%20horizontalRevert%203s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20horizontalRevert%203s%20linear%20infinite%3B%0A%7D%0A%40-webkit-keyframes%20electron%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20horizontal%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20horizontalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20vertical%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20verticalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20lateral%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20lateralRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20electron%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20horizontal%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20horizontalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20vertical%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20verticalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20lateral%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20lateralRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%7D%0A&l=#preview',
-				'onecodepen (fs)': 'console/index?fullscreen=true&h=%3Ccanvas%20id%3D%22c%22%3E%3C%2Fcanvas%3E&j=var%20a%20%3D%20document.getElementsByTagName(%27canvas%27)%5B0%5D%3B%0Avar%20b%20%3D%20document.body%3B%0A%0Avar%20requestAnimationFrame%20%3D%0A%09window.requestAnimationFrame%20%7C%7C%0A%20%20%20%20window.mozRequestAnimationFrame%20%7C%7C%0A%20%20%20%20window.webkitRequestAnimationFrame%20%7C%7C%0A%20%20%20%20window.msRequestAnimationFrame%20%7C%7C%0A%20%20%20%20function(f)%7B%20setTimeout(f%2C%201000%2F30)%3B%20%7D%3B%0A%0Aa.style.width%20%3D%20(a.width%20%3D%20innerWidth)%20%2B%20%27px%27%3B%0Aa.style.height%20%3D%20(a.height%20%3D%20innerHeight)%20%2B%20%27px%27%3B%0A%0Avar%20c%20%3D%20a.getContext(%272d%27)%3B%0A%0Aif%20(typeof%20raf%20!%3D%3D%20%27undefined%27)%20cancelAnimationFrame(raf)%3B%0A%0Asw%20%3D%20a.width%3B%0Ash%20%3D%20a.height%3B%0A%0Afunction%20drawGlypy(angle%2C%20distance)%20%7B%0A%0A%20%20%20%20var%20rings%20%3D%2019%3B%0A%20%20%20%20for%20(%20var%20j%20%3D%200%3B%20j%20%3C%20rings%3B%20j%2B%2B%20)%20%7B%0A%20%20%20%20%20%20base%20%3D%20Math.pow(1.5%2C%20(j%20%2B%201)%20)%0A%20%20%20%20%20%20d%20%3D%20base%20%2B%20distance%20*%20base%3B%0A%20%20%20%20%20%20x%20%3D%20sw%20%2F%202%20%2B%20Math.cos(angle)%20*%20d%3B%0A%20%20%20%20%20%20y%20%3D%20sh%20%2F%202%20%2B%20Math.sin(angle)%20*%20d%3B%0A%20%20%20%20%20%20size%20%3D%20d%20%2F%2020%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20c.fillStyle%20%3D%20%22hsla(%22%20%2B%20~~(j%20%2F%20rings%20*%20300)%20%2B%20%22%2C100%25%2C%2030%25%2C%201)%22%0A%20%20%20%20%20%20c.beginPath()%3B%0A%20%20%20%20%20%20c.arc(x%2C%20y%2C%20size%20*%203%2C%200%2C%202%20*%20Math.PI%2C%20false)%3B%0A%20%20%20%20%20%20c.fill()%3B%0A%20%20%20%20%7D%0A%7D%0A%0Ap%20%3D%200%3B%0A%0Afunction%20r()%20%7B%0A%09a.width%20%3D%20a.width%3B%0A%09p%2B%2B%3B%0A%09dots%20%3D%2020%3B%0A%09tunnel%20%3D%200%3B%0A%0A%09for%20(%20var%20i%20%3D%200%3B%20i%20%3C%20dots%3B%20i%2B%2B%20)%20%7B%0A%09%20%20%20%20angle%20%3D%20p%20%2F%20100%20%2B%20i%20%2F%20dots%20*%20Math.PI%20*%202%3B%0A%09%09distance%20%3D%20tunnel%20%2B%20%20(Math.sin(3%20*%20i%20%2F%20dots%20*%20Math.PI%20*%202)%20%2B%201%20%2B%20Math.cos(p%20%2F%2020%20%2B%202%20*%20i%20%2F%20dots%20*%20Math.PI%20*%202)%20%2B%201)%20%2F%204%3B%0A%09%09drawGlypy(angle%2C%20distance)%3B%0A%09%7D%0A%0A%20%09%2F%2F%20GLOB%0A%20%09window.raf%20%3D%20requestAnimationFrame(r)%3B%0A%7D%0Ar()%3B%0A&c=html%2C%20body%20%7B%0A%09margin%3A%200%3B%0A%09padding%3A%200%3B%0A%09border%3A%200%3B%0A%09background-color%3Ablack%0A%7D%0A%23c%20%7B%20display%3A%20block%3B%20%7D&l=#preview',
+				'onecodepen (fullscreen)': 'console/index?fullscreen=true&h=%3Ccanvas%20id%3D%22c%22%3E%3C%2Fcanvas%3E&j=var%20a%20%3D%20document.getElementsByTagName(%27canvas%27)%5B0%5D%3B%0Avar%20b%20%3D%20document.body%3B%0A%0Avar%20requestAnimationFrame%20%3D%0A%09window.requestAnimationFrame%20%7C%7C%0A%20%20%20%20window.mozRequestAnimationFrame%20%7C%7C%0A%20%20%20%20window.webkitRequestAnimationFrame%20%7C%7C%0A%20%20%20%20window.msRequestAnimationFrame%20%7C%7C%0A%20%20%20%20function(f)%7B%20setTimeout(f%2C%201000%2F30)%3B%20%7D%3B%0A%0Aa.style.width%20%3D%20(a.width%20%3D%20innerWidth)%20%2B%20%27px%27%3B%0Aa.style.height%20%3D%20(a.height%20%3D%20innerHeight)%20%2B%20%27px%27%3B%0A%0Avar%20c%20%3D%20a.getContext(%272d%27)%3B%0A%0Aif%20(typeof%20raf%20!%3D%3D%20%27undefined%27)%20cancelAnimationFrame(raf)%3B%0A%0Asw%20%3D%20a.width%3B%0Ash%20%3D%20a.height%3B%0A%0Afunction%20drawGlypy(angle%2C%20distance)%20%7B%0A%0A%20%20%20%20var%20rings%20%3D%2019%3B%0A%20%20%20%20for%20(%20var%20j%20%3D%200%3B%20j%20%3C%20rings%3B%20j%2B%2B%20)%20%7B%0A%20%20%20%20%20%20base%20%3D%20Math.pow(1.5%2C%20(j%20%2B%201)%20)%0A%20%20%20%20%20%20d%20%3D%20base%20%2B%20distance%20*%20base%3B%0A%20%20%20%20%20%20x%20%3D%20sw%20%2F%202%20%2B%20Math.cos(angle)%20*%20d%3B%0A%20%20%20%20%20%20y%20%3D%20sh%20%2F%202%20%2B%20Math.sin(angle)%20*%20d%3B%0A%20%20%20%20%20%20size%20%3D%20d%20%2F%2020%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20c.fillStyle%20%3D%20%22hsla(%22%20%2B%20~~(j%20%2F%20rings%20*%20300)%20%2B%20%22%2C100%25%2C%2030%25%2C%201)%22%0A%20%20%20%20%20%20c.beginPath()%3B%0A%20%20%20%20%20%20c.arc(x%2C%20y%2C%20size%20*%203%2C%200%2C%202%20*%20Math.PI%2C%20false)%3B%0A%20%20%20%20%20%20c.fill()%3B%0A%20%20%20%20%7D%0A%7D%0A%0Ap%20%3D%200%3B%0A%0Afunction%20r()%20%7B%0A%09a.width%20%3D%20a.width%3B%0A%09p%2B%2B%3B%0A%09dots%20%3D%2020%3B%0A%09tunnel%20%3D%200%3B%0A%0A%09for%20(%20var%20i%20%3D%200%3B%20i%20%3C%20dots%3B%20i%2B%2B%20)%20%7B%0A%09%20%20%20%20angle%20%3D%20p%20%2F%20100%20%2B%20i%20%2F%20dots%20*%20Math.PI%20*%202%3B%0A%09%09distance%20%3D%20tunnel%20%2B%20%20(Math.sin(3%20*%20i%20%2F%20dots%20*%20Math.PI%20*%202)%20%2B%201%20%2B%20Math.cos(p%20%2F%2020%20%2B%202%20*%20i%20%2F%20dots%20*%20Math.PI%20*%202)%20%2B%201)%20%2F%204%3B%0A%09%09drawGlypy(angle%2C%20distance)%3B%0A%09%7D%0A%0A%20%09%2F%2F%20GLOB%0A%20%09window.raf%20%3D%20requestAnimationFrame(r)%3B%0A%7D%0Ar()%3B%0A&c=html%2C%20body%20%7B%0A%09margin%3A%200%3B%0A%09padding%3A%200%3B%0A%09border%3A%200%3B%0A%09background-color%3Ablack%0A%7D%0A%23c%20%7B%20display%3A%20block%3B%20%7D&l=#preview',
 				'Console cs': 'demo/cs/',
+				'Center':'console/index?fullscreen=true&h=%3Cdiv%20class%3D%22center%20centerALL%22%3E%0A%20%20%20%20%3Cdiv%20class%3D%22inner%22%3ELorem%20ipsum%20dolor%20sit%20amet%2C%20consectetur%20adipisicing%20elit.%20Alias%20ducimus%20sed%20optio%20esse%20architecto%20quae%20earum%20repellendus%20consequatur%20accusamus%20ipsam%3F%3C%2Fdiv%3E%0A%3C%2Fdiv%3E&j=%2F*%20no%20javascript%20content%20*%2F&c=body%7B%0A%20%20%20%20font-family%3Averdana%3B%0A%7D%0A.center%7B%0A%20%20%20%20height%3A50%25%3B%0A%20%20%20%20width%3A50%25%3B%0A%20%20%20%20background-color%3A%20gainsboro%3B%0A%20%20%20%20position%3Aabsolute%3B%0A%20%20%20%20display%3Atable%3B%0A%7D%0A.centerV%20%7B%0A%20%20%20%20top%20%3A%2025%25%3B%0A%7D%0A.centerO%20%7B%0A%20%20%20%20left%3A25%25%3B%0A%7D%0A.centerALL%7B%0A%20%20%20%20top%3A25%25%3B%0A%20%20%20%20left%3A25%25%3B%0A%7D%0A.center%20.inner%7B%0A%20%20%20%20padding%3A50px%3B%0A%20%20%20%20display%3Atable-cell%3B%0A%20%20%20%20vertical-align%3Amiddle%3B%0A%7D&l=undefined#preview',
 				'Some widgets': 'test_widget',
 				'Wcave game': 'wcave.jmvc',
 				'Canvas based Image filter': 'demo/img',
 				'Streetview panorama animator': '?map=true',
 
-				//				'Console cube' : 'console/index?h=%3Cdiv%20class%3D%22flip-card-content%22%3E%0A%20%20%3Cdiv%20class%3D%22flip-card-side-a%22%20style%3D%22background%3Ared%22%3E%0A%20%20%20%20FRONT%20%0A%20%20%3C%2Fdiv%3E%0A%20%20%3Cdiv%20class%3D%22flip-card-side-b%22%20style%3D%22background%3Agreen%22%3E%0A%20%20%20%20BACK%0A%20%20%3C%2Fdiv%3E%0A%3C%2Fdiv%3E%0A%0A%3Cbutton%20id%3D%22button%22%3EFlip%3C%2Fbutton%3E&j=%24(%22%23button%22).on('click'%2C%20function()%7B%0A%20%20%24(%22.flip-card-content%22).toggleClass(%22flip%22)%3B%0A%7D)%3B&c=.flip-card-content%20%7B%0A%20%20%20%20position%3A%20relative%3B%0A%20%20%20%20margin%3A%20100px%3B%0A%20%20%20%20width%3A%20200px%3B%0A%20%20%20%20height%3A%20200px%3B%0A%20%20%20%20transform-style%3A%20preserve-3d%3B%0A%20%20%20%20perspective%3A%201000px%3B%0A%7D%0A%0A.flip-card-side-a%2C%0A.flip-card-side-b%20%7B%0A%20%20%20%20width%3A%20100%25%3B%0A%20%20%20%20position%3A%20absolute%3B%0A%20%20%20%20height%3A%20100%25%3B%0A%20%20%20%20backface-visibility%3A%20hidden%3B%0A%20%20%20%20transform-origin%3A%2050%25%2050%25%3B%0A%20%20%20%20transition%3A%20all%20.5s%20ease-in-out%3B%0A%7D%0A%0A.flip-card-side-a%20%7B%0A%20%20transform%3A%20rotateY(0deg)%20translateZ(100px)%3B%0A%20%20z-index%3A%201%3B%0A%7D%0A.flip-card-side-b%20%7B%0A%20%20transform%3A%20rotateY(90deg)%20translateZ(100px)%3B%0A%7D%0A%0A.flip%20.flip-card-side-a%20%7B%0A%20%20transform%3A%20rotateY(-90deg)%20translateZ(100px)%3B%0A%7D%0A.flip%20.flip-card-side-b%20%7B%0A%20%20transform%3A%20rotateY(0deg)%20translateZ(100px)%3B%0A%20%20z-index%3A%201%3B%0A%7D&l=http%3A%2F%2Fcodeorigin.jquery.com%2Fjquery-1.10.2.min.js#preview',
 				'Some fun': 'demo/flag',
 
 				'JMVC Logo plotted': 'demo/logo',
@@ -186,17 +185,131 @@ JMVC.controllers.demo = function() {
 			*/
 		});
 		JMVC.debug('0+')
+	};
+
+	this.action_demo = function () {
+		JMVC.require('core/lib/grind/grind');
+
+		function makeList (title, links) {
+			var cnt = [{
+					style:{padding : '10px 0px'},
+					html : '<strong>' + title + '</strong>'
+				}],
+				inner = {tag : 'ul', content : []};
+
+			for (var k in links) {
+				inner.content.push({
+					tag : 'li',
+					content : [{
+						tag : 'a',
+						html : k,
+						attrs : {href : links[k]}
+					}]
+				});
+			}
+			cnt.push(inner);
+
+			return {
+				content : cnt,
+				style : {backgroundColor : 'yellow', margin : '5px', 'float' : 'left'},
+				attrs : {'class' : 'round8 pad5'}
+			};
+		}
+
+		var config = {
+			target : '#extralogo',
+			content : [
+				makeList('Image', {
+					'Image filters' : '/demo/img',
+					'Canvas Editor (WIP)' : '/canvaseditor',
+					'Canvas editor (old layout)' : '/canvaseditor?v=1'
+				}),
+				makeList('Google', {
+					'Streetview panorama animator' : '/?map=true',
+					'Google' : '/google.jmvc',
+					'Google flash' : '/google.jmvc?flash',
+					'Google aberration' : '/google.jmvc?aberrate'
+				}),
+				makeList('JMVC', {
+					'Model' : '/demo/model',
+					'Controller' : '/demo/controller',
+					'View' : '/demo/view'
+				}),
+				makeList('css3 exp', {
+					'6 Divs Cube css3 tranformations ' : '/demo/divrot.js'
+				}),
+				'clearer',
+				makeList('Console', {
+					'Console' : '/console',
+					'Console atom (fullscreen)' : '/console/index?fullscreen=true&h=%3Cdiv%20class%3D%22container%22%3E%0A%09%3Cdiv%20class%3D%22wrap%22%3E%0A%09%09%3Cdiv%20class%3D%22circle%20horizontal%20c1%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%09%3Cdiv%20class%3D%22circle%20vertical%20c1%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%09%3Cdiv%20class%3D%22wrap%20r%22%3E%0A%09%09%3Cdiv%20class%3D%22circle%20horizontal%20c2%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%09%3Cdiv%20class%3D%22circle%20vertical%20c2%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%09%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%09%3Cdiv%20class%3D%22circle%20center%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%3C%2Fdiv%3E%0A%0A%0A%0A%0A%0A%0A%0A&j=%2F*%20no%20javascript%20content%20*%2F&c=body%20%7B%0A%20%20background%3A%20%23222%3B%0A%7D%0A.container%20%7B%0A%20%20position%3A%20relative%3B%0A%20%20margin%3A%20auto%3B%0A%20%20width%3A%20250px%3B%0A%7D%0A.wrap%2C%0A.circle%20%7B%0A%20%20-webkit-transition%3A%20-webkit-transform%20500ms%20linear%3B%0A%20%20-webkit-transform-style%3A%20preserve-3d%3B%0A%20%20-moz-transition%3A%20-moz-transform%20500ms%20linear%3B%0A%20%20-moz-transform-style%3A%20preserve-3d%3B%0A%20%20width%3A%20250px%3B%0A%20%20height%3A%20250px%3B%0A%20%20margin%3A%20auto%3B%0A%20%20margin-top%3A%2050px%3B%0A%20%20position%3A%20absolute%3B%0A%7D%0A.circle%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20border%3A%203px%20solid%20%23aaaaaa%3B%0A%20%20border-radius%3A%20250px%3B%0A%20%20margin%3A%20auto%3B%0A%7D%0A.circle.c2%2C%0A.circle.center%20%7B%0A%20%20border%3A%202px%20solid%20%23666666%3B%0A%20%20width%3A%20140px%3B%0A%20%20height%3A%20140px%3B%0A%20%20top%3A%2055px%3B%0A%20%20left%3A%2055px%3B%0A%7D%0A.circle.center%20%7B%0A%20%20background%3A%20%23ffffff%3B%0A%20%20width%3A%2030px%3B%0A%20%20height%3A%2030px%3B%0A%20%20top%3A%20110px%3B%0A%20%20left%3A%20110px%3B%0A%20%20box-shadow%3A%200%200%205px%20%23fff%3B%0A%7D%0A.wrap-electron%20%7B%0A%20%20border%3A%200px%20solid%20%20%23fff%3B%0A%20%20position%3A%20absolute%3B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%20100%25%3B%0A%20%20-webkit-animation%3A%20electron%203s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20electron%203s%20linear%20infinite%3B%0A%7D%0A.electron%20%7B%0A%20%20width%3A%2012px%3B%0A%20%20height%3A%2012px%3B%0A%20%20background%3A%20%23aaaaaa%3B%0A%20%20left%3A%2050%25%3B%0A%20%20margin-left%3A%20-8px%3B%0A%20%20border%3A%20none%3B%0A%20%20top%3A%20-7px%3B%0A%20%20-webkit-transform-origin%3A%2050%25%2050%25%3B%0A%7D%0A.c2%20.wrap-electron%20%7B%0A%20%20-webkit-animation%3A%20electron%202s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20electron%202s%20linear%20infinite%3B%0A%7D%0A.c2%20.electron%20%7B%0A%20%20top%3A%20-6px%3B%0A%7D%0A.wrap%20%7B%0A%20%20border%3A%200px%20solid%20%23aaaaaa%3B%0A%20%20-webkit-animation%3A%20lateral%2015s%20ease-in-out%20infinite%3B%0A%20%20-moz-animation%3A%20lateral%2015s%20ease-in-out%20infinite%3B%0A%7D%0A.wrap.r%20%7B%0A%20%20-webkit-animation%3A%20lateralRevert%208s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20lateralRevert%208s%20linear%20infinite%3B%0A%7D%0A.vertical%20%7B%0A%20%20-webkit-animation%3A%20vertical%208s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20vertical%208s%20linear%20infinite%3B%0A%7D%0A.horizontal%20%7B%0A%20%20-webkit-animation%3A%20horizontalRevert%206s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20horizontalRevert%206s%20linear%20infinite%3B%0A%7D%0A.vertical.c2%20%7B%0A%20%20-webkit-animation%3A%20vertical%204s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20vertical%204s%20linear%20infinite%3B%0A%7D%0A.horizontal.c2%20%7B%0A%20%20-webkit-animation%3A%20horizontalRevert%203s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20horizontalRevert%203s%20linear%20infinite%3B%0A%7D%0A%40-webkit-keyframes%20electron%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20horizontal%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20horizontalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20vertical%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20verticalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20lateral%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20lateralRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20electron%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20horizontal%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20horizontalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20vertical%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20verticalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20lateral%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20lateralRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%7D%0A&l=#preview',
+					'Onecodepen (fs)' : '/console/index?fullscreen=true&h=%3Ccanvas%20id%3D%22c%22%3E%3C%2Fcanvas%3E&j=var%20a%20%3D%20document.getElementsByTagName(%27canvas%27)%5B0%5D%3B%0Avar%20b%20%3D%20document.body%3B%0A%0Avar%20requestAnimationFrame%20%3D%0A%09window.requestAnimationFrame%20%7C%7C%0A%20%20%20%20window.mozRequestAnimationFrame%20%7C%7C%0A%20%20%20%20window.webkitRequestAnimationFrame%20%7C%7C%0A%20%20%20%20window.msRequestAnimationFrame%20%7C%7C%0A%20%20%20%20function(f)%7B%20setTimeout(f%2C%201000%2F30)%3B%20%7D%3B%0A%0Aa.style.width%20%3D%20(a.width%20%3D%20innerWidth)%20%2B%20%27px%27%3B%0Aa.style.height%20%3D%20(a.height%20%3D%20innerHeight)%20%2B%20%27px%27%3B%0A%0Avar%20c%20%3D%20a.getContext(%272d%27)%3B%0A%0Aif%20(typeof%20raf%20!%3D%3D%20%27undefined%27)%20cancelAnimationFrame(raf)%3B%0A%0Asw%20%3D%20a.width%3B%0Ash%20%3D%20a.height%3B%0A%0Afunction%20drawGlypy(angle%2C%20distance)%20%7B%0A%0A%20%20%20%20var%20rings%20%3D%2019%3B%0A%20%20%20%20for%20(%20var%20j%20%3D%200%3B%20j%20%3C%20rings%3B%20j%2B%2B%20)%20%7B%0A%20%20%20%20%20%20base%20%3D%20Math.pow(1.5%2C%20(j%20%2B%201)%20)%0A%20%20%20%20%20%20d%20%3D%20base%20%2B%20distance%20*%20base%3B%0A%20%20%20%20%20%20x%20%3D%20sw%20%2F%202%20%2B%20Math.cos(angle)%20*%20d%3B%0A%20%20%20%20%20%20y%20%3D%20sh%20%2F%202%20%2B%20Math.sin(angle)%20*%20d%3B%0A%20%20%20%20%20%20size%20%3D%20d%20%2F%2020%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20c.fillStyle%20%3D%20%22hsla(%22%20%2B%20~~(j%20%2F%20rings%20*%20300)%20%2B%20%22%2C100%25%2C%2030%25%2C%201)%22%0A%20%20%20%20%20%20c.beginPath()%3B%0A%20%20%20%20%20%20c.arc(x%2C%20y%2C%20size%20*%203%2C%200%2C%202%20*%20Math.PI%2C%20false)%3B%0A%20%20%20%20%20%20c.fill()%3B%0A%20%20%20%20%7D%0A%7D%0A%0Ap%20%3D%200%3B%0A%0Afunction%20r()%20%7B%0A%09a.width%20%3D%20a.width%3B%0A%09p%2B%2B%3B%0A%09dots%20%3D%2020%3B%0A%09tunnel%20%3D%200%3B%0A%0A%09for%20(%20var%20i%20%3D%200%3B%20i%20%3C%20dots%3B%20i%2B%2B%20)%20%7B%0A%09%20%20%20%20angle%20%3D%20p%20%2F%20100%20%2B%20i%20%2F%20dots%20*%20Math.PI%20*%202%3B%0A%09%09distance%20%3D%20tunnel%20%2B%20%20(Math.sin(3%20*%20i%20%2F%20dots%20*%20Math.PI%20*%202)%20%2B%201%20%2B%20Math.cos(p%20%2F%2020%20%2B%202%20*%20i%20%2F%20dots%20*%20Math.PI%20*%202)%20%2B%201)%20%2F%204%3B%0A%09%09drawGlypy(angle%2C%20distance)%3B%0A%09%7D%0A%0A%20%09%2F%2F%20GLOB%0A%20%09window.raf%20%3D%20requestAnimationFrame(r)%3B%0A%7D%0Ar()%3B%0A&c=html%2C%20body%20%7B%0A%09margin%3A%200%3B%0A%09padding%3A%200%3B%0A%09border%3A%200%3B%0A%09background-color%3Ablack%0A%7D%0A%23c%20%7B%20display%3A%20block%3B%20%7D&l=#preview',
+					'Console cs' : '/demo/cs/'
+				}),
+				makeList('Widget', {
+					'Some widgets' : '/test_widget',
+					'modal' : 'test_modal'
+				}),
+				makeList('Games', {
+					'Wcave game' : '/wcave.jmvc'
+				}),
+				makeList('Test', {
+					'strict' : '/test_strict',
+					'obj/bucket' : '/test_bucket',
+					'obj/deque' : '/test_deque',
+					'obj/date' : '/test_date',
+					'lib/array' : '/test_array',
+					'findRich' : '/test_arrayOp',
+					'Key' : '/test_key',
+					'lib/crypt' : '/test_crypt',
+					'FizzBuzz perf' : '/test_fizzbuzz'
+				}),
+
+				
+				makeList('Exp', {
+				'cubic': '/cubic'
+				}),
+				'clearer'
+
+
+			]
+		};
+/*
+		links = {
+				'Some fun': 'demo/flag',
+
+				'JMVC Logo plotted': 'demo/logo',
+				'Observer': 'demo/observer.jmvc',
+				'Sheduler': 'demo/scheduler.jmvc',
+				'Effects': 'demo/fx.jmvc',
+				
+				'Grind': 'grind',
+				'canvas ext using 2d lib': 'test_canvas',
+
+
+				'direct&crypt_image': 'demo/direct',
+				'Tabs': 'tabs/one/i_say/Hello%20my%20Guest',
+
+				
+
+				'cubic': 'cubic',
+
+				'neverending carpet': 'carpet',
+
+			},
+*/
+		JMVC.getView('vacuum')
+			.set({
+				'style' : 'font-family:verdana;',
+				'id' : 'extralogo'
+			}).render(function () {
+				JMVC.css.style(JMVC.dom.body(), 'backgroundColor', '#444');
+				JMVC.grind.render(config, function (){console.debug('end'); }, 'b960');
+			});
 
 	};
 
-
-
-
-
-
-
 	/* test a VIEW*/
-	this.action_view = function() {
+	this.action_view = function () {
 		var v = JMVC.getView('test'),
 			v1 = JMVC.factory('view', 'test1'),
 			v2 = JMVC.factory('view', 'test2'),
@@ -212,12 +325,8 @@ JMVC.controllers.demo = function() {
 		v.render();
 	};
 
-
-
-
-
 	/* test some MODELs */
-	this.action_model = function() {
+	this.action_model = function () {
 		var p1 = JMVC.getModel('xxx/Persona'),
 			p2 = JMVC.getModel('Persona'),
 			p3 = JMVC.getModel('Persona2'),
@@ -252,36 +361,23 @@ JMVC.controllers.demo = function() {
 		v.render();
 	};
 
-
-
-
-	this.action_modelviewparse = function() {
+	this.action_modelviewparse = function () {
 		var p = JMVC.getModel('Persona'),
 			v = JMVC.getView('parse');
 		p.set('name', 'Fredrich');
 		v.parse(p).render();
 	};
 
-
-
-
-
 	/* test a CONTROLLER */
-	this.action_controller = function() {
+	this.action_controller = function () {
 		this.set('nome', 'Federico');
 		alert(this.get('nome'));
 	};
 
-
-
-
-
-	this.action_controller2 = function() {
+	this.action_controller2 = function () {
 		this.set('nome', 'Federico2');
 		alert(this.get('nome'));
 	};
-
-
 
 	/* just to celebrate a better time */
 	this.action_flag = function(p) {
@@ -456,7 +552,6 @@ JMVC.controllers.demo = function() {
 				back();
 			}
 		});
-
 	};
 
 	this.action_direct = function() {
@@ -504,7 +599,6 @@ JMVC.controllers.demo = function() {
 			}
 		);
 	};
-
 
 	this.action_img = function() {
 		JMVC.head.title('Image Filters');
@@ -694,7 +788,6 @@ JMVC.controllers.demo = function() {
 		});
 	};
 
-
 	this.action_viewplus = function() {
 		JMVC.head.title('Hello');
 		var sv = JMVC.getView('superview');
@@ -703,8 +796,6 @@ JMVC.controllers.demo = function() {
 		sv.set('hello', ' yeah hello');
 		v.render();
 	};
-
-
 
 	this.action_logo = function() {
 		JMVC.events.loadify(1000);
@@ -921,9 +1012,7 @@ JMVC.controllers.demo = function() {
 		});
 
 		JMVC.W.s = s;
-
 	};
-
 
 	this.action_observer = function() {
 		JMVC.require('core/codeview/codehl/codehl');
@@ -995,8 +1084,6 @@ JMVC.controllers.demo = function() {
 				list.build(ulist);
 			}
 		});
-
-
 	}
 
 	this.action_fx = function() {
@@ -1059,7 +1146,6 @@ JMVC.controllers.demo = function() {
 			}
 		});
 	};
-
 
 	this.action_divrot = function() {
 
