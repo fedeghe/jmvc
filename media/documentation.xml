@@ -14,9 +14,9 @@
         <param name="">this function needs no parameters</param>
     </params>
     <returns>void (undefined)</returns>
-    <sample>// show the console &#10;JMVC.console();&#10;// and hide it after 5 seconds &#10;window.setTimeout(function () {JMVC.console(); }, 5000);</sample>
+    <sample>// show the console &#10;JMVC.console();&#10;// and hide it after 5 seconds &#10;window.setTimeout(function () {JMVC.console(); }, 6000);</sample>
     <status>complete</status>
-    <code>JMVC.console();window.setTimeout(function () {JMVC.console(); }, 5000);</code>
+    <code>JMVC.console();window.setTimeout(function () {JMVC.console(); }, 6000);</code>
 </function>
 <!--
 [MALTA] src/jmvc/debug.xml
@@ -28,16 +28,15 @@
         <param name="el">all parameters to be debugged</param>
     </params>
     <returns>void (undefined)</returns>
-    <sample>&#10;
+    <sample>var arr = [1,2,3,4,5],&#10;
+    obj =  {name : "Federico", surname : "Ghedina", say : "WAT"},&#10;
+    foo = function (){alert('foo'); };&#10;&#10;
 // open the console before running&#10;
 //&#10;
-var arr = [1,2,3,4,5],&#10;
-    obj =  {name : "Federico", surname : "Ghedina", say : "WAT"},&#10;
-    foo = function (){alert('foo'); };&#10;
-JMVC.debug(arr, obj, foo);
+JMVC.debug(arr), JMVC.debug(obj), JMVC.debug(foo);
 </sample>
     <status>human</status>
-    <code>var arr = [1,2,3,4,5], obj =  {name : 'Federico', surname : 'Ghedina', say : 'WAT'},foo = function (){alert('foo'); };JMVC.debug(arr, obj, foo)</code>
+    <code>var arr = [1,2,3,4,5], obj =  {name : 'Federico', surname : 'Ghedina', say : 'WAT'},foo = function (){alert('foo'); };JMVC.debug(arr), JMVC.debug(obj), JMVC.debug(foo);</code>
 </function>
 <!--
 [MALTA] src/jmvc/del.xml
@@ -51,19 +50,23 @@ JMVC.debug(arr, obj, foo);
     </params>
     <returns>JMVC</returns>
     <sample>JMVC.set('a', 10);&#10;
-var t = JMVC.get('a');&#10;
+JMVC.debug(JMVC.get('a'));&#10;
 JMVC.del('a');&#10;
+JMVC.debug(JMVC.get('a'));&#10;
 &#10;
-JMVC.set('a', 10, localStorage);&#10;
-var t = JMVC.get('a', localStorage);&#10;
+JMVC.set('a', 11, localStorage);&#10;
+JMVC.debug(JMVC.get('a', localStorage));&#10;
 JMVC.del('a', localStorage);&#10;
+JMVC.debug(JMVC.get('a', localStorage));&#10;
 &#10;
-JMVC.set('a', 10, sessionStorage);&#10;
-var t = JMVC.get('a', sessionStorage);&#10;
-JMVC.del('a', sessionStorage);
+JMVC.set('a', 12, sessionStorage);&#10;
+JMVC.debug(JMVC.get('a', sessionStorage));&#10;
+JMVC.del('a', sessionStorage);&#10;
+JMVC.debug(JMVC.get('a', sessionStorage));&#10;
 </sample>
     <status>testing</status>
     <testlink>test_api_jmvc_delgetset</testlink>
+    <code>JMVC.set('a', 10);JMVC.debug(JMVC.get('a'));JMVC.del('a');JMVC.debug(JMVC.get('a'));JMVC.set('a', 11, localStorage);JMVC.debug(JMVC.get('a', localStorage));JMVC.del('a', localStorage);JMVC.debug(JMVC.get('a', localStorage));JMVC.set('a', 12, sessionStorage);JMVC.debug(JMVC.get('a', sessionStorage));JMVC.del('a', sessionStorage);JMVC.debug(JMVC.get('a', sessionStorage));</code>
 </function>
 <!--
 [MALTA] src/jmvc/delegate.xml
@@ -99,6 +102,7 @@ var obj = {name:'Federico', surname : 'Ghedina', says : 'wat'},&#10;
     arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],&#10;
     objAfter = JMVC.each(obj, function (el, i) {&#10;
         console.debug(i, el);&#10;
+        return i + '-' + el;&#10;
     }),&#10;
     arrAfter = JMVC.each(arr, function f(el, i) {&#10;
         if (i % 2) { //will skip odd indexed elements&#10;
@@ -110,6 +114,7 @@ console.debug(obj, objAfter);&#10;
 console.debug(arr, arrAfter);&#10;</sample>
     <status>testing</status>
     <testlink>test_api_jmvc_each</testlink>
+    <code>var obj = {name:'Federico', surname : 'Ghedina', says : 'wat'},arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],objAfter = JMVC.each(obj, function (el, i) {console.debug(i, el); return i + '-' + el;}),arrAfter = JMVC.each(arr, function f(el, i) {if (i % 2) {f.continue();}return i;});console.debug(obj, objAfter);console.debug(arr, arrAfter);</code>
 </function>
 <!--
 [MALTA] src/jmvc/extend.xml
@@ -127,22 +132,23 @@ console.debug(arr, arrAfter);&#10;</sample>
     // if specified, will lock the extension&#10;
     // for any value returned but true&#10;
     initCheck : function () {&#10;
-        console.debug('init check');&#10;
+        alert('init check');&#10;
         return true;&#10;
     },&#10;
     // if specified, will be executed immediately&#10;
     init : function () {&#10;
-        console.debug('init fooWidget');&#10;
+        alert('init fooWidget');&#10;
     },&#10;
     // ... specify your methods&#10;
     start : function () {&#10;
-        console.debug('doing foo');&#10;
+        alert('doing foo');&#10;
     }&#10;
     // ...&#10;
 });&#10;
 JMVC.fooWidget.start();
     </sample>
     <testlink>test_api_jmvc_extend</testlink>
+    <code>JMVC.extend('fooWidget', {initCheck : function () {alert('init check');return true;},init : function () {alert('init fooWidget');},start : function () {alert('doing foo');}});JMVC.fooWidget.start();</code>
 </function>
 <!--
 [MALTA] src/jmvc/factory.xml
@@ -173,20 +179,24 @@ console.debug(you.hello());</sample>
         <param name="storage">meant to be localStorage or sessionStorage</param>
     </params>
     <returns>the variable reference or value if found, or undefined</returns>
-        <sample>JMVC.set('a', 10);&#10;
-var t = JMVC.get('a');&#10;
+    <sample>JMVC.set('a', 10);&#10;
+JMVC.debug(JMVC.get('a'));&#10;
 JMVC.del('a');&#10;
+JMVC.debug(JMVC.get('a'));&#10;
 &#10;
-JMVC.set('a', 10, localStorage);&#10;
-var t = JMVC.get('a', localStorage);&#10;
+JMVC.set('a', 11, localStorage);&#10;
+JMVC.debug(JMVC.get('a', localStorage));&#10;
 JMVC.del('a', localStorage);&#10;
+JMVC.debug(JMVC.get('a', localStorage));&#10;
 &#10;
-JMVC.set('a', 10, sessionStorage);&#10;
-var t = JMVC.get('a', sessionStorage);&#10;
-JMVC.del('a', sessionStorage);
+JMVC.set('a', 12, sessionStorage);&#10;
+JMVC.debug(JMVC.get('a', sessionStorage));&#10;
+JMVC.del('a', sessionStorage);&#10;
+JMVC.debug(JMVC.get('a', sessionStorage));&#10;
 </sample>
     <status>testing</status>
     <testlink>test_api_jmvc_delgetset</testlink>
+    <code>JMVC.set('a', 10);JMVC.debug(JMVC.get('a'));JMVC.del('a');JMVC.debug(JMVC.get('a'));JMVC.set('a', 11, localStorage);JMVC.debug(JMVC.get('a', localStorage));JMVC.del('a', localStorage);JMVC.debug(JMVC.get('a', localStorage));JMVC.set('a', 12, sessionStorage);JMVC.debug(JMVC.get('a', sessionStorage));JMVC.del('a', sessionStorage);JMVC.debug(JMVC.get('a', sessionStorage));</code>
 </function>
 <!--
 [MALTA] src/jmvc/getModel.xml
@@ -516,20 +526,24 @@ console.log(t);</sample>
         <param name="storage">meant to be localStorage or sessionStorage</param>
     </params>
     <returns>void (undefined)</returns>
-    <status>incomplete</status>
     <sample>JMVC.set('a', 10);&#10;
-var t = JMVC.get('a');&#10;
+JMVC.debug(JMVC.get('a'));&#10;
 JMVC.del('a');&#10;
+JMVC.debug(JMVC.get('a'));&#10;
 &#10;
-JMVC.set('a', 10, localStorage);&#10;
-var t = JMVC.get('a', localStorage);&#10;
+JMVC.set('a', 11, localStorage);&#10;
+JMVC.debug(JMVC.get('a', localStorage));&#10;
 JMVC.del('a', localStorage);&#10;
+JMVC.debug(JMVC.get('a', localStorage));&#10;
 &#10;
-JMVC.set('a', 10, sessionStorage);&#10;
-var t = JMVC.get('a', sessionStorage);&#10;
-JMVC.del('a', sessionStorage);
+JMVC.set('a', 12, sessionStorage);&#10;
+JMVC.debug(JMVC.get('a', sessionStorage));&#10;
+JMVC.del('a', sessionStorage);&#10;
+JMVC.debug(JMVC.get('a', sessionStorage));&#10;
 </sample>
+    <status>testing</status>
     <testlink>test_api_jmvc_delgetset</testlink>
+    <code>JMVC.set('a', 10);JMVC.debug(JMVC.get('a'));JMVC.del('a');JMVC.debug(JMVC.get('a'));JMVC.set('a', 11, localStorage);JMVC.debug(JMVC.get('a', localStorage));JMVC.del('a', localStorage);JMVC.debug(JMVC.get('a', localStorage));JMVC.set('a', 12, sessionStorage);JMVC.debug(JMVC.get('a', sessionStorage));JMVC.del('a', sessionStorage);JMVC.debug(JMVC.get('a', sessionStorage));</code>
 </function>
     <param>
         <name>W</name>
@@ -1559,6 +1573,10 @@ t()&#10;
     </params>
     <returns>void (undefined)</returns>
     <status>incomplete</status>
+    <sample>JMVC.events.bind(window, 'click', function (e){&#10;
+    JMVC.events.kill(e);&#10;
+});</sample>
+    <code>JMVC.events.bind(window, 'click', function (e){JMVC.events.kill(e);});</code>
 </function>
 <!--
 [MALTA] src/events/loadify.xml

@@ -11,20 +11,21 @@
     // if specified, will lock the extension&#10;
     // for any value returned but true&#10;
     initCheck : function () {&#10;
-        console.debug('init check');&#10;
+        alert('init check');&#10;
         return true;&#10;
     },&#10;
     // if specified, will be executed immediately&#10;
     init : function () {&#10;
-        console.debug('init fooWidget');&#10;
+        alert('init fooWidget');&#10;
     },&#10;
     // ... specify your methods&#10;
     start : function () {&#10;
-        console.debug('doing foo');&#10;
+        alert('doing foo');&#10;
     }&#10;
     // ...&#10;
 });&#10;
 JMVC.fooWidget.start();
     </sample>
     <testlink>test_api_jmvc_extend</testlink>
+    <code>JMVC.extend('fooWidget', {initCheck : function () {alert('init check');return true;},init : function () {alert('init fooWidget');},start : function () {alert('doing foo');}});JMVC.fooWidget.start();</code>
 </function>

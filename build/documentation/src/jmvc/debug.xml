@@ -5,14 +5,13 @@
         <param name="el">all parameters to be debugged</param>
     </params>
     <returns>void (undefined)</returns>
-    <sample>&#10;
+    <sample>var arr = [1,2,3,4,5],&#10;
+    obj =  {name : "Federico", surname : "Ghedina", say : "WAT"},&#10;
+    foo = function (){alert('foo'); };&#10;&#10;
 // open the console before running&#10;
 //&#10;
-var arr = [1,2,3,4,5],&#10;
-    obj =  {name : "Federico", surname : "Ghedina", say : "WAT"},&#10;
-    foo = function (){alert('foo'); };&#10;
-JMVC.debug(arr, obj, foo);
+JMVC.debug(arr), JMVC.debug(obj), JMVC.debug(foo);
 </sample>
     <status>human</status>
-    <code>var arr = [1,2,3,4,5], obj =  {name : 'Federico', surname : 'Ghedina', say : 'WAT'},foo = function (){alert('foo'); };JMVC.debug(arr, obj, foo)</code>
+    <code>var arr = [1,2,3,4,5], obj =  {name : 'Federico', surname : 'Ghedina', say : 'WAT'},foo = function (){alert('foo'); };JMVC.debug(arr), JMVC.debug(obj), JMVC.debug(foo);</code>
 </function>
