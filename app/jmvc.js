@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.3.7 (rev. 3) build: 1173
+ * @version :  3.3.7 (rev. 4) build: 1213
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
- * @file : built with Malta v.1.0.21 & a love heap
- *         glued with 37 files on 15/4/2014 at 1:53:52
+ * @file : built with Malta v.1.1.0 & a love heap
+ *         glued with 37 files on 24/4/2014 at 0:33:23
  *
  * All rights reserved.
  *
@@ -68,7 +68,7 @@
                 JMVC_VERSION = '3.3.7',
                 //
                 // review (vars.json)
-                JMVC_REVIEW = '3',
+                JMVC_REVIEW = '4',
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -225,6 +225,7 @@
                         Errors.notify(e);
                     }
                 },
+            
                 /**
                  * [debug description]
                  * @param  {[type]} msg [description]
@@ -257,12 +258,13 @@
                     }
                     return true;
                 },
+            
                 /**
                  * [description]
                  * @param  {[type]} name [description]
                  * @return {[type]}      [description]
                  */
-                del: function(name, storage) {
+                del: function (name, storage) {
                     if (storage) {
                         storage.removeItem(name);
                     } else {
@@ -272,19 +274,21 @@
                     }
                     return $JMVC;
                 },
+            
                 /**
                  * Returns a new function having as context the passed object
                  * @param  {[type]} func [description]
                  * @param  {[type]} ctx  [description]
                  * @return {[type]}      [description]
                  */
-                delegate: function(func, ctx) {
+                delegate: function (func, ctx) {
                     // get relevant arguments
                     var args = Array.prototype.slice.call(arguments, 2);
                     return function() {
                         return func.apply(ctx || $JMVC, [].concat(args, Array.prototype.slice.call(arguments)));
                     };
                 },
+            
                 /**
                  * Every each implementation is really bad compared to a native loop,
                  * so, if possible , do not ever use that function.
@@ -292,20 +296,20 @@
                  * @param  {[type]} func [description]
                  * @return {[type]}      [description]
                  */
-                each: function(o, func) {
+                each: function (o, func) {
                     //var type = ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase(),
                     // speed up
                     var type = 'length' in o ? 'array' : 'object',
                         i,
                         l,
                         ret;
-                    func.Obreak = false;
-                    func.Ocontinue = false;
+                    func._break = false;
+                    func._continue = false;
                     func['break'] = /*func.exit = */ function() {
-                        func.Obreak = true;
+                        func._break = true;
                     };
                     func['continue'] = /*func.skip = */ function() {
-                        func.Ocontinue = true;
+                        func._continue = true;
                     };
             
                     if (type === 'array') {
@@ -313,11 +317,11 @@
                         i = 0;
                         l = o.length;
                         for (null; i < l; i += 1) {
-                            if (func.Ocontinue) {
-                                func.Ocontinue = false;
+                            if (func._continue) {
+                                func._continue = false;
                                 continue;
                             }
-                            if (func.Obreak) {
+                            if (func._break) {
                                 break;
                             }
                             ret.push(func.call(o, o[i], i));
@@ -326,11 +330,11 @@
                         ret = {};
                         for (i in o) {
                             if (o.hasOwnProperty(i)) {
-                                if (func.Ocontinue) {
-                                    func.Ocontinue = false;
+                                if (func._continue) {
+                                    func._continue = false;
                                     continue;
                                 }
-                                if (func.Obreak) {
+                                if (func._break) {
                                     break;
                                 }
                                 (function(j) {
@@ -343,6 +347,7 @@
                     }
                     return ret;
                 },
+            
                 /**
                  * Basic function for extending an object
                  * only under JMVC ns
@@ -360,17 +365,15 @@
                     }
                     //
                     // ensures that the target namespace exists 
-                    var trg = jmvc.ns.make('JMVC.' + label);
+                    var lab = 'JMVC.' + label,
+                        trg = jmvc.ns.make(lab);
                     //
                     //let the literal straigth inherith from Extension Object
                     Extension.call(trg);
                     //
                     // if is a function return its execution
                     if (typeof obj === 'function') {
-                        trg = obj();
-                        //jmvc.ns.make('JMVC.' + label, trg);
-                        jmvc.extend(label, trg);
-                        return trg;
+                        return jmvc.extend(label, obj());
                     }
                     //
                     // and set a flag, that can be switched off as far as
@@ -401,6 +404,7 @@
                     //
                     return trg;
                 },
+            
                 /**
                  * [factory_method description]
                  * @param  {[type]} type   [description]
@@ -435,6 +439,7 @@
                     ret = jmvc.xhrget(path_absolute, type, name, params);
                     return ret;
                 },
+            
                 /**
                  * [get description]
                  * @param  {[type]} name [description]
@@ -446,6 +451,7 @@
                         :
                         ($JMVC.vars[name] || undefined);
                 },
+            
                 /**
                  * [globalize description]
                  * @param  {[type]} obj  [description]
@@ -455,6 +461,7 @@
                 globalize: function(obj, name) {
                     JMVC.W[name] = obj;
                 },
+            
                 /**
                  * [hook description]
                  * @param  {[type]} obj   [description]
@@ -483,6 +490,7 @@
                         }
                     }
                 },
+            
                 /**
                  * hook utility
                  * @param  {[type]} hookname [description]
@@ -501,6 +509,7 @@
                     }
                     return dyn;
                 },
+            
                 /**
                  * [htmlspecialchars description]
                  * @param  {[type]} text [description]
@@ -514,6 +523,7 @@
                         .replace(/"/g, '&quot;')
                         .replace(/'/g, '&#039;');
                 },
+            
                 /**
                  * [htmlspecialchars_decode description]
                  * @param  {[type]} html [description]
@@ -527,6 +537,7 @@
                         .replace(/&quot;/g, '"')
                         .replace(/&#039;/g, '\'');
                 },
+            
                 /**
                  * [description]
                  * @param  {[type]} o      [description]
@@ -548,6 +559,7 @@
                     }
                     return true;
                 },
+            
                 /**
                  * [ description]
                  * @param  {[type]} Child  [description]
@@ -563,6 +575,7 @@
                     Child.baseConstructor = Parent;
                     //Child.constructor = Child;
                 },
+            
                 /**
                  * eval function wrap
                  * @param  string   code to be evalued
@@ -575,6 +588,7 @@
                     } catch (e) {}
                     return false;
                 },
+            
                 /**
                  * lang loader
                  * @return {[type]} [description]
@@ -588,6 +602,7 @@
                         i += 1;
                     }
                 },
+            
                 /**
                  * just for models
                  * @param  {[type]} m [description]
@@ -601,6 +616,7 @@
                     m.prototype.reset = Model.prototype.reset;
                     m.prototype.constructor = Model.prototype.constructor;
                 },
+            
                 /**
                  * [ description]
                  * @param  {obejct literal} Childs [description]
@@ -612,11 +628,13 @@
                         jmvc.inherit(ch, Parent);
                     });
                 },
+            
                 /**
                  * [ns description]
                  * @type {Object}
                  */
                 ns: {
+            
                     /**
                      * creates a namespace
                      * @param  {[type]} str [description]
@@ -638,6 +656,7 @@
                         ret = ctx[els[0]];
                         return (l > 1) ? jmvc.ns.make(els.slice(1).join(chr), obj, ctx[els[0]]) : ret;
                     },
+            
                     /**
                      * check if a namespace already exists
                      * @param  {[type]} ns  namesoace dot glued
@@ -659,6 +678,7 @@
                         return ctx;
                     }
                 },
+            
                 /**
                  * [parselang description]
                  * @param  {[type]} cnt [description]
@@ -670,13 +690,15 @@
                         tmp,
                         limit = 1E5,
                         def_lang = $JMVC.cookie.get('lang') || defaultlang;
+            
                     JMVC.vars.currentlang = def_lang;
+            
                     $JMVC.lang(JMVC.vars.currentlang);
                     //
                     if (JMVC.i18n[JMVC.vars.currentlang] === true) {
                         $JMVC.io.get(
                             JMVC.vars.baseurl + PATH.lang + JMVC.vars.currentlang + (JMVC_PACKED || '') + '.js',
-                            function(ln) {
+                            function (ln) {
                                 jmvc.jeval(ln);
                             },
                             false
@@ -687,7 +709,7 @@
                     while (limit) {
                         lang = new RegExp(RXlng, 'gm').exec(cnt);
                         tmp = '';
-                        if ( !! lang) {
+                        if (!!lang) {
                             tmp = ($JMVC.i18n[JMVC.vars.currentlang] && $JMVC.i18n[JMVC.vars.currentlang][lang[1]]) || lang[1];
                             cnt = cnt.replace(lang[0], tmp);
                         } else {
@@ -698,13 +720,14 @@
                     }
                     return cnt;
                 },
+            
                 /**
                  * [prototipize description]
                  * @param  {[type]} el  [description]
                  * @param  {[type]} obj [description]
                  * @return {[type]}     [description]
                  */
-                prototipize: function(el, obj) {
+                prototipize: function (el, obj) {
                     var p, l,
                         i = 0;
                     if (el instanceof Array) {
@@ -718,12 +741,13 @@
                         }
                     }
                 },
+            
                 /**
                  * [purge description]
                  * @param  {[type]} o [description]
                  * @return {[type]}   [description]
                  */
-                purge: function(o) {
+                purge: function (o) {
                     var t;
                     try {
                         for (t in o) {
@@ -732,12 +756,13 @@
                         }
                     } catch (e) {}
                 },
+            
                 /**
                  * render function
                  * @param  {[type]} cback [description]
                  * @return {[type]}       [description]
                  */
-                render: function(cback) {
+                render: function (cback) {
                     var ctrl,
                         i;
                     //
@@ -815,6 +840,7 @@
                     }
                     $JMVC.loaded = true;
                 },
+            
                 /**
                  * 'test' is an exception, if passed then the path will be /app/test
                  * @param {String} none [description]
@@ -836,29 +862,37 @@
                             // check if the required end with /, in this case
                             // 
                             if (arg[i].match(/\/$/)) {
-                                $JMVC.io.getJson(JMVC.vars.baseurl + PATH.ext + arg[i] + 'require.json', function(json) {
+            
+                                $JMVC.io.getJson(JMVC.vars.baseurl + PATH.ext + arg[i] + 'require.json', function (json) {
                                     for (var j in json.require) {
                                         jmvc.require(arg[i] + json.require[j]);
                                     }
                                 }, false);
+            
                             } else {
+            
                                 extNS = arg[i].split(US);
                                 extNSlength = extNS.length;
                                 extname = extNS[extNSlength - 1];
+            
                                 path = JMVC.vars.baseurl +
                                     PATH[(arg[i] === 'testsuite' ? 'test' : 'ext')] +
                                     arg[i] + (JMVC_PACKED || '') + '.js';
             
                                 if (getmode === 'ajax') {
+            
                                     $JMVC.io.get(path, function(jres) {
                                         jmvc.jeval(jres);
                                     }, false);
+            
                                 } else if (getmode.match(/script/)) {
+            
                                     s = JMVC.WD.createElement('script');
                                     s.type = 'text/javascript';
                                     s.src = path;
                                     head.appendChild(s);
                                     getmode === 'scriptghost' && head.removeChild(s);
+            
                                 }
                                 $JMVC.extensions[arg[i]] = arg[i];
                             }
@@ -867,6 +901,7 @@
                     }
                     cb && cb();
                 },
+            
                 /* 
                  * setter, getter, unsetter for $JMVC vars
                  */
@@ -876,14 +911,14 @@
                  * @param {[type]} content [description]
                  */
                 set: function(name, content, storage) {
-                    /*
+                    
                     if (JMVC.util.isObject(name)) {
                         for (var i in name) {
-                            $JMVC.set(i, name[i]);
+                            $JMVC.set(i, name[i], storage);
                         }
                         return $JMVC;
                     }
-                    */
+                    
                     if (storage) {
             
                         storage.setItem(name, JSON.stringify(content));
@@ -894,6 +929,7 @@
                     }
                     return $JMVC;
                 },
+            
                 /**
                  * instance new view content or eval a model or controller
                  * @param  {[type]} path   [description]
@@ -950,9 +986,11 @@
                 get2: function(ns) {
                     return jmvc.ns.check(ns, JMVC.vars);
                 },
+            
                 set2: function(ns, val) {
                     jmvc.ns.make(ns, val, JMVC.vars);
                 },
+            
                 del2: function(ns) {
                     jmvc.purge(jmvc.get2(ns));
                 }
@@ -1087,18 +1125,35 @@
             Channel = (function () {
                 var channels = {},
             
+                    // function added to free completely
+                    // that object from dependencies
+                    // 
+                    findInArray = function (arr, mvar) {
+                        //IE6,7,8 would fail here
+                        if ('indexOf' in arr) {
+                            return arr.indexOf(mvar);
+                        }
+                        var l = arr.length - 1;
+                        while (arr[l] !== mvar) l--;
+                        return l;
+                    },
+            
                     P_Channel = function () {
                         this.topic2cbs = {};
                         this.enabled = true;
                     };
             
+                /**
+                 * [prototype description]
+                 * @type {Object}
+                 */
                 P_Channel.prototype = {
                     /**
                      * enable cb execution on publish
                      * @return {undefined}
                      */
                     enable : function () {
-                        this.enabled = false;
+                        this.enabled = true;
                     },
                     //
                     /**
@@ -1106,7 +1161,7 @@
                      * @return {undefined}
                      */
                     disable : function () {
-                        this.enabled = true;
+                        this.enabled = false;
                     },
                     //
                     /**
@@ -1139,7 +1194,7 @@
                      *                   argument the topic, the others follow
                      * @return {undefined}
                      */
-                    sub : function (topic, cb) {
+                    sub : function (topic, cb, force) {
                         var i = 0,
                             l;
                         if (topic instanceof Array) {
@@ -1147,16 +1202,61 @@
                                 this.sub(topic[i], cb);
                             }
                         }
+            
                         if (!(topic in this.topic2cbs) || !this.enabled) {
                             this.topic2cbs[topic] = [];
                         }
+            
+                        if (!force && findInArray(this.topic2cbs[topic], cb) >= 0) {
+                            return this;
+                        }
+            
                         this.topic2cbs[topic].push(cb);
                     },
+            
+                    /**
+                     * removes an existing booked callback from the topic list
+                     * @param  {[type]}   topic [description]
+                     * @param  {Function} cb    [description]
+                     * @return {[type]}         [description]
+                     */
+                    unsub : function (topic, cb) {
+                        var i = 0,
+                            l;
+                        if (topic instanceof Array) {
+                            for (l = topic.length; i < l; i += 1) {
+                                this.unsub(topic[i], cb);
+                            }
+                        }
+                        if (topic in this.topic2cbs) {
+                            i = findInArray(this.topic2cbs[topic], cb);
+                            if (i >= 0) {
+                                this.topic2cbs[topic].splice(i, 1);
+                            }
+                        }
+                        return this;
+                    },
+                    
+                    /**
+                     * one shot sub with auto unsub after first shot
+                     * @param  {[type]}   topic [description]
+                     * @param  {Function} cb    [description]
+                     * @return {[type]}         [description]
+                     */
+                    once : function (topic, cb){
+                        var self = this,
+                            cb2 = function () {
+                                cb.apply(null, Array.prototype.concat(arguments));
+                                self.unsub(topic, cb2);
+                            };
+                        this.sub(topic, cb2);
+                    },
+            
                     //
                     /**
                      * Removes all callbacks for one or more topic
                      * @param [String] ...
-                     *                 the topic queue that must  be emptied
+                     *                 the topic queues that must  be emptied
                      * @return [Channel] the instance
                      */
                     reset : function () {
@@ -1177,7 +1277,9 @@
             
             
             
-            
+                /**
+                 * returning function
+                 */
                 return function (name) {
                     if (name in channels) {
                         return channels[name];
@@ -1720,13 +1822,24 @@
             // directly instantiated assinging content
             /**
              * [View description]
-             * @param {[type]} cnt [description]
+             * @param {String} cnt beginning content for the view
              */
             View = function (cnt) {
+            
+                //the view container
+                //
                 this.container = false;
-                // original content
+            
+                // original content, not intended to be modified
+                // 
                 this.ocontent = cnt || '';
+            
+                // the content passed or empty
+                // 
                 this.content = cnt || '';
+            
+                // every view has a registry for the variables that will be used at reder time
+                // 
                 this.vars = {
                     baseurl : $JMVC.vars.baseurl
                 };
@@ -1739,7 +1852,7 @@
             /**
              * [parse description]
              * @param  {[type]} obj [description]
-             * @return {[type]}     [description]
+             * @return {}     [description]
              */
             View.prototype.parse = function (obj) {
                 var j;
@@ -1759,19 +1872,26 @@
                 // allow chain
                 return this;
             };
-            //
-            // reset content to orginal (unparsed) value
-            // and reset all vars
+            
+            
             /**
-             * [reset description]
+             * reset content to orginal (unparsed) value
+             * and reset all vars
              * @return {[type]} [description]
              */
             View.prototype.reset = function () {
+                // get back the original content
+                //
                 this.content = this.ocontent;
+            
+                // reset vars
+                //
                 this.vars = {};
-                // allow chain
+            
+                // chain
                 return this;
             };
+            
             /**
              * [setFromUrl description]
              * @param {[type]} vname [description]
@@ -1782,6 +1902,7 @@
                 // allow chain
                 return this;
             };
+            
             /*
              * [getFromUrl description]
              * @param {[type]} vname [description]
@@ -1790,49 +1911,50 @@
             View.prototype.getFromUrl = function (vname) {
                 return $JMVC.controllers[$JMVC.c].get(vname) || false;
             };
-            // render the view parsing for variable&view placeholders
+            
             /**
-             * [render description]
+             * render the view parsing for variable&view placeholders
              * @param  {[type]} pars [description]
              * @return {[type]}      [description]
              */
             View.prototype.render = function (pars) {
                 var arg = pars || {},
-                    //
+                    
                     // maybe a callback is passed   
                     cback = arg.cback || false,
-                    //
+                    
                     // and maybe some args must be passed
                     // to the callback
                     argz = arg.argz || null,
-                    //
+            
                     // You may specify a string with a selector or a node,
                     // that's where the content will be loaded,
                     // note that here dom is not loaded so you
                     // cannot pass an element
                     target = arg.target || false,
-                    //
+                    
                     // for binding this context in the callback
                     that = this,
-                    //
+                    
                     // the view content
                     cont = this.content,
-                    //
+                    
                     // regexp for variables, do NOT use here new RegExp
                     pattvar = '\\$(.[^\\$\\s}]*)\\$',
-                    //
+                    
                     // variables found
                     resvar,
-                    //
+                    
                     // a loop temporary variable
                     t,
                     trg,
                     may_trg;
+            
                 //let pars be the callback function
                 typeof pars === 'function' && (cback = pars);
+            
                 // look for / substitute  vars
                 // in the view (these belongs to the view)
-                //
                 resvar = 1;
                 while (resvar) {
                     resvar = new RegExp(pattvar, 'gm').exec(cont);
@@ -1844,11 +1966,11 @@
                 cont = Parser.parse(cont);
                 this.content = cont;
                 if (!$JMVC.loaded) {
-                    //
+            
                     // books rendering in body or elsewhere, on load
                     // @ @ //
-                    //////////////////////////////////////$JMVC.events.bind(W, 'load', function () {
-                        //  
+                    $JMVC.events.bind(W, 'load', function () {
+            
                         // call before render
                         $JMVC.events.startRender();
                         //
@@ -1857,31 +1979,30 @@
                         trg = may_trg || WD.body;
                         this.container = trg;
             
-                        //
                         // time
                         $JMVC.vars.starttime = time_begin;
                         $JMVC.vars.endtime = +new Date;
             
-                        //
+            
                         $JMVC.vars.rendertime = $JMVC.vars.endtime - $JMVC.vars.starttime;
-                        //
+            
                         // before render
                         that.content = jmvc.hook_check('onBeforeRender', [that.content]) || that.content;
-                        //
+            
                         // render
                         $JMVC.dom.html(trg, that.content);
-                        //
+            
                         // may be a callback? 
                         cback && cback.apply(this, argz || []);
-                        //
+            
                         // after render
                         that.content = jmvc.hook_check('onAfterRender', [that.content]) || that.content;
-                        // 
+            
                         // trigger end of render queue
                         $JMVC.events.endRender();
                     // @ @ //
-                    //////////////////////////////////////});
-                //
+                    });
+            
                 // happend after load... so can render a view from a render cback 
                 // of a main view
                 } else {
@@ -1890,7 +2011,7 @@
                     $JMVC.dom.html(trg, that.content);
                     cback && cback.apply(this, !!argz ? argz : []);
                 }
-                // allow chain
+                // chain
                 return this;
             };
             ///////////////////////

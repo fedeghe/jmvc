@@ -9,6 +9,7 @@ jmvc = {
             Errors.notify(e);
         }
     },
+
     /**
      * [debug description]
      * @param  {[type]} msg [description]
@@ -41,12 +42,13 @@ jmvc = {
         }
         return true;
     },
+
     /**
      * [description]
      * @param  {[type]} name [description]
      * @return {[type]}      [description]
      */
-    del: function(name, storage) {
+    del: function (name, storage) {
         if (storage) {
             storage.removeItem(name);
         } else {
@@ -56,19 +58,21 @@ jmvc = {
         }
         return $JMVC;
     },
+
     /**
      * Returns a new function having as context the passed object
      * @param  {[type]} func [description]
      * @param  {[type]} ctx  [description]
      * @return {[type]}      [description]
      */
-    delegate: function(func, ctx) {
+    delegate: function (func, ctx) {
         // get relevant arguments
         var args = Array.prototype.slice.call(arguments, 2);
         return function() {
             return func.apply(ctx || $JMVC, [].concat(args, Array.prototype.slice.call(arguments)));
         };
     },
+
     /**
      * Every each implementation is really bad compared to a native loop,
      * so, if possible , do not ever use that function.
@@ -76,20 +80,20 @@ jmvc = {
      * @param  {[type]} func [description]
      * @return {[type]}      [description]
      */
-    each: function(o, func) {
+    each: function (o, func) {
         //var type = ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase(),
         // speed up
         var type = 'length' in o ? 'array' : 'object',
             i,
             l,
             ret;
-        func.Obreak = false;
-        func.Ocontinue = false;
+        func._break = false;
+        func._continue = false;
         func['break'] = /*func.exit = */ function() {
-            func.Obreak = true;
+            func._break = true;
         };
         func['continue'] = /*func.skip = */ function() {
-            func.Ocontinue = true;
+            func._continue = true;
         };
 
         if (type === 'array') {
@@ -97,11 +101,11 @@ jmvc = {
             i = 0;
             l = o.length;
             for (null; i < l; i += 1) {
-                if (func.Ocontinue) {
-                    func.Ocontinue = false;
+                if (func._continue) {
+                    func._continue = false;
                     continue;
                 }
-                if (func.Obreak) {
+                if (func._break) {
                     break;
                 }
                 ret.push(func.call(o, o[i], i));
@@ -110,11 +114,11 @@ jmvc = {
             ret = {};
             for (i in o) {
                 if (o.hasOwnProperty(i)) {
-                    if (func.Ocontinue) {
-                        func.Ocontinue = false;
+                    if (func._continue) {
+                        func._continue = false;
                         continue;
                     }
-                    if (func.Obreak) {
+                    if (func._break) {
                         break;
                     }
                     (function(j) {
@@ -127,6 +131,7 @@ jmvc = {
         }
         return ret;
     },
+
     /**
      * Basic function for extending an object
      * only under JMVC ns
@@ -144,17 +149,15 @@ jmvc = {
         }
         //
         // ensures that the target namespace exists 
-        var trg = jmvc.ns.make('JMVC.' + label);
+        var lab = 'JMVC.' + label,
+            trg = jmvc.ns.make(lab);
         //
         //let the literal straigth inherith from Extension Object
         Extension.call(trg);
         //
         // if is a function return its execution
         if (typeof obj === 'function') {
-            trg = obj();
-            //jmvc.ns.make('JMVC.' + label, trg);
-            jmvc.extend(label, trg);
-            return trg;
+            return jmvc.extend(label, obj());
         }
         //
         // and set a flag, that can be switched off as far as
@@ -185,6 +188,7 @@ jmvc = {
         //
         return trg;
     },
+
     /**
      * [factory_method description]
      * @param  {[type]} type   [description]
@@ -219,6 +223,7 @@ jmvc = {
         ret = jmvc.xhrget(path_absolute, type, name, params);
         return ret;
     },
+
     /**
      * [get description]
      * @param  {[type]} name [description]
@@ -230,6 +235,7 @@ jmvc = {
             :
             ($JMVC.vars[name] || undefined);
     },
+
     /**
      * [globalize description]
      * @param  {[type]} obj  [description]
@@ -239,6 +245,7 @@ jmvc = {
     globalize: function(obj, name) {
         JMVC.W[name] = obj;
     },
+
     /**
      * [hook description]
      * @param  {[type]} obj   [description]
@@ -267,6 +274,7 @@ jmvc = {
             }
         }
     },
+
     /**
      * hook utility
      * @param  {[type]} hookname [description]
@@ -285,6 +293,7 @@ jmvc = {
         }
         return dyn;
     },
+
     /**
      * [htmlspecialchars description]
      * @param  {[type]} text [description]
@@ -298,6 +307,7 @@ jmvc = {
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
     },
+
     /**
      * [htmlspecialchars_decode description]
      * @param  {[type]} html [description]
@@ -311,6 +321,7 @@ jmvc = {
             .replace(/&quot;/g, '"')
             .replace(/&#039;/g, '\'');
     },
+
     /**
      * [description]
      * @param  {[type]} o      [description]
@@ -332,6 +343,7 @@ jmvc = {
         }
         return true;
     },
+
     /**
      * [ description]
      * @param  {[type]} Child  [description]
@@ -347,6 +359,7 @@ jmvc = {
         Child.baseConstructor = Parent;
         //Child.constructor = Child;
     },
+
     /**
      * eval function wrap
      * @param  string   code to be evalued
@@ -359,6 +372,7 @@ jmvc = {
         } catch (e) {}
         return false;
     },
+
     /**
      * lang loader
      * @return {[type]} [description]
@@ -372,6 +386,7 @@ jmvc = {
             i += 1;
         }
     },
+
     /**
      * just for models
      * @param  {[type]} m [description]
@@ -385,6 +400,7 @@ jmvc = {
         m.prototype.reset = Model.prototype.reset;
         m.prototype.constructor = Model.prototype.constructor;
     },
+
     /**
      * [ description]
      * @param  {obejct literal} Childs [description]
@@ -396,11 +412,13 @@ jmvc = {
             jmvc.inherit(ch, Parent);
         });
     },
+
     /**
      * [ns description]
      * @type {Object}
      */
     ns: {
+
         /**
          * creates a namespace
          * @param  {[type]} str [description]
@@ -422,6 +440,7 @@ jmvc = {
             ret = ctx[els[0]];
             return (l > 1) ? jmvc.ns.make(els.slice(1).join(chr), obj, ctx[els[0]]) : ret;
         },
+
         /**
          * check if a namespace already exists
          * @param  {[type]} ns  namesoace dot glued
@@ -443,6 +462,7 @@ jmvc = {
             return ctx;
         }
     },
+
     /**
      * [parselang description]
      * @param  {[type]} cnt [description]
@@ -454,13 +474,15 @@ jmvc = {
             tmp,
             limit = 1E5,
             def_lang = $JMVC.cookie.get('lang') || defaultlang;
+
         JMVC.vars.currentlang = def_lang;
+
         $JMVC.lang(JMVC.vars.currentlang);
         //
         if (JMVC.i18n[JMVC.vars.currentlang] === true) {
             $JMVC.io.get(
                 JMVC.vars.baseurl + PATH.lang + JMVC.vars.currentlang + (JMVC_PACKED || '') + '.js',
-                function(ln) {
+                function (ln) {
                     jmvc.jeval(ln);
                 },
                 false
@@ -471,7 +493,7 @@ jmvc = {
         while (limit) {
             lang = new RegExp(RXlng, 'gm').exec(cnt);
             tmp = '';
-            if ( !! lang) {
+            if (!!lang) {
                 tmp = ($JMVC.i18n[JMVC.vars.currentlang] && $JMVC.i18n[JMVC.vars.currentlang][lang[1]]) || lang[1];
                 cnt = cnt.replace(lang[0], tmp);
             } else {
@@ -482,13 +504,14 @@ jmvc = {
         }
         return cnt;
     },
+
     /**
      * [prototipize description]
      * @param  {[type]} el  [description]
      * @param  {[type]} obj [description]
      * @return {[type]}     [description]
      */
-    prototipize: function(el, obj) {
+    prototipize: function (el, obj) {
         var p, l,
             i = 0;
         if (el instanceof Array) {
@@ -502,12 +525,13 @@ jmvc = {
             }
         }
     },
+
     /**
      * [purge description]
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    purge: function(o) {
+    purge: function (o) {
         var t;
         try {
             for (t in o) {
@@ -516,12 +540,13 @@ jmvc = {
             }
         } catch (e) {}
     },
+
     /**
      * render function
      * @param  {[type]} cback [description]
      * @return {[type]}       [description]
      */
-    render: function(cback) {
+    render: function (cback) {
         var ctrl,
             i;
         //
@@ -599,6 +624,7 @@ jmvc = {
         }
         $JMVC.loaded = true;
     },
+
     /**
      * 'test' is an exception, if passed then the path will be /app/test
      * @param {String} none [description]
@@ -620,29 +646,37 @@ jmvc = {
                 // check if the required end with /, in this case
                 // 
                 if (arg[i].match(/\/$/)) {
-                    $JMVC.io.getJson(JMVC.vars.baseurl + PATH.ext + arg[i] + 'require.json', function(json) {
+
+                    $JMVC.io.getJson(JMVC.vars.baseurl + PATH.ext + arg[i] + 'require.json', function (json) {
                         for (var j in json.require) {
                             jmvc.require(arg[i] + json.require[j]);
                         }
                     }, false);
+
                 } else {
+
                     extNS = arg[i].split(US);
                     extNSlength = extNS.length;
                     extname = extNS[extNSlength - 1];
+
                     path = JMVC.vars.baseurl +
                         PATH[(arg[i] === 'testsuite' ? 'test' : 'ext')] +
                         arg[i] + (JMVC_PACKED || '') + '.js';
 
                     if (getmode === 'ajax') {
+
                         $JMVC.io.get(path, function(jres) {
                             jmvc.jeval(jres);
                         }, false);
+
                     } else if (getmode.match(/script/)) {
+
                         s = JMVC.WD.createElement('script');
                         s.type = 'text/javascript';
                         s.src = path;
                         head.appendChild(s);
                         getmode === 'scriptghost' && head.removeChild(s);
+
                     }
                     $JMVC.extensions[arg[i]] = arg[i];
                 }
@@ -651,6 +685,7 @@ jmvc = {
         }
         cb && cb();
     },
+
     /* 
      * setter, getter, unsetter for $JMVC vars
      */
@@ -660,14 +695,14 @@ jmvc = {
      * @param {[type]} content [description]
      */
     set: function(name, content, storage) {
-        /*
+        
         if (JMVC.util.isObject(name)) {
             for (var i in name) {
-                $JMVC.set(i, name[i]);
+                $JMVC.set(i, name[i], storage);
             }
             return $JMVC;
         }
-        */
+        
         if (storage) {
 
             storage.setItem(name, JSON.stringify(content));
@@ -678,6 +713,7 @@ jmvc = {
         }
         return $JMVC;
     },
+
     /**
      * instance new view content or eval a model or controller
      * @param  {[type]} path   [description]
@@ -734,9 +770,11 @@ jmvc = {
     get2: function(ns) {
         return jmvc.ns.check(ns, JMVC.vars);
     },
+
     set2: function(ns, val) {
         jmvc.ns.make(ns, val, JMVC.vars);
     },
+
     del2: function(ns) {
         jmvc.purge(jmvc.get2(ns));
     }
