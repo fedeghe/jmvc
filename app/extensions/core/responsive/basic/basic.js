@@ -24,6 +24,10 @@ JMVC.extend('responsive', {
 		JMVC.events.end(function(){
 			JMVC.responsive._change(JMVC.W.outerWidth || JMVC.W.innerWidth);
 		});
+
+		JMVC.head.addstyle(JMVC.vars.extensions + 'core/responsive/basic/style.css');
+
+		
 	},
 
 	/**
