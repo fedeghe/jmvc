@@ -5,18 +5,35 @@
 Channel = (function () {
     var channels = {},
 
+        // function added to free completely
+        // that object from dependencies
+        // 
+        findInArray = function (arr, mvar) {
+            //IE6,7,8 would fail here
+            if ('indexOf' in arr) {
+                return arr.indexOf(mvar);
+            }
+            var l = arr.length - 1;
+            while (arr[l] !== mvar) l--;
+            return l;
+        },
+
         P_Channel = function () {
             this.topic2cbs = {};
             this.enabled = true;
         };
 
+    /**
+     * [prototype description]
+     * @type {Object}
+     */
     P_Channel.prototype = {
         /**
          * enable cb execution on publish
          * @return {undefined}
          */
         enable : function () {
-            this.enabled = false;
+            this.enabled = true;
         },
         //
         /**
@@ -24,7 +41,7 @@ Channel = (function () {
          * @return {undefined}
          */
         disable : function () {
-            this.enabled = true;
+            this.enabled = false;
         },
         //
         /**
@@ -57,7 +74,7 @@ Channel = (function () {
          *                   argument the topic, the others follow
          * @return {undefined}
          */
-        sub : function (topic, cb) {
+        sub : function (topic, cb, force) {
             var i = 0,
                 l;
             if (topic instanceof Array) {
@@ -65,16 +82,61 @@ Channel = (function () {
                     this.sub(topic[i], cb);
                 }
             }
+
             if (!(topic in this.topic2cbs) || !this.enabled) {
                 this.topic2cbs[topic] = [];
             }
+
+            if (!force && findInArray(this.topic2cbs[topic], cb) >= 0) {
+                return this;
+            }
+
             this.topic2cbs[topic].push(cb);
         },
+
+        /**
+         * removes an existing booked callback from the topic list
+         * @param  {[type]}   topic [description]
+         * @param  {Function} cb    [description]
+         * @return {[type]}         [description]
+         */
+        unsub : function (topic, cb) {
+            var i = 0,
+                l;
+            if (topic instanceof Array) {
+                for (l = topic.length; i < l; i += 1) {
+                    this.unsub(topic[i], cb);
+                }
+            }
+            if (topic in this.topic2cbs) {
+                i = findInArray(this.topic2cbs[topic], cb);
+                if (i >= 0) {
+                    this.topic2cbs[topic].splice(i, 1);
+                }
+            }
+            return this;
+        },
+        
+        /**
+         * one shot sub with auto unsub after first shot
+         * @param  {[type]}   topic [description]
+         * @param  {Function} cb    [description]
+         * @return {[type]}         [description]
+         */
+        once : function (topic, cb){
+            var self = this,
+                cb2 = function () {
+                    cb.apply(null, Array.prototype.concat(arguments));
+                    self.unsub(topic, cb2);
+                };
+            this.sub(topic, cb2);
+        },
+
         //
         /**
          * Removes all callbacks for one or more topic
          * @param [String] ...
-         *                 the topic queue that must  be emptied
+         *                 the topic queues that must  be emptied
          * @return [Channel] the instance
          */
         reset : function () {
@@ -95,7 +157,9 @@ Channel = (function () {
 
 
 
-
+    /**
+     * returning function
+     */
     return function (name) {
         if (name in channels) {
             return channels[name];
