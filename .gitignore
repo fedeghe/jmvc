@@ -11,3 +11,4 @@ jmvcjs.buildNum
 build/documentation/documentationxml.buildNum
 build/styles/apicss.buildNum
 build/styles/jmvcless.buildNum
+*.buildNum
