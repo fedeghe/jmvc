@@ -1,6 +1,11 @@
 {
     "jmvc.js" :  "../app",
     "documentation/documentation.xml" : "../media",
+    
     "styles/jmvc.less" : "../media/css/core",
-    "styles/api.css" :  "../media/css/core"
+    "styles/jmvc-day.less" : "../media/css/core",
+    "styles/jmvc-night.less" : "../media/css/core",
+
+    "styles/api.css" :  "../media/css/core",
+    "styles/grind.less" : "../app/extensions/core/lib/grind"
 }
