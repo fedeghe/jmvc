@@ -27,6 +27,7 @@ JMVC.widget.Tooltip = function (node, html, styled, options) {
             //tip.setAttribute("id", tipId); 
 
             tip.className = "tooltip";
+            tip.innerHTML = '';
 
             if(typeof innerhtml !== 'undefined' && innerhtml){
                 tip.innerHTML = innerhtml;
@@ -42,7 +43,7 @@ JMVC.widget.Tooltip = function (node, html, styled, options) {
                 cursorPosition[1] = e.clientY + scrollingPosition.scrollTop; 
             } 
             
-            document.getElementsByTagName("body")[0].appendChild(tip); 
+            
             
             JMVC.css.style(tip, {
                 'position' : 'absolute',
@@ -70,6 +71,8 @@ JMVC.widget.Tooltip = function (node, html, styled, options) {
             } 
             
             JMVC.css.style(tip, styled);
+
+            document.getElementsByTagName("body")[0].appendChild(tip); 
         },
         
         
