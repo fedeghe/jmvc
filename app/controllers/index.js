@@ -48,7 +48,9 @@ JMVC.controllers.index = function () {
 		JMVC.head.meta('description', 'A true pure javascript model view controller framework', true);
 		JMVC.head.meta('keywords', 'jmvc,javascript mvc,pure javascript mvc,pure javascript');
 		JMVC.head.meta('generator', 'jmvc resident in your machine');
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/homestyle.css', true);
+
+		//JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/core/jmvc-night.min.css', true);
+		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/core/jmvc-day.min.css', true);
 
 
 		/*
