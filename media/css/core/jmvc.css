@@ -372,6 +372,18 @@ h6 {
   -webkit-border-radius: 14px;
   border-radius: 14px;
 }
+.pad5 {
+  padding: 5px;
+}
+.pad10 {
+  padding: 10px;
+}
+.pad15 {
+  padding: 15px;
+}
+.pad20 {
+  padding: 20px;
+}
 .roundtop {
   -moz-border-radius-bottomleft: 0px;
   -moz-border-radius-bottomright: 0px;

@@ -22,6 +22,12 @@ $$reset.css$$
 	}
 	.generate-round(@n, (@value + 2));
 }
+.generate-pad(@n, @value: 5) when (@value =< @n) {
+	.pad@{value} {
+		padding:1px * @value;
+	}
+	.generate-pad(@n, (@value + 5));
+}
 /*
  * //
  * 
@@ -89,6 +95,7 @@ h6{font-size:8px; line-height:16px; padding:8px 0px 4px;}
 /* less parametric mixins */
 .generate-opa(9);
 .generate-round(14);
+.generate-pad(20);
 
 .round-side-vars(@side) when(@side = "top"){
 	@sideA1 : bottomleft;
