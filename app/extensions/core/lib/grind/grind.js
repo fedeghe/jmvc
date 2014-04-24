@@ -84,7 +84,6 @@ JMVC.extend('grind', function () {
                     }
 
                     if ('grindID' in item) {
-                        alert(item.grindID)
                        config.content.map[item.grindID] = tag;
                     }
                 }
