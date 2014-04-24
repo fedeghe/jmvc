@@ -113,7 +113,7 @@ View.prototype.render = function (pars) {
         // that's where the content will be loaded,
         // note that here dom is not loaded so you
         // cannot pass an element
-        target = arg.target || false,
+        target = arg.target || WD.body,
         
         // for binding this context in the callback
         that = this,
@@ -128,9 +128,10 @@ View.prototype.render = function (pars) {
         resvar,
         
         // a loop temporary variable
-        t,
+        t;
+        /*,
         trg,
-        may_trg;
+        may_trg;*/
 
     //let pars be the callback function
     typeof pars === 'function' && (cback = pars);
@@ -147,20 +148,25 @@ View.prototype.render = function (pars) {
     }
     cont = Parser.parse(cont);
     this.content = cont;
+    this.container = target;
+
     if (!$JMVC.loaded) {
 
         // books rendering in body or elsewhere, on load
         // @ @ //
         $JMVC.events.bind(W, 'load', function () {
-
+        
             // call before render
             $JMVC.events.startRender();
             //
             $JMVC.loaded = true;
+            /*
             may_trg = target ? $JMVC.dom.find(target) : false;
+            console.debug(may_trg)
             trg = may_trg || WD.body;
             this.container = trg;
-
+            console.debug(this.container)
+            */
             // time
             $JMVC.vars.starttime = time_begin;
             $JMVC.vars.endtime = +new Date;
@@ -172,25 +178,32 @@ View.prototype.render = function (pars) {
             that.content = jmvc.hook_check('onBeforeRender', [that.content]) || that.content;
 
             // render
-            $JMVC.dom.html(trg, that.content);
+            //$JMVC.dom.html(trg, that.content);
+            $JMVC.dom.html(target, that.content);
 
             // may be a callback? 
             cback && cback.apply(this, argz || []);
 
             // after render
+            //
+         
             that.content = jmvc.hook_check('onAfterRender', [that.content]) || that.content;
 
             // trigger end of render queue
             $JMVC.events.endRender();
+        
         // @ @ //
         });
 
     // happend after load... so can render a view from a render cback 
     // of a main view
     } else {
+        /*
         may_trg = target ? $JMVC.dom.find(target) : false;
         trg = may_trg || WD.body;
-        $JMVC.dom.html(trg, that.content);
+        */
+        //$JMVC.dom.html(trg, that.content);
+        $JMVC.dom.html(target, that.content);
         cback && cback.apply(this, !!argz ? argz : []);
     }
     // chain
