@@ -78,12 +78,14 @@ JMVC.extend('test', function () {
     );
     
     return  {
+        vars : vars,
         /**
          * [initialize description]
          * @param  {[type]} outcode [description]
          * @return {[type]}         [description]
          */
         initialize : function (outcode) {
+
             'use strict';
             if (outcode !== undefined && outcode) {
                 vars.outCode = outcode;
