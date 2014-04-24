@@ -309,14 +309,23 @@ JMVC.controllers.index = function () {
 				function () {JMVC.head.title(String.fromCharCode(t[i])); i = (i + 1) % l; },
 				100
 			);
+
+
+
+			
+
+
 		});
 
-		// create a worker
+
+
+		// create a inline worker
 		var blobURL = window.URL.createObjectURL(
 				new Blob([
 					"var i = 0, l = 2<<15,"+
 						"loop = setInterval(function () {"+
-							"self.postMessage(i + ' : &#' + (i++) + ';<br />');	"+
+							"self.postMessage(i + ' : ' + String.fromCharCode('0x'  + (i++).toString(16)) + '<br />');	"+
+							
 							"if (i == l) {"+
 								"clearInterval(loop);"+
 							"}"+
@@ -327,9 +336,7 @@ JMVC.controllers.index = function () {
 
 		worker.onmessage = function (e) {
 			JMVC.dom.append(self.view.container, JMVC.dom.create('span', {}, e.data));
-			//window.scrollTo(0,document.body.scrollHeight);
 		};
-		
 	};
 
 
