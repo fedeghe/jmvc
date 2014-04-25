@@ -30,6 +30,7 @@ JMVC.controllers['404'] = function () {
 		JMVC.events.delay(function () {JMVC.head.goto(); }, seconds2redirection * 1000);
 		
 		// meant to be passed at the view render
+		//
 		function bubble(){
 
 			//<canvas id="cnv" width="" height="" style=""></canvas>
@@ -46,7 +47,7 @@ JMVC.controllers['404'] = function () {
 
 			JMVC.dom.attr(cnv, {width : canvasWidth + 'px', height : canvasHeight + 'px'});
 			JMVC.css.style(cnv, {
-				opacity: 0.1,
+				opacity: 0.2,
 				position : 'absolute',
 				top: 0,
 				left: 0,
@@ -69,16 +70,27 @@ JMVC.controllers['404'] = function () {
 
 			function drawCircle() {
 			    var point = getRndPoint();
-
 			    mainContext.beginPath();
 			    mainContext.arc(point.x, point.y, point.radius, 0, Math.PI * 2, false);
 			    mainContext.closePath();
-			     
 			    mainContext.fillStyle = JMVC.core.color.getRandomColor();
 			    mainContext.fill();
 			    requestAnimationFrame(drawCircle);
 			}
-			drawCircle();
+			function draw404() {
+			    var point = getRndPoint();
+			    mainContext.rotate(2 * Math.PI * Math.random());
+			    mainContext.fillStyle = JMVC.core.color.getRandomColor();
+			    mainContext.strokeStyle = 'black';
+			    mainContext.font = "bold " + point.radius + "px sans-serif";
+			    mainContext.fillText("404",point.x, point.y);
+			    mainContext.strokeText("404",point.x, point.y);
+			    mainContext.fill();
+			    mainContext.stroke();
+			    requestAnimationFrame(draw404);
+			}
+			draw404();
+			//drawCircle();
 		}
 
 
