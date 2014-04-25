@@ -60,7 +60,7 @@ JMVC.controllers.info = function () {
 		info_intro.set({
 			'review' : JMVC.vars.review,
 			'version' : JMVC.vars.version,
-			'last_modified' : JMVC.vars.last_modified,
+			'last_modified' : JMVC.vars.date + ' @ ' + JMVC.vars.time,//JMVC.vars.last_modified,
 			'gmt' : 'GMT+' + -(new Date().getTimezoneOffset() / 60),
 			'backtotop' : backtotop
 		});
