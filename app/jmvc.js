@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.3.7 (rev. 6) build: 1257
+ * @version :  3.3.7 (rev. 7) build: 1265
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.1.0 & a love heap
- *         glued with 37 files on 25/4/2014 at 11:14:6
+ *         glued with 37 files on 25/4/2014 at 16:30:35
  *
  * All rights reserved.
  *
@@ -68,13 +68,13 @@
                 JMVC_VERSION = '3.3.7',
                 //
                 // review (vars.json)
-                JMVC_REVIEW = '6',
+                JMVC_REVIEW = '7',
                 //
                 // review (vars.json)
                 JMVC_DATE = '25/4/2014',
                 //
                 // review (vars.json)
-                JMVC_TIME = '11:14:6',
+                JMVC_TIME = '16:30:35',
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -4168,11 +4168,11 @@
     
                     head = that.element;
                     style = WD.createElement('style');
-                    rules = WD.createTextNode(String(csscontent));
+                    rules = WD.createTextNode("" + csscontent);
     
                     style.type = 'text/css';
                     if (style.styleSheet) {
-                        style.styleSheet.cssText = rules.value;
+                        style.styleSheet.cssText = rules.nodeValue;
                     } else {
                         style.appendChild(rules);
                     }
@@ -4184,11 +4184,11 @@
                         csscontent = JMVC.parse(csscontent, true);
                         head = that.element;
                         style = WD.createElement('style');
-                        rules = WD.createTextNode(String(csscontent));
+                        rules = WD.createTextNode("" + csscontent);
                         //
                         style.type = 'text/css';
                         if (style.styleSheet) {
-                            style.styleSheet.cssText = rules.value
+                            style.styleSheet.cssText = rules.nodeValue
                         } else {
                             style.appendChild(rules);
                         }

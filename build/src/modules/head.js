@@ -73,11 +73,11 @@ JMVC.head = {
 
                 head = that.element;
                 style = WD.createElement('style');
-                rules = WD.createTextNode(String(csscontent));
+                rules = WD.createTextNode("" + csscontent);
 
                 style.type = 'text/css';
                 if (style.styleSheet) {
-                    style.styleSheet.cssText = rules.value;
+                    style.styleSheet.cssText = rules.nodeValue;
                 } else {
                     style.appendChild(rules);
                 }
@@ -89,11 +89,11 @@ JMVC.head = {
                     csscontent = JMVC.parse(csscontent, true);
                     head = that.element;
                     style = WD.createElement('style');
-                    rules = WD.createTextNode(String(csscontent));
+                    rules = WD.createTextNode("" + csscontent);
                     //
                     style.type = 'text/css';
                     if (style.styleSheet) {
-                        style.styleSheet.cssText = rules.value
+                        style.styleSheet.cssText = rules.nodeValue
                     } else {
                         style.appendChild(rules);
                     }
