@@ -12,6 +12,12 @@ var $JMVC,
     // review (vars.json)
     JMVC_REVIEW = '$review$',
     //
+    // review (vars.json)
+    JMVC_DATE = '__DATE__',
+    //
+    // review (vars.json)
+    JMVC_TIME = '__TIME__',
+    //
     // experimental (ignore it)
     JMVC_PACKED = '$packed$', //'.min' 
     //

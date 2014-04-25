@@ -26,6 +26,8 @@ $JMVC = {
         produrlstatic : PROD_URLstatic,
         version : JMVC_VERSION,
         review :  JMVC_REVIEW,
+        date : JMVC_DATE,
+        time :  JMVC_TIME,
         last_modified : WD.lastModified,
         starttime : 0,
         rendertime : 0,

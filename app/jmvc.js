@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.3.7 (rev. 5) build: 1254
+ * @version :  3.3.7 (rev. 6) build: 1257
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.1.0 & a love heap
- *         glued with 37 files on 25/4/2014 at 0:25:6
+ *         glued with 37 files on 25/4/2014 at 11:14:6
  *
  * All rights reserved.
  *
@@ -68,7 +68,13 @@
                 JMVC_VERSION = '3.3.7',
                 //
                 // review (vars.json)
-                JMVC_REVIEW = '5',
+                JMVC_REVIEW = '6',
+                //
+                // review (vars.json)
+                JMVC_DATE = '25/4/2014',
+                //
+                // review (vars.json)
+                JMVC_TIME = '11:14:6',
                 //
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -2193,6 +2199,8 @@
                     produrlstatic : PROD_URLstatic,
                     version : JMVC_VERSION,
                     review :  JMVC_REVIEW,
+                    date : JMVC_DATE,
+                    time :  JMVC_TIME,
                     last_modified : WD.lastModified,
                     starttime : 0,
                     rendertime : 0,
