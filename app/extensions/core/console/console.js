@@ -16,6 +16,7 @@ JMVC.extend('console', {
 					'<head>'+
 						'<style type="text/css">body{background-color:white} html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:"";content:none}table{border-collapse:collapse;border-spacing:0}</style>'+
 						'<style type="text/css">%style%</style>'+
+						'<link rel="stylesheet" type="text/css" href="/media/css/core/jmvc.min.css">'+
 					'</head>'+
 					'<body>%body%</body>'+
 				'</html>',
@@ -238,7 +239,6 @@ JMVC.extend('console', {
 								"attrs" : {"id" : "in-preview", "class" : "in-preview inputdiv"},
 								"content": [{
 									"tag":"iframe",
-									//"style" : {"position":"fixed", "top":"0px", "left":"0px", "bottom":"0px", "right":"0px", "width":"100%", "height":"100%", "border":"none", "margin":"0", "padding":"0", "overflow":"hidden", "zIndex":999999},
 									"attrs":{"id":"outarea", "width":"100%","height":(dims.height - 60) + "px"}
 								}]
 							},{
@@ -286,7 +286,7 @@ JMVC.extend('console', {
 					j = vals[1] || defaults.j,
 					c = vals[2] || defaults.c,
 					iframe = JMVC.dom.find('#outarea'),
-					lib = JMVC.dom.find('#options').value;
+					lib = JMVC.dom.find('#content-options').value || false;
 
 				JMVC.dom.find('#outarea').contentDocument.documentElement.innerHTML = JMVC.string.replaceall(
 					JMVC.console._.tpl, {
@@ -309,7 +309,9 @@ JMVC.extend('console', {
 					var dl = JMVC.WD.location;
 					iframe.contentWindow.eval('var JMVCshut = true; ')
 					iframe.contentWindow.eval(appenderCode( '/app/' + jmvc_iframe_file));
+					
 					!!lib && iframe.contentWindow.eval(appenderCode(lib));
+					
 					iframe.contentWindow.eval(j);
 				}catch(e){
 					console.error(e);
@@ -332,7 +334,6 @@ JMVC.extend('console', {
 			}
 
 			function reset(current) {
-				console.debug(current)
 				if (!!current) {
 					JMVC.dom.find('#content-' + visibleTab).value = '';
 				} else {
