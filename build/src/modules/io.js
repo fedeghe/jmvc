@@ -1,6 +1,8 @@
-/*-------------
-AJAX sub-module
--------------*/
+// ---------------+
+// AJAX sub-module |
+// ---------------+
+
+
 // private section
 _.io = {
     /**
@@ -50,8 +52,12 @@ _.io = {
             res = false,
             ret = false,
             state = false;
-        //prepare data, caring of cache
-        if (!cache) {data.C = JMVC.util.now(); }
+
+        //prepare data, taking care of cache
+        //
+        if (!cache) {
+            data.C = JMVC.util.now();
+        }
         data = JMVC.object.toQs(data).substr(1);
         xhr.onreadystatechange = function () {
             var tmp;

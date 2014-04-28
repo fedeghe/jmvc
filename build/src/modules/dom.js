@@ -1,6 +1,7 @@
-/*------------
-DOM sub-module
-------------*/
+// --------------+
+// DOM sub-module |
+// --------------+
+
 // private section
 _.dom = {
     qsall : function (a) {

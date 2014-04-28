@@ -1,3 +1,7 @@
+// --------------+
+// CSS sub-module |
+// --------------+
+
 _.css = {
     opera : navigator.userAgent.match(/opera\/([^\s]*)/i),
     mappedStyles : {},
@@ -6,60 +10,7 @@ _.css = {
         return s[0] === '-' ? s : s.replace(/-(\w)/g, function (str, $1) {return $1.toUpperCase(); });
     }
 };
-/*,
-css_propertymap : {
-'background-attachment' : 'backgroundAttachment',
-'background-color' : 'backgroundColor',
-'background-image' : 'backgroundImage',
-'background-position' : 'backgroundPosition',
-'background-repeat' : 'backgroundRepeat',
-'border-bottom' : 'borderBottom',
-'border-bottom-color' : 'borderBottomColor',
-'border-bottom-style' : 'borderBottomStyle',
-'border-bottom-width' : 'borderBottomWidth',
-'border-color' : 'borderColor',
-'border-left' : 'borderLeft',
-'border-left-color' : 'borderLeftColor',
-'border-left-style' : 'borderLeftStyle',
-'border-left-width' : 'borderLeftWidth',
-'border-right' : 'borderRight',
-'border-right-color' : 'borderRightColor',
-'border-right-style' : 'borderRightStyle',
-'border-right-width' : 'borderRightWidth',
-'border-style' : 'borderStyle',
-'border-top' : 'borderTop',
-'border-top-color' : 'borderTopColor',
-'border-top-style' : 'borderTopStyle',
-'border-top-width' : 'borderTopWidth',
-'border-width' : 'borderWidth',
-'font-family' : 'fontFamily',
-'font-size' : 'fontSize',
-'font-variant' : 'fontVariant',
-'font-weight' : 'fontWeight',
-'letter-spacing' : 'letterSpacing',
-'line-height' : 'lineHeight',
-'list-style' : 'listStyle',
-'list-style-image' : 'listStyleImage',
-'list-style-position' : 'listStylePosition',
-'list-style-type' : 'listStyleType',
-'margin-bottom' : 'marginBottom',
-'margin-left' : 'marginLeft',
-'margin-right' : 'marginRight',
-'margin-top' : 'marginTop',
-'padding-bottom' : 'paddingBottom',
-'padding-left' : 'paddingLeft',
-'padding-right' : 'paddingRight',
-'padding-top' : 'paddingTop',
-'page-break-after' : 'pageBreakAfter',
-'page-break-before' : 'pageBreakBefore',
-'text-align' : 'textAlign',
-'text-decoration' : 'textDecoration',
-'text-indent' : 'textIndent',
-'text-transform' : 'textTransform',
-'vertical-align' : 'verticalAlign',
-'z-index ' : 'zIndex',
-'z-Index ' : 'zIndex'
-},*/
+
 
 
 JMVC.css = {

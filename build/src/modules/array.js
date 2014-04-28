@@ -1,6 +1,7 @@
-/*--------------
-ARRAY sub-module
---------------*/
+// ----------------+
+// ARRAY sub-module |
+// ----------------+
+
 // private section
 _.array = {
     /**

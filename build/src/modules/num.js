@@ -1,6 +1,7 @@
-/*------------
-NUM sub-module
-------------*/
+// ---------------+
+// NUM sub-module |
+// ---------------+
+
 // private section
 _.num = {};
 // public section

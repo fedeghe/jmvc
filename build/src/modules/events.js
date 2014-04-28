@@ -1,6 +1,7 @@
-/*--------------
-EVENT sub-module
---------------*/
+// -----------------+
+// EVENTS sub-module |
+// -----------------+
+
 // private section
 _.events = {
     /**

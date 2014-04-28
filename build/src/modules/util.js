@@ -1,6 +1,7 @@
-/*-------------
-UTIL sub-module
--------------*/
+// ---------------+
+// UTIL sub-module |
+// ---------------+
+
 /**
  * private section
  * @type {Object}

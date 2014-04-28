@@ -1,6 +1,8 @@
-/*--------------
-MATCH sub-module
---------------*/
+// ----------------+
+// MATCH sub-module |
+// ----------------+
+
+
 // private section
 _.match = {
     rex : {

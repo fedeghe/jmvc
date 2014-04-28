@@ -1,6 +1,7 @@
-/*---------------
-OBJECT sub-module
----------------*/
+// -----------------+
+// OBJECT sub-module |
+// -----------------+
+
 /**
  * [object description]
  * @type {Object}

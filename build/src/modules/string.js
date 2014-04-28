@@ -1,6 +1,7 @@
-/*---------------
-STRING sub-module
----------------*/
+// -----------------+
+// STRING sub-module |
+// -----------------+
+
 // private section
 _.string = {
     charToEntity : {},

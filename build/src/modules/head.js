@@ -1,6 +1,8 @@
-/*-------------
-HEAD sub-module
--------------*/
+// ---------------+
+// HEAD sub-module |
+// ---------------+
+
+
 // private section
 _.head = {};
 // public section
