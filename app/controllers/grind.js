@@ -210,7 +210,9 @@ JMVC.controllers.grind = function () {
 			this.promise.done();
 			JMVC.events.bind(this, 'click', function () {
 				drawText = !drawText;
-				JMVC.grind.render(getConfig(), false, 'b960');
+				JMVC.grind.render(getConfig(), function (){
+					JMVC.debug('end of re-render');
+				}, 'b960');
 			});
 		}
 
