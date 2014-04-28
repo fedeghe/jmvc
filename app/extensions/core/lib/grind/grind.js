@@ -1,11 +1,24 @@
 JMVC.extend('grind', function () {
+
     "use strict";
+    
     JMVC.head.addstyle(JMVC.vars.extensions + 'core/lib/grind/grind.min.css');
+
+
 
     function render(config, callback) {
         
         var mainTarget = config.target,
-            gotContent = 'content' in config;
+            gotContent = 'content' in config,
+            promises = [],
+            resolve = function () {
+                promises.length && promises.shift();
+                if (promises.length == 0) {
+                    if (typeof callback === 'function') {
+                        callback.call();
+                    }
+                }
+            };
 
         if (gotContent) {
             config.content.map = {};
@@ -58,12 +71,6 @@ JMVC.extend('grind', function () {
                             tag.style[j.replace(/^float$/,'cssFloat')] = item.style[j];
                         }
                     }
-                    /*
-                    // now in style
-                     
-                    if (typeof item['float'] !== 'undefined') { 
-                        tag.style.cssFloat = item['float'];
-                    }*/
 
                     if (typeof item.html !== 'undefined') { 
                         tag.innerHTML = item.html;
@@ -75,7 +82,12 @@ JMVC.extend('grind', function () {
                     //
                     item.node = tag;
 
-                    typeof item.cb === "function" && item.cb.call(tag);
+                    if (typeof item.cb === "function") {
+                        tag.promise = new JMVC.Promise();
+                        tag.promise.then(resolve);
+                        promises.push(tag.promise);
+                        item.cb.call(tag);
+                    }
 
                     if (item.content) {
                         for (var k = 0, h = item.content.length; k < h; k++) {
@@ -89,7 +101,8 @@ JMVC.extend('grind', function () {
                 }
             })(config.content[i]);
         }   
-        typeof callback === 'function' && callback.call();
+        !promises.length && resolve();
+        
     }
 
 

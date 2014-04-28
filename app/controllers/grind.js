@@ -69,14 +69,36 @@ JMVC.controllers.grind = function () {
 											backgroundColor : 'green'
 										},
 										attrs : {'class' : 'pad10 round8'},
-										html : lorem(30)
+										html : lorem(30),
+
+
+
+										cb : function () {
+											var p = this.promise;
+											setTimeout(function () {
+												JMVC.debug(2)
+												p.done();
+											}, 2000);
+										}
 									}, {
 										style : {
 											marginTop : '5px',
 											backgroundColor : 'green'
 										},
 										attrs : {'class' : 'pad10 round8'},
-										html : lorem(30)
+										html : lorem(30),
+
+
+
+										cb : function () {
+											var p = this.promise;
+											setTimeout(function () {
+												JMVC.debug(3)
+												p.done();
+											}, 3000);
+										}
+
+
 									}
 								]
 							}, {
@@ -185,6 +207,7 @@ JMVC.controllers.grind = function () {
 
 
 		function toggleText (){
+			this.promise.done();
 			JMVC.events.bind(this, 'click', function () {
 				drawText = !drawText;
 				JMVC.grind.render(getConfig(), false, 'b960');
@@ -197,7 +220,9 @@ JMVC.controllers.grind = function () {
 				'id' : 'extralogo'
 			}).render(function () {
 				JMVC.css.style(JMVC.dom.body(), 'backgroundColor', '#444');
-				JMVC.grind.render(config, function (){console.debug('end'); }, 'b960');
+				JMVC.grind.render(config, function (){
+					JMVC.debug('end');
+				}, 'b960');
 			});
 	};
 
@@ -343,7 +368,7 @@ JMVC.controllers.grind = function () {
 		};
 
 		this.render(function () {
-			JMVC.grind.render(config, function (){}, 'b960');
+			JMVC.grind.render(config, function (){JMVC.debug('free'); }, 'b960');
 			JMVC.grind.colorize();
 		});
 	};
