@@ -70,6 +70,7 @@ JMVC.controllers.demo = function() {
 				//'View' : 'demo/view',
 				'Canvas editor (WorkInProgress)': 'canvaseditor',
 				//'Canvas editor (old layout)' : 'canvaseditor?v=1',
+				'Widgzard' : 'widgzard',
 				'6 Divs Cube css3 tranformations ': 'demo/divrot.js',
 
 				'Console': 'console',

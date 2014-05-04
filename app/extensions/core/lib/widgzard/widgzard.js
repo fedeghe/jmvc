@@ -1,8 +1,8 @@
 
-JMVC.extend('core/json2dom', function () {
+JMVC.extend('core/widgzard', function () {
     "use strict";
 
-    JMVC.head.addstyle(JMVC.vars.extensions + 'core/lib/json2dom/json2dom.min.css');
+    JMVC.head.addstyle(JMVC.vars.extensions + 'core/lib/widgzard/widgzard.min.css');
 
     /**
      * Main object constructor represeting any node created
@@ -192,7 +192,14 @@ JMVC.extend('core/json2dom', function () {
         target.innerHTML = '';
         
         // initialize the root node to reflect what will be done
-        // by the Node contstructor to every build node
+        // by the Node contstructor to every build node: 
+        // 
+        // - len : the lenght of the content array
+        // - promise : the promise that calls, when honoured, the node callback
+        // - cb : exactly th ecallback
+        // - resolve : the method that must be called within childs callbacks
+        // - node : a reference to the node
+        // - node.conf : and to its configuration json sub-section
         // 
         target.len = params.content.length;
         target.promise = new JMVC.Promise();
@@ -210,12 +217,19 @@ JMVC.extend('core/json2dom', function () {
         // 
         (function recur(cnf, trg){
             
+            // change the class if the element is simply a "clearer" String
+            // 
             if (cnf === 'clearer') {
+                
                 trg.className = 'clearer';
-            }
 
-            if (cnf.content) {
+            // otherwise maybe it`s not a leaf node
+            //
+            } else if (cnf.content) {
 
+                // recur on every content node, after adding it
+                // in the right place
+                //
                 for (var i = 0, l = cnf.content.length; i < l; i++) {
 
                     var n = new Node(cnf.content[i], trg, inner);

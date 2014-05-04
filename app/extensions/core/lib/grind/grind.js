@@ -1,21 +1,29 @@
+/**
+ * [description]
+ * @return {[type]} [description]
+ */
 JMVC.extend('grind', function () {
 
     "use strict";
     
     JMVC.head.addstyle(JMVC.vars.extensions + 'core/lib/grind/grind.min.css');
 
-
-
-    function render(config, callback) {
+    function render(config, callback, pro) {
         
         var mainTarget = config.target,
             gotContent = 'content' in config,
-            promises = [],
+            promises = pro || [],
             resolve = function () {
                 promises.length && promises.shift();
                 if (promises.length == 0) {
                     if (typeof callback === 'function') {
-                        callback.call();
+
+                        // prevent inner Grind to call again their root when is a leaf of a 
+                        // parent Grind
+                        if (!mainTarget._called) {
+                            callback.call();
+                            mainTarget._called = true;
+                        }
                     }
                 }
             };

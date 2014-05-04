@@ -6,7 +6,7 @@ JMVC.require(
     'widget/snow/snow',
     'core/lorem'
 );
-JMVC.controllers.json2dom = function () {
+JMVC.controllers.widgzard = function () {
     "use strict";
 
     var drawText = !JMVC.p.draw,
