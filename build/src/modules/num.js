@@ -12,7 +12,9 @@ JMVC.num = {
 	pInt : function (i) {return i >> 0; },
 	mRound : function (n) {return (n + 0.5) >> 0; },
     //mFloor : function (n) {return ~~n; },
-	mFloor : function (n) {return n >> 0; },
+    mFloor : function (n) {return n >> 0; },
+	mFloor2 : function (n) {return n | 0; },
+
     mCeil : function (n) {return (n + (n > 0 && !!(n % 1))) >> 0; },
 	//mCeil : function (n) {return (n >> 0) + (n > 0 ? 1 : -1); },
 	num : function (n) {return parseFloat(n.toFixed(10), 10); },
