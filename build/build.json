@@ -7,5 +7,6 @@
     "styles/jmvc-night.less" : "../media/css/core",
 
     "styles/api.css" :  "../media/css/core",
-    "styles/grind.less" : "../app/extensions/core/lib/grind"
+    "styles/grind.less" : "../app/extensions/core/lib/grind",
+    "styles/json2dom.less" : "../app/extensions/core/lib/json2dom"
 }
