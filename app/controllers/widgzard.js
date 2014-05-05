@@ -35,6 +35,7 @@ JMVC.controllers.widgzard = function () {
                 cb : function (){
                     JMVC.dom.addClass(document.body, 'b960');
                     JMVC.debug('end RENDER MAIN');
+                    console.debug(this.getNode('tree'))
                 },
                 content : [
                     {
@@ -43,7 +44,7 @@ JMVC.controllers.widgzard = function () {
                             'class' : 'round12 roundtop pad5'
                         },
                         style : {
-                            backgroundColor : 'hsla(360, 80%, 50%, 1)',
+                            backgroundColor : '#ff0000',
                             marginTop : '5px'
                         },
                         html : '<h1>' + lorem(3) + '</h1>'
@@ -73,7 +74,7 @@ JMVC.controllers.widgzard = function () {
                                             backgroundColor : 'green'
                                         },
                                         attrs : {'class' : 'pad10 round8'},
-                                        html : lorem(30),
+                                        html : lorem(50),
                                         cb : function () {
                                             //this.resolve();
                                             
@@ -90,7 +91,7 @@ JMVC.controllers.widgzard = function () {
                                             backgroundColor : 'green'
                                         },
                                         attrs : {'class' : 'pad10 round8'},
-                                        html : lorem(30),
+                                        html : lorem(70),
                                         cb : function () {
                                             //this.resolve();
                                             
@@ -167,23 +168,41 @@ JMVC.controllers.widgzard = function () {
                     },
                     'clearer',
                     {
+                        wid : 'tree',
                         attrs : {id : 'prova5'},
                         content : [
                             {
                                 attrs : {id : 'brd1', 'class' : 'p25 round12 roundleft pad5'},
                                 style : {'float' : 'left',backgroundColor : '#eee'},
-                                html : lorem(10)
+                                html : lorem(10),
+                                cb : function () {
+                                    console.debug(JMVC.css.height(this))
+                                    this.done();
+                                }
                             }, {
                                 attrs : {id : 'brd2', 'class' : 'p50 pad5'},
                                 style : {'float' : 'left',backgroundColor : '#eee'},
-                                html : lorem(20)
+                                html : lorem(20),
+                                cb : function () {
+                                    console.debug(JMVC.css.height(this))
+                                    this.done();
+                                }
                             }, {
                                 attrs : {id : 'brd3', 'class' : 'p25 round12 roundbottomright pad5'},
                                 style : {'float' : 'left',backgroundColor : '#eee'},
-                                html : lorem(10)
+                                html : lorem(10),
+                                cb : function () {
+                                    console.debug(JMVC.css.height(this))
+                                    this.done();
+                                }
                             },
                             'clearer'
-                        ]
+                        ],
+                        cb : function () {
+                            console.debug(JMVC.css.height(this))
+                            this.done();
+                        }
+
                     },
                     'clearer',
                     {
@@ -193,7 +212,7 @@ JMVC.controllers.widgzard = function () {
                             html : 'gainsboro',
                             style : {padding : '10px', fontSize:'10px'}
                         }],
-                        grindID : 'footer',
+                        wid : 'footer',
                         cb : another
                     },
                     {

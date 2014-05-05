@@ -25,9 +25,9 @@ JMVC.extend('core/widgzard', function () {
         // handle special case when one element is simply specified as
         // 'clearer', in that case the tag used will be a br
         // 
-        if (conf == 'clearer') {
-            tag = 'br';
-        }
+        //if (conf == 'clearer') {
+        //    tag = 'br';
+        //}
 
         // save a reference to the target parent for that node
         // by means of the callback promise chain, in fact the 
@@ -70,7 +70,7 @@ JMVC.extend('core/widgzard', function () {
 
         // as said at the begibbibg every node keeps a reference
         // to a function that allow to get a reference to any
-        // node that in his configuration has a grindID values
+        // node that in his configuration has a 'wid' value
         // specified
         //
         this.map = mapcnt.map;
@@ -98,6 +98,30 @@ JMVC.extend('core/widgzard', function () {
             --self.target.len == 0 && self.node.promise.done();
         };
     }
+
+    Node.prototype.setAttrs = function (node, attrs) {
+        // if set, append all attributes (*class)
+        // 
+        if (typeof attrs !== 'undefined') { 
+            for (var j in attrs) {
+                if (j !== 'class') {
+                    node.setAttribute(j, attrs[j]);
+                } else {
+                    node.className = attrs[j];
+                }
+            }
+        }
+    };
+
+    Node.prototype.setStyle = function (node, style) {
+        // if set, append all styles (*class)
+        //
+        if (typeof style !== 'undefined') { 
+            for (var j in style) {
+                node.style[j.replace(/^float$/, 'cssFloat')] = style[j];
+            }
+        }
+    };
     
     /**
      * add method for the Node
@@ -108,25 +132,13 @@ JMVC.extend('core/widgzard', function () {
             node = this.node,
             j;
 
-        // if set, append all attributes (*class)
+        // set attributes
         // 
-        if (typeof conf.attrs !== 'undefined') { 
-            for (j in conf.attrs) {
-                if (j !== 'class') {
-                    node.setAttribute(j, conf.attrs[j]);
-                } else {
-                    node.className = conf.attrs[j];
-                }
-            }
-        }
+        this.setAttrs(node, conf.attrs);
 
-        // if set, append all styles (*class)
+        // set styles
         //
-        if (typeof conf.style !== 'undefined') { 
-            for (j in conf.style) {
-                node.style[j.replace(/^float$/,'cssFloat')] = conf.style[j];
-            }
-        }
+        this.setStyle(node, conf.style);
 
         // if `html` key is found on node conf 
         // inject its value
@@ -142,7 +154,7 @@ JMVC.extend('core/widgzard', function () {
         // from all others callback invoking
         // this.getNode(keyValue)
         //
-        typeof conf.grindID !== 'undefined' && (this.map[conf.grindID] = node);
+        typeof conf.wid !== 'undefined' && (this.map[conf.wid] = node);
 
         // if the user specifies a node the is not the target 
         // passed to the constructor we use it as destination node
@@ -159,6 +171,8 @@ JMVC.extend('core/widgzard', function () {
         // this is the node itself, those functions are attached
         // 
         !conf.content && node.cb.call(node);
+
+        return this.node;
     };
 
 
@@ -189,29 +203,21 @@ JMVC.extend('core/widgzard', function () {
         
         // first literal must have a
         // target specified within
+        // 
         target.innerHTML = '';
         
         // initialize the root node to reflect what will be done
         // by the Node contstructor to every build node: 
         // 
         // - len : the lenght of the content array
-        // - promise : the promise that calls, when honoured, the node callback
-        // - cb : exactly th ecallback
-        // - resolve : the method that must be called within childs callbacks
-        // - node : a reference to the node
-        // - node.conf : and to its configuration json sub-section
+        // - cb : exactly the callback
         // 
         target.len = params.content.length;
-        target.promise = new JMVC.Promise();
-        target.promise.then(params.cb, target);
         target.cb = params.cb;
-        target.resolve = function () {
-            target.len--;
-            !target.len && target.promise.resolve();
-        };
-        target.node = target;
-        target.node.conf = params;
-        
+
+        // allow to use getNode from root
+        // 
+        target.getNode = inner.getNode;
 
         // start recursion
         // 
@@ -219,25 +225,23 @@ JMVC.extend('core/widgzard', function () {
             
             // change the class if the element is simply a "clearer" String
             // 
-            if (cnf === 'clearer') {
-                
-                trg.className = 'clearer';
+            if (cnf.content) {
 
-            // otherwise maybe it`s not a leaf node
-            //
-            } else if (cnf.content) {
-
-                // recur on every content node, after adding it
-                // in the right place
-                //
                 for (var i = 0, l = cnf.content.length; i < l; i++) {
 
-                    var n = new Node(cnf.content[i], trg, inner);
-                    n.add();
-                    recur(cnf.content[i], n.node);
+                    if (cnf.content[i] === 'clearer') {
+                        cnf.content[i] = {
+                            tag : 'br',
+                            attrs : {'class':'clearer'}
+                        };
+                    }
+                    
+                    recur(
+                        cnf.content[i],
+                        new Node(cnf.content[i], trg, inner).add()
+                    );
                 }
             }
-            
         })(params, target);
     }
     
