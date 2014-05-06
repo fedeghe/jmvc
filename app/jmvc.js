@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.3.7 (rev. 8) build: 1270
+ * @version :  3.3.7 (rev. 9) build: 1308
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.1.0 & a love heap
- *         glued with 37 files on 27/4/2014 at 0:9:34
+ *         glued with 37 files on 7/5/2014 at 0:23:46
  *
  * All rights reserved.
  *
@@ -70,13 +70,13 @@
                 JMVC_VERSION = '3.3.7',
             
                 // review (vars.json)
-                JMVC_REVIEW = '8',
+                JMVC_REVIEW = '9',
             
                 // review (vars.json)
-                JMVC_DATE = '27/4/2014',
+                JMVC_DATE = '7/5/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '0:9:34',
+                JMVC_TIME = '0:23:46',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -2375,9 +2375,11 @@
     /*
     [MALTA] src/modules/io.js
     */
-    /*-------------
-    AJAX sub-module
-    -------------*/
+    // ---------------+
+    // AJAX sub-module |
+    // ---------------+
+    
+    
     // private section
     _.io = {
         /**
@@ -2427,8 +2429,12 @@
                 res = false,
                 ret = false,
                 state = false;
-            //prepare data, caring of cache
-            if (!cache) {data.C = JMVC.util.now(); }
+    
+            //prepare data, taking care of cache
+            //
+            if (!cache) {
+                data.C = JMVC.util.now();
+            }
             data = JMVC.object.toQs(data).substr(1);
             xhr.onreadystatechange = function () {
                 var tmp;
@@ -2613,9 +2619,10 @@
     /*
     [MALTA] src/modules/util.js
     */
-    /*-------------
-    UTIL sub-module
-    -------------*/
+    // ---------------+
+    // UTIL sub-module |
+    // ---------------+
+    
     /**
      * private section
      * @type {Object}
@@ -2791,9 +2798,10 @@
     /*
     [MALTA] src/modules/dom.js
     */
-    /*------------
-    DOM sub-module
-    ------------*/
+    // --------------+
+    // DOM sub-module |
+    // --------------+
+    
     // private section
     _.dom = {
         qsall : function (a) {
@@ -3464,9 +3472,10 @@
     /*
     [MALTA] src/modules/events.js
     */
-    /*--------------
-    EVENT sub-module
-    --------------*/
+    // -----------------+
+    // EVENTS sub-module |
+    // -----------------+
+    
     // private section
     _.events = {
         /**
@@ -4088,9 +4097,11 @@
     /*
     [MALTA] src/modules/head.js
     */
-    /*-------------
-    HEAD sub-module
-    -------------*/
+    // ---------------+
+    // HEAD sub-module |
+    // ---------------+
+    
+    
     // private section
     _.head = {};
     // public section
@@ -4335,6 +4346,10 @@
     /*
     [MALTA] src/modules/css.js
     */
+    // --------------+
+    // CSS sub-module |
+    // --------------+
+    
     _.css = {
         opera : navigator.userAgent.match(/opera\/([^\s]*)/i),
         mappedStyles : {},
@@ -4343,60 +4358,7 @@
             return s[0] === '-' ? s : s.replace(/-(\w)/g, function (str, $1) {return $1.toUpperCase(); });
         }
     };
-    /*,
-    css_propertymap : {
-    'background-attachment' : 'backgroundAttachment',
-    'background-color' : 'backgroundColor',
-    'background-image' : 'backgroundImage',
-    'background-position' : 'backgroundPosition',
-    'background-repeat' : 'backgroundRepeat',
-    'border-bottom' : 'borderBottom',
-    'border-bottom-color' : 'borderBottomColor',
-    'border-bottom-style' : 'borderBottomStyle',
-    'border-bottom-width' : 'borderBottomWidth',
-    'border-color' : 'borderColor',
-    'border-left' : 'borderLeft',
-    'border-left-color' : 'borderLeftColor',
-    'border-left-style' : 'borderLeftStyle',
-    'border-left-width' : 'borderLeftWidth',
-    'border-right' : 'borderRight',
-    'border-right-color' : 'borderRightColor',
-    'border-right-style' : 'borderRightStyle',
-    'border-right-width' : 'borderRightWidth',
-    'border-style' : 'borderStyle',
-    'border-top' : 'borderTop',
-    'border-top-color' : 'borderTopColor',
-    'border-top-style' : 'borderTopStyle',
-    'border-top-width' : 'borderTopWidth',
-    'border-width' : 'borderWidth',
-    'font-family' : 'fontFamily',
-    'font-size' : 'fontSize',
-    'font-variant' : 'fontVariant',
-    'font-weight' : 'fontWeight',
-    'letter-spacing' : 'letterSpacing',
-    'line-height' : 'lineHeight',
-    'list-style' : 'listStyle',
-    'list-style-image' : 'listStyleImage',
-    'list-style-position' : 'listStylePosition',
-    'list-style-type' : 'listStyleType',
-    'margin-bottom' : 'marginBottom',
-    'margin-left' : 'marginLeft',
-    'margin-right' : 'marginRight',
-    'margin-top' : 'marginTop',
-    'padding-bottom' : 'paddingBottom',
-    'padding-left' : 'paddingLeft',
-    'padding-right' : 'paddingRight',
-    'padding-top' : 'paddingTop',
-    'page-break-after' : 'pageBreakAfter',
-    'page-break-before' : 'pageBreakBefore',
-    'text-align' : 'textAlign',
-    'text-decoration' : 'textDecoration',
-    'text-indent' : 'textIndent',
-    'text-transform' : 'textTransform',
-    'vertical-align' : 'verticalAlign',
-    'z-index ' : 'zIndex',
-    'z-Index ' : 'zIndex'
-    },*/
+    
     
     
     JMVC.css = {
@@ -4599,9 +4561,10 @@
     /*
     [MALTA] src/modules/array.js
     */
-    /*--------------
-    ARRAY sub-module
-    --------------*/
+    // ----------------+
+    // ARRAY sub-module |
+    // ----------------+
+    
     // private section
     _.array = {
         /**
@@ -4878,9 +4841,10 @@
     /*
     [MALTA] src/modules/string.js
     */
-    /*---------------
-    STRING sub-module
-    ---------------*/
+    // -----------------+
+    // STRING sub-module |
+    // -----------------+
+    
     // private section
     _.string = {
         charToEntity : {},
@@ -5155,9 +5119,10 @@
     /*
     [MALTA] src/modules/object.js
     */
-    /*---------------
-    OBJECT sub-module
-    ---------------*/
+    // -----------------+
+    // OBJECT sub-module |
+    // -----------------+
+    
     /**
      * [object description]
      * @type {Object}
@@ -5392,9 +5357,11 @@
     /*
     [MALTA] src/modules/match.js
     */
-    /*--------------
-    MATCH sub-module
-    --------------*/
+    // ----------------+
+    // MATCH sub-module |
+    // ----------------+
+    
+    
     // private section
     _.match = {
         rex : {
@@ -5429,9 +5396,10 @@
     /*
     [MALTA] src/modules/num.js
     */
-    /*------------
-    NUM sub-module
-    ------------*/
+    // ---------------+
+    // NUM sub-module |
+    // ---------------+
+    
     // private section
     _.num = {};
     // public section
@@ -5442,7 +5410,9 @@
     	pInt : function (i) {return i >> 0; },
     	mRound : function (n) {return (n + 0.5) >> 0; },
         //mFloor : function (n) {return ~~n; },
-    	mFloor : function (n) {return n >> 0; },
+        mFloor : function (n) {return n >> 0; },
+    	mFloor2 : function (n) {return n | 0; },
+    
         mCeil : function (n) {return (n + (n > 0 && !!(n % 1))) >> 0; },
     	//mCeil : function (n) {return (n >> 0) + (n > 0 ? 1 : -1); },
     	num : function (n) {return parseFloat(n.toFixed(10), 10); },
