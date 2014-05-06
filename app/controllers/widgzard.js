@@ -95,17 +95,17 @@ JMVC.controllers.widgzard = function () {
                                         content : [{
                                             content : [{
                                                 wid : 'tb1',
-                                                attrs : {'class':'tongue round8 roundtop active'},
+                                                attrs : {'class':'tongue round8 roundtop active respfixed'},
                                                 html : drawText ? lorem(1) : '',
                                                 style : {'float':'left'}
                                             }, {
                                                 wid : 'tb2',
-                                                attrs : {'class':'tongue round8 roundtop'},
+                                                attrs : {'class':'tongue round8 roundtop respfixed'},
                                                 html : drawText ? lorem(2).split(/\s/).pop() : '',
                                                 style : {'float':'left'}
                                             }, {
                                                 wid : 'tb3', 
-                                                attrs : {'class':'tongue round8 roundtop'},
+                                                attrs : {'class':'tongue round8 roundtop respfixed'},
                                                 html : drawText ? lorem(3).split(/\s/).pop() : '',
                                                 style : {'float':'left'}
                                             },
