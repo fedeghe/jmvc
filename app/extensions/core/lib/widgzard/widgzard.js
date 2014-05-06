@@ -99,6 +99,11 @@ JMVC.extend('core/widgzard', function () {
         };
     }
 
+    /**
+     * Set neo attributes
+     * @param {DOMnode} node  the node
+     * @param {Object} attrs  the hash of attributes->values
+     */
     Node.prototype.setAttrs = function (node, attrs) {
         // if set, append all attributes (*class)
         // 
@@ -111,8 +116,14 @@ JMVC.extend('core/widgzard', function () {
                 }
             }
         }
+        return this;
     };
 
+    /**
+     * Set node inline style
+     * @param {DOMnode} node  the node
+     * @param {Object} style  the hash of rules
+     */
     Node.prototype.setStyle = function (node, style) {
         // if set, append all styles (*class)
         //
@@ -121,6 +132,7 @@ JMVC.extend('core/widgzard', function () {
                 node.style[j.replace(/^float$/, 'cssFloat')] = style[j];
             }
         }
+        return this;
     };
     
     /**
@@ -132,13 +144,10 @@ JMVC.extend('core/widgzard', function () {
             node = this.node,
             j;
 
-        // set attributes
+        // set attributes & styles
         // 
-        this.setAttrs(node, conf.attrs);
-
-        // set styles
-        //
-        this.setStyle(node, conf.style);
+        this.setAttrs(node, conf.attrs)
+            .setStyle(node, conf.style);
 
         // if `html` key is found on node conf 
         // inject its value
@@ -221,6 +230,45 @@ JMVC.extend('core/widgzard', function () {
 
         // start recursion
         // 
+        // start recursion
+        // 
+        (function recur(cnf, trg){
+            
+            // change the class if the element is simply a "clearer" String
+            // 
+            if (cnf.content) {
+                var nodes = [],
+                    postpro = !!cnf.sameHeight,
+                    h = 0,
+                    skip = false;
+                for (var i = 0, l = cnf.content.length; i < l; i++) {
+
+                    if (cnf.content[i] === 'clearer') {
+                        skip = true;
+                        cnf.content[i] = {
+                            tag : 'br',
+                            attrs : {'class':'clearer'}
+                        };
+                    }
+                    var n = new Node(cnf.content[i], trg, inner).add();
+                    if (postpro && !skip) {
+                        nodes.push(n);
+                        h = Math.max(h, JMVC.css.height(n));
+                    }
+                    
+                    recur(cnf.content[i], n);
+                }
+                if (postpro) {
+                    for (var j = 0, l = nodes.length; j < l; j++) {
+                        nodes[j].style.height = h + 'px';
+                    }
+                }
+            }
+            
+        })(params, target);
+
+
+        /*
         (function recur(cnf, trg){
             
             // change the class if the element is simply a "clearer" String
@@ -243,6 +291,7 @@ JMVC.extend('core/widgzard', function () {
                 }
             }
         })(params, target);
+*/
     }
     
     return {render:render};

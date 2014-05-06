@@ -60,30 +60,105 @@ JMVC.controllers.widgzard = function () {
                             {
                                 attrs : {'id' : 'prova3', 'class' : 'p30'},
                                 style : {'float' : 'left'},
+                                sameHeight : true,
                                 content : [
+                                    {
+                                        tag : 'style',
+                                        html : '.tongue{'+
+                                                'border-bottom:1px solid #ccc;'+
+                                                'background-color:#aaa;'+
+                                                'padding:5px;'+
+                                                'margin-right:5px;'+
+                                                'cursor:pointer}'+
+                                            '.tongue.active{'+
+                                                'border-bottom:1px solid #fff;'+
+                                                'background-color:white;'+
+                                                'cursor:default'+
+                                            '}'+
+                                            '.tongue:hover{'+
+                                                'background-color:#ddd'+
+                                            '}'+
+                                            '.tongue.active:hover{'+
+                                                'background-color:white'+
+                                            '}'+
+                                            '.cnt{'+
+                                                'background-color:white;'+
+                                                'padding:5px'+
+                                            '}'
+                                    },
                                     {
                                         style : {
                                             marginTop : '5px',
                                             backgroundColor : 'green'
                                         },
                                         attrs : {'class' : 'pad10 round8'},
-                                        html : lorem(30)
-                                    }, {
-                                        style : {
-                                            marginTop : '5px',
-                                            backgroundColor : 'green'
-                                        },
-                                        attrs : {'class' : 'pad10 round8'},
-                                        html : lorem(50),
+                                        content : [{
+                                            content : [{
+                                                wid : 'tb1',
+                                                attrs : {'class':'tongue round8 roundtop active'},
+                                                html : drawText ? lorem(1) : '',
+                                                style : {'float':'left'}
+                                            }, {
+                                                wid : 'tb2',
+                                                attrs : {'class':'tongue round8 roundtop'},
+                                                html : drawText ? lorem(2).split(/\s/).pop() : '',
+                                                style : {'float':'left'}
+                                            }, {
+                                                wid : 'tb3', 
+                                                attrs : {'class':'tongue round8 roundtop'},
+                                                html : drawText ? lorem(3).split(/\s/).pop() : '',
+                                                style : {'float':'left'}
+                                            },
+                                            'clearer'
+                                        ]}, {
+                                            attrs : {'class':'cnt round8 roundnotopleft'},
+                                            content : [{
+                                                content : [{
+                                                    wid : 'cnt1',
+                                                    html : lorem(50)
+                                                }, {
+                                                    wid : 'cnt2',
+                                                    style : {display : 'none'},
+                                                    html : lorem(100)
+                                                }, {
+                                                    wid : 'cnt3',
+                                                    style : {display : 'none'},
+                                                    html : lorem()
+                                                }]    
+                                            }]
+                                        }],
                                         cb : function () {
-                                            //this.resolve();
-                                            
-                                            var p = this;
-                                            setTimeout(function () {
-                                                JMVC.debug(2)
-                                                p.done();
-                                            }, 500);
-                                            
+                                            var tb1 = this.getNode('tb1'),
+                                                tb2 = this.getNode('tb2'),
+                                                tb3 = this.getNode('tb3'),
+                                                cnt1 = this.getNode('cnt1'),
+                                                cnt2 = this.getNode('cnt2'),
+                                                cnt3 = this.getNode('cnt3');
+                                            function clear() {
+                                                cnt1.style.display = 'none';
+                                                cnt2.style.display = 'none';
+                                                cnt3.style.display = 'none';
+                                                JMVC.dom.removeClass(tb1, 'active');
+                                                JMVC.dom.removeClass(tb2, 'active');
+                                                JMVC.dom.removeClass(tb3, 'active');
+                                            }
+                                            JMVC.events.bind(tb1, 'click', function () {
+                                                clear();
+                                                JMVC.dom.addClass(tb1, 'active');
+                                                cnt1.style.display = '';
+                                            });
+                                            JMVC.events.bind(tb2, 'click', function () {
+                                                clear();
+                                                JMVC.dom.addClass(tb2, 'active');
+                                                cnt2.style.display = '';
+                                            });
+                                            JMVC.events.bind(tb3, 'click', function () {
+                                                clear();
+                                                JMVC.dom.addClass(tb3, 'active');
+                                                cnt3.style.display = '';
+                                            });
+
+                                            this.done();
                                         }
                                     }, {
                                         style : {
@@ -91,17 +166,14 @@ JMVC.controllers.widgzard = function () {
                                             backgroundColor : 'green'
                                         },
                                         attrs : {'class' : 'pad10 round8'},
-                                        html : lorem(70),
-                                        cb : function () {
-                                            //this.resolve();
-                                            
-                                            var p = this;
-                                            setTimeout(function () {
-                                                JMVC.debug(3)
-                                                p.done();
-                                            }, 1000);
-                                            
-                                        }
+                                        html : lorem(50)
+                                    }, {
+                                        style : {
+                                            margin : '5px 0px',
+                                            backgroundColor : 'green'
+                                        },
+                                        attrs : {'class' : 'pad10 round8'},
+                                        html : lorem(70)
                                     }
                                 ]
                             }, {
@@ -170,38 +242,23 @@ JMVC.controllers.widgzard = function () {
                     {
                         wid : 'tree',
                         attrs : {id : 'prova5'},
+                        sameHeight : true,
                         content : [
                             {
                                 attrs : {id : 'brd1', 'class' : 'p25 round12 roundleft pad5'},
                                 style : {'float' : 'left',backgroundColor : '#eee'},
-                                html : lorem(10),
-                                cb : function () {
-                                    console.debug(JMVC.css.height(this))
-                                    this.done();
-                                }
+                                html : lorem(10)
                             }, {
                                 attrs : {id : 'brd2', 'class' : 'p50 pad5'},
                                 style : {'float' : 'left',backgroundColor : '#eee'},
-                                html : lorem(20),
-                                cb : function () {
-                                    console.debug(JMVC.css.height(this))
-                                    this.done();
-                                }
+                                html : lorem(20)
                             }, {
                                 attrs : {id : 'brd3', 'class' : 'p25 round12 roundbottomright pad5'},
                                 style : {'float' : 'left',backgroundColor : '#eee'},
-                                html : lorem(10),
-                                cb : function () {
-                                    console.debug(JMVC.css.height(this))
-                                    this.done();
-                                }
+                                html : lorem(10)
                             },
                             'clearer'
-                        ],
-                        cb : function () {
-                            console.debug(JMVC.css.height(this))
-                            this.done();
-                        }
+                        ]
 
                     },
                     'clearer',
