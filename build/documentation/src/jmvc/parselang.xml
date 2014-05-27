@@ -1,5 +1,5 @@
 <function>
-    <signature name="parselang">JMVC.parselang(String cnt)</signature>
+    <signature name="parseLang">JMVC.parseLang(String cnt)</signature>
     <description>Parses cnt looking for language placeholders [L[label]] and replacing them with the current(or default) language translation given in the app/i18n/XX.js lang file. That function is not mean to be called manually, it will be called by JMVC as a `onBeforeRender` hook as far as 'core/i18n' is required</description>
     <params>
         <param name="*cnt">the content to be parsed</param>
@@ -8,8 +8,8 @@
     <status>incomplete</status>
     <sample>var txt = '[L[ciao]] Federico, [L[come stai]]?';&#10;
 //default lang is en, and app/i18n/en.js contains tha translations&#10;
-console.debug(JMVC.parselang(txt));&#10;
+console.debug(JMVC.parseLang(txt));&#10;
 //but You set any language es: app/i18n/jp.js&#10;
 JMVC.cookie.set('lang',"jp");&#10;
-console.debug(JMVC.parselang(txt));</sample>
+console.debug(JMVC.parseLang(txt));</sample>
 </function>

@@ -1,5 +1,5 @@
 <function>
-    <signature name="htmlchars_decode">JMVC.htmlchars_decode(String str)</signature>
+    <signature name="htmlCharsDecode">JMVC.htmlCharsDecode(String str)</signature>
     <description>Gets a view instance, even on a subfolder</description>
     <params>
         <param name="*str">the string that must be changed</param>

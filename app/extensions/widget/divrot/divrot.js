@@ -1,7 +1,7 @@
 JMVC.extend('widget.divrot', {
 
     init : function () {
-        JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/widget/divrot/divrot.css', true);
+        JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/widget/divrot/divrot.css', true);
     },
 
     create : function (options) {
@@ -17,7 +17,7 @@ JMVC.extend('widget.divrot', {
                 left : options.left || '',
                 front : options.front || ''
             },
-            tpl = JMVC.string.replaceall('<div class="flip-card" style="width:%width%px; height:%height%px">'+
+            tpl = JMVC.string.replaceAll('<div class="flip-card" style="width:%width%px; height:%height%px">'+
                     '<div class="flip-card-content">' +
                         '<div class="flip-card-side-top" style="background:gainsboro">%cnt_top%</div>' + 
                         '<div class="flip-card-side-bott" style="background:lime">%cnt_bott%</div>' + 

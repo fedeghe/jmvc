@@ -4,14 +4,15 @@ JMVC.controllers.google = function () {
 		JMVC.events.loadify(1000);
 		JMVC.require('plotter/plotter', 'core/obj/bucket/bucket');
 		JMVC.head.meta('generator', 'jmvc resident in your machine');
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/logoogle.css');
+		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/logoogle.css');
 
 		var M = Math,
 			v = JMVC.getView('vacuum'),
 			that = this;
 
+		document.body.style.paddingTop = '100px';
 		v.set({
-			'style' : 'font-family:verdana;margin:0 auto;width:285px;height:105px;margin-top:80px;position:relative;',
+			'style' : 'font-family:verdana;margin:0 auto;width:285px;height:105px;position:relative;',
 			'content' : '&nbsp;',
 			'id' : 'extralogo'
 		});

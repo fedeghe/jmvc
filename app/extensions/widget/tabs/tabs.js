@@ -195,7 +195,7 @@ JMVC.extend('tabs', {
 					'div.tabcontainer_v' : 'color:' + colors.vert.textcontent +';background-color:' + colors.vert.containerbg +';' + border3 + 'min-height:250px;overflow:hidden; position:relative;line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;border:' + sizes.vert.border + 'px solid ' + colors.vert.border + ';left:-1px;z-index:5; padding:5px;'
 				};
 			
-			JMVC.head.addstyle(JMVC.object.toCss(styles, true), true, true);			
+			JMVC.head.addStyle(JMVC.object.toCss(styles, true), true, true);			
 		});
 	}
 });

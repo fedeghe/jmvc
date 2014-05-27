@@ -322,7 +322,7 @@ JMVC.controllers.arrayShuffle = function() {
                 tpl = '[%name%] match: %match%%, dist: %dist%',
                 j;
             for (j in checks) {
-                JT.message(JMVC.string.replaceall(tpl, {name : j, match : checks[j].match, dist : checks[j].dist.toFixed(2)}));    
+                JT.message(JMVC.string.replaceAll(tpl, {name : j, match : checks[j].match, dist : checks[j].dist.toFixed(2)}));    
             }
 
             function checkShuffle(a, strat) {

@@ -1,3 +1,6 @@
+// type : FACTORY_METHOD
+//
+
 JMVC.extend('calendar', {
 	vars : {
 		css_path : JMVC.vars.extensions + 'core/obj/calendar',
@@ -8,7 +11,7 @@ JMVC.extend('calendar', {
 	},
 	init : function () {
 		//JMVC.debug(this.vars.css_path);
-		JMVC.head.addstyle(JMVC.calendar.vars.css_path + '/calendar.css');
+		JMVC.head.addStyle(JMVC.calendar.vars.css_path + '/calendar.css');
 	},
 	create : function(options){
 		var cal = JMVC.calendar,

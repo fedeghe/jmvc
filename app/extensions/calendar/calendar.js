@@ -1,3 +1,5 @@
+// type : FACTORY_METHOD
+// 
 JMVC.extend('calendar',{
 	vars : {
 		css_path : JMVC.vars.extensions + '/calendar/styles',
@@ -6,7 +8,7 @@ JMVC.extend('calendar',{
 	},
 	init : function () {
 		//JMVC.debug(this.vars.css_path);
-		JMVC.head.addstyle(JMVC.calendar.vars.css_path + '/default.css');
+		JMVC.head.addStyle(JMVC.calendar.vars.css_path + '/default.css');
 	},
 	create : function(options){
 		var self = JMVC.calendar,
@@ -19,8 +21,10 @@ JMVC.extend('calendar',{
 			currentMap = false,
 			starts_with = 1;
 		getDaysInMonth = function (m, y) {
-			var bis = ( ( !(y % 100 ) && !( y % 400 ) ) || ( !( y % 4 ) && ( y % 100 ) ) );
-			return self.vars.dINm[m] ? self.vars.dINm[m] : (bis?29:28);
+			// the fastest checkLeap ever : JMVC.head.goto('test_leap') 
+			var bis = !!(!(y % 4) && (y % 100 || !(y % 400)))
+			
+			return self.vars.dINm[m] || bis ? 29 : 28;
 		};
 		getMonthMap = function (m, y) {
 			var d = new Date(),

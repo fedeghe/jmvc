@@ -56,7 +56,7 @@ JMVC.string = {
      * @param  {[type]} ''         [description]
      * @return {[type]}            [description]
      */
-    ltrim : function (s) {return s.replace(/^\s+/g, ''); },
+    triml : function (s) {return s.replace(/^\s+/g, ''); },
     /**
      * [multireplace description]
      * @param  {[type]} cnt [description]
@@ -134,10 +134,10 @@ JMVC.string = {
            y:'c%z%e',
            z : 'd'
        };
-    JMVC.string.replaceall(tpl, o); // abcdefg
+    JMVC.string.replaceAll(tpl, o); // abcdefg
      * 
      */
-    replaceall : function (tpl, obj, start, end, fb) {
+    replaceAll : function (tpl, obj, start, end, fb) {
         if (!start) {start = '%'; }
         if (!end) {end = '%'; }
         //start = this.regEscape(start);
@@ -214,7 +214,7 @@ JMVC.string = {
      * @param  {[type]} ''         [description]
      * @return {[type]}            [description]
      */
-    rtrim : function (s) {return s.replace(/\s+$/g, ''); },
+    trimr : function (s) {return s.replace(/\s+$/g, ''); },
     /**
      * [ description]
      * @param  {[type]} str [description]

@@ -13,7 +13,7 @@ JMVC.controllers.exm = function () {
 			'id' : 'extralogo'
 		});
 		
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/logoexm.css', true, false);
+		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/logoexm.css', true, false);
 		
 		v.render(function () {
 			var newlogo = document.getElementById('extralogo'),

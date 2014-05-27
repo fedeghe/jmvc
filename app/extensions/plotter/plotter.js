@@ -81,7 +81,7 @@ JMVC.extend('plotter', {
 				for (null; i < l; i++) {
 					tmp = JMVC.dom.create('span', {
 							'class' : 'point ' + letter,
-							'style' : JMVC.string.replaceall('top:%top%px;left:%left%px', {
+							'style' : JMVC.string.replaceAll('top:%top%px;left:%left%px', {
 								top : ~~ (positions[i][0] + top) * scale,
 								left : ~~ (positions[i][1] + left) * scale
 							})

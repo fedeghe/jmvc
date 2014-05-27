@@ -1,6 +1,10 @@
+// type : FACTOY_METHOD
+//
+
+
 JMVC.extend('carpet',{
 	'init' : function () {
-		JMVC.head.addstyle(JMVC.vars.extensions + 'lib/carpet/css/default.css', true, false);
+		JMVC.head.addStyle(JMVC.vars.extensions + 'lib/carpet/css/default.css', true, false);
 	},
 	'create' : function (container, w, h, s) {
 		var tileSize = {

@@ -1,5 +1,5 @@
 <function>
-    <signature name="addscript">JMVC.head.addscript(String src, Boolean parse, Boolean explicit)</signature>
+    <signature name="addScript">JMVC.head.addScript(String src, Boolean parse, Boolean explicit)</signature>
     <description>Add a script in the head section</description>
     <params>
         <param name="*src">this can be the url of the script or the script content (you can even use \{\{myscript name=`hello` ... \{\} )</param>

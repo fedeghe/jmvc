@@ -59,7 +59,7 @@ $JMVC = {
     Pipe : Pipe,
     Promise : Promise,
     //
-    parselang : jmvc.parselang,
+    parseLang : jmvc.parseLang,
     //
     hookCheck : jmvc.hook_check,
     //
@@ -92,8 +92,8 @@ $JMVC = {
     get2 : jmvc.get2,
     del2 : jmvc.del2,
     //
-    htmlchars : jmvc.htmlchars,
-    htmlchars_decode : jmvc.htmlchars_decode,
+    htmlChars : jmvc.htmlChars,
+    htmlCharsDecode : jmvc.htmlCharsDecode,
     //
     gc : function () {
         var i = 0,
@@ -125,37 +125,82 @@ $JMVC = {
      */
     console : function (opts) {
         opts = opts || {};
-        if (!('core/console' in $JMVC.extensions)) {
+        if (!('core/console/console' in $JMVC.extensions)) {
             $JMVC.require('core/console/console');
         }
         JMVC.console.toggle(opts.h, opts.j, opts.c, opts.tab);
     },
+
     /**
      * [xdoc description]
      * @param  {[type]} ext [description]
      * @return {[type]}     [description]
+     *
+     * look at core/screen/screen.xml
      */
-    xdoc : function (ext) {
+     xdoc : function (ext) {
+
+        // maybe the register must be created
         !('elements' in JMVC.xdoc) && (JMVC.xdoc.elements = {});
-        !('core/xdoc/xdoc' in $JMVC.extensions) && $JMVC.require('core/xdoc/xdoc');
+
+        // maybe xdoc is not loaded yet 
+        //
+        $JMVC.require('core/xdoc/xdoc');
+
+        // if has been loaded before, it would be found in the registry
+        // otherwise get it!
+        // 
         if (!(ext in JMVC.xdoc.elements)) {
+            
+            // try to get the extension xml
+            //
             try {
-                JMVC.io.ajcall(
-                    JMVC.vars.baseurl + '/app/extensions/' + ext + '/xdoc.xml', {
-                        method : 'GET',
-                        type : 'xml',
-                        cback : function (doc) {
-                            JMVC.xdoc.elements[ext] = doc;
-                            //JMVC.debug('doc : ' + doc);
-                        },
-                        error : function () {alert('errore'); }
+                JMVC.io.getXML(
+                    JMVC.vars.baseurl + '/app/extensions/' + ext + '.xml',
+
+                    // success
+                    //
+                    function (doc) {
+                        
+                        // save into the xdoc elements registry
+                        //
+                        JMVC.xdoc.elements[ext] = doc;
+
+                        // toggle the view
+                        //
+                        JMVC.xdoc.toggle(ext);
+                    },
+
+                    // notify the user that no documentation has been found
+                    //
+                    function (xhr) {
+                        alert([
+                            '# JMVC WARNING',
+                            '# The document',
+                            ('# /app/extensions/' + ext + '.xml').replace(/\//g, " / "),
+                            '# CANNOT be found!'
+                        ].join('\n'));
+                        xhr.abort();
+                        return false;
                     }
                 );
-            } catch (e) {}
+            }catch (e){}
+
+        } else {
+
+            // ok the extension specification xml has been previously loaded
+            // thus is in the registry ready to be used
+            //
+            JMVC.xdoc.toggle(ext);
         }
-        JMVC.xdoc.toggle(ext);
     },
-    //
+
+    /**
+     * [loading description]
+     * @param  {[type]} intperc [description]
+     * @param  {[type]} msg     [description]
+     * @return {[type]}         [description]
+     */
     loading : function (intperc, msg) {
         /*
         MARKUP NEEDED to use that function:

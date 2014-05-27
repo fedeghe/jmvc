@@ -5,7 +5,7 @@ JMVC.require(
 JMVC.nsMake('JMVC.canvas');
 //
 // Basic editor style
-JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/canvas/editor/editor.css', true);
+JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/canvas/editor/editor.css', true);
 /**
  * [Editor description]
  * @param {[type]} options [description]

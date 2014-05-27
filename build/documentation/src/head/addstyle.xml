@@ -1,5 +1,5 @@
 <function>
-    <signature name="addstyle">JMVC.head.addstyle(String src, Boolean parse, Boolean explicit)</signature>
+    <signature name="addStyle">JMVC.head.addStyle(String src, Boolean parse, Boolean explicit)</signature>
     <description>Add a stylesheet in the head section</description>
     <params>
         <param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>

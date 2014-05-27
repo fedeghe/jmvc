@@ -12,7 +12,7 @@ JMVC.extend('canvas.editortools.neighbour_points', {
 
         ctx.lineWidth = 1;
         ctx.lineJoin = ctx.lineCap = 'round';
-        ctx.strokeStyle = JMVC.string.replaceall('hsla({h}, {s}%, {l}%, {a})',{
+        ctx.strokeStyle = JMVC.string.replaceAll('hsla({h}, {s}%, {l}%, {a})',{
             h : self.options.color.hueZero,
             s : self.options.color.satZero * 100,
             l : self.options.color.lumZero * 100,

@@ -1,7 +1,7 @@
 JMVC.extend('deck', function () {
     JMVC.require('core/obj/bucket/bucket');
     
-    JMVC.head.addstyle([JMVC.vars.baseurl, 'app', 'extensions', 'games', 'deck', 'deck.css'].join(JMVC.US), false, false);
+    JMVC.head.addStyle([JMVC.vars.baseurl, 'app', 'extensions', 'games', 'deck', 'deck.css'].join(JMVC.US), false, false);
     // 
     var seeds = {
             c : '&#9829;',

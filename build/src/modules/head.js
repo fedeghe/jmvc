@@ -18,7 +18,7 @@ JMVC.head = {
      * @param  {[type]} explicit [description]
      * @return {[type]}          [description]
      */
-    addscript : function (src, parse, explicit) {
+    addScript : function (src, parse, explicit) {
         //
         var script,
             head,
@@ -31,26 +31,27 @@ JMVC.head = {
             if (explicit) {
                 //script_content = JMVC.parse(src/* in this case is mean to be the content */);
                 script_content = JMVC.parse(src, true);
-                script = JMVC.dom.create('script', {type: 'text/javascript', defer: 'defer'}, script_content);
+                script = JMVC.dom.create('script', {type: 'text/javascript'}, script_content);
                 head = that.element;
                 head.appendChild(script);
             } else {
                 /* get css content, async */
                 tmp = JMVC.io.get(src, function (script_content) {
                     script_content = JMVC.parse(script_content, true);
-                    script = JMVC.dom.create('script', {type: 'text/javascript', defer: 'defer'}, script_content);
+                    script = JMVC.dom.create('script', {type: 'text/javascript'}, script_content);
                     head = that.element;
                     head.appendChild(script);
                 }, postmode, async);
             }
         } else {
             script = explicit ?
-                JMVC.dom.create('script', {type: 'text/javascript', defer: 'defer'}, src)
+                JMVC.dom.create('script', {type: 'text/javascript'}, src)
                 :
-                JMVC.dom.create('script', {type: 'text/javascript', defer: 'defer', src: src}, ' ');
+                JMVC.dom.create('script', {type: 'text/javascript', src: src}, ' ');
             head = this.element;
             head.appendChild(script);
         }
+        return script;
     },
     /**
      * [ description]
@@ -59,7 +60,7 @@ JMVC.head = {
      * @param  {[type]} explicit [description]
      * @return {[type]}          [description]
      */
-    addstyle : function (src, parse, explicit, idn) {
+    addStyle : function (src, parse, explicit, idn) {
         var style,
             head,
             tmp,
@@ -120,7 +121,7 @@ JMVC.head = {
      * @return {[type]} [description]
      */
     denyiXrame : function () {
-        return W.top !== W.self &&  (W.top.location = JMVC.vars.baseurl);
+        return W.top !== W.self && (W.top.location = JMVC.vars.baseurl);
     },
     /**
      * [favicon description]
@@ -153,7 +154,7 @@ JMVC.head = {
      * @param  {[type]} d [description]
      * @return {[type]}   [description]
      */
-    lastmodified : function (d) {
+    lastModified : function (d) {
         var meta = this.element.getElementsByTagName('meta'),
             newmeta = JMVC.dom.create(
                 'meta',
@@ -176,9 +177,10 @@ JMVC.head = {
             jQuery : '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js',
             jsapi : 'https://www.google.com/jsapi',
             underscore : 'http://underscorejs.org/underscore-min.js',
-            'prototype' : 'https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js'
+            'prototype' : 'https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js',
+            dropbox : 'https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js'
         };
-        l in libs && this.addscript(libs[l]);
+        l in libs && this.addScript(libs[l]);
     },
     /**
      * [link description]
@@ -230,6 +232,17 @@ JMVC.head = {
         WD.location.href = n;
         //that do not cause wierd IE alert
     },
+
+    /**
+     * [removeMeta description]
+     * @param  {[type]} name [description]
+     * @return {[type]}      [description]
+     */
+    removeMeta : function (name) {
+        var maybeExisting = JMVC.dom.findByAttribute('name', name, this.metas());
+        !!maybeExisting.length && JMVC.dom.remove(maybeExisting[0]);
+    },
+    
     /**
      * [ description]
      * @param  {[type]} t [description]

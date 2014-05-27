@@ -298,8 +298,8 @@ jmvc = {
      * [htmlspecialchars description]
      * @param  {[type]} text [description]
      * @return {[type]}      [description]
-     */
-    htmlchars: function(text) {
+     */ 
+    htmlChars: function(text) {
         return text
             .replace(/&(?![\w\#]+;)/g, '&amp;')
             .replace(/</g, '&lt;')
@@ -313,7 +313,7 @@ jmvc = {
      * @param  {[type]} html [description]
      * @return {[type]}      [description]
      */
-    htmlchars_decode: function(html) {
+    htmlCharsDecode: function(html) {
         return html
             .replace(/&amp;/g, '&')
             .replace(/&lt;/g, '<')
@@ -464,11 +464,11 @@ jmvc = {
     },
 
     /**
-     * [parselang description]
+     * [parseLang description]
      * @param  {[type]} cnt [description]
      * @return {[type]}     [description]
      */
-    parselang: function(cnt) {
+    parseLang: function(cnt) {
         var RXlng = '\\[L\\[([\\S\\s]*?)\\]\\]',
             lang = true,
             tmp,
@@ -636,7 +636,8 @@ jmvc = {
             arg = arguments,
             lArg = arg.length,
             head = JMVC.WD.getElementsByTagName('head').item(0),
-            cb = null;
+            cb = null,
+            requireFileName = 'require.json';
         //
         while (i < lArg) {
             if (typeof arg[i] === 'function') {
@@ -647,16 +648,18 @@ jmvc = {
                 // 
                 if (arg[i].match(/\/$/)) {
 
-                    $JMVC.io.getJson(JMVC.vars.baseurl + PATH.ext + arg[i] + 'require.json', function (json) {
-                        for (var j in json.require) {
-                            jmvc.require(arg[i] + json.require[j]);
+                    $JMVC.io.getJson(JMVC.vars.baseurl + PATH.ext + arg[i] + requireFileName, function (json) {
+                        for (var j in json) {
+                            jmvc.require(arg[i] + json[j]);
                         }
                     }, false);
 
                 } else {
 
                     extNS = arg[i].split(US);
+                    
                     extNSlength = extNS.length;
+
                     extname = extNS[extNSlength - 1];
 
                     path = JMVC.vars.baseurl +

@@ -19,7 +19,7 @@ JMVC.extend('screensaver', {
                 '-o-transform: translateX( -100% ) rotateY( -180deg );'+
                 'transform: translateX( -100% ) rotateY( -180deg );'
         };
-        JMVC.head.addstyle(JMVC.object.toCss(styles, true), true, true);
+        JMVC.head.addStyle(JMVC.object.toCss(styles, true), true, true);
 
     },
     shut : function () {

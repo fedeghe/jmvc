@@ -11,6 +11,6 @@ if (document.doctype !== null) {
         for (var i = 0, l = t.length; i < l; i++) {
             document.createElement(t[i]);
         }
-        JMVC.head.addstyle(_.shimthags + '{display:block}', true, true);
+        JMVC.head.addStyle(_.shimthags + '{display:block}', true, true);
     }
 }

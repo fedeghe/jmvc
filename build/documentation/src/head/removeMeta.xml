@@ -1,6 +1,6 @@
 <function>
-    <signature name="trimr">JMVC.string.trimr(String name, String value)</signature>
-    <description>Gets/sets document title</description>
+    <signature name="removeMeta">JMVC.head.removeMeta(String name, String value, String mode)</signature>
+    <description>Add</description>
     <params>
         <param name="name">The name of the meta You want to add</param>
         <param name="value">The value of the meta You want to add</param>

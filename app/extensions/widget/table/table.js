@@ -1,5 +1,5 @@
 // load base styles
-JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/widget/table/table.css', true);
+JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/widget/table/table.css', true);
 
 // ensure ns
 JMVC.nsCheck('JMVC.widget');

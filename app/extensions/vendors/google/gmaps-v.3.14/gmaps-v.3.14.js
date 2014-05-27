@@ -1,7 +1,7 @@
 JMVC.extend('gmaps', {
     init : function () {
         // FFfix
-        JMVC.head.addstyle(JMVC.vars.extensions + 'vendors/google/gmaps-v.3.14/gmap.css');
+        JMVC.head.addStyle(JMVC.vars.extensions + 'vendors/google/gmaps-v.3.14/gmap.css');
     },
     create : function () {
         return {
@@ -18,7 +18,7 @@ JMVC.extend('gmaps', {
                 params = JMVC.object.extend(params, options);
                 // 
                 // 
-                JMVC.head.addscript('https://maps.google.com/maps/api/js' + JMVC.object.toQs(params));
+                JMVC.head.addScript('https://maps.google.com/maps/api/js' + JMVC.object.toQs(params));
             },
 
             render : function (node, options) {

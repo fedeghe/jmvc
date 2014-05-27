@@ -1,8 +1,8 @@
-JMVC.require('core/dim/dim', 'event_scroll/event_scroll');
+JMVC.require('core/screen/screen', 'event_scroll/event_scroll');
 JMVC.extend('modal',{
 	init : function (){
 		//get style
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/widget/modal/modal.css', true);
+		JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/widget/modal/modal.css', true);
 	},
 	zi_zero  : 900,
 	zIndex : 900,
@@ -33,7 +33,7 @@ JMVC.extend('modal',{
 
 	injtpl : function () {
 
-		JMVC.dom.html(JMVC.WD.body, JMVC.string.replaceall(this.tpl, {
+		JMVC.dom.html(JMVC.WD.body, JMVC.string.replaceAll(this.tpl, {
 			zindex:300,
 			width:300,
 			height:400,
@@ -60,7 +60,7 @@ JMVC.extend('modal',{
 			width,
 			height,
 			title = options.title || '',
-			scrData = JMVC.dim.getScreenData(),
+			scrData = JMVC.screen.getScreenData(),
 			dom = {
 				bg : null,
 				modal : null,
@@ -76,8 +76,8 @@ JMVC.extend('modal',{
 			// modal,
 			// position,
 			// topbar,
-			bodysize = JMVC.dim.bodySize(),
-			viewportSize = JMVC.dim.getViewportSize(),
+			bodysize = JMVC.screen.bodySize(),
+			viewportSize = JMVC.screen.getViewportSize(),
 			//viewHeight = viewportSize.height,
 			bg_zindex = this.zIndex++,
 			cnt_zindex = this.zIndex++;
@@ -99,7 +99,7 @@ JMVC.extend('modal',{
 		//now create real content
 		// a div with topbar and content passsed
 		dom.modal = JMVC.dom.create('div', {'class':'jmvc_modal_content'+(shadow ? ' shadow' : '')});
-		position = JMVC.dim.centerHelper(width, height);
+		position = JMVC.screen.centerHelper(width, height);
 		
 		
 		JMVC.css.style(dom.modal, {'z-index' : cnt_zindex, 'width': width + 'px','height': height + 'px', 'left' : position['left'] + 'px', 'top':position['top'] + 'px'});
@@ -138,7 +138,7 @@ JMVC.extend('modal',{
 			// here must be stored current position
 			// to allow to get back later (on minimize)
 			//
-			var scr = JMVC.dim.scroll();
+			var scr = JMVC.screen.scroll();
 			JMVC.css.style(dom.modal, {
 				width:'auto',
 				height : (viewportSize.height - 15) + 'px',

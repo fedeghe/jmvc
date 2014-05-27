@@ -6,13 +6,13 @@ JMVC.extend('gmap2', {
 		var params = {callback : 'cb', v : '3.exp'};//, key : 'AIzaSyCGPE1UyhBMvPx9RcrgwjmoYmNJDHYdP30'};
 
 		//FFfix
-		JMVC.head.addstyle(JMVC.vars.extensions + 'vendors/google/gmap2/gmap.css');
+		JMVC.head.addStyle(JMVC.vars.extensions + 'vendors/google/gmap2/gmap.css');
 		
 		//extend options with those passed
 		params = JMVC.object.extend(params, options);
 		
-		//JMVC.head.addscript('https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=cb');
-		JMVC.head.addscript('https://maps.google.com/maps/api/js' + JMVC.object.toQs(params));
+		//JMVC.head.addScript('https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=cb');
+		JMVC.head.addScript('https://maps.google.com/maps/api/js' + JMVC.object.toQs(params));
 		//console.debug('http://maps.google.com/maps/api/js' + JMVC.object.toQs(params));
 	},
 	

@@ -1,9 +1,9 @@
-JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/widget/console/console.css', true);
+JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/widget/console/console.css', true);
 
 JMVC.extend('console', {
 	'init' : function () {
 		//get some page dimensions
-		var dims = JMVC.dim.getScreenData(),
+		var dims = JMVC.screen.getScreenData(),
 			border_size = 5,
 			margin = 20,
 			top_height = 20,

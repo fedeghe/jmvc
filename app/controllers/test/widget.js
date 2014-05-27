@@ -10,7 +10,7 @@ JMVC.controllers.widget = function () {
 			'event_scroll/event_scroll'
 		);
 		JMVC.head.meta("generator", "JMVC widget");
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/widget.css', true);
+		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/widget.css', true);
 		//
 		var M = Math,
 			v = JMVC.getView('vacuum'),

@@ -1,4 +1,4 @@
-JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/widget/slider/slider.css', true);
+JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/widget/slider/slider.css', true);
 
 JMVC.nsCheck('JMVC.widget');
 

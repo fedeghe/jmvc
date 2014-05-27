@@ -1,6 +1,9 @@
+// type : FACTOY_METHOD
+//
+
 JMVC.extend('jmap',{
 	init : function () {
-		JMVC.head.addstyle(JMVC.vars.extensions + 'core/lib/jmap/css/default.css', true, false);
+		JMVC.head.addStyle(JMVC.vars.extensions + 'core/lib/jmap/css/default.css', true, false);
 	},
 	create : function (container, w, h, s) {
 		var tileSize = {

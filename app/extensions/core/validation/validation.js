@@ -1,4 +1,7 @@
-JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/core/validation/style.css', true);
+// type : FACTORY_METHOD
+//
+
+JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/core/validation/style.css', true);
 
 JMVC.validation = function () {
 	

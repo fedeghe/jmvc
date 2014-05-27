@@ -2,7 +2,7 @@ JMVC.extend('widget.langs', {
 
 	//get the basic styles
 	init : function () {
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/widget/lang/lang.css');
+		JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/widget/lang/lang.css');
 	},
 
 	//create the ul with home langs links within

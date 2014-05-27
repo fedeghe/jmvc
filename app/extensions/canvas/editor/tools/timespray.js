@@ -9,7 +9,7 @@ JMVC.extend('canvas.editortools.timespray', {
             radius = self.options.radius.value;
 
 
-        ctx.fillStyle =  JMVC.string.replaceall('hsla({h}, {s}%, {l}%, {a})',{
+        ctx.fillStyle =  JMVC.string.replaceAll('hsla({h}, {s}%, {l}%, {a})',{
             h : self.options.color.hueZero,
             s : self.options.color.satZero * 100,
             l : self.options.color.lumZero * 100,

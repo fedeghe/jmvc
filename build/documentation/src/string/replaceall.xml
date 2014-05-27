@@ -1,5 +1,5 @@
 <function>
-    <signature name="replaceall">JMVC.string.replaceall(String name, String value)</signature>
+    <signature name="replaceAll">JMVC.string.replaceAll(String name, String value)</signature>
     <description>Gets/sets document title</description>
     <params>
         <param name="name">The name of the meta You want to add</param>

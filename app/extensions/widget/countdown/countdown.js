@@ -17,7 +17,7 @@ JMVC.extend('widget.countdown', {
 	},
 	
 	start : function (sel, date) {
-		JMVC.head.addstyle('.jmvc_countdown{color:red} .jmvc_countdown span{padding:0px 3px}', true, true);
+		JMVC.head.addStyle('.jmvc_countdown{color:red} .jmvc_countdown span{padding:0px 3px}', true, true);
 		var node = JMVC.dom.find(sel);
 		if (!node) { alert('xxx'); return false; }
 		
@@ -33,7 +33,7 @@ JMVC.extend('widget.countdown', {
 				idMS : "" + JMVC.util.uniqueid
 			},
 			mainid = ids.id,
-			tpl = JMVC.string.replaceall(wc.tpl, ids),
+			tpl = JMVC.string.replaceAll(wc.tpl, ids),
 			now = JMVC.util.now(),
 			d, h, m, s, ms,
 			interval,
@@ -51,7 +51,7 @@ JMVC.extend('widget.countdown', {
 				m = ~~((diff - d * dayms - h * hourms) / minms) || '0';
 				s = ~~((diff - d * dayms - h * hourms - m * minms) / 1000) || '0';
 				ms = diff % 1000;
-				JMVC.dom.html(node, JMVC.string.replaceall(tpl, {d:d, h:h, m:m, s:s, ms : ms}));
+				JMVC.dom.html(node, JMVC.string.replaceAll(tpl, {d:d, h:h, m:m, s:s, ms : ms}));
 				
 				now = JMVC.util.now();
 				if (now > date) {

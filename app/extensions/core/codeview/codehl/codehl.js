@@ -1,4 +1,4 @@
-JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/core/codeview/codehl.css');
+JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/core/codeview/codehl.css');
 
 JMVC.hook({'onBeforeRender' : function(cnt){	
 	
@@ -24,7 +24,7 @@ JMVC.hook({'onBeforeRender' : function(cnt){
 					var code = '',
 					  self = this;
 					JMVC.each(self.lines, function (el, i) {
-					    var y = JMVC.string.replaceall(self.linetpl, {
+					    var y = JMVC.string.replaceAll(self.linetpl, {
 							'lineclass' : 'line',
 							'ln' : i + '',
 							'linecode' : el
@@ -50,7 +50,7 @@ JMVC.hook({'onBeforeRender' : function(cnt){
 					html = new RegExp(RX.html, 'gm').exec(cnt);
 					tmp = '';
 					if (html) {
-						tmp = hl(JMVC.htmlchars(html[1]));
+						tmp = hl(JMVC.htmlChars(html[1]));
 						cnt = cnt.replace(html[0], tmp);
 					} else {
 						html = false;

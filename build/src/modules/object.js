@@ -204,7 +204,7 @@ JMVC.object = {
      */
     toQs: function(obj) {
         return _.object.map(obj, function(o, i, r) {
-            //return (r ? '&' : '?') + encodeURIComponent(JMVC.htmlchars(i)) + '=' + encodeURIComponent(JMVC.htmlchars(o[i]));
+            //return (r ? '&' : '?') + encodeURIComponent(JMVC.htmlChars(i)) + '=' + encodeURIComponent(JMVC.htmlChars(o[i]));
             return ((r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i])).replace(/\'/g, '%27');
         });
     },

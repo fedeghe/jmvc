@@ -1,5 +1,6 @@
-JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/widget/snow/snow.css', true);
+JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/widget/snow/snow.css', true);
 
+JMVC.require('core/screen/screen');	
 //
 JMVC.extend('snow', {
 	'vars' : {
@@ -20,7 +21,7 @@ JMVC.extend('snow', {
 		JMVC.css.style(JMVC.snow.vars.trg, 'position', 'relative');
 		JMVC.snow.vars.l = opts && opts.length || 100;
 		
-		var bodysize = JMVC.dim.bodySize();
+		var bodysize = JMVC.screen.bodySize();
 		
 		
 		function Flake () {
@@ -42,17 +43,11 @@ JMVC.extend('snow', {
 			this.cursor = 0;
 		}
 		
-		
-		
-		
 		function getFlake() {
 			var f = new Flake();
 			JMVC.snow.vars.flakes.push(f);
 			JMVC.dom.append(JMVC.snow.vars.trg, f.node);
 		}
-		
-		
-		
 		
 		function loop() {
 			var newr = [];

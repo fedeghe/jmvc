@@ -1,3 +1,7 @@
+// type : LIB
+//
+
+
 /**
  * [description]
  * @return {[type]} [description]
@@ -6,7 +10,7 @@ JMVC.extend('grind', function () {
 
     "use strict";
     
-    JMVC.head.addstyle(JMVC.vars.extensions + 'core/lib/grind/grind.min.css');
+    JMVC.head.addStyle(JMVC.vars.extensions + 'core/lib/grind/grind.min.css');
 
     function render(config, callback, pro) {
         
@@ -120,7 +124,7 @@ JMVC.extend('grind', function () {
             render(conf, cb);
         },
         colorize : function () {
-            JMVC.head.addstyle(JMVC.vars.extensions + 'core/lib/grind/color.css');  
+            JMVC.head.addStyle(JMVC.vars.extensions + 'core/lib/grind/color.css');  
         }
     };
 

@@ -1,8 +1,8 @@
 
-JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/wcave.css');
+JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/wcave.css');
 
 
-JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css', true);
+JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css', true);
 
 
 /**
@@ -644,7 +644,7 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 			//,height : h / 2 + 'px'
 		});
 		self.utils.attr(self.messagePanel, {'class' : 'panel'});
-		self.messagePanel.innerHTML = self.utils.replaceall(
+		self.messagePanel.innerHTML = self.utils.replaceAll(
 			conf.tpl.start, {
 				gameName : conf.gameName,
 				wormLength : conf.wormLenght,
@@ -1546,7 +1546,7 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 	 */
 	Wcave.prototype.gameOver = function () {
 
-		self.messagePanel.innerHTML = self.utils.replaceall(
+		self.messagePanel.innerHTML = self.utils.replaceAll(
 			conf.tpl.gameover,
 			{
 				'gameName' : conf.gameName,
@@ -1727,7 +1727,7 @@ JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
 				)
 			};
 		},
-		'replaceall' : function (tpl, o, dD, Dd) {
+		'replaceAll' : function (tpl, o, dD, Dd) {
 			var reg = new RegExp((dD || '%') + '([A-z0-9-_]*)' + (Dd || '%'), 'g'),
 				str;
 			return tpl.replace(reg, function (str, $1) {

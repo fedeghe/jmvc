@@ -58,10 +58,10 @@ JMVC.extend('test', function () {
             for (j = 0; j < l; j++) {
                 // remove the right number of spaces at line begin
                 lines[j] = lines[j].replace(new RegExp("^\\\s{" + min + "}"), '');
-                out += JMVC.string.replaceall(
+                out += JMVC.string.replaceAll(
                     outline, {
                         nline : noNumberLines ? '' : i,
-                        line : JMVC.htmlchars(lines[j] || ' ')
+                        line : JMVC.htmlChars(lines[j] || ' ')
                     }
                 );
                 i += 1;
@@ -90,8 +90,8 @@ JMVC.extend('test', function () {
             if (outcode !== undefined && outcode) {
                 vars.outCode = outcode;
             }
-            JMVC.head.addstyle(vars.css_path + JMVC.US + vars.css_default);
-            JMVC.head.addstyle(vars.css_path + JMVC.US + vars.css_code);
+            JMVC.head.addStyle(vars.css_path + JMVC.US + vars.css_default);
+            JMVC.head.addStyle(vars.css_path + JMVC.US + vars.css_code);
             vars.banner = JMVC.dom.add(JMVC.dom.body(), 'div', {id : 'results'});
         },
 
@@ -182,7 +182,7 @@ JMVC.extend('test', function () {
                 break;
             default:break;
             }
-            return [vars.debug_id, JMVC.string.replaceall(tpl, pars)];
+            return [vars.debug_id, JMVC.string.replaceAll(tpl, pars)];
         },
 
         /**
@@ -533,7 +533,7 @@ JMVC.extend('test', function () {
                 JMVC.debug(result);
                 JMVC.debug(wholeResString);
             }
-
+/*
             JMVC.head.link(
                 'icon',
                 {
@@ -541,6 +541,7 @@ JMVC.extend('test', function () {
                     href : JMVC.vars.baseurl + "/media/favicon.ico"
                 }
             );
+*/
         },
 
         /**
