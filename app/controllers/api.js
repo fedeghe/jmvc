@@ -13,8 +13,7 @@ JMVC.controllers.api = function () {
 			'vendors/github/forkme/forkme'
 		);
 		JMVC.events.loadify(500);
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/core/api.css', true, false);// parsed
-		JMVC.head.favicon('/media/favicon.ico');
+		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/api.css', true, false);
 		
 		var main  = JMVC.getView('vacuum'),
 			doc_tpl = JMVC.getView('api/doctpl'),
@@ -25,9 +24,9 @@ JMVC.controllers.api = function () {
 			tabs_inner = {},
 			sections = [
 				'jmvc', 'constructors', 'model', 'view',
-				'controller', 'dom', 'events', 'head',
-				'io', 'array', 'object', 'string',
-				'util', 'match'
+				'controller', 'array', 'css', 'dom',
+				'events', 'head', 'io', 'match',
+				'object', 'string', 'util'
 			];
 			
 			
@@ -45,6 +44,7 @@ JMVC.controllers.api = function () {
 						testlink = false,
 						default_param_val = false,
 						runlabel = '&#8227;',
+						len0 = 0,
 						i = 0, t = 0, len = 0,
 						els = section['function'] instanceof Array ?
 							section['function']
@@ -52,9 +52,7 @@ JMVC.controllers.api = function () {
 							[section['function']],
 						trialbutt;
 
-
-
-					for (i in section['function']) {
+					for (i = 0, len0 = section['function'].length; i < len0; i++) {
 						// prepare content
 						func_model.reset();
 						func_model.set({
@@ -63,8 +61,6 @@ JMVC.controllers.api = function () {
 							'status' : section['function'][i].status ? section['function'][i].status['#text'] : 'undefined'
 						});
 						
-						
-						//func_model.set({bg1 : 'bg1', bg2 : 'bg2'});
 						
 						// reset params
 						params = '';
@@ -93,7 +89,7 @@ JMVC.controllers.api = function () {
 						if (section['function'][i].sample) {
 							sample = '<pre class="code round6 roundright">' + section['function'][i].sample['#text'] + '</pre>';
 							if (section['function'][i].code) {
-								sample += JMVC.string.replaceall(trialbutt, {docode :  section['function'][i].code['#text']});
+								sample += JMVC.string.replaceAll(trialbutt, {docode :  section['function'][i].code['#text']});
 							}
 						}
 						
@@ -115,7 +111,8 @@ JMVC.controllers.api = function () {
 			JMVC.each(sections, function (t) {
 				var y;
 				parser.pointer(parser.xmlDoc.getElementsByTagName(t)[0]);
-				y = JMVC.xmlparser.toJson(parser.pointer());
+				//y = JMVC.xmlparser.toJson(parser.pointer());
+				y = parser.toJson(parser.pointer());
 				tabs_inner[t] = new JMVC.tabs.tab('v');
 				tab_ext.add(t, '');
 				add_all(y, t);
@@ -137,7 +134,7 @@ JMVC.controllers.api = function () {
 
 			JMVC.github.forkme('fedeghe');
 			
-			JMVC.widget.countdown.start('#countdown', new Date(2014, 4, 27));
+			JMVC.widget.countdown.start('#countdown', new Date(2014, 5, 27));
 			
 			JMVC.events.delay(function () {
 				for (var j = 0, l = sections.length;  j < l; j++) {

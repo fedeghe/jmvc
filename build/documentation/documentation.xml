@@ -6,6 +6,7 @@
     $$src/model/_main.xml$$
     $$src/view/_main.xml$$
     $$src/controller/_main.xml$$
+    $$src/css/_main.xml$$
     $$src/dom/_main.xml$$
     $$src/events/_main.xml$$
     $$src/head/_main.xml$$
