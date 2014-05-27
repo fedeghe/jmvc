@@ -280,10 +280,10 @@ JMVC.hook({'myhook': function () {&#10;
 console.debug(foo());</sample>
 </function>
 <!--
-[MALTA] src/jmvc/htmlchars.xml
+[MALTA] src/jmvc/htmlChars.xml
 -->
 <function>
-    <signature name="htmlchars">JMVC.htmlchars(String str)</signature>
+    <signature name="htmlChars">JMVC.htmlChars(String str)</signature>
     <description>Gets a view instance, even on a subfolder</description>
     <params>
         <param name="*str">the string that must be changed</param>
@@ -292,10 +292,10 @@ console.debug(foo());</sample>
     <status>complete</status>
 </function>
 <!--
-[MALTA] src/jmvc/htmlchars_decode.xml
+[MALTA] src/jmvc/htmlCharsDecode.xml
 -->
 <function>
-    <signature name="htmlchars_decode">JMVC.htmlchars_decode(String str)</signature>
+    <signature name="htmlCharsDecode">JMVC.htmlCharsDecode(String str)</signature>
     <description>Gets a view instance, even on a subfolder</description>
     <params>
         <param name="*str">the string that must be changed</param>
@@ -349,7 +349,7 @@ console.debug(foo());</sample>
 -->
 <function>
     <signature name="lang">JMVC.lang(String name, ...)</signature>
-    <description>As far as `core/i18n/i18n` is loaded with JMVC.require an `onBeforeRender` hook queues a call to the JMVC.parselang which will look and replace lang placeholders. The JMVC.lang function add one or more language file to the set of files that can be used.</description>
+    <description>As far as `core/i18n/i18n` is loaded with JMVC.require an `onBeforeRender` hook queues a call to the JMVC.parseLang which will look and replace lang placeholders. The JMVC.lang function add one or more language file to the set of files that can be used.</description>
     <params>
         <param name="*name">the name of the lang file</param>
     </params>
@@ -361,17 +361,17 @@ var t  = JMVC.lang('it', 'en');&#10;
 // be replaced with the active language (cookie or get)&#10;</sample>
 </function>
 <!--
-[MALTA] src/jmvc/loadinterfaces.xml
+[MALTA] src/jmvc/loadInterfaces.xml
 -->
 <function>
-    <signature name="loadinterfaces">JMVC.loadinterfaces(String name)</signature>
+    <signature name="loadInterfaces">JMVC.loadInterfaces(String name)</signature>
     <description>This is a shortcut call for the factory, with the first parameter preset to 'interface'</description>
     <params>
         <param name="*name">the name of the interface that must be loaded</param>
     </params>
     <returns>void (undefined)</returns>
     <status>testing</status>
-    <sample>var me = JMVC.loadinterfaces('loader')</sample>
+    <sample>var me = JMVC.loadInterfaces('loader')</sample>
 </function>
 <!--
 [MALTA] src/jmvc/nsCheck.xml
@@ -409,10 +409,10 @@ var loaded_extensions = JMVC.nsCheck('extensions', JMVC),&#10;
 JMVC.nsMake('y.d');&#10;console.debug(y.d);</sample>
 </function>
 <!--
-[MALTA] src/jmvc/parselang.xml
+[MALTA] src/jmvc/parseLang.xml
 -->
 <function>
-    <signature name="parselang">JMVC.parselang(String cnt)</signature>
+    <signature name="parseLang">JMVC.parseLang(String cnt)</signature>
     <description>Parses cnt looking for language placeholders [L[label]] and replacing them with the current(or default) language translation given in the app/i18n/XX.js lang file. That function is not mean to be called manually, it will be called by JMVC as a `onBeforeRender` hook as far as 'core/i18n' is required</description>
     <params>
         <param name="*cnt">the content to be parsed</param>
@@ -421,10 +421,10 @@ JMVC.nsMake('y.d');&#10;console.debug(y.d);</sample>
     <status>incomplete</status>
     <sample>var txt = '[L[ciao]] Federico, [L[come stai]]?';&#10;
 //default lang is en, and app/i18n/en.js contains tha translations&#10;
-console.debug(JMVC.parselang(txt));&#10;
+console.debug(JMVC.parseLang(txt));&#10;
 //but You set any language es: app/i18n/jp.js&#10;
 JMVC.cookie.set('lang',"jp");&#10;
-console.debug(JMVC.parselang(txt));</sample>
+console.debug(JMVC.parseLang(txt));</sample>
 </function>
 <!--
 [MALTA] src/jmvc/preload.xml
@@ -1019,6 +1019,191 @@ t()&#10;
     <status>incomplete</status>
 </function>
 </controller>
+<!--
+[MALTA] src/css/_main.xml
+-->
+<css>
+<!--
+[MALTA] src/css/addRule.xml
+-->
+<function>
+    <signature name="addRule">JMVC.css.addRule(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/css/autoHeadings.xml
+-->
+<function>
+    <signature name="autoHeadings">JMVC.css.autoHeadings(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/css/clearer.xml
+-->
+<function>
+    <signature name="clearer">JMVC.css.clearer(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/css/getComputedStyle.xml
+-->
+<function>
+    <signature name="getComputedStyle">JMVC.css.getComputedStyle(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/css/getPosition.xml
+-->
+<function>
+    <signature name="getPosition">JMVC.css.getPosition(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/css/height.xml
+-->
+<function>
+    <signature name="height">JMVC.css.height(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/css/hide.xml
+-->
+<function>
+    <signature name="hide">JMVC.css.hide(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/css/pest.xml
+-->
+<function>
+    <signature name="pest">JMVC.css.pest(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/css/reset.xml
+-->
+<function>
+    <signature name="reset">JMVC.css.reset(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/css/show.xml
+-->
+<function>
+    <signature name="show">JMVC.css.show(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/css/style.xml
+-->
+<function>
+    <signature name="style">JMVC.css.style(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/css/width.xml
+-->
+<function>
+    <signature name="width">JMVC.css.width(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+</css>
 <!--
 [MALTA] src/dom/_main.xml
 -->
@@ -1726,10 +1911,10 @@ t()&#10;
 -->
 <head>
 <!--
-[MALTA] src/head/addscript.xml
+[MALTA] src/head/addScript.xml
 -->
 <function>
-    <signature name="addscript">JMVC.head.addscript(String src, Boolean parse, Boolean explicit)</signature>
+    <signature name="addScript">JMVC.head.addScript(String src, Boolean parse, Boolean explicit)</signature>
     <description>Add a script in the head section</description>
     <params>
         <param name="*src">this can be the url of the script or the script content (you can even use \{\{myscript name=`hello` ... \{\} )</param>
@@ -1740,10 +1925,10 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/head/addstyle.xml
+[MALTA] src/head/addStyle.xml
 -->
 <function>
-    <signature name="addstyle">JMVC.head.addstyle(String src, Boolean parse, Boolean explicit)</signature>
+    <signature name="addStyle">JMVC.head.addStyle(String src, Boolean parse, Boolean explicit)</signature>
     <description>Add a stylesheet in the head section</description>
     <params>
         <param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>
@@ -1782,10 +1967,10 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/head/lastmodified.xml
+[MALTA] src/head/lastModified.xml
 -->
 <function>
-    <signature name="lastmodified">JMVC.head.lastmodified(String src, Boolean parse, Boolean explicit)</signature>
+    <signature name="lastModified">JMVC.head.lastModified(String src, Boolean parse, Boolean explicit)</signature>
     <description>Add a stylesheet in the head section</description>
     <params>
         <param name="*src">this can be the url of the stylesheet or the stylesheet content (you can even use \{\{mystyle color=`#ff33cc` ... \}\} )</param>
@@ -1853,6 +2038,19 @@ t()&#10;
 <function>
     <signature name="reload">JMVC.head.reload(String name, String value)</signature>
     <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/head/removeMeta.xml
+-->
+<function>
+    <signature name="removeMeta">JMVC.head.removeMeta(String name, String value, String mode)</signature>
+    <description>Add</description>
     <params>
         <param name="name">The name of the meta You want to add</param>
         <param name="value">The value of the meta You want to add</param>
@@ -1950,19 +2148,6 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/string/ltrim.xml
--->
-<function>
-    <signature name="ltrim">JMVC.string.ltrim(String name, String value)</signature>
-    <description>Gets/sets document title</description>
-    <params>
-        <param name="name">The name of the meta You want to add</param>
-        <param name="value">The value of the meta You want to add</param>
-    </params>
-    <returns>void (undefined)</returns>
-    <status>incomplete</status>
-</function>
-<!--
 [MALTA] src/string/multireplace.xml
 -->
 <function>
@@ -1989,23 +2174,10 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/string/replaceall.xml
+[MALTA] src/string/replaceAll.xml
 -->
 <function>
-    <signature name="replaceall">JMVC.string.replaceall(String name, String value)</signature>
-    <description>Gets/sets document title</description>
-    <params>
-        <param name="name">The name of the meta You want to add</param>
-        <param name="value">The value of the meta You want to add</param>
-    </params>
-    <returns>void (undefined)</returns>
-    <status>incomplete</status>
-</function>
-<!--
-[MALTA] src/string/rtrim.xml
--->
-<function>
-    <signature name="rtrim">JMVC.string.rtrim(String name, String value)</signature>
+    <signature name="replaceAll">JMVC.string.replaceAll(String name, String value)</signature>
     <description>Gets/sets document title</description>
     <params>
         <param name="name">The name of the meta You want to add</param>
@@ -2045,6 +2217,32 @@ t()&#10;
 -->
 <function>
     <signature name="trim">JMVC.string.trim(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/string/triml.xml
+-->
+<function>
+    <signature name="triml">JMVC.string.triml(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/string/trimr.xml
+-->
+<function>
+    <signature name="trimr">JMVC.string.trimr(String name, String value)</signature>
     <description>Gets/sets document title</description>
     <params>
         <param name="name">The name of the meta You want to add</param>
@@ -2230,6 +2428,20 @@ console.debug(JMVC.util.getType(a));</sample>
 -->
 <function>
     <signature name="findRich">JMVC.array.findRich(String name, String value)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <testlink>test_api_array_inarrayrich</testlink>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/array/range.xml
+-->
+<function>
+    <signature name="range">JMVC.array.range(String name, String value)</signature>
     <description>Gets/sets document title</description>
     <params>
         <param name="name">The name of the meta You want to add</param>
