@@ -2,14 +2,18 @@ JMVC.controllers.floor = function() {
 
     this.action_index = function(){
 
-        function floor1(f) {
+        function floor_native(f) {
             return Math.floor(f);
         }
-        function floor2(f) {
+        function floor2NotBw(f) {
             return ~~f;
         }
-        function floor3(f) {
+        function floor_Bw(f) {
             return f >> 0;
+        }
+
+        function floor_OR(f) {
+            return f | 0;
         }
 
 
@@ -24,22 +28,26 @@ JMVC.controllers.floor = function() {
             
             JT.describe('Floor fast');
 
-            JT.message('First version');
-            JT.code(floor1.toString());
+            JT.message('Native version');
+            JT.code(floor_native.toString());
 
-            JT.message('Fast version');
-            JT.code(floor2.toString());
+            JT.message('Double not bitwise version');
+            JT.code(floor2NotBw.toString());
 
-            JT.message('X version');
-            JT.code(floor3.toString());
+            JT.message('Bitwise 0 shift version');
+            JT.code(floor_Bw.toString());
 
-            var times = 1E3,
+            JT.message('OR version');
+            JT.code(floor_OR.toString());
+
+            var times = 1E4,
                 f = function () {return [JMVC.util.range(1,1000) + Math.random()]; };
-            JT.describe('<h2>Times comparison</h2>here the 2 functions are executed ' + times + ' times with the same input : '+ top);
+            JT.describe('<h2>Times comparison</h2>here the 4 functions are executed ' + times + ' times with the same input');
 
-            JT.testTime('floor1', floor1, times, f);
-            JT.testTime('floor2', floor2, times, f);
-            JT.testTime('floor3', floor3, times, f);
+            JT.testTime('floor_native', floor_native, times, f);
+            JT.testTime('floor2NotBw', floor2NotBw, times, f);
+            JT.testTime('floor_bw', floor_Bw, times, f);
+            JT.testTime('floor_OR', floor_OR, times, f);
 
             JT.timeSummary();
             
