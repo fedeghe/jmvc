@@ -1,4 +1,4 @@
-JMVC.require('core/color/color', 'core/dim/dim');
+JMVC.require('core/color/color', 'core/screen/screen');
 
 JMVC.controllers['404'] = function () {
 	'use strict';
@@ -8,7 +8,7 @@ JMVC.controllers['404'] = function () {
 			d = new Date(),
 			format = '%Y%/%m%/%d% %H%:%i%:%s%',
 			data = {
-				date : JMVC.string.replaceall(format, {
+				date : JMVC.string.replaceAll(format, {
 					Y : d.getFullYear(),
 					m : 1 + d.getMonth(),
 					d : d.getDay(),
@@ -35,7 +35,7 @@ JMVC.controllers['404'] = function () {
 
 			//<canvas id="cnv" width="" height="" style=""></canvas>
 			var cnv = JMVC.dom.create('canvas'),
-				dim = JMVC.dim.getViewportSize(),
+				dim = JMVC.screen.getViewportSize(),
 				mainContext = cnv.getContext('2d'),
 				canvasWidth = dim.width,
 				canvasHeight = dim.height,
