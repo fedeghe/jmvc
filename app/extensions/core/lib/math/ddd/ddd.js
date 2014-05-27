@@ -1,3 +1,6 @@
+// type : CONSTRUCTORS
+//
+
 
 JMVC.extend('ddd', {
 	Point : function (x, y, z) {

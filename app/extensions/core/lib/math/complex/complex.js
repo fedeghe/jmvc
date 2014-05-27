@@ -1,3 +1,7 @@
+// type : CONSTRUCTOR
+//
+
+
 JMVC.require('core/lib/math/math');
 JMVC.extend('complex', {
 	Complex : function (re, im) {

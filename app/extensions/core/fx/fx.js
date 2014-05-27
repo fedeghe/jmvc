@@ -1,3 +1,6 @@
+// type : LIB
+// 
+
 JMVC.extend('fx',{
 	speed : 10,
 	

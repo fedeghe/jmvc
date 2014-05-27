@@ -1,3 +1,7 @@
+// type : LIB
+//
+
+
 JMVC.extend('math',{
 	math : JMVC.M, 
 	isSquare : function (n) {

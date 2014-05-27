@@ -1,3 +1,6 @@
+// type : FACTOY_METHOD
+//
+
 JMVC.extend('game', {
 
 	create : function (init, draw, update, fps) {

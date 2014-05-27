@@ -1,3 +1,6 @@
+// type : LIB
+// 
+
 /**
  * this extension sucks
  * urges a strong refactor
@@ -319,7 +322,7 @@ JMVC.extend('core.color', {
 		return ret;	
 	},
 	
-	getWebColors : function (wsafe) {
+	getWebColors : function () {
         'use strict';
         var ret = [],
             hash = '#',

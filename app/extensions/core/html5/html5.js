@@ -1,3 +1,6 @@
+// type : LIB
+// 
+
 JMVC.extend('html5', {
 	init : function () {
 		"use strict";

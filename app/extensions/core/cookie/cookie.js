@@ -1,3 +1,7 @@
+// type : LIB
+// 
+
+
 JMVC.extend('cookie', {
 	initCheck : function () {
 		"use strict";

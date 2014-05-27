@@ -1,3 +1,6 @@
+// type : LIB
+// 
+
 JMVC.extend('fullscreen', {
     up : function (element) {
         var ret = false;

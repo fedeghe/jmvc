@@ -1,3 +1,7 @@
+// type : CONSTRUCTOR
+//
+
+
 JMVC.extend('vector', {
 	Kvector : function(){
 		var that = this; 

@@ -1,3 +1,6 @@
+// type : LIB
+//
+
 JMVC.extend('util', {
 	checkinput : function (tipo) {
 		var i = document.createElement('input');
@@ -11,61 +14,64 @@ JMVC.extend('util', {
 JMVC.extend('sniffer', {
 	init : function () {
 		var bcheck = {
-				'Firefox' : function () {return navigator.userAgent.match(/firefox\/([^\s]*)/i); },
-				'Opera' : function () {return navigator.userAgent.match(/opera\/([^\s]*)/i); },
-				'IE' : function () {return document.all && !(navigator.userAgent.match(/opera/i)); },
-				'Chrome' : function () {return navigator.userAgent.match(/chrome\/([^\s]*)/i); },
-				'Safari' : function () {return navigator.userAgent.match(/safari\/([^\s]*)/i); },
-				'iCab' : function () {return navigator.userAgent.match(/icab\/([^\s]*)/i); }
+				Firefox : function () {return navigator.userAgent.match(/firefox\/([^\s]*)/i); },
+				Opera : function () {return navigator.userAgent.match(/opera\/([^\s]*)/i); },
+				IE : function () {return document.all && !(navigator.userAgent.match(/opera/i)); },
+				Chrome : function () {return navigator.userAgent.match(/chrome\/([^\s]*)/i); },
+				Safari : function () {return navigator.userAgent.match(/safari\/([^\s]*)/i); },
+				iCab : function () {return navigator.userAgent.match(/icab\/([^\s]*)/i); }
 			},
 			ocheck = {
-				'Android' : function () {return navigator.platform.match(/android/i); },
-				'MacOS' : function () {return navigator.appVersion.match(/mac/i); },
-				'Win' : function () {return navigator.appVersion.match(/win/i); },
-				'Linux' : function () {return navigator.userAgent.match(/linux/i); },
-				'Unix' : function () {return navigator.appVersion.match(/x11/i); }
+				Android : function () {return navigator.platform.match(/android/i); },
+				MacOS : function () {return navigator.appVersion.match(/mac/i); },
+				Win : function () {return navigator.appVersion.match(/win/i); },
+				Linux : function () {return navigator.userAgent.match(/linux/i); },
+				Unix : function () {return navigator.appVersion.match(/x11/i); }
 			},
 			dcheck = {
-				'iDevice' : function () {return navigator.userAgent.match(/iPhone|iPad|iPod/i);}
+				iDevice : function () {return navigator.userAgent.match(/iP(hone|ad|od)/i);},
+				BlackBerry : function () {return navigator.userAgent.match(/blackberry/i);}
 			},
 			bro,
 			os,
-			r;
-		JMVC.each(bcheck, function f(fn, nm) {
-			r = fn();
-			if (r) {
-				JMVC.sniffer.browser.name = nm;
-				JMVC.sniffer.browser.version = r[1];
-				f.break();
+			r,
+			i;
 
-			}
-		});
-		JMVC.each(ocheck, function f(fn, nm) {
-			r = fn();
+		for (i in bcheck) {
+			r = bcheck[i]();
 			if (r) {
-				JMVC.sniffer.os.name = nm;
-				f.break();
+				JMVC.sniffer.browser.name = i;
+				JMVC.sniffer.browser.version = r[1];
+				break;
+			}
+		}
+
+		for (i in ocheck) {
+			r = ocheck[i]();
+			if (r) {
+				JMVC.sniffer.os.name = i;
+				break;
 			} else {
 				JMVC.sniffer.os.name = navigator.platform;
 			}
-		});
-		JMVC.each(dcheck, function f(fn, nm) {
-			r = fn();
+		}
+	
+		for (i in dcheck) {
+			r = dcheck[i]();
 			if (r) {
-				JMVC.sniffer.device.name = nm;
-				switch (nm) {
+				JMVC.sniffer.device.name = i;
+				switch (i) {
 					case 'iPad' :
 						if (JMVC.W.screen.availWidth === 768 && JMVC.W.screen.availHeight === 1004) {
-							nm = 'iPadMini';
+							i = 'iPadMini';
 						}
 					break;
 					default:break;
 				}
-				f.break();
+				break;
 			}
-		});
+		}
 	},
-
 	
 	features : {
 		tags : {
@@ -109,14 +115,16 @@ JMVC.extend('sniffer', {
 			video_H264 : (function () {var v = JMVC.WD.createElement('video'); return !!(v.canPlayType && v.canPlayType('video/mp4; codecs="avc1.42E01E,mp4a.40.2"').replace(/no/, '')); })(),
 			video_Theora : (function () {var v = JMVC.WD.createElement('video'); return !!(v.canPlayType && v.canPlayType('video/ogg; codecs="theora,vorbis"').replace(/no/, '')); })()
 		},
+
 		assets : {
+			audioAPI : 'AudioContext' in JMVC.W || 'webkitAudioContext' in JMVC.W,
 			battery : 'battery' in JMVC.W.navigator || 'mozBattery' in JMVC.W.navigator,
 			contentEditable : JMVC.util.propinel('isContentEditable', 'span'),
 			crossDocMessaging : !!JMVC.W.postMessage,
 			dragAndDrop : JMVC.util.propinel('draggable', 'span'),
 			fileAPI : typeof FileReader !== 'undefined',
 			geolocation : !!JMVC.W.navigator.geolocation,
-			history : !!(JMVC.W.history && JMVC.W.history.pushState && JMVC.W.history.popState),
+			history : !!(JMVC.W.history && JMVC.W.history.pushState && JMVC.W.history.replaceState),
 			localStorage : ('localStorage' in JMVC.W) && JMVC.W['localStorage'] !== null,
 			microdata : !!JMVC.WD.getItems,
 			offline : !!JMVC.W.appicationCache,

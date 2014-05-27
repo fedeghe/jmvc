@@ -1,3 +1,6 @@
+// type : FACTOY_METHOD
+// 
+
 JMVC.require('core/lib/math/dd/dd');
 
 JMVC.extend('canvas', {

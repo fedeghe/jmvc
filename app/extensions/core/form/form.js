@@ -1,3 +1,6 @@
+// type : LIB
+// 
+
 JMVC.require('event_scroll/event_scroll');
 
 

@@ -1,7 +1,13 @@
+// type : CONSTRUCTORS
+//
+
+
 JMVC.require(
 	'core/lib/math/math',
 	'core/lib/math/vector/vector'
 );
+
+
 
 JMVC.extend('matrix', {
 	

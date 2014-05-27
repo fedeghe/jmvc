@@ -1,3 +1,6 @@
+// type : LIB
+// 
+
 JMVC.extend('bin', {
 	bin2String : function (array) {
 		var result = "";

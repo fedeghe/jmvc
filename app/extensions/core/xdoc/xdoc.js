@@ -1,51 +1,56 @@
-JMVC.require('core/dim/dim', 'event_scroll/event_scroll', 'widget/tabs/tabs');
+// type : LIB
+//
 
-JMVC.extend('xdoc', {
-	init : function () {
-		//JMVC.head.meta("generator", "jmvc resident in your machine");
-		JMVC.xdoc.otitle = JMVC.head.title();
-		JMVC.head.title(JMVC.xdoc.etitle);
-	},
-	otitle : '',
-	etitle : 'Xdoc',
+JMVC.require(
+	'core/screen/screen'
+	,'event_scroll/event_scroll'
+	,'core/lib/widgzard/widgzard'
+	,'core/xmlparser/xmlparser'
+	,'widget/tooltip/tooltip'
+);
 
-	_status : false,
+JMVC.extend('xdoc', function () {
 
-	scroll : 0,
+	JMVC.xdoc.otitle = JMVC.head.title();
+	JMVC.head.title(JMVC.xdoc.etitle);
+	JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/core/xdoc/xdoc.css', true);
 
-	toggle : function (ext) {
+	var otitle = '',
+		etitle = 'Xdoc',
+		_status = false,
+		_id = JMVC.util.uniqueid + '',
+		scroll = 0;
+
+	function toggle(ext) {
 
 		
-		JMVC.require(ext.replace('.', '/'));
+		ext && JMVC.require(ext.replace('.', '/'));
 
-
-		JMVC.debug(JMVC.nsCheck(ext, JMVC));
-
-		if (JMVC.xdoc._status) {
-			JMVC.dom.remove(JMVC.dom.find('#jmvc_xdoc'));
+		if (_status) {
+			JMVC.dom.remove(JMVC.dom.find('#' + _id));
 			JMVC.events.enable_scroll();
-			JMVC.W.scrollTo(0, JMVC.xdoc.scroll);
-
+			JMVC.W.scrollTo(0, scroll);
 		} else {
 
-			var dims = JMVC.dim.getViewportSize(),
-				border_size = 0,
-				margin = -1,
+			var dims = JMVC.screen.getViewportSize(),
+				border_size = 1,
+				margin = 10,
 				top_height = 10,
 				foot_height = 100,
-				scrollTop = JMVC.dim.getScreenData().scrollTop;
+				scrollTop = JMVC.screen.getScreenData().scrollTop;
 				
 				// main container
 				container = JMVC.dom.create(
 					'div', {
-						'id' : 'jmvc_xdoc',
-						'class' : 'jmvc_xdoc',
-						'style':'left:' + margin + 'px;right:' + margin + 'px;top:' + margin + 'px;bottom:' + margin + 'px;border:' + border_size + 'px solid black'
-					}
+						'id' : _id,
+						'class' : 'jmvc_xdoc respfixed round8',
+						'style' : 'left:' + margin + 'px;right:' + margin + 'px;top:' + margin + 'px;bottom:' + margin + 'px;'
+					},
+					'<div class="close respfixed" title="close" onclick="JMVC.xdoc.toggle()"><span class="txt">x</span></div>'
 				);
 
 			//save scroll vertical position
-			JMVC.xdoc.scroll = scrollTop;
+			scroll = scrollTop;
 
 			//scroll to top
 			JMVC.W.scrollTo(0, 1);
@@ -53,13 +58,53 @@ JMVC.extend('xdoc', {
 			//disable scroll
 			JMVC.events.disable_scroll();
 
-			JMVC.set('height', (dims.height-70) / 2);
-			JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/core/xdoc/xdoc.css', true);
+			JMVC.set('height', (dims.height - 70) / 2);
+			
+			JMVC.xdoc.show(ext, container);
+
 			JMVC.dom.append(JMVC.dom.body(), container);
-
-
 		}
-		JMVC.xdoc._status = !JMVC.xdoc._status;
-		JMVC.head.title(JMVC.xdoc._status ? JMVC.xdoc.etitle : JMVC.xdoc.otitle);
+		_status = !_status;
+		JMVC.head.title(_status ? etitle : otitle);	
 	}
-});	
+
+
+
+	function show(ext, node) {
+		
+		// get the json from xml
+		//
+		var xmlparser = new JMVC.xmlparser.load(JMVC.xdoc.elements[ext], true),
+			doc = xmlparser.toJson();
+
+		JMVC.core.widgzard.render({
+			target : node,
+			content : [{
+				attrs : {'class':'respfixed'},
+				tag : 'h1',
+				html : 'Description'
+			},{
+				tag : 'p',
+				attrs : {'class':'round8', style :'background-color:#ddd'},
+				html : doc.description['#text']
+			},{
+				html : 'world'
+			}]
+		})
+		// var json = JMVC.xmlparser.toJson(JMVC.xdoc.elements[ext].childNodes[0]);
+		// console.debug(json)
+	
+	}
+
+	return {
+		toggle : toggle,
+		show : show
+	};
+
+});
+
+
+	
+	
+
+	

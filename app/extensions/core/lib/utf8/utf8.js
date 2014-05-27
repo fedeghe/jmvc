@@ -1,3 +1,7 @@
+// type : LIB
+//
+
+
 JMVC.extend('utf8', {
 	encode_Utf8 : function (s) {
 		return unescape(encodeURIComponent(s));

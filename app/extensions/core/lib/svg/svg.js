@@ -1,3 +1,7 @@
+// type : FACTOY_METHOD
+//
+
+
 //blog.blazingcloud.net/2010/09/17/svg-scripting-with-javascript-part-1-simple-circle/
 JMVC.extend('svg', {
 	vars : {

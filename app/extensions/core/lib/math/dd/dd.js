@@ -1,3 +1,7 @@
+// type : CONSTRUCTORS
+//
+
+
 JMVC.set('accessor', function () {});
 
 JMVC.get('accessor').prototype = {

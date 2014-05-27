@@ -1,3 +1,7 @@
+// type : CONSTRUCTOR
+//
+
+
 JMVC.require('core/obj/skip_list/Node');
 JMVC.nsMake('JMVC.obj.SkipList');
 
@@ -18,18 +22,7 @@ JMVC.obj.SkipList = function () {
 2 h
 1 h 
 0 
-
-
-
-
-
-
 */
-
-
-
-
-
 JMVC.obj.SkipList.prototype.add = function (value) {
 
     // create the node

@@ -1,3 +1,6 @@
+// type : LIB
+//
+
 JMVC.extend('date', {
 	init : function(){
 		JMVC.date.vars.END = (JMVC.date.vars.START + 6 ) % 7;

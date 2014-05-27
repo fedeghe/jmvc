@@ -1,3 +1,6 @@
+// type : FACTORY_METHOD
+//
+
 JMVC.extend('bucket', {
 	create : function (arr) {
 		"use strict";

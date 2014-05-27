@@ -1,3 +1,6 @@
+// type : FACTORY_METHOD
+//
+
 JMVC.extend('xpub',{
 	init : function () {
 		console.debug('xpub initialized');
