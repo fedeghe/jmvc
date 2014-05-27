@@ -30,7 +30,7 @@ JMVC.controllers.googlemaps = function () {
 	this.action_index = function () {
 
 		JMVC.events.loadify(1000);
-		JMVC.require('vendors/google/gmap/gmap', 'core/dim/dim');
+		JMVC.require('vendors/google/gmap/gmap', 'core/screen/screen');
 		JMVC.head.meta('generator', 'jmvc resident in your machine');
 		JMVC.head.title('Google maps');
 		var v = JMVC.getView('vacuum'),
@@ -46,7 +46,7 @@ JMVC.controllers.googlemaps = function () {
 		});
 
 		v.render(function () {
-			dims = JMVC.dim.getViewportSize();
+			dims = JMVC.screen.getViewportSize();
 			mapid = 'map';
 			b = JMVC.dom.body();
 			

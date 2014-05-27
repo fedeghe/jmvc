@@ -3,7 +3,7 @@ JMVC.controllers.gmaps = function () {
 	this.action_index = function () {
 
 		JMVC.events.loadify(1000);
-		JMVC.require('vendors/google/gmap/gmap', 'core/dim/dim');
+		JMVC.require('vendors/google/gmap/gmap', 'core/screen/screen');
 		JMVC.head.meta('generator', 'jmvc resident in your machine');
 		var v = JMVC.getView('vacuum'),
 			dims,
@@ -13,7 +13,7 @@ JMVC.controllers.gmaps = function () {
 		v.set({'style' : 'font-family:verdana;margin:0 auto;width:285px;height:105px;margin-top:80px;position:relative', 'content' : '&nbsp;', 'id' : 'extralogo'});
 
 		v.render(function () {
-			dims = JMVC.dim.getViewportSize();
+			dims = JMVC.screen.getViewportSize();
 			mapid = 'map';
 			b = JMVC.dom.body();
 			JMVC.dom.append(b, JMVC.dom.create('div', {

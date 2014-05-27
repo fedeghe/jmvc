@@ -5,7 +5,7 @@ JMVC.require(
 	'core/responsive/basic/basic',
 	'core/mobile/mobile',
 	'core/color/color',
-	'core/dim/dim',
+	'core/screen/screen',
 	'core/cookie/cookie',
 	'vendors/google/analytics/analytics',
 	'core/fx/fx',
@@ -16,6 +16,8 @@ JMVC.require(
 
 JMVC.controllers.index = function () {
 	'use strict';
+
+	JMVC.css.autoHeadings();
 
 	this.action_none = function () {};
 
@@ -36,21 +38,20 @@ JMVC.controllers.index = function () {
 		JMVC.events.loadify(500);
 		JMVC.head.title('JMVC');
 		JMVC.lang.apply(null, JMVC.util.getParameters('jmvcscript').langs || ['en', 'de', 'it']);
-		JMVC.head.favicon('/media/favicon.ico');
 
 
 		/*
-		JMVC.head.addscript(JMVC.vars.baseurl+"/media/js/plus_one.js");
+		JMVC.head.addScript(JMVC.vars.baseurl+"/media/js/plus_one.js");
 		see plus_one view
 		add a explicit style parsed from a view
 		*/
-		JMVC.head.addstyle('{{style fontweight=`bold` txtalign=`center` margin=`0px` padding=`0px`}}', true, true);
+		JMVC.head.addStyle('{{style fontweight=`bold` txtalign=`center` margin=`0px` padding=`0px`}}', true, true);
 		JMVC.head.meta('description', 'A true pure javascript model view controller framework', true);
 		JMVC.head.meta('keywords', 'jmvc,javascript mvc,pure javascript mvc,pure javascript');
 		JMVC.head.meta('generator', 'jmvc resident in your machine');
 
-		//JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/core/jmvc-night.min.css', true);
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/core/jmvc-day.min.css', true);
+		//JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-night.min.css', true);
+		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-day.min.css', true);
 
 
 		/*
@@ -76,27 +77,25 @@ JMVC.controllers.index = function () {
 
 				JMVC.mobile.topHide();
 				JMVC.widget.langs.create(JMVC.dom.find('#topbar'));
-
+/*
 				JMVC.responsive.onChange(
 					function (w) {
 						if (w < 800) {
-							/*JMVC.dom.addClass(JMVC.WD.body, 'mini');*/
-							JMVC.responsive.allow('mobi');
+							JMVC.responsive.allow('resp_mobi');
 						} else {
-							/*JMVC.dom.removeClass(JMVC.WD.body, 'mini');*/
-							JMVC.responsive.allow('dskt');
+							JMVC.responsive.allow('resp_dskt');
 						}
 					}
 				);
-
-				JMVC.head.lastmodified();
+*/
+				JMVC.head.lastModified();
 
 				var el = document.getElementById('cent'),
 					links = JMVC.dom.create('h1'),
-					morelink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/info.jmvc', title : 'get more info'}, JMVC.parselang('[L[more]]')),
-					sourcelink = JMVC.dom.create('a', {'class' : 'homelinks', href : 'https://github.com/fedeghe/jmvc', title : 'get code from github!', target : '_blank'}, JMVC.parselang('[L[source]]')),
-					demolink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/demo.jmvc', title : 'some demos'}, JMVC.parselang('[L[demos]]')),
-					apilink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/api.jmvc', title : 'basic documentation'}, JMVC.parselang('[L[api]]')),
+					morelink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/info.jmvc', title : 'get more info'}, JMVC.parseLang('[L[more]]')),
+					sourcelink = JMVC.dom.create('a', {'class' : 'homelinks', href : 'https://github.com/fedeghe/jmvc', title : 'get code from github!', target : '_blank'}, JMVC.parseLang('[L[source]]')),
+					demolink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/demo.jmvc', title : 'some demos'}, JMVC.parseLang('[L[demos]]')),
+					apilink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/api.jmvc', title : 'basic documentation'}, JMVC.parseLang('[L[api]]')),
 					logo, newlogo,
 					dims,
 					mapid,
@@ -110,6 +109,7 @@ JMVC.controllers.index = function () {
 
 				logo = JMVC.dom.find('#extralogo');
 				newlogo = JMVC.dom.create('img', {src : JMVC.vars.baseurl + '/media/img/' + logoimg});
+				JMVC.dom.append(logo, JMVC.dom.create('div', {'class':'resp_mobi', style:'height:20px'}, '&nbsp;'));
 				JMVC.dom.append(logo, newlogo);
 				
 				
@@ -117,7 +117,7 @@ JMVC.controllers.index = function () {
 				/* || JMVC.sniffer.browser.name.toLowerCase().match(/opera|chrome/)*/
 				
 					JMVC.require('vendors/google/gmap2/gmap2');
-					dims = JMVC.dim.getViewportSize();
+					dims = JMVC.screen.getViewportSize();
 					mapid = 'map';
 					body = JMVC.dom.body();
 					JMVC.dom.append(body, JMVC.dom.create('div', {id : mapid, style : 'opacity:0.8;position:absolute;z-index:1;top:0px;left:0px;width:' + dims.width + 'px;height:' + dims.height + 'px'}));
@@ -351,9 +351,9 @@ JMVC.controllers.index = function () {
 
 
 	this.action_gmaps = function () {
-		JMVC.require('vendors/google/gmap2/gmap2', 'core/dim/dim');
+		JMVC.require('vendors/google/gmap2/gmap2', 'core/screen/screen');
 		this.render(function () {
-			var dims = JMVC.dim.getViewportSize(),
+			var dims = JMVC.screen.getViewportSize(),
 				mapid = 'map',
 				b = JMVC.dom.body();
 

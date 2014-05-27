@@ -1,15 +1,18 @@
 JMVC.controllers.info = function () {
 	'use strict';
 	this.action_index = function () {
+
+		JMVC.css.autoHeadings();
+
 		JMVC.events.loadify(500);
 		
 		JMVC.require(
 			'core/codeview/script/script',
-			'core/responsive/basic/basic',
+			//,'core/responsive/basic/basic',
 			'vendors/google/analytics/analytics',
 			'core/sniffer/sniffer',
 			'core/mobile/mobile',
-			'core/dim/dim',
+			'core/screen/screen',
 			'vendors/github/forkme/forkme'
 		);
 		var main  = JMVC.getView('info/info'),
@@ -39,9 +42,7 @@ JMVC.controllers.info = function () {
 			toplinks.push('<a href="#' + t + '" class="round4">' + toplinksdata[t] + '</a>');
 		}
 
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/info.css', true);// parsed
-
-		JMVC.head.favicon('/media/favicon.ico');
+		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/info.css', true);// parsed
 
 		features.set({
 			fr : '<b class="index">&#9758;</b>',
@@ -70,20 +71,7 @@ JMVC.controllers.info = function () {
 
 		main.parse().render(function () {
 
-			JMVC.head.lastmodified();
-
-			JMVC.responsive.onChange(
-					function (w) {
-						if (w < 960) {
-							/*JMVC.dom.addClass(JMVC.WD.body, 'mini'); */
-							JMVC.responsive.allow('mobi');
-						} else {
-							/* JMVC.dom.removeClass(JMVC.WD.body, 'mini'); */
-							JMVC.responsive.allow('dskt');
-						}
-					}
-				);
-
+			JMVC.head.lastModified();
 			JMVC.github.forkme('fedeghe');
 			JMVC.mobile.topHide();
 			JMVC.head.title('JMVC :: info');

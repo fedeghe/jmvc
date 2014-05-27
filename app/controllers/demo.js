@@ -46,22 +46,39 @@ JMVC.controllers.demo = function() {
 		//JMVC.screensaver.on(5000);
 	};
 
+
+
+
+
+
+
+
+
+
 	this.action_index = function () {
-		JMVC.debug('0-')
+		JMVC.debug('0-');
+
 		JMVC.require(
-			'vendors/google/analytics/analytics',
-			'core/responsive/basic/basic'
-			//, 'affix/affix'
+			'vendors/google/analytics/analytics'
+			,'core/responsive/basic/basic'
+			,'core/screen/screen'
 		);
 
+		// show window size, and test orientation switch, 
+		JMVC.responsive.onChange(function (e) {
+			var d = JMVC.screen.getViewportSize();
+			JMVC.dom.html(JMVC.dom.find('#size'), '[' + d.width + ' ; ' + d.height + ']');
+		});
+
 		JMVC.events.loadify(500);
+
 		JMVC.dom.preloadImage(JMVC.vars.baseurl + '/media/img/jmvc_m1.svg');
 
 		//var newlogo = JMVC.dom.create('img', {src : JMVC.vars.baseurl + '/media/img/jmvc_m1.svg'});
 
 		/* JMVC.require('widget/slider/slider'); */
 		// <img src="media/img/jmvc_m2.svg" />
-		var content = '<h3 id="samples" class="round8 roundbottom">Some JMVC based samples</h3>',
+		var content = '<h3 id="samples" class="round8 roundbottom">Some JMVC based samples <span id="size"></span></h3>',
 			bu = JMVC.vars.baseurl,
 			v = JMVC.getView('vacuum'),
 			links = {
@@ -71,6 +88,7 @@ JMVC.controllers.demo = function() {
 				'Canvas editor (WorkInProgress)': 'canvaseditor',
 				//'Canvas editor (old layout)' : 'canvaseditor?v=1',
 				'Widgzard' : 'widgzard',
+				
 				'6 Divs Cube css3 tranformations ': 'demo/divrot.js',
 
 				'Console': 'console',
@@ -98,13 +116,15 @@ JMVC.controllers.demo = function() {
 
 
 				'direct&crypt_image': 'demo/direct',
-				'Tabs': 'tabs/one/i_say/Hello%20my%20Guest',
+				'Tabs': 'tabs/index/i_say/Hello%20my%20Guest',
 
 				'modal': 'test_modal',
 
 				'cubic': 'cubic',
 
 				'neverending carpet': 'carpet',
+
+				'Widgzard SPA' : 'widgzard/sample/',
 
 				'* strict': 'test_strict',
 				'* obj/bucket': 'test_bucket',
@@ -113,7 +133,8 @@ JMVC.controllers.demo = function() {
 				'* lib/array': 'test_array',
 				'* JMVC.util.findRich': 'test_arrayOp',
 				'* lib/crypt': 'test_crypt',
-				'* FizzBuzz perf': 'test_fizzbuzz'
+				'* FizzBuzz perf': 'test_fizzbuzz',
+				'* Leap year': 'test_leap'
 			},
 			style = {
 				'body': {
@@ -152,7 +173,7 @@ JMVC.controllers.demo = function() {
 
 
 		for (i in links) {
-			out += JMVC.string.replaceall(tpl, {
+			out += JMVC.string.replaceAll(tpl, {
 				'base_url': bu,
 				'path': links[i],
 				'label': i
@@ -161,7 +182,8 @@ JMVC.controllers.demo = function() {
 		content += '<ul>' + out + '</ul>';
 		content += '<br /><b>* real test</b>';
 
-		JMVC.head.addstyle(JMVC.object.toCss(style), true, true);
+		//JMVC.head.addStyle(JMVC.object.toCss(style), true, true);
+		JMVC.head.addStyle('/media/css/demo.css');
 
 		v.set({
 			id: 'content',
@@ -185,7 +207,7 @@ JMVC.controllers.demo = function() {
 			});
 			*/
 		});
-		JMVC.debug('0+')
+		JMVC.debug('0+');
 	};
 
 	this.action_demo = function () {
@@ -452,7 +474,7 @@ JMVC.controllers.demo = function() {
 			},
 			back = false;
 
-		JMVC.head.addstyle(JMVC.object.toCss(style), true, true);
+		JMVC.head.addStyle(JMVC.object.toCss(style), true, true);
 
 		JMVC.head.title(nation.toUpperCase() + ' beat');
 
@@ -558,7 +580,7 @@ JMVC.controllers.demo = function() {
 	this.action_direct = function() {
 		JMVC.head.title('Crypto image');
 
-		JMVC.head.addstyle(JMVC.object.toCss({
+		JMVC.head.addStyle(JMVC.object.toCss({
 			'body': {
 				'background-color': 'black'
 			}
@@ -604,7 +626,7 @@ JMVC.controllers.demo = function() {
 	this.action_img = function() {
 		JMVC.head.title('Image Filters');
 		JMVC.require('core/lib/image/image');
-		JMVC.head.addstyle(JMVC.object.toCss({
+		JMVC.head.addStyle(JMVC.object.toCss({
 			'body': {
 				'font-family': 'Verdana, sans-serif'
 			},
@@ -694,7 +716,7 @@ JMVC.controllers.demo = function() {
 				butts = '';
 
 			for (var i = 0, l = elements.length; i < l; i += 1) {
-				butts += JMVC.string.replaceall('<button id="%id%" class="flt">%label%</button>', elements[i]);
+				butts += JMVC.string.replaceAll('<button id="%id%" class="flt">%label%</button>', elements[i]);
 			}
 
 			function track(msg) {
@@ -809,7 +831,7 @@ JMVC.controllers.demo = function() {
 			'id': 'extralogo'
 		});
 
-		JMVC.head.addstyle(JMVC.vars.baseurl + '/media/css/logo.css');
+		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/logo.css');
 
 		v.render({
 			cback: function() {
@@ -1168,7 +1190,7 @@ JMVC.controllers.demo = function() {
 
 
 				if (JMVC.p.aberrate) {
-					JMVC.head.addstyle(JMVC.vars.baseurl + '/app/extensions/widget/divrot/divrot_aberrate.css', true);
+					JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/widget/divrot/divrot_aberrate.css', true);
 				}
 
 				var dstNode = JMVC.dom.find('#container');
@@ -1193,4 +1215,65 @@ JMVC.controllers.demo = function() {
 				}
 			});
 	};
+
+
+
+
+	this.action_captcha = function () {
+		JMVC.require('core/captcha/captcha');
+
+		JMVC.head.title('Captcha');
+		JMVC.css.style(JMVC.WD.body, {
+			'font-family': 'Verdana, sans-serif'
+		});
+
+
+		JMVC.getView('vacuum')
+			.set({
+				style: '',
+				id: 'container',
+				'content': ''
+			})
+			.render(function() {
+				
+				JMVC.core.captcha.create(JMVC.dom.find('#container'));
+
+			});
+	};
+
+	this.action_dropbox = function () {
+		JMVC.require('vendors/dropbox/dropbox');
+
+		var dbox;
+
+
+		JMVC.getView('vacuum')
+			.set({
+				style: '',
+				id: 'container',
+				'content': ''
+			})
+			.render(function() {
+				
+				dbox = JMVC.vendors.dropbox.create();
+
+			    dbox.login(function (){
+			        //dbox.getTable('tasklists');
+			        //dbox.insert('tasklists', {name:'Federico', surname : 'Ghedina'});
+			    	//dbox.truncate('tasklists');
+			        dbox.getFileContent('hw.html', function (err, cnt) {
+			        	console.debug(cnt);
+			        });
+			    });
+
+			    //db.logout();
+
+			});
+
+		
+
+
+	};
+
+
 };

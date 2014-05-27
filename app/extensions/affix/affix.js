@@ -1,7 +1,8 @@
+// type : LIB
 JMVC.extend('affix', {
 	
 	init : function () {
-		JMVC.require('core/dim/dim');
+		JMVC.require('core/screen/screen');
 
 		JMVC.affix.vars = {index : 0, pool : {}};
 		
@@ -9,7 +10,7 @@ JMVC.extend('affix', {
 
 			function react() {
 				var j, style,
-					c = JMVC.dim.getScreenData(),
+					c = JMVC.screen.getScreenData(),
 					t = c.scrollTop;
 
 				for (j in JMVC.affix.vars.pool) {

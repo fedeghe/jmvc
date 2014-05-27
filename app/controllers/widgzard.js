@@ -4,10 +4,14 @@
 JMVC.require(
     'core/lib/border/border',
     'widget/snow/snow',
-    'core/lorem'
+    'core/lorem',
+    'core/captcha/captcha'
+    ,'vendors/dropbox/dropbox'
 );
 JMVC.controllers.widgzard = function () {
     "use strict";
+
+    //JMVC.css.autoHeadings();
 
     var drawText = !JMVC.p.draw,
         link = drawText ?
@@ -22,20 +26,21 @@ JMVC.controllers.widgzard = function () {
     this.action_index = function (){
         JMVC.events.loadify(1000);
         JMVC.require(
-            'core/lib/widgzard/widgzard',
-            'core/dim/dim',
-            'core/responsive/basic/basic'
+            'core/lib/widgzard/widgzard'
+            ,'core/screen/screen'
         );
-        JMVC.head.meta('generator', 'jmvc resident in your machine');
+
+        JMVC.css.autoHeadings();
 
         document.body.className = 'resp';
 
         function getConfig() {
             return {
+                target : JMVC.dom.find('#extralogo'),
                 cb : function (){
                     JMVC.dom.addClass(document.body, 'b960');
                     JMVC.debug('end RENDER MAIN');
-                    console.debug(this.getNode('tree'))
+                    //console.debug(this.getNode('tree'))
                 },
                 content : [
                     {
@@ -104,9 +109,9 @@ JMVC.controllers.widgzard = function () {
                                                 html : drawText ? lorem(2).split(/\s/).pop() : '',
                                                 style : {'float':'left'}
                                             }, {
-                                                wid : 'tb3', 
+                                                wid : 'tb3',
                                                 attrs : {'class':'tongue round8 roundtop respfixed'},
-                                                html : drawText ? lorem(3).split(/\s/).pop() : '',
+                                                html : drawText ? 'Cptch' : '',
                                                 style : {'float':'left'}
                                             },
                                             'clearer'
@@ -123,7 +128,7 @@ JMVC.controllers.widgzard = function () {
                                                 }, {
                                                     wid : 'cnt3',
                                                     style : {display : 'none'},
-                                                    html : lorem()
+                                                    cb : drawText ? doCaptcha : function () {this.done(); }
                                                 }]    
                                             }]
                                         }],
@@ -279,7 +284,7 @@ JMVC.controllers.widgzard = function () {
                             
                             tag : 'span',
                             style : {cursor:'pointer', color:'white', textDecoration : 'none', fontFamily: 'verdana', fontSize:'10px'},
-                            html : drawText ? 'hide text' : 'show text'
+                            html : (drawText ? 'hide' : 'show') + ' content'
                         }]
                         ,cb : toggleText
                     }
@@ -287,27 +292,34 @@ JMVC.controllers.widgzard = function () {
             };
         }
 
+        function doCaptcha() {
+            JMVC.core.captcha.create(this);
+            this.done();
+        }
+
         function another () {
             var self = this,
                 footer = self.getNode('footer');
 
             JMVC.core.widgzard.render({
-                cb : function () {
-                    self.done(); // this is the root resolve ande resolves 'another'
-                },
-                content : [{
-                    tag : 'p',
-                    html : drawText ? 'WTF license ' + (new Date).getFullYear() : '',
-                    style : {
-                        fontSize:'10px',
-                        lineHeight:'10px',
-                        padding:'5px',
-                        color: 'red',
-                        fontWeight:'bold'
+                    target : footer,
+                    cb : function () {
+                        self.done(); // this is the root resolve ande resolves 'another'
                     },
-                    cb : function () { JMVC.debug('inner 1'); this.done();}
-                }]
-            }, footer);
+                    content : [{
+                        tag : 'p',
+                        html : drawText ? 'WTF license ' + (new Date).getFullYear() : '',
+                        style : {
+                            fontSize:'10px',
+                            lineHeight:'10px',
+                            padding:'5px',
+                            color: 'red',
+                            fontWeight:'bold'
+                        },
+                        cb : function () { JMVC.debug('inner 1'); this.done();}
+                    }]
+                }, true
+            );
             
         }
 
@@ -315,7 +327,7 @@ JMVC.controllers.widgzard = function () {
             
             JMVC.events.one(this, 'click', function () {
                 drawText = !drawText;
-                JMVC.core.widgzard.render(getConfig(), JMVC.dom.find('#extralogo'));
+                JMVC.core.widgzard.render(getConfig(), true);
             });
             
            this.done();
@@ -327,9 +339,285 @@ JMVC.controllers.widgzard = function () {
                 'id' : 'extralogo'
             }).render(function () {
                 JMVC.css.style(JMVC.dom.body(), 'backgroundColor', '#444');
-                JMVC.core.widgzard.render(getConfig(), JMVC.dom.find('#extralogo'));
+                JMVC.core.widgzard.render(getConfig(), true);
             });
     };
+
+
+
+    this.action_sample = function (){
+
+        JMVC.head.addStyle(location.protocol + '//fonts.googleapis.com/css?family=Luckiest+Guy');
+        
+        JMVC.events.loadify(1000);
+        JMVC.require(
+            'core/lib/widgzard/widgzard'
+            ,'core/screen/screen'
+        );
+        JMVC.head.addStyle('/media/css/widgzard.css');
+
+        document.body.className = 'resp';
+
+        var incr = 3,
+            time = 10,
+            shrinkFonts = function (t) {
+                var self = this,
+                    n = 0;
+                (function g (){
+                    window.setTimeout(function () {
+                        var c = parseInt(self.style.letterSpacing, 10),
+                            tInd = parseInt(self.style.textIndent, 10);
+                        c -= incr;
+                        self.style.letterSpacing = c + 'px';
+                        if (t) self.style.textIndent = (tInd - incr) + 'px';
+                        if (c > incr) {
+                            g();
+                        }
+                    }, time);
+                })();
+                this.done();
+            },
+            
+            color0 = '#FFFFFF',
+            color1 = '#FF8800',
+            color1a = '#FF8800',
+            color2 = '#008800',
+            color2a = '#008800',
+            color3 = '#DDDDDD',
+            black = '#000000',
+            spaPX = 5,
+            padPX = 10,
+            spacing = spaPX + 'px',
+            margin = 2 * spaPX + 'px',
+            padding = '10px';
+
+
+
+        JMVC.core.widgzard.render({
+            cb : function (){
+                
+                
+/*
+                var self = this,
+                    dbox = JMVC.vendors.dropbox.create();
+                
+                dbox.login(function (){
+                    dbox.getFileContent('hw.html', function (err, cnt) {
+                        self.getNode('db').innerHTML = cnt;
+                    });
+                });
+*/              
+               //console.debug('end')
+               //this.getNode('db').innerHTML = '<b>not FINISHED</b>';
+                
+            }, 
+            style : {backgroundColor: color2},
+            content : [{
+                attrs : {'class' : 'round respfixed'},
+                style : {
+                    backgroundColor : color1,
+                    padding : '20px',
+                    margin : margin + ' 0px',
+                    fontSize : '45px',
+                    lineHeight : '45px',
+                    height:'65px',
+                    fontWeight:'bold',
+                    overflow : 'hidden',
+                    fontFamily: "'Luckiest Guy', cursive"
+                },
+                content : [{
+                    style : {textAlign : 'right', 'float':'left', width: '50%',letterSpacing : '600px', textIndent:'-2000px'},
+                    html : 'Widg',
+                    tag : 'h1'
+                    ,cb : function () {shrinkFonts.call(this, false);}
+                },{
+                    style : {textAlign : 'left', 'float':'left', width: '50%', letterSpacing : '600px', textIndent:'600px'},
+                    html : 'Zard',
+                    tag : 'h1'
+                    ,cb : function () {shrinkFonts.call(this, true);}
+                },'clearer']
+
+            },{
+                attrs : {'class':'round respfixed'},
+                style : {textAlign:'center', margin : '0 auto', backgroundColor : 'white', padding:'20px '+padding, border:'5px solid '+color1, fontSize:'30px'},
+                    
+                content : [{
+                    style : {'float':'left', width : '30%', padding:padding + ' 0px'},
+                    html : '{JSON}'
+                },{
+                    style : {'float':'left', width : '5%', padding:padding + ' 0px'},
+                    html : '<span class="resp_mobi">&darr;</span><span class="resp_dskt">&rarr;</span>' 
+                },{
+                    attrs : {'class':'round'},
+                    style : {'float':'left', width : '30%',backgroundColor : color2, color : color0, height : '52px', padding:padding + ' 0px', fontFamily: "'Luckiest Guy', cursive", fontSize:'45px'},
+                    html : 'Widgzard'
+                },{
+                    style : {'float':'left', width : '5%', padding:padding + ' 0px'},
+                    html : '<span class="resp_mobi">&darr;</span><span class="resp_dskt">&rarr;</span>' 
+                },{
+                    style : {'float':'left', width : '30%', padding:padding + ' 0px'},
+                    html : 'HTML & JS & CSS'
+                },'clearer']
+
+            },{
+
+                attrs : {'class':'round'},
+                style : {
+                    margin : margin +' 0px',
+                    backgroundColor:color0,
+                    width:'100%'
+                    
+                },
+                content : [{
+                    attrs : {'class':'respfixed'},
+                    style : {padding:spacing},
+                    content : [{
+                        style : {width:'20%' ,'float':'left'},
+                        content : [{
+                            attrs : {'class':'round respfixed', id : 'getsamples'},
+                            style : {margin:spacing, backgroundColor:color3},
+                            content : [{
+                                style : {padding:padding, cursor:'pointer', textTransform : 'uppercase'},
+                                html : 'load some samples',
+                                cb : function () {
+                                    JMVC.events.bind(this, 'click', function (){
+                                        JMVC.core.widgzard.load('/media/js/samples.js');
+                                    });
+                                    this.done();
+                                }
+                            }]
+                            
+                        }]    
+                    },{
+                        style : {width:'80%' ,'float':'left'},
+                        content : [{
+                            style : {padding:padding, fontSize:'25px', margin : spacing + ' 0px'},
+                            attrs : {'class':'respfixed'},
+                            tag : 'h3',
+                            html : 'Widgzard javascript module allows to'
+                        }, {
+                            attrs : {'class':'round respfixed'},
+                            style : {margin:spacing, backgroundColor: color1a, padding:padding, lineHeight:'1.6em'},
+                            html : '<h3>PREORDER creation</h3>Inject an arbitrary Dom tree within a DOMnode. For every created DOMnode You can specify attributes, child nodes and a callback executed at creation.'
+                        }, {
+                            attrs : {'class':'round respfixed'},
+                            style : {margin:spacing, backgroundColor: color1a, padding:padding, lineHeight:'1.6em'},
+                            html : '<h3>POSTORDER callbacks</h3>Create a chain of resolving callback, where the tree leaves are called immediately after being appended. Leaf DOMnode ancestors callback will be called only when all childs callback explicitly declare to have finished their work.'
+                        }]    
+                    },'clearer']    
+                }]
+                
+                
+            },{
+                attrs : {'class':'round'},
+                style : {
+                    margin : margin +' 0px',
+                    backgroundColor:color0,
+                    width:'100%'
+                    
+                },
+                content : [{
+                    attrs : {'class':'respfixed'},
+                    style : {padding:spacing},
+                    content : [{
+                        style : {width:'44%' ,'float':'left'},
+                        content : [{
+                            attrs : {'class':'round respfixed'},
+                            style : {margin:spacing, backgroundColor:'black', color:color1},
+                            content : [{
+                                style : {padding:padding},
+                                html : JMVC.core.widgzard.htmlspecialchars(
+                                    "var $ = document.getElementById;\n"+
+                                    "Widgzard.render({\n"+
+                                    "   target : $('cnt'),\n" +
+                                    "   cb : function() {\n"+
+                                    "       console.log('all done');\n"+
+                                    "   },\n" +
+                                    "   content : [{\n" +
+                                    "       html : 'hello',\n" +
+                                    "       style : {color:'red'}\n"+
+                                    "   }, {\n" +
+                                    "       html : 'world',\n"+
+                                    "       style : {\n"+
+                                    "           color:'green',\n"+
+                                    "       }\n"+
+                                    "   }]\n" +
+                                    "});"
+                                )
+                            }]
+                        }]    
+                    },{
+                        style : {width:'4%' ,'float':'left', fontSize:'30px', textAlign:'center',lineHeight:'40px'},
+                        html : '<span class="resp_mobi">&darr;</span><span class="resp_dskt">&rarr;</span>' 
+                    },{
+                        
+                        style : {width:'4%' ,'float':'left', textAlign:'center',lineHeight:'40px'},
+                        content : [{
+                            attrs : {'class':'round respfixed'},
+                            style : {margin:spacing,backgroundColor: color1, fontFamily: "'Luckiest Guy', cursive", fontSize:'20px',lineHeight:'55px',height:'50px'},  
+                            html : '<span class="resp_dskt">W</span><span class="resp_mobi">WIDGZARD</span>'
+                       }]
+                    },{
+                       style : {width:'4%' ,'float':'left', fontSize:'30px', textAlign:'center',lineHeight:'40px'},
+                       html : '<span class="resp_mobi">&darr;</span><span class="resp_dskt">&rarr;</span>' 
+                    },{
+                        style : {width:'44%' ,'float':'left'},
+                        content : [{
+                            attrs : {'class':'round respfixed'},
+                            style : {margin:spacing, color:color3, backgroundColor:color2a, padding:padding},
+                            content : [{
+                                
+                                content : [{
+                                    html : JMVC.core.widgzard.htmlspecialchars('<div id="cnt">')
+                                },{
+
+                                    attrs : {'class':'round'},
+                                    style : { backgroundColor:color2a, color:color0},
+                                    html : JMVC.core.widgzard.htmlspecialchars(
+                                        "  <div style='color:red'>hello</div>\n" + 
+                                        "  <div style='color:green'>world</div>"
+                                    ) 
+                                },{
+                                   html : JMVC.core.widgzard.htmlspecialchars('</div>') 
+                                }]  
+                            }]
+                        }]    
+                    },
+                    'clearer',{
+                        tag:'hr',
+                        style : {margin : padding + ' ' + spacing}
+                    },{
+                        attrs : {'class':'round respfixed'},
+                        style : {backgroundColor: color2a, margin : spacing, padding:padding, color : color0},
+                        html : '<p>It smells a lot like <strong>overhead</strong> that`s clear! Fortunately that`s not all.<br/>'+
+                            '<strong>What about the callbacks chain?</strong> I try to introduce it from a common point of view.<br />'+
+                            'Even thinking about a single little section of a webpage (maybe a widget) let`s try to get an answer to the following question:</p>',
+                        content : [{
+                            attrs : {'class':'round respfixed'},
+                            style : {fontWeight:'bold',backgroundColor: color1, padding:padding, color : black, lineHeight:'1.6em', textAlign:'center'},
+                            html : 'How to trigger some postorder callbacks while creating the tree in preorder?'
+                        }]
+                    },{
+                        html : ' ... to be continued!'
+                    },{
+                        html : 'none',
+                        wid : 'db'
+                    }]
+                }]
+                
+                
+            },{
+                attrs : {'class' : 'round respfixed'},
+                html : 'WTF licence ~ Federico Ghedina ~ ' + (new Date).getFullYear() ,
+                style : {
+                    backgroundColor : 'white',
+                    padding : padding,
+                    margin : margin + ' 0px'
+                }
+            }]
+        }, true);
+    };
+
 
 
 

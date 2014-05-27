@@ -7,7 +7,7 @@ JMVC.controllers.carpet = function () {
 		JMVC.require(
 			'core/color/color',
 			'core/lib/carpet/carpet',
-			'core/dim/dim'
+			'core/screen/screen'
 		);
 
 		JMVC.head.title('Carpet');
@@ -15,7 +15,7 @@ JMVC.controllers.carpet = function () {
 
 		var index = JMVC.getView('zero'),
 			jmap = false,
-			dims = JMVC.dim.getViewportSize(),
+			dims = JMVC.screen.getViewportSize(),
 			Ww = dims.width,
 			Wh = dims.height,
 			that = this;

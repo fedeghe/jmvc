@@ -1,14 +1,14 @@
 JMVC.require(
 	'core/lib/border/border',
 	'widget/snow/snow/snow',
-	'core/dim/dim'
+	'core/screen/screen'
 );
 JMVC.controllers.cubic = function () {
 	'use strict';
 	this.action_index = function () {
 		JMVC.events.loadify(500);
 		
-		JMVC.head.addstyle(
+		JMVC.head.addStyle(
 			JMVC.object.toCss({
 				body : {
 					'background-color' : '#222'

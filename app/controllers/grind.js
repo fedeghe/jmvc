@@ -23,7 +23,7 @@ JMVC.controllers.grind = function () {
 		JMVC.events.loadify(1000);
 		JMVC.require(
 			'core/lib/grind/grind',
-			'core/dim/dim',
+			'core/screen/screen',
 			'core/responsive/basic/basic'
 		);
 		JMVC.head.meta('generator', 'jmvc resident in your machine');
@@ -186,7 +186,9 @@ JMVC.controllers.grind = function () {
 					'clearer',
 					{
 						attrs : {'id' : 'prova6'},
-						style : {backgroundColor : 'magenta'}
+						style : {backgroundColor : 'magenta'},
+						html : 'magenta'
+						,cb : anotherGrind
 					},
 					{
 						target:'body',
@@ -216,6 +218,24 @@ JMVC.controllers.grind = function () {
 			});
 		}
 
+		function anotherGrind () {
+			var node = this,
+				promise = node.promise;
+				
+			JMVC.grind.render({
+				target : node,
+				content : [
+					{
+						html : 'hellooooooooo',
+						cb	: function () {console.debug('inner done');}
+					}
+				]
+			}, function () {
+				promise.done();
+			}, 'b960')
+
+		}
+
 		JMVC.getView('vacuum')
 			.set({
 				'style' : 'font-family:verdana;',
@@ -223,18 +243,14 @@ JMVC.controllers.grind = function () {
 			}).render(function () {
 				JMVC.css.style(JMVC.dom.body(), 'backgroundColor', '#444');
 				JMVC.grind.render(config, function (){
-					JMVC.debug('end');
+					JMVC.debug('end RENDER MAIN');
 				}, 'b960');
 			});
 	};
 
-
-
-
-
 	this.action_direct = function () {
 		JMVC.events.loadify(500);
-		JMVC.require('core/lib/grind/grind', 'core/dim/dim');
+		JMVC.require('core/lib/grind/grind', 'core/screen/screen');
 		JMVC.head.meta('generator', 'jmvc resident in your machine');
 
 		var config  = {
@@ -374,4 +390,5 @@ JMVC.controllers.grind = function () {
 			JMVC.grind.colorize();
 		});
 	};
+
 };

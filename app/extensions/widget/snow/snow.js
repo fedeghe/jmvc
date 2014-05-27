@@ -1,4 +1,10 @@
-JMVC.require('core/dim/dim');
+/*
+
+JMVC.require('widget/snow/snow')
+JMVC.snow.jSnow(document.body, {str:'M@7730', mode:'rot'});
+
+*/
+JMVC.require('core/screen/screen');
 
 JMVC.extend('snow', {
 
@@ -18,14 +24,12 @@ JMVC.extend('snow', {
 			color = options.color || 'white',
 
 			body_dim = target == "body" ? 
-					JMVC.dim.getViewportSize()
+					JMVC.screen.getViewportSize()
 					:
 					new Array(JMVC.num.getNum(JMVC.css.width(target)), JMVC.num.getNum(JMVC.css.height(target))),
 			
-			
-
 			x = false,
-			speeds = [1,2,3,4,5,20,21,22,23],
+			speeds = [ 5, 20, 21, 22, 23],
 			sizes = [2,20],
 			phases = [20,40],
 			amplitudes = [10,20],
@@ -124,12 +128,12 @@ JMVC.extend('snow', {
 				this.stylize = function () {
 					JMVC.css.style(that.el, {
 						color : color,
-						'font-size' : opts.size + 'px',
+						fontSize : opts.size + 'px',
 						position : 'absolute',
 						opacity : opts.opacity,
 						top : '1px',
 						left : opts.position + 'px',
-						'z-index' : 500
+						zIndex : 500
 					})
 					JMVC.dom.html(that.el, rotation? rot_flakes[JMVC.util.rand(0, rot_flakes.length - 1)] : snowflake);
 				};
@@ -165,11 +169,8 @@ JMVC.extend('snow', {
 
 						if (rotation || rot_string) {
 							opts.rot=(opts.rot+opts.rot_incr*opts.rot_fact)%360;
-							JMVC.css.style(f, {
-								'-webkit-transform': 'rotate(' + opts.rot + 'deg)',
-								'-moz-transform':'rotate(' + opts.rot + 'deg)',
-								'-o-transform':'rotate(' + opts.rot + 'deg)'
-							});
+
+							JMVC.css.rotate(f, opts.rot);
 						}
 						move(f, p, y + opts.speed );
 						t = window.setTimeout( function () {that.animate(); }, 40 );
