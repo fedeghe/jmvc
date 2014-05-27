@@ -1,7 +1,7 @@
 JMVC.controllers.tabs = function () {
 	'use strict';
 
-	this.action_one = this.index = function () {
+	this.action_index = this.index = function () {
 		JMVC.require(
 			'core/responsive/basic/basic',
 			'widget/tabs/tabs',
@@ -10,8 +10,8 @@ JMVC.controllers.tabs = function () {
 		);
 
 		var index = JMVC.getView('home/index'),
-			tab = new JMVC.tabs.tab('v'),
-			tab2 = new JMVC.tabs.tab('v'),
+			tab = new JMVC.tabs.tab('o'),
+			tab2 = new JMVC.tabs.tab('o'),
 			ids;
 
 		JMVC.lang('jp', 'en');
@@ -19,15 +19,14 @@ JMVC.controllers.tabs = function () {
 		JMVC.responsive.onChange(
 			function (w) {
 				if (w < 800) {
-					//JMVC.dom.addClass(JMVC.WD.body, 'mini');
-					JMVC.responsive.allow('mobi');
+					JMVC.dom.addClass(JMVC.WD.body, 'mini');
+					//JMVC.responsive.allow('resp_mobi');
 				} else {
-					//JMVC.dom.removeClass(JMVC.WD.body, 'mini');
-					JMVC.responsive.allow('dskt');
+					JMVC.dom.removeClass(JMVC.WD.body, 'mini');
+					//JMVC.responsive.allow('resp_dskt');
 				}
 			}
 		);
-		
 
 		index.setFromUrl('i_say', 'No one');
 		//
