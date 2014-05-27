@@ -1,1 +1,6 @@
-_Editor_ instances a _panelManager_
+new Editor (node)
+    init
+        
+    render
+
+    bind

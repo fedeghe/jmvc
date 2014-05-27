@@ -2,6 +2,8 @@ JMVC.extend('canvas.editortools.neighbour_points', {
 
     use : function (instance) {
 
+        console.debug('Using neighbour_points')
+
         var self = this,
             el = instance.cnv,
             ctx = instance.ctx,
@@ -12,12 +14,15 @@ JMVC.extend('canvas.editortools.neighbour_points', {
 
         ctx.lineWidth = 1;
         ctx.lineJoin = ctx.lineCap = 'round';
-        ctx.strokeStyle = JMVC.string.replaceall('hsla({h}, {s}%, {l}%, {a})',{
+        ctx.strokeStyle = JMVC.string.replaceAll('hsla({h}, {s}%, {l}%, {a})',{
             h : self.options.color.hueZero,
             s : self.options.color.satZero * 100,
             l : self.options.color.lumZero * 100,
             a : self.options.color.alpZero
         }, '{', '}');
+        
+        // save it back
+        self.options.color.value = ctx.strokeStyle;
         
         var isDrawing,
             points = [ ];
@@ -65,7 +70,7 @@ JMVC.extend('canvas.editortools.neighbour_points', {
 
     options : {
         distance : {
-            value : 1000,
+            value : 4000,
             name : 'distance',
             type : 'int',
             min : 0,
@@ -77,7 +82,7 @@ JMVC.extend('canvas.editortools.neighbour_points', {
             hueZero : 1,
             satZero : 1,
             lumZero : 0,
-            alpZero : 0.05,
+            alpZero : 0.1,
             name : 'color',
             type : 'color'
         }

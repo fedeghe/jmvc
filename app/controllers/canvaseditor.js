@@ -19,17 +19,17 @@ JMVC.controllers.canvaseditor = function () {
 
         JMVC.require(
             editors[version],
-            'core/screen/screen',
             'core/lib/image/image'
         );
 
         JMVC.events.loadify(1000);
-        JMVC.head.title('Canvas pure editor');
+        JMVC.head.title('Canvas editor');
         //
         // a minimal wrapper view
         JMVC.getView('vacuum')
-            //
+
             // set some style and the id
+            // 
             .set({
                 style : JMVC.object.toStr({
                     'font-family' : 'verdana',
@@ -37,24 +37,25 @@ JMVC.controllers.canvaseditor = function () {
                     border : '0px',
                     padding : '0px',
                     position : 'relative',
-                    overflow : 'hidden'
+                    overflow : 'hidden',
+                    top : '0px'
                 }),
                 id : editorContainerId
             })
-            //
+
             // render
+            // 
             .render(function () {
-                //
-                // now it`s time to get viewport size
-                screen_size = JMVC.screen.getViewportSize();
-                //
+
                 // create initialize and start the editor
+                // 
                 new JMVC.canvas.Editor({
-                    node : JMVC.dom.find('#' + editorContainerId),
-                    width : screen_size[0],
-                    height : screen_size[1] - 1
-                }).init().render().bind();
+                    node : JMVC.dom.find('#' + editorContainerId)
+                    //,width: 300
+                    //,height: 400
+                });
                 
             });
+        //window.setTimeout(function() {JMVC.screen.launchFullscreen();}, 5000);
     };
 };

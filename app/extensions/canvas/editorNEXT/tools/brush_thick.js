@@ -8,7 +8,7 @@ JMVC.extend('canvas.editortools.brush_thick', {
 
         ctx.lineWidth = self.options.linewidth.value;
 
-        ctx.strokeStyle = JMVC.string.replaceall('hsla({h}, {s}%, {l}%, {a})',{
+        ctx.strokeStyle = JMVC.string.replaceAll('hsla({h}, {s}%, {l}%, {a})',{
             h : self.options.color.hueZero,
             s : self.options.color.satZero * 100,
             l : self.options.color.lumZero * 100,

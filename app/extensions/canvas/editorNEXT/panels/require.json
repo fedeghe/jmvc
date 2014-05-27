@@ -1,12 +1,11 @@
 {
-    "require" : {
-        "toolManager" : "toolManager",
-        "undoredoManager" : "undoredoManager",
-        "layerManager" : "layerManager",
-        "filterManager" : "filterManager",
-        "exportManager" : "exportManager",
-        "settingsManager" : "settingsManager",
-        "infoManager" : "infoManager",
-        "selectionManager" : "selectionManager"
-    }
+    "toolManager" : "toolManager",
+    "undoredoManager" : "undoredoManager",
+    "layerManager" : "layerManager",
+    "filterManager" : "filterManager",
+    "exportManager" : "exportManager",
+    "settingsManager" : "settingsManager",
+    "fullscreenManager" : "fullscreenManager",
+    "infoManager" : "infoManager",
+    "selectionManager" : "selectionManager"
 }

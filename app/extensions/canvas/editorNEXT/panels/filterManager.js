@@ -8,23 +8,24 @@ JMVC.canvas.Editor.getFilterManager = function (instance) {
         getFilter = function () {
             var layer = instance.panelManager.getLayerManager().getCurrent(),
                 flt = JMVC.image.createFilter(layer.cnv);
+            
             flt.setBeforeFilter(function () {
                 JMVC.canvas.Editor.Spinner.show();
             });
+
             flt.setAfterFilter(function () {
                 JMVC.canvas.Editor.Spinner.hide();
             });
+
             return flt;
         },
         filter,
         filters,
-        list;
+        list = false;
 
     return {
         //
-        //
         panel : panel,
-        //
         //
         init : function () {
             panel.html('filters');
@@ -51,7 +52,7 @@ JMVC.canvas.Editor.getFilterManager = function (instance) {
         //
         // 
         render : function () {
-            JMVC.dom.append(this.panel.getInnerNode(), list);
+            !!list && JMVC.dom.append(this.panel.getInnerNode(), list);
         }
     };
 };

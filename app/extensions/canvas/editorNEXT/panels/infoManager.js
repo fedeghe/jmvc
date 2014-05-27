@@ -5,7 +5,13 @@ JMVC.canvas.Editor.getInfoManager = function (instance) {
 
     return {
         init : function () {
-            panel.html('made with love');
+            JMVC.core.widgzard.render({
+                target : panel.inner,
+                content : [{
+                    tag : 'strong',
+                    html:'hello'
+                }]
+            });
         },
         panel : panel
     };

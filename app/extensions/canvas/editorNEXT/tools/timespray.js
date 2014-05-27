@@ -11,7 +11,7 @@ JMVC.extend('canvas.editortools.timespray', {
         el.onmousedown = el.onmousemove = el.onmouseup = null;
 
 
-        ctx.fillStyle =  JMVC.string.replaceall('hsla({h}, {s}%, {l}%, {a})',{
+        ctx.fillStyle =  JMVC.string.replaceAll('hsla({h}, {s}%, {l}%, {a})',{
             h : self.options.color.hueZero,
             s : self.options.color.satZero * 100,
             l : self.options.color.lumZero * 100,

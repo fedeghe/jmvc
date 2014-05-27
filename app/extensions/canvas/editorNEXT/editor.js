@@ -1,8 +1,13 @@
+// type : CONSTRUCTOR
+// 
 JMVC.nsMake('JMVC.canvas');
+JMVC.nsMake('JMVC.canvas.Editor.fields');
 
 JMVC.require(
     'core/fx/fx',
-    'core/color/color'
+    'core/color/color',
+    'core/screen/screen',
+    'core/lib/widgzard/widgzard'
 );
 //
 // init a channel for editor level
@@ -14,16 +19,20 @@ JMVC.Channel('canvaseditor');
  */
 JMVC.canvas.Editor = function (options) {
     // reference for callbacks
-    var self = this;
+    var self = this,
+        screenSize;
 
     /**
      * check if a node is passed as options, it is necessay
-     * too see where to rendere the editor
+     * too see where to render the editor
      */
     if (!('node' in options)) {
         throw new Error('A node is needed to create a Editor in it');
         return false;
     }
+
+    // now it`s time to get viewport size
+    screenSize = JMVC.screen.getViewportSize();
 
     /**
      * Bas path for the editor
@@ -47,13 +56,13 @@ JMVC.canvas.Editor = function (options) {
      * Width for the editor, in px
      * @type {Integer}
      */
-    this.width = options.width || 200;
+    this.width = options.width || screenSize.width;
 
     /**
      * Height for the editor
      * @type {Integer}
      */
-    this.height = options.height || 200;
+    this.height = options.height || screenSize.height - 1;
 
     /**
      * every editor has a panelManager
@@ -67,57 +76,51 @@ JMVC.canvas.Editor = function (options) {
     JMVC.io.getJson(this.basepath + 'config.json', function (json) {
         self.config = json;
     });
-};
-/**
- * Editor prototype definition
- * @type {Object}
- */
-JMVC.canvas.Editor.prototype = {
 
-    /**
-     * Init function 
-     * @return {[type]} [description]
-     */
-    init: function () {
-        // Basic editor style
-        // 
-        JMVC.head.addstyle(this.basepath + 'css/editor.css', true);
-        JMVC.head.addstyle(this.basepath + 'css/tooltip.css', true);
-        JMVC.head.addstyle(this.basepath + 'css/' + this.config.sprite, true);  
-        
-        // create and initialize the panelMAnager
-        // 
-        this.panelManager = JMVC.canvas.Editor.getPanelManager(this);
-        this.panelManager.init();
 
+    // on window resize tell the layermanager to resiza all layers
+    // 
+    JMVC.events.bind(JMVC.W, 'resize', function () {
+        self.panelManager.getLayerManager().resize();
+    });
+
+
+
+    // get all the helpers:
+    // PanelManager
+    // ToolOptionsManager
+    // Panel
+    // Inputs: colorPicker
+    // Inputs: integerInput
+    // Inputs: floatInput
+    //
+    // AND then load styles
+    JMVC.require('canvas/editorNEXT/helpers/', function () {
         // disable right click
         //
         JMVC.events.disableRightClick();
+        console.log('loaded')
 
-        // chain
+        // Basic editor style
         // 
-        return this;
-    },
-    render: function () {
-        // render the panel 
+        JMVC.head.addStyle(self.basepath + 'css/editor.css', true);
+        JMVC.head.addStyle(self.basepath + 'css/tooltip.css', true);
+        JMVC.head.addStyle(self.basepath + 'css/' + self.config.sprite, true);  
+        
+        // create and initialize the panelMAnager
         // 
-        this.panelManager.render();
+        self.panelManager = JMVC.canvas.Editor.getPanelManager(self);
 
-        // chain
-        // 
-        return this;
-    },
-    bind : function () {
-        // bind the panel
-        // 
-        this.panelManager.bind();
-
-        // chain
-        return this;
-    }
+        // initialize, render and bind the panel manager
+        //
+        self.panelManager
+            .init()
+            .render()
+            .bind();
+    });
 };
 //
 // load almost anything else (check canvas/editorNEW/helpers/require.json)
-JMVC.require('canvas/editorNEXT/helpers/');
+
 //
-JMVC.nsMake('JMVC.canvas.Editor.fields');
+

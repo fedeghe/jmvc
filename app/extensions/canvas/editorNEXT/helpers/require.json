@@ -1,8 +1,6 @@
 {
-    "require" : {
-        "panelManager" : "panelManager",
-        "toolOptionsManager" : "toolOptionsManager",
-        "panel" : "Panel",
-        "inputs" : "inputs/"
-    }
+    "panelManager" : "panelManager",
+    "toolOptionsManager" : "toolOptionsManager",
+    "panel" : "Panel",
+    "inputs" : "inputs/"
 }

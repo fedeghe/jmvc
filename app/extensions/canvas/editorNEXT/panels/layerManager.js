@@ -1,3 +1,5 @@
+JMVC.require('core/screen/screen');
+
 JMVC.canvas.Editor.getLayerManager = function (instance) {
     var self = instance,
         panel = new JMVC.canvas.Editor.Panel(),
@@ -24,7 +26,8 @@ JMVC.canvas.Editor.getLayerManager = function (instance) {
                 l = {
                     id : JMVC.util.uniqueid,
                     cnv : cnv,
-                    ctx : ctx
+                    ctx : ctx,
+                    opacity : 1
                 };
 
             this.clean(l);
@@ -36,7 +39,7 @@ JMVC.canvas.Editor.getLayerManager = function (instance) {
             l.ctx.width = l.ctx.width;
             l.ctx.fillStyle = 'hsla(0,100%, 100%, 100)';
             l.ctx.fillRect(0, 0, self.width, self.height);
-            l.ctx.restore();
+            window.setTimeout(function () {l.ctx.restore();}, 10);
         },
         remove : function (index) {
             if (!(index < layers.length)) {
@@ -44,12 +47,40 @@ JMVC.canvas.Editor.getLayerManager = function (instance) {
             }
             [].splice.call(layers, index, 1);
         },
+        resize : function () {
+
+            var s_size = JMVC.screen.getViewportSize();
+            self.width = s_size.width;
+            self.height = s_size.height - 1;
+
+
+
+            var tmpCnv,
+                tmpCtx;
+
+            for (var i = 0, l = layers.length; i < l; i++) {
+                tmpCnv = document.createElement('canvas');
+                tmpCtx = tmpCnv.getContext('2d');
+                tmpCnv.width = layers[i].cnv.width;
+                tmpCnv.height = layers[i].cnv.height;
+                tmpCtx.drawImage(layers[i].cnv, 0, 0);
+
+
+                layers[i].cnv.width = self.width;
+                layers[i].cnv.height = self.height;  
+                
+                layers[i].ctx.drawImage(tmpCnv, 0, 0);
+            }
+        },
+
         activate : function (index) {
             activeLayerIndex = index || 0;
             activeLayer = layers[activeLayerIndex];
+
             self.node.appendChild(activeLayer.cnv);
             JMVC.events.bind(activeLayer.cnv, "mousemove", function (e) { e.preventDefault(); });
         },
+        
         createThumb : function (index, width, height) {
             var canvasOrig = layers[index],
                 dataurl = canvasOrig.toDataURL("image/png"),

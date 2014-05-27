@@ -17,7 +17,8 @@ canvas {
     background-color:#000;
     /*background-color: hsl(0, 100%, 50%);*/
     position:absolute;
-    top:0px;
+    /*top:-25px;*/
+    top : 0px;
     left:0px;
     color:white;
     font-size:10px;
