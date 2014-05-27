@@ -10,16 +10,24 @@ _.io = {
      * @return {object} the xhr
      */
     getxhr : function () {
-        return ('XMLHttpRequest' in W) ?
-            function () {JMVC.io.xhrcount += 1; return new W.XMLHttpRequest(); }
-            :
-            ('ActiveXObject' in W) ?
-            function () {JMVC.io.xhrcount += 1; return new W.ActiveXObject('Microsoft.XMLHTTP'); }
-            :
-            function () {
-                JMVC.debug('No way to initialize XHR');       
-            };
-    }(),
+        JMVC.io.xhrcount += 1;
+        var xhr,
+            IEfuckIds = ['Msxml2.XMLHTTP', 'Msxml3.XMLHTTP', 'Microsoft.XMLHTTP'],
+            len = IEfuckIds.length,
+            i = 0;
+        try {
+            xhr = new W.XMLHttpRequest();
+        } catch (e1) {
+            for (null; i < len; i += 1) {
+                try {
+                    xhr = new W.ActiveXObject(IEfuckIds[i]);
+                } catch (e2) {continue; }
+            }
+            !xhr && JMVC.debug('No way to initialize XHR');
+        }
+        JMVC.gc(IEfuckIds, i, len);
+        return xhr;
+    },
     /**
      * [ description]
      * @param  {[type]} uri     [description]
@@ -34,15 +42,7 @@ _.io = {
             cb_opened = (options && options.opened) || function () {},
             cb_loading = (options && options.loading) || function () {},
             cb_error = (options && options.error) || function () {},
-            cb_abort = (options && options.abort) || function () {return false; },
-
-            cb_loadstart = (options && options.loadstart) || function () {},
-            // cb_progress = (options && options.progress) || function () {},
-            // cb_abort = (options && options.abort) || function () {},
-            // cb_error = (options && options.error) || function () {},
-            // cb_load = (options && options.load) || function () {},
-            cb_timeout = (options && options.timeout) || function () {},
-            // cb_loadend = (options && options.loadend) || function () {},
+            cb_abort = (options && options.abort) || function () {},
             
             sync = options && options.sync,
             data = (options && options.data) || false,
@@ -69,27 +69,21 @@ _.io = {
                 return false;
             }
             state = xhr.readyState;
-            //if (xhr.readyState === 'complete' || (xhr.readyState === 4 && xhr.status === 200)) {
-            if (xhr.readyState === 4){
-                if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
-                    complete = true;
-                    if (cback) {
-                        res = xhr[targetType];
-                        (function () {cback(res); })(res);
-                    }
-                    ret = xhr[targetType];
-                    //IE leak ?????
-                    W.setTimeout(function () {
-                        JMVC.io.xhrcount -= 1;
-                        //JMVC.purge(xhr);
-                    }, 50);
-                    return ret;
+            if (xhr.readyState === 'complete' || (xhr.readyState === 4 && xhr.status === 200)) {
 
-                } else {
-                    cb_error(xhr);
-                    return false;
+                complete = true;
+                if (cback) {
+                    res = xhr[targetType];
+                    (function () {cback(res); })(res);
                 }
+                ret = xhr[targetType];
+                //IE leak ?????
+                W.setTimeout(function () {
+                    JMVC.io.xhrcount -= 1;
+                    //JMVC.purge(xhr);
+                }, 50);
 
+                return ret;
             } else if (xhr.readyState === 3) {
                 //loading data
                 cb_loading(xhr);
@@ -97,8 +91,6 @@ _.io = {
                 //headers received
                 cb_opened(xhr);
             } else if (xhr.readyState === 1) {
-                cb_loadstart(xhr);
-
                 switch (method) {
                 case 'POST':
                     try {
@@ -123,10 +115,23 @@ _.io = {
                     xhr.send(null);
                     break;
                 }
+/*
+                if (xhr
+                    && 'status' in xhr
+                    && xhr.status == 404
+                ) {
+                    console.debug(xhr)
+                    cb_error(xhr);
+                    //xhr.abort();
+                    return false;
+                }
+*/
             }
+            /*
+            
+            */
             return true;
         };
-
         xhr.onerror = function () {
             cb_error && cb_error.apply(null, arguments);
         };
@@ -140,11 +145,12 @@ _.io = {
         xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri, sync);
         
         
+        
+        
         //thread abortion
         //
         W.setTimeout(function () {
             if (!complete) {
-                cb_timeout(xhr);
                 complete = true;
                 xhr.abort();
             }
@@ -228,7 +234,7 @@ JMVC.io = {
      * @param  {[type]} data  [description]
      * @return {[type]}       [description]
      */
-    getJson : function (uri, cback, data, err) {
+    getJson : function (uri, cback, data) {
         return _.io.ajcall(uri, {
             type : 'json',
             method: 'GET',
@@ -237,7 +243,6 @@ JMVC.io = {
                 var j = (W.JSON && W.JSON.parse) ? JSON.parse(r) : JMVC.jeval('(' + r + ')');
                 cback(j);
             },
-            error : err || function () {},
             data : data
         });
     },
@@ -253,7 +258,6 @@ JMVC.io = {
             method : 'GET',
             sync : false,
             type : 'xml',
-            cache : false,
             error : err || function () {},
             cback : cback || function () {}
         });

@@ -1,6 +1,6 @@
 <function>
     <signature name="lang">JMVC.lang(String name, ...)</signature>
-    <description>As far as `core/i18n/i18n` is loaded with JMVC.require an `onBeforeRender` hook queues a call to the JMVC.parselang which will look and replace lang placeholders. The JMVC.lang function add one or more language file to the set of files that can be used.</description>
+    <description>As far as `core/i18n/i18n` is loaded with JMVC.require an `onBeforeRender` hook queues a call to the JMVC.parseLang which will look and replace lang placeholders. The JMVC.lang function add one or more language file to the set of files that can be used.</description>
     <params>
         <param name="*name">the name of the lang file</param>
     </params>

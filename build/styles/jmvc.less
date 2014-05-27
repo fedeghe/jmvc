@@ -1,16 +1,17 @@
 $$reset.css$$
+
 /*
------------------
-*/
+ * LESS FUNCTIONS
+ *-------------*/
 .generate-opa(@n, @value: 1) when (@value =< @n) {
 	.opa@{value} {
 		@opaPerc : @value * 10;
 		@opaFloat : @value / 10;
-	  	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=@{opaPerc})";/* IE 8 */
-		filter: alpha(opacity=@opaPerc);/* IE 5-7 */
-		-moz-opacity: @opaFloat;/* Netscape */
-		-khtml-opacity: @opaFloat;/* Safari 1.x */
-		opacity: @opaFloat;/* Good browsers */
+
+		zoom: 1;
+		filter: alpha(opacity=@opaPerc);
+		opacity: @opaFloat;
+
 	}
 	.generate-opa(@n, (@value + 1));
 }
@@ -28,11 +29,28 @@ $$reset.css$$
 	}
 	.generate-pad(@n, (@value + 5));
 }
-/*
- * //
- * 
+
+
+.generate-g(@n, @value: 1) when ((@value * 60) =< @n) {
+    .g@{value} {
+        width:60px * @value;
+    }
+    .generate-g(@n, (@value + 1));
+}
+.generate-p(@n, @value: 5) when ((@value) =< @n) {
+    .p@{value} {
+        width:1% * @value;
+    }
+    .generate-p(@n, (@value + 5));
+}
+/*-------------------
+ * LESS FUNCTIONS END
  */
-.clearer{
+
+/*
+ * CLEARER
+ */
+.clearer, .clearfix{
 	clear: both;
 	display: block;
 	zoom: 1;
@@ -45,6 +63,10 @@ $$reset.css$$
 	content: ".";
 }
 
+body{
+	max-width:100% !important;
+}
+
 strong, b{
 	font-weight:bold !important;
 }
@@ -53,15 +75,9 @@ i{
 	font-style: italic !important;
 }
 
-body{
-	max-width:100% !important;
-}
 
-@media screen {
-	img {	
-		/*width: auto !important; /* for ie 8 */
-	}
-}
+
+
 
 img {
 	max-width: 100% !important;
@@ -79,12 +95,15 @@ sub{vertical-align: sub;}
 .floatr{float:right;}
 
 h1,h2,h3,h4,h5,h6{font-weight:bold;}
+
+/*
 h1{font-size:24px; line-height:48px; padding:24px 0px 12px;}
 h2{font-size:18px; line-height:36px; padding:18px 0px 9px;}
 h3{font-size:14px; line-height:28px; padding:14px 0px 7px;}
 h4{font-size:12px; line-height:24px; padding:12px 0px 6px;}
 h5{font-size:10px; line-height:20px; padding:10px 0px 5px;}
 h6{font-size:8px; line-height:16px; padding:8px 0px 4px;}
+*/
 
 *, *:before, *:after {
 	-moz-box-sizing: border-box;
@@ -96,6 +115,96 @@ h6{font-size:8px; line-height:16px; padding:8px 0px 4px;}
 .generate-opa(9);
 .generate-round(14);
 .generate-pad(20);
+.generate-g(2520);
+.generate-p(100);
+
+
+
+
+*.resp_mobi {
+    display:none;
+}
+*.resp_dskt {
+    display:block;
+} 
+
+@media screen {
+	img {	
+		//	width: auto !important; /* for ie 8 */
+	}
+}
+
+@media (max-width: 720px) {
+    body.resp {
+        width :90%;
+        margin: 0 auto;
+        padding:0px 5% !important;
+        padding-top : inherit;
+        padding-bottom : inherit;
+    }
+
+    *.resp_mobi {
+        display:block!important;
+    }
+    *.resp_dskt {
+        display:none!important;
+    }  
+    
+    div:not(.respfixed){
+        clear:both;
+        width:100% !important;
+        margin:0 auto;
+    }
+}
+@media (min-width: 720px) {
+    body.resp {
+        width :710px !important;
+        padding:0px 5px !important;
+    }
+}
+@media (min-width: 960px) {
+    body.resp {
+        width :950px !important;
+        padding:0px 5px !important;
+    }
+}
+@media (min-width: 1200px) {
+    body.resp {
+        width :1190px !important;
+        padding:0px 5px !important;
+    }
+}
+@media (min-width: 1560px) {
+    body.resp {
+        width :1550px !important;
+        padding:0px 5px !important;
+    }
+}
+@media (min-width: 1920px) {
+    body.resp {
+        width :1910px !important;
+        padding:0px 5px !important;
+    }
+}
+@media (min-width: 2520px) {
+    body.resp {
+        width :2510px !important;
+        padding:0px 5px !important;
+    }
+}
+
+/* fullscreen */
+*:-webkit-full-screen  { width: 100% }
+*:-moz-full-screen     { width: 100% }
+*:-ms-full-screen      { width: 100% }
+*:-o-full-screen       { width: 100% }
+*:full-screen          { width: 100% }
+
+*:-webkit-full-screen img { width: 100% }
+*:-moz-full-screen    img { width: 100% }
+*:-ms-full-screen     img { width: 100% }
+*:-o-full-screen      img { width: 100% }
+*:full-screen         img { width: 100% }
 
 .round-side-vars(@side) when(@side = "top"){
 	@sideA1 : bottomleft;

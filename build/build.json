@@ -1,6 +1,8 @@
 {
     "jmvc.js" :  "../app",
     "documentation/documentation.xml" : "../media",
+
+    "../app/extensions/games/wcave/build/wcave.js" : "../app/extensions/games/wcave/",
     
     "styles/jmvc.less" : "../media/css/core",
     "styles/jmvc-day.less" : "../media/css/core",

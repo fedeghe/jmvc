@@ -1,11 +1,11 @@
 <string>
     $$src/string/code2str.xml$$
-    $$src/string/ltrim.xml$$
     $$src/string/multireplace.xml$$
     $$src/string/padme.xml$$
-    $$src/string/replaceall.xml$$
-    $$src/string/rtrim.xml$$
+    $$src/string/replaceAll.xml$$
     $$src/string/str2code.xml$$
     $$src/string/repeat.xml$$
     $$src/string/trim.xml$$
+    $$src/string/triml.xml$$
+    $$src/string/trimr.xml$$
 </string>

@@ -13,7 +13,7 @@ _.dom = {
 
 // public section
 JMVC.dom = {
-    /**
+    /** 
      * [ description]
      * @param  {[type]} where [description]
      * @param  {[type]} tag   [description]
@@ -26,6 +26,7 @@ JMVC.dom = {
         this.append(where, n);
         return n;
     },
+
     /**
      * [ description]
      * @param  {[type]} elem        [description]
@@ -45,6 +46,7 @@ JMVC.dom = {
             elem.className = cls.join(' ');
         }
     },
+
     /**
      * [ description]
      * @param  {[type]} where [description]
@@ -61,6 +63,7 @@ JMVC.dom = {
         }
         return where;
     },
+
     /**
      * [ description]
      * @param  {[type]} elem  [description]
@@ -84,7 +87,7 @@ JMVC.dom = {
             i = 0,
             result,
             is_obj = false;
-
+ 
         is_obj = JMVC.util.isObject(name);
         
         if (is_obj && elem.setAttribute) {
@@ -122,6 +125,7 @@ JMVC.dom = {
         }
         return elem;
     },
+
     /**
      * [ description]
      * @return {[type]} [description]
@@ -129,6 +133,7 @@ JMVC.dom = {
     body : function () {
         return WD.body;
     },
+
     /**
      * [childs description]
      * @param  {[type]} node [description]
@@ -137,6 +142,7 @@ JMVC.dom = {
     childs : function (node) {
         return node.childNodes;
     },
+
     /**
      * returns a crearer node
      * @return {[type]} [description]
@@ -144,6 +150,7 @@ JMVC.dom = {
     clearer : function () {
         return this.create('br', {'class': 'clearer'});
     },
+
     /**
      * [ description]
      * @param  {[type]} n    [description]
@@ -153,6 +160,7 @@ JMVC.dom = {
     clone : function (n, deep) {
         return n.cloneNode(!!deep);
     },
+
     /**
      * [ description]
      * @param  {[type]} tag   [description]
@@ -178,6 +186,7 @@ JMVC.dom = {
         }
         return node;
     },
+
     /**
      * [ description]
      * @param  {[type]} text [description]
@@ -186,6 +195,7 @@ JMVC.dom = {
     createText : function (text) {
         return JMVC.WD.createTextNode(text);
     },
+
     /**
      * [ description]
      * @param  {[type]} ns   [description]
@@ -195,6 +205,7 @@ JMVC.dom = {
     createNS : function (ns, name) {
         return JMVC.WD.createElementNS(ns, name);
     },
+
     /**
      * [ description]
      * @param  {[type]} el [description]
@@ -203,6 +214,7 @@ JMVC.dom = {
     empty : function (el) {
         el.innerHTML = '';
     },
+
     /**
      * [ description]
      * @param  {[type]} a [description]
@@ -264,6 +276,7 @@ JMVC.dom = {
         ret = toArr ? JMVC.array.coll2array(ret) : ret;
         return ret instanceof Array ?  (ret.length === 1 ? ret[0] :  ret) : ret;
     },
+
     /**
      * [ description]
      * @param  {[type]} ctx   [description]
@@ -281,6 +294,7 @@ JMVC.dom = {
         }
         return a;
     },
+
     /**
      * [ description]
      * @param  {[type]} attr  [description]
@@ -305,6 +319,7 @@ JMVC.dom = {
         }
         return ret;
     },
+
     /**
      * [firstAncestor description]
      * @param  {[type]} el      [description]
@@ -318,6 +333,7 @@ JMVC.dom = {
         while (el && el.tagName !== tagName.toUpperCase());
         return el;
     },
+
     /**
      * [getPosition description]
      * @param  {[type]} node [description]
@@ -338,6 +354,7 @@ JMVC.dom = {
         }
         return res;
     },
+
     /**
      * [ description]
      * @param  {[type]} el   [description]
@@ -347,6 +364,7 @@ JMVC.dom = {
     hasAttribute : function (el, name) {
         return el.getAttribute(name) !== null;
     },
+
     /**
      * [ description]
      * @param  {[type]} el        [description]
@@ -356,6 +374,7 @@ JMVC.dom = {
     hasClass : function (el, classname) {
         return el.className.match(new RegExp('(\\s|^)' + classname + '(\\s|$)'));
     },
+
     /**
      * [ description]
      * @param  {[type]} el   [description]
@@ -386,6 +405,7 @@ JMVC.dom = {
         JMVC.purge(el);
         return t.trim();
     },
+
     /**
      * [idize description]
      * @param  {[type]} el   [description]
@@ -403,6 +423,7 @@ JMVC.dom = {
         }
         return el[prop];
     },
+
     /**
      * [ description]
      * @param  {[type]} node          [description]
@@ -414,6 +435,7 @@ JMVC.dom = {
         p.insertBefore(node, referenceNode.nextSibling);
         return node;
     },
+
     /**
      * [ description]
      * @param  {[type]} node          [description]
@@ -425,6 +447,7 @@ JMVC.dom = {
         p.insertBefore(node, referenceNode);
         return node;
     },
+
     //Returns true if it is a DOM element    
     /**
      * [ description]
@@ -441,6 +464,7 @@ JMVC.dom = {
                 typeof o.nodeName === 'string'
         );
     },
+
     /**
      * [isNodeList description]
      * @param  {[type]}  el [description]
@@ -451,6 +475,7 @@ JMVC.dom = {
         && (typeof el.length == 'number')
         && (typeof el.item == 'function');
     },
+
     //thx to http://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
     //for the following 2 mthds
     //Returns true if it is a DOM node
@@ -466,9 +491,11 @@ JMVC.dom = {
             o && typeof o === 'object' && typeof o.nodeType === 'number' && typeof o.nodeName === 'string'
         );
     },
+
     nodeFromId : function (id) {
         return _.dom.nodeidMap[id];
     },
+
     /**
      * [ description]
      * @param  {[type]} node [description]
@@ -480,6 +507,7 @@ JMVC.dom = {
             'DOCUMENT_NODE', 'DOCUMENT_TYPE_NODE', 'DOCUMENT_FRAGMENT_NODE', 'NOTATION_NODE'
         ][node.nodeType - 1] || undefined;
     },
+
     /**
      * [ description]
      * @param  {[type]} node  [description]
@@ -509,6 +537,7 @@ JMVC.dom = {
         //
         return (num < len) ? tagChilds[num] : false;
     },
+
     /**
      * [ description]
      * @param  {[type]} src [description]
@@ -520,6 +549,7 @@ JMVC.dom = {
         i.src = src;
         return i;
     },
+
     /**
      * [ description]
      * @param  {[type]} node [description]
@@ -529,6 +559,7 @@ JMVC.dom = {
         return (node.parentNode && node.parentNode.nodeType !== 11) ?
             node.parentNode : false;
     },
+
     /**
      * [ description]
      * @param  {[type]} where [description]
@@ -540,6 +571,7 @@ JMVC.dom = {
         where.insertBefore(what, c);
         return what;
     },
+
     /**
      * [ description]
      * @param  {[type]} el [description]
@@ -565,6 +597,7 @@ JMVC.dom = {
         parent.removeChild(el);
         return parent;
     },
+
     /**
      * [ description]
      * @param  {[type]} el     [description]
@@ -576,6 +609,7 @@ JMVC.dom = {
         el.removeAttribute(valore);
         return el;
     },
+
     /**
      * [ description]
      * @param  {[type]} el  [description]
@@ -601,12 +635,20 @@ JMVC.dom = {
         el.className = el.className.replace(reg, ' ');
         return this;
     },
+
+    /**
+     * [swap description]
+     * @param  {[type]} going  [description]
+     * @param  {[type]} coming [description]
+     * @return {[type]}        [description]
+     */
     swap : function (going, coming) {
         var display = coming.style.display;
         coming.style.display = 'none';
         this.insertAfter(coming, going);
         this.remove(going) && (coming.style.display = display);
     },
+
     /**
      * [ description]
      * @param  {[type]} el       [description]
@@ -621,6 +663,7 @@ JMVC.dom = {
         }
         return el;
     },
+
     /**
      * [toggleClass description]
      * @param  {[type]} el  [description]
@@ -630,6 +673,7 @@ JMVC.dom = {
     toggleClass : function (el, cls) {
         this[this.hasClass(el, cls) ? 'removeClass' : 'addClass'](el, cls);
     },
+
     /**
      * [ description]
      * @param  {[type]} el [description]
@@ -638,6 +682,7 @@ JMVC.dom = {
     val : function (el) {
         return el.value;
     },
+    
     /**
      * :D :D :D 
      * from http://stackoverflow.com/questions/6969604/recursion-down-dom-tree

@@ -59,12 +59,16 @@ JMVC.array = {
      * @source http://stackoverflow.com/questions/3115982/how-to-check-javascript-array-equals
      */
     compare : function (a, b, onlyPresence) {
-        if (a === b) return true;
-        if (a == null || b == null) return false;
-        if (a.length != b.length) return false;
+        if (a === b) {
+            return true;
+        }
+        if (a === null || b === null || a.length !== b.length) {
+            return false;
+        }
 
         // If you don't care about the order of the elements inside
         // the array, you should sort both arrays here.
+        // 
         if (typeof onlyPresence !== 'undefined') {
             a = a.sort();
             b = b.sort();
@@ -72,7 +76,6 @@ JMVC.array = {
         if (JSON && 'stringify' in JSON) {
             return JSON.stringify(a) === JSON.stringify(b);
         }
-
         for (var i = 0; i < a.length; ++i) {
             if (a[i] !== b[i]) return false;
         }
@@ -98,12 +101,11 @@ JMVC.array = {
      */
     find : function (arr, mvar) {
         //IE6,7,8 fail here
-        
         if ('indexOf' in arr) {
             return arr.indexOf(mvar);
         }
         var l = arr.length - 1;
-        while (arr[l] !== mvar) {l--; }
+        while (l >= 0 && arr[l] !== mvar) {l--; }
         return l;
     },
 
@@ -117,7 +119,6 @@ JMVC.array = {
         var res = [],
             sum = 0,
             tmp;
-
         while (true) {
             tmp = this.find(arr, mvar);
             // not found exit
@@ -166,36 +167,39 @@ JMVC.array = {
      * @param  {[type]} a [description]
      * @return {[type]}   [description]
      */
-    mean : function (a) {
-        return this.sum(a) / a.length;
-    },
+    mean : function (a) {return this.sum(a) / a.length; },
 
     /**
      * [min description]
      * @param  {[type]} a) {return      Math.min.apply(null, a [description]
      * @return {[type]}    [description]
      */
-    min : function (a) {
-        return Math.min.apply(null, a);
-    },
+    min : function (a) {return Math.min.apply(null, a); },
     
     /**
      * [mult description]
      * @param  {[type]} a [description]
      * @return {[type]}   [description]
      */
-    mult : function (a) {
-        return _.array.op(a, '*');
-    },
+    mult : function (a) {return _.array.op(a, '*'); },
 
     /**
      * [rand description]
      * @param  {[type]} a [description]
      * @return {[type]}   [description]
      */
-    rand : function (a) {
-        var m = Math;
-        return a[m.floor(m.random() * a.length)];
+    rand : function (a) {return a[Math.floor(Math.random() * a.length)]; },
+
+    /**
+     * [range description]
+     * @param  {[type]} min [description]
+     * @param  {[type]} max [description]
+     * @return {[type]}     [description]
+     */
+    range : function (min, max) {
+        var out = [];
+        while (min <= max) out.push(min++);
+        return out; 
     },
 
     /**
@@ -245,23 +249,6 @@ JMVC.array = {
      * @param  {[type]} a [description]
      * @return {[type]}   [description]
      */
-    unique2 : function (a) {
-        var r = [],
-            l = a.length,
-            i = 0, j;
-        for (i = 0; i < l; i++) {
-            for (j = i + 1; j < l; j++) 
-                if (a[i] == a[j]) j = ++i;
-            r.push(a[i]);
-        }
-        return r;
-    },
-
-    /*
-    [1,2,3,4,5,6,7,8,9]
-    i
-    j
-    */
     unique : function (a) {    
         var r = [],
             l = a.length,

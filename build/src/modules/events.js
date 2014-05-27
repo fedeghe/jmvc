@@ -401,6 +401,17 @@ JMVC.events = {
         });
     },
 
+    onEsc: function (cb, w) {
+        w = w || JMVC.W;
+
+        JMVC.events.bind(w.document, 'keyup', function (e) {
+            if (e.keyCode == 27) {
+                cb.call(w, e);
+            }
+        })
+        
+    },
+
     /**
      * [onRight description]
      * @param  {[type]} el [description]
