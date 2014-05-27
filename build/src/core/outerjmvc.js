@@ -175,11 +175,11 @@ $JMVC = {
                     //
                     function (xhr) {
                         alert([
-                            '# JMVC WARNING',
-                            '# The document',
-                            ('# /app/extensions/' + ext + '.xml').replace(/\//g, " / "),
-                            '# CANNOT be found!'
-                        ].join('\n'));
+                            '[ JMVC WARNING ]',
+                            'The document',
+                            ('/app/extensions/' + ext + '.xml').replace(/\//g, " / "),
+                            'CANNOT be found!'
+                        ].join('\n\n'));
                         xhr.abort();
                         return false;
                     }

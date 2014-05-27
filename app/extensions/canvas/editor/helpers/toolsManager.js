@@ -23,6 +23,7 @@ JMVC.canvas.Editor.getToolsManager = function (instance, tools) {
 
         render : function (dst) {
             
+            //default initial tool
             this.changeTool(JMVC.canvas.editortools.neighbour_points);
 
             var i, tmp,

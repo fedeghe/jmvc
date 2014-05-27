@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<doc>
+    <description>Extension to obtain pretty safe password</description>
+    <dependencies></dependencies>
+    <version>0.1</version>
+    <date>Mon May 26 2014 22:24:25 GMT+0200 (CEST)</date>
+    <hints>
+        <hint>Be wise</hint>
+    </hints>
+    <functions>
+        <function>
+            <signature name="JMVC.core.lib.pwd.generate">JMVC.core.lib.pwd.generate(Object options)</signature>
+            <description>Get a safe password</description>
+            <params>
+                <param name="*obj">an object that allows to specify which and how many characters are used to compose the passwords</param>
+            </params>
+            <returns>the brand new password</returns>
+            <sample>alert(JMVC.core.lib.pwd.generate({&#10;
+    alphaLower : 3, //default 0&#10;
+    alphaUpper : 5, //default 0&#10;
+    number : 10, //default 0&#10;
+    symbol:1 //default 0&#10;
+    size : 12 // default 8&#10;
+}));</sample>
+            <hints>
+                <hint>If no parameters are given, will be used lowercase and numbers with the same weight</hint>
+            </hints>
+            <status>complete</status>
+            <testlink>test_ext_core_lib_pwd_generate</testlink>
+            <code>alert(JMVC.core.lib.pwd.generate({alphaLower:3, alphaUpper:5, number:10, symbol:1size:12}));</code>
+        </function>
+    </functions>
+</doc>

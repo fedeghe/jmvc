@@ -6,10 +6,49 @@
         Purpose of the stylesheet follows.
 */
 div.jmvc_xdoc {
+    font-family:verdana, sans;
 	position : absolute;
-	background-color : gray;
+	background-color : #fff;
 	color : black;
-	font-size : 10px;
+    border: 1px solid #000;
+	font-size : 14px;
 	padding:10px;
 	z-index:200;
+    overflow : auto;
+    
+    -moz-box-shadow: 7px 5px 5px #555;
+    -webkit-box-shadow: 7px 5px 5px #555;
+    box-shadow: 7px 5px 5px #555;
 }
+
+div.jmvc_xdoc div.close{
+    position:absolute;
+    right:0px;
+    top:0px;
+    width : 0px;
+    height : 0px;
+    border-right:30px solid black;
+    border-bottom:30px solid white;
+    cursor:pointer;
+}
+div.jmvc_xdoc div.close .txt{
+    color:white;
+    position:relative;
+    right:-18px;        
+    top:0px;
+    font-size:13px;
+}
+
+div.jmvc_xdoc h1 {font-size : 32px; margin:.2em 0px;}
+div.jmvc_xdoc h2 {font-size : 26px; margin:.2em 0px;}
+div.jmvc_xdoc h3 {font-size : 20px; margin:.2em 0px;}
+div.jmvc_xdoc h4 {font-size : 14px; margin:.2em 0px;}
+div.jmvc_xdoc h5 {font-size : 10px; margin:.2em 0px;}
+div.jmvc_xdoc h6 {font-size : 6px; margin:.2em 0px;}
+div.jmvc_xdoc p {
+    padding:1em;
+    line-height: 1.2em;
+}
+
+
+

@@ -1,0 +1,26 @@
+body {
+    font-family: verdana, sans-serif;
+}
+.tongue{
+    border:1px solid black;
+    border-bottom:1px solid black;
+    padding:5px;
+    cursor:pointer;
+    margin-right:5px;
+    background-color:white;
+    top:1px;
+    position:relative;
+    background-color:#eee;
+    float:left;
+}
+.tongue.active {
+    border-bottom:none;
+    top:2px;
+    cursor:default;
+    background-color:#fff;
+}
+.tab {
+    background-color:#fff;   
+    border:1px solid black;
+    padding:5px;
+}

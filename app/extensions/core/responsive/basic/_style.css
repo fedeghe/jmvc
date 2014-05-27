@@ -1,4 +1,4 @@
-@media (max-width: 720px) {
+/*@media (max-width: 720px) {
     body.resp {
         width :95%;
         margin: 0 auto;
@@ -11,13 +11,6 @@
         margin:5px 0px !important;
     }
 }
-/*@media (min-width: 480px) {
-    body.resp {
-        width :480px !important;
-        padding:0px 5px !important;
-        font-size:2em;
-    }
-}*/
 @media (min-width: 720px) {
     body.resp {
         width :720px !important;
@@ -53,4 +46,4 @@
         width :2520px !important;
         padding:0px 5px !important;
     }
-}
+}*/

@@ -1,2 +1,33 @@
 > JMVC.get_model da un test_xxxx
 	sbaglia il path
+
+
+core/dim/dim e  core/screen/screen hann praticamente lo stesso scopo.... unficarle!
+
+
+
+
+extensions
+|
++-- core
+|   |
+|   +-- extra
+|   |   |
+|   |   +-- widget
+|   |   |
+|   |   +-- vendors
+|   |  
+|   +-- lib
+|   |
+|   +-- obj
+|
++-- vendors
+|   |
+|   +-- google
+|
++-- extra
+    |
+    +-- games
+
+
+    
