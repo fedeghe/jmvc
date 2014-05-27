@@ -1,9 +1,7 @@
-{
-    "require" : {
-        "layerManager" : "layerManager",
-        "panelManager" : "panelManager",
-        "optionsManager" : "optionsManager",
-        "toolsManager" : "toolsManager",
-        "inputs" : "inputs/"
-    }
+{    
+    "layerManager" : "layerManager",
+    "panelManager" : "panelManager",
+    "optionsManager" : "optionsManager",
+    "toolsManager" : "toolsManager",
+    "inputs" : "inputs/"
 }
