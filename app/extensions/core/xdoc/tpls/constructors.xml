@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+
+<!-- constructors list -->
+<constructors>
+
+    <!-- first constructor -->
+    <constructor>
+
+        <!--
+        the type can be either
+            LIB,
+            FACTORY_METHOD,
+            CONSTRUCTOR,
+            CONSTRUCTORS
+        -->
+
+        <!-- a brief description of the library -->
+        <description>Text description for the CONSTRUCTOR</description>
+
+        <!-- list of dependencies -->
+        <dependencies>
+            <dependency>dependency one</dependency>
+            <!-- other dependencies here -->
+        </dependencies>
+        <version>0.1</version>
+        <hints>
+            <hint>Be wise</hint>
+        </hints>
+
+        
+            <!-- the signature -->
+        <signature name="factory_method_name">JMVC.delegate(Function func, Object obj)</signature>
+
+        <!-- a text description for it -->
+        <description>Get a function with a delegated context</description>
+        
+        <!-- list of parameters for the function -->
+        <params>
+            <param name="*func">the function that must be binded to the object</param>
+            <param name="*obj">the object where the function must be binded</param>
+        </params>
+
+        <!-- a sample code -->
+        <sample>var y = {type:'literal'},&#10;
+    t = JMVC.delegate(function(){alert(this.type);}, y);&#10;
+    t(); // literal&#10;</sample>
+
+
+
+
+        <!-- functions in the returned instance -->
+        <functions>
+
+            <!-- one function -->
+            <function>
+
+                <!-- the signature -->
+                <signature name="delegate">JMVC.delegate(Function func, Object obj)</signature>
+
+                <!-- a text description for it -->
+                <description>Get a function with a delegated context</description>
+                
+                <!-- list of parameters for the function -->
+                <params>
+                    <param name="*func">the function that must be binded to the object</param>
+                    <param name="*obj">the object where the function must be binded</param>
+                </params>
+
+                <!-- return value -->
+                <returns>the function binded</returns>
+
+                <!-- a sample code -->
+                <sample>var y = {type:'literal'},&#10;
+    t = JMVC.delegate(function(){alert(this.type);}, y);&#10;
+    t(); // literal&#10;</sample>
+                
+                <!--
+                that code if present should reflect the sample code; if found, under the sample code box 
+                will be show a `play` button with will trigger the evaluation of the code content
+                -->
+                <code>var y = {type:'literal'}, t = JMVC.delegate(function(){alert(this.type);}, y);t();</code>
+
+                <!-- status -->
+                <status>complete</status>
+
+                <!-- a test link if present -->
+                <testlink>test_api_jmvc_delegate</testlink>
+
+                <!-- functionhints list -->
+                <hints>
+                    <hint>function specific hint 1</hint>
+                    <hint>function specific hint 2</hint>
+                </hints>
+            </function>
+
+            <!-- another function  -->
+
+        </functions>
+
+        <!-- list of properties -->
+        <properties>
+            <property name="propertyName" defalutValue="">description</property>
+            <!-- other properties -->
+        </properties>
+    </constructor>
+
+
+    <!-- another constructor here -->
+
+
+</constructors>

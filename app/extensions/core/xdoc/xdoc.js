@@ -19,7 +19,13 @@ JMVC.extend('xdoc', function () {
 		etitle = 'Xdoc',
 		_status = false,
 		_id = JMVC.util.uniqueid + '',
-		scroll = 0;
+		scroll = 0,
+		templates = {
+			LIB : {},
+			FACTORY_METHOD : {},
+			CONSTRUCTOR : {},
+			CONSTRUCTORS : {}
+		};
 
 	function toggle(ext) {
 
@@ -75,7 +81,8 @@ JMVC.extend('xdoc', function () {
 		// get the json from xml
 		//
 		var xmlparser = new JMVC.xmlparser.load(JMVC.xdoc.elements[ext], true),
-			doc = xmlparser.toJson();
+			doc = xmlparser.toJson(),
+			rootTagName = xmlparser.root().tagName;
 
 		JMVC.core.widgzard.render({
 			target : node,
@@ -90,11 +97,12 @@ JMVC.extend('xdoc', function () {
 			},{
 				html : 'world'
 			}]
-		})
-		// var json = JMVC.xmlparser.toJson(JMVC.xdoc.elements[ext].childNodes[0]);
-		// console.debug(json)
-	
+		});
 	}
+
+
+
+
 
 	return {
 		toggle : toggle,
