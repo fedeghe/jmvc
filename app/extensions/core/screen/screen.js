@@ -217,5 +217,11 @@ JMVC.extend('screen', {
 		} else if (document.webkitExitFullscreen) {
 			document.webkitExitFullscreen();
 		}
-	}
+	},
+
+	enabled : document.fullscreenEnabled || document.mozFullScreenEnabled || document.webkitFullscreenEnabled,
+    
+    el : function () {
+        return document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
+    }
 });
