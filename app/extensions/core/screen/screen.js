@@ -189,7 +189,6 @@ JMVC.extend('screen', {
 			&&
 			(JMVC.W.top.window.outerHeight < screen.availHeight || JMVC.W.top.window.outerWidth < screen.availWidth)
 		) {	
-			alert('xxx')
 			JMVC.W.top.window.outerHeight = screen.availHeight;
 			JMVC.W.top.window.outerWidth = screen.availWidth;
 		}

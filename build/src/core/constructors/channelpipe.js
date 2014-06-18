@@ -14,7 +14,9 @@ Channel = (function () {
                 return arr.indexOf(mvar);
             }
             var l = arr.length - 1;
-            while (arr[l] !== mvar) l--;
+            while (arr[l] !== mvar) {
+                l--;
+            }
             return l;
         },
 
@@ -161,10 +163,9 @@ Channel = (function () {
      * returning function
      */
     return function (name) {
-        if (name in channels) {
-            return channels[name];
+        if (!(name in channels)) {
+            channels[name] = new P_Channel();
         }
-        channels[name] = new P_Channel();
         return channels[name];
     };
 })();

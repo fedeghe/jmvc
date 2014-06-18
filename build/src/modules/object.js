@@ -17,7 +17,9 @@ _.object = {
         var ret = '',
             j;
         for (j in o) {
-            o.hasOwnProperty(j) && (ret += fn(o, j, ret));
+            if (o.hasOwnProperty(j)) {
+                ret += fn(o, j, ret);
+            }
         }
         return ret;
     }
@@ -42,7 +44,9 @@ JMVC.object = {
         }
         temp = obj.constructor();
         for (key in obj) {
-            obj.hasOwnProperty(key) && (temp[key] = this.clone(obj[key]));
+            if (obj.hasOwnProperty(key)) {
+                temp[key] = this.clone(obj[key]);
+            }
         }
         return temp;
     },
@@ -50,7 +54,9 @@ JMVC.object = {
     clone: function(obj) {
         var self = this;
         // Handle the 3 simple types, and null or undefined
-        if (null == obj || "object" != typeof obj) return obj;
+        if (null == obj || "object" != typeof obj) {
+            return obj;
+        }
 
         // Handle Date
         if (obj instanceof Date) {
@@ -134,8 +140,9 @@ JMVC.object = {
         var obj = this.clone(o),
             j;
         for (j in ext) {
-            ext.hasOwnProperty(j) && !(j in obj) &&
-                (obj[j] = ext[j]);
+            if (ext.hasOwnProperty(j) && !(j in obj)) {
+                obj[j] = ext[j];
+            }
         }
         return obj;
     },
@@ -156,7 +163,9 @@ JMVC.object = {
     keys: function(obj) {
         var res = [],
             i;
-        for (i in obj) res.push(i);
+        for (i in obj) {
+            res.push(i);
+        }
         return res;
     },
 
@@ -164,7 +173,9 @@ JMVC.object = {
         var k = [],
             i,
             out = {};
-        for (i in obj) k.push(i);
+        for (i in obj) {
+            k.push(i);
+        }
         k.sort();
         for (var j = 0, l = k.length; j < l; j++) {
             out[k[j]] = obj[k[j]];
