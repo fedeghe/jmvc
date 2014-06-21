@@ -13,7 +13,11 @@
     }
 
     try {
-        !W.JMVCshut && JMVC.render();
+        if (W.JMVCshut) {
+            JMVC.loaded = true;
+        } else {
+            JMVC.render();
+        }
     } catch (e) {
         return JMVC.Errors.notify(e);
     } 
