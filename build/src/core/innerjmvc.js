@@ -5,7 +5,7 @@ jmvc = {
     check : function (f, p) {
         try {
             f.apply(null, p || []);
-        } catch (e){
+        } catch (e) {
             Errors.notify(e);
         }
     },
@@ -15,21 +15,19 @@ jmvc = {
      * @param  {[type]} msg [description]
      * @return {[type]}     [description]
      */
-    debug: function(msg) {
-        var now = +new Date,
+    debug: function (msg) {
+        var now = +new Date(),
             diff = now - ($JMVC.vars.endtime || $JMVC.vars.starttime || now),
             ms = diff % 1000,
-            s = ~~ ((diff % 60000) / 1000),
-            m = ~~ (diff / 60000),
-            outmsg = [];
+            s = ~~((diff % 60000) / 1000),
+            m = ~~(diff / 60000),
+            outmsg = '';
 
 
-        outmsg.push(
-            (m && (~~m + 'm')) +
+        outmsg += (m && (~~m + 'm')) +
             (s && (~~s + 's')) +
-            ms + 'ms :: '
-        );
-        outmsg.push(msg);            
+            ms + ' ms :: ';
+        outmsg += msg;
 
         try {
             W.console.log(outmsg);
@@ -621,6 +619,10 @@ jmvc = {
         }
         if (cback && typeof cback === 'function') {
             cback.call($JMVC);
+        }
+        if (!$JMVC.events.loadifyCalled) {
+            WD.body.style.opacity = 1;
+            WD.body.style.filter = 'alpha(opacity=100)';
         }
         $JMVC.loaded = true;
     },
