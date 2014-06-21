@@ -1,5 +1,16 @@
 /*- INIT -*/
 
+/**
+ * Generic dummy window.onerror enhancement
+ */
+(function (previousOnError) {
+    W.onerror = function (errorMsg, url, lineNumber) {
+        JMVC.debug(lineNumber + '@' + url + ": " + errorMsg);
+        previousOnError && previousOnError(errorMsg, url, lineNumber);
+    };
+})(W.onerror);
+
+
 // store starting time, that's not truly the starting time but 
 // it's really next to the real value
 var time_begin = +new Date(),
