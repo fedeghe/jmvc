@@ -37,7 +37,7 @@ JMVC.util = {
      * @param  {[type]} scriptname [description]
      * @return {[type]}            [description]
      */
-    getParameters : function (scriptid, pname) {
+    getParameters : function (scriptid /**string**/, pname /**string**/) {
         var script = document.getElementById(scriptid),
             p = false,
             parameters = false;
@@ -46,6 +46,20 @@ JMVC.util = {
         parameters = p ? eval('(' + p + ')') : {};
         return parameters;
     },
+
+    getSignature : function (func) {
+        var funcStr = func.toString(),
+            params = funcStr.split(/\n/)[0].match(/\((.*)\)/)[1].split(','),
+            out = {},
+            i = -1, l = params.length,
+            tmp;
+        while (++i < l) {
+            tmp = JMVC.string.trim(params[i]).match(/(\w*)\s?(\/\*\*?(\w*)\*\*?\/)?/);
+            out[tmp[1]] = tmp.length == 4 ? tmp[3] : 'not specified';
+        }
+        return out;
+    },
+
     //http://stackoverflow.com/questions/7390426/better-way-to-get-type-of-a-javascript-variable
     /**
      * [ description]
@@ -77,10 +91,12 @@ JMVC.util = {
      * @return {[type]}   [description]
      */
     isArray : function (o) {
-        var y = Array.isArray && Array.isArray(o), t1, t2;
-        if (y) {return true; }
-        t1 = String(o) !== o;
-        t2 = {}.toString.call(o).match(/\[object\sArray\]/);
+        if (Array.isArray && Array.isArray(o)) {
+            return true;
+        }
+        var t1 = String(o) !== o,
+            t2 = {}.toString.call(o).match(/\[object\sArray\]/);
+
         return t1 && !!(t2 && t2.length);
     },
     /**
