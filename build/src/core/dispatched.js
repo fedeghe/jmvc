@@ -59,6 +59,12 @@ dispatched = (function () {
             !params[lab_val[0]] && (params[lab_val[0]] = lab_val[1]);
         }
     }
+
+    // ckeck jmvcgoto
+    if ('jmvcgoto' in params) {
+        document.location.href = W.decodeURIComponent(params.jmvcgoto);
+        return false;
+    }
     
     //
     return {
