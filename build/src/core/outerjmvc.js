@@ -6,6 +6,7 @@ $JMVC = {
     W: W,
     WD: WD,
     WDL : WDL,
+    WDB : WD.body,
     US : US,
     M : Math,
     c_prepath : dispatched.controller_prepath,
