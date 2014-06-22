@@ -21,6 +21,27 @@ _.array = {
 
 // public section
 JMVC.array = {
+
+    /**
+     * [clean description]
+     * @return {[type]} [description]
+     */
+    clean : function (arr) {
+        var i = -1,
+            l = arr.length; 
+
+        while (++i < l) {
+            
+            if (arr[i] == undefined ||
+                (typeof arr[i] == 'number' && isNaN(arr[i]))
+            ){
+                arr.splice(i--, 1);
+                l--;
+            }
+        }
+        return arr;
+    },
+
     /**
      * Clone an existing array
      * @param {Array} arr the array that should be cloned
@@ -101,7 +122,7 @@ JMVC.array = {
      */
     find : function (arr, mvar) {
         //IE6,7,8 fail here
-        if ('indexOf' in arr) {
+        if (arr instanceof Array && 'indexOf' in arr) {
             return arr.indexOf(mvar);
         }
         var l = arr.length - 1;
