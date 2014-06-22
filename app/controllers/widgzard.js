@@ -6,7 +6,7 @@ JMVC.require(
     'widget/snow/snow',
     'core/lorem',
     'core/captcha/captcha'
-    ,'vendors/dropbox/dropbox'
+    //,'vendors/dropbox/dropbox'
 );
 JMVC.controllers.widgzard = function () {
     "use strict";
@@ -24,7 +24,9 @@ JMVC.controllers.widgzard = function () {
     }
 
     this.action_index = function (){
+        
         JMVC.events.loadify(1000);
+
         JMVC.require(
             'core/lib/widgzard/widgzard'
             ,'core/screen/screen'
@@ -345,18 +347,38 @@ JMVC.controllers.widgzard = function () {
 
 
 
+
+
+
     this.action_sample = function (){
 
-        JMVC.head.addStyle(location.protocol + '//fonts.googleapis.com/css?family=Luckiest+Guy');
-        
-        JMVC.events.loadify(1000);
         JMVC.require(
             'core/lib/widgzard/widgzard'
             ,'core/screen/screen'
         );
+
+        JMVC.head.addStyle(location.protocol + '//fonts.googleapis.com/css?family=Luckiest+Guy');
+        
+
+        //JMVC.events.loadify(1000);
+
+        
         JMVC.head.addStyle('/media/css/widgzard.css');
 
-        document.body.className = 'resp';
+
+        JMVC.dom.addClass(JMVC.WD.body, 'resp');
+        
+
+
+
+
+
+
+
+
+
+
+
 
         var incr = 3,
             time = 10,
@@ -389,11 +411,22 @@ JMVC.controllers.widgzard = function () {
             padPX = 10,
             spacing = spaPX + 'px',
             margin = 2 * spaPX + 'px',
-            padding = '10px';
+            padding = '10px',
+            li = function (msg) {
+                return {
+                    tag : 'li',
+                    attrs : {'class':'round8'},
+                    style : {fontSize : '16px', margin : margin + ' 0px', padding:padding, border:'1px solid black', backgroundColor:color2, color:color0},
+                    html  : msg
+                };
+            };
+
+
 
 
 
         JMVC.core.widgzard.render({
+
             cb : function (){
                 
                 
@@ -498,11 +531,11 @@ JMVC.controllers.widgzard = function () {
                         }, {
                             attrs : {'class':'round respfixed'},
                             style : {margin:spacing, backgroundColor: color1a, padding:padding, lineHeight:'1.6em'},
-                            html : '<h3>PREORDER creation</h3>Inject an arbitrary Dom tree within a DOMnode. For every created DOMnode You can specify attributes, child nodes and a callback executed at creation.'
+                            html : '<h3>PREORDER creation</h3>Inject an arbitrary Dom tree within a DOMnode. For every created DOMnode You can specify attributes, child nodes and a callback that for leaf nodes is executed at creation.'
                         }, {
                             attrs : {'class':'round respfixed'},
                             style : {margin:spacing, backgroundColor: color1a, padding:padding, lineHeight:'1.6em'},
-                            html : '<h3>POSTORDER callbacks</h3>Create a chain of resolving callback, where the tree leaves are called immediately after being appended. Leaf DOMnode ancestors callback will be called only when all childs callback explicitly declare to have finished their work.'
+                            html : '<h3>POSTORDER callbacks</h3>Create a chain of resolving callback, where the tree leaves are called immediately after being appended. Leaf DOMnode ancestors callback will be called only when all childs callbacks explicitly declare to have finished their work.'
                         }]    
                     },'clearer']    
                 }]
@@ -597,15 +630,58 @@ JMVC.controllers.widgzard = function () {
                             style : {fontWeight:'bold',backgroundColor: color1, padding:padding, color : black, lineHeight:'1.6em', textAlign:'center'},
                             html : 'How to trigger some postorder callbacks while creating the tree in preorder?'
                         }]
-                    },{
-                        html : ' ... to be continued!'
-                    },{
-                        html : 'none',
-                        wid : 'db'
+                    }]
+                }]  
+            },{
+                attrs : {'class':'round'},
+                style : {
+                    margin : margin +' 0px',
+                    backgroundColor:color0,
+                    width:'100%'
+                },
+                content : [{
+                    attrs : {'class':'respfixed'},
+                    style : {padding:spacing},
+                    content : [{
+                        attrs : {'class':'round respfixed'},
+                        style : {padding:padding, margin:spacing, backgroundColor:color1, color:black, border:'1px solid '+ color2},
+                        html : 'The node information are contained in an Object literal like the following:',
+                        content : [{
+                            attrs : {'class':'round8'},
+                            style : {fontWeight:'bold',margin : margin + ' 0px', padding:padding, border:'1px solid black', backgroundColor:'white'},
+                            html : JMVC.core.widgzard.htmlspecialchars(
+                                "{\n"+
+                                "   target : aDOMnode,\n" +
+                                "   attrs : {},\n" +
+                                "   style : {},\n" +
+                                "   cb : function() {\n" +
+                                "       ... \n" +
+                                "       this.done();\n" +
+                                "   },\n" +
+                                "   html : '<h1>Title</h1>',\n" +
+                                "   content : [\n" +
+                                "       ...other\n" +
+                                "       nodes here\n" +
+                                "   ]\n" +
+                                "});"
+                            )
+                        },{
+                            html : '<strong>where</strong>',
+                            content : [{
+                                tag : 'ul',
+                                content : [
+                                    li('either <i>html</i> or <i>content</i> are mandatory, and can be used togheter, <i>html</i> will come before <i>content</i>'),
+                                    li('<b>target</b><br/>is optional, if not specified for the root will be used document.body while other nodes will be appended to the parent'),
+                                    li('<b>attrs</b><br/>is optional, specify attributes for that node'),
+                                    li('<b>style</b><br/>is optional, specify style for that node'),
+                                    li('<b>cb</b><br/>is optional,specify a callback, ending with this.done()'),
+                                    li('<b>html</b><br/>is optional, specify the html content of the node, the content will come before the content nodes array'),
+                                    li('<b>content</b><br/>is optional, an array of nodes like that')
+                                ]
+                            }]
+                        }]
                     }]
                 }]
-                
-                
             },{
                 attrs : {'class' : 'round respfixed'},
                 html : 'WTF licence ~ Federico Ghedina ~ ' + (new Date).getFullYear() ,
@@ -619,6 +695,23 @@ JMVC.controllers.widgzard = function () {
     };
 
 
+
+    this.action_extreme = function () {
+        JMVC.require(
+            'core/lib/widgzard/widgzard'
+            ,'core/screen/screen'
+        );
+        JMVC.head.addStyle(location.protocol + '//fonts.googleapis.com/css?family=Luckiest+Guy');
+        JMVC.head.addStyle('/media/css/widgzard.css');
+        JMVC.dom.addClass(JMVC.WDB, 'resp');
+
+        JMVC.core.widgzard.render({
+            html : '<h1>Hello world</h1>',
+            content : false,
+            cb : function () {}
+        }, true);
+
+    };
 
 
 
