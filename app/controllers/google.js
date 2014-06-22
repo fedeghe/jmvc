@@ -29,6 +29,8 @@ JMVC.controllers.google = function () {
 				l = new JMVC.plotter.symbol('l', 10, 220),
 				e = new JMVC.plotter.symbol('e', 48, 260);
 				//t = new JMVC.plotter.letter('t', 108, 360);
+				//
+			JMVC.dom.addClass(newlogo, 'respfixed');
 
 			G.arc(17, 3, 35, 38, -M.PI / 20, M.PI / 10, 28);
 			G.arc(18, 6, 32, 27, -M.PI / 15, -M.PI * 0.13, 21, M.PI / 4);
