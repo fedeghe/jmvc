@@ -22,7 +22,8 @@ JMVC.controllers.grind = function () {
 	this.action_index = function (){
 		JMVC.events.loadify(1000);
 		JMVC.require(
-			'core/lib/grind/grind',
+			//'core/lib/grind/grind',
+			'core/lib/widgzard/widgzard',
 			'core/screen/screen',
 			'core/responsive/basic/basic'
 		);
@@ -32,7 +33,10 @@ JMVC.controllers.grind = function () {
 
 		function getConfig() {
 			return {
-				target : "#extralogo",
+				cb : function (){
+					JMVC.debug('end RENDER MAIN');
+				},
+				target : JMVC.dom.find("#extralogo"),
 				content : [
 					{
 						attrs : {
@@ -91,10 +95,10 @@ JMVC.controllers.grind = function () {
 
 
 										cb : function () {
-											var p = this.promise;
+											var self = this;
 											setTimeout(function () {
 												JMVC.debug(3)
-												p.done();
+												self.done();
 											}, 3000);
 										}
 
@@ -191,10 +195,10 @@ JMVC.controllers.grind = function () {
 						,cb : anotherGrind
 					},
 					{
-						target:'body',
+						target:JMVC.dom.find('body'),
 						style:{position:'absolute', top:'0px', left:'5px', color:'white'},
 						content : [{
-							grindID : 'txtButt',
+							//wid : 'txtButt',
 							tag : 'span',
 							style : {cursor:'pointer', color:'white', textDecoration : 'none', fontFamily: 'verdana', fontSize:'10px'},
 							html : 'toggle text'
@@ -209,30 +213,33 @@ JMVC.controllers.grind = function () {
 
 
 		function toggleText (){
-			this.promise.done();
+			this.done();
 			JMVC.events.bind(this, 'click', function () {
 				drawText = !drawText;
+				/*
 				JMVC.grind.render(getConfig(), function (){
 					JMVC.debug('end of re-render');
 				}, 'b960');
+				*/
+				JMVC.core.widgzard.render(getConfig(), true);
 			});
 		}
 
 		function anotherGrind () {
-			var node = this,
-				promise = node.promise;
+			var node = this;
 				
-			JMVC.grind.render({
+			JMVC.core.widgzard.render({
 				target : node,
 				content : [
 					{
 						html : 'hellooooooooo',
 						cb	: function () {console.debug('inner done');}
 					}
-				]
-			}, function () {
-				promise.done();
-			}, 'b960')
+				],
+				cb : function () {
+					node.done();
+				}
+			}, true);
 
 		}
 
@@ -242,15 +249,21 @@ JMVC.controllers.grind = function () {
 				'id' : 'extralogo'
 			}).render(function () {
 				JMVC.css.style(JMVC.dom.body(), 'backgroundColor', '#444');
+				/*
 				JMVC.grind.render(config, function (){
 					JMVC.debug('end RENDER MAIN');
-				}, 'b960');
+				},  'b960');*/
+				JMVC.core.widgzard.render(config, true);
 			});
 	};
 
 	this.action_direct = function () {
 		JMVC.events.loadify(500);
-		JMVC.require('core/lib/grind/grind', 'core/screen/screen');
+		JMVC.require(
+			//'core/lib/grind/grind',
+			'core/lib/widgzard/widgzard',
+			'core/screen/screen'
+		);
 		JMVC.head.meta('generator', 'jmvc resident in your machine');
 
 		var config  = {
@@ -386,8 +399,8 @@ JMVC.controllers.grind = function () {
 		};
 
 		this.render(function () {
-			JMVC.grind.render(config, function (){JMVC.debug('free'); }, 'b960');
-			JMVC.grind.colorize();
+			//JMVC.grind.render(config, function (){JMVC.debug('free'); }, 'b960');
+			JMVC.core.widgzard.render(config, true);
 		});
 	};
 
