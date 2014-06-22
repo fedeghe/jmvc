@@ -32,7 +32,7 @@ JMVC.extend('core/widgzard', function () {
      * @param {[type]} mapcnt an object used to allow the access from any node
      *                        to every node that has the gindID attribute
      */
-    function Node(conf, trg, mapcnt) {
+    function Wnode(conf, trg, mapcnt) {
 
         // save a reference to the instance
         // 
@@ -117,7 +117,7 @@ JMVC.extend('core/widgzard', function () {
      * @param {DOMnode} node  the node
      * @param {Object} attrs  the hash of attributes->values
      */
-    Node.prototype.setAttrs = function (node, attrs) {
+    Wnode.prototype.setAttrs = function (node, attrs) {
         // if set, append all attributes (*class)
         // 
         if (typeof attrs !== 'undefined') { 
@@ -137,7 +137,7 @@ JMVC.extend('core/widgzard', function () {
      * @param {DOMnode} node  the node
      * @param {Object} style  the hash of rules
      */
-    Node.prototype.setStyle = function (node, style) {
+    Wnode.prototype.setStyle = function (node, style) {
 
         // 'listStyleType'.replace(/([A-Z])/g, function (s){return '-' + s.toLowerCase()})
 
@@ -156,7 +156,7 @@ JMVC.extend('core/widgzard', function () {
      * @param {DOMnode} node  the node
      * @param {Object} data   the hash of properties to be attached
      */
-    Node.prototype.setData = function (node, data) {
+    Wnode.prototype.setData = function (node, data) {
         node.data = data || {};
         return this;
     };
@@ -164,7 +164,7 @@ JMVC.extend('core/widgzard', function () {
     /**
      * add method for the Node
      */
-    Node.prototype.add = function () {
+    Wnode.prototype.add = function () {
 
         var conf = this.conf,
             node = this.node,
@@ -220,15 +220,13 @@ JMVC.extend('core/widgzard', function () {
      */
     function render (config, clean) {
 
-        // reference to the requested target, if present
-        var target;
-
         if (!config) {
             throw new Error({message : 'ERROR : Check parameters for render function'});
         }
 
-        // or body
-        target = config.target || document.body;
+        // reference to the requested target, or body
+        var target = config.target || document.body,
+            inner;
 
         // noop cb if not given
         //
@@ -239,7 +237,7 @@ JMVC.extend('core/widgzard', function () {
         // reached afterward calling this.getNode(id)
         // from any callback
         // 
-        var inner = {
+        inner = {
             map : {},
             getNode : function (id) {
                 return inner.map[id] || false;
@@ -247,19 +245,26 @@ JMVC.extend('core/widgzard', function () {
         };
 
 
-        // rape Node prototype funcs
+        // rape Wnode prototype funcs
         // to set attributes & styles
         // and attached data
         // 
-        Node.prototype
+        Wnode.prototype
             .setAttrs(target, config.attrs)
             .setStyle(target, config.style)
             .setData(target, config.data);
         
         // clean if required
+        // 
         if (!!clean) {
             target.innerHTML = '';
         }
+        
+        // maybe a raw html is requested before treating content
+        if (typeof config.html !== 'undefined') {
+            target.innerHTML = config.html;
+        }
+        
         
         // initialize the root node to reflect what will be done
         // by the Node contstructor to every build node: 
@@ -274,7 +279,6 @@ JMVC.extend('core/widgzard', function () {
         // 
         target.getNode = inner.getNode;
 
-        // start recursion
         // 
         // start recursion
         // 
@@ -297,7 +301,7 @@ JMVC.extend('core/widgzard', function () {
                             attrs : {'class' : clearerClassName}
                         };
                     }
-                    n = new Node(cnf.content[i], trg, inner).add();
+                    n = new Wnode(cnf.content[i], trg, inner).add();
                     
                     if (postpro && !skip) {
                         nodes.push(n);
@@ -341,7 +345,7 @@ JMVC.extend('core/widgzard', function () {
                     );
                 }
             }
-        })(params, target);
+        })(config, target);
         */
     }
 
@@ -349,13 +353,12 @@ JMVC.extend('core/widgzard', function () {
     load = function (src) {
         var s = document.createElement('script');
         document.getElementsByTagName('head')[0].appendChild(s);
-        s.src = src;
         
         // when finished remove the script tag
-        //
         s.onload = function () {
             s.parentNode.removeChild(s);
         }
+        s.src = src;
     };
 
     htmlspecialchars = function (c) {
