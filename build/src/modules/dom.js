@@ -212,6 +212,18 @@ JMVC.dom = {
      * @return {[type]}    [description]
      */
     empty : function (el) {
+        //el.innerHTML = '';
+        while (el.firstChild) {
+            el.removeChild(el.firstChild);
+        }
+    },
+
+    /**
+     * [ description]
+     * @param  {[type]} el [description]
+     * @return {[type]}    [description]
+     */
+    empty2 : function (el) {
         el.innerHTML = '';
     },
 
@@ -389,8 +401,8 @@ JMVC.dom = {
         if (typeof html !== 'undefined') {
             if (el) {
                 try {
+                    this.empty(el);
                     if (this.isElement(html)) {
-                        this.empty(el);
                         this.append(el, html);
                     } else {
                         el.innerHTML = html + '';
@@ -697,6 +709,20 @@ JMVC.dom = {
             this.walk(node, func);
             node = node.nextSibling;
         }
+    },
+
+    /**
+     * [wrap description]
+     * @param  {[type]} node  [description]
+     * @param  {[type]} attrs [description]
+     * @return {[type]}       [description]
+     */
+    wrap : function (node, attrs) {
+        var n = JMVC.dom.create('div', attrs || {});
+        n.innerHTML = node.innerHTML;
+        node.innerHTML = '';
+        node.appendChild(n);
+        return n;
     }
 };
 //-----------------------------------------------------------------------------
