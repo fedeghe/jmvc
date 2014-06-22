@@ -1,0 +1,37 @@
+html{height:100%;}
+body{height:100%;}
+
+.JMVC-drawer{
+    background-color: #333;
+    color:white;
+    padding-top:30px !important;
+}
+div.JMVC-drawer-hamburger{
+    position:absolute;
+    left:5px;
+    top:5px;
+    width:30px !important;
+    height:30px;
+    background-color: black;
+    cursor:pointer;
+    z-index:200;
+    border:2px solid gray;
+}
+.JMVC-drawer li {
+    border-bottom : 1px solid #aaa;
+    padding:1em 0em;
+    font-family:verdana, sans;
+}
+.JMVC-drawer li a {
+    text-decoration:none;
+    color:white;
+    width:100%;
+    font-size:2em;
+    display:block;
+}
+.JMVC-drawer .lev1{
+
+}
+.JMVC-drawer .lev2{
+
+}
