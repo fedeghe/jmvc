@@ -69,9 +69,9 @@ JMVC.extend('console', {
                 ),
 
                 content = {
-                    h : h || (JMVC.p.h ? decodeURIComponent(JMVC.p.h) : "<div id='hw'>hello world</div>"),
+                    h : h || (JMVC.p.h ? decodeURIComponent(JMVC.p.h) : "<p><span id='hw'>hello world</span></p>"),
                     j : j || (JMVC.p.j ? decodeURIComponent(JMVC.p.j) : "var t = document.getElementById('hw');\nt.onclick = function () {t.innerHTML='clicked'; };"),
-                    c : c || (JMVC.p.c ? decodeURIComponent(JMVC.p.c) : "#hw{\n\tcolor:red;\n\tfont-family:arial, sans-serif;\n\tpadding:20px;\n\tfont-size:20px\n}")
+                    c : c || (JMVC.p.c ? decodeURIComponent(JMVC.p.c) : "p {\n\tmargin:20px\n}\nspan{\n\tcolor:red;\n\tfont-family:arial, sans-serif;\n\tfont-size:20px;\n\tcursor:pointer;\n}")
                 },
                 // triangle = {
                 //   tag : "div",
@@ -88,46 +88,81 @@ JMVC.extend('console', {
                 config  = {
                     target : container,
                     content : [{
-                        "tag" : "div",
                         attrs : {"class" : "console-head"},
                         content : [
                             {
-                                "tag":"div",
-                                "html" : "<a href='" + JMVC.vars.baseurl + "'><img src='/media/img/jmvc_m1.svg' width='60'/></a>",
-                                "style" : {"float":"left", "marginTop":"12px", "marginLeft":"10px"}
-                            },{
-                                "tag":"h5",
-                                "html":"web console v." + version,
-                                "style" : {"float":"left", "color":"#888", "paddingLeft":"10px"}
-                            },{
-                                "tag":"button",
-                                "html":"GET URL",
-                                "attrs" : {"id":"get-url", "class" : "round4"},
-                                "style" : {"float":"left", "height":"20px", "line-height":"20px", "padding":"0px 5px"}
+                                html : "<a href='" + JMVC.vars.baseurl + "'><img src='/media/img/jmvc_m1.svg' width='60'/></a>",
+                                style : {
+                                    "float" : "left",
+                                    marginTop : "12px",
+                                    marginLeft : "10px"
+                                },
+                                attrs : {title : "web console v." + version}
                             },{
                                 "tag":"button",
-                                "html":"FullScreen",
-                                "attrs" : {"id":"go-fs", "class" : "round4"},
-                                "style" : {"float":"left","height":"20px", "line-height":"20px", "padding":"0px 5px"}
+                                html:"GET URL",
+                                attrs : {
+                                    id : "get-url",
+                                    "class" : "round4"
+                                },
+                                style : {
+                                    "float" : "left",
+                                    height : "20px",
+                                    lineHeight : "16px",
+                                    padding : "0px 5px"
+                                }
                             },{
-                                "tag":"button",
-                                "html":"Reset",
-                                "attrs" : {"id":"reset", "class" : "round4"},
-                                "style" : {"float":"left", "height":"20px", "line-height":"20px", "padding":"0px 5px"}
+                                tag : "button",
+                                html : "FullScreen",
+                                attrs : {
+                                    id : "go-fs",
+                                    "class" : "round4"
+                                },
+                                style : {
+                                    "float" : "left",
+                                    height : "20px",
+                                    lineHeight : "16px",
+                                    padding : "0px 5px"
+                                }
                             },{
-                                "tag":"button",
-                                "html":"Reset All",
-                                "attrs" : {"id":"resetall", "class" : "round4"},
-                                "style" : {"float":"left", "height":"20px", "line-height":"20px", "padding":"0px 5px"}
+                                tag : "button",
+                                html : "Reset",
+                                attrs : {
+                                    id : "reset",
+                                    "class" : "round4"
+                                },
+                                style : {
+                                    "float" : "left",
+                                    height : "20px",
+                                    lineHeight : "16px",
+                                    padding : "0px 5px"
+                                }
+                            },{
+                                tag : "button",
+                                html : "Reset All",
+                                attrs : {
+                                    id : "resetall",
+                                    "class" : "round4"
+                                },
+                                style : {
+                                    "float" : "left",
+                                    height : "20px",
+                                    lineHeight : "16px",
+                                    padding : "0px 5px"
+                                }
                             },
 
                             ////////////////////////////////////////
 
                             {
-                                "tag":"a",
-                                "attrs" : {"id" : "options", "href":"#options", "class" : "ablock"},
-                                style : {"float":"right"},
-                                "content" : [
+                                tag : "a",
+                                attrs : {
+                                    id : "options",
+                                    href : "#options",
+                                    "class" : "ablock"
+                                },
+                                style : {"float" : "right"},
+                                content : [
                                     {
                                         "tag":"div",
                                         attrs : {"class":"round4 roundtop text"},
@@ -139,64 +174,74 @@ JMVC.extend('console', {
                                     }
                                 ]
                             },{
-                                "tag":"a",
-                                "attrs" : {"id" : "preview", "href":"#preview", "class" : "ablock"},
+                                tag : "a",
+                                attrs : {
+                                    id : "preview",
+                                    href : "#preview",
+                                    "class" : "ablock"
+                                },
                                 style : {"float":"right"},
-                                "content" : [
+                                content : [
                                     {
-                                        "tag":"div",
                                         attrs : {"class":"round4 roundtop text"},
                                         style : {"float":"right"},
                                     },{
-                                        "tag":"div",
                                         style : {"float":"right"},
                                         attrs : {"class":"tri"}
                                     }
                                 ]
                             },{
-                                "tag":"a",
-                                "attrs" : {"id" : "css", "href":"#css", "class" : "ablock"},
+                                tag : "a",
+                                attrs : {
+                                    id : "css",
+                                    href : "#css",
+                                    "class" : "ablock"
+                                },
                                 style : {"float":"right"},
-                                "content" : [
+                                content : [
                                     {
-                                        "tag":"div",
                                         attrs : {"class":"round4 roundtop text"},
                                         style : {"float":"right"},
-                                        "html":"CSS"
+                                        html : "CSS"
                                     },{
-                                        "tag":"div",
-                                        style : {"float":"right"},
-                                        attrs : {"class":"tri"}
+                                        style : {"float" : "right"},
+                                        attrs : {"class" : "tri"}
                                     }
                                 ]
                             },{
-                                "tag":"a",
-                                "attrs" : {"id" : "javascript", "href":"#javascript", "class" : "ablock"},
-                                style : {"float":"right"},
-                                "content" : [
+                                tag : "a",
+                                attrs : {
+                                    id : "javascript",
+                                    href : "#javascript",
+                                    "class" : "ablock"
+                                },
+                                style : {"float" : "right"},
+                                content : [
                                     {
-                                        "tag":"div",
-                                        attrs : {"class":"round4 roundtop text"},
-                                        style : {"float":"right"},
-                                        "html":"JAVASCRIPT"
+                                        tag : "div",
+                                        attrs : {"class" : "round4 roundtop text"},
+                                        style : {"float" : "right"},
+                                        html : "JS"
                                     },{
-                                        "tag":"div",
-                                        style : {"float":"right"},
-                                        attrs : {"class":"tri"}
+                                        tag : "div",
+                                        style : {"float" : "right"},
+                                        attrs : {"class" : "tri"}
                                     }
                                 ]
                             },{
-                                "tag":"a",
-                                "attrs" : {"id" : "html", "href":"#html", "class" : "ablock"},
+                                tag : "a",
+                                attrs : {
+                                    id : "html",
+                                    href : "#html",
+                                    "class" : "ablock"
+                                },
                                 style : {"float":"right"},
-                                "content" : [
+                                content : [
                                     {
-                                        "tag":"div",
                                         attrs : {"class":"round4 roundtop text"},
                                         style : {"float":"right"},
-                                        "html":"HTML"
+                                        html : "HTML"
                                     },{
-                                        "tag":"div",
                                         style : {"float":"right"},
                                         attrs : {"class":"tri"}
                                     }
@@ -205,49 +250,72 @@ JMVC.extend('console', {
                             "clearer"
                         ]
                     },{
-                        "tag" : "div",
-                        "target" : container,
+                        target : container,
                         attrs : {"class" : "input-divs"},
-                        "content" : [
+                        content : [
                             {
-                                "tag" : "div",
-                                "attrs" : {"id" : "in-html", "class" : "in-html inputdiv"},
-                                "content": [{
-                                    "tag" : "textarea",
-                                    "attrs" : {"id":"content-html"},
-                                    "style" : {"height" : (dims.height - 60) + "px", "border":"none"},
-                                    "html" : content.h
+                                attrs : {
+                                    id : "in-html",
+                                    "class" : "in-html inputdiv"
+                                },
+                                content : [{
+                                    tag : "textarea",
+                                    attrs : {
+                                        id : "content-html"
+                                    },
+                                    style : {
+                                        height : (dims.height - 61) + "px",
+                                        border : "none"
+                                    },
+                                    html : content.h
                                 }]
                             },{
-                                "tag" : "div",
-                                "attrs" : {"id" : "in-javascript", "class" : "in-javascript inputdiv"},
-                                "content": [{
-                                    "tag" : "textarea",
-                                    "attrs" : {"id":"content-javascript"},
-                                    "style" : {"height" : (dims.height - 60) + "px", "border":"none"},
-                                    "html" : content.j
+                                attrs : {"id" : "in-javascript", "class" : "in-javascript inputdiv"},
+                                content: [{
+                                    tag : "textarea",
+                                    attrs : {
+                                        id : "content-javascript"
+                                    },
+                                    style : {
+                                        height : (dims.height - 61) + "px",
+                                        border : "none"
+                                    },
+                                    html : content.j
                                 }]
                             },{
-                                "tag" : "div",
-                                "attrs" : {"id" : "in-css", "class" : "in-css inputdiv"},
-                                "content": [{
-                                    "tag" : "textarea",
-                                    "attrs" : {"id":"content-css"},
-                                    "style" : {"height" : (dims.height - 60) + "px", "border":"none"},
-                                    "html" : content.c
+                                attrs : {
+                                    id : "in-css",
+                                    "class" : "in-css inputdiv"
+                                },
+                                content: [{
+                                    tag : "textarea",
+                                    attrs : {"id":"content-css"},
+                                    style : {
+                                        height : (dims.height - 61) + "px",
+                                        border : "none"
+                                    },
+                                    html : content.c
                                 }]
                             },{
-                                "tag" : "div",
-                                "attrs" : {"id" : "in-preview", "class" : "in-preview inputdiv"},
-                                "content": [{
-                                    "tag":"iframe",
-                                    "attrs":{"id":"outarea", "width":"100%","height":(dims.height - 60) + "px"},
-                                    style : {'backgroundColor':'white'}
+                                attrs : {
+                                    id : "in-preview",
+                                    "class" : "in-preview inputdiv"
+                                },
+                                content: [{
+                                    tag : "iframe",
+                                    attrs : {
+                                        id : "outarea",
+                                        width : "100%",
+                                        height : (dims.height - 61) + "px"
+                                    },
+                                    style : {backgroundColor : 'white'}
                                 }]
                             },{
-                                "tag" : "div",
-                                "attrs" : {"id" : "in-options", "class" : "in-options inputdiv"},
-                                "html": JMVC.console._.options
+                                attrs : {
+                                    id : "in-options",
+                                    "class" : "in-options inputdiv"
+                                },
+                                html : JMVC.console._.options
                             }
                         ]
                     }]
@@ -393,7 +461,10 @@ JMVC.extend('console', {
             JMVC.set('height', dims.height - 60);
             JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/core/console/console.css', true);
             JMVC.dom.append(JMVC.dom.body(), container);
+
+            // -------------------------------------
             JMVC.core.widgzard.render(config, true);
+            // -------------------------------------
 
             //lib
             if(JMVC.p.l) {

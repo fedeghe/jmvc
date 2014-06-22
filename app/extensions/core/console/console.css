@@ -79,9 +79,7 @@ div.input-divs div textarea{
 	-o-tab-size:4;
 	tab-size:4;
 }
-div.input-divs div.in-html textarea{color:#f00;}
-div.input-divs div.in-javascript textarea{color:#0f0;}
-div.input-divs div.in-css textarea{color:#00f;}
+
 div.input-divs div.in-preview{}
 div.input-divs div.in-options{}
 a#preview .text{
@@ -133,6 +131,11 @@ button#go-fs{
 div.pad20{
 	padding:20px;
 }
-#jmvc-console .console-head a#html.active div.text{color:#f00;}
-#jmvc-console .console-head a#javascript.active div.text{color:#0f0;}
-#jmvc-console .console-head a#css.active div.text{color:#00f;}
+#jmvc-console .console-head a#html.active div.text{color:#faa;}
+#jmvc-console .console-head a#javascript.active div.text{color:#afa;}
+#jmvc-console .console-head a#css.active div.text{color:#aaf;}
+
+div.input-divs div.in-html textarea{color:#faa;}
+div.input-divs div.in-javascript textarea{color:#afa;}
+div.input-divs div.in-css textarea{color:#aaf;}
+
