@@ -1,88 +1,84 @@
-// type : CONSTRUCTOR
+// 
+// 
+//------------------------------------------------ 
+//  
+//    https://gist.github.com/Yaffle/2757614
+// 
+//------------------------------------------------
 //
+// 
+/*jslint plusplus: true, vars: true, indent: 2 */
 
 
-JMVC.require('core/obj/skip_list/Node');
-JMVC.nsMake('JMVC.obj.SkipList');
+(function (exports) {
+    "use strict";
 
-JMVC.obj.SkipList = function () {
-    this.header = new JMVC.obj.SLNode(-Infinity);
-    this.sentinel = new JMVC.obj.SLNode(Infinity);
-    this.header.next = this.sentinel;
-    this.start = this.header;
-    this.headerHeight = 0;
-}
+    var random = Math.random;
+    var Node = function (down, key, value) {
+        this.next = null;
+        this.down = down;
+        this.key = key;
+        this.value = value;
+    };
 
-/*
+    var levels = 8; // Math.floor(Math.log(MAX_SIZE) / Math.log(p))
+    var p = 4;
 
-6 H
-5 h
-4 h
-3 h
-2 h
-1 h 
-0 
-*/
-JMVC.obj.SkipList.prototype.add = function (value) {
-
-    // create the node
-    // 
-    var node = new JMVC.obj.SLNode(value),
-        flipCount = 0,
-        done = false,
-        nH, nS, nI, i = 0;
-
-    // flip
-    // 
-    while (Math.random() >= .5) {
-        ++flipCount;        
+    function SkipList(lessFunction) {
+        var head = null;
+        var i = levels;
+        do {
+            head = new Node(head, undefined, undefined);
+        } while (--i >= 0);
+        this.head = head;
+        this.less = lessFunction || function (a, b) {
+            return a < b;
+        };
     }
 
-    // maybe update the header and sentinel towers
-    // 
-    while (this.headerHeight < flipCount) {
-        nS = new new JMVC.obj.SLNode(Infinity, null, this.sentinel);
-        nH = new new JMVC.obj.SLNode(-Infinity, nS, this.header);
-        this.start = nH;
-        this.headerHeight++;
-    }
-
-
-    // go to the right level for the first insertion
-    // 
-    while (i < (this.headerHeight - flipCount)) {
-        iN = (iN || this.start).bottom; 
-        i++;
-    }
-    
-    // insert
-    // 
-    while (!done) {
-        if (iN.next.value <= value) {
-            iN = iN.next;
-        } else {
-            while (i >= 0) {
-                var tmpN = iN.next,
-                    tmpB = iN.bottom;
-                node
-                i--;
+    function f(head, less, key, node, k) {
+        var x = null;
+        while ((head = head.down) !== null) {
+            while ((x = head.next) !== null && less(x.key, key)) {
+                head = x;
             }
-            done = true;
+            if (x !== null && !less(key, x.key)) {
+                if (node === null && k === 0) {
+                    return x.value;
+                }
+                x = x.next;
+                head.next = x;
+            }
+            if (node !== null) {
+                if (--k < 0) {
+                    node.next = x;
+                    head.next = node;
+                    node = node.down;
+                }
+            }
         }
+        return undefined;
     }
 
-};
+    SkipList.prototype = {
+        get: function (key) {
+            return f(this.head, this.less, key, null, 0);
+        },
+        set: function (key, value) {
+            var node = null;
+            var l = levels;
+            var z = random();
+            do {
+                node = new Node(node, key, value);
+                z *= p;
+            } while (--l > 0 && z < 1);
+            f(this.head, this.less, key, node, l);
+        },
+        "delete": function (key) {
+            f(this.head, this.less, key, null, 1);
+        }
+    };
 
+    exports.SkipList = SkipList;
 
-
-
-
-
-
-
-
-
-
-
-
-
+}(JMVC));
