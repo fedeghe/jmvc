@@ -8,7 +8,7 @@ JMVC.events.end(function () {
 	var ua = 'UA-29571830-1',
 		t =/(^true$|^false$)/i,
 		do_ga = function () {
-			JMVC.head.addScript("{{vendors/google/analytics ua=`" + ua + "`}}", true, true);
+			JMVC.head.addScript("{{core/vendors/google/analytics ua=`" + ua + "`}}", true, true);
 		};
 
 	// right domain, only production
