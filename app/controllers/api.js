@@ -27,7 +27,8 @@ JMVC.controllers.api = function () {
 				'controller', 'array', 'css', 'dom',
 				'events', 'head', 'io', 'match',
 				'object', 'string', 'util'
-			];
+			],
+			whenReady = new Date(2014, 6, 27);
 			
 			
 		main.set('id', 'desc');
@@ -134,7 +135,7 @@ JMVC.controllers.api = function () {
 
 			JMVC.github.forkme('fedeghe');
 			
-			JMVC.widget.countdown.start('#countdown', new Date(2014, 5, 27));
+			JMVC.widget.countdown.start('#countdown', whenReady);
 			
 			JMVC.events.delay(function () {
 				for (var j = 0, l = sections.length;  j < l; j++) {
