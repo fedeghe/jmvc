@@ -43,6 +43,7 @@ JMVC.extend('vendors/dropbox', function () {
             return false;
         }
     };
+    
     DropBoxDataStore.prototype.ensureTable = function (tableName) {
         this.tables[tableName] || this.getTable(tableName);
     }
