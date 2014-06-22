@@ -153,6 +153,14 @@ table {
 }
 body {
   max-width: 100% !important;
+  zoom: 1;
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+body.console {
+  zoom: 1;
+  filter: alpha(opacity=100);
+  opacity: 1;
 }
 strong,
 b {
@@ -180,6 +188,9 @@ sub {
 }
 .floatr {
   float: right;
+}
+pre {
+  font-family: monospace;
 }
 h1,
 h2,

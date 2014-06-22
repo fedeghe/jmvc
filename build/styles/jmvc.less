@@ -7,11 +7,9 @@ $$reset.css$$
 	.opa@{value} {
 		@opaPerc : @value * 10;
 		@opaFloat : @value / 10;
-
 		zoom: 1;
 		filter: alpha(opacity=@opaPerc);
 		opacity: @opaFloat;
-
 	}
 	.generate-opa(@n, (@value + 1));
 }
@@ -65,6 +63,14 @@ $$reset.css$$
 
 body{
 	max-width:100% !important;
+    zoom: 1;
+    filter: alpha(opacity=0);
+    opacity: 0;
+}
+body.console{
+    zoom: 1;
+    filter: alpha(opacity=100);
+    opacity: 1;
 }
 
 strong, b{
@@ -79,7 +85,7 @@ i{
 
 
 
-img {
+img{
 	max-width: 100% !important;
 	height: auto !important;
 }
@@ -94,6 +100,9 @@ sub{vertical-align: sub;}
 
 .floatr{float:right;}
 
+pre{
+    font-family:monospace;
+}
 h1,h2,h3,h4,h5,h6{font-weight:bold;}
 
 /*
