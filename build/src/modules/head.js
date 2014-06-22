@@ -24,8 +24,8 @@ JMVC.head = {
             head,
             tmp,
             that = this,
-            postmode = true,
-            async = true,
+            //postmode = true,
+            sync = true,
             script_content;
         if (parse) {
             if (explicit) {
@@ -41,7 +41,7 @@ JMVC.head = {
                     script = JMVC.dom.create('script', {type: 'text/javascript'}, script_content);
                     head = that.element;
                     head.appendChild(script);
-                }, postmode, async);
+                }, /*postmode,*/ sync);
             }
         } else {
             script = explicit ?
@@ -65,8 +65,8 @@ JMVC.head = {
             head,
             tmp,
             that = this,
-            postmode = true,
-            sync = false,
+            //postmode = true,
+            sync = true,
             rules,
             csscontent;
         if (parse) {
@@ -103,7 +103,7 @@ JMVC.head = {
                     idn && JMVC.dom.attr(style, 'id', idn);
                     head.appendChild(style);
                     //
-                }, postmode, sync);
+                }, /*postmode, */sync);
             }
         } else {
             style = JMVC.dom.create('link', {
