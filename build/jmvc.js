@@ -50,6 +50,7 @@ $$src/head.js$$
     $$src/modules/object.js$$
     $$src/modules/match.js$$
     $$src/modules/num.js$$
+    $$src/modules/dnd.js$$
     $$src/modules/minishim.js$$
     //
     // render
