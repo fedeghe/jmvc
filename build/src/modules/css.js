@@ -304,6 +304,7 @@ JMVC.css = {
             };
         info.className = 'report respfixed';
         info.style.position = 'fixed';
+        info.style.zIndex = 999;
         info.style.top = '0px';
         info.style.left = '0px';
 
