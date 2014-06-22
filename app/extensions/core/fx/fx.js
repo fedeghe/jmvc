@@ -20,8 +20,11 @@ JMVC.extend('fx',{
 	},
 	
 	animate : function (el, prop, to, delta, cb) {
+		delta = delta || 1;
 		(function () {
-			var from = JMVC.num.getNum(JMVC.css.style(el, prop)),
+			var oVal = JMVC.css.style(el, prop),
+				from = JMVC.num.getNum(oVal),
+				unit = oVal.match(/(%|px|em)/)[0],
 				versus = from < to,
 				end = false,
 				t = JMVC.W.setInterval(
@@ -41,7 +44,7 @@ JMVC.extend('fx',{
 							}
 						} 
 						
-						JMVC.css.style(el, prop , from + 'px');
+						JMVC.css.style(el, prop , from + unit);
 						if (end) {
 							cb && cb();
 							from = to;
