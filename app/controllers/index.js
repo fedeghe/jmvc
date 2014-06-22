@@ -21,19 +21,14 @@ JMVC.controllers.index = function () {
 
 	this.action_none = function () {};
 
-	
-
 	this.action_index = function () {
-
 		
 		var logoimg = 'jmvc_m1.png';
-		
 
 		JMVC.dom.preloadImage(
 			JMVC.vars.baseurl + '/media/img/' + logoimg
 			/*, function (i){console.debug(i, 'loaded')}*/
 		);
-
 		
 		JMVC.events.loadify(500);
 		JMVC.head.title('JMVC');
@@ -45,7 +40,7 @@ JMVC.controllers.index = function () {
 		see plus_one view
 		add a explicit style parsed from a view
 		*/
-		JMVC.head.addStyle('{{style fontweight=`bold` txtalign=`center` margin=`0px` padding=`0px`}}', true, true);
+		//JMVC.head.addStyle('{{style fontweight=`bold` txtalign=`center` margin=`0px` padding=`0px`}}', true, true);
 		JMVC.head.meta('description', 'A true pure javascript model view controller framework', true);
 		JMVC.head.meta('keywords', 'jmvc,javascript mvc,pure javascript mvc,pure javascript');
 		JMVC.head.meta('generator', 'jmvc resident in your machine');
@@ -69,10 +64,12 @@ JMVC.controllers.index = function () {
 		
 		index.parse().render(
 			function () {
-				/*
-				JMVC.preload(JMVC.vars.baseurl + '/info');
-				JMVC.preload(JMVC.vars.baseurl + '/api');
-				*/
+
+				
+				//JMVC.preload(JMVC.vars.baseurl + '/info');
+				//JMVC.preload(JMVC.vars.baseurl + '/api');
+				
+			
 				JMVC.github.forkme('fedeghe');
 
 				JMVC.mobile.topHide();
@@ -91,7 +88,7 @@ JMVC.controllers.index = function () {
 				JMVC.head.lastModified();
 
 				var el = document.getElementById('cent'),
-					links = JMVC.dom.create('h1'),
+					links = JMVC.dom.create('h2'),
 					morelink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/info.jmvc', title : 'get more info'}, JMVC.parseLang('[L[more]]')),
 					sourcelink = JMVC.dom.create('a', {'class' : 'homelinks', href : 'https://github.com/fedeghe/jmvc', title : 'get code from github!', target : '_blank'}, JMVC.parseLang('[L[source]]')),
 					demolink = JMVC.dom.create('a', {'class' : 'homelinks', href : JMVC.vars.baseurl + '/demo.jmvc', title : 'some demos'}, JMVC.parseLang('[L[demos]]')),
