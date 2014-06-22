@@ -98,6 +98,7 @@ _.events = {
         }
         return wrapf;
     },
+
     /**
      * unbind the passed cb or all function
      * binded to a node-event pair
@@ -109,7 +110,6 @@ _.events = {
      *                                 will be unattached
      * @return {boolean}    whether the unbinding succeded
      */
-
     unbind: function(el, evnt, cb) {
         function unstore(evnt, nodeid, index) {
             Array.prototype.splice.call(_.events.bindings[evnt][nodeid], index, 1);
@@ -144,11 +144,9 @@ _.events = {
         JMVC.W.exp = _.events.bindings;
         index = JMVC.array.find(_.events.bindings[evnt][nodeid], cb);
 
-
         if (index === -1) {
             return false;
         }
-
 
         if (el.removeEventListener) {
             el.removeEventListener(evnt, cb, false);
@@ -183,6 +181,7 @@ JMVC.events = {
         return _.events.bind(el, tipo, fn);
         //return _.events.bind(el, tipo, _.events.fixCurrentTarget(fn, el));
     },
+
     /**
      * [code description]
      * @param  {[type]} e [description]
@@ -198,6 +197,7 @@ JMVC.events = {
         }
         return false;
     },
+
     /**
      * [ description]
      * @param  {[type]} f [description]
@@ -207,6 +207,7 @@ JMVC.events = {
     delay: function(f, t) {
         W.setTimeout(f, t);
     },
+
     /**
      * [disableRightClick description]
      * @return {[type]} [description]
@@ -296,12 +297,11 @@ JMVC.events = {
     },
 
     /**
-     * [ description]
-     * @param  {[type]} el [description]
-     * @param  {[type]} e  [description]
-     * @return {[type]}    [description]
+     * [coord description]
+     * @param  {[type]} e [description]
+     * @return {[type]}   [description]
      */
-    getCoord: function(el, e) {
+    coord : function (e) {
         var x,
             y;
         if (e.pageX || e.pageY) {
@@ -311,10 +311,23 @@ JMVC.events = {
             x = e.clientX + JMVC.WD.body.scrollLeft + JMVC.WD.documentElement.scrollLeft;
             y = e.clientY + JMVC.WD.body.scrollTop + JMVC.WD.documentElement.scrollTop;
         }
-        x -= el.offsetLeft;
-        y -= el.offsetTop;
         return [x, y];
     },
+
+    /**
+     * [ description]
+     * @param  {[type]} el [description]
+     * @param  {[type]} e  [description]
+     * @return {[type]}    [description]
+     */
+    getCoord: function(el, e) {
+        var coord = JMVC.events.coord(e)
+        coord[0] -= el.offsetLeft;
+        coord[1] -= el.offsetTop;
+        return coord;
+    },
+
+    loadifyCalled : false,
 
     /**
      * [ description]
@@ -322,7 +335,9 @@ JMVC.events = {
      * @return {[type]}    [description]
      */
     loadify: function(ms) {
+
         var self = this;
+        self.loadifyCalled = true;
         this.start(function() {
             //otherwise some browser hangs (opera)
             self.delay(function() {
@@ -342,8 +357,7 @@ JMVC.events = {
                         WD.body.style.filter = 'alpha(opacity=' + (j * 100) + ')';
                         if (j >= top || isNaN(j)) {
                             WD.body.style.opacity = 1;
-                            WD.body.style.filter = 'alpha(opacity=' + 100 + ')';
-                            //W.clearTimeout(to);
+                            WD.body.style.filter = 'alpha(opacity=100)';
                         }
                     },
                     ms * i,
@@ -370,7 +384,7 @@ JMVC.events = {
             return;
         }
         this.bind(el, tipo, function f(e) {
-            fn(e);
+            fn(e); 
             self.unbind(el, tipo, f);
         });
     },
@@ -401,15 +415,19 @@ JMVC.events = {
         });
     },
 
+    /**
+     * [onEsc description]
+     * @param  {Function} cb [description]
+     * @param  {[type]}   w  [description]
+     * @return {[type]}      [description]
+     */
     onEsc: function (cb, w) {
         w = w || JMVC.W;
-
         JMVC.events.bind(w.document, 'keyup', function (e) {
             if (e.keyCode == 27) {
                 cb.call(w, e);
             }
-        })
-        
+        });
     },
 
     /**
@@ -516,6 +534,7 @@ JMVC.events = {
     start: function(f) {
         _.events.Estart.push(f);
     },
+
     /**
      * [ description]
      * @return {[type]} [description]
@@ -527,6 +546,7 @@ JMVC.events = {
             _.events.Estart[i]();
         }
     },
+
     /**
      * [stopBubble description]
      * @param  {[type]} e [description]
@@ -540,6 +560,7 @@ JMVC.events = {
             e.cancelBubble = true;
         }
     },
+
     /**
      * [ description]
      * @param  {[type]} left [description]
@@ -551,6 +572,7 @@ JMVC.events = {
             W.scrollBy(left, top);
         }, 1);
     },
+
     /**
      * [ description]
      * @param  {[type]} left [description]
@@ -562,6 +584,7 @@ JMVC.events = {
             W.scrollTo(left, top);
         }, 1);
     },
+
     /**
      * [ description]
      * @param  {[type]} e [description]
@@ -581,6 +604,7 @@ JMVC.events = {
         }
         return touches;
     },
+
     /**
      * [ description]
      * @param  {[type]} el   [description]
@@ -596,6 +620,21 @@ JMVC.events = {
             return;
         }
         _.events.unbind(el, tipo, fn);
+    },
+
+    /**
+     * [unload description]
+     * @return {[type]} [description]
+     */
+    unload: function (){
+        this.bind(W, 'beforeunload', function (e) {
+            
+            var confirmationMessage = /\//;//'Are you sure to leave or reload this page?';//"\o/";
+            (e || window.event).returnValue = confirmationMessage;     //Gecko + IE
+            return confirmationMessage; 
+            
+            
+        });
     }
 };
 if (!Event.prototype.preventDefault) {

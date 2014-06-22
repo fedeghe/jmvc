@@ -6,7 +6,6 @@ _.css = {
     opera: navigator.userAgent.match(/opera\/([^\s]*)/i),
     mappedStyles: {},
     css2js_rule: function (s) {
-        'use strict';
         return s[0] === '-' ? s : s.replace(/-(\w)/g, function (str, $1) {
             return $1.toUpperCase();
         });
@@ -35,8 +34,8 @@ JMVC.css = {
     autoHeadings : function () {
         JMVC.head.addStyle(
             'h1{font-size:24px; line-height:48px; padding:24px 0px 12px;}'+
-            'h2{font-size:18px; line-height:36px; padding:18px 0px 9px;}'+
-            'h3{font-size:14px; line-height:28px; padding:14px 0px 7px;}'+
+            'h2{font-size:20px; line-height:36px; padding:18px 0px 9px;}'+
+            'h3{font-size:16px; line-height:28px; padding:14px 0px 7px;}'+
             'h4{font-size:12px; line-height:24px; padding:12px 0px 6px;}'+
             'h5{font-size:10px; line-height:20px; padding:10px 0px 5px;}'+
             'h6{font-size:8px; line-height:16px; padding:8px 0px 4px;}', true, true);
