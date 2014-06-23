@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.4 (rev. 1) build: 2095
+ * @version :  3.4 (rev. 1) build: 2105
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.1.0 & a love heap
- *         glued with 38 files on 23/6/2014 at 0:4:4
+ *         glued with 38 files on 23/6/2014 at 14:49:40
  *
  * All rights reserved.
  *
@@ -87,7 +87,7 @@
                 JMVC_DATE = '23/6/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '0:4:4',
+                JMVC_TIME = '14:49:40',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -1736,17 +1736,26 @@
             [MALTA] src/core/controller.js
             */
             /*--------
-            CONTROLLER          
+            CONTROLLER
             --------*/
+            
             // parent controller
+            //
             Controller = function () {
             };
+            
             // autoview
+            //
             Controller.prototype.view = false;
+            
             // for storing vars 
+            // 
             Controller.prototype.vars = {};
+            
             // this has no sense and must be removed
+            // 
             Controller.prototype.jmvc_routes = {};
+            
             /**
              * [index description]
              * @return {[type]} [description]
@@ -1754,6 +1763,7 @@
             Controller.prototype.index = function () {
                 W.alert('Default index action, write down a controller with at least an index action');
             };
+            
             /**
              * [addRoutes description]
              * @param {[type]} name [description]
@@ -1770,6 +1780,7 @@
                     }
                 }
             };
+            
             /**
              * [relocate description]
              * @param  {[type]} uri [description]
@@ -1782,6 +1793,7 @@
                     ~~ms || 0
                 );
             };
+            
             /**
              * [render description]
              * @param  {[type]} content [description]
@@ -1790,16 +1802,16 @@
              */
             Controller.prototype.render = function (content, cback) {
                 // allow only cback 
+                // 
                 if (typeof content === 'function') {
                     cback = content;
                     content = false;
                 }
-            
                 this.view = new View(content);
                 this.view.render(cback && typeof cback === 'function' ? {cback : cback} : null);
-            
                 return this;
             };
+            
             /**
              * [reset description]
              * @return {[type]} [description]
@@ -1808,7 +1820,7 @@
                 this.vars = {};
                 return this;
             };
-            //-----------------------------------------------------------------------------
+            
             /*
             [MALTA] src/core/model.js
             */
@@ -2105,9 +2117,9 @@
             /*
             [MALTA] src/core/dispatched.js
             */
-            /*--------
-            DISPATCHED
-            --------*/
+            /*-------
+            DISPACHED
+            -------*/
             
             // Dispatch url getting controller, action and parameters
             //          
@@ -2430,7 +2442,7 @@
                 JMVC_DEFAULT,
                 time_begin
             );
-            //-----------------------------------------------------------------------------
+            
             /*
             [MALTA] src/core/end.js
             */
