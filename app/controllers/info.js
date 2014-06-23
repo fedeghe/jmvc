@@ -56,7 +56,7 @@ JMVC.controllers.info = function () {
 			'legend': '<b>*</b> : mandatory parameter',
 			'backtotop' : backtotop,
 			'toplinks' : toplinks.join(' ~ '),
-			'logo' : 'jmvc_m1.png'
+			'logo' : 'jmvc_n2.png'
 		});
 		info_intro.set({
 			'review' : JMVC.vars.review,

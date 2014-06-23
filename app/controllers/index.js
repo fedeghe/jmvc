@@ -23,7 +23,7 @@ JMVC.controllers.index = function () {
 
 	this.action_index = function () {
 		
-		var logoimg = 'jmvc_m1.png';
+		var logoimg = 'jmvc_n2.png';
 
 		JMVC.dom.preloadImage(
 			JMVC.vars.baseurl + '/media/img/' + logoimg
