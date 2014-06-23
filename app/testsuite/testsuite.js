@@ -57,11 +57,12 @@ JMVC.extend('test', function () {
             // 
             for (j = 0; j < l; j++) {
                 // remove the right number of spaces at line begin
-                lines[j] = lines[j].replace(new RegExp("^\\\s{" + min + "}"), '');
+                //lines[j] = lines[j].replace(new RegExp("^\\\s{" + min + "}"), '');
+
                 out += JMVC.string.replaceAll(
                     outline, {
                         nline : noNumberLines ? '' : i,
-                        line : JMVC.htmlChars(lines[j] || ' ')
+                        line : '<span>' + JMVC.htmlChars(lines[j] || ' ') + '</span>'
                     }
                 );
                 i += 1;
