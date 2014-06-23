@@ -37,18 +37,18 @@ JMVC.controllers.arrayOp = function() {
 			JMVC.test.code(afunc.toString()+'\n\
 '+'\
 var arr = [\n\
-\t[1, [1, [1, [1, 2]]]],			// 0\n\
-\t2,					// 1\n\
-\ttrue,					// 2\n\
-\t\'hei\',					// 3\n\
-\t\'YOU\',					// 4\n\
-\tInfinity,				// 5\n\
-\t{\'o\' : \'s\', \'d\' : [1, 2, 3]},		// 6\n\
-\tnew RegExp(/\s/),			// 7\n\
-\t{},					// 8\n\
-\tfunction () {alert(\'hei\'); },	// 9\n\
-\t[{a : 1}, {b : 2}, {c : 3}, {d : {a : {b : {d : 1000}}}}],// 10\n\
-\tafunc					// 11\n\
+	[1, [1, [1, [1, 2]]]],			// 0\n\
+	2,					// 1\n\
+	true,					// 2\n\
+	\'hei\',					// 3\n\
+	\'YOU\',					// 4\n\
+	Infinity,				// 5\n\
+	{\'o\' : \'s\', \'d\' : [1, 2, 3]},		// 6\n\
+	new RegExp(/\s/),			// 7\n\
+	{},					// 8\n\
+	function () {alert(\'hei\'); },	// 9\n\
+	[{a : 1}, {b : 2}, {c : 3}, {d : {a : {b : {d : 1000}}}}],// 10\n\
+	afunc					// 11\n\
 ];\n\
 \n\
 '+JMVC.array.findRich.toString());

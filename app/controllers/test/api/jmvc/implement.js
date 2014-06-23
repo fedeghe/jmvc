@@ -18,17 +18,17 @@ JMVC.controllers.implement = function() {
 
 
 			JMVC.test.code('function Person(n) {\n'+
-				'	this.name = n;\n' + 
-				'};\n'+
-				'Person.prototype.talk = function(){\n'+
-				'	alert(this.name + \' says `foo`\');\n'+
-				'}\n'+
-				'Person.prototype.wc = function(){\n'+
-				'	alert(\'my name is \' + this.name.length + \' char long\');\n'+
-				'}\n'+
-				'Person.prototype.eat = function(){\n'+
-				'	alert(this.name + \' eats `foo`\');\n'+
-				'}\n'
+				'		this.name = n;\n' + 
+				'	};\n'+
+				'	Person.prototype.talk = function(){\n'+
+				'		alert(this.name + \' says `foo`\');\n'+
+				'	}\n'+
+				'	Person.prototype.wc = function(){\n'+
+				'		alert(\'my name is \' + this.name.length + \' char long\');\n'+
+				'	}\n'+
+				'	Person.prototype.eat = function(){\n'+
+				'		alert(this.name + \' eats `foo`\');\n'+
+				'	}\n'
 			);
 			
 			JMVC.test.testValue(
@@ -45,7 +45,7 @@ JMVC.controllers.implement = function() {
 
 			JMVC.test.describe('Check it using a JMVC.Interface instance');
 			JMVC.test.code('var interfacePASS = new JMVC.interface(["talk", "eat"]),\n'+
-				'    interfaceFAIL = new JMVC.interface(["foo", "nope"]);\n' + 
+				'interfaceFAIL = new JMVC.interface(["foo", "nope"]);\n' + 
 				'//now check\n' +
 				'interfacePASS.check(Person);\n'+
 				'interfaceFAIL.check(Person);\n'

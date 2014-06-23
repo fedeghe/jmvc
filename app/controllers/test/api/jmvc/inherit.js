@@ -29,22 +29,22 @@ JMVC.controllers.inherit = function () {
 
 
 			JMVC.test.code('function Person(n) {\n'+
-				'	this.name = n || \'unknown\';\n' + 
-				'};\n'+
-				'Person.prototype.talk = function () {\n'+
-				'	alert(this.name + \' says `foo`\');\n'+
-				'};\n'+
-				'Person.prototype.wc = function () {\n'+
-				'	alert(\'my name is \' + this.name.length + \' char long\');\n'+
-				'};\n'+
-				'Person.prototype.eat = function () {\n'+
-				'	alert(this.name + \' eats `foo`\');\n'+
-				'};\n\n'+
-				'function Developer() {};\n' +
-				'JMVC.inherit(Developer, Person);\n' +
-				'Developer.prototype.code = function () {\n' +
-				'	console.debug(this.name + \' is coding hard\');\n' +
-				'}'
+				'		this.name = n || \'unknown\';\n' + 
+				'	};\n'+
+				'	Person.prototype.talk = function () {\n'+
+				'		alert(this.name + \' says `foo`\');\n'+
+				'	};\n'+
+				'	Person.prototype.wc = function () {\n'+
+				'		alert(\'my name is \' + this.name.length + \' char long\');\n'+
+				'	};\n'+
+				'	Person.prototype.eat = function () {\n'+
+				'		alert(this.name + \' eats `foo`\');\n'+
+				'	};\n\n'+
+				'	function Developer() {};\n' +
+				'	JMVC.inherit(Developer, Person);\n' +
+				'	Developer.prototype.code = function () {\n' +
+				'		console.debug(this.name + \' is coding hard\');\n' +
+				'	}'
 			);
 
 			
