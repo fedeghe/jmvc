@@ -654,11 +654,26 @@ JMVC.dom = {
      * @param  {[type]} coming [description]
      * @return {[type]}        [description]
      */
-    swap : function (going, coming) {
+    replace : function (going, coming) {
         var display = coming.style.display;
         coming.style.display = 'none';
         this.insertAfter(coming, going);
         this.remove(going) && (coming.style.display = display);
+    },
+
+    /**
+     * Swap two existing nodes
+     * @param  {[type]} elm1 [description]
+     * @param  {[type]} elm2 [description]
+     * @return {[type]}      [description]
+     */
+    swap : function (elm1, elm2) {
+        var parent1 = elm1.parentNode,
+            next1 = elm1.nextSibling,
+            parent2 = elm2.parentNode,
+            next2 = elm2.nextSibling;
+        parent1.insertBefore(elm2, next1);
+        parent2.insertBefore(elm1, next2);
     },
 
     /**
