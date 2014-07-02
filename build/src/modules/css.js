@@ -41,6 +41,10 @@ JMVC.css = {
             'h6{font-size:8px; line-height:16px; padding:8px 0px 4px;}', true, true);
     },
 
+    beResponsive : function () {
+        JMVC.dom.addClass(JMVC.WDB, 'resp');
+    },
+
 
     /**
      * [mappedStyle description]
@@ -236,6 +240,8 @@ JMVC.css = {
         var tmp = JMVC.dom.find('#pest-css'),
             info = document.createElement('div'),
             enabled = true,
+            initialPosition = 0,
+            positions = ['tl','bl','br','tr'],
 
             fnshow = function (e) {
                 if (!enabled) {
@@ -302,12 +308,16 @@ JMVC.css = {
             fnhide = function () {
                 JMVC.dom.remove(info);
             };
-        info.className = 'report respfixed';
+
+        info.className = 'report respfixed ' + positions[initialPosition];
         info.style.position = 'fixed';
         info.style.zIndex = 999;
-        info.style.top = '0px';
-        info.style.left = '0px';
 
+        JMVC.events.bind(info, 'mouseover', function () {
+            var old = initialPosition;
+            initialPosition = (++initialPosition) % positions.length;
+            JMVC.dom.switchClass(info, positions[old], positions[initialPosition]);
+        })
         
         JMVC.WD.body.appendChild(info);
 
@@ -321,6 +331,10 @@ JMVC.css = {
                 '*:hover {outline : 1px solid red !important; opacity:1 }' +
                 '.report {padding:10px; position:fixed; margin:10px; border:1px solid #333;}' +
                 '.report, .report *{opacity:1; line-height:14px; font-family:verdana, sans; font-size:9px; outline:0 !important; background-color:white;}' +
+                '.report.tl{top:0px; left:0px;}' +
+                '.report.tr{top:0px; right:0px;}' +
+                '.report.bl{bottom:0px; left:0px;}' +
+                '.report.br{bottom:0px; right:0px;}' +
                 'html , body , .report, .report *{opacity: 1}'
             );
             JMVC.events.bind(JMVC.WD, 'mousemove', fnshow);
