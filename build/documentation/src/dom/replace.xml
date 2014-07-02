@@ -1,0 +1,10 @@
+<function>
+    <signature name="replace">JMVC.dom.replace(Element outNode, Element inNode)</signature>
+    <description>Replace outNode with inNode</description>
+    <params>
+        <param name="outNode">The node that will be removed</param>
+        <param name="inNode">The node that will replace the removed one</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>

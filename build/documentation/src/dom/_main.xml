@@ -29,6 +29,7 @@
     $$src/dom/remove.xml$$
     $$src/dom/removeAttribute.xml$$
     $$src/dom/removeClass.xml$$
+    $$src/dom/replace.xml$$
     $$src/dom/swap.xml$$
     $$src/dom/switchClass.xml$$
     $$src/dom/val.xml$$
