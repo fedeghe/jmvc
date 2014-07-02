@@ -1,0 +1,1 @@
+JMVC.hook({onAfterRender : JMVC.head.linkin});
