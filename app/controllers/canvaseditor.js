@@ -2,6 +2,10 @@ JMVC.controllers.canvaseditor = function () {
     'use strict';
     this.action_index = function (p) {
 
+        JMVC.events.loadify(1000);
+        JMVC.head.title('Canvas editor');
+
+
         var default_version = 0,
             version = p.v || 0,
             editors = [
@@ -21,9 +25,7 @@ JMVC.controllers.canvaseditor = function () {
             editors[version],
             'core/lib/image/image'
         );
-
-        JMVC.events.loadify(1000);
-        JMVC.head.title('Canvas editor');
+        
         //
         // a minimal wrapper view
         JMVC.getView('vacuum')

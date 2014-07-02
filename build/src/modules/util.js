@@ -134,6 +134,7 @@ JMVC.util = {
     isTypeOf : function (el, type) {
         return typeof el === type;
     },
+
     /**
      * [ description]
      * @param  {[type]} ) {return      +new Date( [description]

@@ -34,7 +34,8 @@ JMVC.controllers.widgzard = function () {
 
         JMVC.css.autoHeadings();
 
-        document.body.className = 'resp';
+        //document.body.className = 'resp';
+        JMVC.css.beResponsive();
 
         function getConfig() {
             return {
@@ -366,7 +367,8 @@ JMVC.controllers.widgzard = function () {
         JMVC.head.addStyle('/media/css/widgzard.css');
 
 
-        JMVC.dom.addClass(JMVC.WD.body, 'resp');
+        //JMVC.dom.addClass(JMVC.WD.body, 'resp');
+        JMVC.css.beResponsive();
         
 
 

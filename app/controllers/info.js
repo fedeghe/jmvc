@@ -36,10 +36,10 @@ JMVC.controllers.info = function () {
 				testsuite : 'Test suite',
 				why : 'Why'
 			},
-			t;
+			i;
 
-		for (t in toplinksdata) {
-			toplinks.push('<a href="#' + t + '" class="round4">' + toplinksdata[t] + '</a>');
+		for (i in toplinksdata) {
+			toplinks.push('<a href="#' + i + '" class="round4">' + toplinksdata[i] + '</a>');
 		}
 
 		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/info.css', true);// parsed

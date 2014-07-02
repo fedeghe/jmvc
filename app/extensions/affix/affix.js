@@ -34,10 +34,15 @@ JMVC.extend('affix', {
 
 		var tmp = new function (opt) {
 			this.html = opt.html ||'no content';
+
 			this.top = opt.init || 100;
+
 			this.mintop = opt.min || 10;
+
 			this.style = opt.style || '';
+
 			this['class'] = opt['class'] || '';
+			
 			this.node = JMVC.dom.create('div', {
 					//'style' : 'position:absolute;top:' + this.top + 'px;' + this.style,
 					'style' : this.style,

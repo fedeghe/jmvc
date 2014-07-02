@@ -10,6 +10,7 @@ JMVC.extend('calendar',{
 		//JMVC.debug(this.vars.css_path);
 		JMVC.head.addStyle(JMVC.calendar.vars.css_path + '/default.css');
 	},
+	
 	create : function(options){
 		var self = JMVC.calendar,
 			getDaysInMonth,
