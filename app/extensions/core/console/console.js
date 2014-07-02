@@ -329,8 +329,14 @@ JMVC.extend('console', {
                         h : vals[0] || defaults.h,
                         j : vals[1] || defaults.j,
                         c : vals[2] || defaults.c,
-                        l : JMVC.dom.find('#options').value
-                    }) + (hash ? "#" + hash : '');
+                        l : JMVC.dom.find('#options').value || ''
+                    }) + (hash ? "#" + hash : ''),
+
+                    l = url.length,
+                    limit = 2047;
+                if (l > limit) {
+                    alert('Url length : ' + l + "\n"  + "It seems like all content cannot be safely put in a url,\nit WON`T WORK in some browsers.");
+                }
                 prompt("Copy the following url", url);
             }
 
@@ -364,9 +370,6 @@ JMVC.extend('console', {
                     scriptTag;
 
                 ///reset iframe
-                
-
-
                 scriptTag = document.createElement('script');
                 scriptTag.innerHTML = j;
 
@@ -447,8 +450,6 @@ JMVC.extend('console', {
                 }
             }
 
-
-
             //save scroll vertical position
             JMVC.console._.scroll = scrollTop;
 
@@ -470,7 +471,6 @@ JMVC.extend('console', {
             if(JMVC.p.l) {
                 JMVC.dom.find('#options').value = decodeURIComponent(JMVC.p.l);
             }
-
 
             if (tab && tab.match(/html|css|javascript|preview|options/)) {
                 JMVC.dom.addClass(JMVC.dom.find('#' + tab), 'active');
@@ -495,8 +495,6 @@ JMVC.extend('console', {
                 JMVC.css.show(JMVC.dom.find('#reset'));
                 JMVC.css.show(JMVC.dom.find('#resetall'));
             }
-
-
 
             JMVC.events.bind(JMVC.dom.find('.ablock'), 'click', function (e) {
                 var butt = JMVC.dom.find(this),
