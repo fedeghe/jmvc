@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.4 (rev. 1) build: 2106
+ * @version :  3.5 (rev. 1) build: 2203
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
- * @file : built with Malta v.1.1.0 & a love heap
- *         glued with 38 files on 24/6/2014 at 1:56:46
+ * @file : built with Malta v.1.1.1 & a love heap
+ *         glued with 38 files on 3/7/2014 at 1:11:3
  *
  * All rights reserved.
  *
@@ -38,18 +38,17 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-//
-//
-(function (W) {
-    //
+
+(function (W, undefined) {
+
     // one for all the build
     'use strict';
-    //
+
     // local reference for window.document
     // local reference for current window.document.location
     var WD = W.document,
         WDL = WD.location,
-        //
+
         // this function returns the JMVC object, globalized, after doing some stuff
         // @return {object literal} $JMVC inner object
         JMVC = W.JMVC = (function () {
@@ -78,16 +77,16 @@
                 $JMVC,
             
                 // version (vars.json)
-                JMVC_VERSION = '3.4',
+                JMVC_VERSION = '3.5',
             
                 // review (vars.json)
                 JMVC_REVIEW = '1',
             
                 // review (vars.json)
-                JMVC_DATE = '24/6/2014',
+                JMVC_DATE = '3/7/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '1:56:46',
+                JMVC_TIME = '1:11:3',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -2436,11 +2435,13 @@
             */
             return $JMVC;
         })(),
-        //
+
         // private ns for modules
         _ = {};
+
+    /////////////////////
+    // MANDATORY MODULES
     //
-    // mandatory modules
     /*
     [MALTA] src/modules/io.js
     */
@@ -2845,6 +2846,7 @@
         isTypeOf : function (el, type) {
             return typeof el === type;
         },
+    
         /**
          * [ description]
          * @param  {[type]} ) {return      +new Date( [description]
@@ -3560,11 +3562,26 @@
          * @param  {[type]} coming [description]
          * @return {[type]}        [description]
          */
-        swap : function (going, coming) {
+        replace : function (going, coming) {
             var display = coming.style.display;
             coming.style.display = 'none';
             this.insertAfter(coming, going);
             this.remove(going) && (coming.style.display = display);
+        },
+    
+        /**
+         * Swap two existing nodes
+         * @param  {[type]} elm1 [description]
+         * @param  {[type]} elm2 [description]
+         * @return {[type]}      [description]
+         */
+        swap : function (elm1, elm2) {
+            var parent1 = elm1.parentNode,
+                next1 = elm1.nextSibling,
+                parent2 = elm2.parentNode,
+                next2 = elm2.nextSibling;
+            parent1.insertBefore(elm2, next1);
+            parent2.insertBefore(elm1, next2);
         },
     
         /**
@@ -4518,6 +4535,68 @@
             attrs.rel = rel;
             JMVC.dom.add(this.element, 'link', attrs);
         },
+    
+        /**
+         * [linkin description]
+         * @return {[type]} [description]
+         */
+        linkin : function () {
+    
+            if(("standalone" in window.navigator) && window.navigator.standalone){
+                JMVC.events.bind(document, 'click', function(event) {
+                    var trg = event.target;
+                    while(trg.nodeName !== "A" && trg.nodeName !== "HTML") {
+                        trg = trg.parentNode;
+                    }
+                    if ('href' in trg){
+                        event.preventDefault();
+                        document.location.href = trg.href;
+                    }
+                });
+    
+                // now add bottom navigation
+                // 1) add body margin-bottom
+                JMVC.css.style(JMVC.WDB, 'margin-bottom', '15px');
+                // 2) create navigation div
+                var d = document.createElement('div'),
+                    secLeft = document.createElement('div'),
+                    secCenter = document.createElement('div'),
+                    secRight = document.createElement('div'),
+                    linkBack = document.createElement('div'),
+                    linkReload = document.createElement('div'),
+                    linkForward = document.createElement('div');
+    
+                JMVC.dom.addClass(d, 'jmvc-spa-bottom-navigation group');
+                JMVC.dom.addClass(secLeft, 'back cnt respfixed');
+                JMVC.dom.addClass(secCenter, 'reload cnt respfixed');
+                JMVC.dom.addClass(secRight, 'forward cnt respfixed');
+    
+                JMVC.dom.append(secLeft, linkBack);
+                JMVC.dom.append(secCenter, linkReload);
+                JMVC.dom.append(secRight, linkForward);
+                JMVC.dom.append(d, secLeft);
+                JMVC.dom.append(d, secCenter);
+                JMVC.dom.append(d, secRight);
+    
+    
+                
+                
+                // 3) bind it
+                JMVC.events.bind(linkBack, 'click', function(){history.back();});
+                JMVC.events.bind(linkReload, 'click', function(){document.location.href = document.location.href;});
+                JMVC.events.bind(linkForward, 'click', function(){history.forward();});
+    
+                // 4) append it 
+                JMVC.dom.append(JMVC.WDB, d);
+            }
+        
+            
+    
+            
+    
+           
+        },
+    
         /**
          * [meta description]
          * @param  {[type]} name    [description]
@@ -4627,6 +4706,10 @@
                 'h4{font-size:12px; line-height:24px; padding:12px 0px 6px;}'+
                 'h5{font-size:10px; line-height:20px; padding:10px 0px 5px;}'+
                 'h6{font-size:8px; line-height:16px; padding:8px 0px 4px;}', true, true);
+        },
+    
+        beResponsive : function () {
+            JMVC.dom.addClass(JMVC.WDB, 'resp');
         },
     
     
@@ -4824,6 +4907,8 @@
             var tmp = JMVC.dom.find('#pest-css'),
                 info = document.createElement('div'),
                 enabled = true,
+                initialPosition = 0,
+                positions = ['tl','bl','br','tr'],
     
                 fnshow = function (e) {
                     if (!enabled) {
@@ -4890,12 +4975,16 @@
                 fnhide = function () {
                     JMVC.dom.remove(info);
                 };
-            info.className = 'report respfixed';
+    
+            info.className = 'report respfixed ' + positions[initialPosition];
             info.style.position = 'fixed';
             info.style.zIndex = 999;
-            info.style.top = '0px';
-            info.style.left = '0px';
     
+            JMVC.events.bind(info, 'mouseover', function () {
+                var old = initialPosition;
+                initialPosition = (++initialPosition) % positions.length;
+                JMVC.dom.switchClass(info, positions[old], positions[initialPosition]);
+            })
             
             JMVC.WD.body.appendChild(info);
     
@@ -4909,6 +4998,10 @@
                     '*:hover {outline : 1px solid red !important; opacity:1 }' +
                     '.report {padding:10px; position:fixed; margin:10px; border:1px solid #333;}' +
                     '.report, .report *{opacity:1; line-height:14px; font-family:verdana, sans; font-size:9px; outline:0 !important; background-color:white;}' +
+                    '.report.tl{top:0px; left:0px;}' +
+                    '.report.tr{top:0px; right:0px;}' +
+                    '.report.bl{bottom:0px; left:0px;}' +
+                    '.report.br{bottom:0px; right:0px;}' +
                     'html , body , .report, .report *{opacity: 1}'
                 );
                 JMVC.events.bind(JMVC.WD, 'mousemove', fnshow);
@@ -5955,7 +6048,11 @@
         }
     }
     //
-    // render
+    // modules end
+    ///////////////
+
+    //////////////////
+    // TIME TO RENDER
     /*
     [MALTA] src/core/render.js
     */
@@ -6021,4 +6118,4 @@
 
 //-------------------------------------------------------------------------[ THE END ]
 
-
+/* the endline */

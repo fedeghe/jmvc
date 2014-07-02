@@ -1,16 +1,15 @@
 $$src/head.js$$
-//
-//
-(function (W) {
-    //
+
+(function (W, undefined) {
+
     // one for all the build
     'use strict';
-    //
+
     // local reference for window.document
     // local reference for current window.document.location
     var WD = W.document,
         WDL = WD.location,
-        //
+
         // this function returns the JMVC object, globalized, after doing some stuff
         // @return {object literal} $JMVC inner object
         JMVC = W.JMVC = (function () {
@@ -33,11 +32,13 @@ $$src/head.js$$
             $$src/core/cleanup.js$$
             $$src/core/end.js$$
         })(),
-        //
+
         // private ns for modules
         _ = {};
+
+    /////////////////////
+    // MANDATORY MODULES
     //
-    // mandatory modules
     $$src/modules/io.js$$
     $$src/modules/util.js$$
     $$src/modules/dom.js$$
@@ -53,10 +54,14 @@ $$src/head.js$$
     $$src/modules/dnd.js$$
     $$src/modules/minishim.js$$
     //
-    // render
+    // modules end
+    ///////////////
+
+    //////////////////
+    // TIME TO RENDER
     $$src/core/render.js$$
     $$src/amd.js$$
 //
 })(this);
 $$src/foot.js$$
-
+/* the endline */

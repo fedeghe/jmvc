@@ -151,6 +151,28 @@ table {
   overflow: hidden;
   content: ".";
 }
+/* MEANT TO BE USED IN PARENT CONTAINER OF FLOATING ELEMENTS (>=IE8) */
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/*
+* OTHERWISE, IF IE7 IS NEEDED USE THE FOLLOWING
+*    .group:before,
+*    .group:after {
+*        content: "";
+*        display: table;
+*    } 
+*    
+*    .group:after {
+*        clear: both;
+*    }
+*
+*    .group {
+*        zoom: 1;
+*   }
+*/
 body {
   max-width: 100% !important;
   zoom: 1;
@@ -682,4 +704,56 @@ h6{font-size:8px; line-height:16px; padding:8px 0px 4px;}
   -moz-border-radius-bottomright: 0px;
   -webkit-border-bottom-right-radius: 0px;
   border-bottom-right-radius: 0px;
+}
+.jmvc-spa-bottom-navigation {
+  position: fixed;
+  height: 30px;
+  background-color: black;
+  border-top: 1px solid #111;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 999;
+}
+.jmvc-spa-bottom-navigation .back {
+  text-align: left;
+}
+.jmvc-spa-bottom-navigation .reload {
+  text-align: center;
+}
+.jmvc-spa-bottom-navigation .forward {
+  text-align: right;
+}
+.jmvc-spa-bottom-navigation div.cnt {
+  width: 33.3%;
+  display: inline-block;
+}
+.jmvc-spa-bottom-navigation div.cnt div {
+  width: 30px !important;
+  height: 30px !important;
+  background-image: url("../../img/icons/icons.jpg");
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  background-repeat: no-repeat;
+}
+.jmvc-spa-bottom-navigation div div {
+  opacity: 0.5;
+  cursor: pointer;
+  content: ' ';
+}
+.jmvc-spa-bottom-navigation div div:hover,
+.jmvc-spa-bottom-navigation div div.active {
+  opacity: 1;
+}
+.jmvc-spa-bottom-navigation .back div {
+  background-position: -93px -20px;
+  margin-left: 10px;
+}
+.jmvc-spa-bottom-navigation .reload div {
+  background-position: -424px -560px;
+}
+.jmvc-spa-bottom-navigation .forward div {
+  background-position: -68px -20px;
+  margin-right: 10px;
 }
