@@ -67,12 +67,12 @@ JMVC.extend('plotter', {
 				}
 				that.arr.push([x2, y2]);
 			},
-			plot : function (node, positions, character, top, left) {
+			plot : function (node, positions, character, left, top) {
 				for (var i = 0, l = positions.length; i < l; i ++) {
-					JMVC.gra.plotarr(node, positions[i], i, character, top, left);
+					JMVC.gra.plotarr(node, positions[i], i, character, left, top);
 				}
 			},
-			plotarr : function (node, positions, letter, character, top, left, scale) {
+			plotarr : function (node, positions, letter, character, left, top, scale) {
 				var i = 0,
 					l = positions.length,
 					tmp;
@@ -82,8 +82,8 @@ JMVC.extend('plotter', {
 					tmp = JMVC.dom.create('span', {
 							'class' : 'point ' + letter,
 							'style' : JMVC.string.replaceAll('top:%top%px;left:%left%px', {
-								top : ~~ (positions[i][0] + top) * scale,
-								left : ~~ (positions[i][1] + left) * scale
+								left : ~~ (positions[i][0] + left) * scale,
+								top : ~~ (positions[i][1] + top) * scale
 							})
 						}, character);
 					JMVC.dom.append(node, tmp);
