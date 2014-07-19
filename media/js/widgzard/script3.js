@@ -23,6 +23,17 @@ JMVC.head.addStyle('/media/css/widgzard/sample3.css');
 
     JMVC.core.widgzard.render({
         content : [{
+            content:[{
+                tag : 'button',
+                html : 'back',
+                cb : function () {
+                    var self = this;
+                    JMVC.events.on(self, 'click', function () {
+                        JMVC.head.goto('widgzard', 'sample');
+                    })
+                }
+            }]
+        },{
             style : {border : '3px solid green', overflow : 'hidden'},
             attrs : {
                 'class':'checker'

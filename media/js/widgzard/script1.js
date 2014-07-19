@@ -10,8 +10,18 @@ JMVC.core.widgzard.render({
         document.body.style.backgroundColor = 'gainsboro';
     },
     
-    content : [
-        {
+    content : [{
+            content:[{
+                tag : 'button',
+                html : 'back',
+                cb : function () {
+                    var self = this;
+                    JMVC.events.on(self, 'click', function () {
+                        JMVC.head.goto('widgzard', 'sample');
+                    })
+                }
+            }]
+        },{
             content : [
                 {
                     html : 'tab one',
@@ -67,17 +77,17 @@ JMVC.core.widgzard.render({
                     hide(cnt3, tng3);
                 }
 
-                JMVC.events.bind(tng1, 'click', function () {
+                JMVC.events.on(tng1, 'click', function () {
                     hideall();
                     show(cnt1, tng1);
                 });
 
-                JMVC.events.bind(tng2, 'click', function () {
+                JMVC.events.on(tng2, 'click', function () {
                     hideall();
                     show(cnt2, tng2);
                 });
 
-                JMVC.events.bind(tng3, 'click', function () {
+                JMVC.events.on(tng3, 'click', function () {
                     hideall();
                     show(cnt3, tng3);
                 });
