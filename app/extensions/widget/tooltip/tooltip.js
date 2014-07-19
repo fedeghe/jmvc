@@ -55,16 +55,16 @@ JMVC.widget.Tooltip = function (node, html, styled, options) {
             styled = styled || {};
             styled.display = '';
 
-            if (cursorPosition[0] - scrollingPosition.scrollLeft + 10 + tip.offsetWidth > viewportSize[0] - 25) {
-                styled.left = scrollingPosition.scrollLeft + viewportSize[0] - 25 - tip.offsetWidth + "px";
+            if (cursorPosition[0] - scrollingPosition.scrollLeft + 10 + tip.offsetWidth > viewportSize.width - 25) {
+                styled.left = scrollingPosition.scrollLeft + viewportSize.width - 25 - tip.offsetWidth + "px";
             } else {
                 styled.left = cursorPosition[0] + 10 + "px"; 
             }
-            if (cursorPosition[1] - scrollingPosition.scrollTop + 10 + tip.offsetHeight > viewportSize[1] - 25) {
-                if (e.clientX > (viewportSize[0] - 25 - tip.offsetWidth)) {
+            if (cursorPosition[1] - scrollingPosition.scrollTop + 10 + tip.offsetHeight > viewportSize.height - 25) {
+                if (e.clientX > (viewportSize.width - 25 - tip.offsetWidth)) {
                     styled.top = cursorPosition[1] - tip.offsetHeight - 10 + "px";
                 } else {
-                    styled.top = scrollingPosition.scrollTop + viewportSize[1] - 25 - tip.offsetHeight + "px"; 
+                    styled.top = scrollingPosition.scrollTop + viewportSize.height - 25 - tip.offsetHeight + "px"; 
                 } 
             } else {
                 styled.top = cursorPosition[1] + 10 + "px"; 
@@ -117,7 +117,7 @@ JMVC.widget.Tooltip = function (node, html, styled, options) {
         '</div>';
         html = more + html;
     } else {
-        JMVC.events.bind(node,
+        JMVC.events.on(node,
             'mouseout',
             function (e) {
                 priv.hideTip(e);
@@ -125,7 +125,7 @@ JMVC.widget.Tooltip = function (node, html, styled, options) {
         );
     }
     
-    JMVC.events.bind(
+    JMVC.events.on(
         node,
         'mouseover',
         function (e1) {
@@ -133,7 +133,7 @@ JMVC.widget.Tooltip = function (node, html, styled, options) {
             //            
             //in case add event to the header closer
             if (stayopen) {
-                JMVC.events.bind(
+                JMVC.events.on(
                     JMVC.dom.find('#' + hidetipId),
                     'click',
                     function (e2) {
@@ -145,7 +145,7 @@ JMVC.widget.Tooltip = function (node, html, styled, options) {
     );
     
     if (typeof options != 'undefined' && options.follow == true) {
-        JMVC.events.bind(
+        JMVC.events.on(
             node,
             'mousemove',
             function (e) {

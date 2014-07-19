@@ -5,6 +5,9 @@ JMVC.extend('screensaver', {
         
         var self = JMVC.screensaver,
             baseStyle = '';
+            
+        
+
         self.outer = JMVC.dom.add(JMVC.WD.body, 'div', {'style' : 'display:none;z-index:900;position:absolute;left:0px;right:0px;top:0px;bottom:0px'});
         self.inner = JMVC.dom.add(self.outer, 'div', {'style' : 'z-index:999;position:relative;height:100%;width:100%'});
 
@@ -15,13 +18,15 @@ JMVC.extend('screensaver', {
             JMVC.css.style(self.top, {height : j + 'px'});                                 
             JMVC.css.style(self.bottom, {height : j + 'px'});
         };
+        
     },
 
     _shut : function () {
+        
         JMVC.events.disable_scroll();
         
         JMVC.screensaver.scrolltop = JMVC.screen.getScreenData().scrollTop;
-        JMVC.screensaver.height = ~~JMVC.screen.getViewportSize()[1];
+        JMVC.screensaver.height = ~~JMVC.screen.getViewportSize().height;
 
         var done = false,
             self = JMVC.screensaver,
@@ -51,6 +56,7 @@ JMVC.extend('screensaver', {
     },
     
     _up : function () {
+        
         var self = JMVC.screensaver;
         JMVC.events.enable_scroll();
         self._modH(0);
@@ -60,12 +66,11 @@ JMVC.extend('screensaver', {
         this._up();
     },
     on : function (timeout) {
-        console.debug(this)
+
         timeout = ~~timeout || 5000;
         var self = this,
             to,
-            setT = function (){
-                // console.debug('set');
+            setT = function () {
                 to = JMVC.W.setTimeout(function () {
                     self._shut();    
                 }, timeout);
@@ -76,10 +81,10 @@ JMVC.extend('screensaver', {
                 setT();
             };
         setT();
-        JMVC.events.bind(JMVC.WD.body, 'mousemove', backT);
-        JMVC.events.bind(JMVC.WD.body, 'click', backT);
-        JMVC.events.bind(JMVC.WD.body, 'keyup', backT);
-        JMVC.events.bind(JMVC.W, 'scroll', backT);
+        JMVC.events.on(JMVC.WD.body, 'mousemove', backT);
+        JMVC.events.on(JMVC.WD.body, 'click', backT);
+        JMVC.events.on(JMVC.WD.body, 'keyup', backT);
+        JMVC.events.on(JMVC.W, 'scroll', backT);
     }
 
 });

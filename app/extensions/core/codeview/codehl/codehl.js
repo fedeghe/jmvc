@@ -28,7 +28,7 @@ JMVC.hook({'onBeforeRender' : function(cnt){
 							'lineclass' : 'line',
 							'ln' : i + '',
 							'linecode' : el
-						}, '%', '%', ' ');
+						}, {delim:['%', '%']});
 						code += y;
 					});
 					this.markup  = '<pre><ul class="code">' + code + '</ul></pre>';

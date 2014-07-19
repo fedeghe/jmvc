@@ -26,7 +26,7 @@ JMVC.extend('snow', {
 			body_dim = target == "body" ? 
 					JMVC.screen.getViewportSize()
 					:
-					new Array(JMVC.num.getNum(JMVC.css.width(target)), JMVC.num.getNum(JMVC.css.height(target))),
+					{width : JMVC.num.getNum(JMVC.css.width(target), height : JMVC.num.getNum(JMVC.css.height(target))},
 			
 			x = false,
 			speeds = [ 5, 20, 21, 22, 23],
@@ -36,8 +36,8 @@ JMVC.extend('snow', {
 			directions = [-5,5],
 			opacities = [0.1,1],
 
-			body_width = body_dim[0]-20,
-			body_height = body_dim[1]-20,
+			body_width = body_dim.width - 20,
+			body_height = body_dim.height - 20,
 
 			count = 0,
 

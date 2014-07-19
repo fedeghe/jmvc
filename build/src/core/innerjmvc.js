@@ -11,6 +11,43 @@ jmvc = {
     },
 
     /**
+     * [code description]
+     * @return {[type]} [description]
+     */
+    code  : function () {
+
+        var padding = 20,
+            w = window.open("","","scrollbar=1,top=" + padding + ",left=" + padding + ",width=" + (window.innerWidth - padding * 2) ), //  + ",height=" + (window.innerHeight - padding * 2)),
+            html = window.document.documentElement.outerHTML,
+            elements = html.replace(/\n/g, '').split(/(<[^>]+>)/ig),
+            out = '',
+            tb = 0;
+        
+        for (var i = 0, l = elements.length; i < l; i++) {
+            if (elements[i].match(/^[\s|\t|\r]*$/)) continue;
+
+            //ending
+
+            
+            //console.debug(elements[i].match(/<\/|<meta|<link/))
+            out += (new Array(tb + 1)).join("\t") + elements[i] + "\n";
+
+            if (!elements[i].match(/<meta|<link/)) {
+                tb = tb + (elements[i].match(/<\//) ? -1 : 1);    
+            }
+        }
+        console.debug(out);
+
+        
+        console.debug(window.document.documentElement.outerHTML.replace(/\n/g, '').split(/(<[^>]+>)/ig));
+
+        
+        w.document.body.style.overflow = 'scroll';
+        w.document.body.innerHTML = '<pre style="overflow:scroll">' + JMVC.htmlChars(out) + '</pre>';
+        //window.document.documentElement.outerHTML
+    },
+
+    /**
      * [debug description]
      * @param  {[type]} msg [description]
      * @return {[type]}     [description]
@@ -147,8 +184,7 @@ jmvc = {
         }
         //
         // ensures that the target namespace exists 
-        var lab = 'JMVC.' + label,
-            trg = jmvc.ns.make(lab);
+        var trg = jmvc.ns.make('JMVC.' + label);
         //
         //let the literal straigth inherith from Extension Object
         Extension.call(trg);
@@ -157,7 +193,14 @@ jmvc = {
         if (typeof obj === 'function') {
             return jmvc.extend(label, obj());
         }
-        //
+
+        (function(t, o) {
+            var j;
+            for (j in o) {
+                o.hasOwnProperty(j) && t[j] === undefined && (t[j] = o[j]);
+            }
+        })(trg, obj);
+
         // and set a flag, that can be switched off as far as
         // if the object passed has a initCheck function
         // the extension will take place only if the initCheck
@@ -167,22 +210,16 @@ jmvc = {
             if (!obj.initCheck.call($JMVC)) {
                 return false;
             }
-            trg.initCheck = null;
+            obj.initCheck = null;
         }
-        //
-        (function(t, o) {
-            var j;
-            for (j in o) {
-                o.hasOwnProperty(j) && t[j] === undefined && (t[j] = o[j]);
-            }
-        })(trg, obj);
         //
         //maybe init, in case call it
-        if (typeof trg.init === 'function') {
-            trg.init.call($JMVC);
+        if (typeof obj.init === 'function') {
+            obj.init.call($JMVC);
             //and clean
-            trg.init = null;
+            obj.init = null;
         }
+        
         //
         return trg;
     },
@@ -582,6 +619,7 @@ jmvc = {
             if ('before_' + $JMVC.a in ctrl && typeof ctrl['before_' + $JMVC.a] === 'function') {
                 ctrl['before_' + $JMVC.a]($JMVC.p);
             }
+
             /***************************/
             // REAL ACTION
             // check actual action
@@ -605,12 +643,18 @@ jmvc = {
             //
             // @action hook 
             if ('after_' + $JMVC.a in ctrl && typeof ctrl['after_' + $JMVC.a] === 'function') {
-                ctrl['after_' + $JMVC.a]($JMVC.p);
+                // ensure to happen after rendering
+                $JMVC.hook({onAfterRender : function () {
+                    ctrl['after_' + $JMVC.a]($JMVC.p);
+                }});
             }
             //
             // @global hook
             if ('after' in ctrl && typeof ctrl.after === 'function') {
-                ctrl.after($JMVC.p);
+                // ensure to happen after rendering
+                $JMVC.hook({onAfterRender : function () {
+                    ctrl.after($JMVC.p);
+                }});
             }
 
             //////////////////////////
@@ -659,9 +703,7 @@ jmvc = {
                 } else {
 
                     extNS = arg[i].split(US);
-                    
                     extNSlength = extNS.length;
-
                     extname = extNS[extNSlength - 1];
 
                     path = JMVC.vars.baseurl +
@@ -686,7 +728,7 @@ jmvc = {
                     $JMVC.extensions[arg[i]] = arg[i];
                 }
             }
-            i += 1;
+            i++;
         }
         cb && cb();
     },

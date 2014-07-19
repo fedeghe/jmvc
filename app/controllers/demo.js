@@ -6,7 +6,7 @@ JMVC.controllers.demo = function() {
 
 	/* test a route */
 	this.addRoutes({
-		'ndl': 'flag',
+		ndl: 'flag',
 		f: 'flag'
 	});
 
@@ -18,6 +18,8 @@ JMVC.controllers.demo = function() {
 		//JMVC.events.loadify(1000);
 		self.startController = JMVC.util.now();
 		JMVC.debug(-2)
+		
+		
 	};
 
 	this.before_index = this.before_flag = function() {
@@ -31,7 +33,8 @@ JMVC.controllers.demo = function() {
 	};
 
 	this.after = function () {
-		JMVC.debug(2)
+		
+		JMVC.debug(2);
 		self.endController = JMVC.util.now();
 		JMVC.debug('Controller Time: ' + ((self.endController - self.startController) || 0));
 		JMVC.debug('Action Time: ' + ((self.endAction - self.startAction) || 0));
@@ -39,12 +42,32 @@ JMVC.controllers.demo = function() {
 		JMVC.events.disableRightClick();
 
 		JMVC.events.onRight(JMVC.WD, function() {
-			JMVC.debug('right');
+			JMVC.debug('right click locked');
 		});
 		JMVC.debug('disabled right click');
 
-		//JMVC.require('widget/screensaver/screensaver');
-		//JMVC.screensaver.on(5000);
+		
+		JMVC.require('vendors/twitter/twitter');
+
+
+		JMVC.vendors.twitter.follow(document.body, {
+			name : 'purejmvc'
+			//,lang : 'ja'
+			//url : 'http://www.jmvc.org'
+			//title : 'mytitle'
+			,text : 'check out JMVC demo'
+			//,via : 'via me'
+			//,size : 'large'
+			//,related : '#javascript'
+			,hashtags : 'javascript, pure javascript'
+			,'show-count' : false
+		});	
+		
+
+		
+
+		// JMVC.require('widget/screensaver/screensaver');
+		// JMVC.screensaver.on(5000);
 	};
 
 
@@ -82,7 +105,7 @@ JMVC.controllers.demo = function() {
 				'Widgzard SPA' : 'widgzard/sample/',
 				'6 Divs Cube css3 tranformations ': 'demo/divrot.js',
 				'Console': 'console',
-				'Get gravatar from email (FullScreen, esc to exit)' : 'console/index?fullscreen=true&h=%3Cp%3E%0A%09%3Cinput%20id%3D%22tx%22%20type%3D%22text%22%20%2F%3E%0A%09%3Cbutton%20id%3D%22bt%22%3Eget%20avatar%3C%2Fbutton%3E%0A%3C%2Fp%3E&j=var%20tx%20%3D%20JMVC.dom.find(%27%23tx%27)%2C%0A%09bt%20%3D%20JMVC.dom.find(%27%23bt%27)%3B%0A%09%09%0AJMVC.events.bind(bt%2C%20%27click%27%2C%20function%20()%20%7B%0A%09var%20t%20%3D%20tx.value%2C%0A%09%09url%20%3D%20false%2C%0A%09%09img%3B%0A%09if%20(!!t)%20%7B%0A%09%09url%20%3D%20get_gravatar(t%2C%20200)%3B%0A%09%09img%20%3D%20document.createElement(%27img%27)%3B%0A%09%09img.onload%20%3D%20function%20()%20%7B%0A%09%09%09JMVC.dom.append(document.body%2C%20img)%3B%0A%09%09%7D%3B%0A%09%09img.src%20%3D%20url%3B%0A%09%7D%0A%7D)%3B%0A%0A%0A%0Afunction%20get_gravatar(email%2C%20size)%20%7B%0A%20%0A%09%2F%2F%20MD5%20(Message-Digest%20Algorithm)%20by%20WebToolkit%0A%09%2F%2F%0A%20%0A%09var%20MD5%3Dfunction(s)%7Bfunction%20L(k%2Cd)%7Breturn(k%3C%3Cd)%7C(k%3E%3E%3E(32-d))%7Dfunction%20K(G%2Ck)%7Bvar%20I%2Cd%2CF%2CH%2Cx%3BF%3D(G%262147483648)%3BH%3D(k%262147483648)%3BI%3D(G%261073741824)%3Bd%3D(k%261073741824)%3Bx%3D(G%261073741823)%2B(k%261073741823)%3Bif(I%26d)%7Breturn(x%5E2147483648%5EF%5EH)%7Dif(I%7Cd)%7Bif(x%261073741824)%7Breturn(x%5E3221225472%5EF%5EH)%7Delse%7Breturn(x%5E1073741824%5EF%5EH)%7D%7Delse%7Breturn(x%5EF%5EH)%7D%7Dfunction%20r(d%2CF%2Ck)%7Breturn(d%26F)%7C((~d)%26k)%7Dfunction%20q(d%2CF%2Ck)%7Breturn(d%26k)%7C(F%26(~k))%7Dfunction%20p(d%2CF%2Ck)%7Breturn(d%5EF%5Ek)%7Dfunction%20n(d%2CF%2Ck)%7Breturn(F%5E(d%7C(~k)))%7Dfunction%20u(G%2CF%2Caa%2CZ%2Ck%2CH%2CI)%7BG%3DK(G%2CK(K(r(F%2Caa%2CZ)%2Ck)%2CI))%3Breturn%20K(L(G%2CH)%2CF)%7Dfunction%20f(G%2CF%2Caa%2CZ%2Ck%2CH%2CI)%7BG%3DK(G%2CK(K(q(F%2Caa%2CZ)%2Ck)%2CI))%3Breturn%20K(L(G%2CH)%2CF)%7Dfunction%20D(G%2CF%2Caa%2CZ%2Ck%2CH%2CI)%7BG%3DK(G%2CK(K(p(F%2Caa%2CZ)%2Ck)%2CI))%3Breturn%20K(L(G%2CH)%2CF)%7Dfunction%20t(G%2CF%2Caa%2CZ%2Ck%2CH%2CI)%7BG%3DK(G%2CK(K(n(F%2Caa%2CZ)%2Ck)%2CI))%3Breturn%20K(L(G%2CH)%2CF)%7Dfunction%20e(G)%7Bvar%20Z%3Bvar%20F%3DG.length%3Bvar%20x%3DF%2B8%3Bvar%20k%3D(x-(x%2564))%2F64%3Bvar%20I%3D(k%2B1)*16%3Bvar%20aa%3DArray(I-1)%3Bvar%20d%3D0%3Bvar%20H%3D0%3Bwhile(H%3CF)%7BZ%3D(H-(H%254))%2F4%3Bd%3D(H%254)*8%3Baa%5BZ%5D%3D(aa%5BZ%5D%7C(G.charCodeAt(H)%3C%3Cd))%3BH%2B%2B%7DZ%3D(H-(H%254))%2F4%3Bd%3D(H%254)*8%3Baa%5BZ%5D%3Daa%5BZ%5D%7C(128%3C%3Cd)%3Baa%5BI-2%5D%3DF%3C%3C3%3Baa%5BI-1%5D%3DF%3E%3E%3E29%3Breturn%20aa%7Dfunction%20B(x)%7Bvar%20k%3D%22%22%2CF%3D%22%22%2CG%2Cd%3Bfor(d%3D0%3Bd%3C%3D3%3Bd%2B%2B)%7BG%3D(x%3E%3E%3E(d*8))%26255%3BF%3D%220%22%2BG.toString(16)%3Bk%3Dk%2BF.substr(F.length-2%2C2)%7Dreturn%20k%7Dfunction%20J(k)%7Bk%3Dk.replace(%2Frn%2Fg%2C%22n%22)%3Bvar%20d%3D%22%22%3Bfor(var%20F%3D0%3BF%3Ck.length%3BF%2B%2B)%7Bvar%20x%3Dk.charCodeAt(F)%3Bif(x%3C128)%7Bd%2B%3DString.fromCharCode(x)%7Delse%7Bif((x%3E127)%26%26(x%3C2048))%7Bd%2B%3DString.fromCharCode((x%3E%3E6)%7C192)%3Bd%2B%3DString.fromCharCode((x%2663)%7C128)%7Delse%7Bd%2B%3DString.fromCharCode((x%3E%3E12)%7C224)%3Bd%2B%3DString.fromCharCode(((x%3E%3E6)%2663)%7C128)%3Bd%2B%3DString.fromCharCode((x%2663)%7C128)%7D%7D%7Dreturn%20d%7Dvar%20C%3DArray()%3Bvar%20P%2Ch%2CE%2Cv%2Cg%2CY%2CX%2CW%2CV%3Bvar%20S%3D7%2CQ%3D12%2CN%3D17%2CM%3D22%3Bvar%20A%3D5%2Cz%3D9%2Cy%3D14%2Cw%3D20%3Bvar%20o%3D4%2Cm%3D11%2Cl%3D16%2Cj%3D23%3Bvar%20U%3D6%2CT%3D10%2CR%3D15%2CO%3D21%3Bs%3DJ(s)%3BC%3De(s)%3BY%3D1732584193%3BX%3D4023233417%3BW%3D2562383102%3BV%3D271733878%3Bfor(P%3D0%3BP%3CC.length%3BP%2B%3D16)%7Bh%3DY%3BE%3DX%3Bv%3DW%3Bg%3DV%3BY%3Du(Y%2CX%2CW%2CV%2CC%5BP%2B0%5D%2CS%2C3614090360)%3BV%3Du(V%2CY%2CX%2CW%2CC%5BP%2B1%5D%2CQ%2C3905402710)%3BW%3Du(W%2CV%2CY%2CX%2CC%5BP%2B2%5D%2CN%2C606105819)%3BX%3Du(X%2CW%2CV%2CY%2CC%5BP%2B3%5D%2CM%2C3250441966)%3BY%3Du(Y%2CX%2CW%2CV%2CC%5BP%2B4%5D%2CS%2C4118548399)%3BV%3Du(V%2CY%2CX%2CW%2CC%5BP%2B5%5D%2CQ%2C1200080426)%3BW%3Du(W%2CV%2CY%2CX%2CC%5BP%2B6%5D%2CN%2C2821735955)%3BX%3Du(X%2CW%2CV%2CY%2CC%5BP%2B7%5D%2CM%2C4249261313)%3BY%3Du(Y%2CX%2CW%2CV%2CC%5BP%2B8%5D%2CS%2C1770035416)%3BV%3Du(V%2CY%2CX%2CW%2CC%5BP%2B9%5D%2CQ%2C2336552879)%3BW%3Du(W%2CV%2CY%2CX%2CC%5BP%2B10%5D%2CN%2C4294925233)%3BX%3Du(X%2CW%2CV%2CY%2CC%5BP%2B11%5D%2CM%2C2304563134)%3BY%3Du(Y%2CX%2CW%2CV%2CC%5BP%2B12%5D%2CS%2C1804603682)%3BV%3Du(V%2CY%2CX%2CW%2CC%5BP%2B13%5D%2CQ%2C4254626195)%3BW%3Du(W%2CV%2CY%2CX%2CC%5BP%2B14%5D%2CN%2C2792965006)%3BX%3Du(X%2CW%2CV%2CY%2CC%5BP%2B15%5D%2CM%2C1236535329)%3BY%3Df(Y%2CX%2CW%2CV%2CC%5BP%2B1%5D%2CA%2C4129170786)%3BV%3Df(V%2CY%2CX%2CW%2CC%5BP%2B6%5D%2Cz%2C3225465664)%3BW%3Df(W%2CV%2CY%2CX%2CC%5BP%2B11%5D%2Cy%2C643717713)%3BX%3Df(X%2CW%2CV%2CY%2CC%5BP%2B0%5D%2Cw%2C3921069994)%3BY%3Df(Y%2CX%2CW%2CV%2CC%5BP%2B5%5D%2CA%2C3593408605)%3BV%3Df(V%2CY%2CX%2CW%2CC%5BP%2B10%5D%2Cz%2C38016083)%3BW%3Df(W%2CV%2CY%2CX%2CC%5BP%2B15%5D%2Cy%2C3634488961)%3BX%3Df(X%2CW%2CV%2CY%2CC%5BP%2B4%5D%2Cw%2C3889429448)%3BY%3Df(Y%2CX%2CW%2CV%2CC%5BP%2B9%5D%2CA%2C568446438)%3BV%3Df(V%2CY%2CX%2CW%2CC%5BP%2B14%5D%2Cz%2C3275163606)%3BW%3Df(W%2CV%2CY%2CX%2CC%5BP%2B3%5D%2Cy%2C4107603335)%3BX%3Df(X%2CW%2CV%2CY%2CC%5BP%2B8%5D%2Cw%2C1163531501)%3BY%3Df(Y%2CX%2CW%2CV%2CC%5BP%2B13%5D%2CA%2C2850285829)%3BV%3Df(V%2CY%2CX%2CW%2CC%5BP%2B2%5D%2Cz%2C4243563512)%3BW%3Df(W%2CV%2CY%2CX%2CC%5BP%2B7%5D%2Cy%2C1735328473)%3BX%3Df(X%2CW%2CV%2CY%2CC%5BP%2B12%5D%2Cw%2C2368359562)%3BY%3DD(Y%2CX%2CW%2CV%2CC%5BP%2B5%5D%2Co%2C4294588738)%3BV%3DD(V%2CY%2CX%2CW%2CC%5BP%2B8%5D%2Cm%2C2272392833)%3BW%3DD(W%2CV%2CY%2CX%2CC%5BP%2B11%5D%2Cl%2C1839030562)%3BX%3DD(X%2CW%2CV%2CY%2CC%5BP%2B14%5D%2Cj%2C4259657740)%3BY%3DD(Y%2CX%2CW%2CV%2CC%5BP%2B1%5D%2Co%2C2763975236)%3BV%3DD(V%2CY%2CX%2CW%2CC%5BP%2B4%5D%2Cm%2C1272893353)%3BW%3DD(W%2CV%2CY%2CX%2CC%5BP%2B7%5D%2Cl%2C4139469664)%3BX%3DD(X%2CW%2CV%2CY%2CC%5BP%2B10%5D%2Cj%2C3200236656)%3BY%3DD(Y%2CX%2CW%2CV%2CC%5BP%2B13%5D%2Co%2C681279174)%3BV%3DD(V%2CY%2CX%2CW%2CC%5BP%2B0%5D%2Cm%2C3936430074)%3BW%3DD(W%2CV%2CY%2CX%2CC%5BP%2B3%5D%2Cl%2C3572445317)%3BX%3DD(X%2CW%2CV%2CY%2CC%5BP%2B6%5D%2Cj%2C76029189)%3BY%3DD(Y%2CX%2CW%2CV%2CC%5BP%2B9%5D%2Co%2C3654602809)%3BV%3DD(V%2CY%2CX%2CW%2CC%5BP%2B12%5D%2Cm%2C3873151461)%3BW%3DD(W%2CV%2CY%2CX%2CC%5BP%2B15%5D%2Cl%2C530742520)%3BX%3DD(X%2CW%2CV%2CY%2CC%5BP%2B2%5D%2Cj%2C3299628645)%3BY%3Dt(Y%2CX%2CW%2CV%2CC%5BP%2B0%5D%2CU%2C4096336452)%3BV%3Dt(V%2CY%2CX%2CW%2CC%5BP%2B7%5D%2CT%2C1126891415)%3BW%3Dt(W%2CV%2CY%2CX%2CC%5BP%2B14%5D%2CR%2C2878612391)%3BX%3Dt(X%2CW%2CV%2CY%2CC%5BP%2B5%5D%2CO%2C4237533241)%3BY%3Dt(Y%2CX%2CW%2CV%2CC%5BP%2B12%5D%2CU%2C1700485571)%3BV%3Dt(V%2CY%2CX%2CW%2CC%5BP%2B3%5D%2CT%2C2399980690)%3BW%3Dt(W%2CV%2CY%2CX%2CC%5BP%2B10%5D%2CR%2C4293915773)%3BX%3Dt(X%2CW%2CV%2CY%2CC%5BP%2B1%5D%2CO%2C2240044497)%3BY%3Dt(Y%2CX%2CW%2CV%2CC%5BP%2B8%5D%2CU%2C1873313359)%3BV%3Dt(V%2CY%2CX%2CW%2CC%5BP%2B15%5D%2CT%2C4264355552)%3BW%3Dt(W%2CV%2CY%2CX%2CC%5BP%2B6%5D%2CR%2C2734768916)%3BX%3Dt(X%2CW%2CV%2CY%2CC%5BP%2B13%5D%2CO%2C1309151649)%3BY%3Dt(Y%2CX%2CW%2CV%2CC%5BP%2B4%5D%2CU%2C4149444226)%3BV%3Dt(V%2CY%2CX%2CW%2CC%5BP%2B11%5D%2CT%2C3174756917)%3BW%3Dt(W%2CV%2CY%2CX%2CC%5BP%2B2%5D%2CR%2C718787259)%3BX%3Dt(X%2CW%2CV%2CY%2CC%5BP%2B9%5D%2CO%2C3951481745)%3BY%3DK(Y%2Ch)%3BX%3DK(X%2CE)%3BW%3DK(W%2Cv)%3BV%3DK(V%2Cg)%7Dvar%20i%3DB(Y)%2BB(X)%2BB(W)%2BB(V)%3Breturn%20i.toLowerCase()%7D%3B%0A%20%0A%09var%20size%20%3D%20size%20%7C%7C%2080%3B%0A%20%0A%09return%20%27http%3A%2F%2Fwww.gravatar.com%2Favatar%2F%27%20%2B%20MD5(email)%20%2B%20%27.jpg%3Fs%3D%27%20%2B%20size%3B%0A%7D%0A%0Atx.value%20%3D%20%27fedeghe%40gmail.com%27%3B%0Atx.focus()%3B%0A&c=p%7Bpadding%3A10px%7D&l=#preview',
+				'Get gravatar from email (FullScreen, esc to exit)' : 'console/index?fullscreen=true&h=%3Cp%3E%0A%09%3Cinput%20id%3D%22tx%22%20type%3D%22text%22%20%2F%3E%0A%09%3Cbutton%20id%3D%22bt%22%3Eget%20avatar%3C%2Fbutton%3E%0A%3C%2Fp%3E&j=var%20tx%20%3D%20JMVC.dom.find(%27%23tx%27)%2C%0A%09bt%20%3D%20JMVC.dom.find(%27%23bt%27)%3B%0A%09%09%0AJMVC.events.on(bt%2C%20%27click%27%2C%20function%20()%20%7B%0A%09var%20t%20%3D%20tx.value%2C%0A%09%09url%20%3D%20false%2C%0A%09%09img%3B%0A%09if%20(!!t)%20%7B%0A%09%09url%20%3D%20get_gravatar(t%2C%20200)%3B%0A%09%09img%20%3D%20document.createElement(%27img%27)%3B%0A%09%09img.onload%20%3D%20function%20()%20%7B%0A%09%09%09JMVC.dom.append(document.body%2C%20img)%3B%0A%09%09%7D%3B%0A%09%09img.src%20%3D%20url%3B%0A%09%7D%0A%7D)%3B%0A%0A%0A%0Afunction%20get_gravatar(email%2C%20size)%20%7B%0A%20%0A%09%2F%2F%20MD5%20(Message-Digest%20Algorithm)%20by%20WebToolkit%0A%09%2F%2F%0A%20%0A%09var%20MD5%3Dfunction(s)%7Bfunction%20L(k%2Cd)%7Breturn(k%3C%3Cd)%7C(k%3E%3E%3E(32-d))%7Dfunction%20K(G%2Ck)%7Bvar%20I%2Cd%2CF%2CH%2Cx%3BF%3D(G%262147483648)%3BH%3D(k%262147483648)%3BI%3D(G%261073741824)%3Bd%3D(k%261073741824)%3Bx%3D(G%261073741823)%2B(k%261073741823)%3Bif(I%26d)%7Breturn(x%5E2147483648%5EF%5EH)%7Dif(I%7Cd)%7Bif(x%261073741824)%7Breturn(x%5E3221225472%5EF%5EH)%7Delse%7Breturn(x%5E1073741824%5EF%5EH)%7D%7Delse%7Breturn(x%5EF%5EH)%7D%7Dfunction%20r(d%2CF%2Ck)%7Breturn(d%26F)%7C((~d)%26k)%7Dfunction%20q(d%2CF%2Ck)%7Breturn(d%26k)%7C(F%26(~k))%7Dfunction%20p(d%2CF%2Ck)%7Breturn(d%5EF%5Ek)%7Dfunction%20n(d%2CF%2Ck)%7Breturn(F%5E(d%7C(~k)))%7Dfunction%20u(G%2CF%2Caa%2CZ%2Ck%2CH%2CI)%7BG%3DK(G%2CK(K(r(F%2Caa%2CZ)%2Ck)%2CI))%3Breturn%20K(L(G%2CH)%2CF)%7Dfunction%20f(G%2CF%2Caa%2CZ%2Ck%2CH%2CI)%7BG%3DK(G%2CK(K(q(F%2Caa%2CZ)%2Ck)%2CI))%3Breturn%20K(L(G%2CH)%2CF)%7Dfunction%20D(G%2CF%2Caa%2CZ%2Ck%2CH%2CI)%7BG%3DK(G%2CK(K(p(F%2Caa%2CZ)%2Ck)%2CI))%3Breturn%20K(L(G%2CH)%2CF)%7Dfunction%20t(G%2CF%2Caa%2CZ%2Ck%2CH%2CI)%7BG%3DK(G%2CK(K(n(F%2Caa%2CZ)%2Ck)%2CI))%3Breturn%20K(L(G%2CH)%2CF)%7Dfunction%20e(G)%7Bvar%20Z%3Bvar%20F%3DG.length%3Bvar%20x%3DF%2B8%3Bvar%20k%3D(x-(x%2564))%2F64%3Bvar%20I%3D(k%2B1)*16%3Bvar%20aa%3DArray(I-1)%3Bvar%20d%3D0%3Bvar%20H%3D0%3Bwhile(H%3CF)%7BZ%3D(H-(H%254))%2F4%3Bd%3D(H%254)*8%3Baa%5BZ%5D%3D(aa%5BZ%5D%7C(G.charCodeAt(H)%3C%3Cd))%3BH%2B%2B%7DZ%3D(H-(H%254))%2F4%3Bd%3D(H%254)*8%3Baa%5BZ%5D%3Daa%5BZ%5D%7C(128%3C%3Cd)%3Baa%5BI-2%5D%3DF%3C%3C3%3Baa%5BI-1%5D%3DF%3E%3E%3E29%3Breturn%20aa%7Dfunction%20B(x)%7Bvar%20k%3D%22%22%2CF%3D%22%22%2CG%2Cd%3Bfor(d%3D0%3Bd%3C%3D3%3Bd%2B%2B)%7BG%3D(x%3E%3E%3E(d*8))%26255%3BF%3D%220%22%2BG.toString(16)%3Bk%3Dk%2BF.substr(F.length-2%2C2)%7Dreturn%20k%7Dfunction%20J(k)%7Bk%3Dk.replace(%2Frn%2Fg%2C%22n%22)%3Bvar%20d%3D%22%22%3Bfor(var%20F%3D0%3BF%3Ck.length%3BF%2B%2B)%7Bvar%20x%3Dk.charCodeAt(F)%3Bif(x%3C128)%7Bd%2B%3DString.fromCharCode(x)%7Delse%7Bif((x%3E127)%26%26(x%3C2048))%7Bd%2B%3DString.fromCharCode((x%3E%3E6)%7C192)%3Bd%2B%3DString.fromCharCode((x%2663)%7C128)%7Delse%7Bd%2B%3DString.fromCharCode((x%3E%3E12)%7C224)%3Bd%2B%3DString.fromCharCode(((x%3E%3E6)%2663)%7C128)%3Bd%2B%3DString.fromCharCode((x%2663)%7C128)%7D%7D%7Dreturn%20d%7Dvar%20C%3DArray()%3Bvar%20P%2Ch%2CE%2Cv%2Cg%2CY%2CX%2CW%2CV%3Bvar%20S%3D7%2CQ%3D12%2CN%3D17%2CM%3D22%3Bvar%20A%3D5%2Cz%3D9%2Cy%3D14%2Cw%3D20%3Bvar%20o%3D4%2Cm%3D11%2Cl%3D16%2Cj%3D23%3Bvar%20U%3D6%2CT%3D10%2CR%3D15%2CO%3D21%3Bs%3DJ(s)%3BC%3De(s)%3BY%3D1732584193%3BX%3D4023233417%3BW%3D2562383102%3BV%3D271733878%3Bfor(P%3D0%3BP%3CC.length%3BP%2B%3D16)%7Bh%3DY%3BE%3DX%3Bv%3DW%3Bg%3DV%3BY%3Du(Y%2CX%2CW%2CV%2CC%5BP%2B0%5D%2CS%2C3614090360)%3BV%3Du(V%2CY%2CX%2CW%2CC%5BP%2B1%5D%2CQ%2C3905402710)%3BW%3Du(W%2CV%2CY%2CX%2CC%5BP%2B2%5D%2CN%2C606105819)%3BX%3Du(X%2CW%2CV%2CY%2CC%5BP%2B3%5D%2CM%2C3250441966)%3BY%3Du(Y%2CX%2CW%2CV%2CC%5BP%2B4%5D%2CS%2C4118548399)%3BV%3Du(V%2CY%2CX%2CW%2CC%5BP%2B5%5D%2CQ%2C1200080426)%3BW%3Du(W%2CV%2CY%2CX%2CC%5BP%2B6%5D%2CN%2C2821735955)%3BX%3Du(X%2CW%2CV%2CY%2CC%5BP%2B7%5D%2CM%2C4249261313)%3BY%3Du(Y%2CX%2CW%2CV%2CC%5BP%2B8%5D%2CS%2C1770035416)%3BV%3Du(V%2CY%2CX%2CW%2CC%5BP%2B9%5D%2CQ%2C2336552879)%3BW%3Du(W%2CV%2CY%2CX%2CC%5BP%2B10%5D%2CN%2C4294925233)%3BX%3Du(X%2CW%2CV%2CY%2CC%5BP%2B11%5D%2CM%2C2304563134)%3BY%3Du(Y%2CX%2CW%2CV%2CC%5BP%2B12%5D%2CS%2C1804603682)%3BV%3Du(V%2CY%2CX%2CW%2CC%5BP%2B13%5D%2CQ%2C4254626195)%3BW%3Du(W%2CV%2CY%2CX%2CC%5BP%2B14%5D%2CN%2C2792965006)%3BX%3Du(X%2CW%2CV%2CY%2CC%5BP%2B15%5D%2CM%2C1236535329)%3BY%3Df(Y%2CX%2CW%2CV%2CC%5BP%2B1%5D%2CA%2C4129170786)%3BV%3Df(V%2CY%2CX%2CW%2CC%5BP%2B6%5D%2Cz%2C3225465664)%3BW%3Df(W%2CV%2CY%2CX%2CC%5BP%2B11%5D%2Cy%2C643717713)%3BX%3Df(X%2CW%2CV%2CY%2CC%5BP%2B0%5D%2Cw%2C3921069994)%3BY%3Df(Y%2CX%2CW%2CV%2CC%5BP%2B5%5D%2CA%2C3593408605)%3BV%3Df(V%2CY%2CX%2CW%2CC%5BP%2B10%5D%2Cz%2C38016083)%3BW%3Df(W%2CV%2CY%2CX%2CC%5BP%2B15%5D%2Cy%2C3634488961)%3BX%3Df(X%2CW%2CV%2CY%2CC%5BP%2B4%5D%2Cw%2C3889429448)%3BY%3Df(Y%2CX%2CW%2CV%2CC%5BP%2B9%5D%2CA%2C568446438)%3BV%3Df(V%2CY%2CX%2CW%2CC%5BP%2B14%5D%2Cz%2C3275163606)%3BW%3Df(W%2CV%2CY%2CX%2CC%5BP%2B3%5D%2Cy%2C4107603335)%3BX%3Df(X%2CW%2CV%2CY%2CC%5BP%2B8%5D%2Cw%2C1163531501)%3BY%3Df(Y%2CX%2CW%2CV%2CC%5BP%2B13%5D%2CA%2C2850285829)%3BV%3Df(V%2CY%2CX%2CW%2CC%5BP%2B2%5D%2Cz%2C4243563512)%3BW%3Df(W%2CV%2CY%2CX%2CC%5BP%2B7%5D%2Cy%2C1735328473)%3BX%3Df(X%2CW%2CV%2CY%2CC%5BP%2B12%5D%2Cw%2C2368359562)%3BY%3DD(Y%2CX%2CW%2CV%2CC%5BP%2B5%5D%2Co%2C4294588738)%3BV%3DD(V%2CY%2CX%2CW%2CC%5BP%2B8%5D%2Cm%2C2272392833)%3BW%3DD(W%2CV%2CY%2CX%2CC%5BP%2B11%5D%2Cl%2C1839030562)%3BX%3DD(X%2CW%2CV%2CY%2CC%5BP%2B14%5D%2Cj%2C4259657740)%3BY%3DD(Y%2CX%2CW%2CV%2CC%5BP%2B1%5D%2Co%2C2763975236)%3BV%3DD(V%2CY%2CX%2CW%2CC%5BP%2B4%5D%2Cm%2C1272893353)%3BW%3DD(W%2CV%2CY%2CX%2CC%5BP%2B7%5D%2Cl%2C4139469664)%3BX%3DD(X%2CW%2CV%2CY%2CC%5BP%2B10%5D%2Cj%2C3200236656)%3BY%3DD(Y%2CX%2CW%2CV%2CC%5BP%2B13%5D%2Co%2C681279174)%3BV%3DD(V%2CY%2CX%2CW%2CC%5BP%2B0%5D%2Cm%2C3936430074)%3BW%3DD(W%2CV%2CY%2CX%2CC%5BP%2B3%5D%2Cl%2C3572445317)%3BX%3DD(X%2CW%2CV%2CY%2CC%5BP%2B6%5D%2Cj%2C76029189)%3BY%3DD(Y%2CX%2CW%2CV%2CC%5BP%2B9%5D%2Co%2C3654602809)%3BV%3DD(V%2CY%2CX%2CW%2CC%5BP%2B12%5D%2Cm%2C3873151461)%3BW%3DD(W%2CV%2CY%2CX%2CC%5BP%2B15%5D%2Cl%2C530742520)%3BX%3DD(X%2CW%2CV%2CY%2CC%5BP%2B2%5D%2Cj%2C3299628645)%3BY%3Dt(Y%2CX%2CW%2CV%2CC%5BP%2B0%5D%2CU%2C4096336452)%3BV%3Dt(V%2CY%2CX%2CW%2CC%5BP%2B7%5D%2CT%2C1126891415)%3BW%3Dt(W%2CV%2CY%2CX%2CC%5BP%2B14%5D%2CR%2C2878612391)%3BX%3Dt(X%2CW%2CV%2CY%2CC%5BP%2B5%5D%2CO%2C4237533241)%3BY%3Dt(Y%2CX%2CW%2CV%2CC%5BP%2B12%5D%2CU%2C1700485571)%3BV%3Dt(V%2CY%2CX%2CW%2CC%5BP%2B3%5D%2CT%2C2399980690)%3BW%3Dt(W%2CV%2CY%2CX%2CC%5BP%2B10%5D%2CR%2C4293915773)%3BX%3Dt(X%2CW%2CV%2CY%2CC%5BP%2B1%5D%2CO%2C2240044497)%3BY%3Dt(Y%2CX%2CW%2CV%2CC%5BP%2B8%5D%2CU%2C1873313359)%3BV%3Dt(V%2CY%2CX%2CW%2CC%5BP%2B15%5D%2CT%2C4264355552)%3BW%3Dt(W%2CV%2CY%2CX%2CC%5BP%2B6%5D%2CR%2C2734768916)%3BX%3Dt(X%2CW%2CV%2CY%2CC%5BP%2B13%5D%2CO%2C1309151649)%3BY%3Dt(Y%2CX%2CW%2CV%2CC%5BP%2B4%5D%2CU%2C4149444226)%3BV%3Dt(V%2CY%2CX%2CW%2CC%5BP%2B11%5D%2CT%2C3174756917)%3BW%3Dt(W%2CV%2CY%2CX%2CC%5BP%2B2%5D%2CR%2C718787259)%3BX%3Dt(X%2CW%2CV%2CY%2CC%5BP%2B9%5D%2CO%2C3951481745)%3BY%3DK(Y%2Ch)%3BX%3DK(X%2CE)%3BW%3DK(W%2Cv)%3BV%3DK(V%2Cg)%7Dvar%20i%3DB(Y)%2BB(X)%2BB(W)%2BB(V)%3Breturn%20i.toLowerCase()%7D%3B%0A%20%0A%09var%20size%20%3D%20size%20%7C%7C%2080%3B%0A%20%0A%09return%20%27http%3A%2F%2Fwww.gravatar.com%2Favatar%2F%27%20%2B%20MD5(email)%20%2B%20%27.jpg%3Fs%3D%27%20%2B%20size%3B%0A%7D%0A%0Atx.value%20%3D%20%27fedeghe%40gmail.com%27%3B%0Atx.focus()%3B%0A&c=p%7Bpadding%3A10px%7D&l=#preview',
 				'Console atom (FullScreen, esc to exit)': 'console/index?fullscreen=true&h=%3Cdiv%20class%3D%22container%22%3E%0A%09%3Cdiv%20class%3D%22wrap%22%3E%0A%09%09%3Cdiv%20class%3D%22circle%20horizontal%20c1%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%09%3Cdiv%20class%3D%22circle%20vertical%20c1%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%09%3Cdiv%20class%3D%22wrap%20r%22%3E%0A%09%09%3Cdiv%20class%3D%22circle%20horizontal%20c2%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%09%3Cdiv%20class%3D%22circle%20vertical%20c2%22%3E%0A%09%09%09%3Cdiv%20class%3D%22wrap-electron%22%3E%0A%09%09%09%09%3Cdiv%20class%3D%22circle%20electron%22%3E%3C%2Fdiv%3E%09%0A%09%09%09%3C%2Fdiv%3E%0A%09%09%3C%2Fdiv%3E%0A%09%09%3Cdiv%20class%3D%22circle%20center%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%3C%2Fdiv%3E%0A%0A%0A%0A%0A%0A%0A%0A&j=%2F*%20no%20javascript%20content%20*%2F&c=body%20%7B%0A%20%20background%3A%20%23222%3B%0A%7D%0A.container%20%7B%0A%20%20position%3A%20relative%3B%0A%20%20margin%3A%20auto%3B%0A%20%20width%3A%20250px%3B%0A%7D%0A.wrap%2C%0A.circle%20%7B%0A%20%20-webkit-transition%3A%20-webkit-transform%20500ms%20linear%3B%0A%20%20-webkit-transform-style%3A%20preserve-3d%3B%0A%20%20-moz-transition%3A%20-moz-transform%20500ms%20linear%3B%0A%20%20-moz-transform-style%3A%20preserve-3d%3B%0A%20%20width%3A%20250px%3B%0A%20%20height%3A%20250px%3B%0A%20%20margin%3A%20auto%3B%0A%20%20margin-top%3A%2050px%3B%0A%20%20position%3A%20absolute%3B%0A%7D%0A.circle%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20border%3A%203px%20solid%20%23aaaaaa%3B%0A%20%20border-radius%3A%20250px%3B%0A%20%20margin%3A%20auto%3B%0A%7D%0A.circle.c2%2C%0A.circle.center%20%7B%0A%20%20border%3A%202px%20solid%20%23666666%3B%0A%20%20width%3A%20140px%3B%0A%20%20height%3A%20140px%3B%0A%20%20top%3A%2055px%3B%0A%20%20left%3A%2055px%3B%0A%7D%0A.circle.center%20%7B%0A%20%20background%3A%20%23ffffff%3B%0A%20%20width%3A%2030px%3B%0A%20%20height%3A%2030px%3B%0A%20%20top%3A%20110px%3B%0A%20%20left%3A%20110px%3B%0A%20%20box-shadow%3A%200%200%205px%20%23fff%3B%0A%7D%0A.wrap-electron%20%7B%0A%20%20border%3A%200px%20solid%20%20%23fff%3B%0A%20%20position%3A%20absolute%3B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%20100%25%3B%0A%20%20-webkit-animation%3A%20electron%203s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20electron%203s%20linear%20infinite%3B%0A%7D%0A.electron%20%7B%0A%20%20width%3A%2012px%3B%0A%20%20height%3A%2012px%3B%0A%20%20background%3A%20%23aaaaaa%3B%0A%20%20left%3A%2050%25%3B%0A%20%20margin-left%3A%20-8px%3B%0A%20%20border%3A%20none%3B%0A%20%20top%3A%20-7px%3B%0A%20%20-webkit-transform-origin%3A%2050%25%2050%25%3B%0A%7D%0A.c2%20.wrap-electron%20%7B%0A%20%20-webkit-animation%3A%20electron%202s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20electron%202s%20linear%20infinite%3B%0A%7D%0A.c2%20.electron%20%7B%0A%20%20top%3A%20-6px%3B%0A%7D%0A.wrap%20%7B%0A%20%20border%3A%200px%20solid%20%23aaaaaa%3B%0A%20%20-webkit-animation%3A%20lateral%2015s%20ease-in-out%20infinite%3B%0A%20%20-moz-animation%3A%20lateral%2015s%20ease-in-out%20infinite%3B%0A%7D%0A.wrap.r%20%7B%0A%20%20-webkit-animation%3A%20lateralRevert%208s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20lateralRevert%208s%20linear%20infinite%3B%0A%7D%0A.vertical%20%7B%0A%20%20-webkit-animation%3A%20vertical%208s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20vertical%208s%20linear%20infinite%3B%0A%7D%0A.horizontal%20%7B%0A%20%20-webkit-animation%3A%20horizontalRevert%206s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20horizontalRevert%206s%20linear%20infinite%3B%0A%7D%0A.vertical.c2%20%7B%0A%20%20-webkit-animation%3A%20vertical%204s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20vertical%204s%20linear%20infinite%3B%0A%7D%0A.horizontal.c2%20%7B%0A%20%20-webkit-animation%3A%20horizontalRevert%203s%20linear%20infinite%3B%0A%20%20-moz-animation%3A%20horizontalRevert%203s%20linear%20infinite%3B%0A%7D%0A%40-webkit-keyframes%20electron%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20horizontal%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20horizontalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20vertical%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20verticalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20lateral%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-webkit-keyframes%20lateralRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-webkit-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20electron%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20horizontal%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20horizontalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateY(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20vertical%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20verticalRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateX(0deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20lateral%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%7D%0A%40-moz-keyframes%20lateralRevert%20%7B%0A%20%20from%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(360deg)%3B%0A%20%20%7D%0A%20%20to%20%7B%0A%20%20%20%20-moz-transform%3A%20rotateZ(0deg)%3B%0A%20%20%7D%0A%7D%0A&l=#preview',
 				'onecodepen (FullScreen, esc to exit)': 'console/index?fullscreen=true&h=%3Ccanvas%20id%3D%22c%22%3E%3C%2Fcanvas%3E&j=var%20a%20%3D%20document.getElementsByTagName(%27canvas%27)%5B0%5D%3B%0Avar%20b%20%3D%20document.body%3B%0A%0Avar%20requestAnimationFrame%20%3D%0A%09window.requestAnimationFrame%20%7C%7C%0A%20%20%20%20window.mozRequestAnimationFrame%20%7C%7C%0A%20%20%20%20window.webkitRequestAnimationFrame%20%7C%7C%0A%20%20%20%20window.msRequestAnimationFrame%20%7C%7C%0A%20%20%20%20function(f)%7B%20setTimeout(f%2C%201000%2F30)%3B%20%7D%3B%0A%0Aa.style.width%20%3D%20(a.width%20%3D%20innerWidth)%20%2B%20%27px%27%3B%0Aa.style.height%20%3D%20(a.height%20%3D%20innerHeight)%20%2B%20%27px%27%3B%0A%0Avar%20c%20%3D%20a.getContext(%272d%27)%3B%0A%0Aif%20(typeof%20raf%20!%3D%3D%20%27undefined%27)%20cancelAnimationFrame(raf)%3B%0A%0Asw%20%3D%20a.width%3B%0Ash%20%3D%20a.height%3B%0A%0Afunction%20drawGlypy(angle%2C%20distance)%20%7B%0A%0A%20%20%20%20var%20rings%20%3D%2019%3B%0A%20%20%20%20for%20(%20var%20j%20%3D%200%3B%20j%20%3C%20rings%3B%20j%2B%2B%20)%20%7B%0A%20%20%20%20%20%20base%20%3D%20Math.pow(1.5%2C%20(j%20%2B%201)%20)%0A%20%20%20%20%20%20d%20%3D%20base%20%2B%20distance%20*%20base%3B%0A%20%20%20%20%20%20x%20%3D%20sw%20%2F%202%20%2B%20Math.cos(angle)%20*%20d%3B%0A%20%20%20%20%20%20y%20%3D%20sh%20%2F%202%20%2B%20Math.sin(angle)%20*%20d%3B%0A%20%20%20%20%20%20size%20%3D%20d%20%2F%2020%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20c.fillStyle%20%3D%20%22hsla(%22%20%2B%20~~(j%20%2F%20rings%20*%20300)%20%2B%20%22%2C100%25%2C%2030%25%2C%201)%22%0A%20%20%20%20%20%20c.beginPath()%3B%0A%20%20%20%20%20%20c.arc(x%2C%20y%2C%20size%20*%203%2C%200%2C%202%20*%20Math.PI%2C%20false)%3B%0A%20%20%20%20%20%20c.fill()%3B%0A%20%20%20%20%7D%0A%7D%0A%0Ap%20%3D%200%3B%0A%0Afunction%20r()%20%7B%0A%09a.width%20%3D%20a.width%3B%0A%09p%2B%2B%3B%0A%09dots%20%3D%2020%3B%0A%09tunnel%20%3D%200%3B%0A%0A%09for%20(%20var%20i%20%3D%200%3B%20i%20%3C%20dots%3B%20i%2B%2B%20)%20%7B%0A%09%20%20%20%20angle%20%3D%20p%20%2F%20100%20%2B%20i%20%2F%20dots%20*%20Math.PI%20*%202%3B%0A%09%09distance%20%3D%20tunnel%20%2B%20%20(Math.sin(3%20*%20i%20%2F%20dots%20*%20Math.PI%20*%202)%20%2B%201%20%2B%20Math.cos(p%20%2F%2020%20%2B%202%20*%20i%20%2F%20dots%20*%20Math.PI%20*%202)%20%2B%201)%20%2F%204%3B%0A%09%09drawGlypy(angle%2C%20distance)%3B%0A%09%7D%0A%0A%20%09%2F%2F%20GLOB%0A%20%09window.raf%20%3D%20requestAnimationFrame(r)%3B%0A%7D%0Ar()%3B%0A&c=html%2C%20body%20%7B%0A%09margin%3A%200%3B%0A%09padding%3A%200%3B%0A%09border%3A%200%3B%0A%09background-color%3Ablack%0A%7D%0A%23c%20%7B%20display%3A%20block%3B%20%7D&l=#preview',
 				'cp4 (FullScreen, esc to exit)' : 'console/index?fullscreen=true&h=%3C!--%20no%20html%20content%20--%3E&j=var%20canvas%20%3D%20document.createElement(%20%27canvas%27%20)%2C%0A%20%20%20%20ctx%20%3D%20canvas.getContext(%20%272d%27%20)%2C%0A%20%20%20%20width%20%3D%20canvas.width%20%3D%20500%2C%0A%20%20%20%20height%20%3D%20canvas.height%20%3D%20500%2C%0A%20%20%20%20rect%20%3D%20%7B%0A%20%20%20%20%20%20x%3A%20width%20%2F%202%2C%0A%20%20%20%20%20%20y%3A%20height%20%2F%202%2C%0A%20%20%20%20%20%20width%3A%2080%2C%0A%20%20%20%20%20%20height%3A%2080%2C%0A%20%20%20%20%20%20rotation%3A%200%0A%20%20%20%20%7D%2C%0A%20%20%20%20tick%20%3D%200%3B%0A%0Actx.lineWidth%20%3D%205%3B%0A%0Afunction%20update()%20%7B%20%20%0A%20%20rect.y%20%3D%20height%20%2F%202%20%2B%20Math.sin(%20tick%20%2F%2020%20)%20*%20175%3B%0A%20%20rect.rotation%20%3D%20Math.cos(%20tick%20%2F%2040%20)%20*%20Math.PI%20*%200.5%3B%0A%7D%0A%0Afunction%20render()%20%7B%0A%20%20ctx.save()%3B%0A%20%20%0A%20%20ctx.translate(%20height%20%2F%202%2C%20width%20%2F%202%20)%3B%0A%20%20ctx.rotate(%20tick%20%2F%2040%20)%3B%0A%20%20%0A%20%20ctx.translate(%20-height%20%2F%202%2C%20-width%20%2F%202%20)%3B%20%20%0A%20%20ctx.fillStyle%20%3D%20%27%23333%27%3B%0A%20%20ctx.fillRect(%20-width%20%2F%202%2C%20height%20%2F%202%20%2C%20width%20*%202%2C%20height%20*%202%20)%3B%0A%20%20%0A%20%20ctx.save()%3B%0A%20%20ctx.translate(%20rect.x%2C%20rect.y%20)%3B%0A%20%20ctx.rotate(%20rect.rotation%20)%3B%0A%20%20ctx.fillStyle%20%3D%20%27%23f34%27%3B%0A%20%20ctx.fillRect(%20-rect.width%20%2F%202%2C%20-rect.height%20%2F%202%2C%20rect.width%2C%20rect.height%20)%3B%0A%20%20ctx.strokeStyle%20%3D%20%27%23333%27%3B%0A%20%20ctx.strokeRect(%20-rect.width%20%2F%202%2C%20-rect.height%20%2F%202%2C%20rect.width%2C%20rect.height%20)%3B%0A%20%20ctx.restore()%3B%0A%20%20%0A%20%20ctx.save()%3B%0A%20%20ctx.translate(%20rect.x%2C%20height%20-%20rect.y%20)%3B%0A%20%20ctx.rotate(%20-rect.rotation%20)%3B%0A%20%20ctx.fillStyle%20%3D%20%27%23333%27%3B%0A%20%20ctx.fillRect(%20-rect.width%20%2F%202%2C%20-rect.height%20%2F%202%2C%20rect.width%2C%20rect.height%20)%3B%0A%20%20ctx.strokeStyle%20%3D%20%27%23f34%27%3B%0A%20%20ctx.strokeRect(%20-rect.width%20%2F%202%2C%20-rect.height%20%2F%202%2C%20rect.width%2C%20rect.height%20)%3B%0A%20%20ctx.restore()%3B%0A%20%20%0A%20%20ctx.restore()%3B%0A%7D%0Avar%20_af%3B%0Afunction%20loop()%20%7B%0A%20%20_af%20%3D%20requestAnimationFrame(%20loop%20)%3B%0A%20%20ctx.clearRect(%200%2C%200%2C%20width%2C%20height%20)%3B%0A%20%20update()%3B%0A%20%20render()%3B%0A%20%20tick%2B%2B%3B%0A%7D%0A%0Adocument.body.appendChild(%20canvas%20)%3B%0Aloop()%3B%0A&c=body%20%7B%0A%20%20background%3A%20%23000%3B%0A%20%20overflow%3A%20hidden%3B%0A%7D%0A%0Acanvas%20%7B%0A%20%20background%3A%20%23f34%3B%0A%20%20bottom%3A%200%3B%0A%20%20left%3A%200%3B%0A%20%20margin%3A%20auto%3B%0A%20%20position%3A%20absolute%3B%0A%20%20right%3A%200%3B%0A%20%20top%3A%200%3B%0A%7D&l=#preview',
@@ -103,7 +126,7 @@ JMVC.controllers.demo = function() {
 				'Observer': 'demo/observer.jmvc',
 				'Sheduler': 'demo/scheduler.jmvc',
 				'Effects': 'demo/fx.jmvc',
-				'Key': 'test_key',
+				//'Key': 'test_key',
 				//'Grind': 'grind',
 				'canvas ext using 2d lib': 'test_canvas',
 				'deviceLight API (FF only)' : 'console/index?fullscreen=true&h=%3Ch3%3ELight%3A%20%3Cspan%20id%3D%22l%22%3E%3C%2Fspan%3E%3C%2Fh3%3E&j=window.addEventListener(%27devicelight%27%2C%20function(e)%20%7B%0A%09document.getElementById(%27l%27).innerHTML%20%3D%20e.value%3B%0A%7D)&c=body%7Bbackground-color%3Ablack%3B%20padding%3A50px%7D%0Ah3%7Bcolor%3A%20white%7D%0Aspan%7Bcolor%3Ared%7D&l=#preview',
@@ -145,7 +168,7 @@ JMVC.controllers.demo = function() {
 
 		v.set({
 			id: 'content',
-			style: 'font-family:Verdana, sans-serif; font-size:12px;',
+			style: 'font-family:Verdana, sans-serif; font-size:12px;margin-bottom:50px',
 			content: content,
 			index: '&#9826;'
 		});
@@ -510,7 +533,7 @@ JMVC.controllers.demo = function() {
 					tag = JMVC.dom.create('span', os, j);
 
 					(function(y, tg) {
-						JMVC.events.bind(tg, 'click', function() {
+						JMVC.events.on(tg, 'click', function() {
 							nation = y;
 							JMVC.dom.removeClass(JMVC.dom.find('span'), 'active');
 							JMVC.dom.addClass(tg, 'active');
@@ -555,7 +578,7 @@ JMVC.controllers.demo = function() {
 				var cryp = '×ÚĐÃÍÙéòùÿóâúĈçÖÚÿéâçåÚÚéâêÃËďêåçÕîÜêâ÷ÙÚďýæèÕêÞêòûÛÛďğêèċüàêĘÞßÜďēîëåÑëíĉëäÞêéõìüĐðíę÷õßêéóí×ÞñïĉĝøáĐàćëČüāòäïùãÚğĆîČÐÇÚĘèØÚéýçèåüßêĘÚÝÜÙÜĆìÖÞíðĉÚùáĀÜĆîüÍýðĉÚùáĀÜĆîüÍýðĉÚùáĀÜĆîüÍýðĉÚùáĀÜĆîüÍýðĉÚùáĀÜĆîüÍýðĉÚùáĀßÐĝÕÚêëâéÃÚäàåççâÙéĉëÖÚĐíãÕÌêÙðĘçÕÚéýãçåÞÚéòëÕÚÙéâçÕÚÙéâë×ÚďùçèûüáëòĕàÈÐùâĚæÚÙéĈëØÚďñæçċîÞêâ÷ÕÚÙîÚçåâÜéâ÷æÛêñĉóéÞßíÒìüÛđòęìØäÚēĂëÝâÈóęĝæïëØćçÿæÊòĚčûĄãîĉĉíàêėčðýüćóôĕÄçìāÔõØĄÎùÑøÚëăČêùéĉìþçüëïÉĐûýāçăĂøĀĂúßĔĒĉÇëÉČďĊÈþðęåĎÝðßĐÕďÞĂĈóõĒÞðïĔÖďîĆĉóċĖßðąĘ×ďĄĊĊóěĚàðÊĜØďÉĎċôåĞáñßĠÙĐÞĒČôõ×âñïÙÚĐîËčðĊÚ¿íĄÝĖČăÏýĚęÞĊéÈáćĈÇÄèĖ×ÕÌêÙðĘëÕÚďíãçåÞÚéòëÖÚééâçÕÚÙéâë×ÚďùçèûüáëòĕàÈÐùâĚæÞÙéĈë×ÛÙùåèÕüÞêâ÷ÕÚéòÔçÕÞÛéęëÙÛëíęèüãÚýòĊüüêõĊóăÞáîæñæĈúðãéçæĒýėçêòĆôóéüòăöðëĀÑêċúíæĈąòĚčĄäĂýÓôĎĀÍ÷ČôÙëíĂéùÙąãýÒøêïĄČúýêĉĂĂèüāóÊĐđćĂçÈČùĀÇþàĔ×čăèÝĐúćÜĂáĕìđĄèíĔûćìĆâĕĂĕąèăĘĂćĂĊãĕĒęĆèÈĜăćÇĎäĕ×ĝćéÝĠĄĈÜĒåĖìÖĈéíÙąĈìËæĖĂÚĉéăÝĆĈĂÏçĖĒÞĊéÈáćĈÇÄèĖ×ÕÍĈÙìâóÖÚÙñóçČÞÙøĘêÊďĐđĈÚĄæÈØĎęûßçóõöĊĂăòèóÉáàĞùô¿ãèîąĒăčÍìăùÃèÐĕôĝČĀĉ÷ęÕäĂĀĝĘÖĆćëíēčÿČÙéĄîÞÏþýÒēìèĎĉñĈÖÈæĞÕĒáúĄĕèĉāďáôċĞüýĐÛÌĖčãäĞôÝ÷ÐûĖØĕØóÚĠÐěþáÌÙěĒÃÿĒÛ÷ğÌÉĊĖĆÙéýĉĢĄĞÆéýýÙüõèÐßóò÷üäïëí÷ÝãďéÑĈñæøÒĘèåÃĉøõÆĎăČĐęĀđĂïãÖÊćÎþÙÜÞüđôďÛþēÉÝ××õčüüĖÿêúçó÷ĕċÈďêØèÊÉčċíîÄāßġĖčøàîØñøüĒÜüĔÿÊÎÇí÷ÚÞóýóÚþćÍêðăÙÄĂêĘÚÖîÐÉėøČþċïÜđííÌÏĖĄóĂüćĊďØÖßîĢĉÿÍĊæéÚÜÌÐÈøÕđÖĂááõĚ×êÞĠÖđÝēă×ôĚþïþðøđëąăĔĚîàÄòáÒçãüÃáñē×đÉĘêîùĆßúó×äÎÐþÖøąñĐôĖíÞßĆĊììÍñèöĄÝùÄæöĄěĀòßßÙĚèËðĒçùÉāñáĚĔĊÐùíûċêßàÓÑ×îçÏÜĖÖëÊËêēØáĄüùðúìāæĠĒüÉýÝčćĊĎéÑĀïóáĊýĝõùÉĆďØñýĆÈÌē×ĀÙæïàĄęČÏûìçÿãĈþíċûÜĒČĜĂĕûéêđĄēĉÛùúåĠĂáĎùûìÜÿĊûĖõÉÉÞáÕĜÅĒÌÓ÷ĘćĈèàâĀĆßčČòěÉćâĔĖĀìãÎÝĄ×Öâý÷ĕüÆòÍÝïçĆĄĐēĚċæĄÈĘíçîĊčïÌĈÆĉÏûâÞéÚìêÓõãĐĉþòĖÜãÍęĒęăÚĐßÒðÜąčáâîÄÑùĉćÖÚàìþõüöčúøõÛĆąāĝê×čýĐğãýÅÐÝėĒÑÞçòĜĕëÄÎÏęÕĈăÝČĀÒôùÛÎ×ĒûĉĈðØÚÛãÎüÝèðÉÐÜÓčĈäăĂĠãöąÊÐğíÿüÛÚþ÷õêÄČċĒÜćüĆòēðĉÎéĐăöéÒêĢôì¿üăÝđĐÌÞÈğďïĎîÿûčęßüûĕčîčĀåĢúßąĀÐğúĞāĈĈòąĠÙÞÑóæèíþúðâÜúðăàÖĞþãâ÷ñýąĈçÿ×ĊąÿčÝÖôÕßĈôčĚÊÎñēćýĈĊÊĝÕòĉĐïĢĖîÝòæĔøĞÄáĎĀðĞÕÑÃÓìĚåæñĊĉøûÒÙĉæéàçĒîÖûËđÚĜÌÖÈÌÜėĂčßćÈöăđéîîÚĐđëæÚĠĈôûÒêûĚćùÛĆĒĊēáĐßýÚęÄÉÿáĒÙèĉÌęïĚãēéóęďÌăĆòđéëēďüøğøèçóċĈèăĂîâýáĈċĠéûÄÉċċÙđêĊĆüÓïĄăùċÔúÚÚïõÑó÷ýþĘòýÝèéóėĔèÌĐØÐùāčĈßĈĊØêÞđČýÞĉËĕïĐÕēîĒØêÝÝÈöâęîÛÈÿĈòÜÉÇÓãðÍĊÐáÌñëĈðàçĜÛĊëúÓęáĀãēēðĀÎèęðĝĆďúĝ÷ÿöðïþÔüÚëëĠûĐûåÏĕėĔþđîĚçÙąĎĉûÔìÇüæõĄđÞććęÚ÷ÖïĒāêčýĀÐØĔĝËáĊúëĈĈÉĐþÐùċĈČõæÞĂĆĈĂøûøāíéúûĈČÎáĔ×éąĀČóĝĊßüíęĐ÷ýċÙ÷ēþîĆÚĐçÉĎðċèĞýĈĄìĔċĀûÈĜđíÅçëġċûÌÉÙā×òÝđďéóďĆîîĘêøÿĈùÚêĕÝÊçČĈėÉÞĉďċĕáîÙāÙìüãċêäĔĆëûğôòÝàü÷ã×ÈċĈāäĖÝĒÚüØÑÆìïġČïÍäÚÚîČçóĎóĎéĆĒÿÝĘñÊêãēČćĉāÚýċïĆēÃ÷×óêÉÈüĔüßáÍÿÐĖìûÃîđ×ĉčãêÕêÝËÛĞđÕĂçÙØøößáúØđĜÿÈÍĠ÷ÖĆĀÈĕÑĊØđéõđÑçéìà×ê×ÝÎþăØÕćÉėÓßûÛéêôìćéùēÌĠĆÏîčìç÷ÉąØąùõÚãùĕĎÅđąēĂ×ÕéáÞÒĕÖÛĂĖÙÜ×ĈĐďöçîĉČêÐĊăçćĝĆēßÉČĞéÞÊíñĜäçËÌÌēÔĚĊòÃíØēçþèĢïÙčĈĈÞçěăēÏċćĠĆÎÐôÖĒêêÚĜëÝøäÑğÌôáíĎÜêĊÅéÃęďøýéðęėÕćÊýîóęäçđìěúĀĎòĕÐĖÌđÊĊãÑøíëõõđÕáèĚ÷ýċñãàĄĉêóÐĜĔĐÍúéġîðÞćçùìê×đÃàõÜÌïáĢĉċØËæìÔëîñÿàÑçåďßûîçāĆĊëĘÛöċíÞðĘ÷ĄÇûĉĖÿîûÜĐè×ĉßÚòçØĀÉõçïåÎÚî÷Ġ÷äðéãîçċÞĞąòČąĀĒĐćÖăÏċéĘÿÊýþĊ×ĊâßéęĐäÊĉóêĝèóßáòċÇçïòēĊÿčÊĠÑïčÝéöéēëčđěĎĖçæĎðëðčäÎĞÕċìäĎ÷öòÝÚÌĠČđÉãÚÞúÜøäÌĞęñËĉýġïĠĉÛèÿĕČÈüđĘñÚąăîĀĘéĉÑÜĜďîâÚčĘ×ėéđÉêÐíāßûþðĝčæÑÓÚó÷üíîæĀÜàùĉäõÅéáÜđěÇăèčĈèáòÍėÓčÍÏüĖâÜÄÌáĠĈĉéÚãéòĉÈÎĈóðċãæāēëíúúÿêõÖĎëĐÞöčäċêĖçéÕÐúÜďýØÏĂÜìĜăĄäĊÕĒÙĊÿČÚĜÞēÃïĂÑùûæÿČěÕćûĖēþÄÌÌđÒíČÉĒûëĈþîûĕãĜÇóéČùğ×æÛĞďñċĂîČûÿÕÞãïëĞýĊăùĕĐëÚïØĉÙäĀÙìëßÊÎÃàÒõÊúòĖċÚÛþÚÿđĘćËéíÐĎĎēðöùüČåăĚèĎÝÒĀÙĒ÷ÞãČþėüíČđàöďõĐÃöěéąÉùüùëàĎÏôéĚÊÛĂÙĒĒÞÝãïÓčáíĆðĕ÷ÖÉæĚćēíóĂāÙĊąìÍĝđĕĀÌæĝęÕëĉèêÚėÜąòĂîĈĈčúčĒÜöčċĀćçÈÐíéċĐàďïĚĉèÌćÚĚðČëčêēð×îæñęñüÝĉÇöëüØăèù÷ýćĈäēěĘĊñÙòÖöìĂÿĂĒýÅÈĉĂúóÞČÌÝĘêìþÃëÚĀĊċÎþăùÍĄðāĐÑìÎûíÒĞÙçĄČôóíÍúýõčÍàéĊøþÇċíØ÷ĈčÊĎñĊğĀáîĐÒÜÄĀäøę÷ÄÉÊĔÒî÷äčîČßÃċîĎÕùëóąàõĖáċòíôõÆèÇñęÕãĎąÓêÖõñËĐ×ØĀòÿõČčÉáþöûĔċēÉìôßØÊÙĠùÛßĒËĂæĉöäçþÖÚĎÄæõåÖÅđÉáęûèýãĕČíáÎÞùČÞøđéýîÿÌîÈÓėÛÄċà÷ĆéõèĉÜ×ûÕëČĒēØĄæûàéĚèĂćá×ćùÛÿďÑçßÝÏÜđéåþûØĆĒÕÛà÷ìçÕÒèęĂóÉûąĔêğæìÝĂ×ÖÝÝüÓðđüíďĠĂĕ×ëąßéïËÿãÛÌôùìïúîüÊÄÍďøñûÎèĞùĈùçĎïïĚÈĀċüđÖ÷ÛÊîĘğčáÃîĉĔÜÑÐþĘïàáîĜĖéÕßÍĢõĒąĒÛáąĞýëāÿØÑĀîĈñëÿÅÈüĠìĝÜûĎÿČĞÖòÜĒÑėîîéčďîÊÊáðïùĄüđðäØąċÎíÑØäìĈûÐēçìàøĐõûċĈĂãíÕàãĚ÷ýÌĎÌíöñĊåàďìõÍâÝòĐûäąËûØøýĎąĔóĀàëÿÚäóÌÎĊôÑěãèçõôğÃäÇā÷ęÆāĂĝêĠÜĄÙĕĎĎĂãùĠÕČÙËòėċĚäòüóĘĐĄïÏéĘĝýČèċĄ×ÆþĊÛĊýÿďĄûĒċæĐùęóþéíăàĊĎûóýēĘćĂàÎĜÖñăéðČù÷æđßāĊøÍāûáĘñÝÝßÚåĝæăĊýĘïþûÑÛĈĘÊþĄëâčÌóąöćêăĂúÝõěéÑþÿĖòĉĈÏČăÝçóÏČĚÝĆæĉġćþøĄþĢēĚäáÞěíĔåáüčĊøËČÇđñÞõđþĐēĖ×ÏÿØçÙãĉåýæĎĀÛáÜăíÕéÍ×đúÕÒèēñðĎÏąėèßÃðĈðĒðĎĀÐàÚĎåîåòèúÅáæñĄÛĎĆÿÝÐñûĄăàúÜéÚÚÝÕîëĆăčđĠçĄýĔêċĀÚÚĢďçÃÜĀüęďĀÚÎČìéØćāďãìĎĎÎØėúĈìÏċæĉÌÉàĒëô×ÚÐÚąĀĄáÛêõđĂĂĊĜÔĈĆÜÌĕëöāßûõñĝÜçùÚĉòõÌíėñíæîËĒðØçËÝíÙđîÞâùċČþăüÞéÖăâċċÔò÷āìÙĒïìËçëĆñĄñÏĕð÷ąèÇööĀĄáÐĞëĕÖßÊ×ĘèêâÚéðêÄßåØĒýõÜñÛÙÖäĆĀêČðāČąÙòĠèßÍïÕèċéýĜęôċĀĐĖñĚþĂăĠčĖúÞÈþĘĕÖĂåĂéîäßùčċÑÞÐëÚċĊÇíþďæÞøúÌĚöÝîĒëāĘØúêÛĕĂúöñÝċďÝÈÞòÞûĖÕýìĚĎęĄċĄēćðĈĉáÚóęüËÌĢùöåÌÈĜēôÉüĀĢØ×ćĐĉöďðÊÝÞĂèĘÆÑçàĒĀÕìËüďĖåÛĊÚøĖÉàÈøĚċāÝïėĕÕĀÞñĜċðÜçûĀđďĉĎéüČêþçúõíó÷đÐěîĐĆêÚÚèęçàðùėòČćýġíčøđĆòéÜêÉïďÓćÆąĊ÷ĔĉåăāĉõëõĀûāâîäÎÍĚĎðÉóćáñęăÉČĂēĐúâûÓøēøďàïõÑâýĀāäćÜíÌñđĞýëîÝéĖÿĄÇÙđĕõáåċĕûöòæøăĘûÜćĒďôáòĀðñĚçýÙċöÝÞĉçáâéØÑãëîēÿÐÈė×ÖÕäÚĠôč÷ÍĐüëðÙăàĢĔèèíüğêěëĄððÒĕÕąñĊóđÅÜÏõÓüëĈðÙä×ÿÍÝġÐĔçĉûÚÕÛÌÊþĢĐçÌĊÐø×ØÍąçĐúÛÕéĊĀĕîüĎÇěĕýĈïêÜÑđØÚÝęÕêÕÈĆĀěċÌĎÉěÖÛĆÉäÜôćÇèÇđäéČýĎēăĖ¿ßâíĔĊÈÐċĞĔþýäÏďâéăãÛýâîÕÛÍðÙÜċÚÞĂąěäċðėñĞĄčÉĐÒě×ÍíďĆĀöăááĘùßÑÑÛúğØĂÿúåĉëĉÐěĐĔÖÏāěĎÜþÊýġĖçĈĐÐĐĊõâĉìĕĖčêĆâýîéæðĀċèìĆýîĔåĐÕÍáßöčæĒĂġěđÿĉäċïÑÚÜđĢîčîÎĈáÔĈÉäËðďęÄÚÜøèÙäîĂêĒðĆĎđÛĉûßÝËøïçĎàâÙø÷öåéÛêÙÜąāõâüíÈċÚÖĚċàčÝÔċéăĆòěďĉĉÈÓØĎáòÛéð÷ãþçóđćċýďþĈõ÷ÒùéìßüàĎëåÖÉĊÉāìĞĂËÌÜěĔâïÏøÚØĆááęØĖÃÌāÜÖÛÕÚćéÚòÌåÇôđÕÖÍÎÙĐěåæÜĒēýöÍúêùúĀîÃĔùþäçíõóĐčííĂęĐĆēéĠÚÜþåñÜě÷áüìĢĊĐÝÏÈĠòÖþûñÓõùçëðñÕëîçÙëĔÙäßåēďéÞĎâęïÚËćâ×ąēąýÉððğáéãĊČûÕüüÜÚÞèċúĂċĎÿâñĂØ×ČîĆđÓÜĀăÊÓąčÃðčėÙù¿ßòĚÓÚáāĂċÐĎìæËøĉéøèêëÕÕ×āÛõÒĊùďďÝûòĄĎĎĚöčÌëùđãÕċÚþüæÕëĂðğØóüÍĂċâċÅêæėĔďÃÌĀáĂÿüãëìęĔāďëĎĈòõêìÓêØĀćÌčïČÿēðĔĘČĉþèûĖĝ¿ÞăáÙöÚÒĉĜĔÛÉûÍĠÓĞÊÉÿĂ×ĔÌûÌà×ĎöýÐùÐ×âþíĞêûÞãèĀĐñÍăÃöČòþÐÜõóÞĄāã×òĐĂÄČčîÙăËđČðĒÞĂêčĉïíċĐĢØüąÄðñÑÿÖĐûàąõõÎđØĖĝÿĂăĒċöâýÚĊ×ĖÙĂĉÓâČöçáĂåĉõÝÍÚäùąćÈÝĒñàĐÌĘðøÝāçčĘÜêĈìĉěéùïñéċĘêçÑĉöóÕćÙÞÙûûåăöČïÚÜêĒĄöéîĒýĐ÷ąćýêÑÜêáÚĚìîþèïß÷ûÅéíĐêØÚââöâëèÍďęē×äìČĚĘßöÿùòéÿÌãÜïùÿþÊÏĎÑĘāîąôěĎåýĒÝÐéĊïĎĐēĕĊćýðĕþĀäúàøĘÖðĐÙćÝÇÒÚùĕ÷âÝď×ďÑĎÊèñÌĚìãÜÙÚćĄÏÙėïčĄÎÍ×øĘöăÊÝĒđéëåčðñýóĉēúÿÊïßğĚĉùčåëÔĖÌþìĞïþêòÿĖìėúìćôöĈíđíĝó÷ÕÍÃÞåôÕÞòÞęĐÌĊñĢąÞÌîąàÚĐåÛâÝïěČÈÉāđĘëçăğĘÖåÈãē÷ÕëćúÓñċûÜÚĜéÖÅĐþÛäĔÊċíìÌîĈãñàĘĖĂÈüęÙþċÛāĔÔÑăĈéðĚĎÖûìĀãÚËÑāĝĔÞâðÑßđôÉÝäéÕÞÊÎüĊĆòÜñûÝęÕëĈÏëñúÍèèĕĖÕÆąĄÞĄìéÈĐęÚĕëĉàýñďÜÍüìĒėæċĉíð×ÕæþĠĊđÝÄĂĎéíýăðöåđćÉÍĝêĎĉĀâßĕĐĄÄçóÌĊøóČĂíċÊąĀĖċćãïÛù×ëíâèĘù×ÖèïôăčãúÌĚÕĎ¿ÝñøæĊĉûąÙÓĝõĄÿÜăîčĒÃĠÚÕùĊùíćö÷ĊċĞìđÙÝĈýíþèĀÚùĆĒõðĉÚąĞĄÊÌáċċċéÚøèĉáăûĎēÙĆçąđöÛäÛĉĊåø×ÊÊÜãíÊĈĒøêøċÈÚęèċâąÍêØÖÅÞñðãĉÄāĄÞÒĔÿïċĔĔÿÊóĉüØùĎĄĉĐÌĖâîÌØČĒāðßñïïÉèÙėãðäÍîÞĉÚÙÄßöÒĊ¿ñýĉÙýĈĈçėĉî¿ČúÞÌĒÕăãÓéÙüĂÃÙ×ÝêòáġĔñĂæċßåÛêáÑüùÖäĈÊĖøØþÏÝáďç×âćÜøğëÏċċĄđÅñÈđěĚøèČñØýĎčÈďĉ÷÷äćÞÌÛÍúòÜÒ×ÙúúÜî×ùÑäĊćòćÎüĞÒØÌïëþĈøÉÐÐ÷ØÖÇćĀĕÔÿĈÑÎďĒ÷èÏîĞėÞÕăðĒÐçÝâÉğøíāđêõęèÖēăðđþăÄĆÓëĊâĎíñčĒÌĎéāěěÈēÑóôÿĎîòĉĂėÿĎÚĠöęöđĒôėĎÿðêüÑñÜüÜÓ÷ñýÈĎ÷ĎñíßĈúĕĐÚçàùĎĖøĈãċÒíæÏíéîÿéÌĈüÓĠèÜãéâëÃĀãĀĄøĎćæòÐñþĉăá×çØüþûĈěÆèČóõđÿÉÈĖçéÕÄüíÓÑéëĂĞÌĊãÑàÛìø¿éÑíĎö¿ċëáċõçÿêęđþ÷ÎîøíûĂĄûĕĐÕØÌèđùúüËÐáĄČĂìéĒØôçîÞùò÷ùäßéêğÖēîìõùČčñġõĔÉëîĜôċãËùěóĠĊăúğċĖÇĂýġìúĆÎîØĈÕ÷ēćøĎû¿ÈĉóÙèÌíÃðÚúÌèËĒøēăĐÏýěÞÿĊĂÝéîąÝðØÖėêÎòĉąĈúúüùĖïËþäěùõ×ÌÈðĄÑċċĒĒęôÈĒĂÙðĊøçÿØãĔćàçðĖĘčâĄċúÛßĈçùćČâìďøãĘĈÑÍñééÅÉèďØĝÖÍĀàôóÿĊéïěęþĒúđĄëÕăÇéèøÅçüĀĐÑăÄÙČëÞéāäĞĘ×ùßæÜÓĠèæðûïěĊÌÜØéïÍíðĜÓēĎðïėøûøđĈěÙûÄàçøìï¿ñÊğðĔÄĈċďðùÌàÃéÚîÌçćìãëöĂÏĠÙÖÌĐđċÌÙĄÄÞČąìÙþåĖ××íðæýÚó×ąâéÕìãĐÚïĐìùúÇĜæÜĎÒĂàèôĄČúēñċçäĀğĆĝãíÇéæĘÄþÌĎĚĕþâËùåðĆÎÈÓñõĄìðĕĖ÷ëÎúñòđûóÇÿČØâááÿöĝþāíċÙČĎċìđÒðÖáČēċÿĈăÿďÒĎÆĄĆġĈĀÜÛÙöø÷ùÝÎÓĕ÷áčďÞÖėÛąËúčęàĎùòäċûûĈÓçĊîĈþĠïĜÝËîĊÌéãÎíċăĎÌċþÜ÷ĝáÏĀěÖîçĊÊûēÛÖâæëúîÄÿÌčÙüõçĊĉĉòùÿđÝĔĉČĒûðÙêÇċòČîêãÝāĞĎíÄĎĈāèêČĎîāąéØĂčÞÙöúÞìýØðéĂčðæÜØăÍ×ÙćąÍàěãèÍäñúěĠČñâÞćÞÕÞÜüăĔÕćāčîßčĉđó×éċÊþüăÞØÐæČĐĞÃĎăÜñÜÄñÙĜďíãäéÜÖèĄÎß÷ĆĔĄđììÒöÊÉÈéæĐÞĉÛúÔÜéÞÈØČċĈæÜÝĊēíĄÐÝÌĚÞĈÐġęċÝčæēĄĐõčđĕćĠÚëċċÐÕĆĊĄċîüĀëÉêãüċëĂÚÖėéÛÑěĂćāåîîñûßèĆØēìÌýýôíîċćĈÛďúÕíðĒÐÜýÚàĔċÜĂÉĈÛĉÕìÛýĉéĖíčûøĆþêĈăġĉčåĊÇóäùõÎúĀÐçÕìÃęÔĈìþćÛďĔĎéËÞâêÄßíûċĎĈåÉĞöČÙðĉĞĒýĈíąĉ÷ēäąêÜÌùáüăêóØöÌĊĘđïåÑêýúïöÎìĝöĔäČďĢØĊèðæęùĎ¿ñéôčĀÙäđóØè×ÝËáĒÙöíüôăčÉÝòÓöëþĀÑõĒÙĆÉèĜöęØéąĜčĒčāíÝÌÝćüúĜĖċøĉÙÜ×çíéĎÿñėÛċùĒÕðĉòüýÑėæÍÿßĈùÆÎàßĕĝúÍüĞúÑÈċĈğĈğ×îÃùēÖ÷ÒĂġ÷ïÜáéċ÷čùãäĉÑ×èîúčÔēìýßďåìêàËĚÑïäÉĐûòîąćÿðęĜĄáĂïěÕ÷èäčÐĐìæČěęÑíáÉðĒñÊóăóéĔĆñą÷ĊċÕċúüĎĐĊýæĖĂéîüåĒíĝêēðĎ×ĀąÞċĞÌčÇĈÛÛĊòÿąþĝĔöëċìéċ×ąòâĊôóČĐāęøÿ¿ĀÞĎìîýÈîĐēČýĎÏĞêØÇêÚġĔþ¿ÏçáĆØúčÚčêØÄăďÚïôĈðñĀèĕÿĈïïóĚþáËĒÐïêÑÐÚâÜćþèü×üàáñĞòĔõÄÜēäĘÈäĀéĄĔÚóÎÜě×âðúčòçËñÎÜĒøÆÜîġĚĒüăËĠööčČåĖĈ×íðÚÝÖíùÌÙêäĒÆÛÎíäęÍîäěęÙÙÞÐÜãÜéÚïđċçÍçËĎĊđêēđ÷ìčçèñõïđĆûċĒãðąđäóØĕ×ÏâĞěčćèÑëâČÜæíñðĉúìČóÑ×ëúæďóï÷Äčċ÷ĐËāČÝĚñééĂîîêĊÒâàăćĄúúùûğÌÿìĉÖğáÿĒĚĔôáÑüĉąĉÝßčØîòúÌĄÝçċÞĉãğñèąúçÞĄîÉíÿØùç¿ĂäóÐęĆËáøĂÙÙüćáâċúĒĉþĎçĆĐþûïČāčäĘëïëäçĖĄĊÊÐÏùėëøÊþęúúĎäāßĚċāëĆðÚćĄæê×Úđ¹ÌÜĝďęõÿý',
 					img = '<img src="data:image/jpg;base64,%imgdata%" alt="Red dot" />';
 
-				JMVC.events.bind(JMVC.dom.find('#see'), 'click', function() {
+				JMVC.events.on(JMVC.dom.find('#see'), 'click', function() {
 					var p = prompt('Insert password (the right one is `unsafe`)'),
 						dec;
 					if (!p) {
@@ -686,70 +709,70 @@ JMVC.controllers.demo = function() {
 							flt = JMVC.image.createFilter(img);
 						flt.prepare();
 
-						JMVC.events.bind(JMVC.dom.find('#brightness'), 'click', function() {
+						JMVC.events.on(JMVC.dom.find('#brightness'), 'click', function() {
 							flt.filterImage(flt.filters.brightness, 20);
 							track('brightness');
 						});
-						JMVC.events.bind(JMVC.dom.find('#threshold'), 'click', function() {
+						JMVC.events.on(JMVC.dom.find('#threshold'), 'click', function() {
 							flt.filterImage(flt.filters.threshold, 50);
 							track('threshold');
 						});
-						JMVC.events.bind(JMVC.dom.find('#grayscale'), 'click', function() {
+						JMVC.events.on(JMVC.dom.find('#grayscale'), 'click', function() {
 							flt.filterImage(flt.filters.grayscale);
 							track('grayscale');
 						});
-						JMVC.events.bind(JMVC.dom.find('#invert'), 'click', function() {
+						JMVC.events.on(JMVC.dom.find('#invert'), 'click', function() {
 							flt.filterImage(flt.filters.invert);
 							track('invert');
 						});
-						JMVC.events.bind(JMVC.dom.find('#blur'), 'click', function() {
+						JMVC.events.on(JMVC.dom.find('#blur'), 'click', function() {
 							flt.filterImage(flt.filters.blur);
 							track('blur');
 						});
-						JMVC.events.bind(JMVC.dom.find('#sharpen'), 'click', function() {
+						JMVC.events.on(JMVC.dom.find('#sharpen'), 'click', function() {
 							flt.filterImage(flt.filters.sharpen);
 							track('sharpen');
 						});
-						JMVC.events.bind(JMVC.dom.find('#laplace'), 'click', function() {
+						JMVC.events.on(JMVC.dom.find('#laplace'), 'click', function() {
 							flt.filterImage(flt.filters.laplace);
 							track('laplace');
 						});
-						JMVC.events.bind(JMVC.dom.find('#sobeloriz'), 'click', function() {
+						JMVC.events.on(JMVC.dom.find('#sobeloriz'), 'click', function() {
 							flt.filterImage(flt.filters.sobeloriz);
 							track('sobel orizontal');
 						});
-						JMVC.events.bind(JMVC.dom.find('#sobelvert'), 'click', function() {
+						JMVC.events.on(JMVC.dom.find('#sobelvert'), 'click', function() {
 							flt.filterImage(flt.filters.sobelvert);
 							track('sobel vertical');
 						});
-						JMVC.events.bind(JMVC.dom.find('#emboss'), 'click', function() {
+						JMVC.events.on(JMVC.dom.find('#emboss'), 'click', function() {
 							flt.filterImage(flt.filters.emboss);
 							track('emboss');
 						});
 
-						JMVC.events.bind(JMVC.dom.find('#red'), 'click', function() {
+						JMVC.events.on(JMVC.dom.find('#red'), 'click', function() {
 							flt.filterImage(flt.filters.remove, 0);
 							track('red channel removed');
 						});
-						JMVC.events.bind(JMVC.dom.find('#green'), 'click', function() {
+						JMVC.events.on(JMVC.dom.find('#green'), 'click', function() {
 							flt.filterImage(flt.filters.remove, 1);
 							track('green channel removed');
 						});
-						JMVC.events.bind(JMVC.dom.find('#blue'), 'click', function() {
+						JMVC.events.on(JMVC.dom.find('#blue'), 'click', function() {
 							flt.filterImage(flt.filters.remove, 2);
 							track('blue channel removed');
 						});
-						JMVC.events.bind(JMVC.dom.find('#x'), 'click', function() {
+						JMVC.events.on(JMVC.dom.find('#x'), 'click', function() {
 							flt.filterImage(flt.filters.x);
 							track('x filter');
 						});
-						JMVC.events.bind(JMVC.dom.find('#mblur'), 'click', function() {
+						JMVC.events.on(JMVC.dom.find('#mblur'), 'click', function() {
 							flt.filterImage(flt.filters.mblur);
 							track('motion blur');
 						});
 
 
-						JMVC.events.bind(JMVC.dom.find('#reset'), 'click', function() {
+						JMVC.events.on(JMVC.dom.find('#reset'), 'click', function() {
 							flt.reset();
 							track.reset();
 						});
@@ -1053,13 +1076,13 @@ JMVC.controllers.demo = function() {
 					item,
 					render;
 
-				JMVC.events.bind(butt_plus, 'click', function() {
+				JMVC.events.on(butt_plus, 'click', function() {
 					item = prompt('Item to add');
 					if (item !== null && item !== '') {
 						list.addItem(item);
 					}
 				});
-				JMVC.events.bind(butt_minus, 'click', function() {
+				JMVC.events.on(butt_minus, 'click', function() {
 					item = prompt('Item index to be removed');
 					if (item !== null && item !== '' && !isNaN(item)) {
 						list.removeItemAt(item);
@@ -1239,44 +1262,61 @@ JMVC.controllers.demo = function() {
 			    //db.logout();
 
 			});
-
-		
-
-
 	};
+
+
+
 
 	this.action_drawer = function (){
 		JMVC.require(
 			'core/mobile/drawer/drawer',
 			'core/lorem'
 		);
+		
 		JMVC.getView('vacuum')
-			.set({
-				style: '',
-				id: 'container',
-				'content': ''
-			})
-			.render(function() {
+		.set({
+			style: '',
+			id: 'container',
+			'content': ''
+		})
+		.render(function() {
 
-				document.body.style.backgroundColor = 'red';
-				document.body.style.padding = '50px';
+			document.body.style.backgroundColor = 'red';
 
-				document.body.innerHTML = JMVC.string.lorem();
-				
-				var drawer = JMVC.mobile.drawer.create([{
-			        label : 'JMVC logo',
-			        href : '/demo/logo.html'
-			    },{
-			        label : 'Google',
-			        href : '/google.jmvc?flash'
-			    }]);
+			document.body.style.padding = '50px';
 
-			    drawer.render();
-			});
+			document.body.innerHTML = JMVC.string.lorem();
+			
+			var drawer = JMVC.mobile.drawer.create([{
+		        label : 'JMVC logo',
+		        href : '/demo/logo.html'
+		    },{
+		        label : 'Google',
+		        href : '/google.jmvc?flash'
+		    },{
+		        label : 'JMVC logo',
+		        href : '/demo/logo.html'
+		    },{
+		        label : 'Google',
+		        href : '/google.jmvc?flash'
+		    },{
+		        label : 'JMVC logo',
+		        href : '/demo/logo.html'
+		    },{
+		        label : 'Google',
+		        href : '/google.jmvc?flash'
+		    }]);
+
+		    drawer.render();
+		});
 	};
 
 
+
+
 	this.action_orientation = function () {
+
+		//JMVC.require('vendors/twitter/twitter');
 
 		JMVC.getView('demo/orientation')
 			.set({
@@ -1286,7 +1326,42 @@ JMVC.controllers.demo = function() {
 			})
 			.render(function() {
 
-				JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/demo/orientation.css', true);
+				// experimental
+				 
+				// JMVC.vendors.twitter.linkShare(document.body, {
+				// 	//url : 'http://www.jmvc.org'
+				// 	title : 'mytitle'
+				// 	,text : 'testo del tweet'
+				// 	//,via : 'via me'
+				// 	//,size : 'large'
+				// 	,related : '#javascript'
+				// 	,hashtags : 'javascript, pure javascript'
+				// });
+
+				// JMVC.vendors.twitter.follow(document.body, {
+				// 	'show-count' : false
+				// 	,'size' : 'large'
+				// 	,'show-screen-name' : true
+				// });
+
+				// JMVC.vendors.twitter.hashTag(document.body, {
+				// 	size : 'large'
+				// 	,related : 'purejmvc'
+				// 	//,url : 'http://www.jmvc.dev'
+				// 	//,button_hashtag : '#javascript'
+				// 	,text : 'my text'
+				// });
+
+				// JMVC.vendors.twitter.mention(document.body, {
+				// 	size : 'large'
+				// 	,related : 'purejmvc'
+				// 	,url : 'http://www.jmvc.dev'
+				// 	,screen_name : 'purejmvc'
+				// 	,text : 'my text'
+				// });
+
+				
+				JMVC.head.addStyle(JMVC.vars.baseurl + '/app/views/demo/orientation.css', true);
 
 				var $ = JMVC.dom.find,
 					Mr = Math.round;
@@ -1305,7 +1380,7 @@ JMVC.controllers.demo = function() {
 	 					$('#is-absolute').innerHTML = e.absolute ? "true" : "false";
 	 				});
          		}
-         		if (!window.DeviceMotione) {
+         		if (!window.DeviceMotionEvent) {
          			$('#dm-unsupported').classList.remove('hidden');
      			} else {
      				$('#dm-info').classList.remove('hidden');

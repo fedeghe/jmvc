@@ -160,8 +160,10 @@ var time_begin = +new Date(),
     // script       : creates a script tag with the right url to the source
     // scriptghost  : same as script but removes all injected script from the DOM after load
     // NOTE > it seems like script mode load faster but ...
-    getmode = 'ajax'; // {ajax, script, scriptghost}
+    getmode = 'ajax', // {ajax, script, scriptghost}
     //
     // ===========================================
     //
+    returnTrue = function () {return !0; },
+    returnFalse = function () {return !1; };
     //-----------------------------------------------------------------------------

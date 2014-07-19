@@ -17,7 +17,7 @@ JMVC.util = {
      * @param  {[type]} d [description]
      * @return {[type]}   [description]
      */
-    deg2rad : function (d) {return JMVC.M.PI * d / 180; },
+    deg2rad : function (d) {return d * JMVC.M.PI / 180; },
     /**
      * [getLink description]
      * @param  {[type]} cnt  [description]
@@ -158,7 +158,7 @@ JMVC.util = {
      * @return {[type]}   [description]
      */
     rad2deg : function (r) {
-        return 180 * r / JMVC.M.PI;
+        return r * 180 / JMVC.M.PI;
     },
     /**
      * [ description]

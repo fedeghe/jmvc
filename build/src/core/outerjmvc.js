@@ -66,6 +66,7 @@ $JMVC = {
     //
     debug : jmvc.debug,
     delegate : jmvc.delegate,
+    code : jmvc.code,
     extend : jmvc.extend,
     factory:    jmvc.factory_method,
     inherit : jmvc.inherit,
@@ -128,6 +129,9 @@ $JMVC = {
         opts = opts || {};
         if (!('core/console/console' in $JMVC.extensions)) {
             $JMVC.require('core/console/console');
+        }
+        if (opts.clear) {
+            opts.h = opts.j = opts.c = '';
         }
         JMVC.console.toggle(opts.h, opts.j, opts.c, opts.tab);
     },
