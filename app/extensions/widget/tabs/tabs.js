@@ -1,3 +1,8 @@
+//
+//
+// TODO: MUST BE REWRITTEN AS A REAL OBJECT !!!!
+//
+//
 JMVC.extend('tabs', {
 	counter : 0,
 	vert_css : false,
@@ -5,10 +10,15 @@ JMVC.extend('tabs', {
 
 	init : function () {},
 
-	tab : function (mode, vertlabel) {
+	tab : function (options) {
 		JMVC.tabs.counter += 1;
+		
+		options = options || {};
+
 		var bid = '_' + JMVC.tabs.counter,
-			direction = {'v' : 'v', 'o' : 'o'}[mode] || 'o',
+			vertlabel = options.vertlabel || false,
+			direction = {'v' : 'v', 'o' : 'o'}[options.mode || 'o'],
+			tbId = options.tbId || false,
 			that = this;
 
 		this.tabs = {};
@@ -25,7 +35,6 @@ JMVC.extend('tabs', {
 
 			//utility function to hide all tabs
 			function hideall () {
-				//his é JMVC.tabs, quindi glielo passo sotto con la call
 				for (var i = 0, l = that.elements['div'].length; i < l; i += 1) {
 					JMVC.css.style(that.elements['div'][i], 'display', 'none');
 					JMVC.dom.switchClass(that.elements['li'][i], 'sel', 'unsel');
@@ -34,9 +43,6 @@ JMVC.extend('tabs', {
 			function verticalize (str) {
 				return str.split('').join('<br />');
 			}
-			
-			
-			
 			
 			var num2show = show || 0,
 				ul_id = idul + bid,
@@ -97,7 +103,7 @@ JMVC.extend('tabs', {
 			
 			//set bindings
 			for(i = 0, l = that.elements['li'].length; i < l; i += 1){
-				JMVC.events.bind(that.elements['li'][i], 'click', function(e){
+				JMVC.events.on(that.elements['li'][i], 'click', function(e){
 
 					//anchor up
 					document.location.hash = anchorName;

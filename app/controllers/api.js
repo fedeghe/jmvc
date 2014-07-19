@@ -20,7 +20,7 @@ JMVC.controllers.api = function () {
 			apintro = JMVC.getView('api/apintro'),
 			func_model = JMVC.getModel('api/function'),
 			//field_model = JMVC.getModel('api/field'),
-			tab_ext = new JMVC.tabs.tab(/*'o'*/),
+			tab_ext = new JMVC.tabs.tab({tbId : 'tbMain'}),
 			tabs_inner = {},
 			sections = [
 				'jmvc', 'constructors', 'model', 'view',
@@ -33,7 +33,9 @@ JMVC.controllers.api = function () {
 			
 		main.set('id', 'desc');
 
-		JMVC.io.get(JMVC.vars.baseurl + '/media/documentation.xml', function (doc) {
+		JMVC.io.get(JMVC.vars.baseurl + '/media/documentation.xml', gotDoc, false);
+
+		function gotDoc(doc) {
 
 			/* get a parser */
 			var parser = new JMVC.xmlparser.load(doc),
@@ -87,12 +89,15 @@ JMVC.controllers.api = function () {
 						} else {
 							params += '<label>' + section['function'][i].params.param['@attributes'].name + '</label> : ' + section['function'][i].params.param['#text'] + '<br />';
 						}
+
+
 						if (section['function'][i].sample) {
 							sample = '<pre class="code round6 roundright">' + section['function'][i].sample['#text'] + '</pre>';
 							if (section['function'][i].code) {
 								sample += JMVC.string.replaceAll(trialbutt, {docode :  section['function'][i].code['#text']});
 							}
 						}
+
 						
 						func_model.set({
 							testlink : testlink ? '<a target="_blank" class="testLink" href="' + JMVC.vars.baseurl + JMVC.US + testlink + '">test</a>' : false,
@@ -112,24 +117,24 @@ JMVC.controllers.api = function () {
 			JMVC.each(sections, function (t) {
 				var y;
 				parser.pointer(parser.xmlDoc.getElementsByTagName(t)[0]);
-				//y = JMVC.xmlparser.toJson(parser.pointer());
 				y = parser.toJson(parser.pointer());
-				tabs_inner[t] = new JMVC.tabs.tab('v');
+				tabs_inner[t] = new JMVC.tabs.tab({mode : 'v'});
 				tab_ext.add(t, '');
 				add_all(y, t);
 			});
 			
 			main.setFromUrl('nome', 'Guest');
 
-		}, false);
+		}
 		
 		apintro.set('postmessage', 'Thank You');
 		main.set('content', '{{apintro}}<p class="rendertime">Rendering time: <strong>[[JMVC.vars.rendertime]]</strong> ms</p>');
-		/* main.set('content', '{{apintro postmessage=`hello`}}<p style="color:#fff">Rendering time: <strong>[[JMVC.vars.rendertime]]</strong> ms</p>'); */
+		
 		
 	
 		main.parse().render(function () {
 			var i = tab_ext.render('desc', JMVC.util.uniqueid);
+
 			JMVC.head.title('JMVC API');
 			JMVC.mobile.topHide();
 

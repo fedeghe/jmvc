@@ -10,8 +10,8 @@ JMVC.controllers.tabs = function () {
 		);
 
 		var index = JMVC.getView('home/index'),
-			tab = new JMVC.tabs.tab('o'),
-			tab2 = new JMVC.tabs.tab('o'),
+			tab = new JMVC.tabs.tab(),
+			tab2 = new JMVC.tabs.tab(),
 			ids;
 
 		JMVC.lang('jp', 'en');
