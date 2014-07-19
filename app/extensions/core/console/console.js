@@ -56,8 +56,11 @@ JMVC.extend('console', {
                 foot_height = 100,
                 screendata = JMVC.screen.getScreenData(),
                 scrollTop = screendata.scrollTop,
-                triBrdCol = '#606060',
-                
+                defaultContent = {
+                    h : "<p><span id='hw'>hello world</span></p>",
+                    j : "var t = document.getElementById('hw');\nt.onclick = function () {t.innerHTML='clicked'; };",
+                    c : "p {\n\tmargin:20px\n}\nspan{\n\tcolor:red;\n\tfont-family:arial, sans-serif;\n\tfont-size:20px;\n\tcursor:pointer;\n}"
+                },
 
                 // main container
                 container = JMVC.dom.create(
@@ -69,22 +72,24 @@ JMVC.extend('console', {
                 ),
 
                 content = {
-                    h : h || (JMVC.p.h ? decodeURIComponent(JMVC.p.h) : "<p><span id='hw'>hello world</span></p>"),
-                    j : j || (JMVC.p.j ? decodeURIComponent(JMVC.p.j) : "var t = document.getElementById('hw');\nt.onclick = function () {t.innerHTML='clicked'; };"),
-                    c : c || (JMVC.p.c ? decodeURIComponent(JMVC.p.c) : "p {\n\tmargin:20px\n}\nspan{\n\tcolor:red;\n\tfont-family:arial, sans-serif;\n\tfont-size:20px;\n\tcursor:pointer;\n}")
+                    h : h != undefined ?
+                        h : (JMVC.p.h ? decodeURIComponent(JMVC.p.h) : defaultContent.h),
+                    j : j != undefined ?
+                        j : (JMVC.p.j ? decodeURIComponent(JMVC.p.j) : defaultContent.j),
+                    c : c != undefined ?
+                        c : (JMVC.p.c ? decodeURIComponent(JMVC.p.c) : defaultContent.c)
                 },
-                // triangle = {
-                //   tag : "div",
-                //   "float" : "right",
-                //   style  : {"height":"0px","width":"0px","borderBottom":"30px solid " + triBrdCol,"borderLeft":"20px solid #333", "marginTop":"-10px"}
-                // },
+                
                 brd = '<div class=" gbox" style="float: right; height: 0px; width: 0px; border-bottom: 30px solid rgb(96, 96, 96); border-left: 20px solid rgb(51, 51, 51); margin-top: -10px;"></div>',
+                
                 version = 0.4,
+                
                 defaults = {
                     h : '<!-- no html content -->',
                     j : '/* no javascript content */',
                     c : '/* no css content */'
                 },
+
                 config  = {
                     target : container,
                     content : [{
@@ -325,15 +330,21 @@ JMVC.extend('console', {
 
             function getUrl() {
                 var vals = getValues(),
-                    url = [JMVC.vars.baseurl, JMVC.c, JMVC.a].join(JMVC.US) + JMVC.object.toQs({
-                        h : vals[0] || defaults.h,
-                        j : vals[1] || defaults.j,
-                        c : vals[2] || defaults.c,
-                        l : JMVC.dom.find('#options').value || ''
-                    }) + (hash ? "#" + hash : ''),
+
+                    url = [JMVC.vars.baseurl, JMVC.c, JMVC.a].join(JMVC.US) +
+                        JMVC.object.toQs({
+                            h : vals[0] || defaults.h,
+                            j : vals[1] || defaults.j,
+                            c : vals[2] || defaults.c,
+                            l : JMVC.dom.find('#options').value || ''
+                        }) +
+                        (hash ? "#" + hash : ''),
 
                     l = url.length,
+
                     limit = 2047;
+
+                // just let the user know about url 2k limit
                 if (l > limit) {
                     alert('Url length : ' + l + "\n"  + "It seems like all content cannot be safely put in a url,\nit WON`T WORK in some browsers.");
                 }
@@ -412,13 +423,6 @@ JMVC.extend('console', {
                        innerload(); 
                     }
 
-                    //iframe.contentWindow.eval(appendScript( '/app/' + jmvc_iframe_file));
-                    
-                    
-                    
-                    //iframe.contentWindow.document.getElementsByTagName('head').item(0).appendChild(scriptTag);
-                    
-
                 }catch(e){
                     console.error(e);
                 }
@@ -496,7 +500,7 @@ JMVC.extend('console', {
                 JMVC.css.show(JMVC.dom.find('#resetall'));
             }
 
-            JMVC.events.bind(JMVC.dom.find('.ablock'), 'click', function (e) {
+            JMVC.events.on(JMVC.dom.find('.ablock'), 'click', function (e) {
                 var butt = JMVC.dom.find(this),
                     id =  JMVC.dom.attr(butt, 'id') || 'xxx';
 
@@ -528,68 +532,13 @@ JMVC.extend('console', {
             });
 
             //enable tab on textareas
-            JMVC.each(JMVC.dom.find('textarea'), function (el) {
-                el.onkeydown = function (e) {
-                    var textarea = this,
-                        input,
-                        remove,
-                        posstart,
-                        posend,
-                        compensateForNewline,
-                        before,
-                        after,
-                        selection,
-                        val;
+            JMVC.each(JMVC.dom.find('textarea'), JMVC.events.doTab);
 
-                    if (e.keyCode == 9) { // tab
-                        input = textarea.value; // as shown, `this` would also be textarea, just like e.target
-                        remove = e.shiftKey;
-                        posstart = textarea.selectionStart;
-                        posend = textarea.selectionEnd;
-
-                        // if anything has been selected, add one tab in front of any line in the selection
-                        if (posstart != posend) {
-                            posstart = input.lastIndexOf('\n', posstart) + 1;
-                            compensateForNewline = input[posend - 1] == '\n';
-                            before = input.substring(0, posstart);
-                            after = input.substring(posend - (~~compensateForNewline));
-                            selection = input.substring(posstart, posend);
-
-                            // now add or remove tabs at the start of each selected line, depending on shift key state
-                            // note: this might not work so good on mobile, as shiftKey is a little unreliable...
-                            if (remove) {
-                                if (selection[0] == '\t') {
-                                    selection = selection.substring(1);
-                                }
-                                selection = selection.split('\n\t').join('\n');
-                            } else {
-                                selection = selection.split('\n');
-                                if (compensateForNewline){
-                                    selection.pop();    
-                                } 
-                                selection = '\t'+selection.join('\n\t');
-                            }
-
-                            // put it all back in...
-                            textarea.value = before+selection+after;
-                            // reselect area
-                            textarea.selectionStart = posstart;
-                            textarea.selectionEnd = posstart + selection.length;
-                        } else {
-                            val = textarea.value;
-                            textarea.value = val.substring(0,posstart) + '\t' + val.substring(posstart);
-                            textarea.selectionEnd = textarea.selectionStart = posstart + 1;
-                        }
-                        e.preventDefault(); // dont jump. unfortunately, also/still doesnt insert the tab.
-                    }
-                }
-            });
-
-            JMVC.events.bind(JMVC.dom.find('#get-url'), 'click', getUrl);
-            JMVC.events.bind(JMVC.dom.find('#go-fs'), 'click', gofs);
-            JMVC.events.bind(JMVC.dom.find('#preview'), 'click', update);
-            JMVC.events.bind(JMVC.dom.find('#resetall'), 'click', function () {reset(); });
-            JMVC.events.bind(JMVC.dom.find('#reset'), 'click', function () {reset(true); });
+            JMVC.events.on(JMVC.dom.find('#get-url'), 'click', getUrl);
+            JMVC.events.on(JMVC.dom.find('#go-fs'), 'click', gofs);
+            JMVC.events.on(JMVC.dom.find('#preview'), 'click', update);
+            JMVC.events.on(JMVC.dom.find('#resetall'), 'click', function () {reset(); });
+            JMVC.events.on(JMVC.dom.find('#reset'), 'click', function () {reset(true); });
 
 
             JMVC.events.delay(function () {update(); }, 0);
