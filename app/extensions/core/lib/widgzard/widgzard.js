@@ -18,11 +18,16 @@ JMVC.extend('core/widgzard', function () {
 
     // clearer class that should provide right
     // css float clearing
+    // ex: TB uses `clearfix`, I don`t
     // 
     var clearerClassName = 'clearer',
+        nodeIdentifier = 'wid',
         noop = function () {},
-        load,
-        htmlspecialchars;
+        delegate,
+        eulerWalk = JMVC.dom.eulerWalk,
+        autoclean = true,
+        htmlspecialchars,
+        load;
 
     /**
      * Main object constructor represeting any node created
@@ -40,7 +45,6 @@ JMVC.extend('core/widgzard', function () {
 
             // the tag used for that node can be specified in the conf
             // otherwise will be a div (except for 'clearer') 
-            // 
             tag = conf.tag || "div";
 
         // save a reference to the target parent for that node
@@ -54,7 +58,7 @@ JMVC.extend('core/widgzard', function () {
         // 
         this.node = document.createElement(tag);
 
-        // save a reference to the node configuration
+        // save a reference toe the node configuration
         // will be useful on append to append to conf.target
         // if specified
         //
@@ -64,7 +68,7 @@ JMVC.extend('core/widgzard', function () {
         // otherwise create a function that do nothing but
         // freeing the parent promise from waiting
         //
-        this.node.cb = conf.cb || function () {
+        this.node.WIDGZARD_cb = conf.cb || function () {
             // autoresolve
             self.node.resolve();
         };
@@ -74,17 +78,17 @@ JMVC.extend('core/widgzard', function () {
         // all the child elements cb have called 
         // this.done OR this.resolve
         // 
-        this.node.promise = new JMVC.Promise();
+        this.node.WIDGZARD_promise = new JMVC.Promise();
 
         // When called Promise.done means that 
         // the parent callback can be called
         // delegating the parent context
         //
-        this.node.promise.then(trg.cb, trg);
+        this.node.WIDGZARD_promise.then(trg.WIDGZARD_cb, trg);
 
         // as said at the begibbibg every node keeps a reference
         // to a function that allow to get a reference to any
-        // node that in his configuration has a 'wid' value
+        // node that in his configuration has a `nodeIdentifier` value
         // specified
         //
         this.map = mapcnt.map;
@@ -94,7 +98,7 @@ JMVC.extend('core/widgzard', function () {
         // that counter is fundamental for calling this node
         // callback only when every child callback has done
         // 
-        this.node.len = conf.content ? conf.content.length : 0;
+        this.node.WIDGZARD_len = conf.content ? conf.content.length : 0;
 
         // through these two alias from within a callback
         // (where the DOMnode is passed as context)
@@ -108,7 +112,7 @@ JMVC.extend('core/widgzard', function () {
             // it`s time to honour the node promise,
             // thus call the node callback
             // 
-            --self.target.len == 0 && self.node.promise.done();
+            !--self.target.WIDGZARD_len && self.node.WIDGZARD_promise.done();
         };
     }
 
@@ -123,7 +127,11 @@ JMVC.extend('core/widgzard', function () {
         if (typeof attrs !== 'undefined') { 
             for (var j in attrs) {
                 if (j !== 'class') {
-                    node.setAttribute(j, attrs[j]);
+                    if (j !== 'style') {
+                        node.setAttribute(j, attrs[j]);
+                    } else {
+                        this.setStyle(node, attrs.style);
+                    }
                 } else {
                     node.className = attrs[j];
                 }
@@ -138,14 +146,11 @@ JMVC.extend('core/widgzard', function () {
      * @param {Object} style  the hash of rules
      */
     Wnode.prototype.setStyle = function (node, style) {
-
-        // 'listStyleType'.replace(/([A-Z])/g, function (s){return '-' + s.toLowerCase()})
-
         // if set, append all styles (*class)
         //
-        if (typeof style !== 'undefined') { 
+        if (typeof style !== 'undefined') {
             for (var j in style) {
-                node.style[j.replace(/^float$/, 'cssFloat')] = style[j];
+                node.style[j.replace(/^float$/i, 'cssFloat')] = style[j];
             }
         }
         return this;
@@ -162,15 +167,14 @@ JMVC.extend('core/widgzard', function () {
     };
     
     /**
-     * add method for the Node
+     * add method for the Wnode
      */
     Wnode.prototype.add = function () {
 
         var conf = this.conf,
-            node = this.node,
-            j;
+            node = this.node;
 
-        // set attributes & styles & data
+        // set attributes and styles
         // 
         this.setAttrs(node, conf.attrs)
             .setStyle(node, conf.style)
@@ -180,13 +184,17 @@ JMVC.extend('core/widgzard', function () {
         // inject its value
         //
         typeof conf.html !== 'undefined' && (node.innerHTML = conf.html);
+        
+        // save a reference back to json
+        //
+        //// this.conf.node = this.node;
 
-        // if the node configuration has a `grindID` key
+        // if the node configuration has a `nodeIdentifier` key
         // (and a String value), the node can be reached 
         // from all others callback invoking
         // this.getNode(keyValue)
         //
-        typeof conf.wid !== 'undefined' && (this.map[conf.wid] = node);
+        typeof conf[nodeIdentifier] !== 'undefined' && (this.map[conf[nodeIdentifier]] = node);
 
         // if the user specifies a node the is not the target 
         // passed to the constructor we use it as destination node
@@ -194,6 +202,7 @@ JMVC.extend('core/widgzard', function () {
         // the target passed)
         // 
         (conf.target || this.target).appendChild(node);
+        node.WIDGZARD = true;
 
         // if the node configuration do not declares content array
         // then the callback is executed.
@@ -202,10 +211,56 @@ JMVC.extend('core/widgzard', function () {
         // this.done() OR this.resolve()
         // this is the node itself, those functions are attached
         // 
-        !conf.content && node.cb.call(node);
+        !conf.content && node.WIDGZARD_cb.call(node);
 
-        return this.node;
+        return node;
     };
+
+    /**
+     * clean a tree from injected properties to avoid leaks,
+     * intended to be used just before render involving current
+     * dom section previously created from Widgzard
+     * @param  {[type]} node [description]
+     * @return {[type]}      [description]
+     */
+    function cleanup(node) {
+        var removeNode = function (t) {
+
+                t.parentNode.removeChild(t);
+                return true;
+            },
+            nodesToBeCleaned = [],
+            keys = [
+                'WIDGZARD', 'WIDGZARD_cb', 'WIDGZARD_promise', 'WIDGZARD_length',
+                'getNode', 'done', 'resolve', 'data'
+            ],
+            kL = keys.length,
+            i = 0,
+            //j = 0, k = 0,
+            n = null;
+        
+        // pick up postorder tree traversal
+        eulerWalk(node, function (n) {
+            //skip root & text nodes
+            n !== node && n.nodeType != 3 && nodesToBeCleaned.push(n); // && k++;
+        }, 'post');
+        /*
+        while (j < k) {
+            n = nodesToBeCleaned[j++];
+            while (i < kL) n[keys[i++]] = null;
+            removeNode(n);
+        }*/
+
+        while (nodesToBeCleaned.length) {
+            n = nodesToBeCleaned.pop();
+            while (i < kL) n[keys[i++]] = null;
+            removeNode(n);
+        }
+
+        nodesToBeCleaned = keys = null;
+
+        return true;
+    }
 
 
 
@@ -218,7 +273,7 @@ JMVC.extend('core/widgzard', function () {
      *                         will be attached
      * @return {undefined}
      */
-    function render (config, clean) {
+    function render______________ (config, clean) {
 
         if (!config) {
             throw new Error({message : 'ERROR : Check parameters for render function'});
@@ -227,10 +282,6 @@ JMVC.extend('core/widgzard', function () {
         // reference to the requested target, or body
         var target = config.target || document.body,
             inner;
-
-        // noop cb if not given
-        //
-        (config.cb && typeof config.cb === 'function') || (config.cb = noop);
 
         // a literal used to save a reference 
         // to all the elements that need to be 
@@ -273,7 +324,7 @@ JMVC.extend('core/widgzard', function () {
         // - cb : exactly the callback
         // 
         target.len = config.content.length;
-        target.cb = config.cb || function () {};
+        target.cb = config.cb || noop;
 
         // allow to use getNode from root
         // 
@@ -350,6 +401,142 @@ JMVC.extend('core/widgzard', function () {
     }
 
 
+        /**
+     * PUBLIC function to render Dom from Json
+     * @param  {Object} params the configuration json that contains all the 
+     *                         information to build the dom :
+     *                         target : where to start the tree
+     *                         content : what to create
+     *                         {cb} : optional end callback
+     *                         {style} : optional styles for the target Node
+     *                         {attrs} : optionsl attributes to be added at the target Node
+     *                         
+     * @param  {boolean} clean whether or not the target node must be emptied before
+     *                         creating the tree inside it.
+     * @return {undefined}
+     */
+    function render (params, clean) {
+
+        var target = params.target || document.body;
+
+        // maybe cleanup previous
+        //
+        autoclean && target.WIDGZARD && cleanup(target);
+
+        if (!params) {
+            throw new Exception('ERROR : Check parameters for render function');
+        }
+
+        // a literal used to save a reference 
+        // to all the elements that need to be 
+        // reached afterward calling this.getNode(id)
+        // from any callback
+        // 
+        var inner = {
+            map : {},
+            getNode : function (id) {
+                return inner.map[id] || false;
+            }
+        };
+
+        // rape Node prototype funcs
+        // to set attributes & styles
+        // 
+        Wnode.prototype
+            .setAttrs(target, params.attrs)
+            .setStyle(target, params.style)
+            .setData(target, params.data);
+
+        // maybe clean
+        // 
+        if (!!clean) target.innerHTML = '';
+
+        // maybe a raw html is requested before treating content
+        if (typeof params.html !== 'undefined') {
+            target.innerHTML = params.html;
+        }
+        
+        // initialize the root node to respect what is needed
+        // by the childs node Promise 
+        // 
+        // - len : the lenght of the content array
+        // - cb : exactly the end callback
+        // 
+        target.WIDGZARD_len = params.content.length;
+        target.WIDGZARD_cb = params.cb || function () {};
+
+        //flag to enable cleaning
+        target.WIDGZARD = true;
+
+        // allow to use getNode from root
+        // 
+        target.getNode = inner.getNode;
+
+        // start recursion
+        // 
+        /*
+        
+        REPLACE WITH THAT FUNCTION IF sameHeight IS NOT USEFUL
+        
+        (function recur(cnf, trg){
+            
+            // change the class if the element is simply a "clearer" String
+            // 
+            if (cnf.content) {
+                for (var i = 0, l = cnf.content.length; i < l; i++) {
+                    if (cnf.content[i] === clearerClassName) {
+                        cnf.content[i] = {
+                            tag : 'br',
+                            attrs : {'class' : clearerClassName}
+                        };
+                    }
+                    recur(cnf.content[i], new Wnode(cnf.content[i], trg, inner).add());
+                }
+            }
+            
+        })(params, target);
+        */
+        (function recur(cnf, trg){
+            
+            // change the class if the element is simply a "clearer" String
+            // 
+            if (cnf.content) {
+                var nodes = [],
+                    postpro = !!cnf.sameHeight,
+                    h = 0,
+                    skip = false;
+
+                for (var n, i = 0, l = cnf.content.length; i < l; i++) {
+
+                    if (cnf.content[i] === clearerClassName) {
+                        skip = true;
+                        cnf.content[i] = {
+                            tag : 'br',
+                            attrs : {'class' : clearerClassName}
+                        };
+                    }
+
+                    n = new Wnode(cnf.content[i], trg, inner).add();
+                    
+                    if (postpro && !skip) {
+                        nodes.push(n);
+                        h = Math.max(h, JMVC.css.height(n));
+                    }
+                    recur(cnf.content[i], n);
+                }
+
+                if (postpro) {
+                    for (var j = 0, l = nodes.length; j < l; j++) {
+                        nodes[j].style.height = h + 'px';
+                    }
+                }
+            }
+            
+        })(params, target);
+    }
+
+
+
     load = function (src) {
         var s = document.createElement('script');
         document.getElementsByTagName('head')[0].appendChild(s);
@@ -363,11 +550,11 @@ JMVC.extend('core/widgzard', function () {
 
     htmlspecialchars = function (c) {
         return '<pre>' +
-            c.replace(/&(?![\w\#]+;)/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;'); +
+                c.replace(/&(?![\w\#]+;)/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;') +
             '</pre>';
     };
 
