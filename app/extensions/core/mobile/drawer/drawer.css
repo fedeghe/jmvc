@@ -1,21 +1,30 @@
 html{height:100%;}
-body{height:100%;}
+body{
+    height:100%;
+    overflow-x: hidden;
+}
 
 .JMVC-drawer{
     background-color: #333;
     color:white;
     padding-top:30px !important;
+    overflow : hidden;
+    /*width:0px;*/
+}
+.JMVC-drawer .cnt {
+    padding:0px 10px;
 }
 div.JMVC-drawer-hamburger{
     position:absolute;
-    left:5px;
-    top:5px;
+    /*left:5px;
+    top:5px;*/
     width:30px !important;
     height:30px;
     background-color: black;
     cursor:pointer;
     z-index:200;
     border:2px solid gray;
+    margin:10px;
 }
 .JMVC-drawer li {
     border-bottom : 1px solid #aaa;
