@@ -1,6 +1,6 @@
 $$src/head.js$$
 
-(function (W, undefined) {
+!function (W, undefined) {
 
     // one for all the build
     'use strict';
@@ -23,10 +23,10 @@ $$src/head.js$$
             $$src/core/constructors/promise.js$$
             $$src/core/constructors/interface.js$$
             $$src/core/constructors/functionqueue.js$$
+            $$src/core/constructors/controller.js$$
+            $$src/core/constructors/model.js$$
+            $$src/core/constructors/view.js$$
             $$src/core/parser.js$$
-            $$src/core/controller.js$$
-            $$src/core/model.js$$
-            $$src/core/view.js$$
             $$src/core/dispatched.js$$
             $$src/core/outerjmvc.js$$
             $$src/core/cleanup.js$$
@@ -62,6 +62,6 @@ $$src/head.js$$
     $$src/core/render.js$$
     $$src/amd.js$$
 //
-})(this);
+}(this);
 $$src/foot.js$$
 /* the endline */

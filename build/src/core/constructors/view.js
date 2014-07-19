@@ -154,7 +154,7 @@ View.prototype.render = function (pars) {
 
         // books rendering in body or elsewhere, on load
         // @ @ //
-        $JMVC.events.bind(W, 'load', function () {
+        $JMVC.events.on(W, 'load', function () {
         
             // call before render
             $JMVC.events.startRender();
