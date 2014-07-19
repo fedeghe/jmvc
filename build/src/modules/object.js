@@ -136,11 +136,11 @@ JMVC.object = {
      * @param  {[type]} ext [description]
      * @return {[type]}     [description]
      */
-    extend: function(o, ext) {
+    extend: function(o, ext, force) {
         var obj = this.clone(o),
             j;
         for (j in ext) {
-            if (ext.hasOwnProperty(j) && !(j in obj)) {
+            if (ext.hasOwnProperty(j) && (!(j in obj) || force)) {
                 obj[j] = ext[j];
             }
         }
