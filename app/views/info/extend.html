@@ -1,0 +1,12 @@
+<h2><a name="extend" ></a>Extend</h2>
+<p>Extending JMVC could not be easier. Basically You can either use the <i>JMVC.extend</i> function which manages automatically the JMVC namespace
+    , either write into the JMVC namespace (with some care) or create Your own ns.<br />
+    Once You wrote your extension, save it within the app/extensions/ folder, require and use it in the Controller action.</p>
+<p>If You save Your extension in <i>/app/extensions/foo/mylib.js</i> the right path to load it with the require function is <i>'foo/mylib'</i></p>
+<p>There are some good reason to use the JMVC.extend function: 
+    <ul class="inner">
+        <li>Take care of namespace collision, if not explicitly requested it will forbid You to override an existing element</li>
+        <li>Allows to do some check as far as the extension is required, nullifying the ns population if some conditions are not met</li>
+        <li>Allows to execute some arbitraty code as far as the extension is loaded, but before using it</li>
+    </ul>
+</p>

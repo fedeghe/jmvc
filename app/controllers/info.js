@@ -17,6 +17,7 @@ JMVC.controllers.info = function () {
 		);
 		var main  = JMVC.getView('info/info'),
 			readme = JMVC.getView('info/readme'),
+			extend = JMVC.getView('info/extend'),
 			features = JMVC.getView('info/features'),
 			info_intro = JMVC.getView('info/info_intro'),
 			infoutro = JMVC.getView('info/info_outro'),
@@ -30,6 +31,7 @@ JMVC.controllers.info = function () {
 				features : 'Features',
 				urlstruc : 'Url structure',
 				samples : 'Samples',
+				extend : 'Extend jmvc',
 				api : 'Api',
 				coredoc : 'Core doc',
 				extdoc : 'Extension doc',
@@ -51,7 +53,8 @@ JMVC.controllers.info = function () {
 		});
 
 		readme.set({
-			'api': '{{info_outro}}',
+			//'extend' : '{{extend}}',
+			//'api': '{{info_outro}}',
 			'githublink' : 'https://github.com/fedeghe/jmvc',
 			'legend': '<b>*</b> : mandatory parameter',
 			'backtotop' : backtotop,
