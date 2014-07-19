@@ -1,10 +1,71 @@
 <function>
-    <signature name="replaceAll">JMVC.string.replaceAll(String name, String value)</signature>
-    <description>Gets/sets document title</description>
+    <signature name="replaceAll">JMVC.string.replaceAll(String tpl, Object rep, [Literal opt])</signature>
+    <description>Replace placeholders on a string</description>
     <params>
-        <param name="name">The name of the meta You want to add</param>
-        <param name="value">The value of the meta You want to add</param>
+        <param name="tpl">The string where placeholders must be replaced</param>
+        <param name="rep">A replacer object, can be a literal or a function</param>
+        <param name="opt">A replacer object, can be a literal or a function</param>
     </params>
-    <returns>void (undefined)</returns>
+    <returns>String</returns>
+    <sample>var t = JMVC.string.replaceAll(&#10;
+    'The lazy %animalOne% jumps over the poor %animalTwo%',{&#10;
+        animalOne : 'dog',&#10;
+        animalTwo : 'sheep'&#10;
+    });'&#10;
+console.log(t);&#10;
+&#10;
+t = JMVC.string.replaceAll(&#10;
+    'The lazy %animal.One% jumps over the poor %animal.Two%',{&#10;
+        animal : {&#10;
+            One : 'cheetah',&#10;
+            Two : 'gazella'&#10;
+        }&#10;
+    });&#10;
+console.log(t);&#10;
+&#10;
+t = JMVC.string.replaceAll(&#10;
+    'The lazy %animal.One% jumps over the poor %animal.Two%',{&#10;
+        animal : {&#10;
+            One : 'elefant',&#10;
+            Two : function (y) {return 'ant ' + y; }&#10;
+        }&#10;
+    });&#10;
+console.log(t);&#10;
+&#10;
+t = JMVC.string.replaceAll(&#10;
+    'The lazy %animal.One% jumps over the poor %animal.Two%',&#10;
+        function (k) {return k.replace(/\./, '/'); }&#10;
+    );&#10;
+console.log(t);
+</sample>
+    <testlink>test_api_jmvc_extend</testlink>
+    <code>
+        console.clear();
+        var t = JMVC.string.replaceAll(
+            'The lazy %animalOne% jumps over the poor %animalTwo%',
+            {animalOne : 'dog',animalTwo : 'sheep'}
+        );
+        console.log(t);
+        t = JMVC.string.replaceAll(
+            'The lazy %animal.One% jumps over the poor %animal.Two%',{
+                animal : {
+                    One : 'cheetah',
+                    Two : 'gazella'
+                }    });
+        console.log(t);
+        t = JMVC.string.replaceAll(
+            'The lazy %animal.One% jumps over the poor %animal.Two%',{
+                animal : {
+                    One : 'elefant',
+                    Two : function (y) {return 'ant #'+y; }
+                }
+            });
+        console.log(t);
+        t = JMVC.string.replaceAll(
+            'The lazy %animal.One% jumps over the poor %animal.Two%',
+                function (k) {return k.replace(/\./, '/'); }
+            );
+        console.log(t);
+    </code>
     <status>incomplete</status>
 </function>

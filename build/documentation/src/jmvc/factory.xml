@@ -12,4 +12,10 @@
     you = JMVC.factory('model', 'Persona', ['Jenny', 23]);&#10;
 console.debug(me.hello());&#10;
 console.debug(you.hello());</sample>
+    <code>
+        var me = JMVC.factory('model', 'Persona', ['Fred', 35]),
+            you = JMVC.factory('model', 'Persona', ['Jenny', 23]);
+        console.debug(me.hello());
+        console.debug(you.hello());
+    </code>
 </function>

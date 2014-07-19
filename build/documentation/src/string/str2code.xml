@@ -1,10 +1,11 @@
 <function>
-    <signature name="str2code">JMVC.string.str2code(String name, String value)</signature>
-    <description>Gets/sets document title</description>
+    <signature name="str2code">JMVC.string.str2code(String str)</signature>
+    <description>Get the char codes from a string</description>
     <params>
-        <param name="name">The name of the meta You want to add</param>
-        <param name="value">The value of the meta You want to add</param>
+        <param name="str">The source string</param>
     </params>
-    <returns>void (undefined)</returns>
+    <returns>Array[int]</returns>
+    <sample>var t = JMVC.string.str2code('info@jmvc.org');&#10;console.log(t);</sample>
+    <code>console.clear();console.log(JMVC.string.str2code('info@jmvc.org'));</code>
     <status>incomplete</status>
 </function>

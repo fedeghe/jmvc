@@ -1,10 +1,17 @@
 <function>
-    <signature name="code2str">JMVC.string.code2str(String name, String value)</signature>
-    <description>Gets/sets document title</description>
+    <signature name="code2str">JMVC.string.code2str(Array str)</signature>
+    <description>Get a string from a char codes array</description>
     <params>
-        <param name="name">The name of the meta You want to add</param>
-        <param name="value">The value of the meta You want to add</param>
+        <param name="str">The source array</param>
     </params>
-    <returns>void (undefined)</returns>
+    <returns>String</returns>
+    <sample>var t = JMVC.string.code2str([&#10;
+    105, 110, 102, 111,&#10;
+    64,&#10;
+    106, 109, 118, 99,&#10;
+    46,&#10;
+    111, 114, 103]);&#10;
+console.log(t);</sample>
+    <code>console.clear();console.log(JMVC.string.code2str([105,110,102,111,64,106,109,118,99,46,111,114,103]));</code>
     <status>incomplete</status>
 </function>

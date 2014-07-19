@@ -6,26 +6,87 @@
         <param name="*extension">this object literal defines all the functions in your extension (JMVC is in that scope, so You can use it)</param>
     </params>
     <returns>void (undefined)</returns>
-    <status>testing</status>
-    <sample>JMVC.extend('fooWidget', {&#10;
+    <status>complete</status>
+
+    <sample>console.clear();&#10;
+JMVC.extend('fooWidget', {&#10;
+&#10;
     // if specified, will lock the extension&#10;
     // for any value returned but true&#10;
     initCheck : function () {&#10;
-        alert('init check');&#10;
+        console.log('init check 1');&#10;
         return true;&#10;
     },&#10;
+&#10;
     // if specified, will be executed immediately&#10;
     init : function () {&#10;
-        alert('init fooWidget');&#10;
+        console.log('init fooWidget 1');&#10;
     },&#10;
+&#10;
     // ... specify your methods&#10;
     start : function () {&#10;
-        alert('doing foo');&#10;
+        console.log('doing foo 1');&#10;
     }&#10;
     // ...&#10;
 });&#10;
-JMVC.fooWidget.start();
+
+&#10;
+// or in module mode&#10;
+// with the module as second parameter&#10;
+//&#10;
+JMVC.extend('fooWidget2', function () {&#10;
+&#10;
+    // here private code&#10;
+    // &#10;
+&#10;
+    return {&#10;
+        initCheck : function () {&#10;
+            console.log('init check 2');&#10;
+            return true;&#10;
+        },&#10;
+&#10;
+        init : function () {&#10;
+            console.log('init fooWidget 2');&#10;
+        },&#10;
+&#10;
+        start : function () {&#10;
+            console.log('doing foo 2');&#10;
+        }&#10;
+    }&#10;
+});&#10;
+JMVC.fooWidget.start();&#10;
+JMVC.fooWidget2.start();&#10;
     </sample>
+
     <testlink>test_api_jmvc_extend</testlink>
-    <code>JMVC.extend('fooWidget', {initCheck : function () {alert('init check');return true;},init : function () {alert('init fooWidget');},start : function () {alert('doing foo');}});JMVC.fooWidget.start();</code>
+    <code>
+        JMVC.extend('fooWidget', {
+            initCheck : function () {
+                console.log('init check');
+                return true;
+            },
+            init : function () {
+                console.log('init fooWidget');
+            },
+            start : function () {
+                console.log('doing foo');
+            }
+        });
+        JMVC.extend('fooWidget2', function () {
+            return {
+                initCheck : function () {
+                    console.log('init check 2');
+                    return true;
+                },
+                init : function () {
+                    console.log('init fooWidget 2');
+                },
+                start : function () {
+                    console.log('doing foo 2');
+                }
+            };
+        });
+        JMVC.fooWidget.start();
+        JMVC.fooWidget2.start();
+    </code>
 </function>

@@ -1,6 +1,9 @@
 <function>
     <signature name="each">JMVC.each(obj, fn)</signature>
-    <description>Loop over an object literal or Array, the callback at each cycle will receive the object and his index. As far as the callback has a name, the two `continue` and `break` function are available</description>
+    <description>
+        Loop over an object literal or Array, the callback at each cycle will receive the object and his index.
+        As far as the callback has a name, the two `continue` and `break` function are available.
+    </description>
     <params>
         <param name="*obj">the object to loop Object literal or Array</param>
         <param name="*fn">the loop callback</param>
@@ -21,7 +24,29 @@ var obj = {name:'Federico', surname : 'Ghedina', says : 'wat'},&#10;
     });&#10;
 console.debug(obj, objAfter);&#10;
 console.debug(arr, arrAfter);&#10;</sample>
-    <status>testing</status>
+    <status>complete</status>
     <testlink>test_api_jmvc_each</testlink>
-    <code>var obj = {name:'Federico', surname : 'Ghedina', says : 'wat'},arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],objAfter = JMVC.each(obj, function (el, i) {console.debug(i, el); return i + '-' + el;}),arrAfter = JMVC.each(arr, function f(el, i) {if (i % 2) {f.continue();}return i;});console.debug(obj, objAfter);console.debug(arr, arrAfter);</code>
+    <code>
+        var obj = {
+                name:'Federico',
+                surname : 'Ghedina',
+                says : 'wat'
+            },
+            arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            objAfter = JMVC.each(obj,
+                function (el, i) {
+                    console.debug(i, el);
+                    return i + '-' + el;
+                }),
+            arrAfter = JMVC.each(arr,
+                function f(el, i) {
+                    if (i % 2) {
+                        f.continue();
+                    }
+                    return i;
+                }
+            );
+        console.debug(obj, objAfter),
+        console.debug(arr, arrAfter);
+    </code>
 </function>
