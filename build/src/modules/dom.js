@@ -228,6 +228,32 @@ JMVC.dom = {
     },
 
     /**
+     * [eulerWalk description]
+     * @param  {[type]} root [description]
+     * @param  {[type]} func [description]
+     * @param  {[type]} mode [description]
+     * @return {[type]}      [description]
+     */
+    eulerWalk : function (root, func, mode) {
+        mode = {pre : 'pre', post : 'post'}[mode] || 'post';
+        var nope = function () {},
+            pre = mode === 'pre' ? func : nope,
+            post = mode === 'post' ? func : nope,
+            walk = (function (m) {
+                return function (n, _n) {
+                    pre(n);
+                    _n = n.firstChild;
+                    while (_n) {
+                        walk(_n);
+                        _n = _n.nextSibling;
+                    }
+                    post(n);
+                };
+            })(mode);
+        walk(root);
+    },
+
+    /**
      * [ description]
      * @param  {[type]} a [description]
      * @param  {[type]} b [description]
@@ -718,7 +744,8 @@ JMVC.dom = {
      * @return {[type]}      [description]
      */
     walk : function (node, func) {
-        func(node);                     //What does this do?
+        func(node);                 //What does this do?, it's a fucking preorder
+                                    // must test, cause eulerWalk do even postorder
         node = node.firstChild;
         while (node) {
             this.walk(node, func);
