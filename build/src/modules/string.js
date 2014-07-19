@@ -137,49 +137,74 @@ JMVC.string = {
     JMVC.string.replaceAll(tpl, o); // abcdefg
      * 
      */
-    replaceAll : function (tpl, obj, start, end, fb) {
-        if (!start) {start = '%'; }
-        if (!end) {end = '%'; }
-        //start = this.regEscape(start);
-        //end = this.regEscape(end);
-        var reg = new RegExp(start + '([A-z0-9-_\.]*)' + end, 'g'),
+    replaceAll : function (tpl, obj, options) {
+
+        var start = '%',
+            end = '%',
+            fb = null,
+            clean = false,
+            reg,
             straight = true,
             str, tmp, last;
-        //fb = fb || false;
+
+        if (options != undefined) {
+            if ('delim' in options) {
+                start = options.delim[0];
+                end = options.delim[1];
+            }
+            if ('fb' in options) {
+                fb = options.fb;
+            }
+            clean = !!options.clean;
+        }
+
+        reg = new RegExp(start + '(\\\+)?([A-z0-9-_\.]*)' + end, 'g');
+
         while (straight) {
             if (!(tpl.match(reg))) {
                 return tpl;
             }
-            tpl = tpl.replace(reg, function (str, $1) {
-                switch (true) {
-                    // 
-                case typeof obj === 'function' :
-                    // avoid silly infiloops
-                    tmp = obj($1);
-                    return (tmp !== start + $1 + end) ? obj($1)  : $1;
-                    // the label matches a obj literal element
-                    // use it
-                case $1 in obj :
-                    return obj[$1];
+            tpl = tpl.replace(reg, function (str, enc, $1, _t) {
+                
+                if (typeof obj === 'function') {
                     /**
-                     * not a function and not found in literal
-                     * use fallback if passed or get back the placeholder
-                     * switching off before returning
-                     */
-                default:
+                     * avoid silly infiloops */
+                    tmp = obj($1);
+                    _t = (tmp !== start + $1 + end) ? obj($1) : $1;
 
-                    // at least check for ns, in case of dots
-                    //
-                    if ($1.match(/\./)) {    
+                } else if ($1 in obj) {
+
+                    _t = typeof obj[$1];
+                    if (_t === 'function') {
+                        _t = obj[$1]($1);
+                    } else if (_t === 'object') {
+                        _t = '';
+                    } else {
+                        _t= obj[$1];
+                    }
+                    // incomplete when the placeholder points to a object (would print)
+                    // _t = typeof obj[$1] === 'function' ? obj[$1]($1) : obj[$1];
+                    
+                /**
+                 * not a function and not found in literal
+                 * use fallback if passed or get back the placeholder
+                 * switching off before returning
+                 */
+                } else {
+                    /* @ least check for ns, in case of dots
+                    */
+                    if ($1.match(/\./)) {
                         last = JMVC.nsCheck($1 ,obj);
                         if (last) {
-                            return last;
+                            _t = enc ? encodeURIComponent(last) : last;
+                            return typeof last === 'function' ? last($1) : last;
                         }
-                    }   
+                    }
+                    // but do not go deeper   
                     straight = false;
-                    return typeof fb !== 'undefined' ? fb : start + $1 + end;
-
+                    _t = fb !== null ? fb : clean ? '' : start + $1 + end;
                 }
+                return enc ? encodeURIComponent(_t): _t;
             });
         }
         return tpl;
