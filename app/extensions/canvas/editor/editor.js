@@ -1,50 +1,126 @@
+// type : CONSTRUCTOR
+// 
+JMVC.nsMake('JMVC.canvas');
+JMVC.nsMake('JMVC.canvas.Editor.fields');
+
 JMVC.require(
     'core/fx/fx',
-    'core/color/color'
+    'core/color/color',
+    'core/screen/screen',
+    'core/lib/widgzard/widgzard'
 );
-JMVC.nsMake('JMVC.canvas');
 //
-// Basic editor style
-JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/canvas/editor/editor.css', true);
+// init a channel for editor level
+JMVC.Channel('canvaseditor');
+
 /**
- * [Editor description]
+ * Basic constuctor for editor
  * @param {[type]} options [description]
  */
 JMVC.canvas.Editor = function (options) {
-    if (!options.hasOwnProperty('node')) {
+    // reference for callbacks
+    var self = this,
+        screenSize;
+
+    /**
+     * check if a node is passed as options, it is necessay
+     * too see where to render the editor
+     */
+    if (!('node' in options)) {
         throw new Error('A node is needed to create a Editor in it');
         return false;
     }
+
+    // now it`s time to get viewport size
+    screenSize = JMVC.screen.getViewportSize();
+
+    /**
+     * Bas path for the editor
+     * @type {String}
+     */
+    this.basepath = JMVC.vars.baseurl + '/app/extensions/canvas/editor/';
+
+    /**
+     * Configuration that will be taken from config.json
+     * @type {Object}
+     */
+    this.config = {};
+
+    /**
+     * The node where the editor will be created
+     * @type {DOMnode}
+     */
     this.node = options.node;
-    this.width = options.width || 200;
-    this.height = options.height || 200;
-    this.layerManager = null;
+
+    /**
+     * Width for the editor, in px
+     * @type {Integer}
+     */
+    this.width = options.width || screenSize.width;
+
+    /**
+     * Height for the editor
+     * @type {Integer}
+     */
+    this.height = options.height || screenSize.height - 1;
+
+    /**
+     * every editor has a panelManager
+     * @type {Object}
+     */
     this.panelManager = null;
+
+    /**
+     * get the configuration
+     */
+    JMVC.io.getJson(this.basepath + 'config.json', function (json) {
+        self.config = json;
+    });
+
+
+    // on window resize tell the layermanager to resiza all layers
+    // 
+    JMVC.events.on(JMVC.W, 'resize', function () {
+        self.panelManager.getLayerManager().resize();
+    });
+
+
+
+    // get all the helpers:
+    // PanelManager
+    // ToolOptionsManager
+    // Panel
+    // Inputs: colorPicker
+    // Inputs: integerInput
+    // Inputs: floatInput
+    //
+    // AND then load styles
+    JMVC.require('canvas/editor/helpers/', function () {
+        // disable right click
+        //
+        JMVC.events.disableRightClick();
+        console.log('loaded')
+
+        // Basic editor style
+        // 
+        JMVC.head.addStyle(self.basepath + 'css/editor.css', true);
+        JMVC.head.addStyle(self.basepath + 'css/tooltip.css', true);
+        JMVC.head.addStyle(self.basepath + 'css/' + self.config.sprite, true);  
+        
+        // create and initialize the panelMAnager
+        // 
+        self.panelManager = JMVC.canvas.Editor.getPanelManager(self);
+
+        // initialize, render and bind the panel manager
+        //
+        self.panelManager
+            .init()
+            .render()
+            .bind();
+    });
 };
-/**
- * [prototype description]
- * @type {Object}
- */
-JMVC.canvas.Editor.prototype = {
-    init: function () {
-        JMVC.css.style(this.node, {position : 'relative', overflow : 'hidden'});
-        this.layerManager = JMVC.canvas.Editor.getLayerManager(this);
-        this.panelManager = JMVC.canvas.Editor.getPanelManager(this);
-        return this;
-    },
-    render: function (){
-        // ask layermanager to add first layer and activate it
-        this.layerManager.add().activate();
-        // ad the panel
-        this.panelManager.init().render().bind();
-        return this;
-    },
-    bind : function (){}
-};
+//
+// load almost anything else (check canvas/editorNEW/helpers/require.json)
 
-JMVC.events.disableRightClick();
+//
 
-// load almost anything else (check canvas/editor/require.json)
-JMVC.require('canvas/editor/helpers/');
-
-JMVC.nsMake('JMVC.canvas.Editor.fields');

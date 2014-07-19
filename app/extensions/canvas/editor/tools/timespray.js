@@ -8,13 +8,15 @@ JMVC.extend('canvas.editortools.timespray', {
             tout = 50,
             radius = self.options.radius.value;
 
+        el.onmousedown = el.onmousemove = el.onmouseup = null;
+
 
         ctx.fillStyle =  JMVC.string.replaceAll('hsla({h}, {s}%, {l}%, {a})',{
             h : self.options.color.hueZero,
             s : self.options.color.satZero * 100,
             l : self.options.color.lumZero * 100,
             a : self.options.color.alpZero
-        }, {delim : ['{', '}']});
+        }, {delim:['{', '}']});
 
         function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -47,6 +49,7 @@ JMVC.extend('canvas.editortools.timespray', {
             clientY = e.clientY;
         };
         el.onmouseup = function() {
+            JMVC.canvas.Editor.undoredoManager.save();
             clearTimeout(timeout);
         };        
     },

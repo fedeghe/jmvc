@@ -2,13 +2,15 @@ JMVC.extend('canvas.editortools.neighbour_points', {
 
     use : function (instance) {
 
+        console.debug('Using neighbour_points')
+
         var self = this,
             el = instance.cnv,
             ctx = instance.ctx,
             len = 0,
             dis = 0.2;
 
-        el.onmousedown = el.onmousemove = el.onmousemove = null;
+        el.onmousedown = el.onmousemove = el.onmouseup = null;
 
         ctx.lineWidth = 1;
         ctx.lineJoin = ctx.lineCap = 'round';
@@ -17,7 +19,10 @@ JMVC.extend('canvas.editortools.neighbour_points', {
             s : self.options.color.satZero * 100,
             l : self.options.color.lumZero * 100,
             a : self.options.color.alpZero
-        }, {delim : ['{', '}']});
+        }, {delim:['{', '}']});
+        
+        // save it back
+        self.options.color.value = ctx.strokeStyle;
         
         var isDrawing,
             points = [ ];
@@ -57,6 +62,7 @@ JMVC.extend('canvas.editortools.neighbour_points', {
         };
 
         el.onmouseup = function () {
+            JMVC.canvas.Editor.undoredoManager.save();
             isDrawing = false;
             points.length = 0;
         };
@@ -64,7 +70,7 @@ JMVC.extend('canvas.editortools.neighbour_points', {
 
     options : {
         distance : {
-            value : 1000,
+            value : 4000,
             name : 'distance',
             type : 'int',
             min : 0,
@@ -83,7 +89,3 @@ JMVC.extend('canvas.editortools.neighbour_points', {
 
     }
 });
-
-
-
-

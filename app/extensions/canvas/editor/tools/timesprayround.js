@@ -6,7 +6,7 @@ JMVC.extend('canvas.editortools.timesprayround', {
             clientX, clientY, timeout,
             density = parseInt(self.options.density.value, 10);
 
-        
+        el.onmousedown = el.onmousemove = el.onmouseup = null;
 
         function getRandomFloat(min, max) {
             return Math.random() * (max - min) + min;
@@ -38,6 +38,7 @@ JMVC.extend('canvas.editortools.timesprayround', {
             clientY = e.clientY;
         };
         el.onmouseup = function() {
+            JMVC.canvas.Editor.undoredoManager.save();
             clearTimeout(timeout);
         };  
     },

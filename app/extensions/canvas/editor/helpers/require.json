@@ -1,7 +1,6 @@
-{    
-    "layerManager" : "layerManager",
+{
     "panelManager" : "panelManager",
-    "optionsManager" : "optionsManager",
-    "toolsManager" : "toolsManager",
+    "toolOptionsManager" : "toolOptionsManager",
+    "panel" : "Panel",
     "inputs" : "inputs/"
 }

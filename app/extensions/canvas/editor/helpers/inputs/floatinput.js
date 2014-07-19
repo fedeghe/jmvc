@@ -1,1 +1,1 @@
-console.debug('float');
+JMVC.debug('float');

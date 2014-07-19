@@ -3,26 +3,17 @@ JMVC.controllers.canvaseditor = function () {
     this.action_index = function (p) {
 
         JMVC.events.loadify(1000);
+
         JMVC.head.title('Canvas editor');
 
 
-        var default_version = 0,
-            version = p.v || 0,
-            editors = [
-                'canvas/editorNEXT/editor',
-                //'canvas/editorNEW/editor',
-                'canvas/editor/editor'
-            ],
-            screen_size,
+        var screen_size,
             editorContainerId = 'canvasEditorContainerId';
 
-        if (version >= editors.length) {
-            alert('out of versions, loading version ' + default_version);
-            version = default_version;
-        }
+        
 
         JMVC.require(
-            editors[version],
+            'canvas/editor/editor'
             'core/lib/image/image'
         );
         

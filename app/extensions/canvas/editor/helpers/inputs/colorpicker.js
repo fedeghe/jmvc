@@ -72,17 +72,17 @@ JMVC.extend('canvas.Editor.fields.colorpicker', {
                 ul = JMVC.dom.create('ul');
 
                 lisat = JMVC.dom.create('li');
-                JMVC.dom.add(lisat, 'h5', {}, 'Saturation');
+                JMVC.dom.add(lisat, 'span', {}, 'Sat');
                 sat = JMVC.dom.add(lisat, 'input', {type : 'range', min : 0, max : 1, step : 0.05});
 
                 lilum = JMVC.dom.create('li');
-                JMVC.dom.add(lilum, 'h5', {}, 'Luminance');
+                JMVC.dom.add(lilum, 'span', {}, 'Lum');
                 lum = JMVC.dom.add(lilum, 'input', {type : 'range', min : 0, max : 1, step : 0.05});
 
                 // list item for alpha range
                 lialp = JMVC.dom.create('li');
-                JMVC.dom.add(lialp, 'h5', {}, 'Alpha');
-                alp = JMVC.dom.add(lialp, 'input', {type : 'range', min : 0.1, max : 1, step : 0.05});
+                JMVC.dom.add(lialp, 'span', {}, 'Alp');
+                alp = JMVC.dom.add(lialp, 'input', {type : 'range', min : 0.05, max : 1, step : 0.05});
 
                 colwrap = JMVC.dom.create('div', {'class' : 'colorwrap'});
                 col = JMVC.dom.add(colwrap, 'div', {'class' : 'color'});
@@ -94,7 +94,7 @@ JMVC.extend('canvas.Editor.fields.colorpicker', {
 
                 JMVC.dom.append(ul, [lisat, lilum, lialp]);
                 JMVC.dom.append(wrap, [
-                    JMVC.dom.create('h5', {}, 'Hue'),
+                    JMVC.dom.create('span', {}, 'Hue'),
                     huewrap,
                     ul,
                     colwrap,

@@ -1,7 +1,10 @@
-{    
+{
     "neighbour" : "neighbour_points",
-    "rdots" : "dots_random",
+    "dots_random" : "dots_random",
     "fur_neighbour" : "fur_neighbour",
     "timespray" : "timespray",
-    "timesprayround" : "timesprayround"
+    "timesprayround" : "timesprayround",
+    "beizer" : "beizer",
+    "brush_thick" : "brush_thick",
+    "edge_smooth_with_shadows" : "edge_smooth_with_shadows"
 }

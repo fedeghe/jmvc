@@ -6,7 +6,7 @@ JMVC.extend('canvas.editortools.dots_random', {
             clientX, clientY, timeout,
             density = 40;
 
-        el.onmousedown = el.onmousemove = el.onmousemove = null;
+        el.onmousedown = el.onmousemove = el.onmouseup = null;
 
         ctx.fillStyle = 'hsla('+self.options.color.hueZero+', ' + (self.options.color.satZero * 100) + '% ,' + (self.options.color.lumZero * 100) + '%, ' + (self.options.color.alpZero) + ')'; 
 
@@ -45,6 +45,7 @@ JMVC.extend('canvas.editortools.dots_random', {
         };
 
         el.onmouseup = function() {
+            JMVC.canvas.Editor.undoredoManager.save();
             clearTimeout(timeout);
         };
     },
@@ -59,7 +60,7 @@ JMVC.extend('canvas.editortools.dots_random', {
         color : {
             value : '',
 
-            hueZero : 1,
+            hueZero : 100,
             satZero : 1,
             lumZero : 0.5,
 

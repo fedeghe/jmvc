@@ -74,7 +74,11 @@ canvas {
     margin-bottom:10px;
     cursor:pointer;
     overflow:hidden;
-
+    background-image: url(app/extensions/canvas/editor/css/tool.png);
+    background-repeat: no-repeat;
+}
+#jmvcCEpanel div.panel ul.tools li.neighbour_points{
+    background-position:0px 0px;
 }
 div#toolOptions>ul>li{
     border-top:1px dotted #aaa;
@@ -194,7 +198,7 @@ div.loadingspinner{
     width:79px;
     height:79px;
     margin:0 auto;
-    background-image : url(app/extensions/canvas/editorNEXT/css/spinnerbig.gif);
+    background-image : url(app/extensions/canvas/editor/css/spinnerbig.gif);
     background-repeat: no-repeat;
     -moz-border-radius-bottomleft:40px;
     -moz-border-radius-bottomright:40px;

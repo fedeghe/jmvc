@@ -28,16 +28,19 @@ JMVC.extend('canvas.Editor.fields.integerinput', {
 
                 JMVC.dom.append(node, field);
 
-                JMVC.events.on(field, 'change', function (e) {
-                    t = JMVC.events.eventTarget(e);
-                    
+                var change = function (e) {
+                    var t = JMVC.events.eventTarget(e);
                     onchange && onchange(field.value);
-                });
+                };
+
+                JMVC.events.on(field, 'change', change);
+                JMVC.events.on(field, 'click', change);
             },
             unbind : function () {
                 JMVC.events.off(field, 'change');
+                JMVC.events.off(field, 'click');
             },
-            onChange : function (f){onchange = f; }
+            onChange : function (f) {onchange = f; }
         };
         
     }

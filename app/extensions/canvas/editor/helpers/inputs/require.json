@@ -1,5 +1,5 @@
 {
-    "color" : "colorpicker",
-    "int" : "integerinput",
-    "float" : "floatinput"
+    "color" : "colorPicker",
+    "int" : "integerInput",
+    "float" : "floatInput"
 }
