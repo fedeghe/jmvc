@@ -27,12 +27,14 @@ JMVC.extend('array', {
         for(i in o) r.push(o[i]);
         return r;
     },
+
     Mottie_Claudill : function (arr) {
         var o = {}, a = [], i, e;
         for (i = 0; e = arr[i]; i++) {o[e] = 1};
         for (e in o) {a.push (e)};
         return a;
     },
+
     Rafael_Claudill : function (arr) {
         var u = {}, a = [];
         for (var i = 0, l = arr.length; i < l; ++i) {
@@ -44,7 +46,8 @@ JMVC.extend('array', {
         }
         return a;
     },
-    Darshan : function getUnique(a) {
+    
+    Darshan : function (a) {
         var b = [a[0]], i, j, tmp;
         for (i = 1; i < a.length; i++) {
             tmp = 1;

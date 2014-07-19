@@ -12,7 +12,7 @@ JMVC.controllers.google = function () {
 
 		document.body.style.paddingTop = '100px';
 		v.set({
-			'style' : 'font-family:verdana;margin:0 auto;width:285px;height:105px;position:relative;',
+			'style' : 'font-family:verdana;margin:0 auto;width:538px;height:190px;position:relative;' + (JMVC.p.back ? ';background-image:url(' + JMVC.vars.baseurl + '/media/img/google.png);' : ''),
 			'content' : '&nbsp;',
 			'id' : 'extralogo'
 		});
@@ -22,62 +22,50 @@ JMVC.controllers.google = function () {
 		v.render(function () {
 
 			var newlogo = JMVC.dom.find('#extralogo'),
-				G = new JMVC.plotter.symbol('G', 22, 37),
-				o1 = new JMVC.plotter.symbol('o1', 48, 97),
-				o2 = new JMVC.plotter.symbol('o2', 48, 148),
+				G = new JMVC.plotter.symbol('G', 72, 67),
+				o1 = new JMVC.plotter.symbol('o1', 185, 90),
+				o2 = new JMVC.plotter.symbol('o2', 283, 90),
 				g = new JMVC.plotter.symbol('g', 43, 193),
-				l = new JMVC.plotter.symbol('l', 10, 220),
+				l = new JMVC.plotter.symbol('l', 437, 64),
 				e = new JMVC.plotter.symbol('e', 48, 260);
 				//t = new JMVC.plotter.letter('t', 108, 360);
 				//
 			JMVC.dom.addClass(newlogo, 'respfixed');
 
-			G.arc(17, 3, 35, 38, -M.PI / 20, M.PI / 10, 28);
-			G.arc(18, 6, 32, 27, -M.PI / 15, -M.PI * 0.13, 21, M.PI / 4);
-			G.line(50, 14, 47, 30, 2);
-			G.line(47, 30, 34, 30, 1);
+			var off = {x:-72, y:-67};
 
-			G.line(27, 32, 27, 14, 2);
+			G.arc(3, 0, 76, 68, M.PI / 27, M.PI/2, 34);
+			G.line(12, 67, 53, 58, 3);
+			G.line(53, 58, 53, 23,  3);
+			G.line(53, 23, 59, 16, 0);
+			G.line(59, 16, 18, 16, 4);
+			G.line(18, 16, 12, 22, 0);
+			G.line(12, 22, 34, 22, 2);
+			G.line(34, 22, 34, 54, 3);
+			G.arc(3, 0, 62, 54, -M.PI / 24, -5*M.PI/8 , 33, M.PI/3);
+			
+			G.line(46, -48, 36, -37, 1);
 
-			G.line(31, 8, 31, 20, 1);
-			G.line(31, 20, 42, 20, 1);
-
-			G.line(-4, 22, -8, 29, 1);
+				//G.rotate(M.PI)
+				//
+			o1.arc(0,0,45,45, M.PI/20, 0, 40);
+			o1.arc(0,0,28,38, M.PI/16, 0, 32);
+			o1.rotate(-M.PI/12);
 			
-			o1.arc(0, 0, 22, 22, 2 * M.PI / 25, 0, 25);
-			o1.arc(1, 1, 11, 16, 2 * M.PI / 17, 0, 17, -M.PI * 0.44);
-			
-			
+			//o1.rotate(M.PI/2);
 			o2.clone(o1);
 
-			g.arc(0, 0, 16, 18, M.PI / 10, 2 * M.PI * 0.1, 7);
-			g.arc(0, 0, 16, 18, -M.PI / 10, -2 * M.PI * 0.05, 10);
-			g.line(-16, 0, -16, 20, 2);
-			g.line(-16, 20, -12, 10, 1);
-			g.arc(0, 0, 9, 12, M.PI / 6, 0, 12, -M.PI * 0.4);
+			l.line(-12,-60,16,-60, 2);
+			l.line(16,-60, 10, -54, 0);
+			l.line(10, -54, 10, 60, 12);
+			l.line(10, 60, 21, 62, 1);
+			l.line(21, 62, 17, 66, 0);
+			l.line(17, 66, -15, 66, 3);
+			l.line(-15, 66, -9, 60, 0);
+			l.line(-9, 60, -9,-52, 12);
+			l.line(-9,-52, -18, -52, 0);
 
-			g.arc(38, 0, 10, 13, M.PI / 6, 0, 12, -M.PI);
-			g.arc(38, 0, 15, 22, -2 * M.PI / 20, -M.PI / 2, 15, -M.PI);
-
-			g.dot(18, 0);
-			g.dot(22, 2);
-			g.beizer(12, 10, 17, 7, 20, 9, 31, 19, 6);
-
-
-			l.line(0, 1, 52, 1, 7);
-			l.line(52, 1, 58, -4, 0);
-			l.line(58, -4, 58, 15, 2);
-			l.line(54, 19, 54, 11, 1);
-			l.line(54, 11, 0, 11, 7);
-			l.line(0, 11, -6, 14, 0);
-			l.line(-6, 14, -6, 0, 1);
-			l.dot(-4, -6);
-
-			e.arc(0, 0, 22, 22, -2 * M.PI / 25, 2 * M.PI * 0.13, 21);
-			e.arc(-2, 5, 20, 17, -2 * M.PI / 22, 2 * M.PI * 0.04, 8, 2 * M.PI * 0.07);
-			e.arc(1, 1, 20, 13, -2 * M.PI / 20, 2 * M.PI * 0.67, 8, 2 * M.PI * 0.07);
-			e.line(-11, 7, -3, -13, 2);
-			e.line(-10, 16, 0, -8, 3);
+			//l.rotate(M.PI/2);
 			
 			
 			var scale = 1;
@@ -91,7 +79,7 @@ JMVC.controllers.google = function () {
 			
 			
 			
-			
+			/*
 			var animate = true, a, i, T1, T2, nums, bucket, t, c, s, dotsize, maxsize,
 				aberrate = that.get('aberrate');
 			if (animate) {
@@ -137,7 +125,7 @@ JMVC.controllers.google = function () {
 					}
 				}, T2);
 
-			}
+			}*/
 			
 		});
 	};
