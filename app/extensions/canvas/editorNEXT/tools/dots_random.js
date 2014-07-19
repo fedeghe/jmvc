@@ -60,7 +60,7 @@ JMVC.extend('canvas.editortools.dots_random', {
         color : {
             value : '',
 
-            hueZero : 1,
+            hueZero : 100,
             satZero : 1,
             lumZero : 0.5,
 

@@ -16,7 +16,7 @@ JMVC.extend('canvas.editortools.timespray', {
             s : self.options.color.satZero * 100,
             l : self.options.color.lumZero * 100,
             a : self.options.color.alpZero
-        }, '{', '}');
+        }, {delim:['{', '}']});
 
         function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;

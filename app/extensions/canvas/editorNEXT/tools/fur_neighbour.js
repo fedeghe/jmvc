@@ -11,7 +11,8 @@ JMVC.extend('canvas.editortools.fur_neighbour', {
 
         el.onmousedown = el.onmousemove = el.onmouseup = null;
 
-        ctx.fillStyle = self.options.color.value;
+        //ctx.fillStyle = self.options.color.value;
+        ctx.strokeStyle = 'hsla('+self.options.color.hueZero+', ' + (self.options.color.satZero * 100) + '% ,' + (self.options.color.lumZero * 100) + '%, ' + (self.options.color.alpZero) + ')'; 
 
         ctx.lineWidth = 1;
         ctx.lineJoin = ctx.lineCap = 'round';
@@ -45,6 +46,7 @@ JMVC.extend('canvas.editortools.fur_neighbour', {
                 if (d < radius && Math.random() > d / radius) {
                     ctx.beginPath();
                     ctx.strokeStyle = self.options.color.value;
+
                     ctx.moveTo( points[points.length-1].x + (dx * 0.5), points[points.length-1].y + (dy * 0.5));
                     ctx.lineTo( points[points.length-1].x - (dx * 0.5), points[points.length-1].y - (dy * 0.5));
                     ctx.stroke();
@@ -74,7 +76,7 @@ JMVC.extend('canvas.editortools.fur_neighbour', {
             value : '',
             hueZero : 1,
             satZero : 1,
-            lumZero : 0,
+            lumZero : 0.5,
 
             alpZero : 0.1,
 

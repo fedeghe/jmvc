@@ -19,7 +19,7 @@ JMVC.extend('canvas.editortools.neighbour_points', {
             s : self.options.color.satZero * 100,
             l : self.options.color.lumZero * 100,
             a : self.options.color.alpZero
-        }, '{', '}');
+        }, {delim:['{', '}']});
         
         // save it back
         self.options.color.value = ctx.strokeStyle;

@@ -13,7 +13,7 @@ JMVC.extend('canvas.editortools.brush_thick', {
             s : self.options.color.satZero * 100,
             l : self.options.color.lumZero * 100,
             a : self.options.color.alpZero
-        }, '{', '}');
+        }, {delim: ['{', '}']});
         ctx.lineJoin = ctx.lineCap = 'butt';
 
         var isDrawing, lastPoint;

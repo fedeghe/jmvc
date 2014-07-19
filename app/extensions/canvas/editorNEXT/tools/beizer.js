@@ -21,7 +21,7 @@ JMVC.extend('canvas.editortools.beizer', {
             s : self.options.color.satZero * 100,
             l : self.options.color.lumZero * 100,
             a : self.options.color.alpZero
-        }, '{', '}');
+        }, {delim : ['{', '}']});
         ctx.lineJoin = ctx.lineCap = 'round';
 
         var isDrawing, points = [ ];
