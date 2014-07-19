@@ -6,8 +6,8 @@
     </params>
     <returns>void (undefined)</returns>
     <status>incomplete</status>
-    <sample>JMVC.events.bind(window, 'click', function (e){&#10;
+    <sample>JMVC.events.on(window, 'click', function (e){&#10;
     JMVC.events.kill(e);&#10;
 });</sample>
-    <code>JMVC.events.bind(window, 'click', function (e){JMVC.events.kill(e);});</code>
+    <code>JMVC.events.on(window, 'click', function (e){JMVC.events.kill(e);});</code>
 </function>

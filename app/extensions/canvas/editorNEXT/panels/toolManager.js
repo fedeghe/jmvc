@@ -53,7 +53,7 @@ JMVC.canvas.Editor.getToolManager = function (instance, tools) {
                 );
 
                 (function (el, tool) {
-                    JMVC.events.bind(el, 'click', function () {
+                    JMVC.events.on(el, 'click', function () {
                         JMVC.dom.removeClass(JMVC.dom.find('li', dst), 'active');
                         JMVC.dom.addClass(this, 'active');
                         that.changeTool(tool);

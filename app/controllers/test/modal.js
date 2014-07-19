@@ -15,7 +15,7 @@ JMVC.controllers.modal = function() {
 			
 			JMVC.test.describe(JMVC.string.repeat('<br />', 20) + '<input type="button" id="openmodal" value="Open modal" style="cursor:pointer" />' + JMVC.string.repeat('<br />', 40));
 			
-			JMVC.events.bind(JMVC.dom.find('#openmodal'), 'click', function () {
+			JMVC.events.on(JMVC.dom.find('#openmodal'), 'click', function () {
 				var t = JMVC.dom.create('span', {}, 'Here is some content');
 				JMVC.modal.open(t, {title : 'Titolo del modal', bgcolor:'#777', shadow : true});
 			});

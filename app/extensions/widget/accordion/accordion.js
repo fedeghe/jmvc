@@ -64,7 +64,7 @@ JMVC.widget.Accordion.prototype.render = function (container, open_index, rem) {
 		JMVC.dom.append(li, this.els[i].dom[1]);
 
 		(function (j) {			
-			JMVC.events.bind(
+			JMVC.events.on(
 				self.els[j].dom[0],
 				'click',
 				function (e) {

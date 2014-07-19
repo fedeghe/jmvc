@@ -33,7 +33,7 @@ JMVC.extend('key', {
 	//EXPERIMENTAL
 	disable : function (element, shortcut) {
 		
-		JMVC.events.bind(element, 'keydown', function (e) {
+		JMVC.events.on(element, 'keydown', function (e) {
 			var code = JMVC.events.code(e);
 			/*
 			if (code && code == shortcut) {
@@ -295,7 +295,7 @@ JMVC.extend('key', {
 			'event' : opt.type
 		};
 		//Attach the function with the event
-		JMVC.events.bind(window, opt.type, func);
+		JMVC.events.on(window, opt.type, func);
 	},
 
 	//Remove the shortcut - just specify the shortcut and I will remove the binding
@@ -318,7 +318,7 @@ JMVC.extend('key', {
 		ele = binding.target;
 		callback = binding.callback;
 
-		JMVC.events.unbind(window, type);
+		JMVC.events.off(window, type);
 		ele['on' + type] = false;
 	}
 });

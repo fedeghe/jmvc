@@ -9,11 +9,11 @@ JMVC.extend('form', {
 		if (n.tagName === 'INPUT' && n.type === "text" ) {
 			JMVC.dom.attr(n, 'value', val);
 
-			JMVC.events.bind(n, 'mouseover', function () {
+			JMVC.events.on(n, 'mouseover', function () {
 				JMVC.events.disable_scroll(n);
 			});
 			
-			JMVC.events.bind(n, 'mouseout', function () {
+			JMVC.events.on(n, 'mouseout', function () {
 				JMVC.events.enable_scroll(n);
 			});
 

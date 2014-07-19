@@ -169,7 +169,7 @@ JMVC.events = {
      * @param  {Function} fn   [description]
      * @return {[type]}        [description]
      */
-    bind: function(el, tipo, fn) {
+    on: function(el, tipo, fn) {
         var res = true;
         if (el instanceof Array) {
             for (var i = 0, l = el.length; i < l; i++) {
@@ -219,7 +219,7 @@ JMVC.events = {
         _.events.disabledRightClick = true;
         var self = this;
         JMVC.dom.attr(JMVC.WD.body, 'oncontextmenu', 'return false');
-        this.bind(JMVC.WD, 'mousedown', function(e) {
+        this.on(JMVC.WD, 'mousedown', function(e) {
             if (~~(e.button) === 2) {
                 self.preventDefault(e);
                 return false;
@@ -292,7 +292,7 @@ JMVC.events = {
             return true;
         }
         JMVC.dom.walk(node, function(n) {
-            JMVC.events.unbind(n, evnt);
+            JMVC.events.off(n, evnt);
         });
     },
 
@@ -370,6 +370,23 @@ JMVC.events = {
 
     /**
      * [ description]
+     * @param  {[type]} el   [description]
+     * @param  {[type]} tipo [description]
+     * @return {[type]}      [description]
+     */
+    off: function(el, tipo, fn) {
+        //as for binding
+        if (el instanceof Array) {
+            for (var i = 0, l = el.length; i < l; i++) {
+                _.events.unbind(el[i], tipo, fn);
+            }
+            return;
+        }
+        _.events.unbind(el, tipo, fn);
+    },
+
+    /**
+     * [ description]
      * @param  {[type]}   el   [description]
      * @param  {[type]}   tipo [description]
      * @param  {Function} fn   [description]
@@ -383,9 +400,9 @@ JMVC.events = {
             }
             return;
         }
-        this.bind(el, tipo, function f(e) {
+        this.on(el, tipo, function f(e) {
             fn(e); 
-            self.unbind(el, tipo, f);
+            self.off(el, tipo, f);
         });
     },
 
@@ -403,12 +420,12 @@ JMVC.events = {
         var self = this,
             root = JMVC.dom.body();
 
-        this.bind(root, evnt, function f(e) {
+        this.on(root, evnt, function f(e) {
             var trg = self.eventTarget(e);
             while (trg !== el) {
                 trg = JMVC.dom.parent(trg);
                 if (trg === root) {
-                    self.unbind(root, evnt, f);
+                    self.off(root, evnt, f);
                     return cb();
                 }
             }
@@ -423,7 +440,7 @@ JMVC.events = {
      */
     onEsc: function (cb, w) {
         w = w || JMVC.W;
-        JMVC.events.bind(w.document, 'keyup', function (e) {
+        this.on(w.document, 'keyup', function (e) {
             if (e.keyCode == 27) {
                 cb.call(w, e);
             }
@@ -438,7 +455,7 @@ JMVC.events = {
      */
     onRight: function(el, f) {
         this.disableRightClick();
-        this.bind(el, 'mousedown', function(e) {
+        this.on(el, 'mousedown', function(e) {
 
             if (~~(e.button) === 2) {
                 f.call(el, e);
@@ -605,29 +622,14 @@ JMVC.events = {
         return touches;
     },
 
-    /**
-     * [ description]
-     * @param  {[type]} el   [description]
-     * @param  {[type]} tipo [description]
-     * @return {[type]}      [description]
-     */
-    unbind: function(el, tipo, fn) {
-        //as for binding
-        if (el instanceof Array) {
-            for (var i = 0, l = el.length; i < l; i++) {
-                _.events.unbind(el[i], tipo, fn);
-            }
-            return;
-        }
-        _.events.unbind(el, tipo, fn);
-    },
+    
 
     /**
      * [unload description]
      * @return {[type]} [description]
      */
     unload: function (){
-        this.bind(W, 'beforeunload', function (e) {
+        this.on(W, 'beforeunload', function (e) {
             
             var confirmationMessage = /\//;//'Are you sure to leave or reload this page?';//"\o/";
             (e || window.event).returnValue = confirmationMessage;     //Gecko + IE
@@ -637,6 +639,66 @@ JMVC.events = {
         });
     }
 };
+
+JMVC.events.doTab = function (el) {
+    el.onkeydown = function (e) {
+        var textarea = this,
+            input,
+            remove,
+            posstart,
+            posend,
+            compensateForNewline,
+            before,
+            after,
+            selection,
+            val;
+
+        if (e.keyCode == 9) { // tab
+            input = textarea.value; // as shown, `this` would also be textarea, just like e.target
+            remove = e.shiftKey;
+            posstart = textarea.selectionStart;
+            posend = textarea.selectionEnd;
+
+            // if anything has been selected, add one tab in front of any line in the selection
+            if (posstart != posend) {
+                posstart = input.lastIndexOf('\n', posstart) + 1;
+                compensateForNewline = input[posend - 1] == '\n';
+                before = input.substring(0, posstart);
+                after = input.substring(posend - (~~compensateForNewline));
+                selection = input.substring(posstart, posend);
+
+                // now add or remove tabs at the start of each selected line, depending on shift key state
+                // note: this might not work so good on mobile, as shiftKey is a little unreliable...
+                if (remove) {
+                    if (selection[0] == '\t') {
+                        selection = selection.substring(1);
+                    }
+                    selection = selection.split('\n\t').join('\n');
+                } else {
+                    selection = selection.split('\n');
+                    if (compensateForNewline){
+                        selection.pop();    
+                    } 
+                    selection = '\t'+selection.join('\n\t');
+                }
+
+                // put it all back in...
+                textarea.value = before+selection+after;
+                // reselect area
+                textarea.selectionStart = posstart;
+                textarea.selectionEnd = posstart + selection.length;
+            } else {
+                val = textarea.value;
+                textarea.value = val.substring(0,posstart) + '\t' + val.substring(posstart);
+                textarea.selectionEnd = textarea.selectionStart = posstart + 1;
+            }
+            e.preventDefault(); // dont jump. unfortunately, also/still doesnt insert the tab.
+        }
+    }
+};
+
+
+
 if (!Event.prototype.preventDefault) {
     Event.prototype.preventDefault = function() {
         this.returnValue = false;
@@ -662,10 +724,10 @@ var el = JMVC.dom.find('#extralogo'),
         console.debug(JMVC.dom.nodeFromId('JMVCID6'));
     };
 JMVC.events.free(el);
-JMVC.events.bind(el, 'click', cb1);
-JMVC.events.bind(el, 'click', cb2);
-JMVC.events.bind(el, 'mouseenter', cb3);
-JMVC.events.unbind(el, 'click', cb2);
+JMVC.events.on(el, 'click', cb1);
+JMVC.events.on(el, 'click', cb2);
+JMVC.events.on(el, 'mouseenter', cb3);
+JMVC.events.off(el, 'click', cb2);
 
 JMVC.events.free(JMVC.WD.body);
 

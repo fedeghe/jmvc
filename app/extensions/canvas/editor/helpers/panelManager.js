@@ -72,20 +72,20 @@ JMVC.canvas.Editor.getPanelManager = function (instance, options) {
         bind : function () {
             JMVC.debug('Binding panel');
             
-            JMVC.events.bind(buttons['clear'], 'click', function () {
+            JMVC.events.on(buttons['clear'], 'click', function () {
                 toolsManager.clear();
             });
-            JMVC.events.bind(buttons['export'], 'click', function () {
+            JMVC.events.on(buttons['export'], 'click', function () {
                 toolsManager.save();
             });
 
-            JMVC.events.bind(panel, 'mouseenter',
+            JMVC.events.on(panel, 'mouseenter',
                 function () {
                     JMVC.css.style(panel, {top : '0px', right : '0px'});
                 }
             );
 
-            JMVC.events.bind(panel, 'mouseleave',
+            JMVC.events.on(panel, 'mouseleave',
                 function () {
                     JMVC.css.style(panel, {top : size_pos.topClosed + 'px', right : size_pos.rightClosed + 'px'});
                 }

@@ -97,7 +97,7 @@ JMVC.extend('xvents',{
 					
 					JMVC.each(fnArr, function (fn, i) {
 
-						JMVC.events.bind(self.node, ev, function (e) {
+						JMVC.events.on(self.node, ev, function (e) {
 
 							if (!self.listening) {return false; }
 

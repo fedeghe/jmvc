@@ -28,14 +28,14 @@ JMVC.extend('canvas.Editor.fields.integerinput', {
 
                 JMVC.dom.append(node, field);
 
-                JMVC.events.bind(field, 'change', function (e) {
+                JMVC.events.on(field, 'change', function (e) {
                     t = JMVC.events.eventTarget(e);
                     
                     onchange && onchange(field.value);
                 });
             },
             unbind : function () {
-                JMVC.events.unbind(field, 'change');
+                JMVC.events.off(field, 'change');
             },
             onChange : function (f){onchange = f; }
         };

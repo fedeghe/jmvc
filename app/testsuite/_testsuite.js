@@ -63,9 +63,7 @@ JMVC.extend('test', function () {
                     outline, {
                         nline : noNumberLines ? '' : i,
                         line : JMVC.htmlChars(lines[j] || ' ')
-                    },
-                    '%',
-                    '%'
+                    }
                 );
                 i += 1;
             }
@@ -405,7 +403,7 @@ JMVC.extend('test', function () {
                         {},
                         debuginfo[1] || ''
                     );
-                    JMVC.events.bind(
+                    JMVC.events.on(
                         JMVC.dom.find('#toggle_' + debuginfo[0]),
                         'click',
                         function () {JMVC.fx.toggle(JMVC.dom.find('#spec_' + debuginfo[0])); }
@@ -447,7 +445,7 @@ JMVC.extend('test', function () {
                         'input',
                         {'id' : 'togglespec', 'type' : 'button', 'class' : 'panelbutton fiveround', 'value' : 'Toggle `more`'}
                     );
-                    JMVC.events.bind(togglebutton, 'click', function () {
+                    JMVC.events.on(togglebutton, 'click', function () {
                         JMVC.each(JMVC.dom.find('.more'), function (i) {i.click(); });
                         togglespec_visibility = !togglespec_visibility;
                     });

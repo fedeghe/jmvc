@@ -150,17 +150,17 @@ JMVC.controllers.widgzard = function () {
                                                 JMVC.dom.removeClass(tb2, 'active');
                                                 JMVC.dom.removeClass(tb3, 'active');
                                             }
-                                            JMVC.events.bind(tb1, 'click', function () {
+                                            JMVC.events.on(tb1, 'click', function () {
                                                 clear();
                                                 JMVC.dom.addClass(tb1, 'active');
                                                 cnt1.style.display = '';
                                             });
-                                            JMVC.events.bind(tb2, 'click', function () {
+                                            JMVC.events.on(tb2, 'click', function () {
                                                 clear();
                                                 JMVC.dom.addClass(tb2, 'active');
                                                 cnt2.style.display = '';
                                             });
-                                            JMVC.events.bind(tb3, 'click', function () {
+                                            JMVC.events.on(tb3, 'click', function () {
                                                 clear();
                                                 JMVC.dom.addClass(tb3, 'active');
                                                 cnt3.style.display = '';
@@ -369,21 +369,9 @@ JMVC.controllers.widgzard = function () {
 
         //JMVC.dom.addClass(JMVC.WD.body, 'resp');
         JMVC.css.beResponsive();
-        
 
-
-
-
-
-
-
-
-
-
-
-
-        var incr = 3,
-            time = 10,
+        var incr = 5,
+            time = 2,
             shrinkFonts = function (t) {
                 var self = this,
                     n = 0;
@@ -451,11 +439,11 @@ JMVC.controllers.widgzard = function () {
                 attrs : {'class' : 'round respfixed'},
                 style : {
                     backgroundColor : color1,
-                    padding : '20px',
+                    padding : '40px',
                     margin : margin + ' 0px',
-                    fontSize : '45px',
-                    lineHeight : '45px',
-                    height:'65px',
+                    fontSize : '44px',
+                    lineHeight : '50px',
+                    height:'105px',
                     fontWeight:'bold',
                     overflow : 'hidden',
                     fontFamily: "'Luckiest Guy', cursive"
@@ -515,8 +503,8 @@ JMVC.controllers.widgzard = function () {
                                 style : {padding:padding, cursor:'pointer', textTransform : 'uppercase'},
                                 html : 'load some samples',
                                 cb : function () {
-                                    JMVC.events.bind(this, 'click', function (){
-                                        JMVC.core.widgzard.load('/media/js/samples.js');
+                                    JMVC.events.on(this, 'click', function (){
+                                        JMVC.core.widgzard.load('/media/js/widgzard/samples.js');
                                     });
                                     this.done();
                                 }
@@ -538,6 +526,11 @@ JMVC.controllers.widgzard = function () {
                             attrs : {'class':'round respfixed'},
                             style : {margin:spacing, backgroundColor: color1a, padding:padding, lineHeight:'1.6em'},
                             html : '<h3>POSTORDER callbacks</h3>Create a chain of resolving callback, where the tree leaves are called immediately after being appended. Leaf DOMnode ancestors callback will be called only when all childs callbacks explicitly declare to have finished their work.'
+                        },{
+                            style : {padding:padding, fontSize:'25px', margin : spacing + ' 0px'},
+                            attrs : {'class':'respfixed'},
+                            tag : 'h3',
+                            html : 'just using a object literal!'
                         }]    
                     },'clearer']    
                 }]

@@ -15,7 +15,7 @@ JMVC.controllers.form = function () {
 
 		index.render(function () {
 			var submit = JMVC.dom.find('#save');
-			JMVC.events.bind(submit, 'click', function (e) {
+			JMVC.events.on(submit, 'click', function (e) {
 				!JMVC.fvalidation.validate(rules) && JMVC.events.preventDefault(e);
 			});
 			JMVC.require('iscroll/iscroll');
@@ -39,7 +39,7 @@ JMVC.controllers.form = function () {
 				.add(JMVC.dom.find('#chk'), {'required' : true})
 				.add(JMVC.dom.find('form').rad, {'required' : true});
 
-			JMVC.events.bind(submit, 'click', function (e) {
+			JMVC.events.on(submit, 'click', function (e) {
 				validator.validate() || JMVC.events.preventDefault(e);
 			});
 

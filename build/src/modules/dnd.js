@@ -30,26 +30,15 @@ JMVC.events.drag = {
         
         var fStart = fn.start || function () {},
             fMove = fn.move || function () {},
-            fEnd = fn.end || function () {};
+            fEnd = fn.end || function () {},
+            mmove = function (e) {
 
-
-        
-        JMVC.events.bind(el, 'mousedown', function (e) {
-            
-            _.events.drag.gd1 = JMVC.events.coord(e);
-
-            fStart.call(e, e, {start : _.events.drag.gd1});
-            
-            JMVC.events.bind(el, 'mousemove', function (e) {
-                //if (!gotDir) {
                 _.events.drag.getDirection(e);
-                //}
+
                 var tmp = JMVC.events.coord(e),
                     dst = Math.sqrt((tmp[1] - _.events.drag.gd1[1]) * (tmp[1] - _.events.drag.gd1[1])
-                        +
-                        (tmp[0] - _.events.drag.gd1[0]) * (tmp[0] - _.events.drag.gd1[0])
+                        + (tmp[0] - _.events.drag.gd1[0]) * (tmp[0] - _.events.drag.gd1[0])
                     );
-
                 fMove.call(e, e, {
                     start : _.events.drag.gd1,
                     current : tmp,
@@ -57,33 +46,41 @@ JMVC.events.drag = {
                     orientation : JMVC.events.drag.orientation,
                     distance : dst
                 });
-            });
-        });
+            },
+            mup = function (e) {
+                JMVC.events.off(el, 'mousemove');
+                JMVC.events.off(el, 'touchmove');
+                 var tmp = JMVC.events.coord(e),
+                    dst = Math.sqrt((tmp[1] - _.events.drag.gd1[1]) * (tmp[1] - _.events.drag.gd1[1])
+                        +
+                        (tmp[0] - _.events.drag.gd1[0]) * (tmp[0] - _.events.drag.gd1[0])
+                    );
 
-        JMVC.events.bind(el, 'mouseup', function (e) {
-            JMVC.events.unbind(el, 'mousemove');
-             var tmp = JMVC.events.coord(e),
-                dst = Math.sqrt((tmp[1] - _.events.drag.gd1[1]) * (tmp[1] - _.events.drag.gd1[1])
-                    +
-                    (tmp[0] - _.events.drag.gd1[0]) * (tmp[0] - _.events.drag.gd1[0])
-                );
-            fEnd.call(e, e, {
-                start : _.events.drag.gd1,
-                current : JMVC.events.coord(e),
-                direction : JMVC.events.drag.direction,
-                orientation : JMVC.events.drag.orientation,
-                distance : dst
-            });
-            /*
-            JMVC.dom.find('#container').innerHTML = '<h1 style="font-size:40px">' +
-                JMVC.events.drag.direction + ' = ' + JMVC.events.drag.orientation + '</h1> ';
-            */
-            
+                fEnd.call(e, e, {
+                    start : _.events.drag.gd1,
+                    current : JMVC.events.coord(e),
+                    direction : JMVC.events.drag.direction,
+                    orientation : JMVC.events.drag.orientation,
+                    distance : dst
+                });
+            };
+
+        JMVC.events.on(el, 'mousedown', function (e) {    
+            _.events.drag.gd1 = JMVC.events.coord(e);
+            fStart.call(e, e, {start : _.events.drag.gd1});
+            JMVC.events.on(el, 'mousemove', mmove);
         });
+        JMVC.events.on(el, 'mouseup', mup);
+        JMVC.events.on(el, 'touchstart', function (e) {    
+            _.events.drag.gd1 = JMVC.events.coord(e);
+            fStart.call(e, e, {start : _.events.drag.gd1});
+            JMVC.events.on(el, 'touchmove', mmove);
+        });
+        JMVC.events.on(el, 'touchend', mup);
     },
 
-
     off : function (el, f) {
-        JMVC.events.bind(el, 'mouseup', f);
+        JMVC.events.on(el, 'mouseup', f);
+        JMVC.events.on(el, 'touchend', f);
     }
 };

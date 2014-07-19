@@ -337,10 +337,10 @@ JMVC.extend('jmap',{
 			dragging = false;
 		}
 		
-		JMVC.events.bind(this.map, 'mouseenter', stopMove);
-		JMVC.events.bind(this.map, 'mousedown', startMove);
-		JMVC.events.bind(this.map, 'mousemove', processMove);
-		JMVC.events.bind(this.map, 'mouseup', stopMove);
+		JMVC.events.on(this.map, 'mouseenter', stopMove);
+		JMVC.events.on(this.map, 'mousedown', startMove);
+		JMVC.events.on(this.map, 'mousemove', processMove);
+		JMVC.events.on(this.map, 'mouseup', stopMove);
 		
 		return this;
 	}

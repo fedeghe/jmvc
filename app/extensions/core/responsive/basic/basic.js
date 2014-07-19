@@ -17,7 +17,7 @@ JMVC.extend('responsive', {
 		/**
 		 * bind inner wChange (user cb) passing current window width
 		 */
-		JMVC.events.bind(JMVC.W, 'resize', JMVC.responsive.wChange);
+		JMVC.events.on(JMVC.W, 'resize', JMVC.responsive.wChange);
 
 		/**
 		 * on dom ready trigger onchange passing current window width

@@ -200,7 +200,7 @@ JMVC.head = {
     linkin : function () {
 
         if(("standalone" in window.navigator) && window.navigator.standalone){
-            JMVC.events.bind(document, 'click', function(event) {
+            JMVC.events.on(document, 'click', function(event) {
                 var trg = event.target;
                 while(trg.nodeName !== "A" && trg.nodeName !== "HTML") {
                     trg = trg.parentNode;
@@ -239,9 +239,9 @@ JMVC.head = {
             
             
             // 3) bind it
-            JMVC.events.bind(linkBack, 'click', function(){history.back();});
-            JMVC.events.bind(linkReload, 'click', function(){document.location.href = document.location.href;});
-            JMVC.events.bind(linkForward, 'click', function(){history.forward();});
+            JMVC.events.on(linkBack, 'click', function(){history.back();});
+            JMVC.events.on(linkReload, 'click', function(){document.location.href = document.location.href;});
+            JMVC.events.on(linkForward, 'click', function(){history.forward();});
 
             // 4) append it 
             JMVC.dom.append(JMVC.WDB, d);

@@ -57,7 +57,7 @@ JMVC.extend('events', {
 			//JMVC.events.preventDefault;
 		}
 		
-		JMVC.events.bind(el, 'mouseover', function (e) {
+		JMVC.events.on(el, 'mouseover', function (e) {
 			//JMVC.events.disable_scroll();
 			
 			if (JMVC.W.addEventListener) {
@@ -67,7 +67,7 @@ JMVC.extend('events', {
 			
 			JMVC.events.preventDefault(e);
 		});
-		JMVC.events.bind(el, 'mouseout', function () {
+		JMVC.events.on(el, 'mouseout', function () {
 			//JMVC.events.enable_scroll();
 		});
 		

@@ -49,7 +49,7 @@ JMVC.extend('widget.divrot', {
 
         clsNode = JMVC.dom.find('.flip-card-content');
 
-        JMVC.events.bind(document, 'keyup', function (e){
+        JMVC.events.on(document, 'keyup', function (e){
 
             var code = parseInt(JMVC.events.code(e), 10),
                 mode = 'o';

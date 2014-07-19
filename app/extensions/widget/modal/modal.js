@@ -124,16 +124,16 @@ JMVC.extend('modal',{
 		// - click on closing cross
 		// - click out of the modal
 		// - press esc button
-		JMVC.events.bind([dom.close, dom.bg], 'click', function (e) {
+		JMVC.events.on([dom.close, dom.bg], 'click', function (e) {
 			JMVC.modal.close(dom);
 		});
-		JMVC.events.bind(JMVC.W, 'keyup', function (e) {
+		JMVC.events.on(JMVC.W, 'keyup', function (e) {
 			JMVC.events.code(e) == 27 && JMVC.modal.close(dom);	
 		});
 
 		//
 		// maximize
-		JMVC.events.bind(dom.maximize, 'click', function (e) {
+		JMVC.events.on(dom.maximize, 'click', function (e) {
 			//
 			// here must be stored current position
 			// to allow to get back later (on minimize)
@@ -165,7 +165,7 @@ JMVC.extend('modal',{
 			this.zIndex = this.zi_zero;
 			JMVC.events.enable_scroll();
 		}
-		JMVC.events.unbind(JMVC.W, 'keyup');
+		JMVC.events.off(JMVC.W, 'keyup');
 		JMVC.dom.remove(element.modal, true);
 		JMVC.dom.remove(element.bg, true);
 	}

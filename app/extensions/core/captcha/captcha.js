@@ -3,8 +3,8 @@
 
 
 JMVC.require(
-    'core/lib/crypt/crypt',
-    'core/lib/widgzard/widgzard'
+    'core/lib/crypt/crypt'
+    ,'core/lib/widgzard/widgzard'
 );
 
 JMVC.extend('core/captcha', function () {
@@ -24,22 +24,18 @@ JMVC.extend('core/captcha', function () {
             function enableChk () {
                 var butt = this;
                 
-                JMVC.events.bind(butt, 'click', function () {
+                JMVC.events.on(butt, 'click', function () {
                     var input = butt.getNode('inputTxt'),
-                        val = input.value;
-                    //console.debug(captchaInst.imgName)
-                    //console.debug(data[captchaInst.imgName], val);
-                    var passed = JMVC.security.decrypt(data[captchaInst.imgName], val);
+                        val = input.value,
+                        passed = JMVC.security.decrypt(data[captchaInst.imgName], val);
                     
                     console.debug(!!passed ? 'OK' : 'No way man');
-
-
                 });
             }
 
             function refresh () {
                 var self = this;
-                JMVC.events.bind(self, 'click', function () {
+                JMVC.events.on(self, 'click', function () {
                     captchaInst.imgName = getRandImg();
                     JMVC.dom.attr(self, 'src', path + captchaInst.imgName);
                 });

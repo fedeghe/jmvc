@@ -64,7 +64,7 @@ JMVC.extend('xpub',{
 			this.cbacks = {};
 			this.binded = false;
 			JMVC.each(this.bindings, function (b) {
-				JMVC.events.unbind(b.node, b.type);
+				JMVC.events.off(b.node, b.type);
 			});
 			this.bindings = [];
 			return this;
@@ -129,7 +129,7 @@ JMVC.extend('xpub',{
 									if (!self.listening) {return false; }
 									cback.call(null, {'event' : e, 'node' : trg, 'realtaget' : realtrg});
 								}
-								JMVC.events.bind(self.node, eType, f);
+								JMVC.events.on(self.node, eType, f);
 								self.bindings.push({"node" : self.node, "type" : eType, "function" : f}); 
 							});
 						}

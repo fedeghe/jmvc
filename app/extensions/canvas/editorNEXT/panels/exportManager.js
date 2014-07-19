@@ -20,7 +20,7 @@ JMVC.canvas.Editor.getExportManager = function (instance) {
             //panel.html('export');
         },
         bind : function () {
-            JMVC.events.bind(exportButton, 'click', function () {
+            JMVC.events.on(exportButton, 'click', function () {
                 var name = inputName.value;
                 if (name) {
                     instance.panelManager.export(name);

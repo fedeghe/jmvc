@@ -24,7 +24,7 @@ JMVC.extend('affix', {
 				}
 			}
 
-			JMVC.events.bind(JMVC.W, 'scroll', react);
+			JMVC.events.on(JMVC.W, 'scroll', react);
 			
 			JMVC.events.ready(react);
 		});

@@ -68,7 +68,7 @@ JMVC.extend('hpub',{
 				if (!self.binded) {		
 					JMVC.each(targetEvents, function (el) {
 
-						JMVC.events.bind(node, el, function (e) {
+						JMVC.events.on(node, el, function (e) {
 							if (!self.listening) {return false; }
 
 							var trg = JMVC.events.eventTarget(e),

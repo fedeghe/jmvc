@@ -78,7 +78,7 @@ JMVC.canvas.Editor.getLayerManager = function (instance) {
             activeLayer = layers[activeLayerIndex];
 
             self.node.appendChild(activeLayer.cnv);
-            JMVC.events.bind(activeLayer.cnv, "mousemove", function (e) { e.preventDefault(); });
+            JMVC.events.on(activeLayer.cnv, "mousemove", function (e) { e.preventDefault(); });
         },
         
         createThumb : function (index, width, height) {

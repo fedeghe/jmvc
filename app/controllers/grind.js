@@ -214,7 +214,7 @@ JMVC.controllers.grind = function () {
 
 		function toggleText (){
 			this.done();
-			JMVC.events.bind(this, 'click', function () {
+			JMVC.events.on(this, 'click', function () {
 				drawText = !drawText;
 				/*
 				JMVC.grind.render(getConfig(), function (){

@@ -114,8 +114,8 @@ JMVC.widget.Slider.prototype.init = function (bounds, top, down, step) {
 		//dnd
 		dnd = {
 			initElement: function (element) {
-				JMVC.events.bind(element, 'mousedown', dnd.startDragMouse);
-				JMVC.events.bind(element, 'touchstart', dnd.startDragTouch);
+				JMVC.events.on(element, 'mousedown', dnd.startDragMouse);
+				JMVC.events.on(element, 'touchstart', dnd.startDragTouch);
 			},
 			unbind : function (element) {
 				dnd.removeEventSimple(element,'mousedown',dnd.startDragMouse);
@@ -138,8 +138,8 @@ JMVC.widget.Slider.prototype.init = function (bounds, top, down, step) {
 				dnd.startDrag(el);
 				var touches = JMVC.events.touch(evt);
 				dnd.initialMouseX = touches[0].x;
-				JMVC.events.bind(el,'touchmove',dnd.dragTouch);
-				JMVC.events.bind(el,'touchend',dnd.releaseElement);
+				JMVC.events.on(el,'touchmove',dnd.dragTouch);
+				JMVC.events.on(el,'touchend',dnd.releaseElement);
 				return false;
 			},
 

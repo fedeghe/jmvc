@@ -280,15 +280,15 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
             exportManager.bind();
 
 /*
-            JMVC.events.bind(mainPanel, 'mouseover', function () {
+            JMVC.events.on(mainPanel, 'mouseover', function () {
                 JMVC.css.style(mainPanel, 'top', '0px');
             });
             
-            JMVC.events.bind(mainPanel, 'mouseout', function () {
+            JMVC.events.on(mainPanel, 'mouseout', function () {
                 JMVC.css.style(mainPanel, 'top', '-25px');
             });
 */
-            JMVC.events.bind(sections, 'click', function (e) {
+            JMVC.events.on(sections, 'click', function (e) {
 
                 var trg = this,
                     trgPos = JMVC.css.getPosition(trg),

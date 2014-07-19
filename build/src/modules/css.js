@@ -313,7 +313,7 @@ JMVC.css = {
         info.style.position = 'fixed';
         info.style.zIndex = 999;
 
-        JMVC.events.bind(info, 'mouseover', function () {
+        JMVC.events.on(info, 'mouseover', function () {
             var old = initialPosition;
             initialPosition = (++initialPosition) % positions.length;
             JMVC.dom.switchClass(info, positions[old], positions[initialPosition]);
@@ -323,7 +323,7 @@ JMVC.css = {
 
         if (tmp) {
             JMVC.dom.remove(tmp);
-            JMVC.events.unbind(JMVC.WD, 'mousemove', fnshow);
+            JMVC.events.off(JMVC.WD, 'mousemove', fnshow);
         } else {
             this.mappedStyle(
                 'pest-css',
@@ -337,11 +337,11 @@ JMVC.css = {
                 '.report.br{bottom:0px; right:0px;}' +
                 'html , body , .report, .report *{opacity: 1}'
             );
-            JMVC.events.bind(JMVC.WD, 'mousemove', fnshow);
-            JMVC.events.bind(info, 'mouseenter', function () {
+            JMVC.events.on(JMVC.WD, 'mousemove', fnshow);
+            JMVC.events.on(info, 'mouseenter', function () {
                 enabled = false;
             });
-            JMVC.events.bind(info, 'mouseout', function () {
+            JMVC.events.on(info, 'mouseout', function () {
                 enabled = true;
             });
         }
@@ -352,6 +352,22 @@ JMVC.css = {
             '-moz-transform':'rotate(' + rot + 'deg)',
             '-o-transform':'rotate(' + rot + 'deg)'
         });
+    },
+
+    unselectable : function (n) {
+        JMVC.css.style(n, {
+          '-moz-user-select': 'none',
+          '-webkit-user-select': 'none',
+          '-ms-user-select':'none',
+          'user-select':'none'  
+        });
+        JMVC.dom.attr(n, {
+            'unselectable': 'on',
+            'onselectstart': 'return false;',
+            'onmousedown':'return false;'
+        });
+        
+ 
     }
 };
 

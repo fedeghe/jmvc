@@ -63,7 +63,7 @@ JMVC.extend('zpub',{
 			this.unbind = function () {
 				this.binded = false;
 				JMVC.each(this.bindings, function (b) {
-					JMVC.events.unbind(b.node, b.type);
+					JMVC.events.off(b.node, b.type);
 				});
 				this.bindings = [];
 			};
@@ -97,7 +97,7 @@ JMVC.extend('zpub',{
 												console.debug('no is match: '+ a + ' | ' + id);
 											}
 										}
-										JMVC.events.bind(self.node, eType, f);
+										JMVC.events.on(self.node, eType, f);
 										self.bindings.push({"node" : self.node, "type" : eType, "function" : f}); 
 									});
 								});

@@ -369,10 +369,10 @@ JMVC.extend('carpet',{
 			}*/
 		}
 		
-		JMVC.events.bind(this.map, 'mouseenter', stopMove);
-		JMVC.events.bind(this.map, 'mousedown', startMove);
-		JMVC.events.bind(this.map, 'mousemove', processMove);
-		JMVC.events.bind(this.map, 'mouseup', stopMove);
+		JMVC.events.on(this.map, 'mouseenter', stopMove);
+		JMVC.events.on(this.map, 'mousedown', startMove);
+		JMVC.events.on(this.map, 'mousemove', processMove);
+		JMVC.events.on(this.map, 'mouseup', stopMove);
 		
 		
 		function startTouch(e){
@@ -441,9 +441,9 @@ JMVC.extend('carpet',{
 				}
 			}*/
 		}
-		JMVC.events.bind(this.map, 'touchstart', startTouch);
-		JMVC.events.bind(this.map, 'touchmove', processTouch);
-		JMVC.events.bind(this.map, 'touchend', stopTouch);
+		JMVC.events.on(this.map, 'touchstart', startTouch);
+		JMVC.events.on(this.map, 'touchmove', processTouch);
+		JMVC.events.on(this.map, 'touchend', stopTouch);
 		
 		
 		

@@ -46,7 +46,7 @@ JMVC.controllers.widget = function () {
 			
 			
 			JMVC.dom.append(container, butt);
-			JMVC.events.bind(JMVC.dom.find('#openmodal'), 'click', function () {
+			JMVC.events.on(JMVC.dom.find('#openmodal'), 'click', function () {
 				var t = JMVC.dom.create('span', {}, 'Here is some content');
 				JMVC.modal.open(t, {title: 'Modal title', width: 600, height : 400, bgcolor:'#777', shadow : true});
 			});
@@ -94,9 +94,9 @@ JMVC.controllers.widget = function () {
 			JMVC.dom.append(container, btn2);
 			JMVC.dom.append(container, btn3);
 
-			JMVC.events.bind(btn1, 'click', function () {slider3.setValue(1000, -2000);} );
-			JMVC.events.bind(btn2, 'click', function () {slider3.setValue(7000, 1000);} );
-			JMVC.events.bind(btn3, 'click', function () {slider3.setValue(10000, 7000);} );
+			JMVC.events.on(btn1, 'click', function () {slider3.setValue(1000, -2000);} );
+			JMVC.events.on(btn2, 'click', function () {slider3.setValue(7000, 1000);} );
+			JMVC.events.on(btn3, 'click', function () {slider3.setValue(10000, 7000);} );
 
 			JMVC.W.s1 = slider1;
 			JMVC.W.s2 = slider2;

@@ -36,7 +36,7 @@ JMVC.canvas.Editor.getFilterManager = function (instance) {
             for (var l in filters) {
                 var el = JMVC.dom.add(list, 'li', {'class':'effect round'}, l);
                 (function (eff, flt) {
-                    JMVC.events.bind(eff, 'click', function () {
+                    JMVC.events.on(eff, 'click', function () {
                         
                         filter.prepare();
                         filter.filterImage(flt);

@@ -36,8 +36,8 @@ JMVC.extend('canvas.Editor.fields.colorpicker', {
             },
 
             bind = function () {
-                JMVC.events.bind([hue, sat, lum, alp], 'click', updatecolor);
-                JMVC.events.bind([hue, sat, lum, alp], 'change', updatecolor);
+                JMVC.events.on([hue, sat, lum, alp], 'click', updatecolor);
+                JMVC.events.on([hue, sat, lum, alp], 'change', updatecolor);
             };
 
 
@@ -109,8 +109,8 @@ JMVC.extend('canvas.Editor.fields.colorpicker', {
             },
 
             unbind : function () {
-                JMVC.events.unbind([hue, sat, lum, alp], 'click');
-                JMVC.events.unbind([hue, sat, lum, alp], 'change');
+                JMVC.events.off([hue, sat, lum, alp], 'click');
+                JMVC.events.off([hue, sat, lum, alp], 'change');
             },
 
             onChange : function (f){onchange = f; }

@@ -1,5 +1,5 @@
 <function>
-    <signature name="bind">JMVC.events.bind(Element el, String type, Javascript function func)</signature>
+    <signature name="on">JMVC.events.on(Element el, String type, Javascript function func)</signature>
     <description>binds a callback to an event fired from an element</description>
     <params>
         <param name="el*">dom element target</param>

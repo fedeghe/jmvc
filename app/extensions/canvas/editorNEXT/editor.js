@@ -80,7 +80,7 @@ JMVC.canvas.Editor = function (options) {
 
     // on window resize tell the layermanager to resiza all layers
     // 
-    JMVC.events.bind(JMVC.W, 'resize', function () {
+    JMVC.events.on(JMVC.W, 'resize', function () {
         self.panelManager.getLayerManager().resize();
     });
 

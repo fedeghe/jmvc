@@ -101,7 +101,7 @@ JMVC.controllers.index = function () {
 				JMVC.dom.append(links,  [morelink, apilink, demolink, sourcelink]);
 				JMVC.dom.append(el, links);
 
-				JMVC.events.bind([morelink, apilink, demolink, sourcelink], 'click', function () {this.blur(); });
+				JMVC.events.on([morelink, apilink, demolink, sourcelink], 'click', function () {this.blur(); });
 
 
 				logo = JMVC.dom.find('#extralogo');
