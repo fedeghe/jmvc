@@ -104,13 +104,8 @@ JMVC.extend('iscroll', {
 					break;
 				}
 
-
-
-				
 			//over top
-			} else if(st == 0 && incr > 0){
-
-
+			} else if (st == 0 && incr > 0) {
 
 				switch(mode){
 					case 1 :
@@ -161,22 +156,7 @@ JMVC.extend('iscroll', {
 						}, 3000);
 						
 					break;
-				}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-				
+				}				
 			}
 		})
 	}
