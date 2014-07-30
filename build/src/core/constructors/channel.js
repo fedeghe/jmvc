@@ -20,7 +20,7 @@ Channel = (function () {
             return l;
         },
 
-        P_Channel = function () {
+        _Channel = function () {
             this.topic2cbs = {};
             this.enabled = true;
         };
@@ -29,7 +29,7 @@ Channel = (function () {
      * [prototype description]
      * @type {Object}
      */
-    P_Channel.prototype = {
+    _Channel.prototype = {
         /**
          * enable cb execution on publish
          * @return {undefined}
@@ -37,7 +37,7 @@ Channel = (function () {
         enable : function () {
             this.enabled = true;
         },
-        //
+
         /**
          * disable cb execution on publish
          * @return {undefined}
@@ -45,7 +45,7 @@ Channel = (function () {
         disable : function () {
             this.enabled = false;
         },
-        //
+
         /**
          * publish an event on that channel
          * @param  {String} topic
@@ -66,7 +66,7 @@ Channel = (function () {
             }
             return true;
         },
-        //
+
         /**
          * add a callback to a topic
          * @param {String} topic
@@ -128,13 +128,12 @@ Channel = (function () {
         once : function (topic, cb){
             var self = this,
                 cb2 = function () {
-                    cb.apply(null, Array.prototype.concat(arguments));
+                    cb.apply(null, Array.prototype.slice.call(arguments, 0));
                     self.unsub(topic, cb2);
                 };
             this.sub(topic, cb2);
         },
 
-        //
         /**
          * Removes all callbacks for one or more topic
          * @param [String] ...
@@ -156,15 +155,12 @@ Channel = (function () {
         }
     };
 
-
-
-
     /**
      * returning function
      */
     return function (name) {
         if (!(name in channels)) {
-            channels[name] = new P_Channel();
+            channels[name] = new _Channel();
         }
         return channels[name];
     };
@@ -174,7 +170,7 @@ Channel = (function () {
 
 /*
 var colorsPalette = JMVC.Channel('colorsPalette'),
-    optionsPalette = new JMVC.Channel('optionsPalette');
+    optionsPalette = JMVC.Channel('optionsPalette');
 
 colorsPalette.sub('getNewColor', function (topic, c){
     console.debug('got color :' + c);

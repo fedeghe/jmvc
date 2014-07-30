@@ -18,7 +18,7 @@ $$src/head.js$$
             $$src/core/preload.js$$
             $$src/core/constructors/errors.js$$
             $$src/core/constructors/event.js$$
-            $$src/core/constructors/channelpipe.js$$
+            $$src/core/constructors/channel.js$$
             $$src/core/constructors/extension.js$$
             $$src/core/constructors/promise.js$$
             $$src/core/constructors/interface.js$$
@@ -26,6 +26,7 @@ $$src/head.js$$
             $$src/core/constructors/controller.js$$
             $$src/core/constructors/model.js$$
             $$src/core/constructors/view.js$$
+            $$src/core/constructors/mvc_common.js$$
             $$src/core/parser.js$$
             $$src/core/dispatched.js$$
             $$src/core/outerjmvc.js$$
