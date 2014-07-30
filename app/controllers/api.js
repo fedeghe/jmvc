@@ -28,7 +28,7 @@ JMVC.controllers.api = function () {
 				'events', 'head', 'io', 'match',
 				'object', 'string', 'util'
 			],
-			whenReady = new Date(2014, 6, 27);
+			whenReady = new Date(2014, 9, 27);
 			
 			
 		main.set('id', 'desc');
