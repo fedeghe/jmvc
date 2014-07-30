@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 2) build: 2450
+ * @version :  3.5 (rev. 2) build: 2554
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.1.1 & a love heap
- *         glued with 38 files on 19/7/2014 at 12:41:15
+ *         glued with 39 files on 30/7/2014 at 11:29:15
  *
  * All rights reserved.
  *
@@ -83,10 +83,10 @@
                 JMVC_REVIEW = '2',
             
                 // review (vars.json)
-                JMVC_DATE = '19/7/2014',
+                JMVC_DATE = '30/7/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '12:41:15',
+                JMVC_TIME = '11:29:15',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -245,35 +245,126 @@
                  */
                 code  : function () {
             
+                    
+                    
+            // function code() {
+            //   var cnt = document.documentElement.outerHTML;
+            
+            //   // remove comments
+            //   cnt = cnt.replace(/<!--.*?-->/g, '');
+            
+            //   //remove spaces between tags
+            
+            //   cnt = cnt.replace(/>[\s|\t]*</g, '><')
+            //     .replace(/[\n|\t|\r]/g, '')
+            
+            //     .split(/(<[^>]+>)/ig)
+            
+              
+            
+            //   return cnt;
+            // }
+            
                     var padding = 20,
                         w = window.open("","","scrollbar=1,top=" + padding + ",left=" + padding + ",width=" + (window.innerWidth - padding * 2) ), //  + ",height=" + (window.innerHeight - padding * 2)),
                         html = window.document.documentElement.outerHTML,
-                        elements = html.replace(/\n/g, '').split(/(<[^>]+>)/ig),
-                        out = '',
-                        tb = 0;
-                    
-                    for (var i = 0, l = elements.length; i < l; i++) {
-                        if (elements[i].match(/^[\s|\t|\r]*$/)) continue;
+                        out = jmvc.formatCode(html);
             
-                        //ending
-            
-                        
-                        //console.debug(elements[i].match(/<\/|<meta|<link/))
-                        out += (new Array(tb + 1)).join("\t") + elements[i] + "\n";
-            
-                        if (!elements[i].match(/<meta|<link/)) {
-                            tb = tb + (elements[i].match(/<\//) ? -1 : 1);    
-                        }
-                    }
-                    console.debug(out);
-            
-                    
-                    console.debug(window.document.documentElement.outerHTML.replace(/\n/g, '').split(/(<[^>]+>)/ig));
-            
-                    
                     w.document.body.style.overflow = 'scroll';
-                    w.document.body.innerHTML = '<pre style="overflow:scroll">' + JMVC.htmlChars(out) + '</pre>';
+                    w.document.body.innerHTML = '<pre style="overflow:scroll; height:100%">' + JMVC.htmlChars(out) + '</pre>';
                     //window.document.documentElement.outerHTML
+                },
+            
+                formatCode : function (mup) {
+                    var cnt = mup || document.documentElement.outerHTML,
+                        tb = 0,
+                        out = "",
+                        tabChar = "&nbsp;&nbsp;&nbsp;&nbsp;",
+                        nTab = function () {
+                            return "\n" + (tb>0 ? (new Array(tb + 1)).join(tabChar) : '');
+                        },
+                        RX = {
+                            open : /^<([^\/].*[^\/])>$/,    // starts with <; has no > within; do not ends with />; ends with >
+                            close : /^<\/(.*)>$/,           // starts with </; has no < within; ends with >
+                            autoclose : /^<[^>]*\/>$/,      // starts with >; has no > within; ends with />
+                            text : /^[^<]*$/,               // do not starts with <
+                            special : /<(meta|link|br|img|col)+(\s[^>]*|>)?\/?>/ // starts with <; is a meta of link or br
+                        },
+                        TYPE = {special:1, open:2, close:3, autoclose:4, text:5},
+                        checktype = function (t) {
+                            /*
+                            console.debug('TAG : ' + t);
+                            console.debug('special : ' + t.match(RX.special));
+                            console.debug('open : ' + t.match(RX.open));
+                            console.debug('close : ' + t.match(RX.close));
+                            console.debug('autoclose : ' + t.match(RX.autoclose));
+                            console.debug('text : ' + t.match(RX.text));
+                            console.debug('=================' + "\n\n\n");
+                            */
+                            if (t.match(RX.special)) {
+                                return TYPE.special;
+                            } else if(t.match(RX.open)) {
+                                return TYPE.open;
+                            } else if(t.match(RX.close)) {
+                                return TYPE.close;
+                            } else if(t.match(RX.autoclose)) {
+                                return TYPE.autoclose;
+                            } else if(t.match(RX.text)) {
+                                return TYPE.text;
+                            }
+                        };
+                    // remove spaces between tags
+                    // comments
+                    // and get tags
+                    cnt = cnt.replace(/>[\s|\t]*</g, '><')
+                        // remove newline, carriage return, tabs
+                        .replace(/[\n|\t|\r]/g, '')
+                        .replace(/<!--([\s\S]*?)-->/mig, '')
+                        //split, one empty one full
+                        .split(/(<[^>]+>)/ig);
+            
+                    // cleanup empty
+                    var els = [],
+                        i = 0, k = 0, l = cnt.length,
+                        tag;
+            
+                    for (; i < l; i++) {
+                        if (!cnt[i]) continue;
+                        els.push(cnt[i]);           
+                    }
+                    
+                    for (i = 0, l = els.length; i < l; i++) {
+                        
+                        tag = els[i];
+                        t = checktype(tag);
+                        
+                      switch (t){
+                        case TYPE.special:
+                            out += nTab() + tag;
+            
+                            break;
+                        case TYPE.open:
+                            out += nTab() + tag;
+                            tb++;
+                            break;
+                        case TYPE.close:
+                            tb--;
+                            out += nTab() + tag;
+                            break;
+                        case TYPE.autoclose:
+                            out += nTab() + tag;
+                            break;
+                        case TYPE.text: 
+                          out += tag;
+                          if ((i + 1) < l && checktype(els[i+1]) == TYPE.close) {
+                            out += els[i + 1];
+                            i++;
+                            tb--;
+                          }
+                        break;
+                      }
+                    }
+                    return out;
                 },
             
                 /**
@@ -1176,7 +1267,7 @@
             };
             //-----------------------------------------------------------------------------
             /*
-            [MALTA] src/core/constructors/channelpipe.js
+            [MALTA] src/core/constructors/channel.js
             */
             /**
              * [Channel description]
@@ -1200,7 +1291,7 @@
                         return l;
                     },
             
-                    P_Channel = function () {
+                    _Channel = function () {
                         this.topic2cbs = {};
                         this.enabled = true;
                     };
@@ -1209,7 +1300,7 @@
                  * [prototype description]
                  * @type {Object}
                  */
-                P_Channel.prototype = {
+                _Channel.prototype = {
                     /**
                      * enable cb execution on publish
                      * @return {undefined}
@@ -1217,7 +1308,7 @@
                     enable : function () {
                         this.enabled = true;
                     },
-                    //
+            
                     /**
                      * disable cb execution on publish
                      * @return {undefined}
@@ -1225,7 +1316,7 @@
                     disable : function () {
                         this.enabled = false;
                     },
-                    //
+            
                     /**
                      * publish an event on that channel
                      * @param  {String} topic
@@ -1246,7 +1337,7 @@
                         }
                         return true;
                     },
-                    //
+            
                     /**
                      * add a callback to a topic
                      * @param {String} topic
@@ -1308,13 +1399,12 @@
                     once : function (topic, cb){
                         var self = this,
                             cb2 = function () {
-                                cb.apply(null, Array.prototype.concat(arguments));
+                                cb.apply(null, Array.prototype.slice.call(arguments, 0));
                                 self.unsub(topic, cb2);
                             };
                         this.sub(topic, cb2);
                     },
             
-                    //
                     /**
                      * Removes all callbacks for one or more topic
                      * @param [String] ...
@@ -1336,15 +1426,12 @@
                     }
                 };
             
-            
-            
-            
                 /**
                  * returning function
                  */
                 return function (name) {
                     if (!(name in channels)) {
-                        channels[name] = new P_Channel();
+                        channels[name] = new _Channel();
                     }
                     return channels[name];
                 };
@@ -1354,7 +1441,7 @@
             
             /*
             var colorsPalette = JMVC.Channel('colorsPalette'),
-                optionsPalette = new JMVC.Channel('optionsPalette');
+                optionsPalette = JMVC.Channel('optionsPalette');
             
             colorsPalette.sub('getNewColor', function (topic, c){
                 console.debug('got color :' + c);
@@ -1907,47 +1994,7 @@
                 // chain
                 return this;
             };
-            ///////////////////////
-            // COMMON
-            // getter, setter and "deleter" for mvc classes
-            /**
-             * [get description]
-             * @param  {[type]} n [description]
-             * @return {[type]}   [description]
-             */
-            View.prototype.get = Model.prototype.get = Controller.prototype.get = function (n) {
-                return (!!this.vars[n]) ? this.vars[n] : false;
-            };
-            /**
-             * [set description]
-             * @param {[type]} vname [description]
-             * @param {[type]} vval  [description]
-             * @param {[type]} force [description]
-             */
-            View.prototype.set = Model.prototype.set = Controller.prototype.set = function (vname, vval, force) {
-                var i;
-                switch (typeof vname) {
-                case 'string':
-                    if (!this.vars[vname] || force) {this.vars[vname] = vval; }
-                    break;
-                case 'object':
-                    for (i in vname) {
-                        vname.hasOwnProperty(i) && (!this.vars[i] || vval || force) &&
-                        (this.vars[i] = vname[i]);
-                    }
-                    break;
-                }
-                return this;
-            };
-            /**
-             * [del description]
-             * @param  {[type]} n [description]
-             * @return {[type]}   [description]
-             */
-            View.prototype.del = Model.prototype.del = Controller.prototype.del = function (n) {
-                !!this.vars[n] && (this.vars[n] = null);
-                return this;
-            };
+            
             /**
              * [clone description]
              * @param  {[type]} name [description]
@@ -1964,6 +2011,59 @@
                 return ret;
             };
             //-----------------------------------------------------------------------------
+            /*
+            [MALTA] src/core/constructors/mvc_common.js
+            */
+            ///////////////////////
+            // COMMON
+            // getter, setter and "deleter" for mvc classes
+            
+            /**
+             * [get description]
+             * @param  {[type]} n [description]
+             * @return {[type]}   [description]
+             */
+            View.prototype.get =
+            Model.prototype.get =
+            Controller.prototype.get = function (n) {
+                return (!!this.vars[n]) ? this.vars[n] : false;
+            };
+            
+            /**
+             * [set description]
+             * @param {[type]} vname [description]
+             * @param {[type]} vval  [description]
+             * @param {[type]} force [description]
+             */
+            View.prototype.set =
+            Model.prototype.set =
+            Controller.prototype.set = function (vname, vval, force) {
+                var i;
+                switch (typeof vname) {
+                case 'string':
+                    if (!this.vars[vname] || force) {this.vars[vname] = vval; }
+                    break;
+                case 'object':
+                    for (i in vname) {
+                        vname.hasOwnProperty(i) && (!this.vars[i] || vval || force) &&
+                        (this.vars[i] = vname[i]);
+                    }
+                    break;
+                }
+                return this;
+            };
+            
+            /**
+             * [del description]
+             * @param  {[type]} n [description]
+             * @return {[type]}   [description]
+             */
+            View.prototype.del =
+            Model.prototype.del =
+            Controller.prototype.del = function (n) {
+                !!this.vars[n] && (this.vars[n] = null);
+                return this;
+            };
             /*
             [MALTA] src/core/parser.js
             */

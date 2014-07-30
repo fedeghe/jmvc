@@ -16,35 +16,126 @@ jmvc = {
      */
     code  : function () {
 
+        
+        
+// function code() {
+//   var cnt = document.documentElement.outerHTML;
+
+//   // remove comments
+//   cnt = cnt.replace(/<!--.*?-->/g, '');
+
+//   //remove spaces between tags
+
+//   cnt = cnt.replace(/>[\s|\t]*</g, '><')
+//     .replace(/[\n|\t|\r]/g, '')
+
+//     .split(/(<[^>]+>)/ig)
+
+  
+
+//   return cnt;
+// }
+
         var padding = 20,
             w = window.open("","","scrollbar=1,top=" + padding + ",left=" + padding + ",width=" + (window.innerWidth - padding * 2) ), //  + ",height=" + (window.innerHeight - padding * 2)),
             html = window.document.documentElement.outerHTML,
-            elements = html.replace(/\n/g, '').split(/(<[^>]+>)/ig),
-            out = '',
-            tb = 0;
-        
-        for (var i = 0, l = elements.length; i < l; i++) {
-            if (elements[i].match(/^[\s|\t|\r]*$/)) continue;
+            out = jmvc.formatCode(html);
 
-            //ending
-
-            
-            //console.debug(elements[i].match(/<\/|<meta|<link/))
-            out += (new Array(tb + 1)).join("\t") + elements[i] + "\n";
-
-            if (!elements[i].match(/<meta|<link/)) {
-                tb = tb + (elements[i].match(/<\//) ? -1 : 1);    
-            }
-        }
-        console.debug(out);
-
-        
-        console.debug(window.document.documentElement.outerHTML.replace(/\n/g, '').split(/(<[^>]+>)/ig));
-
-        
         w.document.body.style.overflow = 'scroll';
-        w.document.body.innerHTML = '<pre style="overflow:scroll">' + JMVC.htmlChars(out) + '</pre>';
+        w.document.body.innerHTML = '<pre style="overflow:scroll; height:100%">' + JMVC.htmlChars(out) + '</pre>';
         //window.document.documentElement.outerHTML
+    },
+
+    formatCode : function (mup) {
+        var cnt = mup || document.documentElement.outerHTML,
+            tb = 0,
+            out = "",
+            tabChar = "&nbsp;&nbsp;&nbsp;&nbsp;",
+            nTab = function () {
+                return "\n" + (tb>0 ? (new Array(tb + 1)).join(tabChar) : '');
+            },
+            RX = {
+                open : /^<([^\/].*[^\/])>$/,    // starts with <; has no > within; do not ends with />; ends with >
+                close : /^<\/(.*)>$/,           // starts with </; has no < within; ends with >
+                autoclose : /^<[^>]*\/>$/,      // starts with >; has no > within; ends with />
+                text : /^[^<]*$/,               // do not starts with <
+                special : /<(meta|link|br|img|col)+(\s[^>]*|>)?\/?>/ // starts with <; is a meta of link or br
+            },
+            TYPE = {special:1, open:2, close:3, autoclose:4, text:5},
+            checktype = function (t) {
+                /*
+                console.debug('TAG : ' + t);
+                console.debug('special : ' + t.match(RX.special));
+                console.debug('open : ' + t.match(RX.open));
+                console.debug('close : ' + t.match(RX.close));
+                console.debug('autoclose : ' + t.match(RX.autoclose));
+                console.debug('text : ' + t.match(RX.text));
+                console.debug('=================' + "\n\n\n");
+                */
+                if (t.match(RX.special)) {
+                    return TYPE.special;
+                } else if(t.match(RX.open)) {
+                    return TYPE.open;
+                } else if(t.match(RX.close)) {
+                    return TYPE.close;
+                } else if(t.match(RX.autoclose)) {
+                    return TYPE.autoclose;
+                } else if(t.match(RX.text)) {
+                    return TYPE.text;
+                }
+            };
+        // remove spaces between tags
+        // comments
+        // and get tags
+        cnt = cnt.replace(/>[\s|\t]*</g, '><')
+            // remove newline, carriage return, tabs
+            .replace(/[\n|\t|\r]/g, '')
+            .replace(/<!--([\s\S]*?)-->/mig, '')
+            //split, one empty one full
+            .split(/(<[^>]+>)/ig);
+
+        // cleanup empty
+        var els = [],
+            i = 0, k = 0, l = cnt.length,
+            tag;
+
+        for (; i < l; i++) {
+            if (!cnt[i]) continue;
+            els.push(cnt[i]);           
+        }
+        
+        for (i = 0, l = els.length; i < l; i++) {
+            
+            tag = els[i];
+            t = checktype(tag);
+            
+          switch (t){
+            case TYPE.special:
+                out += nTab() + tag;
+
+                break;
+            case TYPE.open:
+                out += nTab() + tag;
+                tb++;
+                break;
+            case TYPE.close:
+                tb--;
+                out += nTab() + tag;
+                break;
+            case TYPE.autoclose:
+                out += nTab() + tag;
+                break;
+            case TYPE.text: 
+              out += tag;
+              if ((i + 1) < l && checktype(els[i+1]) == TYPE.close) {
+                out += els[i + 1];
+                i++;
+                tb--;
+              }
+            break;
+          }
+        }
+        return out;
     },
 
     /**
