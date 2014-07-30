@@ -17,24 +17,6 @@ jmvc = {
     code  : function () {
 
         
-        
-// function code() {
-//   var cnt = document.documentElement.outerHTML;
-
-//   // remove comments
-//   cnt = cnt.replace(/<!--.*?-->/g, '');
-
-//   //remove spaces between tags
-
-//   cnt = cnt.replace(/>[\s|\t]*</g, '><')
-//     .replace(/[\n|\t|\r]/g, '')
-
-//     .split(/(<[^>]+>)/ig)
-
-  
-
-//   return cnt;
-// }
 
         var padding = 20,
             w = window.open("","","scrollbar=1,top=" + padding + ",left=" + padding + ",width=" + (window.innerWidth - padding * 2) ), //  + ",height=" + (window.innerHeight - padding * 2)),
@@ -42,24 +24,35 @@ jmvc = {
             out = jmvc.formatCode(html);
 
         w.document.body.style.overflow = 'scroll';
-        w.document.body.innerHTML = '<pre style="overflow:scroll; height:100%">' + JMVC.htmlChars(out) + '</pre>';
-        //window.document.documentElement.outerHTML
+        w.document.body.style.margin = '0px';
+        w.document.body.style.padding = '5px';
+        w.document.body.style.backgroundColor = '#000';
+        w.document.body.style.color = '#0f0';
+
+        w.document.body.innerHTML = '<pre style="overflow:scroll; height:100%;">' + JMVC.htmlChars(out) + '</pre>';
     },
+
+
 
     formatCode : function (mup) {
         var cnt = mup || document.documentElement.outerHTML,
             tb = 0,
             out = "",
+            line = 0,
             tabChar = "&nbsp;&nbsp;&nbsp;&nbsp;",
             nTab = function () {
-                return "\n" + (tb>0 ? (new Array(tb + 1)).join(tabChar) : '');
+                return "\n" + getLine() + (tb>0 ? (new Array(tb + 1)).join(tabChar) : '');
+            },
+            getLine = function () {
+                line++;
+                return (new Array(6 - (''+line).length)).join('0') + line;
             },
             RX = {
                 open : /^<([^\/].*[^\/])>$/,    // starts with <; has no > within; do not ends with />; ends with >
                 close : /^<\/(.*)>$/,           // starts with </; has no < within; ends with >
                 autoclose : /^<[^>]*\/>$/,      // starts with >; has no > within; ends with />
                 text : /^[^<]*$/,               // do not starts with <
-                special : /<(meta|link|br|img|col)+(\s[^>]*|>)?\/?>/ // starts with <; is a meta of link or br
+                special : /<(meta|link|br|img|col|input)+(\s[^>]*|>)?\/?>/ // starts with <; is a meta of link or br
             },
             TYPE = {special:1, open:2, close:3, autoclose:4, text:5},
             checktype = function (t) {
@@ -84,10 +77,11 @@ jmvc = {
                     return TYPE.text;
                 }
             };
-        // remove spaces between tags
+        // multipsces, remove spaces between tags
         // comments
         // and get tags
-        cnt = cnt.replace(/>[\s|\t]*</g, '><')
+        cnt = cnt.replace(/\s{2,}/g, ' ')
+            .replace(/>[\s|\t]*</g, '><')
             // remove newline, carriage return, tabs
             .replace(/[\n|\t|\r]/g, '')
             .replace(/<!--([\s\S]*?)-->/mig, '')
