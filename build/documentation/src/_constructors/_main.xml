@@ -1,0 +1,6 @@
+<constructors>
+    $$src/_constructors/Event.xml$$
+    $$src/_constructors/Channel.xml$$
+    $$src/_constructors/Interface.xml$$
+    $$src/_constructors/Promise.xml$$
+</constructors>

@@ -1,0 +1,45 @@
+<function>
+    <signature name="Channel">JMVC.Channel(String name)</signature>
+    <description>This is a factory method to obtain an observer named channel.</description>
+    <params>
+        <param name="*name">The name of the channel that must be created/retrieved</param>
+    </params>
+    <returns>
+        <description>the brand new object, enable, disable, pub, sub, unsub, once, reset</description>
+        <properties></properties>
+        <functions>
+            <function>
+                <signature>enable()</signature>
+                <description>Enables the channel</description>
+            </function>
+            <function>
+                <signature>disable()</signature>
+                <description>Disables the channel</description>
+            </function>
+            <function>
+                <signature>pub(String topic, Array args)</signature>
+                <description></description>
+            </function>
+            <function>
+                <signature>sub(String topic, function cb, boolean force)</signature>
+                <description></description>
+            </function>
+            <function>
+                <signature>unsub(String topic, function cb)</signature>
+                <description></description>
+            </function>
+            <function>
+                <signature>once(String topic, function cb)</signature>
+                <description></description>
+            </function>
+            <function>
+                <signature>reset([topic1 [, topic2[, ...]]])</signature>
+                <description></description>
+            </function>
+        </functions>
+    </returns>
+    <sample>var c = JMVC.Channel('trial');&#10;
+c.sub('notice1', function (a, b) {alert('first notice'); console.debug(a,b);});&#10;
+b.pub('notice1', ['hello','world'])</sample>
+    <status>incomplete</status>
+</function>

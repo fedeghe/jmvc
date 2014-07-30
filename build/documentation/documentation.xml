@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <api>
     $$src/jmvc/_main.xml$$
-    $$src/constructors/_main.xml$$    
+    $$src/_constructors/_main.xml$$    
     $$src/errors/_main.xml$$
     $$src/model/_main.xml$$
     $$src/view/_main.xml$$

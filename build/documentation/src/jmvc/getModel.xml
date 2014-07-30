@@ -11,4 +11,10 @@
     you = JMVC.getModel('Persona', ['Frances', 4]);&#10;
 console.debug(me.hello());&#10;
 console.debug(you.hello());</sample>
+    <code>
+        var me = JMVC.getModel('Persona', ['Federico', 35]),
+            you = JMVC.getModel('Persona', ['Frances', 4]);
+        console.debug(me.hello());
+        console.debug(you.hello());
+    </code>
 </function>

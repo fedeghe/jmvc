@@ -16,4 +16,18 @@ function foo() {&#10;
 };&#10;
 JMVC.hook({'myhook': function () {console.debug(arguments); }}, true);&#10;
 foo();</sample>
+    <code>
+        JMVC.hook({
+            onAfterRender: function () {
+                alert('You`ll never see that message booking that function from the console!!!');
+            }
+        });
+        function foo() {
+            JMVC.hookCheck('myhook', [1,2,3]);
+        };
+        JMVC.hook({
+            myhook: function () {
+                console.debug(arguments);
+            }}, true);
+        foo();</code>
 </function>
