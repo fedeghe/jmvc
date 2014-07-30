@@ -37,6 +37,12 @@ canvas {
     height:30px;
     padding:0px 10px;
 }
+#jmvcCEpanel>ul>li.fleft{
+    float:left !important;
+}
+#jmvcCEpanel>ul>li.fright{
+    float:right !important;
+}
 
 #jmvcCEpanel div.panel{
     display:none;
@@ -67,19 +73,30 @@ canvas {
 }
 #jmvcCEpanel div.panel ul.tools li {
     float:left;
-    width:40px;
-    height:40px;
-    border:1px dotted #111;
+    width:44px;
+    height:44px;
+    border:2px solid #111;
     margin-right:10px;
     margin-bottom:10px;
     cursor:pointer;
     overflow:hidden;
-    background-image: url(app/extensions/canvas/editor/css/tool.png);
+    background-image: url(/app/extensions/canvas/editor/css/tools.png);
     background-repeat: no-repeat;
 }
-#jmvcCEpanel div.panel ul.tools li.neighbour_points{
-    background-position:0px 0px;
+#jmvcCEpanel div.panel ul.tools li.neighbour_points{    background-position:0px 0px;}
+#jmvcCEpanel div.panel ul.tools li.dots_random{         background-position:-40px 0px;}
+#jmvcCEpanel div.panel ul.tools li.fur_neighbour{         background-position:-80px 0px;}
+#jmvcCEpanel div.panel ul.tools li.ribbon{         background-position:-120px 0px;}
+#jmvcCEpanel div.panel ul.tools li:hover{
+    transition-property: border-color;
+    transition-duration: .4s;
+    transition-delay: 0s;
+    border-color: white;
 }
+#jmvcCEpanel div.panel ul.tools li.active{
+    border-color: #f60;   
+}
+
 div#toolOptions>ul>li{
     border-top:1px dotted #aaa;
 }
@@ -176,8 +193,8 @@ button {
 }
 div.selection {
     background-color:white;
-    border:1px dashed #555;
-    opacity: 0.5;
+    border:1px dashed #f00;
+    opacity: 0.4;
     cursor: move;
     position:absolute;
 }
@@ -198,7 +215,7 @@ div.loadingspinner{
     width:79px;
     height:79px;
     margin:0 auto;
-    background-image : url(app/extensions/canvas/editor/css/spinnerbig.gif);
+    background-image : url(/app/extensions/canvas/editor/css/spinnerbig.gif);
     background-repeat: no-repeat;
     -moz-border-radius-bottomleft:40px;
     -moz-border-radius-bottomright:40px;
@@ -206,4 +223,19 @@ div.loadingspinner{
     -webkit-border-bottom-right-radius:40px;
     border-bottom-left-radius:40px;
     border-bottom-right-radius:40px;
+}
+div.modalPanel{
+    -moz-box-shadow: 0px 0px 5px #222;
+    -webkit-box-shadow: 0px 0px 5px #222;
+    box-shadow: 0px 0px 5px #222;
+    background-color: white;
+    z-index: 200;
+}
+div.modalPanel .modalHeader{
+    background-color:black;
+    color:white;
+    padding:10px;
+}
+.pointer{
+    cursor:pointer;
 }

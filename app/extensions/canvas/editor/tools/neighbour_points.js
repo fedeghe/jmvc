@@ -47,7 +47,8 @@ JMVC.extend('canvas.editortools.neighbour_points', {
             ctx.lineTo(points[len - 1].x, points[len - 1].y);
             ctx.stroke();
 
-            for (var i = 0, len = len; i < len; i++) {
+            for (var i = 0; i < len; i++) {
+
                 dx = points[i].x - points[len-1].x;
                 dy = points[i].y - points[len-1].y;
                 d = dx * dx + dy * dy;
@@ -86,6 +87,5 @@ JMVC.extend('canvas.editortools.neighbour_points', {
             name : 'color',
             type : 'color'
         }
-
     }
 });

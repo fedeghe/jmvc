@@ -4,7 +4,7 @@ JMVC.canvas.Editor.getToolManager = function (instance, tools) {
         panel = new JMVC.canvas.Editor.Panel(),
         currentTool,
         toolObjs,
-        toolnodes,
+        toolnodes = [],
         tools_files = tools,
         toolOptionsManager = JMVC.canvas.Editor.getToolOptionsManager(),
         getCurrentLayer = function () {
@@ -35,7 +35,7 @@ JMVC.canvas.Editor.getToolManager = function (instance, tools) {
             var that = this,
                 dst = panel.getInnerNode(),
                 list = JMVC.dom.create('ul', {'class' : 'tools'}),
-                i, tmp;
+                i, j = 0;
 
             this.optionsNode = JMVC.dom.create('div', {'id' : 'toolOptions'});
 
@@ -43,10 +43,10 @@ JMVC.canvas.Editor.getToolManager = function (instance, tools) {
 
             for (i in toolObjs) {
 
-                tmp = JMVC.dom.add(list, 'li',{title : i}, '');
+                toolnodes[j] = JMVC.dom.add(list, 'li',{title : i.replace(/_/, ' '), 'class' : i}, '');
 
                 JMVC.widget.Tooltip(
-                    tmp,
+                    toolnodes[j],
                     false,
                     {},
                     {follow : true}
@@ -58,7 +58,9 @@ JMVC.canvas.Editor.getToolManager = function (instance, tools) {
                         JMVC.dom.addClass(this, 'active');
                         that.changeTool(tool);
                     });
-                })(tmp, toolObjs[i]);
+                })(toolnodes[j], toolObjs[i]);
+
+                j++;
             }
             JMVC.dom.append(dst, [list, JMVC.dom.clearer(), that.optionsNode]);
            
@@ -72,7 +74,7 @@ JMVC.canvas.Editor.getToolManager = function (instance, tools) {
         
         changeTool : function (tool) {
             var layer = getCurrentLayer();
-            JMVC.css.style(layer.cnv, 'cursor', 'crosshair');
+            
             // iniject the layer (canvas, context, ... )
             // and let che tool decide
             tool.use(layer);
@@ -80,7 +82,7 @@ JMVC.canvas.Editor.getToolManager = function (instance, tools) {
             // load the options
             // found on the tool
             toolOptionsManager.loadToolOptions(
-                this.optionsNode,
+                this.optionsNode,   
                 tool,
                 self.panelManager.getLayerManager()
             );

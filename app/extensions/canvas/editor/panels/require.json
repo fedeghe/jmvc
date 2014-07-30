@@ -7,5 +7,6 @@
     "settingsManager" : "settingsManager",
     "fullscreenManager" : "fullscreenManager",
     "infoManager" : "infoManager",
-    "selectionManager" : "selectionManager"
+    "selectionManager" : "selectionManager",
+    "fileManager" : "fileManager"
 }

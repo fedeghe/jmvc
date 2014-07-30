@@ -1,7 +1,7 @@
 JMVC.canvas.Editor.getUndoredoManager = function (instance) {
 
     var self = instance,
-        maxLevels = 50,
+        maxLevels = 100,
         states = [],
         index = 0,
         //

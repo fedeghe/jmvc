@@ -23,10 +23,11 @@ JMVC.extend('canvas.editortools.dots_random', {
             clientY = e.clientY;
 
             timeout = setTimeout(function draw() {
-                for (var i = density; i--; ) {
+                for (var i = self.options.density.value; i--; ) {
                     var angle = getRandomFloat(0, Math.PI * 2),
                         radius = getRandomFloat(0, self.options.radius.value);
-                    ctx.globalAlpha = Math.random();
+
+                    ctx.globalAlpha = getRandomFloat(0, self.options.pressure.value);
                     ctx.fillRect(
                         clientX + radius * Math.cos(angle),
                         clientY + radius * Math.sin(angle), 
@@ -45,6 +46,7 @@ JMVC.extend('canvas.editortools.dots_random', {
         };
 
         el.onmouseup = function() {
+            ctx.globalAlpha = 1;
             JMVC.canvas.Editor.undoredoManager.save();
             clearTimeout(timeout);
         };
@@ -70,11 +72,19 @@ JMVC.extend('canvas.editortools.dots_random', {
         },
         pressure : {
             name : 'pressure',
-            type : 'int'
+            type : 'int',
+            value : .5,
+            min : .1,
+            max : 1,
+            step: .1
         },
         density : {
             name : 'density',
-            type : 'int'
+            type : 'int',
+            value : 50,
+            min : 5,
+            max : 100,
+            step : 5
         }
 
     }

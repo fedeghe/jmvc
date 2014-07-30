@@ -1,5 +1,6 @@
 {
     "neighbour" : "neighbour_points",
+    "ribbon" : "ribbon",
     "dots_random" : "dots_random",
     "fur_neighbour" : "fur_neighbour",
     "timespray" : "timespray",

@@ -24,7 +24,10 @@ JMVC.extend('canvas.editortools.timespray', {
 
         el.onmousedown = function(e) {
 
-            ctx.fillStyle = self.options.color.value;
+ctx.fillStyle = self.options.color.value;
+
+            //ctx.fillStyle = 'hsla('+self.options.color.hueZero+', ' + (self.options.color.satZero * 100) + '% ,' + (self.options.color.lumZero * 100) + '%, ' + (self.options.color.alpZero) + ')'; 
+            
             density = self.options.density.value;
 
             ctx.lineJoin = ctx.lineCap = 'round';
@@ -37,7 +40,9 @@ JMVC.extend('canvas.editortools.timespray', {
                     var offsetX = getRandomInt(-radius, radius);
                     var offsetY = getRandomInt(-radius, radius);
                     if (offsetX * offsetX + offsetY * offsetY < radius * radius) {
+
                         ctx.fillRect(clientX + offsetX, clientY + offsetY, 1, 1);
+
                     }
                 }
                 if (!timeout) return;
@@ -45,6 +50,7 @@ JMVC.extend('canvas.editortools.timespray', {
             }, tout);
         };
         el.onmousemove = function(e) {
+            //clearTimeout(timeout);
             clientX = e.clientX;
             clientY = e.clientY;
         };
@@ -82,10 +88,10 @@ JMVC.extend('canvas.editortools.timespray', {
         density : {
             name : 'density',
             type : 'int',
-            value : 50,
-            min : 1,
-            max : 1000,
-            step : 10
+            value : 10,
+            min : 5,
+            max : 200,
+            step : 5
         }
     }
 });

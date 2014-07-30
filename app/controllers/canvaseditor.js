@@ -13,7 +13,7 @@ JMVC.controllers.canvaseditor = function () {
         
 
         JMVC.require(
-            'canvas/editor/editor'
+            'canvas/editor/editor',
             'core/lib/image/image'
         );
         

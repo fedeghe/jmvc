@@ -13,6 +13,7 @@ JMVC.canvas.Editor.getLayerManager = function (instance) {
         panel : panel,
         
         getCurrent : function () {return activeLayer; },
+        
         add : function () {
             var cnv = JMVC.dom.create('canvas', {
                     id : JMVC.util.uniqueid,
@@ -20,7 +21,8 @@ JMVC.canvas.Editor.getLayerManager = function (instance) {
                     height: self.height,
                     style : 'margin:0px; padding:0px; background-color:white;',
                     draggable : 'false',
-                    onselectstart : 'return false;'
+                    onselectstart : 'return false;',
+                    cursor: 'crosshair'
                 }),
                 ctx = cnv.getContext('2d'),
                 l = {
@@ -37,9 +39,9 @@ JMVC.canvas.Editor.getLayerManager = function (instance) {
         clean : function (l) {
             l.ctx.save();
             l.ctx.width = l.ctx.width;
-            l.ctx.fillStyle = 'hsla(0,100%, 100%, 100)';
+            l.ctx.fillStyle = '#fff';//hsla(0,100%, 100%, 100)';
             l.ctx.fillRect(0, 0, self.width, self.height);
-            window.setTimeout(function () {l.ctx.restore();}, 10);
+            window.setTimeout(function () {l.ctx.restore();}, 100);
         },
         remove : function (index) {
             if (!(index < layers.length)) {

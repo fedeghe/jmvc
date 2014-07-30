@@ -1,6 +1,6 @@
 
 strong.icon {
-	background-image : url(app/extensions/canvas/editor/css/icons.jpg);
+	background-image : url(/app/extensions/canvas/editor/css/icons.jpg);
 	display:block;
 	width:30px;
 	height:30px;
@@ -37,7 +37,7 @@ strong.icon.filters{
 	background-position: -41px -322px;
 }
 strong.icon.clean{
-	background-position: -144px -289px
+	background-position: -502px -154px;
 }
 strong.icon.layers{
 	background-position: -502px -289px;
@@ -61,6 +61,12 @@ strong.icon.info{
 	background-position: -68px -86px;
 }
 strong.icon.fullscreen{
-	background-position: -168px -424px;
+	background-position: -170px -424px;
+}
+strong.icon.file{
+	background-position: -16px -289px;
+}
+strong.icon.selection{
+	background-position: -222px -424px;
 }
 

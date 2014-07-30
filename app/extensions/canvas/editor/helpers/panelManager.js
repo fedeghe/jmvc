@@ -33,9 +33,12 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
             }
             return ret;
         },
+
+        Channel = JMVC.Channel('canvaseditor'),
+
         //
-        // declare panel managers, each one will be instantiated here at init time
-        
+        // declare panel managers, each one will be
+        // instantiated here at init time
         toolsManager,
         undoredoManager, //***
         layerManager,
@@ -43,6 +46,7 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
         exportManager,
         settingsManager,
         fullscreenManager,
+        fileManager,
         infoManager,
 
         selectionManager = null,
@@ -55,38 +59,42 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
                 data : 'toolmanager',
                 hasPanel : true,
                 manager : function () { return toolsManager; }
-            },
-            {
+            },{
                 'class' : 'undo unactive',
                 name : 'undo',
                 title : 'undo',
                 data : 'undo'
-            },
-            {
+            },{
                 'class' : 'redo unactive',
                 name : 'redo',
                 title : 'redo',
                 data : 'redo'
-            }, {
+            },{
                 'class' : 'layers active',
                 title : 'layer manager',
                 data : 'layermanager',
                 hasPanel : true,
                 manager : function () { return layerManager;}
-            }, {
+            },{
                 'class' : 'filters active',
                 title : 'filters',
                 data : 'filtersmanager',
                 hasPanel : true,
                 manager : function () { return filterManager;}
-            },
-            //{'class' : 'selection active', title : 'selection', data : 'selection'},
-            {
+            },{
                 'class' : 'separator'
             }, {
                 'class' : 'clean active',
                 title : 'clean canvas',
                 data : 'cleancanvas'
+            }, {
+                'class' : 'selection active',
+                title : 'select area',
+                data : 'selection'
+            }, {
+                'class' : 'fullscreen active',
+                title : 'full screen',
+                data : 'fullscreen'
             }, {
                 'class' : 'separator'
             }, {
@@ -96,16 +104,20 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
                 hasPanel : true,
                 manager : function () { return exportManager;}
             }, {
+                'class' : 'file active',
+                title : 'save',
+                data : 'file'
+            }, {
+                'class' : 'separator'
+            }, {
+                //cntClass : 'fright',
                 'class' : 'settings active',
                 title : 'settings',
                 data : 'optionsmanager',
                 hasPanel : true,
                 manager : function () { return settingsManager;}
-            }, {
-                'class' : 'fullscreen active',
-                title : 'full screen',
-                data : 'fullscreen'
             },{
+                //cntClass : 'fright',
                 'class' : 'info active',
                 title : 'usage info',
                 data : 'getinfo',
@@ -115,12 +127,13 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
         ],
         commandsNodes = {};
 
-    JMVC.Channel('canvaseditor').sub('UNDOREDO_EVENT', function (topic, elem, status) {
+    Channel.sub('UNDOREDO_EVENT', function (topic, elem, status) {
         JMVC.dom.removeClass(commandsNodes[elem], ['active','unactive']);
         JMVC.dom.addClass(commandsNodes[elem], status ? 'active' : 'unactive');
     });
 
-    JMVC.Channel('canvaseditor').sub('PANEL_EVENT', function (topic, action, el, positions, size) {
+
+    Channel.sub('PANEL_EVENT', function (topic, action, el, positions, size) {
 
         // maybe a panel is required
         // 
@@ -162,6 +175,9 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
             case 'fullscreen':
                 fullscreenManager.launch();
             break;
+            case 'file':
+                fileManager.open();
+            break;
         }
     });
 
@@ -187,6 +203,7 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
         getToolsManager : function () {return toolsManager; },
         getLayerManager : function () {return layerManager; },
         getFilterManager : function () {return filterManager; },
+        getFileManager : function () {return fileManager; },
         getExportManager : function () {return exportManager; },
         getSettingsManager : function () {return settingsManager; },
         getInfoManager : function () {return infoManager; },
@@ -197,14 +214,12 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
          * @return {[type]} [description]
          */
         init : function () {
-
-            
-
-            // what about that time ?
+            // get all managers!!!
             //
             toolsManager = JMVC.canvas.Editor.getToolManager(editor, ['canvas/editor/tools/']);
             layerManager = JMVC.canvas.Editor.getLayerManager(editor);
             filterManager = JMVC.canvas.Editor.getFilterManager(editor);
+            fileManager = JMVC.canvas.Editor.getFileManager(editor);
             exportManager = JMVC.canvas.Editor.getExportManager(editor);
             settingsManager = JMVC.canvas.Editor.getSettingsManager(editor);
             infoManager = JMVC.canvas.Editor.getInfoManager(editor);
@@ -221,18 +236,26 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
             // initialize the undo-redo manager
             // 
             JMVC.canvas.Editor.undoredoManager = JMVC.canvas.Editor.getUndoredoManager(editor);
+
             JMVC.canvas.Editor.undoredoManager.init();
 
             mainPanel = JMVC.dom.create('div', {id : panelID});
             
             for (var i = 0, l = commands.length; i < l; i += 1) {
                 var n = getCommand(commands[i]),
-                    sec;
+                    sec,
+                    liattrs = {'data-act' : commands[i].data};
+
                 if ('name' in commands[i]) {
                     commandsNodes[commands[i].name] = n;
                 }
 
-                sec = JMVC.dom.create('li', {'data-act' : commands[i].data}, n );
+                if ('cntClass' in commands[i]) {
+                    liattrs['class'] = commands[i].cntClass;
+                }
+
+                sec = JMVC.dom.create('li', liattrs, n );
+
                 if (commands[i].hasPanel) {
                     
                     sec.hasPanel = true;
@@ -245,6 +268,7 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
             toolsManager.init();
             layerManager.init();
             filterManager.init();
+            fileManager.init();
             exportManager.init();
             settingsManager.init();
             infoManager.init();
@@ -299,7 +323,7 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
                 if (JMVC.dom.hasClass(trg, 'unactive')) {
                     return false;
                 }
-                JMVC.Channel('canvaseditor').pub(
+                Channel.pub(
                     'PANEL_EVENT',
                     [
                         JMVC.dom.attr(trg, 'data-act'),

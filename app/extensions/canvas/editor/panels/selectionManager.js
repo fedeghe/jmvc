@@ -18,13 +18,14 @@ JMVC.canvas.Editor.getSelectionManager = function (instance) {
         selection = false,
 
         creating = false;
+
         mousedown = function (e) {
             if (selection) {
                 JMVC.dom.remove(selection);
             }
             selection = JMVC.dom.create('div', {'class':'selection'})
 
-            console.debug(e)
+
             creating = true;
             console.debug('down');
             var position = JMVC.events.getCoord(JMVC.WD.body, e);
@@ -51,10 +52,12 @@ JMVC.canvas.Editor.getSelectionManager = function (instance) {
             });
             console.debug('moving');
         },
-        mouseup = function (e) {
+        mouseup = function () {
+            console.debug(arguments)
+            //JMVC.events.kill(e);
             console.debug('up');
             creating = false;
-
+            JMVC.css.style(getCurrentLayer().cnv, 'cursor', 'crosshair');
         }
 
     return {
@@ -64,8 +67,9 @@ JMVC.canvas.Editor.getSelectionManager = function (instance) {
             //enable cursor for start
             
             // get a reference to the toolsManager
-            var toolsManager = self.panelManager.getToolsManager(),
-                cnv = getCurrentLayer().cnv;
+            var toolsManager = self.panelManager.getToolsManager();
+
+            cnv = getCurrentLayer().cnv;
             //
             //save the current tool
             tool = toolsManager.getCurrentTool();

@@ -77,14 +77,11 @@ JMVC.canvas.Editor = function (options) {
         self.config = json;
     });
 
-
     // on window resize tell the layermanager to resiza all layers
     // 
     JMVC.events.on(JMVC.W, 'resize', function () {
         self.panelManager.getLayerManager().resize();
     });
-
-
 
     // get all the helpers:
     // PanelManager
@@ -96,6 +93,7 @@ JMVC.canvas.Editor = function (options) {
     //
     // AND then load styles
     JMVC.require('canvas/editor/helpers/', function () {
+
         // disable right click
         //
         JMVC.events.disableRightClick();
@@ -106,7 +104,7 @@ JMVC.canvas.Editor = function (options) {
         JMVC.head.addStyle(self.basepath + 'css/editor.css', true);
         JMVC.head.addStyle(self.basepath + 'css/tooltip.css', true);
         JMVC.head.addStyle(self.basepath + 'css/' + self.config.sprite, true);  
-        
+
         // create and initialize the panelMAnager
         // 
         self.panelManager = JMVC.canvas.Editor.getPanelManager(self);
@@ -117,6 +115,7 @@ JMVC.canvas.Editor = function (options) {
             .init()
             .render()
             .bind();
+
     });
 };
 //
