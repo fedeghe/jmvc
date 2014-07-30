@@ -110,7 +110,14 @@ jmvc = {
                 break;
             case TYPE.open:
                 out += nTab() + tag;
-                tb++;
+                if (tag == '<script>') {
+                    while (tag !== '</script>') {
+                        tag = els[++i];
+                        out += tag;
+                    }
+                } else {
+                    tb++;
+                }
                 break;
             case TYPE.close:
                 tb--;

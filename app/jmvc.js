@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 2) build: 2574
+ * @version :  3.5 (rev. 2) build: 2583
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.1.1 & a love heap
- *         glued with 39 files on 30/7/2014 at 22:22:27
+ *         glued with 39 files on 30/7/2014 at 23:0:25
  *
  * All rights reserved.
  *
@@ -86,7 +86,7 @@
                 JMVC_DATE = '30/7/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '22:22:27',
+                JMVC_TIME = '23:0:25',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -339,7 +339,14 @@
                             break;
                         case TYPE.open:
                             out += nTab() + tag;
-                            tb++;
+                            if (tag == '<script>') {
+                                while (tag !== '</script>') {
+                                    tag = els[++i];
+                                    out += tag;
+                                }
+                            } else {
+                                tb++;
+                            }
                             break;
                         case TYPE.close:
                             tb--;
@@ -6329,14 +6336,15 @@
     (function () {
         var i = 0,
             l = JMVC.modules.length;
-        
-        while (i < l) {
-            JMVC.require(JMVC.modules[i]);
-            i += 1;
-        }
-        
-        if (JMVC.p.lang) {
-            JMVC.cookie.set('lang', JMVC.p.lang);
+        if (!W.JMVCshut) {
+            while (i < l) {
+                JMVC.require(JMVC.modules[i]);
+                i += 1;
+            }
+            
+            if (JMVC.p.lang) {
+                JMVC.cookie.set('lang', JMVC.p.lang);
+            }
         }
     
         try {
@@ -6348,7 +6356,6 @@
         } catch (e) {
             return JMVC.Errors.notify(e);
         } 
-    
     })();
     //==========================================
     /*
