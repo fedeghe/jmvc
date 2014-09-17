@@ -72,15 +72,12 @@ JMVC.extend('console', {
                 ),
 
                 content = {
-                    h : h != undefined ?
-                        h : (JMVC.p.h ? decodeURIComponent(JMVC.p.h) : defaultContent.h),
-                    j : j != undefined ?
-                        j : (JMVC.p.j ? decodeURIComponent(JMVC.p.j) : defaultContent.j),
-                    c : c != undefined ?
-                        c : (JMVC.p.c ? decodeURIComponent(JMVC.p.c) : defaultContent.c)
+                    h : h != undefined ? h : (JMVC.p.h ? decodeURIComponent(JMVC.p.h) : defaultContent.h),
+                    j : j != undefined ? j : (JMVC.p.j ? decodeURIComponent(JMVC.p.j) : defaultContent.j),
+                    c : c != undefined ? c : (JMVC.p.c ? decodeURIComponent(JMVC.p.c) : defaultContent.c)
                 },
                 
-                brd = '<div class=" gbox" style="float: right; height: 0px; width: 0px; border-bottom: 30px solid rgb(96, 96, 96); border-left: 20px solid rgb(51, 51, 51); margin-top: -10px;"></div>',
+                //brd = '<div class="gbox console-brd"></div>',
                 
                 version = 0.4,
                 
@@ -96,7 +93,19 @@ JMVC.extend('console', {
                         attrs : {"class" : "console-head"},
                         content : [
                             {
-                                html : "<a href='" + JMVC.vars.baseurl + "'><img src='/media/img/jmvc_m1.svg' width='60'/></a>",
+                                content : [{
+                                    tag : "a",
+                                    attrs : {
+                                        href : JMVC.vars.baseurl,
+                                    },
+                                    content : [{
+                                        tag : "img",
+                                        attrs : {
+                                            src : "/media/img/jmvc_n3.png",
+                                            width : "60"
+                                        }
+                                    }]
+                                }],
                                 style : {
                                     "float" : "left",
                                     marginTop : "12px",
@@ -104,8 +113,8 @@ JMVC.extend('console', {
                                 },
                                 attrs : {title : "web console v." + version}
                             },{
-                                "tag":"button",
-                                html:"GET URL",
+                                tag : "button",
+                                html : "GET URL",
                                 attrs : {
                                     id : "get-url",
                                     "class" : "round4"
