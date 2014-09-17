@@ -30,4 +30,15 @@ extensions
     +-- games
 
 
-    
+
+JMVCshut = true;
+(function() {
+    var scr = document.createElement('script');
+    scr.type = 'text/javascript';
+    scr.async = true;
+    scr.src = ('https:' == document.location.protocol ? 'https://www' : 'http://www') + '.jmvc.org/app/jmvc.min.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(scr, s);
+})();
+
+JMVC.code();
