@@ -7,9 +7,11 @@ JMVC.extend('canvas.editortools.ribbon', {
         var self = this,
             el = instance.cnv,
             ctx = instance.ctx,
-            mx, my,
+            
             Ww = window.innerWidth,
             Wh = window.innerHeight,
+            mx = Ww / 2,
+            my = Wh / 2,
             interval,
             isDrawing = false,
             points = [];
