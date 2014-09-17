@@ -33,6 +33,7 @@ JMVC.extend('canvas.editortools.ribbon', {
         self.options.color.value = ctx.strokeStyle;
 
         el.onmousedown = function(e) {
+
             var a;
             points = [];
             isDrawing = true;
@@ -46,8 +47,6 @@ JMVC.extend('canvas.editortools.ribbon', {
                 points.push({
                     dx: Ww / 2,
                     dy: Wh / 2,
-                    //dx: 0,
-                    //dy: 0,
                     ax: 0,
                     ay: 0,
                     div: 0.1,
@@ -74,7 +73,7 @@ JMVC.extend('canvas.editortools.ribbon', {
                 points[b].dx = mx;
                 points[b].dy = my;
             }
-            isDrawing = true;
+            //isDrawing = false;
         };
 
         el.onmousemove = function(e) {
@@ -86,9 +85,8 @@ JMVC.extend('canvas.editortools.ribbon', {
 
         el.onmouseup = function() {
             JMVC.canvas.Editor.undoredoManager.save();
-            isDrawing = false;
             clearInterval(interval);
-            points.length = 0;
+            isDrawing = false;
         };
     },
 
