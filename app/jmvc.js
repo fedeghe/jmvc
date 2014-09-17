@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 2) build: 2583
+ * @version :  3.5 (rev. 3) build: 2653
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.1.1 & a love heap
- *         glued with 39 files on 30/7/2014 at 23:0:25
+ *         glued with 39 files on 17/9/2014 at 23:1:55
  *
  * All rights reserved.
  *
@@ -80,13 +80,13 @@
                 JMVC_VERSION = '3.5',
             
                 // review (vars.json)
-                JMVC_REVIEW = '2',
+                JMVC_REVIEW = '3',
             
                 // review (vars.json)
-                JMVC_DATE = '30/7/2014',
+                JMVC_DATE = '17/9/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '23:0:25',
+                JMVC_TIME = '23:1:55',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -116,7 +116,7 @@
                  * lang: lang files
                  * @type {Object}
                  */
-                PATH = {
+                PATHS = {
             
                     /**
                      * extensions path, used as base path in the JMVC.require function
@@ -130,7 +130,6 @@
                      *
                      * foocontroller.js will be 
                      * searched into the /app/controller/test directory
-                     * to use test suite a require('test') is needed until TODO is done
                      * @type {[type]}
                      */
                     test : US + 'app' + US + 'testsuite' + US,
@@ -244,9 +243,6 @@
                  * @return {[type]} [description]
                  */
                 code  : function () {
-            
-                    
-            
                     var padding = 20,
                         w = window.open("","","scrollbar=1,top=" + padding + ",left=" + padding + ",width=" + (window.innerWidth - padding * 2) ), //  + ",height=" + (window.innerHeight - padding * 2)),
                         html = window.document.documentElement.outerHTML,
@@ -257,7 +253,6 @@
                     w.document.body.style.padding = '5px';
                     w.document.body.style.backgroundColor = '#000';
                     w.document.body.style.color = '#0f0';
-            
                     w.document.body.innerHTML = '<pre style="overflow:scroll; height:100%;">' + JMVC.htmlChars(out) + '</pre>';
                 },
             
@@ -268,22 +263,30 @@
                         tb = 0,
                         out = "",
                         line = 0,
-                        tabChar = "&nbsp;&nbsp;&nbsp;&nbsp;",
-                        nTab = function () {
-                            return "\n" + getLine() + (tb>0 ? (new Array(tb + 1)).join(tabChar) : '');
-                        },
-                        getLine = function () {
-                            line++;
-                            return (new Array(6 - (''+line).length)).join('0') + line;
-                        },
+                        tabLength = 4,
+                        tabChar = (new Array(tabLength + 1)).join("&nbsp;"),
                         RX = {
                             open : /^<([^\/].*[^\/])>$/,    // starts with <; has no > within; do not ends with />; ends with >
                             close : /^<\/(.*)>$/,           // starts with </; has no < within; ends with >
                             autoclose : /^<[^>]*\/>$/,      // starts with >; has no > within; ends with />
                             text : /^[^<]*$/,               // do not starts with <
-                            special : /<(meta|link|br|img|col|input)+(\s[^>]*|>)?\/?>/ // starts with <; is a meta of link or br
+                            special : /<(meta|link|br|hr|img|col|input)+(\s[^>]*|>)?\/?>/ // starts with <; is a meta of link or br
                         },
+                        els = [],
+                        i = 0, k = 0, l = 0,
+                        tag,
+            
                         TYPE = {special:1, open:2, close:3, autoclose:4, text:5},
+            
+                        nTab = function () {
+                            return "\n" + getLine() + (tb>0 ? (new Array(tb + 1)).join(tabChar) : '');
+                        },
+            
+                        getLine = function () {
+                            line++;
+                            return (new Array(6 - (''+line).length)).join('0') + line;
+                        },
+            
                         checktype = function (t) {
                             /*
                             console.debug('TAG : ' + t);
@@ -304,6 +307,9 @@
                                 return TYPE.autoclose;
                             } else if(t.match(RX.text)) {
                                 return TYPE.text;
+                            } // finally
+                            else {
+                                return TYPE.open;
                             }
                         };
                     // multipsces, remove spaces between tags
@@ -318,10 +324,8 @@
                         .split(/(<[^>]+>)/ig);
             
                     // cleanup empty
-                    var els = [],
-                        i = 0, k = 0, l = cnt.length,
-                        tag;
-            
+                    l = cnt.length;
+                    
                     for (; i < l; i++) {
                         if (!cnt[i]) continue;
                         els.push(cnt[i]);           
@@ -330,40 +334,40 @@
                     for (i = 0, l = els.length; i < l; i++) {
                         
                         tag = els[i];
+            
                         t = checktype(tag);
                         
-                      switch (t){
-                        case TYPE.special:
-                            out += nTab() + tag;
-            
-                            break;
-                        case TYPE.open:
-                            out += nTab() + tag;
-                            if (tag == '<script>') {
-                                while (tag !== '</script>') {
-                                    tag = els[++i];
-                                    out += tag;
+                        switch (t) {
+                            case TYPE.special:
+                                out += nTab() + tag;
+                                break;
+                            case TYPE.open:
+                                out += nTab() + tag;
+                                if (tag == '<script>') {
+                                    while (tag !== '</script>') {
+                                        tag = els[++i];
+                                        out += tag;
+                                    }
+                                } else {
+                                    tb++;
                                 }
-                            } else {
-                                tb++;
-                            }
-                            break;
-                        case TYPE.close:
-                            tb--;
-                            out += nTab() + tag;
-                            break;
-                        case TYPE.autoclose:
-                            out += nTab() + tag;
-                            break;
-                        case TYPE.text: 
-                          out += tag;
-                          if ((i + 1) < l && checktype(els[i+1]) == TYPE.close) {
-                            out += els[i + 1];
-                            i++;
-                            tb--;
-                          }
-                        break;
-                      }
+                                break;
+                            case TYPE.close:
+                                tb--;
+                                out += nTab() + tag;
+                                break;
+                            case TYPE.autoclose:
+                                out += nTab() + tag;
+                                break;
+                            case TYPE.text: 
+                                out += tag;
+                                if ((i + 1) < l && checktype(els[i+1]) == TYPE.close) {
+                                    out += els[i + 1];
+                                    i++;
+                                    tb--;
+                                }
+                                break;
+                        }
                     }
                     return out;
                 },
@@ -380,7 +384,6 @@
                         s = ~~((diff % 60000) / 1000),
                         m = ~~(diff / 60000),
                         outmsg = '';
-            
             
                     outmsg += (m && (~~m + 'm')) +
                         (s && (~~s + 's')) +
@@ -540,8 +543,6 @@
                         //and clean
                         obj.init = null;
                     }
-                    
-                    //
                     return trg;
                 },
             
@@ -559,6 +560,7 @@
                         path_absolute = $JMVC.vars.baseurl + US + 'app' + US + type + 's/',
                         t = type,
                         ret;
+            
                     if (pieces.length > 1) {
                         name = pieces.pop();
                         path = pieces.join(US);
@@ -573,8 +575,9 @@
                     if (!t || t[0] !== type) {
                         return false;
                     }
+            
                     path_absolute += JMVC_EXT[type];
-                    //
+            
                     // ajax get script content and return it
                     ret = jmvc.xhrget(path_absolute, type, name, params);
                     return ret;
@@ -611,6 +614,7 @@
                 hook: function(obj, force) {
                     var allowed = ['onBeforeRender', 'onAfterRender', 'onBeforeParse', 'onAfterParse'],
                         f = 0;
+            
                     for (f in obj) {
                         if (obj.hasOwnProperty(f)) {
                             try {
@@ -774,7 +778,6 @@
                  * @type {Object}
                  */
                 ns: {
-            
                     /**
                      * creates a namespace
                      * @param  {[type]} str [description]
@@ -782,19 +785,23 @@
                      * @param  {[type]} ctx [description]
                      * @return {[type]}     [description]
                      */
-                    make: function(str, obj, ctx) {
+                    make: function (str, obj, ctx) {
                         var chr = '.',
                             els = str.split(/\.|\//),
                             l = els.length,
                             ret;
                         typeof ctx === undef && (ctx = W);
                         typeof obj === undef && (obj = {});
-                        //
+            
                         if (!ctx[els[0]]) {
                             ctx[els[0]] = (l === 1) ? obj : {};
                         }
                         ret = ctx[els[0]];
-                        return (l > 1) ? jmvc.ns.make(els.slice(1).join(chr), obj, ctx[els[0]]) : ret;
+            
+                        return (l > 1) ?
+                            jmvc.ns.make(els.slice(1).join(chr), obj, ctx[els[0]])
+                            :
+                            ret;
                     },
             
                     /**
@@ -803,15 +810,18 @@
                      * @param  {[type]} ctx [description]
                      * @return {[type]}     [description]
                      */
-                    check: function(ns, ctx) {
+                    check : function (ns, ctx) {
                         var els = ns.split(/\.|\//),
                             i = 0,
                             l = els.length;
                         ctx = (ctx !== undefined) ? ctx : W;
+            
                         for (null; i < l; i += 1) {
+            
                             if (ctx[els[i]]) {
                                 ctx = ctx[els[i]];
-                            } else { // break it
+                            } else {
+                                // break it
                                 return false;
                             }
                         }
@@ -824,7 +834,7 @@
                  * @param  {[type]} cnt [description]
                  * @return {[type]}     [description]
                  */
-                parseLang: function(cnt) {
+                parseLang: function (cnt) {
                     var RXlng = '\\[L\\[([\\S\\s]*?)\\]\\]',
                         lang = true,
                         tmp,
@@ -834,28 +844,30 @@
                     JMVC.vars.currentlang = def_lang;
             
                     $JMVC.lang(JMVC.vars.currentlang);
-                    //
+            
                     if (JMVC.i18n[JMVC.vars.currentlang] === true) {
                         $JMVC.io.get(
-                            JMVC.vars.baseurl + PATH.lang + JMVC.vars.currentlang + (JMVC_PACKED || '') + '.js',
+                            JMVC.vars.baseurl + PATHS.lang + JMVC.vars.currentlang + (JMVC_PACKED || '') + '.js',
                             function (ln) {
                                 jmvc.jeval(ln);
                             },
                             false
                         );
                     }
-                    //
+            
                     // check for [[js code]], es. [[JMVC.vars.baseurl]] will be rendered as the value of baseurl
                     while (limit) {
                         lang = new RegExp(RXlng, 'gm').exec(cnt);
                         tmp = '';
-                        if (!!lang) {
-                            tmp = ($JMVC.i18n[JMVC.vars.currentlang] && $JMVC.i18n[JMVC.vars.currentlang][lang[1]]) || lang[1];
-                            cnt = cnt.replace(lang[0], tmp);
-                        } else {
+            
+                        if (!lang) {
                             break;
                         }
-                        lang = !! lang;
+            
+                        tmp = ($JMVC.i18n[JMVC.vars.currentlang] && $JMVC.i18n[JMVC.vars.currentlang][lang[1]]) || lang[1];
+                        cnt = cnt.replace(lang[0], tmp);
+                       
+                        lang = !!lang;
                         limit -= 1;
                     }
                     return cnt;
@@ -870,6 +882,7 @@
                 prototipize: function (el, obj) {
                     var p, l,
                         i = 0;
+            
                     if (el instanceof Array) {
                         for (l = el.length; i < l; i += 1) {
                             jmvc.prototipize(el[i], obj);
@@ -905,25 +918,25 @@
                 render: function (cback) {
                     var ctrl,
                         i;
-                    //
+            
                     // "import" the controller (eval ajax code)
                     $JMVC.factory('controller', $JMVC.c);
-                    //
+            
                     // if the constructor has been evalued correctly
                     if ($JMVC.c in $JMVC.controllers) {
-                        //
+            
                         // grant basic ineritance from parent Controller
                         jmvc.inherit($JMVC.controllers[$JMVC.c], Controller);
-                        //
+            
                         // make an instance
                         ctrl = new $JMVC.controllers[$JMVC.c]();
-                        //
+            
                         // store it
                         $JMVC.controllers[$JMVC.c] = ctrl;
-                        //
+            
                         // manage routes
                         'jmvc_routes' in ctrl && ($JMVC.a = ctrl.jmvc_routes[$JMVC.a] || $JMVC.a);
-                        //
+            
                         // parameters are set as variables of the controller
                         for (i in $JMVC.p) {
                             $JMVC.p.hasOwnProperty(i) && (ctrl.set(i, decodeURI($JMVC.p[i])));
@@ -1015,7 +1028,7 @@
                             // 
                             if (arg[i].match(/\/$/)) {
             
-                                $JMVC.io.getJson(JMVC.vars.baseurl + PATH.ext + arg[i] + requireFileName, function (json) {
+                                $JMVC.io.getJson(JMVC.vars.baseurl + PATHS.ext + arg[i] + requireFileName, function (json) {
                                     for (var j in json) {
                                         jmvc.require(arg[i] + json[j]);
                                     }
@@ -1028,7 +1041,7 @@
                                 extname = extNS[extNSlength - 1];
             
                                 path = JMVC.vars.baseurl +
-                                    PATH[(arg[i] === 'testsuite' ? 'test' : 'ext')] +
+                                    PATHS[(arg[i] === 'testsuite' ? 'test' : 'ext')] +
                                     arg[i] + (JMVC_PACKED || '') + '.js';
             
                                 if (getmode === 'ajax') {
@@ -1072,13 +1085,11 @@
                     }
                     
                     if (storage) {
-            
                         storage.setItem(name, JSON.stringify(content));
-                        
                     } else {
-                        
                         $JMVC.vars[name] = content;
                     }
+            
                     return $JMVC;
                 },
             
@@ -1093,6 +1104,7 @@
                 xhrget: function(path, type, name, params) {
                     var ret = false,
                         o;
+                        
                     if (type === 'view' && typeof $JMVC.views[name] === 'function') {
                         ret = $JMVC.views[name];
                     } else if (type === 'model' && typeof $JMVC.models[name] === 'function') {
@@ -2254,6 +2266,8 @@
             --------*/
             
             // Dispatch url getting controller, action and parameters
+            // automatically books the test module loading when the
+            // controller name starts with 'test_'
             //          
             dispatched = (function () {
                 var mid = {
@@ -2265,7 +2279,7 @@
                         hash : WDL.hash.substr(1),
                         port : WDL.port ? ':' + WDL.port : ''
                     },
-                    //
+            
                     // adjust extensions
                     els = mid.path.replace(new RegExp('\\.' + URL_ALLOWED_EXTENSIONS.join('|\\.'), 'gm'), '').substr(1).split(US),
                     controller = false,
@@ -2278,27 +2292,29 @@
                     i,
                     len = 0,
                     baseurl = WDL.protocol + US + US + WDL.hostname;
-                // maybe is the case to load testsuite
-                els[0].match(/test_/) && Modules.push('testsuite');
             
-                //
+                // maybe is the case to load testsuite
+                els[0].match(/^test_/) && Modules.push('testsuite');
+            
+                // controller
                 controller = els.shift() || JMVC_DEFAULT.controller;
-                //
+            
                 // check extrapath for controller
                 if (!!controller.match(controller_splitter)) {
                     controller_prepath_parts = controller.split(controller_splitter);
                     controller = controller_prepath_parts.pop();
                     controller_prepath = controller_prepath_parts.join(US) + US;
                 }
+            
                 //
                 action = els.shift() || JMVC_DEFAULT.action;
                 len = els.length;
-                //
+            
                 // now if els has non zero size, these are extra path params
                 for (i = 0; i + 1 < len; i += 2) {
                     params[els[i]] = els[i + 1];
                 }
-                //
+            
                 // even hash for GET params
                 if (mid.search !== '') {
                     // splitting an empty string give an array with one empty string
@@ -2355,7 +2371,7 @@
                 interfaces : {},
                 vars : {
                     baseurl:    dispatched.baseurl + dispatched.port,
-                    extensions : dispatched.baseurl + dispatched.port + PATH.ext, //'/app/extensions',
+                    extensions : dispatched.baseurl + dispatched.port + PATHS.ext, //'/app/extensions',
                     devurl : DEV_URL,
                     produrl : PROD_URL,
                     devurlstatic : DEV_URLstatic,

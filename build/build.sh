@@ -18,13 +18,8 @@ echo -e "\nSTARTED @ $now" >> malta.log
 
 # tasks
 malta build.json >> malta.log 2>&1 &
-# malta jmvc.js ../app >> malta.log 2>&1 &
-# malta documentation/documentation.xml ../media >> malta.log 2>&1 &
-# malta styles/jmvc.less ../media/css/core >> malta.log 2>&1 &
-# malta styles/api.css ../media/css/core >> malta.log 2>&1 &
 
 # show live message queue
-# 
 echo -e '---------------------------------\nLOG CONTENT:\n.........\n......\n...'
 tail -f malta.log 
 

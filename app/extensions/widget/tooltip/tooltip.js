@@ -84,7 +84,7 @@ JMVC.widget.Tooltip = function (node, html, styled, options) {
                 //cursorPosition[1] = (this.getNum(e.pageY)+scrollingPosition[1]+10)+'px';
                 cursorPosition[1] = (parseInt(e.pageY, 10) + 10)+'px';
             }else{
-                cursorPosition[0] = (parseInt(e.clientX, 10)+10)+'px'; 
+                cursorPosition[0] = (parseInt(e.clientX, 10) + 10)+'px'; 
                 cursorPosition[1] = (parseInt(e.clientY, 10) + scrollingPosition.scrollTop + 10)+'px'
                 
             }
