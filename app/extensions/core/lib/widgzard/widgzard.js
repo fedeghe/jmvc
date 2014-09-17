@@ -535,6 +535,13 @@ JMVC.extend('core/widgzard', function () {
         })(params, target);
     }
 
+    function get (params) {
+        var r = document.createElement('div');
+        params.target = r;
+        render(params);
+        return r;
+    }
+
 
 
     load = function (src) {
@@ -562,6 +569,7 @@ JMVC.extend('core/widgzard', function () {
     // publish module
     return {
         render : render,
+        get : get,
         load : load,
         htmlspecialchars : htmlspecialchars
     };
