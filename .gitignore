@@ -19,3 +19,5 @@ project.properties
 build/styles/jmvcless.buildNum
 tmp.html
 server.go
+jmvc.sublime-project
+jmvc.sublime-workspace
