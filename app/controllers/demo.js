@@ -91,7 +91,7 @@ JMVC.controllers.demo = function() {
 
 		JMVC.events.loadify(500);
 
-		JMVC.dom.preloadImage(JMVC.vars.baseurl + '/media/img/jmvc_m1.svg');
+		JMVC.dom.preloadImage(JMVC.vars.baseurl + '/media/img/jmvc_n1.png');
 
 		//var newlogo = JMVC.dom.create('img', {src : JMVC.vars.baseurl + '/media/img/jmvc_m1.svg'});
 
