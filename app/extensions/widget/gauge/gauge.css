@@ -1,0 +1,25 @@
+.JMVCgauge{
+    position:relative;
+    border:1px solid black;
+    background-color:white;
+    height:24px;
+    width : 200px;
+    padding:1px;
+}
+.JMVCgaugeWrap{
+    position:absolute;
+    left:0px;
+    top:0px;
+    height:20px;
+    background-color:white;
+    margin:1px;
+    width : 196px;
+}
+.JMVCgaugeBar{
+    background-color: #aaa;
+    height:20px;
+    overflow:visible;
+    white-space:nowrap;
+    line-height:20px;
+    font-size:12px;
+}
