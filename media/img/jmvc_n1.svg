@@ -27,9 +27,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="191.64497"
-     inkscape:cy="37.432222"
+     inkscape:zoom="1.979899"
+     inkscape:cx="217.49082"
+     inkscape:cy="41.677416"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -80,25 +80,24 @@
          style="fill:#dadada;fill-opacity:1;stroke:#000000;stroke-width:6;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     </g>
     <g
-       id="g3818"
-       transform="translate(-5,0)">
+       id="g2999">
       <path
          sodipodi:nodetypes="ccccc"
          inkscape:connector-curvature="0"
          id="path3057"
-         d="m 100,932.36218 35,-5 0,65 -35,5 z"
+         d="m 95,932.36218 35,-5 0,65 -35,-5 z"
          style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:6;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
       <path
          sodipodi:nodetypes="ccccc"
          inkscape:connector-curvature="0"
          id="path2987"
-         d="m 145,942.36218 c -0.14048,13.38861 -0.0161,24.0108 0,35 25,0 25,30.00002 25,50.00002 35,5 0,0 35,5 0.98881,-46.63977 -10,-90.00002 -60,-90.00002 z"
+         d="m 140,942.36218 c -0.14048,13.38861 -0.0161,24.0108 0,35 25,0 25,30.00002 25,50.00002 35,5 0,0 35,5 0.98881,-46.63977 -10,-90.00002 -60,-90.00002 z"
          style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:6;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
       <path
          sodipodi:nodetypes="ccccc"
          inkscape:connector-curvature="0"
          id="path2989"
-         d="m 195,952.36218 c 11.2617,16.26759 6.2617,6.26759 16.2617,26.26759 16.22508,-10.45755 28.7383,8.73241 28.7383,33.73243 0,0 0,0 30,-5 0,-50 -37.51322,-84.18998 -75,-55.00002 z"
+         d="m 190,952.36218 c 11.2617,16.26759 6.2617,6.26759 16.2617,26.26759 16.22508,-10.45755 28.7383,8.73241 28.7383,33.73243 0,0 0,0 30,-5 0,-50 -37.51322,-84.18998 -75,-55.00002 z"
          style="fill:#ff0000;fill-opacity:1;stroke:#000000;stroke-width:6;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     </g>
     <g
