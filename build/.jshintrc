@@ -24,7 +24,7 @@
      // Custom globals
      //
     "predef" : [
-        "JMVC","$JMVC","JMVC_VERSION","JMVC_REVIEW","JMVC_PACKED","jmvc","US","DEV_URL","PROD_URL","PATH","JMVC_EXT",
+        "JMVC","$JMVC","JMVC_VERSION","JMVC_REVIEW","JMVC_PACKED","jmvc","US","DEV_URL","PROD_URL","PATHS","JMVC_EXT",
         "URL_ALLOWED_EXTENSIONS","JMVC_DEFAULT","dispatched","Controller","Model","View","Interface",
         "Parser","Pipe","Event","Promise","Errors","Channel","Extension","FunctionQueue","Modules","preload","hooks",
         "defaultlang","currentlang","time_begin","undef","getmode", 

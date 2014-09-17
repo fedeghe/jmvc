@@ -59,7 +59,7 @@ var time_begin = +new Date(),
      * lang: lang files
      * @type {Object}
      */
-    PATH = {
+    PATHS = {
 
         /**
          * extensions path, used as base path in the JMVC.require function
@@ -73,7 +73,6 @@ var time_begin = +new Date(),
          *
          * foocontroller.js will be 
          * searched into the /app/controller/test directory
-         * to use test suite a require('test') is needed until TODO is done
          * @type {[type]}
          */
         test : US + 'app' + US + 'testsuite' + US,

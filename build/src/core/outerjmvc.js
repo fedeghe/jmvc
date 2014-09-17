@@ -20,7 +20,7 @@ $JMVC = {
     interfaces : {},
     vars : {
         baseurl:    dispatched.baseurl + dispatched.port,
-        extensions : dispatched.baseurl + dispatched.port + PATH.ext, //'/app/extensions',
+        extensions : dispatched.baseurl + dispatched.port + PATHS.ext, //'/app/extensions',
         devurl : DEV_URL,
         produrl : PROD_URL,
         devurlstatic : DEV_URLstatic,
