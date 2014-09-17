@@ -13,6 +13,7 @@ $$reset.css$$
 	}
 	.generate-opa(@n, (@value + 1));
 }
+
 .generate-round(@n, @value: 2) when (@value =< @n) {
 	.round@{value} {
 		-moz-border-radius:1px * @value;
@@ -21,6 +22,7 @@ $$reset.css$$
 	}
 	.generate-round(@n, (@value + 2));
 }
+
 .generate-pad(@n, @value: 5) when (@value =< @n) {
 	.pad@{value} {
 		padding:1px * @value;
@@ -28,13 +30,13 @@ $$reset.css$$
 	.generate-pad(@n, (@value + 5));
 }
 
-
 .generate-g(@n, @value: 1) when ((@value * 60) =< @n) {
     .g@{value} {
         width:60px * @value;
     }
     .generate-g(@n, (@value + 1));
 }
+
 .generate-p(@n, @value: 5) when ((@value) =< @n) {
     .p@{value} {
         width:1% * @value;
@@ -154,12 +156,10 @@ h6{font-size:8px; line-height:16px; padding:8px 0px 4px;}
 .generate-g(2520);
 .generate-p(100);
 
-
-
-
 *.resp_mobi {
     display:none;
 }
+
 *.resp_dskt {
     display:block;
 } 
@@ -192,36 +192,42 @@ h6{font-size:8px; line-height:16px; padding:8px 0px 4px;}
         margin:0 auto;
     }
 }
+
 @media (min-width: 720px) {
     body.resp {
         width :710px !important;
         padding:0px 5px !important;
     }
 }
+
 @media (min-width: 960px) {
     body.resp {
         width :950px !important;
         padding:0px 5px !important;
     }
 }
+
 @media (min-width: 1200px) {
     body.resp {
         width :1190px !important;
         padding:0px 5px !important;
     }
 }
+
 @media (min-width: 1560px) {
     body.resp {
         width :1550px !important;
         padding:0px 5px !important;
     }
 }
+
 @media (min-width: 1920px) {
     body.resp {
         width :1910px !important;
         padding:0px 5px !important;
     }
 }
+
 @media (min-width: 2520px) {
     body.resp {
         width :2510px !important;
@@ -248,24 +254,28 @@ h6{font-size:8px; line-height:16px; padding:8px 0px 4px;}
 	@sideB1 : bottom-left;
 	@sideB2 : bottom-right;
 }
+
 .round-side-vars(@side) when(@side = "bottom"){
 	@sideA1 : topleft;
 	@sideA2 : topright;
 	@sideB1 : top-left;
 	@sideB2 : top-right;
 }
+
 .round-side-vars(@side) when(@side = "left"){
 	@sideA1 : topright;
 	@sideA2 : bottomright;
 	@sideB1 : top-right;
 	@sideB2 : bottom-right;
 }
+
 .round-side-vars(@side) when(@side = "right"){
 	@sideA1 : topleft;
 	@sideA2 : bottomleft;
 	@sideB1 : top-left;
 	@sideB2 : bottom-left;
 }
+
 .round-side(@side){
 	.round-side-vars(@side);
 	-moz-border-radius-@{sideA1}: 0px;
@@ -275,11 +285,11 @@ h6{font-size:8px; line-height:16px; padding:8px 0px 4px;}
 	border-@{sideB1}-radius:0px;
 	border-@{sideB2}-radius:0px;
 }
+
 .roundtop{.round-side("top");}
 .roundbottom{.round-side("bottom");}
 .roundleft{.round-side("left");}
 .roundright{.round-side("right");}
-
 .roundtopleft{
 	-moz-border-radius-topright:0px;
 	-moz-border-radius-bottomleft:0px;
