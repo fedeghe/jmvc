@@ -42,7 +42,7 @@ jmvc = {
                 close : /^<\/(.*)>$/,           // starts with </; has no < within; ends with >
                 autoclose : /^<[^>]*\/>$/,      // starts with >; has no > within; ends with />
                 text : /^[^<]*$/,               // do not starts with <
-                special : /<(meta|link|br|hr|img|col|input)+(\s[^>]*|>)?\/?>/ // starts with <; is a meta of link or br
+                special : /<(meta|link|br|hr|img|col|input|source)+(\s[^>]*|>)?\/?>/ // starts with <; is a meta of link or br
             },
             els = [],
             i = 0, k = 0, l = 0,
