@@ -262,146 +262,7 @@ JMVC.extend('core/widgzard', function () {
         return true;
     }
 
-
-
     /**
-     * Public function to render Dom from Json
-     * @param  {Object} params the configuration json that contains all the 
-     *                         information to build the dom within the target
-     *                         node, and to manage the callback tree
-     * @param  {[type]} target the root DOMnode where the structure
-     *                         will be attached
-     * @return {undefined}
-     */
-    function render______________ (config, clean) {
-
-        if (!config) {
-            throw new Error({message : 'ERROR : Check parameters for render function'});
-        }
-
-        // reference to the requested target, or body
-        var target = config.target || document.body,
-            inner;
-
-        // a literal used to save a reference 
-        // to all the elements that need to be 
-        // reached afterward calling this.getNode(id)
-        // from any callback
-        // 
-        inner = {
-            map : {},
-            getNode : function (id) {
-                return inner.map[id] || false;
-            }
-        };
-
-
-        // rape Wnode prototype funcs
-        // to set attributes & styles
-        // and attached data
-        // 
-        Wnode.prototype
-            .setAttrs(target, config.attrs)
-            .setStyle(target, config.style)
-            .setData(target, config.data);
-        
-        // clean if required
-        // 
-        if (!!clean) {
-            target.innerHTML = '';
-        }
-        
-        // maybe a raw html is requested before treating content
-        if (typeof config.html !== 'undefined') {
-            target.innerHTML = config.html;
-        }
-        
-        
-        // initialize the root node to reflect what will be done
-        // by the Node contstructor to every build node: 
-        // 
-        // - len : the lenght of the content array
-        // - cb : exactly the callback
-        // 
-        target.len = config.content.length;
-        target.cb = config.cb || noop;
-
-        // allow to use getNode from root
-        // 
-        target.getNode = inner.getNode;
-
-        // 
-        // start recursion
-        // 
-        (function recur(cnf, trg){
-            
-            // change the class if the element is simply a "clearer" String
-            // 
-            if (cnf.content) {
-                var nodes = [],
-                    postpro = !!cnf.sameHeight,
-                    h = 0,
-                    skip = false;
-
-                for (var n, i = 0, l = cnf.content.length; i < l; i++) {
-
-                    if (cnf.content[i] === clearerClassName) {
-                        skip = true;
-                        cnf.content[i] = {
-                            tag : 'br',
-                            attrs : {'class' : clearerClassName}
-                        };
-                    }
-                    n = new Wnode(cnf.content[i], trg, inner).add();
-                    
-                    if (postpro && !skip) {
-                        nodes.push(n);
-                        h = Math.max(h, JMVC.css.height(n));
-                    }
-                    
-                    recur(cnf.content[i], n);
-                }
-
-                if (postpro) {
-                    for (var j = 0, l = nodes.length; j < l; j++) {
-                        nodes[j].style.height = h + 'px';
-                    }
-                }
-            }
-            
-        })(config, target);
-
-
-        /*
-        REPLACE WITH THAT FUNCTION IF sameHeight IS NOT USEFUL
-        
-        (function recur(cnf, trg){
-            
-            // change the class if the element is simply a "clearer" String
-            // 
-            if (cnf.content) {
-
-                for (var i = 0, l = cnf.content.length; i < l; i++) {
-
-                    if (cnf.content[i] === 'clearer') {
-                        cnf.content[i] = {
-                            tag : 'br',
-                            attrs : {'class':'clearer'}
-                        };
-                    }
-                    
-                    recur(
-                        cnf.content[i],
-                        new Node(cnf.content[i], trg, inner).add()
-                    );
-                }
-            }
-        })(config, target);
-        */
-    }
-
-
-        /**
      * PUBLIC function to render Dom from Json
      * @param  {Object} params the configuration json that contains all the 
      *                         information to build the dom :
@@ -421,7 +282,7 @@ JMVC.extend('core/widgzard', function () {
 
         // maybe cleanup previous
         //
-        autoclean && target.WIDGZARD && cleanup(target);
+        (clean == undefined || clean == true)  && autoclean && target.WIDGZARD && cleanup(target);
 
         if (!params) {
             throw new Exception('ERROR : Check parameters for render function');
@@ -449,7 +310,9 @@ JMVC.extend('core/widgzard', function () {
 
         // maybe clean
         // 
-        if (!!clean) target.innerHTML = '';
+        if (!!clean) {
+            target.innerHTML = '';
+        }
 
         // maybe a raw html is requested before treating content
         if (typeof params.html !== 'undefined') {
