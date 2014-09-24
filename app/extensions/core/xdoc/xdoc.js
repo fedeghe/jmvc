@@ -1,6 +1,10 @@
 // type : LIB
 //
 
+
+// CONSOLE SAMPLE:
+// JMVC.xdoc('core/xmlparser/xmlparser')
+
 JMVC.require(
 	'core/screen/screen'
 	,'event_scroll/event_scroll'
@@ -20,6 +24,10 @@ JMVC.extend('xdoc', function () {
 		_status = false,
 		_id = JMVC.util.uniqueid + '',
 		scroll = 0,
+		margin = 10,
+		
+		scrollTop, container,
+
 		templates = {
 			LIB : {},
 			FACTORY_METHOD : {},
@@ -28,62 +36,97 @@ JMVC.extend('xdoc', function () {
 		};
 
 	function toggle(ext) {
-
 		
 		ext && JMVC.require(ext.replace('.', '/'));
 
-		if (_status) {
+		_status = !_status;
+
+		JMVC.head.title(_status ? etitle : otitle);	
+
+		if (!_status) {
+			//remove the whole node
 			JMVC.dom.remove(JMVC.dom.find('#' + _id));
+
+			// enable back scroll
 			JMVC.events.enable_scroll();
+
+			// get back to the previous vertical scrolling
 			JMVC.W.scrollTo(0, scroll);
+
 		} else {
 
-			var dims = JMVC.screen.getViewportSize(),
-				border_size = 1,
-				margin = 10,
-				top_height = 10,
-				foot_height = 100,
-				scrollTop = JMVC.screen.getScreenData().scrollTop;
-				
-				// main container
-				container = JMVC.dom.create(
-					'div', {
-						'id' : _id,
-						'class' : 'jmvc_xdoc respfixed round8',
-						'style' : 'left:' + margin + 'px;right:' + margin + 'px;top:' + margin + 'px;bottom:' + margin + 'px;'
-					},
-					'<div class="close respfixed" title="close" onclick="JMVC.xdoc.toggle()"><span class="txt">x</span></div>'
-				);
+			// save scroll vertical position
+			scroll = JMVC.screen.getScreenData().scrollTop;
 
-			//save scroll vertical position
-			scroll = scrollTop;
-
-			//scroll to top
+			// scroll to top
 			JMVC.W.scrollTo(0, 1);
 
-			//disable scroll
-			JMVC.events.disable_scroll();
+			JMVC.events.disable_scroll();			
 
-			JMVC.set('height', (dims.height - 70) / 2);
-			
-			JMVC.xdoc.show(ext, container);
-
-			JMVC.dom.append(JMVC.dom.body(), container);
+			//render with widgzard
+			JMVC.xdoc.show(ext);
 		}
-		_status = !_status;
-		JMVC.head.title(_status ? etitle : otitle);	
 	}
 
+	function show(ext) {
 
-
-	function show(ext, node) {
-		
 		// get the json from xml
 		//
 		var xmlparser = new JMVC.xmlparser.load(JMVC.xdoc.elements[ext], true),
 			doc = xmlparser.toJson(),
 			rootTagName = xmlparser.root().tagName;
 
+		JMVC.core.widgzard.render({
+			target : JMVC.dom.body(),
+			content : [{
+					tag : 'div',
+					attrs : {
+						id : _id,
+						'class' : 'jmvc_xdoc respfixed round8',
+					},
+					style : {
+						left : margin + 'px',
+						right : margin + 'px',
+						top : margin + 'px',
+						bottom : margin + 'px'
+					},
+					content : [{
+							tag : 'div',
+							attrs : {
+								'class' : "close respfixed",
+								title : 'close',
+								onclick : "JMVC.xdoc.toggle()"
+							},
+							content : [{
+								tag : 'span',
+								attrs : {
+									'class' : 'txt'
+								},
+								html : 'x'
+							}]
+						},{
+							tag : 'div',
+							content : [{
+									attrs : {'class':'respfixed'},
+									tag : 'h1',
+									html : 'Description'
+								},{
+									tag : 'p',
+									attrs : {'class':'round8'},
+									style :{'background-color' : '#ddd'},
+									html : 'xxx'//doc.description['#text']
+								},{
+									html : '....now get all info from xml2json and use the Widgzard'
+								}
+							]
+						}
+					]
+				}
+			]
+		}, false);
+
+
+/*
 		JMVC.core.widgzard.render({
 			target : node,
 			content : [{
@@ -92,12 +135,16 @@ JMVC.extend('xdoc', function () {
 				html : 'Description'
 			},{
 				tag : 'p',
-				attrs : {'class':'round8', style :'background-color:#ddd'},
+				attrs : {'class':'round8'},
+				style :{'background-color' : '#ddd'},
+
 				html : doc.description['#text']
 			},{
-				html : 'world'
+				html : '....now get all info from xml2json and use the Widgzard'
 			}]
 		});
+*/
+		
 	}
 
 
