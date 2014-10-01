@@ -44,31 +44,51 @@ JMVC.extend('xdoc', function () {
 		JMVC.head.title(_status ? etitle : otitle);	
 
 		if (!_status) {
-			//remove the whole node
-			JMVC.dom.remove(JMVC.dom.find('#' + _id));
+			// remove the whole node
+			// 
+			JMVC.xdoc.hide();
 
 			// enable back scroll
+			// 
 			JMVC.events.enable_scroll();
 
 			// get back to the previous vertical scrolling
+			// 
 			JMVC.W.scrollTo(0, scroll);
 
 		} else {
 
 			// save scroll vertical position
+			// 
 			scroll = JMVC.screen.getScreenData().scrollTop;
 
-			// scroll to top
-			JMVC.W.scrollTo(0, 1);
-
-			JMVC.events.disable_scroll();			
-
 			//render with widgzard
+			//
 			JMVC.xdoc.show(ext);
+
+			// disable scroll
+			// 
+			JMVC.events.disable_scroll();
+
+			// scroll to top
+			// 
+			JMVC.W.scrollTo(0, 1);
 		}
 	}
 
+	function hide() {
+		// if called directly
+		// 
+		_status = false;	
+
+		JMVC.dom.remove(JMVC.dom.find('#' + _id));	
+	}
+
 	function show(ext) {
+
+		// if called directly
+		// 
+		_status = true;
 
 		// get the json from xml
 		//
@@ -79,11 +99,13 @@ JMVC.extend('xdoc', function () {
 		JMVC.core.widgzard.render({
 			target : JMVC.dom.body(),
 			content : [{
+					cb : function (){console.log('done');},
 					tag : 'div',
 					attrs : {
 						id : _id,
 						'class' : 'jmvc_xdoc respfixed round8',
 					},
+
 					style : {
 						left : margin + 'px',
 						right : margin + 'px',
@@ -116,7 +138,11 @@ JMVC.extend('xdoc', function () {
 									style :{'background-color' : '#ddd'},
 									html : 'xxx'//doc.description['#text']
 								},{
-									html : '....now get all info from xml2json and use the Widgzard'
+									html : '....now get all info from xml2json and use the Widgzard',
+									cb : function (){
+										console.log('in');
+										solve(this);
+									}
 								}
 							]
 						}
@@ -124,36 +150,23 @@ JMVC.extend('xdoc', function () {
 				}
 			]
 		}, false);
+	}
 
-
-/*
-		JMVC.core.widgzard.render({
-			target : node,
-			content : [{
-				attrs : {'class':'respfixed'},
-				tag : 'h1',
-				html : 'Description'
-			},{
-				tag : 'p',
-				attrs : {'class':'round8'},
-				style :{'background-color' : '#ddd'},
-
-				html : doc.description['#text']
-			},{
-				html : '....now get all info from xml2json and use the Widgzard'
-			}]
-		});
-*/
-		
+	function solve(inst) {
+		console.log('solving');
+		window.setTimeout(function () {
+			inst.done();
+		}, 3000);
 	}
 
 
-
-
-
+	//
+	// Module return
+	//
 	return {
-		toggle : toggle,
-		show : show
+		hide : hide,
+		show : show,
+		toggle : toggle
 	};
 
 });
