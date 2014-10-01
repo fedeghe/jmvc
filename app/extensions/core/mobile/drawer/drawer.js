@@ -21,7 +21,7 @@ JMVC.extend('mobile.drawer', function () {
             offset = 40,
             //
             // wrap
-            wrap = JMVC.dom.wrap(body);
+            wrap = JMVC.dom.wrapIn(body);
 
         JMVC.css.style(wrap, {
             zIndex : 100,
