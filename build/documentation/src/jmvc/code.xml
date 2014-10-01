@@ -1,0 +1,11 @@
+<function>
+    <signature name="code">JMVC.code()</signature>
+    <description>Toggles formatted dom in a popup window (standing browser settings allow to do that)</description>
+    <params>
+        <param name="">this function needs no parameters</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <sample>// show the code window&#10;JMVC.code();&#10;</sample>
+    <status>complete</status>
+    <code>JMVC.code();</code>
+</function>

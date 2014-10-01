@@ -1,4 +1,5 @@
 <jmvc>
+    $$src/jmvc/code.xml$$
     $$src/jmvc/console.xml$$
     $$src/jmvc/debug.xml$$
     $$src/jmvc/del.xml$$
