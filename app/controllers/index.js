@@ -11,7 +11,9 @@ JMVC.require(
 	'core/fx/fx',
 	'widget/lang/lang',
 	'vendors/github/forkme/forkme',
-	'widget/snow/snow/snow'
+	'widget/snow/snow/snow',
+
+	'core/fx/3DaniLogo'
 );
 
 JMVC.controllers.index = function () {
@@ -106,6 +108,7 @@ JMVC.controllers.index = function () {
 
 				logo = JMVC.dom.find('#extralogo');
 				newlogo = JMVC.dom.create('img', {src : JMVC.vars.baseurl + '/media/img/' + logoimg});
+			
 				JMVC.dom.append(logo, JMVC.dom.create('div', {'class':'resp_mobi', style:'height:20px'}, '&nbsp;'));
 				JMVC.dom.append(logo, newlogo);
 				
@@ -202,6 +205,10 @@ JMVC.controllers.index = function () {
 
 				if (JMVC.p.snow && JMVC.p.snow === 'true') {
 					JMVC.snow.start(JMVC.dom.body());
+				}
+
+				if (!JMVC.sniffer.features.assets.touchDevice) {
+					JMVC.fx.threeDaniLogo(newlogo);
 				}
 
 			}
