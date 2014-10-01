@@ -1,14 +1,38 @@
 /*- INIT -*/
 
 /**
- * Generic dummy window.onerror enhancement
+ * Override window.onerror enhancement
+ * 
+ * thx to Venerons
+ * https://gist.github.com/Venerons/f54b7fbc17f9df4302cf
  */
-(function (previousOnError) {
-    W.onerror = function (errorMsg, url, lineNumber) {
-        JMVC.debug(lineNumber + '@' + url + ": " + errorMsg);
-        previousOnError && previousOnError(errorMsg, url, lineNumber);
+(function (previousOnError){
+    // uh!...want to do something with previousOnError?
+    // ...really?
+    function reportError(error, message) {
+        message = message || '';
+        JMVC.debug(
+            'ERROR: ' + message + ' [' + error.toString() + ']\n' +
+            '\nName:\t\t' + (error.name || '-') +
+            '\nMessage:\t' + (error.message || '-') +
+            '\nFile:\t\t\t' + (error.fileName || '-') +
+            '\nSource:\t\t' + ((error.toSource && error.toSource()) || '-') +
+            '\nLine #:\t\t' + (error.lineNumber || '-') +
+            '\nColumn #:\t' + (error.columnNumber || '-') +
+            '\n\nStack:\n\n' + (error.stack || '-')
+        );
+    }
+     
+    window.onerror = function (message, filename, lineno, colno, error) {
+        error.fileName = error.fileName || filename || null;
+        error.lineNumber = error.lineNumber || lineno || null;
+        error.columnNumber = error.columnNumber || colno || null;
+        reportError(error, 'Uncatched Exception');
     };
+
 })(W.onerror);
+
+
 
 
 // store starting time, that's not truly the starting time but 
