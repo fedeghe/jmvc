@@ -276,6 +276,8 @@ JMVC.extend('sniffer', {
 			svg : !!(document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image", "1.1")),
 			//svg : !!(JMVC.WD.creatElementNS && JMVC.WD.createElementNS('http://www.w3.org/2000/svg','svg').createSVGRect),
 			svg_TEXT_HTML : (function () { var e = JMVC.WD.createElement('div'); e.innerHTML = '<svg></svg>'; return !!(window.SVGSVGElement && e.firstChild instanceof window.SVGSVGElement); })(),
+			touchDevice : 'ontouchstart' in window // works on most browsers 
+				      || 'onmsgesturechange' in window, // works on ie10
 			webSimpleDB : !!window.indexedDB,
 			webSockets : !!window.WebSocket,
 			webSQLDatabase : !!window.openDatabase,
