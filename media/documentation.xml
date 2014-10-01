@@ -5,6 +5,20 @@
 -->
 <jmvc>
 <!--
+[MALTA] src/jmvc/code.xml
+-->
+<function>
+    <signature name="code">JMVC.code()</signature>
+    <description>Toggles formatted dom in a popup window (standing browser settings allow to do that)</description>
+    <params>
+        <param name="">this function needs no parameters</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <sample>// show the code window&#10;JMVC.code();&#10;</sample>
+    <status>complete</status>
+    <code>JMVC.code();</code>
+</function>
+<!--
 [MALTA] src/jmvc/console.xml
 -->
 <function>
@@ -1856,6 +1870,19 @@ t()&#10;
         <param name="types" default="['TEXT_NODE']">An array containig the nodeTypes to consider</param>
     </params>
     <returns>the brand new node</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/dom/wrap.xml
+-->
+<function>
+    <signature name="wrap">JMVC.dom.wrap(Element Node1, Element Node2)</signature>
+    <description></description>
+    <params>
+        <param name="Node1">The first DomNode involved</param>
+        <param name="Node2">The second DomNode involved</param>
+    </params>
+    <returns>void (undefined)</returns>
     <status>incomplete</status>
 </function>
 </dom>
