@@ -6,7 +6,7 @@
  * Widgzard extension
  * 
  * Create an arbitrary dom tree json based allowing for each node to 
- * specify a callback that will be called onky when every inner callback
+ * specify a callback that will be called only when every inner callback
  * will declare to have finished his work.
  *
  * @author Federico Ghedina
@@ -30,7 +30,7 @@ JMVC.extend('core/widgzard', function () {
         load;
 
     /**
-     * Main object constructor represeting any node created
+     * Main object constructor represeting every node created
      * @param {[type]} conf the object that has the information about the node
      *                      that will be created
      * @param {[type]} trg  the DomNODE where the element will be appended to
@@ -122,21 +122,22 @@ JMVC.extend('core/widgzard', function () {
      * @param {Object} attrs  the hash of attributes->values
      */
     Wnode.prototype.setAttrs = function (node, attrs) {
+
+        if (typeof attrs === 'undefined') return this;
+
         // if set, append all attributes (*class)
         // 
-        if (typeof attrs !== 'undefined') { 
-            for (var j in attrs) {
-                if (j !== 'class') {
-                    if (j !== 'style') {
-                        node.setAttribute(j, attrs[j]);
-                    } else {
-                        this.setStyle(node, attrs.style);
-                    }
-                } else {
-                    node.className = attrs[j];
-                }
+        for (var j in attrs) {
+            if (j !== 'class') {
+                if (j !== 'style')
+                    node.setAttribute(j, attrs[j]);
+                else
+                    this.setStyle(node, attrs.style);
+            } else {
+                node.className = attrs[j];
             }
         }
+
         return this;
     };
 
@@ -146,12 +147,13 @@ JMVC.extend('core/widgzard', function () {
      * @param {Object} style  the hash of rules
      */
     Wnode.prototype.setStyle = function (node, style) {
+
+        if (typeof style === 'undefined') return this;
+
         // if set, append all styles (*class)
         //
-        if (typeof style !== 'undefined') {
-            for (var j in style) {
-                node.style[j.replace(/^float$/i, 'cssFloat')] = style[j];
-            }
+        for (var j in style) {
+            node.style[j.replace(/^float$/i, 'cssFloat')] = style[j];
         }
         return this;
     };
@@ -196,7 +198,7 @@ JMVC.extend('core/widgzard', function () {
         //
         typeof conf[nodeIdentifier] !== 'undefined' && (this.map[conf[nodeIdentifier]] = node);
 
-        // if the user specifies a node the is not the target 
+        // if the user specifies a node that is not the target 
         // passed to the constructor we use it as destination node
         // (node that in the constructor the node.target is always
         // the target passed)
@@ -224,8 +226,8 @@ JMVC.extend('core/widgzard', function () {
      * @return {[type]}      [description]
      */
     function cleanup(node) {
-        var removeNode = function (t) {
 
+        var removeNode = function (t) {
                 t.parentNode.removeChild(t);
                 return true;
             },
@@ -236,20 +238,14 @@ JMVC.extend('core/widgzard', function () {
             ],
             kL = keys.length,
             i = 0,
-            //j = 0, k = 0,
             n = null;
         
         // pick up postorder tree traversal
         eulerWalk(node, function (n) {
             //skip root & text nodes
-            n !== node && n.nodeType != 3 && nodesToBeCleaned.push(n); // && k++;
+            n !== node && n.nodeType != 3 && nodesToBeCleaned.push(n);
         }, 'post');
-        /*
-        while (j < k) {
-            n = nodesToBeCleaned[j++];
-            while (i < kL) n[keys[i++]] = null;
-            removeNode(n);
-        }*/
+        
 
         while (nodesToBeCleaned.length) {
             n = nodesToBeCleaned.pop();
@@ -282,7 +278,10 @@ JMVC.extend('core/widgzard', function () {
 
         // maybe cleanup previous
         //
-        (clean == undefined || clean == true)  && autoclean && target.WIDGZARD && cleanup(target);
+        (clean == undefined || clean == true)
+            && autoclean
+            && target.WIDGZARD
+            && cleanup(target);
 
         if (!params) {
             throw new Exception('ERROR : Check parameters for render function');
@@ -328,7 +327,8 @@ JMVC.extend('core/widgzard', function () {
         target.WIDGZARD_len = params.content.length;
         target.WIDGZARD_cb = params.cb || function () {};
 
-        //flag to enable cleaning
+        // flag to enable cleaning
+        // 
         target.WIDGZARD = true;
 
         // allow to use getNode from root
@@ -339,7 +339,9 @@ JMVC.extend('core/widgzard', function () {
         // 
         /*
         
-        REPLACE WITH THAT FUNCTION IF sameHeight IS NOT USEFUL
+        //
+        // REPLACE WITH THAT FUNCTION IF sameHeight IS NOT USEFUL
+        //
         
         (function recur(cnf, trg){
             
