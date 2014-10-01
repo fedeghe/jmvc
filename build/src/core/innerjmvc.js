@@ -91,6 +91,7 @@ jmvc = {
             .replace(/>[\s|\t]*</g, '><')
             // remove newline, carriage return, tabs
             .replace(/[\n|\t|\r]/g, '')
+            //remove hmtl comments
             .replace(/<!--([\s\S]*?)-->/mig, '')
             //split, one empty one full
             .split(/(<[^>]+>)/ig);
@@ -917,6 +918,75 @@ jmvc = {
         }
         return ret;
     },
+
+    /**
+     * [xdoc description]
+     * @param  {[type]} ext [description]
+     * @return {[type]}     [description]
+     * @sample JMVC.xdoc('core/xmlparser/xmlparser')
+     *
+     * look at core/screen/screen.xml
+     */
+    xdoc : function (ext) {
+
+        // maybe the register must be created
+        !('elements' in JMVC.xdoc) && (JMVC.xdoc.elements = {});
+
+        // maybe xdoc is not loaded yet 
+        //
+        $JMVC.require('core/xdoc/xdoc');
+
+        // if has been loaded before, it would be found in the registry
+        // otherwise get it!
+        // 
+        if (!(ext in JMVC.xdoc.elements)) {
+            
+            // try to get the extension xml
+            //
+            try {
+                JMVC.io.getXML(
+                    JMVC.vars.baseurl + '/app/extensions/' + ext + '.xml',
+
+                    // success
+                    //
+                    function (doc) {
+                        
+                        // save into the xdoc elements registry
+                        //
+                        JMVC.xdoc.elements[ext] = doc;
+
+                        // toggle the view
+                        //
+                        JMVC.xdoc.toggle(ext);
+                    },
+
+                    // notify the user that no documentation has been found
+                    //
+                    function (xhr) {
+                        alert([
+                            '[ JMVC WARNING ]',
+                            'The document',
+                            ('/app/extensions/' + ext + '.xml').replace(/\//g, " / "),
+                            'CANNOT be found!'
+                        ].join('\n\n'));
+                        xhr.abort();
+                        return false;
+                    }
+                );
+            }catch (e){}
+
+        } else {
+
+            // ok the extension specification xml has been previously loaded
+            // thus is in the registry ready to be used
+            //
+            JMVC.xdoc.toggle(ext);
+        }
+    },
+
+
+
+
 
     // ignore these 3 functions
     get2: function(ns) {
