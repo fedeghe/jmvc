@@ -1,0 +1,10 @@
+<function>
+    <signature name="wrap">JMVC.dom.wrap(Element Node1, Element Node2)</signature>
+    <description></description>
+    <params>
+        <param name="Node1">The first DomNode involved</param>
+        <param name="Node2">The second DomNode involved</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
