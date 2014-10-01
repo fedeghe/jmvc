@@ -33,4 +33,5 @@
     $$src/dom/swap.xml$$
     $$src/dom/switchClass.xml$$
     $$src/dom/val.xml$$
+    $$src/dom/wrap.xml$$
 </dom>
