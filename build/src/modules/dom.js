@@ -754,12 +754,27 @@ JMVC.dom = {
     },
 
     /**
-     * [wrap description]
+     * [wrapIn description]
      * @param  {[type]} node  [description]
      * @param  {[type]} attrs [description]
      * @return {[type]}       [description]
      */
-    wrap : function (node, attrs) {
+    wrap : function (node, tag, attrs) {
+        var n = JMVC.dom.create(tag || 'div', attrs || {}),
+            clone = JMVC.dom.clone(node);
+        console.log(n);
+        JMVC.dom.append(n, clone);
+        JMVC.dom.replace(node, n);
+        return n;
+    },
+
+    /**
+     * [wrapIn description]
+     * @param  {[type]} node  [description]
+     * @param  {[type]} attrs [description]
+     * @return {[type]}       [description]
+     */
+    wrapIn : function (node, attrs) {
         var n = JMVC.dom.create('div', attrs || {});
         n.innerHTML = node.innerHTML;
         node.innerHTML = '';
