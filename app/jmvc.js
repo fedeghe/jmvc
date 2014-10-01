@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 3) build: 2653
+ * @version :  3.5 (rev. 4) build: 2689
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.1.1 & a love heap
- *         glued with 39 files on 17/9/2014 at 23:1:55
+ *         glued with 39 files on 1/10/2014 at 23:2:21
  *
  * All rights reserved.
  *
@@ -58,14 +58,38 @@
             /*- INIT -*/
             
             /**
-             * Generic dummy window.onerror enhancement
+             * Override window.onerror enhancement
+             * 
+             * thx to Venerons
+             * https://gist.github.com/Venerons/f54b7fbc17f9df4302cf
              */
-            (function (previousOnError) {
-                W.onerror = function (errorMsg, url, lineNumber) {
-                    JMVC.debug(lineNumber + '@' + url + ": " + errorMsg);
-                    previousOnError && previousOnError(errorMsg, url, lineNumber);
+            (function (previousOnError){
+                // uh!...want to do something with previousOnError?
+                // ...really?
+                function reportError(error, message) {
+                    message = message || '';
+                    JMVC.debug(
+                        'ERROR: ' + message + ' [' + error.toString() + ']\n' +
+                        '\nName:\t\t' + (error.name || '-') +
+                        '\nMessage:\t' + (error.message || '-') +
+                        '\nFile:\t\t\t' + (error.fileName || '-') +
+                        '\nSource:\t\t' + ((error.toSource && error.toSource()) || '-') +
+                        '\nLine #:\t\t' + (error.lineNumber || '-') +
+                        '\nColumn #:\t' + (error.columnNumber || '-') +
+                        '\n\nStack:\n\n' + (error.stack || '-')
+                    );
+                }
+                 
+                window.onerror = function (message, filename, lineno, colno, error) {
+                    error.fileName = error.fileName || filename || null;
+                    error.lineNumber = error.lineNumber || lineno || null;
+                    error.columnNumber = error.columnNumber || colno || null;
+                    reportError(error, 'Uncatched Exception');
                 };
+            
             })(W.onerror);
+            
+            
             
             
             // store starting time, that's not truly the starting time but 
@@ -80,13 +104,13 @@
                 JMVC_VERSION = '3.5',
             
                 // review (vars.json)
-                JMVC_REVIEW = '3',
+                JMVC_REVIEW = '4',
             
                 // review (vars.json)
-                JMVC_DATE = '17/9/2014',
+                JMVC_DATE = '1/10/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '23:1:55',
+                JMVC_TIME = '23:2:21',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -270,7 +294,7 @@
                             close : /^<\/(.*)>$/,           // starts with </; has no < within; ends with >
                             autoclose : /^<[^>]*\/>$/,      // starts with >; has no > within; ends with />
                             text : /^[^<]*$/,               // do not starts with <
-                            special : /<(meta|link|br|hr|img|col|input)+(\s[^>]*|>)?\/?>/ // starts with <; is a meta of link or br
+                            special : /<(meta|link|br|hr|img|col|input|source)+(\s[^>]*|>)?\/?>/ // starts with <; is a meta of link or br
                         },
                         els = [],
                         i = 0, k = 0, l = 0,
@@ -319,6 +343,7 @@
                         .replace(/>[\s|\t]*</g, '><')
                         // remove newline, carriage return, tabs
                         .replace(/[\n|\t|\r]/g, '')
+                        //remove hmtl comments
                         .replace(/<!--([\s\S]*?)-->/mig, '')
                         //split, one empty one full
                         .split(/(<[^>]+>)/ig);
@@ -1145,6 +1170,75 @@
                     }
                     return ret;
                 },
+            
+                /**
+                 * [xdoc description]
+                 * @param  {[type]} ext [description]
+                 * @return {[type]}     [description]
+                 * @sample JMVC.xdoc('core/xmlparser/xmlparser')
+                 *
+                 * look at core/screen/screen.xml
+                 */
+                xdoc : function (ext) {
+            
+                    // maybe the register must be created
+                    !('elements' in JMVC.xdoc) && (JMVC.xdoc.elements = {});
+            
+                    // maybe xdoc is not loaded yet 
+                    //
+                    $JMVC.require('core/xdoc/xdoc');
+            
+                    // if has been loaded before, it would be found in the registry
+                    // otherwise get it!
+                    // 
+                    if (!(ext in JMVC.xdoc.elements)) {
+                        
+                        // try to get the extension xml
+                        //
+                        try {
+                            JMVC.io.getXML(
+                                JMVC.vars.baseurl + '/app/extensions/' + ext + '.xml',
+            
+                                // success
+                                //
+                                function (doc) {
+                                    
+                                    // save into the xdoc elements registry
+                                    //
+                                    JMVC.xdoc.elements[ext] = doc;
+            
+                                    // toggle the view
+                                    //
+                                    JMVC.xdoc.toggle(ext);
+                                },
+            
+                                // notify the user that no documentation has been found
+                                //
+                                function (xhr) {
+                                    alert([
+                                        '[ JMVC WARNING ]',
+                                        'The document',
+                                        ('/app/extensions/' + ext + '.xml').replace(/\//g, " / "),
+                                        'CANNOT be found!'
+                                    ].join('\n\n'));
+                                    xhr.abort();
+                                    return false;
+                                }
+                            );
+                        }catch (e){}
+            
+                    } else {
+            
+                        // ok the extension specification xml has been previously loaded
+                        // thus is in the registry ready to be used
+                        //
+                        JMVC.xdoc.toggle(ext);
+                    }
+                },
+            
+            
+            
+            
             
                 // ignore these 3 functions
                 get2: function(ns) {
@@ -2469,7 +2563,7 @@
                 implement : jmvc.implement,
                 //getController :   function(n) {return jmvc.factory_method('controller', n); }
                 //
-                // really really bad
+                // really really bad each
                 each : jmvc.each,
                 //
                 /**
@@ -2487,69 +2581,8 @@
                     JMVC.console.toggle(opts.h, opts.j, opts.c, opts.tab);
                 },
             
-                /**
-                 * [xdoc description]
-                 * @param  {[type]} ext [description]
-                 * @return {[type]}     [description]
-                 *
-                 * look at core/screen/screen.xml
-                 */
-                 xdoc : function (ext) {
-            
-                    // maybe the register must be created
-                    !('elements' in JMVC.xdoc) && (JMVC.xdoc.elements = {});
-            
-                    // maybe xdoc is not loaded yet 
-                    //
-                    $JMVC.require('core/xdoc/xdoc');
-            
-                    // if has been loaded before, it would be found in the registry
-                    // otherwise get it!
-                    // 
-                    if (!(ext in JMVC.xdoc.elements)) {
-                        
-                        // try to get the extension xml
-                        //
-                        try {
-                            JMVC.io.getXML(
-                                JMVC.vars.baseurl + '/app/extensions/' + ext + '.xml',
-            
-                                // success
-                                //
-                                function (doc) {
-                                    
-                                    // save into the xdoc elements registry
-                                    //
-                                    JMVC.xdoc.elements[ext] = doc;
-            
-                                    // toggle the view
-                                    //
-                                    JMVC.xdoc.toggle(ext);
-                                },
-            
-                                // notify the user that no documentation has been found
-                                //
-                                function (xhr) {
-                                    alert([
-                                        '[ JMVC WARNING ]',
-                                        'The document',
-                                        ('/app/extensions/' + ext + '.xml').replace(/\//g, " / "),
-                                        'CANNOT be found!'
-                                    ].join('\n\n'));
-                                    xhr.abort();
-                                    return false;
-                                }
-                            );
-                        }catch (e){}
-            
-                    } else {
-            
-                        // ok the extension specification xml has been previously loaded
-                        // thus is in the registry ready to be used
-                        //
-                        JMVC.xdoc.toggle(ext);
-                    }
-                },
+                // xdoc
+                xdoc : jmvc.xdoc,
             
                 /**
                  * [loading description]
@@ -3827,12 +3860,27 @@
         },
     
         /**
-         * [wrap description]
+         * [wrapIn description]
          * @param  {[type]} node  [description]
          * @param  {[type]} attrs [description]
          * @return {[type]}       [description]
          */
-        wrap : function (node, attrs) {
+        wrap : function (node, tag, attrs) {
+            var n = JMVC.dom.create(tag || 'div', attrs || {}),
+                clone = JMVC.dom.clone(node);
+            console.log(n);
+            JMVC.dom.append(n, clone);
+            JMVC.dom.replace(node, n);
+            return n;
+        },
+    
+        /**
+         * [wrapIn description]
+         * @param  {[type]} node  [description]
+         * @param  {[type]} attrs [description]
+         * @return {[type]}       [description]
+         */
+        wrapIn : function (node, attrs) {
             var n = JMVC.dom.create('div', attrs || {});
             n.innerHTML = node.innerHTML;
             node.innerHTML = '';
