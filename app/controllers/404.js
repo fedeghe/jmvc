@@ -4,6 +4,7 @@ JMVC.controllers['404'] = function () {
 	'use strict';
 	this.action_msg = function () {
 		var seconds2redirection = 5,
+			logo = JMVC.vars.baseurl + "/media/img/jmvc_n2.png",
 			V404 = JMVC.getView('core/404'),
 			d = new Date(),
 			format = '%Y%/%m%/%d% %H%:%i%:%s%',
@@ -22,6 +23,9 @@ JMVC.controllers['404'] = function () {
 			},
 			cnt = this.get('cnt'),
 			act = this.get('act');
+		V404.set('logo', logo);
+
+		JMVC.dom.preloadImage(logo);
 
 		act && (data.msg =  'action `' + this.get('act') + '` not found');
 		cnt && (data.msg = 'controller `' + this.get('cnt') + '` not found');
