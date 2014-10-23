@@ -14,6 +14,21 @@ _.css = {
 
 JMVC.css = {
     /**
+     * [clearer description]
+     * @type {[type]}
+     */
+    clearer: JMVC.dom.create('br', {
+        'class': 'clearer'
+    }),
+
+    /**
+     * [css3_map description]
+     * @type {Array}
+     */
+    css3_map: ['-o-transform', '-moz-transform'],
+
+
+    /**
      * [addRule description]
      * @param {[type]} sheet    [description]
      * @param {[type]} selector [description]
@@ -31,6 +46,10 @@ JMVC.css = {
         }
     },
 
+    /**
+     * [autoHeadings description]
+     * @return {[type]} [description]
+     */
     autoHeadings : function () {
         JMVC.head.addStyle(
             'h1{font-size:24px; line-height:48px; padding:24px 0px 12px;}'+
@@ -41,131 +60,12 @@ JMVC.css = {
             'h6{font-size:8px; line-height:16px; padding:8px 0px 4px;}', true, true);
     },
 
+    /**
+     * [beResponsive description]
+     * @return {[type]} [description]
+     */
     beResponsive : function () {
         JMVC.dom.addClass(JMVC.WDB, 'resp');
-    },
-
-
-    /**
-     * [mappedStyle description]
-     * @param  {[type]} idn   [description]
-     * @param  {[type]} style [description]
-     * @return {[type]}       [description]
-     */
-    mappedStyle: function (idn, style) {
-        var t = JMVC.dom.find('#' + idn);
-        if (t) {
-            JMVC.dom.remove(t);
-        }
-        _.css.mappedStyles[idn] = JMVC.dom.create('style', {
-            'id': idn,
-            type: 'text/css'
-        }, style);
-        JMVC.dom.append(JMVC.head.element, _.css.mappedStyles[idn]);
-    },
-
-    /**
-     * [style description]
-     * @param  {[type]} el   [description]
-     * @param  {[type]} prop [description]
-     * @param  {[type]} val  [description]
-     * @return {[type]}      [description]
-     */
-    style: function (el, prop, val) {
-
-        var prop_is_obj = (typeof prop === 'object' && typeof val === 'undefined'),
-            ret = false,
-            newval, k;
-
-        if (!prop_is_obj && typeof val === 'undefined') {
-            /* opera may use currentStyle or getComputedStyle */
-            //ret = (el.currentStyle) ? el.currentStyle[_.css.css_propertymap[prop] || prop + ""] : el.style[prop]; 
-            ret = el.currentStyle ? el.currentStyle[_.css.css2js_rule(prop)] : el.style[prop];
-            return (ret === '' || ret === 'auto') ? JMVC.css.getComputedStyle(el, prop) : ret;
-        }
-
-        if (prop_is_obj) {
-            for (k in prop) {
-
-                if ((prop[k] + '').search(/rand/) !== -1) {
-                    newval = JMVC.nsCheck('JMVC.core.color') ?
-                        JMVC.core.color.getRandomColor() : '#000000';
-                    prop[k] = prop[k].replace(/rand/, newval);
-                }
-                if (JMVC.array.find(this.css3_map, k) + 1) {
-                    el.style.cssText += ';' + k + ' : ' + prop[k];
-                } else {
-                    //el.style[_.css.css_propertymap[k] || k + ""] = prop[k];
-                    el.style[_.css.css2js_rule(k)] = prop[k];
-                }
-            }
-        } else if (typeof val !== 'undefined') {
-            val += '';
-            if (val.search(/rand/) !== -1) {
-                newval = JMVC.nsCheck('JMVC.core.color') ?
-                    JMVC.core.color.getRandomColor() : '#000000';
-                val = val.replace(/rand/, newval);
-            }
-            if (JMVC.array.find(this.css3_map, prop) + 1) {
-                el.style.cssText += ';' + prop + ' : ' + val;
-            } else {
-                //el.style[_.css.css_propertymap[prop] || prop + ""] = val;
-                el.style[_.css.css2js_rule(prop)] = val;
-
-                if (prop === 'opacity') {
-                    el.style.filter = 'alpha(opacity = ' + (~~(100 * JMVC.num.getFloat(val))) + ')';
-                } /* IE */
-            }
-        }
-        return this;
-    },
-
-    /**
-     * [show description]
-     * @param  {[type]} el [description]
-     * @return {[type]}    [description]
-     */
-    show: function (el) {
-        if (el instanceof Array) {
-            for (var i = 0, l = el.length; i < l; i += 1) {
-                this.show(el[i]);
-            }
-            return;
-        }
-        JMVC.css.style(el, 'display', 'block');
-    },
-
-    /**
-     * [hide description]
-     * @param  {[type]} el [description]
-     * @return {[type]}    [description]
-     */
-    hide: function (el) {
-        if (el instanceof Array) {
-            for (var i = 0, l = el.length; i < l; i += 1) {
-                this.hide(el[i]);
-            }
-            return;
-        }
-        JMVC.css.style(el, 'display', 'none');
-    },
-
-    /**
-     * [width description]
-     * @param  {[type]} el [description]
-     * @return {[type]}    [description]
-     */
-    width: function (el) {
-        return el.offsetWidth || el.scrollWidth || JMVC.css.getComputedStyle(el, 'width');
-    },
-
-    /**
-     * [height description]
-     * @param  {[type]} el [description]
-     * @return {[type]}    [description]
-     */
-    height: function (el) {
-        return el.offsetHeight || el.scrollHeight || JMVC.css.getComputedStyle(el, 'height');
     },
 
     /**
@@ -204,33 +104,48 @@ JMVC.css = {
         return [curleft, curtop];
     },
 
-    css3_map: ['-o-transform', '-moz-transform'],
-
-    reset: function () {
-        // http://meyerweb.com/eric/tools/css/reset/
-        var style = 'html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,' +
-            'acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,' +
-            'var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,' +
-            'tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,' +
-            'output,ruby,section,summary,time,mark,audio,video' +
-            '{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}' +
-            'article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}' +
-            'body{line-height:1;}' +
-            'ol,ul{list-style:none;}' +
-            'blockquote,q{quotes:none;}' +
-            'blockquote:before,blockquote:after,q:before,q:after{content:\'\';content:none;}' +
-            'table{border-collapse:collapse;border-spacing:0;}';
-        JMVC.head.addStyle(style, true, true);
+    /**
+     * [height description]
+     * @param  {[type]} el [description]
+     * @return {[type]}    [description]
+     */
+    height: function (el) {
+        return el.offsetHeight || el.scrollHeight || JMVC.css.getComputedStyle(el, 'height');
     },
 
     /**
-     * [clearer description]
-     * @type {[type]}
+     * [hide description]
+     * @param  {[type]} el [description]
+     * @return {[type]}    [description]
      */
-    clearer: JMVC.dom.create('br', {
-        'class': 'clearer'
-    }),
-    
+    hide: function (el) {
+        if (el instanceof Array) {
+            for (var i = 0, l = el.length; i < l; i += 1) {
+                this.hide(el[i]);
+            }
+            return;
+        }
+        JMVC.css.style(el, 'display', 'none');
+    },
+
+    /**
+     * [mappedStyle description]
+     * @param  {[type]} idn   [description]
+     * @param  {[type]} style [description]
+     * @return {[type]}       [description]
+     */
+    mappedStyle: function (idn, style) {
+        var t = JMVC.dom.find('#' + idn);
+        if (t) {
+            JMVC.dom.remove(t);
+        }
+        _.css.mappedStyles[idn] = JMVC.dom.create('style', {
+            'id': idn,
+            type: 'text/css'
+        }, style);
+        JMVC.dom.append(JMVC.head.element, _.css.mappedStyles[idn]);
+    },
+
     /**
      * [pest description]
      * @param  {[type]} mode [description]
@@ -346,6 +261,34 @@ JMVC.css = {
             });
         }
     },
+
+    /**
+     * [reset description]
+     * @return {[type]} [description]
+     */
+    reset: function () {
+        // http://meyerweb.com/eric/tools/css/reset/
+        var style = 'html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,' +
+            'acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,' +
+            'var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,' +
+            'tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,' +
+            'output,ruby,section,summary,time,mark,audio,video' +
+            '{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}' +
+            'article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}' +
+            'body{line-height:1;}' +
+            'ol,ul{list-style:none;}' +
+            'blockquote,q{quotes:none;}' +
+            'blockquote:before,blockquote:after,q:before,q:after{content:\'\';content:none;}' +
+            'table{border-collapse:collapse;border-spacing:0;}';
+        JMVC.head.addStyle(style, true, true);
+    },
+
+    /**
+     * [rotate description]
+     * @param  {[type]} el  [description]
+     * @param  {[type]} rot [description]
+     * @return {[type]}     [description]
+     */
     rotate : function (el, rot) {
         JMVC.css.style(el, {
             '-webkit-transform': 'rotate(' + rot + 'deg)',
@@ -354,6 +297,82 @@ JMVC.css = {
         });
     },
 
+    /**
+     * [show description]
+     * @param  {[type]} el [description]
+     * @return {[type]}    [description]
+     */
+    show: function (el) {
+        if (el instanceof Array) {
+            for (var i = 0, l = el.length; i < l; i += 1) {
+                this.show(el[i]);
+            }
+            return;
+        }
+        JMVC.css.style(el, 'display', 'block');
+    },
+
+    /**
+     * [style description]
+     * @param  {[type]} el   [description]
+     * @param  {[type]} prop [description]
+     * @param  {[type]} val  [description]
+     * @return {[type]}      [description]
+     */
+    style: function (el, prop, val) {
+
+        var prop_is_obj = (typeof prop === 'object' && typeof val === 'undefined'),
+            ret = false,
+            newval, k;
+
+        if (!prop_is_obj && typeof val === 'undefined') {
+            /* opera may use currentStyle or getComputedStyle */
+            //ret = (el.currentStyle) ? el.currentStyle[_.css.css_propertymap[prop] || prop + ""] : el.style[prop]; 
+            ret = el.currentStyle ? el.currentStyle[_.css.css2js_rule(prop)] : el.style[prop];
+            return (ret === '' || ret === 'auto') ? JMVC.css.getComputedStyle(el, prop) : ret;
+        }
+
+        if (prop_is_obj) {
+            for (k in prop) {
+
+                if ((prop[k] + '').search(/rand/) !== -1) {
+                    newval = JMVC.nsCheck('JMVC.core.color') ?
+                        JMVC.core.color.getRandomColor() : '#000000';
+                    prop[k] = prop[k].replace(/rand/, newval);
+                }
+                if (JMVC.array.find(this.css3_map, k) + 1) {
+                    el.style.cssText += ';' + k + ' : ' + prop[k];
+                } else {
+                    //el.style[_.css.css_propertymap[k] || k + ""] = prop[k];
+                    el.style[_.css.css2js_rule(k)] = prop[k];
+                }
+            }
+        } else if (typeof val !== 'undefined') {
+            val += '';
+            if (val.search(/rand/) !== -1) {
+                newval = JMVC.nsCheck('JMVC.core.color') ?
+                    JMVC.core.color.getRandomColor() : '#000000';
+                val = val.replace(/rand/, newval);
+            }
+            if (JMVC.array.find(this.css3_map, prop) + 1) {
+                el.style.cssText += ';' + prop + ' : ' + val;
+            } else {
+                //el.style[_.css.css_propertymap[prop] || prop + ""] = val;
+                el.style[_.css.css2js_rule(prop)] = val;
+
+                if (prop === 'opacity') {
+                    el.style.filter = 'alpha(opacity = ' + (~~(100 * JMVC.num.getFloat(val))) + ')';
+                } /* IE */
+            }
+        }
+        return this;
+    },
+
+    /**
+     * [unselectable description]
+     * @param  {[type]} n [description]
+     * @return {[type]}   [description]
+     */
     unselectable : function (n) {
         JMVC.css.style(n, {
           '-moz-user-select': 'none',
@@ -368,6 +387,15 @@ JMVC.css = {
         });
         
  
+    },
+
+    /**
+     * [width description]
+     * @param  {[type]} el [description]
+     * @return {[type]}    [description]
+     */
+    width: function (el) {
+        return el.offsetWidth || el.scrollWidth || JMVC.css.getComputedStyle(el, 'width');
     }
 };
 
