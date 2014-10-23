@@ -8,7 +8,6 @@ body{
     background-color: #333;
     color:white;
     padding-top:30px !important;
-    overflow : hidden;
     /*width:0px;*/
 }
 .JMVC-drawer .cnt {
