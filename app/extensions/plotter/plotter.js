@@ -9,6 +9,7 @@ JMVC.extend('plotter', {
 		mod = {
 			adddot : function (x, y) {
 				that.arr.push([x, y]);
+				return that;
 			},
 			addarc : function (centerx, centery, radiusx, radiusy, radstep, radfrom, howmany, rad) {
 				var i = 0,
@@ -37,6 +38,7 @@ JMVC.extend('plotter', {
 					elem[1] = elem[1] + centery;
 				});
 				that.arr = that.arr.concat(iarr);
+				return that;
 			},
 			beizer : function (x1, y1,  x2, y2,  x3, y3,  x4, y4,  hm) {
 				var B1 = function (t) {return t * t * t; },
@@ -52,6 +54,7 @@ JMVC.extend('plotter', {
 						y1 * B1(prcnt) + y2 * B2(prcnt) + y3 * B3(prcnt) + y4 * B4(prcnt)
 					]);
 				}
+				return that;
 			},
 			addline : function (x1, y1, x2, y2, howmany) {
 				var hm = howmany + 1,
@@ -66,11 +69,13 @@ JMVC.extend('plotter', {
 					howmany -= 1;
 				}
 				that.arr.push([x2, y2]);
+				return that;
 			},
 			plot : function (node, positions, character, left, top) {
 				for (var i = 0, l = positions.length; i < l; i ++) {
 					JMVC.gra.plotarr(node, positions[i], i, character, left, top);
 				}
+				return that;
 			},
 			plotarr : function (node, positions, letter, character, left, top, scale) {
 				var i = 0,
@@ -88,6 +93,7 @@ JMVC.extend('plotter', {
 						}, character);
 					JMVC.dom.append(node, tmp);
 				}
+				return that;
 			},
 			rotate : function (rad) {
 				var x, y;
@@ -98,9 +104,11 @@ JMVC.extend('plotter', {
 					el[0] = x * M.cos(rad) - y * M.sin(rad);
 					el[1] = x * M.sin(rad) + y * M.cos(rad);
 				});
+				return that;
 			},
 			clone : function (inst) {
 				that.arr = Array.prototype.slice.call(inst.arr, 0);
+				return that;
 			}
 		};
 
