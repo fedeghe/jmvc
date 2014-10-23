@@ -6,10 +6,12 @@
  * thx to Venerons
  * https://gist.github.com/Venerons/f54b7fbc17f9df4302cf
  */
+
 (function (previousOnError){
     // uh!...want to do something with previousOnError?
     // ...really?
     function reportError(error, message) {
+        //console.debug(arguments);
         message = message || '';
         JMVC.debug(
             'ERROR: ' + message + ' [' + error.toString() + ']\n' +
@@ -24,10 +26,12 @@
     }
      
     window.onerror = function (message, filename, lineno, colno, error) {
+        error.message = error.message || message || null;
         error.fileName = error.fileName || filename || null;
         error.lineNumber = error.lineNumber || lineno || null;
         error.columnNumber = error.columnNumber || colno || null;
         reportError(error, 'Uncatched Exception');
+        JMVC.Errors.notify(error);
     };
 
 })(W.onerror);
