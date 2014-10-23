@@ -17,7 +17,7 @@ dispatched = (function () {
             port : WDL.port ? ':' + WDL.port : ''
         },
 
-        // adjust extensions
+        // adjust extensions allowed
         els = mid.path.replace(new RegExp('\\.' + URL_ALLOWED_EXTENSIONS.join('|\\.'), 'gm'), '').substr(1).split(US),
         controller = false,
         controller_prepath = '',
@@ -47,7 +47,8 @@ dispatched = (function () {
     action = els.shift() || JMVC_DEFAULT.action;
     len = els.length;
 
-    // now if els has non zero size, these are extra path params
+    // now if els has non zero size,
+    // these are extra path params
     for (i = 0; i + 1 < len; i += 2) {
         params[els[i]] = els[i + 1];
     }
@@ -70,7 +71,7 @@ dispatched = (function () {
         return false;
     }
     
-    //
+    // dispatched result
     return {
         controller : controller.replace(/\//g, ''),
         controller_prepath : controller_prepath,
