@@ -3,6 +3,7 @@
  * @param  {[type]} f [description]
  * @return {[type]}   [description]
  */
+/*
 function checkInterface(f) {
     var r = f.toString()
         .match(/function\s(.*)\((.*)\)\s?{return\s[\'\"]?(.*)[\'\"]?;}/);
@@ -12,7 +13,7 @@ function checkInterface(f) {
         ret : !!r[3] ? r[3]  : false
     } : false;
 }
-
+*/
 /**
  * INTERFACE
  * =========
@@ -44,19 +45,25 @@ Interface.checkImplements = function (obj) {
     var m,
         i = 0,
         arg = Array.prototype.slice.call(arguments),
-        l = arg.length;
+        l = arg.length,
+        ret = true,
+        msg = '';
 
     //skip 0 being it obj
     while (++i < l) {
         for (m in arg[i].mthds) {
             if (typeof obj[arg[i].mthds[m]] !== 'function') {
-                throw new Error('Function Interface.checkImplements: object ' +
-                'does not implement the ' + arg[i].name +
-                ' interface. Method ' + arg[i].mthds[m] + ' was not found.');
+                ret = false;
+                msg += 'Function Interface.checkImplements: object ' +
+                'does not implement the `' + arg[i].name +
+                '` interface : method ' + arg[i].mthds[m] + ' was not found.' + "\n";
             }
         }
     }
-    return obj;
+    if (!ret) {
+        JMVC.debug(msg);
+    }
+    return ret;
 };
 /*
 function tee(func, obj, str) {return 'obj';}
