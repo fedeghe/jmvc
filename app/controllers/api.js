@@ -28,7 +28,8 @@ JMVC.controllers.api = function () {
 				'events', 'head', 'io', 'match',
 				'object', 'string', 'util'
 			],
-			whenReady = new Date(2014, 9, 27);
+			consoleUrlTpl = 'console/index?h=%html%&j=%js%&c=%css%&l=#javascript',
+			whenReady = new Date(2014, 11, 27);
 			
 			
 		main.set('id', 'desc');
@@ -46,14 +47,24 @@ JMVC.controllers.api = function () {
 						sample = false,
 						testlink = false,
 						default_param_val = false,
-						runlabel = '&#8227;',
+						runLabel = '&#8227;',
+						consoleLabel = 'edit',
 						len0 = 0,
 						i = 0, t = 0, len = 0,
 						els = section['function'] instanceof Array ?
 							section['function']
 							:
 							[section['function']],
-						trialbutt;
+						props = section['properties'] instanceof Array ?
+							section['properties']
+							:
+							[section['properties']],
+						trialButt,
+						consoleButt;
+						
+					//console.debug(props);
+
+
 
 					for (i = 0, len0 = section['function'].length; i < len0; i++) {
 						// prepare content
@@ -70,34 +81,50 @@ JMVC.controllers.api = function () {
 						default_param_val = false;
 						testlink = section['function'][i].testlink ? section['function'][i].testlink['#text'] : false;
 						sample = 'no sample code given yet';
-						trialbutt = '<button class="trynow round8 roundbottom" onclick="%docode%">' + runlabel + '</button>';
+						trialButt = '<button class="trynow round8 roundbottom" onclick="%doCode%">' + runLabel + '</button>';
+						consoleButt = '<button class="consolenow round8 roundbottom" onclick="%doConsole%">' + consoleLabel + '</button>';
 						
 
 						if (section['function'][i].params.param instanceof Array) {
 							for (t = 0, len = section['function'][i].params.param.length; t < len; t += 1) {
-								section['function'][i].params.param[t]['@attributes'].default && (default_param_val = section['function'][i].params.param[t]['@attributes'].default);
+								section['function'][i].params.param[t]['@attributes'].default
+								&&
+								(default_param_val = section['function'][i].params.param[t]['@attributes'].default);
 
 								params += '<label>' +
-									section['function'][i].params.param[t]['@attributes'].name +
+										section['function'][i].params.param[t]['@attributes'].name +
 									'</label> : ' +
 									section['function'][i].params.param[t]['#text'] +
 									(default_param_val ? '&nbsp;(default: ' + default_param_val + ')' : '') +
-								'<br />';
+									'<br />';
 
 								default_param_val = false;
 							}
 						} else {
-							params += '<label>' + section['function'][i].params.param['@attributes'].name + '</label> : ' + section['function'][i].params.param['#text'] + '<br />';
+							params += '<label>' +
+									section['function'][i].params.param['@attributes'].name +
+								'</label> : ' +
+								section['function'][i].params.param['#text'] +
+								'<br />';
 						}
-
 
 						if (section['function'][i].sample) {
 							sample = '<pre class="code round6 roundright">' + section['function'][i].sample['#text'] + '</pre>';
 							if (section['function'][i].code) {
-								sample += JMVC.string.replaceAll(trialbutt, {docode :  section['function'][i].code['#text']});
+								sample += JMVC.string.replaceAll(trialButt, {doCode :  section['function'][i].code['#text']});
+							/*
+								sample += JMVC.string.replaceAll(consoleButt, {doConsole :
+									JMVC.string.replaceAll(
+										"window.open('" + JMVC.vars.baseurl + "/" + consoleUrlTpl + "')", {
+											html :' ',
+											css: ' ',
+											js: encodeURIComponent(section['function'][i].code['#text'])
+										}
+									)
+								});
+							*/
 							}
 						}
-
 						
 						func_model.set({
 							testlink : testlink ? '<a target="_blank" class="testLink" href="' + JMVC.vars.baseurl + JMVC.US + testlink + '">test</a>' : false,
