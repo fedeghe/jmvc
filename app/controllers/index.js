@@ -11,9 +11,7 @@ JMVC.require(
 	'core/fx/fx',
 	'widget/lang/lang',
 	'vendors/github/forkme/forkme',
-	'widget/snow/snow/snow',
-
-	'core/fx/3DaniLogo'
+	'widget/snow/snow/snow'
 );
 
 JMVC.controllers.index = function () {
@@ -24,6 +22,10 @@ JMVC.controllers.index = function () {
 	this.action_none = function () {};
 
 	this.action_index = function () {
+
+		if (!JMVC.sniffer.features.assets.touchDevice) {
+			JMVC.require('core/fx/3DaniLogo');
+		}
 		
 		var logoimg = 'jmvc_n2.png';
 
@@ -114,7 +116,6 @@ JMVC.controllers.index = function () {
 				
 				
 				if (JMVC.p.map && JMVC.p.map === 'true') {
-				/* || JMVC.sniffer.browser.name.toLowerCase().match(/opera|chrome/)*/
 				
 					JMVC.require('vendors/google/gmap2/gmap2');
 					dims = JMVC.screen.getViewportSize();
@@ -229,9 +230,9 @@ JMVC.controllers.index = function () {
 
 		index.set('i_say', 'Sample Video');
 
-		index.render({cback : function () {
+		index.render(function () {
 			JMVC.dom.append(JMVC.dom.find('#cent'), video);
-		}});
+		});
 	};
 
 
@@ -258,8 +259,8 @@ JMVC.controllers.index = function () {
 	//
 	//
 	this.action_index3 = function () {
-		/* directly render some code */
-		this.render('<b>yupeeee</b>');
+		/* directly render something */
+		this.render('<div id="space"></div>');
 	};
 
 	this.action_codesNoworkers = function () {
@@ -267,17 +268,13 @@ JMVC.controllers.index = function () {
 		if (confirm('That may hang your browser! ...continue?')) {
 			var i = 10;
 			for (null; i < 2<<15; i += 1) {
-				
 				content += i + ' : &#' + i + ';<br />';
-				
-				//content += i + ' : ' + String.fromCharCode(i) + '<br />';
 			}
 			this.render(content, function () {
 				var t = [10367, 10431, 10491, 10493, 10494, 10487, 10479, 10463],
 					i = 0,
 					l = t.length;
 				window.setInterval(
-					//function (){JMVC.head.title(String.fromCharCode(JMVC.util.rand(10240, 10495)))},
 					function () {JMVC.head.title(String.fromCharCode(t[i])); i = (i + 1) % l; },
 					100
 				);
@@ -313,12 +310,6 @@ JMVC.controllers.index = function () {
 				function () {JMVC.head.title(String.fromCharCode(t[i])); i = (i + 1) % l; },
 				100
 			);
-
-
-
-			
-
-
 		});
 
 

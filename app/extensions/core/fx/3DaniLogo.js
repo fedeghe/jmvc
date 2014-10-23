@@ -14,7 +14,7 @@ JMVC.extend('fx', function () {
             sW = iW * persp,
             sH = iH * persp,
             shadowImg = JMVC.dom.create('img', {src: img.src, style : 'width:' + sW + 'px;height:' + sH + 'px;'}),
-            wrap = JMVC.dom.wrap(img, 'span', {'style' : 'position:relative'}),
+            wrap = JMVC.dom.wrap(img, 'span', {style : 'position:relative'}),
             oriX = (iW - sW) / 2,
             oriY = -iH + (iH - sH) / 2;
 
