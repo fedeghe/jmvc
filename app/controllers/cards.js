@@ -1,8 +1,11 @@
 JMVC.controllers.cards = function () {
+
     'use strict';
+    
     this.action_index = function () {
 
-        var howmany = JMVC.p.n || 10;
+        var howmany = JMVC.p.n || 10,
+            decks = JMVC.p.decks || 1;
 
         JMVC.require('games/deck/deck');
 
@@ -12,9 +15,8 @@ JMVC.controllers.cards = function () {
                 'id': 'container'
             })
             .render(function () {
-                JMVC.deck.initDecks(1);
+                JMVC.deck.initDecks(decks);
                 JMVC.deck.shuffle(howmany);
-
                 JMVC.dom.append(JMVC.dom.find('#container'), JMVC.deck.getDecks());
             });
     };
