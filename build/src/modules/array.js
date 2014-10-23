@@ -173,6 +173,15 @@ JMVC.array = {
         }
         return -1;
     },
+    
+    /**
+     * [fromArguments description]
+     * @param  {[type]} a [description]
+     * @return {[type]}   [description]
+     */
+    fromArguments : function (a) {
+        return Array.prototype.slice.call(a, 0);
+    },
 
     /**
      * [max description]
