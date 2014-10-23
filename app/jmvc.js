@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 5) build: 2896
+ * @version :  3.5 (rev. 5) build: 2897
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.1.1 & a love heap
- *         glued with 39 files on 23/10/2014 at 22:9:44
+ *         glued with 39 files on 23/10/2014 at 22:23:58
  *
  * All rights reserved.
  *
@@ -114,7 +114,7 @@
                 JMVC_DATE = '23/10/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '22:9:44',
+                JMVC_TIME = '22:23:58',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -6375,7 +6375,6 @@
             d = Math.atan2(gd2[1] - gd1[1], gd2[0] - gd1[0]) * 180 / (Math.PI);
             JMVC.events.drag.direction = d.toFixed(2);
             JMVC.events.drag.orientation = directions[~~(( (d + 180)% 360) / 22.5)] ;
-        
             return true;
         }
     
