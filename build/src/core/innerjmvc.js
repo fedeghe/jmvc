@@ -28,123 +28,6 @@ jmvc = {
         w.document.body.innerHTML = '<pre style="overflow:scroll; height:100%;">' + JMVC.htmlChars(out) + '</pre>';
     },
 
-
-
-    formatCode : function (mup) {
-        var cnt = mup || document.documentElement.outerHTML,
-            tb = 0,
-            out = "",
-            line = 0,
-            tabLength = 4,
-            tabChar = (new Array(tabLength + 1)).join("&nbsp;"),
-            RX = {
-                open : /^<([^\/].*[^\/])>$/,    // starts with <; has no > within; do not ends with />; ends with >
-                close : /^<\/(.*)>$/,           // starts with </; has no < within; ends with >
-                autoclose : /^<[^>]*\/>$/,      // starts with >; has no > within; ends with />
-                text : /^[^<]*$/,               // do not starts with <
-                special : /<(meta|link|br|hr|img|col|input|source)+(\s[^>]*|>)?\/?>/ // starts with <; is a meta of link or br
-            },
-            els = [],
-            i = 0, k = 0, l = 0,
-            tag,
-
-            TYPE = {special:1, open:2, close:3, autoclose:4, text:5},
-
-            nTab = function () {
-                return "\n" + getLine() + (tb>0 ? (new Array(tb + 1)).join(tabChar) : '');
-            },
-
-            getLine = function () {
-                line++;
-                return (new Array(6 - (''+line).length)).join('0') + line;
-            },
-
-            checktype = function (t) {
-                /*
-                console.debug('TAG : ' + t);
-                console.debug('special : ' + t.match(RX.special));
-                console.debug('open : ' + t.match(RX.open));
-                console.debug('close : ' + t.match(RX.close));
-                console.debug('autoclose : ' + t.match(RX.autoclose));
-                console.debug('text : ' + t.match(RX.text));
-                console.debug('=================' + "\n\n\n");
-                */
-                if (t.match(RX.special)) {
-                    return TYPE.special;
-                } else if(t.match(RX.open)) {
-                    return TYPE.open;
-                } else if(t.match(RX.close)) {
-                    return TYPE.close;
-                } else if(t.match(RX.autoclose)) {
-                    return TYPE.autoclose;
-                } else if(t.match(RX.text)) {
-                    return TYPE.text;
-                } // finally
-                else {
-                    return TYPE.open;
-                }
-            };
-        // multipsces, remove spaces between tags
-        // comments
-        // and get tags
-        cnt = cnt.replace(/\s{2,}/g, ' ')
-            .replace(/>[\s|\t]*</g, '><')
-            // remove newline, carriage return, tabs
-            .replace(/[\n|\t|\r]/g, '')
-            //remove hmtl comments
-            .replace(/<!--([\s\S]*?)-->/mig, '')
-            //split, one empty one full
-            .split(/(<[^>]+>)/ig);
-
-        // cleanup empty
-        l = cnt.length;
-        
-        for (; i < l; i++) {
-            if (!cnt[i]) continue;
-            els.push(cnt[i]);           
-        }
-        
-        for (i = 0, l = els.length; i < l; i++) {
-            
-            tag = els[i];
-
-            t = checktype(tag);
-            
-            switch (t) {
-                case TYPE.special:
-                    out += nTab() + tag;
-                    break;
-                case TYPE.open:
-                    out += nTab() + tag;
-                    if (tag == '<script>') {
-                        while (tag !== '</script>') {
-                            tag = els[++i];
-                            out += tag;
-                        }
-                    } else {
-                        tb++;
-                    }
-                    break;
-                case TYPE.close:
-                    tb--;
-                    out += nTab() + tag;
-                    break;
-                case TYPE.autoclose:
-                    out += nTab() + tag;
-                    break;
-                case TYPE.text: 
-                    out += tag;
-                    if ((i + 1) < l && checktype(els[i+1]) == TYPE.close) {
-                        out += els[i + 1];
-                        i++;
-                        tb--;
-                    }
-                    break;
-            }
-        }
-        return out;
-    },
-
     /**
      * [debug description]
      * @param  {[type]} msg [description]
@@ -173,6 +56,25 @@ jmvc = {
             }
         }
         return true;
+    },
+
+    /**
+     * AMD like dummy function
+     * @param  {[type]}   ns   [description]
+     * @param  {[type]}   deps [description]
+     * @param  {Function} cb   [description]
+     * @return {Object}        the brand new module defined
+     */
+    define : function (ns, deps, cb){
+        return  jmvc.ns.check(ns, $JMVC)
+                ||
+                jmvc.require.apply(null, deps.concat([function () {
+                    var args = [],
+                        i = 0,
+                        l = deps.length;
+                    while (i < l) args.push(jmvc.ns.check(deps[i++], $JMVC));
+                    return jmvc.ns.make(ns, cb.apply(null, args), $JMVC);
+                }]));
     },
 
     /**
@@ -279,24 +181,11 @@ jmvc = {
         if (!obj) {
             throw new JMVC.Errors.BadParams('Missing object parameter for extend');
         }
-        //
-        // ensures that the target namespace exists 
-        var trg = jmvc.ns.make('JMVC.' + label);
-        //
-        //let the literal straigth inherith from Extension Object
-        Extension.call(trg);
-        //
+
         // if is a function return its execution
         if (typeof obj === 'function') {
             return jmvc.extend(label, obj());
         }
-
-        (function(t, o) {
-            var j;
-            for (j in o) {
-                o.hasOwnProperty(j) && t[j] === undefined && (t[j] = o[j]);
-            }
-        })(trg, obj);
 
         // and set a flag, that can be switched off as far as
         // if the object passed has a initCheck function
@@ -309,13 +198,26 @@ jmvc = {
             }
             obj.initCheck = null;
         }
-        //
-        //maybe init, in case call it
+
+        // ensures that the target namespace exists 
+        var trg = jmvc.ns.make('JMVC.' + label);
+
+        // let the literal straigth inherith from Extension Object
+        Extension.call(trg);
+        
+        (function(t, o) {
+            var j;
+            for (j in o) {
+                o.hasOwnProperty(j) && t[j] === undefined && (t[j] = o[j]);
+            }
+        })(trg, obj);
+
+        // maybe init, in case call it
         if (typeof obj.init === 'function') {
             obj.init.call($JMVC);
             //and clean
             obj.init = null;
-        }
+        }        
         return trg;
     },
 
@@ -354,6 +256,122 @@ jmvc = {
         // ajax get script content and return it
         ret = jmvc.xhrget(path_absolute, type, name, params);
         return ret;
+    },
+
+    formatCode : function (mup) {
+        var cnt = mup || document.documentElement.outerHTML,
+            tb = 0,
+            out = "",
+            line = 0,
+            tabLength = 4,
+            tabChar = (new Array(tabLength + 1)).join("&nbsp;"),
+            RX = {
+                open : /^<([^\/].*[^\/])>$/,    // starts with <; has no > within; do not ends with />; ends with >
+                close : /^<\/(.*)>$/,           // starts with </; has no < within; ends with >
+                autoclose : /^<[^>]*\/>$/,      // starts with >; has no > within; ends with />
+                text : /^[^<]*$/,               // do not starts with <
+                special : /<(meta|link|br|hr|img|col|input|source)+(\s[^>]*|>)?\/?>/ // starts with <; is a meta of link or br
+            },
+            els = [],
+            i = 0, k = 0, l = 0,
+            tag,
+
+            TYPE = {special:1, open:2, close:3, autoclose:4, text:5},
+
+            nTab = function () {
+                return "\n" + getLine() + (tb>0 ? (new Array(tb + 1)).join(tabChar) : '');
+            },
+
+            getLine = function () {
+                line++;
+                return (new Array(6 - (''+line).length)).join('0') + line;
+            },
+
+            checktype = function (t) {
+                /*
+                console.debug('TAG : ' + t);
+                console.debug('special : ' + t.match(RX.special));
+                console.debug('open : ' + t.match(RX.open));
+                console.debug('close : ' + t.match(RX.close));
+                console.debug('autoclose : ' + t.match(RX.autoclose));
+                console.debug('text : ' + t.match(RX.text));
+                console.debug('=================' + "\n\n\n");
+                */
+                if (t.match(RX.special)) {
+                    return TYPE.special;
+                } else if(t.match(RX.open)) {
+                    return TYPE.open;
+                } else if(t.match(RX.close)) {
+                    return TYPE.close;
+                } else if(t.match(RX.autoclose)) {
+                    return TYPE.autoclose;
+                } else if(t.match(RX.text)) {
+                    return TYPE.text;
+                } // finally
+                else {
+                    return TYPE.open;
+                }
+            };
+
+        // multispaces, remove spaces between tags
+        // comments
+        // and get tags
+        cnt = cnt.replace(/\s{2,}/g, ' ')
+            .replace(/>[\s|\t]*</g, '><')
+            // remove newline, carriage return, tabs
+            .replace(/[\n|\t|\r]/g, '')
+            //remove hmtl comments
+            .replace(/<!--([\s\S]*?)-->/mig, '')
+            //split, one empty one full
+            .split(/(<[^>]+>)/ig);
+
+        // cleanup empty
+        l = cnt.length;
+        
+        for (; i < l; i++) {
+            if (!cnt[i]) continue;
+            els.push(cnt[i]);           
+        }
+        
+        for (i = 0, l = els.length; i < l; i++) {
+            
+            tag = els[i];
+
+            t = checktype(tag);
+            
+            switch (t) {
+                case TYPE.special:
+                    out += nTab() + tag;
+                    break;
+                case TYPE.open:
+                    out += nTab() + tag;
+                    if (tag == '<script>') {
+                        while (tag !== '</script>') {
+                            tag = els[++i];
+                            out += tag;
+                        }
+                    } else {
+                        tb++;
+                    }
+                    break;
+                case TYPE.close:
+                    tb--;
+                    out += nTab() + tag;
+                    break;
+                case TYPE.autoclose:
+                    out += nTab() + tag;
+                    break;
+                case TYPE.text: 
+                    out += tag;
+                    if ((i + 1) < l && checktype(els[i+1]) == TYPE.close) {
+                        out += els[i + 1];
+                        i++;
+                        tb--;
+                    }
+                    break;
+            }
+        }
+        return out;
     },
 
     /**
@@ -499,7 +517,6 @@ jmvc = {
      * @return void
      */
     jeval: function(r) {
-        //r = r.replace(/(\/\/.*\n)/gm, '');
         try {
             return JMVC.W.eval(r);
         } catch (e) {}
@@ -608,6 +625,7 @@ jmvc = {
      * @return {[type]}     [description]
      */
     parseLang: function (cnt) {
+
         var RXlng = '\\[L\\[([\\S\\s]*?)\\]\\]',
             lang = true,
             tmp,
@@ -636,10 +654,8 @@ jmvc = {
             if (!lang) {
                 break;
             }
-
             tmp = ($JMVC.i18n[JMVC.vars.currentlang] && $JMVC.i18n[JMVC.vars.currentlang][lang[1]]) || lang[1];
             cnt = cnt.replace(lang[0], tmp);
-           
             lang = !!lang;
             limit -= 1;
         }
@@ -796,9 +812,12 @@ jmvc = {
             if (typeof arg[i] === 'function') {
                 cb = arg[i];
             }
-            if (typeof arg[i] === 'string' && !$JMVC.extensions[arg[i]]) {
+            //console.dir($JMVC.extensions);
+            
+            if (typeof arg[i] === 'string') {
                 // check if the required end with /, in this case
-                // 
+                // after replacing . with /
+                
                 if (arg[i].match(/\/$/)) {
 
                     $JMVC.io.getJson(JMVC.vars.baseurl + PATHS.ext + arg[i] + requireFileName, function (json) {
@@ -807,7 +826,8 @@ jmvc = {
                         }
                     }, false);
 
-                } else {
+                } else if (!$JMVC.extensions[arg[i]]) {
+
 
                     extNS = arg[i].split(US);
                     extNSlength = extNS.length;
@@ -815,9 +835,9 @@ jmvc = {
 
                     path = JMVC.vars.baseurl +
                         PATHS[(arg[i] === 'testsuite' ? 'test' : 'ext')] +
-                        arg[i] + (JMVC_PACKED || '') + '.js';
+                        arg[i].replace(/\./, '/') + (JMVC_PACKED || '') + '.js';
 
-                    if (getmode === 'ajax') {
+                    if (getmode.match(/ajax/)) {
 
                         $JMVC.io.get(path, function(jres) {
                             jmvc.jeval(jres);
@@ -831,13 +851,16 @@ jmvc = {
                         head.appendChild(s);
                         getmode === 'scriptghost' && head.removeChild(s);
 
+                    } else {
+                        throw new JMVC.Errors.BadSetting('No way to use JMVC.require function: getmode not in ["ajax","script","scriptghost"]');
+                        return false;
                     }
                     $JMVC.extensions[arg[i]] = arg[i];
                 }
             }
             i++;
         }
-        cb && cb();
+        return cb ? cb() : true;
     },
 
     /* 
