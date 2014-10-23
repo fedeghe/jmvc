@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 4) build: 2689
+ * @version :  3.5 (rev. 5) build: 2896
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.1.1 & a love heap
- *         glued with 39 files on 1/10/2014 at 23:2:21
+ *         glued with 39 files on 23/10/2014 at 22:9:44
  *
  * All rights reserved.
  *
@@ -63,10 +63,12 @@
              * thx to Venerons
              * https://gist.github.com/Venerons/f54b7fbc17f9df4302cf
              */
+            
             (function (previousOnError){
                 // uh!...want to do something with previousOnError?
                 // ...really?
                 function reportError(error, message) {
+                    //console.debug(arguments);
                     message = message || '';
                     JMVC.debug(
                         'ERROR: ' + message + ' [' + error.toString() + ']\n' +
@@ -81,10 +83,12 @@
                 }
                  
                 window.onerror = function (message, filename, lineno, colno, error) {
+                    error.message = error.message || message || null;
                     error.fileName = error.fileName || filename || null;
                     error.lineNumber = error.lineNumber || lineno || null;
                     error.columnNumber = error.columnNumber || colno || null;
                     reportError(error, 'Uncatched Exception');
+                    JMVC.Errors.notify(error);
                 };
             
             })(W.onerror);
@@ -104,13 +108,13 @@
                 JMVC_VERSION = '3.5',
             
                 // review (vars.json)
-                JMVC_REVIEW = '4',
+                JMVC_REVIEW = '5',
             
                 // review (vars.json)
-                JMVC_DATE = '1/10/2014',
+                JMVC_DATE = '23/10/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '23:2:21',
+                JMVC_TIME = '22:9:44',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -280,123 +284,6 @@
                     w.document.body.innerHTML = '<pre style="overflow:scroll; height:100%;">' + JMVC.htmlChars(out) + '</pre>';
                 },
             
-            
-            
-                formatCode : function (mup) {
-                    var cnt = mup || document.documentElement.outerHTML,
-                        tb = 0,
-                        out = "",
-                        line = 0,
-                        tabLength = 4,
-                        tabChar = (new Array(tabLength + 1)).join("&nbsp;"),
-                        RX = {
-                            open : /^<([^\/].*[^\/])>$/,    // starts with <; has no > within; do not ends with />; ends with >
-                            close : /^<\/(.*)>$/,           // starts with </; has no < within; ends with >
-                            autoclose : /^<[^>]*\/>$/,      // starts with >; has no > within; ends with />
-                            text : /^[^<]*$/,               // do not starts with <
-                            special : /<(meta|link|br|hr|img|col|input|source)+(\s[^>]*|>)?\/?>/ // starts with <; is a meta of link or br
-                        },
-                        els = [],
-                        i = 0, k = 0, l = 0,
-                        tag,
-            
-                        TYPE = {special:1, open:2, close:3, autoclose:4, text:5},
-            
-                        nTab = function () {
-                            return "\n" + getLine() + (tb>0 ? (new Array(tb + 1)).join(tabChar) : '');
-                        },
-            
-                        getLine = function () {
-                            line++;
-                            return (new Array(6 - (''+line).length)).join('0') + line;
-                        },
-            
-                        checktype = function (t) {
-                            /*
-                            console.debug('TAG : ' + t);
-                            console.debug('special : ' + t.match(RX.special));
-                            console.debug('open : ' + t.match(RX.open));
-                            console.debug('close : ' + t.match(RX.close));
-                            console.debug('autoclose : ' + t.match(RX.autoclose));
-                            console.debug('text : ' + t.match(RX.text));
-                            console.debug('=================' + "\n\n\n");
-                            */
-                            if (t.match(RX.special)) {
-                                return TYPE.special;
-                            } else if(t.match(RX.open)) {
-                                return TYPE.open;
-                            } else if(t.match(RX.close)) {
-                                return TYPE.close;
-                            } else if(t.match(RX.autoclose)) {
-                                return TYPE.autoclose;
-                            } else if(t.match(RX.text)) {
-                                return TYPE.text;
-                            } // finally
-                            else {
-                                return TYPE.open;
-                            }
-                        };
-                    // multipsces, remove spaces between tags
-                    // comments
-                    // and get tags
-                    cnt = cnt.replace(/\s{2,}/g, ' ')
-                        .replace(/>[\s|\t]*</g, '><')
-                        // remove newline, carriage return, tabs
-                        .replace(/[\n|\t|\r]/g, '')
-                        //remove hmtl comments
-                        .replace(/<!--([\s\S]*?)-->/mig, '')
-                        //split, one empty one full
-                        .split(/(<[^>]+>)/ig);
-            
-                    // cleanup empty
-                    l = cnt.length;
-                    
-                    for (; i < l; i++) {
-                        if (!cnt[i]) continue;
-                        els.push(cnt[i]);           
-                    }
-                    
-                    for (i = 0, l = els.length; i < l; i++) {
-                        
-                        tag = els[i];
-            
-                        t = checktype(tag);
-                        
-                        switch (t) {
-                            case TYPE.special:
-                                out += nTab() + tag;
-                                break;
-                            case TYPE.open:
-                                out += nTab() + tag;
-                                if (tag == '<script>') {
-                                    while (tag !== '</script>') {
-                                        tag = els[++i];
-                                        out += tag;
-                                    }
-                                } else {
-                                    tb++;
-                                }
-                                break;
-                            case TYPE.close:
-                                tb--;
-                                out += nTab() + tag;
-                                break;
-                            case TYPE.autoclose:
-                                out += nTab() + tag;
-                                break;
-                            case TYPE.text: 
-                                out += tag;
-                                if ((i + 1) < l && checktype(els[i+1]) == TYPE.close) {
-                                    out += els[i + 1];
-                                    i++;
-                                    tb--;
-                                }
-                                break;
-                        }
-                    }
-                    return out;
-                },
-            
                 /**
                  * [debug description]
                  * @param  {[type]} msg [description]
@@ -425,6 +312,25 @@
                         }
                     }
                     return true;
+                },
+            
+                /**
+                 * AMD like dummy function
+                 * @param  {[type]}   ns   [description]
+                 * @param  {[type]}   deps [description]
+                 * @param  {Function} cb   [description]
+                 * @return {Object}        the brand new module defined
+                 */
+                define : function (ns, deps, cb){
+                    return  jmvc.ns.check(ns, $JMVC)
+                            ||
+                            jmvc.require.apply(null, deps.concat([function () {
+                                var args = [],
+                                    i = 0,
+                                    l = deps.length;
+                                while (i < l) args.push(jmvc.ns.check(deps[i++], $JMVC));
+                                return jmvc.ns.make(ns, cb.apply(null, args), $JMVC);
+                            }]));
                 },
             
                 /**
@@ -531,24 +437,11 @@
                     if (!obj) {
                         throw new JMVC.Errors.BadParams('Missing object parameter for extend');
                     }
-                    //
-                    // ensures that the target namespace exists 
-                    var trg = jmvc.ns.make('JMVC.' + label);
-                    //
-                    //let the literal straigth inherith from Extension Object
-                    Extension.call(trg);
-                    //
+            
                     // if is a function return its execution
                     if (typeof obj === 'function') {
                         return jmvc.extend(label, obj());
                     }
-            
-                    (function(t, o) {
-                        var j;
-                        for (j in o) {
-                            o.hasOwnProperty(j) && t[j] === undefined && (t[j] = o[j]);
-                        }
-                    })(trg, obj);
             
                     // and set a flag, that can be switched off as far as
                     // if the object passed has a initCheck function
@@ -561,13 +454,26 @@
                         }
                         obj.initCheck = null;
                     }
-                    //
-                    //maybe init, in case call it
+            
+                    // ensures that the target namespace exists 
+                    var trg = jmvc.ns.make('JMVC.' + label);
+            
+                    // let the literal straigth inherith from Extension Object
+                    Extension.call(trg);
+                    
+                    (function(t, o) {
+                        var j;
+                        for (j in o) {
+                            o.hasOwnProperty(j) && t[j] === undefined && (t[j] = o[j]);
+                        }
+                    })(trg, obj);
+            
+                    // maybe init, in case call it
                     if (typeof obj.init === 'function') {
                         obj.init.call($JMVC);
                         //and clean
                         obj.init = null;
-                    }
+                    }        
                     return trg;
                 },
             
@@ -606,6 +512,122 @@
                     // ajax get script content and return it
                     ret = jmvc.xhrget(path_absolute, type, name, params);
                     return ret;
+                },
+            
+                formatCode : function (mup) {
+                    var cnt = mup || document.documentElement.outerHTML,
+                        tb = 0,
+                        out = "",
+                        line = 0,
+                        tabLength = 4,
+                        tabChar = (new Array(tabLength + 1)).join("&nbsp;"),
+                        RX = {
+                            open : /^<([^\/].*[^\/])>$/,    // starts with <; has no > within; do not ends with />; ends with >
+                            close : /^<\/(.*)>$/,           // starts with </; has no < within; ends with >
+                            autoclose : /^<[^>]*\/>$/,      // starts with >; has no > within; ends with />
+                            text : /^[^<]*$/,               // do not starts with <
+                            special : /<(meta|link|br|hr|img|col|input|source)+(\s[^>]*|>)?\/?>/ // starts with <; is a meta of link or br
+                        },
+                        els = [],
+                        i = 0, k = 0, l = 0,
+                        tag,
+            
+                        TYPE = {special:1, open:2, close:3, autoclose:4, text:5},
+            
+                        nTab = function () {
+                            return "\n" + getLine() + (tb>0 ? (new Array(tb + 1)).join(tabChar) : '');
+                        },
+            
+                        getLine = function () {
+                            line++;
+                            return (new Array(6 - (''+line).length)).join('0') + line;
+                        },
+            
+                        checktype = function (t) {
+                            /*
+                            console.debug('TAG : ' + t);
+                            console.debug('special : ' + t.match(RX.special));
+                            console.debug('open : ' + t.match(RX.open));
+                            console.debug('close : ' + t.match(RX.close));
+                            console.debug('autoclose : ' + t.match(RX.autoclose));
+                            console.debug('text : ' + t.match(RX.text));
+                            console.debug('=================' + "\n\n\n");
+                            */
+                            if (t.match(RX.special)) {
+                                return TYPE.special;
+                            } else if(t.match(RX.open)) {
+                                return TYPE.open;
+                            } else if(t.match(RX.close)) {
+                                return TYPE.close;
+                            } else if(t.match(RX.autoclose)) {
+                                return TYPE.autoclose;
+                            } else if(t.match(RX.text)) {
+                                return TYPE.text;
+                            } // finally
+                            else {
+                                return TYPE.open;
+                            }
+                        };
+            
+                    // multispaces, remove spaces between tags
+                    // comments
+                    // and get tags
+                    cnt = cnt.replace(/\s{2,}/g, ' ')
+                        .replace(/>[\s|\t]*</g, '><')
+                        // remove newline, carriage return, tabs
+                        .replace(/[\n|\t|\r]/g, '')
+                        //remove hmtl comments
+                        .replace(/<!--([\s\S]*?)-->/mig, '')
+                        //split, one empty one full
+                        .split(/(<[^>]+>)/ig);
+            
+                    // cleanup empty
+                    l = cnt.length;
+                    
+                    for (; i < l; i++) {
+                        if (!cnt[i]) continue;
+                        els.push(cnt[i]);           
+                    }
+                    
+                    for (i = 0, l = els.length; i < l; i++) {
+                        
+                        tag = els[i];
+            
+                        t = checktype(tag);
+                        
+                        switch (t) {
+                            case TYPE.special:
+                                out += nTab() + tag;
+                                break;
+                            case TYPE.open:
+                                out += nTab() + tag;
+                                if (tag == '<script>') {
+                                    while (tag !== '</script>') {
+                                        tag = els[++i];
+                                        out += tag;
+                                    }
+                                } else {
+                                    tb++;
+                                }
+                                break;
+                            case TYPE.close:
+                                tb--;
+                                out += nTab() + tag;
+                                break;
+                            case TYPE.autoclose:
+                                out += nTab() + tag;
+                                break;
+                            case TYPE.text: 
+                                out += tag;
+                                if ((i + 1) < l && checktype(els[i+1]) == TYPE.close) {
+                                    out += els[i + 1];
+                                    i++;
+                                    tb--;
+                                }
+                                break;
+                        }
+                    }
+                    return out;
                 },
             
                 /**
@@ -751,7 +773,6 @@
                  * @return void
                  */
                 jeval: function(r) {
-                    //r = r.replace(/(\/\/.*\n)/gm, '');
                     try {
                         return JMVC.W.eval(r);
                     } catch (e) {}
@@ -860,6 +881,7 @@
                  * @return {[type]}     [description]
                  */
                 parseLang: function (cnt) {
+            
                     var RXlng = '\\[L\\[([\\S\\s]*?)\\]\\]',
                         lang = true,
                         tmp,
@@ -888,10 +910,8 @@
                         if (!lang) {
                             break;
                         }
-            
                         tmp = ($JMVC.i18n[JMVC.vars.currentlang] && $JMVC.i18n[JMVC.vars.currentlang][lang[1]]) || lang[1];
                         cnt = cnt.replace(lang[0], tmp);
-                       
                         lang = !!lang;
                         limit -= 1;
                     }
@@ -1048,9 +1068,12 @@
                         if (typeof arg[i] === 'function') {
                             cb = arg[i];
                         }
-                        if (typeof arg[i] === 'string' && !$JMVC.extensions[arg[i]]) {
+                        //console.dir($JMVC.extensions);
+                        
+                        if (typeof arg[i] === 'string') {
                             // check if the required end with /, in this case
-                            // 
+                            // after replacing . with /
+                            
                             if (arg[i].match(/\/$/)) {
             
                                 $JMVC.io.getJson(JMVC.vars.baseurl + PATHS.ext + arg[i] + requireFileName, function (json) {
@@ -1059,7 +1082,8 @@
                                     }
                                 }, false);
             
-                            } else {
+                            } else if (!$JMVC.extensions[arg[i]]) {
+            
             
                                 extNS = arg[i].split(US);
                                 extNSlength = extNS.length;
@@ -1067,9 +1091,9 @@
             
                                 path = JMVC.vars.baseurl +
                                     PATHS[(arg[i] === 'testsuite' ? 'test' : 'ext')] +
-                                    arg[i] + (JMVC_PACKED || '') + '.js';
+                                    arg[i].replace(/\./, '/') + (JMVC_PACKED || '') + '.js';
             
-                                if (getmode === 'ajax') {
+                                if (getmode.match(/ajax/)) {
             
                                     $JMVC.io.get(path, function(jres) {
                                         jmvc.jeval(jres);
@@ -1083,13 +1107,16 @@
                                     head.appendChild(s);
                                     getmode === 'scriptghost' && head.removeChild(s);
             
+                                } else {
+                                    throw new JMVC.Errors.BadSetting('No way to use JMVC.require function: getmode not in ["ajax","script","scriptghost"]');
+                                    return false;
                                 }
                                 $JMVC.extensions[arg[i]] = arg[i];
                             }
                         }
                         i++;
                     }
-                    cb && cb();
+                    return cb ? cb() : true;
                 },
             
                 /* 
@@ -1323,6 +1350,10 @@
                 ActionNotFound : function (msg) {
                     this.name = 'ActionNotFound';
                     this.msg = msg ||  this.name + ' error';
+                },
+                BadSetting : function (msg) {
+                    this.name = 'SettingMismash';
+                    this.msg = msg ||  (this.name + ' error');
                 }
             };
             
@@ -1689,6 +1720,7 @@
              * @param  {[type]} f [description]
              * @return {[type]}   [description]
              */
+            /*
             function checkInterface(f) {
                 var r = f.toString()
                     .match(/function\s(.*)\((.*)\)\s?{return\s[\'\"]?(.*)[\'\"]?;}/);
@@ -1698,7 +1730,7 @@
                     ret : !!r[3] ? r[3]  : false
                 } : false;
             }
-            
+            */
             /**
              * INTERFACE
              * =========
@@ -1730,19 +1762,25 @@
                 var m,
                     i = 0,
                     arg = Array.prototype.slice.call(arguments),
-                    l = arg.length;
+                    l = arg.length,
+                    ret = true,
+                    msg = '';
             
                 //skip 0 being it obj
                 while (++i < l) {
                     for (m in arg[i].mthds) {
                         if (typeof obj[arg[i].mthds[m]] !== 'function') {
-                            throw new Error('Function Interface.checkImplements: object ' +
-                            'does not implement the ' + arg[i].name +
-                            ' interface. Method ' + arg[i].mthds[m] + ' was not found.');
+                            ret = false;
+                            msg += 'Function Interface.checkImplements: object ' +
+                            'does not implement the `' + arg[i].name +
+                            '` interface : method ' + arg[i].mthds[m] + ' was not found.' + "\n";
                         }
                     }
                 }
-                return obj;
+                if (!ret) {
+                    JMVC.debug(msg);
+                }
+                return ret;
             };
             /*
             function tee(func, obj, str) {return 'obj';}
@@ -2374,7 +2412,7 @@
                         port : WDL.port ? ':' + WDL.port : ''
                     },
             
-                    // adjust extensions
+                    // adjust extensions allowed
                     els = mid.path.replace(new RegExp('\\.' + URL_ALLOWED_EXTENSIONS.join('|\\.'), 'gm'), '').substr(1).split(US),
                     controller = false,
                     controller_prepath = '',
@@ -2404,7 +2442,8 @@
                 action = els.shift() || JMVC_DEFAULT.action;
                 len = els.length;
             
-                // now if els has non zero size, these are extra path params
+                // now if els has non zero size,
+                // these are extra path params
                 for (i = 0; i + 1 < len; i += 2) {
                     params[els[i]] = els[i + 1];
                 }
@@ -2427,7 +2466,7 @@
                     return false;
                 }
                 
-                //
+                // dispatched result
                 return {
                     controller : controller.replace(/\//g, ''),
                     controller_prepath : controller_prepath,
@@ -2513,6 +2552,7 @@
                 delegate : jmvc.delegate,
                 code : jmvc.code,
                 extend : jmvc.extend,
+                define : jmvc.define,
                 factory:    jmvc.factory_method,
                 inherit : jmvc.inherit,
                 multinherit : jmvc.multi_inherit,
@@ -3866,12 +3906,10 @@
          * @return {[type]}       [description]
          */
         wrap : function (node, tag, attrs) {
-            var n = JMVC.dom.create(tag || 'div', attrs || {}),
-                clone = JMVC.dom.clone(node);
-            console.log(n);
-            JMVC.dom.append(n, clone);
-            JMVC.dom.replace(node, n);
-            return n;
+            var wrap = JMVC.dom.create(tag || 'div', attrs || {});
+            this.insertAfter(wrap, node);
+            wrap.appendChild(node);
+            return wrap;
         },
     
         /**
@@ -4983,6 +5021,21 @@
     
     JMVC.css = {
         /**
+         * [clearer description]
+         * @type {[type]}
+         */
+        clearer: JMVC.dom.create('br', {
+            'class': 'clearer'
+        }),
+    
+        /**
+         * [css3_map description]
+         * @type {Array}
+         */
+        css3_map: ['-o-transform', '-moz-transform'],
+    
+    
+        /**
          * [addRule description]
          * @param {[type]} sheet    [description]
          * @param {[type]} selector [description]
@@ -5000,6 +5053,10 @@
             }
         },
     
+        /**
+         * [autoHeadings description]
+         * @return {[type]} [description]
+         */
         autoHeadings : function () {
             JMVC.head.addStyle(
                 'h1{font-size:24px; line-height:48px; padding:24px 0px 12px;}'+
@@ -5010,131 +5067,12 @@
                 'h6{font-size:8px; line-height:16px; padding:8px 0px 4px;}', true, true);
         },
     
+        /**
+         * [beResponsive description]
+         * @return {[type]} [description]
+         */
         beResponsive : function () {
             JMVC.dom.addClass(JMVC.WDB, 'resp');
-        },
-    
-    
-        /**
-         * [mappedStyle description]
-         * @param  {[type]} idn   [description]
-         * @param  {[type]} style [description]
-         * @return {[type]}       [description]
-         */
-        mappedStyle: function (idn, style) {
-            var t = JMVC.dom.find('#' + idn);
-            if (t) {
-                JMVC.dom.remove(t);
-            }
-            _.css.mappedStyles[idn] = JMVC.dom.create('style', {
-                'id': idn,
-                type: 'text/css'
-            }, style);
-            JMVC.dom.append(JMVC.head.element, _.css.mappedStyles[idn]);
-        },
-    
-        /**
-         * [style description]
-         * @param  {[type]} el   [description]
-         * @param  {[type]} prop [description]
-         * @param  {[type]} val  [description]
-         * @return {[type]}      [description]
-         */
-        style: function (el, prop, val) {
-    
-            var prop_is_obj = (typeof prop === 'object' && typeof val === 'undefined'),
-                ret = false,
-                newval, k;
-    
-            if (!prop_is_obj && typeof val === 'undefined') {
-                /* opera may use currentStyle or getComputedStyle */
-                //ret = (el.currentStyle) ? el.currentStyle[_.css.css_propertymap[prop] || prop + ""] : el.style[prop]; 
-                ret = el.currentStyle ? el.currentStyle[_.css.css2js_rule(prop)] : el.style[prop];
-                return (ret === '' || ret === 'auto') ? JMVC.css.getComputedStyle(el, prop) : ret;
-            }
-    
-            if (prop_is_obj) {
-                for (k in prop) {
-    
-                    if ((prop[k] + '').search(/rand/) !== -1) {
-                        newval = JMVC.nsCheck('JMVC.core.color') ?
-                            JMVC.core.color.getRandomColor() : '#000000';
-                        prop[k] = prop[k].replace(/rand/, newval);
-                    }
-                    if (JMVC.array.find(this.css3_map, k) + 1) {
-                        el.style.cssText += ';' + k + ' : ' + prop[k];
-                    } else {
-                        //el.style[_.css.css_propertymap[k] || k + ""] = prop[k];
-                        el.style[_.css.css2js_rule(k)] = prop[k];
-                    }
-                }
-            } else if (typeof val !== 'undefined') {
-                val += '';
-                if (val.search(/rand/) !== -1) {
-                    newval = JMVC.nsCheck('JMVC.core.color') ?
-                        JMVC.core.color.getRandomColor() : '#000000';
-                    val = val.replace(/rand/, newval);
-                }
-                if (JMVC.array.find(this.css3_map, prop) + 1) {
-                    el.style.cssText += ';' + prop + ' : ' + val;
-                } else {
-                    //el.style[_.css.css_propertymap[prop] || prop + ""] = val;
-                    el.style[_.css.css2js_rule(prop)] = val;
-    
-                    if (prop === 'opacity') {
-                        el.style.filter = 'alpha(opacity = ' + (~~(100 * JMVC.num.getFloat(val))) + ')';
-                    } /* IE */
-                }
-            }
-            return this;
-        },
-    
-        /**
-         * [show description]
-         * @param  {[type]} el [description]
-         * @return {[type]}    [description]
-         */
-        show: function (el) {
-            if (el instanceof Array) {
-                for (var i = 0, l = el.length; i < l; i += 1) {
-                    this.show(el[i]);
-                }
-                return;
-            }
-            JMVC.css.style(el, 'display', 'block');
-        },
-    
-        /**
-         * [hide description]
-         * @param  {[type]} el [description]
-         * @return {[type]}    [description]
-         */
-        hide: function (el) {
-            if (el instanceof Array) {
-                for (var i = 0, l = el.length; i < l; i += 1) {
-                    this.hide(el[i]);
-                }
-                return;
-            }
-            JMVC.css.style(el, 'display', 'none');
-        },
-    
-        /**
-         * [width description]
-         * @param  {[type]} el [description]
-         * @return {[type]}    [description]
-         */
-        width: function (el) {
-            return el.offsetWidth || el.scrollWidth || JMVC.css.getComputedStyle(el, 'width');
-        },
-    
-        /**
-         * [height description]
-         * @param  {[type]} el [description]
-         * @return {[type]}    [description]
-         */
-        height: function (el) {
-            return el.offsetHeight || el.scrollHeight || JMVC.css.getComputedStyle(el, 'height');
         },
     
         /**
@@ -5173,33 +5111,48 @@
             return [curleft, curtop];
         },
     
-        css3_map: ['-o-transform', '-moz-transform'],
-    
-        reset: function () {
-            // http://meyerweb.com/eric/tools/css/reset/
-            var style = 'html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,' +
-                'acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,' +
-                'var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,' +
-                'tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,' +
-                'output,ruby,section,summary,time,mark,audio,video' +
-                '{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}' +
-                'article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}' +
-                'body{line-height:1;}' +
-                'ol,ul{list-style:none;}' +
-                'blockquote,q{quotes:none;}' +
-                'blockquote:before,blockquote:after,q:before,q:after{content:\'\';content:none;}' +
-                'table{border-collapse:collapse;border-spacing:0;}';
-            JMVC.head.addStyle(style, true, true);
+        /**
+         * [height description]
+         * @param  {[type]} el [description]
+         * @return {[type]}    [description]
+         */
+        height: function (el) {
+            return el.offsetHeight || el.scrollHeight || JMVC.css.getComputedStyle(el, 'height');
         },
     
         /**
-         * [clearer description]
-         * @type {[type]}
+         * [hide description]
+         * @param  {[type]} el [description]
+         * @return {[type]}    [description]
          */
-        clearer: JMVC.dom.create('br', {
-            'class': 'clearer'
-        }),
-        
+        hide: function (el) {
+            if (el instanceof Array) {
+                for (var i = 0, l = el.length; i < l; i += 1) {
+                    this.hide(el[i]);
+                }
+                return;
+            }
+            JMVC.css.style(el, 'display', 'none');
+        },
+    
+        /**
+         * [mappedStyle description]
+         * @param  {[type]} idn   [description]
+         * @param  {[type]} style [description]
+         * @return {[type]}       [description]
+         */
+        mappedStyle: function (idn, style) {
+            var t = JMVC.dom.find('#' + idn);
+            if (t) {
+                JMVC.dom.remove(t);
+            }
+            _.css.mappedStyles[idn] = JMVC.dom.create('style', {
+                'id': idn,
+                type: 'text/css'
+            }, style);
+            JMVC.dom.append(JMVC.head.element, _.css.mappedStyles[idn]);
+        },
+    
         /**
          * [pest description]
          * @param  {[type]} mode [description]
@@ -5315,6 +5268,34 @@
                 });
             }
         },
+    
+        /**
+         * [reset description]
+         * @return {[type]} [description]
+         */
+        reset: function () {
+            // http://meyerweb.com/eric/tools/css/reset/
+            var style = 'html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,' +
+                'acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,' +
+                'var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,' +
+                'tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,' +
+                'output,ruby,section,summary,time,mark,audio,video' +
+                '{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}' +
+                'article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}' +
+                'body{line-height:1;}' +
+                'ol,ul{list-style:none;}' +
+                'blockquote,q{quotes:none;}' +
+                'blockquote:before,blockquote:after,q:before,q:after{content:\'\';content:none;}' +
+                'table{border-collapse:collapse;border-spacing:0;}';
+            JMVC.head.addStyle(style, true, true);
+        },
+    
+        /**
+         * [rotate description]
+         * @param  {[type]} el  [description]
+         * @param  {[type]} rot [description]
+         * @return {[type]}     [description]
+         */
         rotate : function (el, rot) {
             JMVC.css.style(el, {
                 '-webkit-transform': 'rotate(' + rot + 'deg)',
@@ -5323,6 +5304,82 @@
             });
         },
     
+        /**
+         * [show description]
+         * @param  {[type]} el [description]
+         * @return {[type]}    [description]
+         */
+        show: function (el) {
+            if (el instanceof Array) {
+                for (var i = 0, l = el.length; i < l; i += 1) {
+                    this.show(el[i]);
+                }
+                return;
+            }
+            JMVC.css.style(el, 'display', 'block');
+        },
+    
+        /**
+         * [style description]
+         * @param  {[type]} el   [description]
+         * @param  {[type]} prop [description]
+         * @param  {[type]} val  [description]
+         * @return {[type]}      [description]
+         */
+        style: function (el, prop, val) {
+    
+            var prop_is_obj = (typeof prop === 'object' && typeof val === 'undefined'),
+                ret = false,
+                newval, k;
+    
+            if (!prop_is_obj && typeof val === 'undefined') {
+                /* opera may use currentStyle or getComputedStyle */
+                //ret = (el.currentStyle) ? el.currentStyle[_.css.css_propertymap[prop] || prop + ""] : el.style[prop]; 
+                ret = el.currentStyle ? el.currentStyle[_.css.css2js_rule(prop)] : el.style[prop];
+                return (ret === '' || ret === 'auto') ? JMVC.css.getComputedStyle(el, prop) : ret;
+            }
+    
+            if (prop_is_obj) {
+                for (k in prop) {
+    
+                    if ((prop[k] + '').search(/rand/) !== -1) {
+                        newval = JMVC.nsCheck('JMVC.core.color') ?
+                            JMVC.core.color.getRandomColor() : '#000000';
+                        prop[k] = prop[k].replace(/rand/, newval);
+                    }
+                    if (JMVC.array.find(this.css3_map, k) + 1) {
+                        el.style.cssText += ';' + k + ' : ' + prop[k];
+                    } else {
+                        //el.style[_.css.css_propertymap[k] || k + ""] = prop[k];
+                        el.style[_.css.css2js_rule(k)] = prop[k];
+                    }
+                }
+            } else if (typeof val !== 'undefined') {
+                val += '';
+                if (val.search(/rand/) !== -1) {
+                    newval = JMVC.nsCheck('JMVC.core.color') ?
+                        JMVC.core.color.getRandomColor() : '#000000';
+                    val = val.replace(/rand/, newval);
+                }
+                if (JMVC.array.find(this.css3_map, prop) + 1) {
+                    el.style.cssText += ';' + prop + ' : ' + val;
+                } else {
+                    //el.style[_.css.css_propertymap[prop] || prop + ""] = val;
+                    el.style[_.css.css2js_rule(prop)] = val;
+    
+                    if (prop === 'opacity') {
+                        el.style.filter = 'alpha(opacity = ' + (~~(100 * JMVC.num.getFloat(val))) + ')';
+                    } /* IE */
+                }
+            }
+            return this;
+        },
+    
+        /**
+         * [unselectable description]
+         * @param  {[type]} n [description]
+         * @return {[type]}   [description]
+         */
         unselectable : function (n) {
             JMVC.css.style(n, {
               '-moz-user-select': 'none',
@@ -5337,6 +5394,15 @@
             });
             
      
+        },
+    
+        /**
+         * [width description]
+         * @param  {[type]} el [description]
+         * @return {[type]}    [description]
+         */
+        width: function (el) {
+            return el.offsetWidth || el.scrollWidth || JMVC.css.getComputedStyle(el, 'width');
         }
     };
     
@@ -5545,6 +5611,15 @@
                 }
             }
             return -1;
+        },
+        
+        /**
+         * [fromArguments description]
+         * @param  {[type]} a [description]
+         * @return {[type]}   [description]
+         */
+        fromArguments : function (a) {
+            return Array.prototype.slice.call(a, 0);
         },
     
         /**
@@ -6300,6 +6375,7 @@
             d = Math.atan2(gd2[1] - gd1[1], gd2[0] - gd1[0]) * 180 / (Math.PI);
             JMVC.events.drag.direction = d.toFixed(2);
             JMVC.events.drag.orientation = directions[~~(( (d + 180)% 360) / 22.5)] ;
+        
             return true;
         }
     
@@ -6380,10 +6456,12 @@
             doctype_string = "<!DOCTYPE " + node.name + (node.publicId ? ' PUBLIC"' + node.publicId + '"' : '') + (!node.publicId && node.systemId ? ' SYSTEM' : '') + (node.systemId ? ' "' + node.systemId + '"' : '') + ">";
     
         if (doctype_string !== '<!DOCTYPE html>') {
-            var t = _.shimthags.split(',');
-            for (var i = 0, l = t.length; i < l; i++) {
-                document.createElement(t[i]);
-            }
+            var t = _.shimthags.split(','),
+                i = 0,
+                l = t.length;
+    
+            while (i < l) document.createElement(t[i++]);
+    
             JMVC.head.addStyle(_.shimthags + '{display:block}', true, true);
         }
     }
