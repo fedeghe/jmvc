@@ -28,6 +28,10 @@ Errors = {
     ActionNotFound : function (msg) {
         this.name = 'ActionNotFound';
         this.msg = msg ||  this.name + ' error';
+    },
+    BadSetting : function (msg) {
+        this.name = 'SettingMismash';
+        this.msg = msg ||  (this.name + ' error');
     }
 };
 
