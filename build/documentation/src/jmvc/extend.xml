@@ -35,27 +35,25 @@ JMVC.extend('fooWidget', {&#10;
 // with the module as second parameter&#10;
 //&#10;
 JMVC.extend('fooWidget2', function () {&#10;
-&#10;
-    // here private code&#10;
+    //&#10;
+    // private code here&#10;
     // &#10;
-&#10;
     return {&#10;
         initCheck : function () {&#10;
             console.log('init check 2');&#10;
-            return true;&#10;
+            return false; //that will lock the extension&#10;
         },&#10;
-&#10;
         init : function () {&#10;
             console.log('init fooWidget 2');&#10;
         },&#10;
-&#10;
         start : function () {&#10;
             console.log('doing foo 2');&#10;
         }&#10;
     }&#10;
 });&#10;
 JMVC.fooWidget.start();&#10;
-JMVC.fooWidget2.start();&#10;
+JMVC.fooWidget2.start();    // that will throw a TypeError&#10;
+                            // given the initCheck returned value
     </sample>
 
     <testlink>test_api_jmvc_extend</testlink>
@@ -76,7 +74,7 @@ JMVC.fooWidget2.start();&#10;
             return {
                 initCheck : function () {
                     console.log('init check 2');
-                    return true;
+                    return false;
                 },
                 init : function () {
                     console.log('init fooWidget 2');

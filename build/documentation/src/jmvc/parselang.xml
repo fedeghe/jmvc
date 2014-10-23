@@ -6,12 +6,18 @@
     </params>
     <returns>the parsed content</returns>
     <status>incomplete</status>
-    <sample>var txt = '[L[ciao]] Federico, [L[come stai]]?';&#10;
+    <sample>var txt = "[L[ciao]] Federico, [L[come stai]]?";&#10;
 &#10;
 //default lang is en, and app/i18n/en.js contains tha translations&#10;
 console.debug(JMVC.parseLang(txt));&#10;
 &#10;
-//but You set any language es: app/i18n/jp.js&#10;
-JMVC.cookie.set('lang',"jp");&#10;
-console.debug(JMVC.parseLang(txt));</sample>
+//but You set any language es: app/i18n/en.js&#10;
+JMVC.cookie.set("lang", "en");&#10;
+console.debug(JMVC.parseLang(txt));&#10;
+JMVC.cookie.set("lang", "it");&#10;
+console.debug(JMVC.parseLang(txt));&#10;
+JMVC.cookie.set("lang", "de");&#10;
+console.debug(JMVC.parseLang(txt));&#10;
+JMVC.cookie.set("lang", "jp");&#10;
+console.debug(JMVC.parseLang(txt));&#10;</sample>
 </function>

@@ -2,6 +2,7 @@
     $$src/jmvc/code.xml$$
     $$src/jmvc/console.xml$$
     $$src/jmvc/debug.xml$$
+    $$src/jmvc/define.xml$$
     $$src/jmvc/del.xml$$
     $$src/jmvc/delegate.xml$$
     $$src/jmvc/each.xml$$
@@ -30,6 +31,6 @@
     <param>
         <name>W</name>
         <type>reference</type>
-        <description>JMVC.W is a reference to th current window object</description>
+        <description>JMVC.W is a reference to the current window object</description>
     </param>
 </jmvc>

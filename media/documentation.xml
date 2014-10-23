@@ -11,7 +11,7 @@
     <signature name="code">JMVC.code()</signature>
     <description>Toggles formatted dom in a popup window (standing browser settings allow to do that)</description>
     <params>
-        <param name="">this function needs no parameters</param>
+        <param name="">no parameters</param>
     </params>
     <returns>void (undefined)</returns>
     <sample>// show the code window&#10;JMVC.code();&#10;</sample>
@@ -25,12 +25,22 @@
     <signature name="console">JMVC.console()</signature>
     <description>Toggles html+css+js+preview console</description>
     <params>
-        <param name="">this function needs no parameters</param>
+        <param name="">no parameters</param>
     </params>
     <returns>void (undefined)</returns>
-    <sample>// show the console &#10;JMVC.console();&#10;// and hide it after 6 seconds &#10;window.setTimeout(function () {JMVC.console(); }, 6000);</sample>
+    <sample>// show the console &#10;
+JMVC.console();&#10;
+// and hide it after 6 seconds &#10;
+window.setTimeout(function () {&#10;
+    JMVC.console();&#10;
+}, 6000);</sample>
     <status>complete</status>
-    <code>JMVC.console();window.setTimeout(function () {JMVC.console(); }, 6000);</code>
+    <code>JMVC.console();
+        window.setTimeout(function () {
+                JMVC.console();
+            }, 6000
+        );
+    </code>
 </function>
 <!--
 [MALTA] src/jmvc/debug.xml
@@ -63,6 +73,49 @@ JMVC.debug(arr), JMVC.debug(obj), JMVC.debug(foo);
         JMVC.debug(arr),
         JMVC.debug(obj),
         JMVC.debug(foo);
+    </code>
+</function>
+<!--
+[MALTA] src/jmvc/define.xml
+-->
+<function>
+    <signature name="define">JMVC.define(ns, dep, cb)</signature>
+    <description>AMD like function</description>
+    <params>
+        <param name="ns">Namespace desired for the module (within JMVC)</param>
+        <param name="dep">dependencies modules</param>
+        <param name="cb">function where dependencies will be injected, must return the module implementation</param>
+    </params>
+    <returns>the brand new module</returns>
+    <sample>/**&#10;
+* inject two modules: app/extensions/def/xxx.js&#10;
+* and app/extensions/def/yyy.js&#10;
+*/&#10;
+var t = JMVC.define(&#10;
+    'xxx.sss',&#10;
+    ['def.xxx', 'def.yyy'],&#10;
+    function (x, y) {&#10;
+        return {&#10;
+            one : function () {&#10;
+                alert(y.getName() + ' extends ' + x.name);&#10;
+            }&#10;
+        }&#10;
+    }&#10;
+);&#10;
+JMVC.xxx.sss.one();&#10;
+console.debug(t);
+</sample>
+    <status>complete</status>
+    <code>
+        var t = JMVC.define('xxx.sss', ['def.xxx', 'def.yyy'], function (x, y) {
+            return {
+                one : function () {
+                    alert(y.getName() + ' extends ' + x.name);
+                }
+            }
+        });
+        JMVC.xxx.sss.one();
+        console.debug(t);
     </code>
 </function>
 <!--
@@ -128,7 +181,11 @@ t(); // literal&#10;</sample>
     </params>
     <returns>void (undefined)</returns>
     <sample>&#10;
-var obj = {name:'Federico', surname : 'Ghedina', says : 'wat'},&#10;
+var obj = {&#10;
+        name:'Federico',&#10;
+        surname : 'Ghedina',&#10;
+        says : 'wat'&#10;
+    },&#10;
     arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],&#10;
     objAfter = JMVC.each(obj, function (el, i) {&#10;
         console.debug(i, el);&#10;
@@ -208,27 +265,25 @@ JMVC.extend('fooWidget', {&#10;
 // with the module as second parameter&#10;
 //&#10;
 JMVC.extend('fooWidget2', function () {&#10;
-&#10;
-    // here private code&#10;
+    //&#10;
+    // private code here&#10;
     // &#10;
-&#10;
     return {&#10;
         initCheck : function () {&#10;
             console.log('init check 2');&#10;
-            return true;&#10;
+            return false; //that will lock the extension&#10;
         },&#10;
-&#10;
         init : function () {&#10;
             console.log('init fooWidget 2');&#10;
         },&#10;
-&#10;
         start : function () {&#10;
             console.log('doing foo 2');&#10;
         }&#10;
     }&#10;
 });&#10;
 JMVC.fooWidget.start();&#10;
-JMVC.fooWidget2.start();&#10;
+JMVC.fooWidget2.start();    // that will throw a TypeError&#10;
+                            // given the initCheck returned value
     </sample>
 
     <testlink>test_api_jmvc_extend</testlink>
@@ -249,7 +304,7 @@ JMVC.fooWidget2.start();&#10;
             return {
                 initCheck : function () {
                     console.log('init check 2');
-                    return true;
+                    return false;
                 },
                 init : function () {
                     console.log('init fooWidget 2');
@@ -347,7 +402,7 @@ console.debug(you.hello());</sample>
     <signature name="getView">JMVC.getView(String name)</signature>
     <description>This is a shortcut call for JMVC.factory, with the first parameter preset to 'view'</description>
     <params>
-        <param name="*name">the name of the new view</param>
+        <param name="*name">the name of the new view, the view file must be app/views{name}.html where `name` can contain subpaths like 'container/main/foot'</param>
     </params>
     <returns>the view instance or false</returns>
     <status>testing</status>
@@ -372,12 +427,29 @@ console.debug(you.hello());</sample>
     <returns>void (undefined)</returns>
     <status>testing</status>
     <sample>// INNER HOOK&#10;
-JMVC.hook({'onAfterRender': function (){alert('You`ll never see that message booking that function from the console!!!'); }});&#10;
+JMVC.hook({&#10;
+    'onAfterRender': function () {&#10;
+        alert('You`ll never see that message booking that function from the console!!!');&#10;
+    }&#10;
+});&#10;
+&#10;
 // USER DEFINED HOOK&#10;
 function foo() {&#10;
-    JMVC.hookCheck('myhook', [1,2,3]);&#10;
+    JMVC.hookCheck('myhook', [1, 2, 3, 4, 5, 6]);&#10;
 };&#10;
-JMVC.hook({'myhook': function () {console.debug(arguments); }}, true);&#10;
+JMVC.hook({&#10;
+    'myhook': function () {&#10;
+        var sum = 0;&#10;
+        JMVC.each(&#10;
+            JMVC.array.fromArguments(arguments),&#10;
+            function (o, i) {&#10;
+                sum += o;&#10;
+            }&#10;
+        );&#10;
+        console.debug(sum);&#10;
+        console.debug(arguments);&#10;
+    }&#10;
+}, true);&#10;
 foo();</sample>
     <code>
         JMVC.hook({
@@ -386,10 +458,18 @@ foo();</sample>
             }
         });
         function foo() {
-            JMVC.hookCheck('myhook', [1,2,3]);
+            JMVC.hookCheck('myhook', [1, 2, 3, 4, 5 ,6]);
         };
         JMVC.hook({
             myhook: function () {
+                var sum = 0;
+                JMVC.each(
+                    JMVC.array.fromArguments(arguments),
+                    function (o, i) {
+                        sum += o;
+                    }
+                );
+                console.debug(sum);
                 console.debug(arguments);
             }}, true);
         foo();</code>
@@ -422,6 +502,22 @@ JMVC.hook({'myhook': function () {&#10;
     return a;&#10;
 }}, true);&#10;
 console.debug(foo());</sample>
+    <code>
+        function foo() {
+            return JMVC.hookCheck('myhook', [1,2,3]);
+        };
+        JMVC.hook({'myhook': function () {
+            var a = Array.prototype.slice.call(arguments, 1);
+            console.debug('inner 1: ', a);
+            return a;
+        }}, true);
+        JMVC.hook({'myhook': function () {
+            var a = Array.prototype.slice.call(arguments, 1);
+            console.debug('inner 2: ', a);
+            return a;
+        }}, true);
+        console.debug(foo());
+    </code>
 </function>
 <!--
 [MALTA] src/jmvc/htmlChars.xml
@@ -434,6 +530,9 @@ console.debug(foo());</sample>
     </params>
     <returns>the string with substituted char</returns>
     <status>complete</status>
+    <sample>&#10;
+console.debug(JMVC.htmlChars("&amp;me"));&#10;
+    </sample>
 </function>
 <!--
 [MALTA] src/jmvc/htmlCharsDecode.xml
@@ -563,14 +662,20 @@ JMVC.nsMake('y.d');&#10;console.debug(y.d);</sample>
     </params>
     <returns>the parsed content</returns>
     <status>incomplete</status>
-    <sample>var txt = '[L[ciao]] Federico, [L[come stai]]?';&#10;
+    <sample>var txt = "[L[ciao]] Federico, [L[come stai]]?";&#10;
 &#10;
 //default lang is en, and app/i18n/en.js contains tha translations&#10;
 console.debug(JMVC.parseLang(txt));&#10;
 &#10;
-//but You set any language es: app/i18n/jp.js&#10;
-JMVC.cookie.set('lang',"jp");&#10;
-console.debug(JMVC.parseLang(txt));</sample>
+//but You set any language es: app/i18n/en.js&#10;
+JMVC.cookie.set("lang", "en");&#10;
+console.debug(JMVC.parseLang(txt));&#10;
+JMVC.cookie.set("lang", "it");&#10;
+console.debug(JMVC.parseLang(txt));&#10;
+JMVC.cookie.set("lang", "de");&#10;
+console.debug(JMVC.parseLang(txt));&#10;
+JMVC.cookie.set("lang", "jp");&#10;
+console.debug(JMVC.parseLang(txt));&#10;</sample>
 </function>
 <!--
 [MALTA] src/jmvc/preload.xml
@@ -646,6 +751,12 @@ console.debug(c1.add(c2) + '');&#10;</sample>
 console.log(t);&#10;
 JMVC.purge(t);&#10;
 console.log(t);</sample>
+    <code>
+        var t = {name:'Jhon', surname:'foo'};
+        console.log(t);
+        JMVC.purge(t);
+        console.log(t);
+    </code>
 </function>
 <!--
 [MALTA] src/jmvc/require.xml
@@ -694,7 +805,7 @@ JMVC.debug(JMVC.get('a', sessionStorage));&#10;
     <param>
         <name>W</name>
         <type>reference</type>
-        <description>JMVC.W is a reference to th current window object</description>
+        <description>JMVC.W is a reference to the current window object</description>
     </param>
 </jmvc>
 <!--
@@ -778,9 +889,18 @@ list.els;</sample>
         </functions>
     </returns>
     <sample>var c = JMVC.Channel('trial');&#10;
-c.sub('notice1', function (a, b) {alert('first notice'); console.debug(a,b);});&#10;
-b.pub('notice1', ['hello','world'])</sample>
+c.sub('notice', function (a, b, c) {&#10;
+    alert('first notice');&#10;
+    console.debug(a, b, c);&#10;
+});&#10;
+c.pub('notice', ['hello','world']);</sample>
     <status>incomplete</status>
+    <code>var c = JMVC.Channel('trial');
+c.sub('notice', function (a, b, c) {
+    alert('first notice');
+    console.debug(a, b, c);
+});
+c.pub('notice', ['hello','world'])</code>
 </function>
 <!--
 [MALTA] src/_constructors/Interface.xml
@@ -807,16 +927,28 @@ b.pub('notice1', ['hello','world'])</sample>
     <returns>the variable reference or value</returns>
     <status>incomplete</status>
     <sample>function t(){&#10;
-var p = new JMVC.Promise();&#10;
-window.setTimeout(function () {&#10;
-console.debug('uan');&#10;
-p.done();&#10;
-}, 2000);&#10;
-return p;&#10;
+    var p = new JMVC.Promise();&#10;
+    window.setTimeout(function () {&#10;
+        console.log('uan');&#10;
+        p.done();&#10;
+    }, 2000);&#10;
+    return p;&#10;
 };&#10;
-t()&#10;
-.then(function(){console.debug('two');})&#10;
-.then(function(){console.debug('tree');});</sample>
+t().then(function(){console.log('two');})&#10;
+   .then(function(){console.log('tree');});</sample>
+<status>complete</status>
+    <code>
+function t(){
+    var p = new JMVC.Promise();
+    window.setTimeout(function () {
+        console.log('uan');
+        p.done();
+    }, 2000);
+    return p;
+};
+t().then(function(){console.log('two');})
+   .then(function(){console.log('tree');});
+    </code>
 </function>
 </constructors>    
 <!--
@@ -1218,6 +1350,22 @@ t()&#10;
 -->
 <css>
 <!--
+[MALTA] src/css/clearer.xml
+-->
+<function>
+    <signature name="clearer">JMVC.css.clearer(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+
+<!--
 [MALTA] src/css/addRule.xml
 -->
 <function>
@@ -1248,10 +1396,10 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/css/clearer.xml
+[MALTA] src/css/beResponsive.xml
 -->
 <function>
-    <signature name="clearer">JMVC.css.clearer(Element where, String tag, Literal attrs, String inner)</signature>
+    <signature name="beResponsive">JMVC.css.autoHeadings(Element where, String tag, Literal attrs, String inner)</signature>
     <description>this is a shortcut that merges create+append</description>
     <params>
         <param name="*where">dom element target</param>
@@ -1292,6 +1440,7 @@ t()&#10;
     <returns>void (undefined)</returns>
     <status>incomplete</status>
 </function>
+
 <!--
 [MALTA] src/css/height.xml
 -->
@@ -1322,6 +1471,8 @@ t()&#10;
     <returns>void (undefined)</returns>
     <status>incomplete</status>
 </function>
+
+
 <!--
 [MALTA] src/css/pest.xml
 -->
@@ -2137,7 +2288,7 @@ t()&#10;
     <signature name="addScript">JMVC.head.addScript(String src, Boolean parse, Boolean explicit)</signature>
     <description>Add a script in the head section</description>
     <params>
-        <param name="*src">this can be the url of the script or the script content (you can even use \{\{myscript name=`hello` ... \{\} )</param>
+        <param name="*src">this can be the url of the script or the script content, even &#123; &#123;myscript name=`hello` ... &#125; &#125; can be used</param>
         <param name="parse">set true if You mean to use JMVC.vars variables placeholders in the script</param>
         <param name="explicit">set true if You mean to pass the script content or a view placeholder in the src (even with on-the-fly variables), in that case 'parse' argument will be considered as true in any case</param>
     </params>
@@ -2725,6 +2876,17 @@ console.debug(JMVC.util.getType(a));</sample>
     <returns>void (undefined)</returns>
     <testlink>test_api_array_inarrayrich</testlink>
     <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/array/fromArguments.xml
+-->
+<function>
+    <signature name="fromArguments">JMVC.array.fromArguments(PseudoArray args)</signature>
+    <description>Get a real array of arguments given the function arguments object</description>
+    <params>
+        <param name="arg">The 'arguments' of a function</param>
+    </params>
+    <returns>The array of arguments</returns>
 </function>
 <!--
 [MALTA] src/array/range.xml

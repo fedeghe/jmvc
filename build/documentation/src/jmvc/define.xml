@@ -1,0 +1,40 @@
+<function>
+    <signature name="define">JMVC.define(ns, dep, cb)</signature>
+    <description>AMD like function</description>
+    <params>
+        <param name="ns">Namespace desired for the module (within JMVC)</param>
+        <param name="dep">dependencies modules</param>
+        <param name="cb">function where dependencies will be injected, must return the module implementation</param>
+    </params>
+    <returns>the brand new module</returns>
+    <sample>/**&#10;
+* inject two modules: app/extensions/def/xxx.js&#10;
+* and app/extensions/def/yyy.js&#10;
+*/&#10;
+var t = JMVC.define(&#10;
+    'xxx.sss',&#10;
+    ['def.xxx', 'def.yyy'],&#10;
+    function (x, y) {&#10;
+        return {&#10;
+            one : function () {&#10;
+                alert(y.getName() + ' extends ' + x.name);&#10;
+            }&#10;
+        }&#10;
+    }&#10;
+);&#10;
+JMVC.xxx.sss.one();&#10;
+console.debug(t);
+</sample>
+    <status>complete</status>
+    <code>
+        var t = JMVC.define('xxx.sss', ['def.xxx', 'def.yyy'], function (x, y) {
+            return {
+                one : function () {
+                    alert(y.getName() + ' extends ' + x.name);
+                }
+            }
+        });
+        JMVC.xxx.sss.one();
+        console.debug(t);
+    </code>
+</function>

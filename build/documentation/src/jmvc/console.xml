@@ -2,10 +2,20 @@
     <signature name="console">JMVC.console()</signature>
     <description>Toggles html+css+js+preview console</description>
     <params>
-        <param name="">this function needs no parameters</param>
+        <param name="">no parameters</param>
     </params>
     <returns>void (undefined)</returns>
-    <sample>// show the console &#10;JMVC.console();&#10;// and hide it after 6 seconds &#10;window.setTimeout(function () {JMVC.console(); }, 6000);</sample>
+    <sample>// show the console &#10;
+JMVC.console();&#10;
+// and hide it after 6 seconds &#10;
+window.setTimeout(function () {&#10;
+    JMVC.console();&#10;
+}, 6000);</sample>
     <status>complete</status>
-    <code>JMVC.console();window.setTimeout(function () {JMVC.console(); }, 6000);</code>
+    <code>JMVC.console();
+        window.setTimeout(function () {
+                JMVC.console();
+            }, 6000
+        );
+    </code>
 </function>

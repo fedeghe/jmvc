@@ -10,4 +10,10 @@
 console.log(t);&#10;
 JMVC.purge(t);&#10;
 console.log(t);</sample>
+    <code>
+        var t = {name:'Jhon', surname:'foo'};
+        console.log(t);
+        JMVC.purge(t);
+        console.log(t);
+    </code>
 </function>

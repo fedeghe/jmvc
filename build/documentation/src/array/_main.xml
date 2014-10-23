@@ -4,6 +4,7 @@
     $$src/array/find.xml$$
     $$src/array/findAll.xml$$
     $$src/array/findRich.xml$$
+    $$src/array/fromArguments.xml$$
     $$src/array/range.xml$$
     $$src/array/unique.xml$$
 </array>

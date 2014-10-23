@@ -1,0 +1,8 @@
+<function>
+    <signature name="fromArguments">JMVC.array.fromArguments(PseudoArray args)</signature>
+    <description>Get a real array of arguments given the function arguments object</description>
+    <params>
+        <param name="arg">The 'arguments' of a function</param>
+    </params>
+    <returns>The array of arguments</returns>
+</function>
