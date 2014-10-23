@@ -7,10 +7,12 @@ if (document.doctype !== null) {
         doctype_string = "<!DOCTYPE " + node.name + (node.publicId ? ' PUBLIC"' + node.publicId + '"' : '') + (!node.publicId && node.systemId ? ' SYSTEM' : '') + (node.systemId ? ' "' + node.systemId + '"' : '') + ">";
 
     if (doctype_string !== '<!DOCTYPE html>') {
-        var t = _.shimthags.split(',');
-        for (var i = 0, l = t.length; i < l; i++) {
-            document.createElement(t[i]);
-        }
+        var t = _.shimthags.split(','),
+            i = 0,
+            l = t.length;
+
+        while (i < l) document.createElement(t[i++]);
+
         JMVC.head.addStyle(_.shimthags + '{display:block}', true, true);
     }
 }
