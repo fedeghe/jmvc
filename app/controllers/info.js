@@ -38,7 +38,12 @@ JMVC.controllers.info = function () {
 				testsuite : 'Test suite',
 				why : 'Why'
 			},
-			i;
+			i,
+			logoimg = 'jmvc_n2.png';
+
+		JMVC.dom.preloadImage(
+			JMVC.vars.baseurl + '/media/img/' + logoimg
+		);
 
 		for (i in toplinksdata) {
 			toplinks.push('<a href="#' + i + '" class="round4">' + toplinksdata[i] + '</a>');
