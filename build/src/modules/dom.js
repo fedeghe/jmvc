@@ -760,12 +760,10 @@ JMVC.dom = {
      * @return {[type]}       [description]
      */
     wrap : function (node, tag, attrs) {
-        var n = JMVC.dom.create(tag || 'div', attrs || {}),
-            clone = JMVC.dom.clone(node);
-        console.log(n);
-        JMVC.dom.append(n, clone);
-        JMVC.dom.replace(node, n);
-        return n;
+        var wrap = JMVC.dom.create(tag || 'div', attrs || {});
+        this.insertAfter(wrap, node);
+        wrap.appendChild(node);
+        return wrap;
     },
 
     /**
