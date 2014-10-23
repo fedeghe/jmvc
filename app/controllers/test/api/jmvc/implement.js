@@ -44,23 +44,24 @@ JMVC.controllers.implement = function() {
 
 
 			JMVC.test.describe('Check it using a JMVC.Interface instance');
-			JMVC.test.code('var interfacePASS = new JMVC.interface(["talk", "eat"]),\n'+
-				'interfaceFAIL = new JMVC.interface(["foo", "nope"]);\n' + 
+			JMVC.test.code('var interfacePASS = new JMVC.interface("human", ["talk", "eat"]),\n'+
+				'interfaceFAIL = new JMVC.interface("ufo", ["foo", "nope"]);\n' + 
 				'//now check\n' +
-				'interfacePASS.check(Person);\n'+
-				'interfaceFAIL.check(Person);\n'
+				'var At = new Person("Athena");\n' +
+				'JMVC.Interface.checkImplements(At, interfacePASS);\n'+
+				'JMVC.Interface.checkImplements(At, interfaceFAIL);\n'
 			);
-			var interfacePASS = new JMVC.Interface(['talk', 'eat']),
-				interfaceFAIL = new JMVC.Interface(['foo', 'nope']);
+			var interfacePASS = new JMVC.Interface('human', ['talk', 'eat']),
+				interfaceFAIL = new JMVC.Interface('ufo', ['foo', 'nope']);
 			
 			JMVC.test.testValue(
 				'interfacePASS.check(Person)',
-				function () {return interfacePASS.check(Person);},
+				function () {return JMVC.Interface.checkImplements(new Person, interfacePASS);},
 				true
 			);
 			JMVC.test.testValue(
 				'interfaceFAIL.check(Person)',
-				function () {return interfaceFAIL.check(Person);},
+				function () {return JMVC.Interface.checkImplements(new Person, interfaceFAIL);},
 				false
 			);
 
