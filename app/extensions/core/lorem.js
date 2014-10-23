@@ -14,7 +14,17 @@ JMVC.extend('string', {
                 'anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, ' +
                 'qui nunc nobis videntur parum clari, fiant sollemnes in futurum.',
             els = li.split(/\s/),
-            l = els.length;
-        return s ? els.slice(0, s < l ? s : l).join(' ') : els.join(' ');
+            l = els.length,
+            ret = '',
+            i = 0;
+        if (s > l) {
+            while (i < s) {
+                ret += els[i % l] + ' ';
+                i++;
+            }
+        } else {
+            ret = s ? els.slice(0, s < l ? s : l).join(' ') : els.join(' ');
+        }
+        return ret;
     }
 });
