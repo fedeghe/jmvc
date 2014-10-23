@@ -34,8 +34,7 @@ JMVC.controllers.widgzard = function () {
 
         JMVC.css.autoHeadings();
 
-        //document.body.className = 'resp';
-        JMVC.css.beResponsive();
+        JMVC.css.beResponsive(); //document.body.className = 'resp';
 
         function getConfig() {
             return {
@@ -661,8 +660,10 @@ JMVC.controllers.widgzard = function () {
                                 "});"
                             )
                         },{
-                            html : '<strong>where</strong>',
                             content : [{
+                                tag: 'strong',
+                                html : 'where'
+                            },{
                                 tag : 'ul',
                                 content : [
                                     li('either <i>html</i> or <i>content</i> are mandatory, and can be used togheter, <i>html</i> will come before <i>content</i>'),
@@ -676,6 +677,25 @@ JMVC.controllers.widgzard = function () {
                             }]
                         }]
                     }]
+                }]
+            },{
+                attrs : {'class':'round'},
+                style : {
+                    margin : margin +' 0px',
+                    backgroundColor:color0,
+                    width:'100%',
+                    padding : padding
+                },
+                content : [{
+                    tag : 'h1',
+                    style: {fontSize : '30px'},
+                    html : 'The previous sample was a joke'
+                },{
+                    tag : 'p',
+                    html : 'let`s try to stress the Widgzard function with something more interesting'
+                },{
+                    tag:'hr',
+                    style : {margin : padding + ' ' + spacing}
                 }]
             },{
                 attrs : {'class' : 'round respfixed'},
