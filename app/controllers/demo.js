@@ -120,9 +120,9 @@ JMVC.controllers.demo = function() {
 				'Streetview panorama animator': '?map=true',
 				'Some flag fun': 'demo/flag',
 				'JMVC Logo plotted': 'demo/logo',
-				//'Google': 'google.jmvc',
-				//'Google flash': 'google.jmvc?flash',
-				//'Google aberration': 'google.jmvc?aberrate',
+				'Google': 'google.jmvc',
+				'Google flash': 'google.jmvc?flash',
+				'Google aberration': 'google.jmvc?aberrate',
 				'Observer': 'demo/observer.jmvc',
 				'Sheduler': 'demo/scheduler.jmvc',
 				'Effects': 'demo/fx.jmvc',
@@ -139,6 +139,12 @@ JMVC.controllers.demo = function() {
 				'Widgzard' : 'widgzard',
 				'Trial drawer' : 'demo/drawer.jmvc',
 				'css sprite' : 'console/index?fullscreen=true&h=%3Cdiv%20class%3D%22hi%22%3E%3C%2Fdiv%3E&j=%2F*%20no%20javascript%20content%20*%2F&c=.hi%20%7B%0A%20%20%20%20width%3A%2050px%3B%0A%20%20%20%20height%3A%2072px%3B%0A%20%20%20%20background-image%3A%20url(%22http%3A%2F%2Fs.cdpn.io%2F79%2Fsprite-steps.png%22)%3B%0A%20%20%20%20%0A%20%20%20%20-webkit-animation%3A%20play%20.8s%20steps(10)%20infinite%3B%0A%20%20%20%20%20%20%20-moz-animation%3A%20play%20.8s%20steps(10)%20infinite%3B%0A%20%20%20%20%20%20%20%20-ms-animation%3A%20play%20.8s%20steps(10)%20infinite%3B%0A%20%20%20%20%20%20%20%20%20-o-animation%3A%20play%20.8s%20steps(10)%20infinite%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20animation%3A%20play%20.8s%20steps(10)%20infinite%3B%0A%7D%0A%0A%40-webkit-keyframes%20play%20%7B%0A%20%20%20from%20%7B%20background-position%3A%20%20%20%200px%3B%20%7D%0A%20%20%20%20%20to%20%7B%20background-position%3A%20-500px%3B%20%7D%0A%7D%0A%0A%40-moz-keyframes%20play%20%7B%0A%20%20%20from%20%7B%20background-position%3A%20%20%20%200px%3B%20%7D%0A%20%20%20%20%20to%20%7B%20background-position%3A%20-500px%3B%20%7D%0A%7D%0A%0A%40-ms-keyframes%20play%20%7B%0A%20%20%20from%20%7B%20background-position%3A%20%20%20%200px%3B%20%7D%0A%20%20%20%20%20to%20%7B%20background-position%3A%20-500px%3B%20%7D%0A%7D%0A%0A%40-o-keyframes%20play%20%7B%0A%20%20%20from%20%7B%20background-position%3A%20%20%20%200px%3B%20%7D%0A%20%20%20%20%20to%20%7B%20background-position%3A%20-500px%3B%20%7D%0A%7D%0A%0A%40keyframes%20play%20%7B%0A%20%20%20from%20%7B%20background-position%3A%20%20%20%200px%3B%20%7D%0A%20%20%20%20%20to%20%7B%20background-position%3A%20-500px%3B%20%7D%0A%7D%0A&l=#preview',
+				'Css logo attempt' : 'console/index?fullscreen=true&h=%3Cdiv%20class%3D%22logo%22%3E%0A%09%3Cdiv%20class%3D%22o1%22%3E%0A%09%09%3Cdiv%20class%3D%22ell%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22cil%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22arr%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%09%3Cdiv%20class%3D%22o2%22%3E%0A%09%09%3Cdiv%20class%3D%22ell%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22cil%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22arr%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%09%3Cdiv%20class%3D%22o3%22%3E%0A%09%09%3Cdiv%20class%3D%22ell%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22cil%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22arr%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%09%3Cdiv%20class%3D%22o4%22%3E%0A%09%09%3Cdiv%20class%3D%22ell%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22cil%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22arr%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%09%3Cdiv%20class%3D%22o5%22%3E%0A%09%09%3Cdiv%20class%3D%22ell%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22cil%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22arr%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%09%3Cdiv%20class%3D%22o6%22%3E%0A%09%09%3Cdiv%20class%3D%22ell%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22cil%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22arr%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%3C%2Fdiv%3E&j=%2F*%20no%20javascript%20content%20*%2F&c=body%7B%0A%09margin-top%3A10px%3B%0A%7D%0A.logo%7B%0A%09position%3Arelative%3B%0A%09width%3A%20500px%3B%0A%09height%3A538px%3B%0A%09text-align%3Acenter%3B%0A%09margin%3A0%20auto%3B%0A%7D%0A.o1%2C%20.o2%2C%20.o3%2C%20.o4%2C%20.o5%2C%20.o6%7B%0A%09position%3Aabsolute%3B%0A%7D%0A.o1%7B%0A%09left%3A200px%3B%0A%7D%0A.o2%7B%0A%09left%3A327px%3B%0A%09top%3A74px%3B%0A%20%09-webkit-transform%3A%20rotate(60deg)%3B%0A%09-moz-transform%3A%20rotate(60deg)%3B%0A%09-ms-transform%3A%20rotate(60deg)%3B%0A%09-o-transform%3A%20rotate(60deg)%3B%0A%7D%0A.o3%7B%0A%09left%3A327px%3B%0A%09top%3A221px%3B%0A%20%09-webkit-transform%3A%20rotate(120deg)%3B%0A%09-moz-transform%3A%20rotate(120deg)%3B%0A%09-ms-transform%3A%20rotate(120deg)%3B%0A%09-o-transform%3A%20rotate(120deg)%3B%0A%7D%0A%0A.o4%7B%0A%09left%3A200px%3B%0A%09top%3A293px%3B%0A%20%09-webkit-transform%3A%20rotate(180deg)%3B%0A%09-moz-transform%3A%20rotate(180deg)%3B%0A%09-ms-transform%3A%20rotate(180deg)%3B%0A%09-o-transform%3A%20rotate(180deg)%3B%0A%7D%0A%0A.o5%7B%0A%09left%3A73px%3B%0A%09top%3A217px%3B%0A%20%09-webkit-transform%3A%20rotate(240deg)%3B%0A%09-moz-transform%3A%20rotate(240deg)%3B%0A%09-ms-transform%3A%20rotate(240deg)%3B%0A%09-o-transform%3A%20rotate(240deg)%3B%0A%7D%0A%0A.o6%7B%0A%09left%3A73px%3B%0A%09top%3A72px%3B%0A%20%09-webkit-transform%3A%20rotate(300deg)%3B%0A%09-moz-transform%3A%20rotate(300deg)%3B%0A%09-ms-transform%3A%20rotate(300deg)%3B%0A%09-o-transform%3A%20rotate(300deg)%3B%0A%7D%0A.ell%20%7B%0A%09width%3A%20100px%3B%0A%20%09height%3A%2060px%3B%0A%09background%3A%20%23e51d8a%3B%0A%09-moz-border-radius%3A%2050px%20%2F%2030px%3B%0A%09-webkit-border-radius%3A%2050px%20%2F%2030px%3B%0A%09border-radius%3A%2050px%20%2F%2030px%3B%20%7D%0A%7D%0A.eli%3Aafter%7B%0A%09content%20%3A%20%22%22%3B%0A%7D%0A.cil%7B%0A%09position%3Arelative%3B%0A%09top%3A%20-30px%3B%0A%09width%3A%20100px%3B%0A%20%09height%3A%20150px%3B%0A%09background-color%3A%23e51d8a%3B%09%0A%7D%0A.arr%20%7B%0A%09position%3Arelative%3B%0A%09width%3A%200%3B%0A%09height%3A%200%3B%0A%09top%3A%20-30px%3B%0A%09border-left%3A%2050px%20solid%20transparent%3B%0A%09border-right%3A%2050px%20solid%20transparent%3B%0A%09border-top%3A%2035px%20solid%20%23e51d8a%3B%0A%7D&l=#preview',
+				'Space invaders shadow based' : 'console/index?fullscreen=true&h=%3Cp%3EDirectly%20from%20the%20fabulous%20%3Ca%20href%3D%22http%3A%2F%2Fcss-tricks.com%2Fexamples%2FShapesOfCSS%2F%22%20target%3D%22_blank%22%3Ecss-tricks.com%3C%2Fa%3E%20just%20to%20test%20this%20console.%3C%2Fp%3E%0A%0A%3Cdiv%20id%3D%22space-invader%22%3E%3C%2Fdiv%3E&j=%2F*%20no%20javascript%20content%20*%2F&c=body%7B%0A%09padding%3A30px%3B%0A%09font-family%3Averdana%2C%20sans%0A%7D%0Ap%7B%0A%09padding%3A10px%200px%0A%7D%0A%23space-invader%7B%0A%09position%3Aabsolute%3B%0A%09left%3A50px%3B%0A%09top%3A100px%3B%0A%09box-shadow%3A%200%200%200%201em%20red%2C%200%201em%200%201em%20red%2C%20-2.5em%201.5em%200%20.5em%20red%2C%202.5em%201.5em%200%20.5em%20red%2C%20-3em%20-3em%200%200%20red%2C%203em%20-3em%200%200%20red%2C%20-2em%20-2em%200%200%20red%2C%202em%20-2em%200%200%20red%2C%20-3em%20-1em%200%200%20red%2C%20-2em%20-1em%200%200%20red%2C%202em%20-1em%200%200%20red%2C%203em%20-1em%200%200%20red%2C%20-4em%200%200%200%20red%2C%20-3em%200%200%200%20red%2C%203em%200%200%200%20red%2C%204em%200%200%200%20red%2C%20-5em%201em%200%200%20red%2C%20-4em%201em%200%200%20red%2C%204em%201em%200%200%20red%2C%205em%201em%200%200%20red%2C%20-5em%202em%200%200%20red%2C%205em%202em%200%200%20red%2C%20-5em%203em%200%200%20red%2C%20-3em%203em%200%200%20red%2C%203em%203em%200%200%20red%2C%205em%203em%200%200%20red%2C%20-2em%204em%200%200%20red%2C%20-1em%204em%200%200%20red%2C%201em%204em%200%200%20red%2C%202em%204em%200%200%20red%3B%0A%09background%3A%20red%3B%0A%09width%3A%201em%3B%0A%09height%3A%201em%3B%0A%09overflow%3A%20hidden%3B%0A%09margin%3A%2050px%200%2070px%2065px%3B%0A%7D%20&l=#preview',
+				'Shadow based experiment' : 'console/index?fullscreen=true&h=%3Cp%3EDirectly%20from%20the%20fabulous%20%3Ca%20href%3D%22http%3A%2F%2Fcss-tricks.com%2Fexamples%2FShapesOfCSS%2F%22%20target%3D%22_blank%22%3Ecss-tricks.com%3C%2Fa%3E%20just%20to%20test%20this%20console.%3C%2Fp%3E%0A%0A%3Cdiv%20id%3D%22space-invader%22%3E%3C%2Fdiv%3E&j=%2F*%20no%20javascript%20content%20*%2F%0Avar%20el%20%3D%20JMVC.dom.find(%27%23space-invader%27)%2C%0A%09tpl%20%3D%20%27%25left%25px%20%25top%25px%200%201px%20red%27%2C%0A%09els%20%3D%20%5B%5D%2C%0A%09versus%20%3D%201%2C%0A%09curx%20%3D%200%2C%20cury%20%3D%200%3B%0A%0Awindow.setInterval(function%20()%7B%0A%09if%20(cury%20%3D%3D%20100)%20versus%20%3D%20-1%3B%0A%09if%20(cury%20%3D%3D%200)%20versus%20%3D%201%0A%09els.push(JMVC.string.replaceAll(tpl%2C%20%7Bleft%3A%20curx%2C%20top%3Acury%7D))%3B%0A%09el.style.boxShadow%20%3D%20els.join(%27%2C%27)%3B%09%20%0A%09cury%20%3D%20cury%20%2B%20versus%3B%0A%09curx%2B%2B%3B%0A%7D%2C100)%3B%0A&c=body%7B%0A%09padding%3A30px%3B%0A%09font-family%3Averdana%2C%20sans%0A%7D%0Ap%7B%0A%09padding%3A10px%200px%0A%7D%0A%23space-invader%7B%0A%09position%3Aabsolute%3B%0A%09left%3A50px%3B%0A%09top%3A100px%3B%0A%09box-shadow%3A%200px%200px%200%201px%20red%3B%0A%09width%3A%200em%3B%0A%09height%3A%200em%3B%0A%09overflow%3A%20hidden%3B%0A%09margin%3A%2050px%200%2070px%2065px%3B%0A%7D%20&l=#preview',
+				'ShadowMatrix function experiment' : 'demo/shadow?size=3',
+				'ShadowMatrix function experiment animation' : 'demo/animation?size=5',
+				'ShadowMatrix create matrix from image' : 'demo/shadowJMVC',
 				'* strict': 'test_strict',
 				'* obj/bucket': 'test_bucket',
 				'* obj/deque': 'test_deque',
@@ -1285,29 +1291,638 @@ JMVC.controllers.demo = function() {
 
 			document.body.style.padding = '50px';
 
-			document.body.innerHTML = JMVC.string.lorem();
+			document.body.innerHTML = JMVC.string.lorem(500);
 			
 			var drawer = JMVC.mobile.drawer.create([{
 		        label : 'JMVC logo',
 		        href : '/demo/logo.html'
 		    },{
-		        label : 'Google',
+		        label : 'Google logo plotted',
+		        href : '/google.jmvc'
+		    },{
+		        label : 'Google logo plotted flash',
 		        href : '/google.jmvc?flash'
 		    },{
-		        label : 'JMVC logo',
-		        href : '/demo/logo.html'
-		    },{
-		        label : 'Google',
-		        href : '/google.jmvc?flash'
-		    },{
-		        label : 'JMVC logo',
-		        href : '/demo/logo.html'
-		    },{
-		        label : 'Google',
-		        href : '/google.jmvc?flash'
+		        label : 'Google logo plotted aberration',
+		        href : '/google.jmvc?aberrate'
 		    }]);
 
 		    drawer.render();
+		});
+	};
+
+	this.action_shadow = function (){
+		var that = this;
+		JMVC.require(
+			'core/mobile/drawer/drawer',
+			'core/lorem',
+			'plotter/shadowMatrix'
+		);
+		
+		JMVC.getView('vacuum')
+		.set({
+			style: 'padding:0px 10px 50px',
+			id: 'container'
+		})
+		.render(function() {
+
+			
+			var size = that.get('size') || 5,
+				cnt = JMVC.dom.find('#container'),
+				flag = JMVC.dom.create('div', {id:'flag'}),
+				space1 = JMVC.dom.create('div', {id:'space1'}),
+				space2 = JMVC.dom.create('div', {id:'space2'}),
+				space3 = JMVC.dom.create('div', {id:'space3'}),
+				space4 = JMVC.dom.create('div', {id:'space4'}),
+				space5 = JMVC.dom.create('div', {id:'space5'}),
+				mario = JMVC.dom.create('div', {id:'mario'}),
+				pacman = JMVC.dom.create('div', {id:'pacman'}),
+				dimonni = JMVC.dom.create('div', {id:'dimonni'}),
+
+				ul = JMVC.dom.create('div'),
+				li0 = JMVC.dom.add(ul, 'div', {style:'height:'+(20 * size)+'px'}),
+				li1 = JMVC.dom.add(ul, 'div', {style:'height:'+(20 * size)+'px'}),
+				li2 = JMVC.dom.add(ul, 'div', {style:'height:'+(20 * size)+'px'}),
+				li3 = JMVC.dom.add(ul, 'div', {style:'height:'+(20 * size)+'px'}),
+				li4 = JMVC.dom.add(ul, 'div', {style:'height:'+(20 * size)+'px'}),
+				li5 = JMVC.dom.add(ul, 'div', {style:'height:'+(20 * size)+'px'}),
+				li6 = JMVC.dom.add(ul, 'div', {style:'height:'+(20 * size)+'px'}),
+				li7 = JMVC.dom.add(ul, 'div', {style:'height:'+(30 * size)+'px'}),
+				li8 = JMVC.dom.add(ul, 'div', {style:'height:'+(50 * size)+'px'});
+
+			JMVC.css.style(JMVC.WDB, {padding : '50px'});
+
+			JMVC.dom.append(li0, flag);
+			JMVC.dom.append(li1, space1);
+			JMVC.dom.append(li2, space2);
+			JMVC.dom.append(li3, space3);
+			JMVC.dom.append(li4, space4);
+			JMVC.dom.append(li5, space5);
+			JMVC.dom.append(li6, mario);
+			JMVC.dom.append(li7, pacman);
+			JMVC.dom.append(li8, dimonni);
+			JMVC.dom.append(cnt, ul);
+			JMVC.dom.append(JMVC.WDB, cnt);
+
+			
+			
+
+			var sm0 = JMVC.shadowMatrix({
+				scale : size,
+				matrix : [
+					'.,.,.,.,.,.,.,.,.,.,.,.,.,.',
+					'.,.,.,.,.,.,.,.,.,.,.,.,.,.',
+					'.,.,.,.,.,.,O,O,.,.,.,.,.,.',
+					'.,.,.,.,.,.,O,O,.,.,.,.,.,.',
+					'.,.,.,.,O,O,O,O,O,O,.,.,.,.',
+					'.,.,.,.,O,O,O,O,O,O,.,.,.,.',
+					'.,.,.,.,.,.,O,O,.,.,.,.,.,.',
+					'.,.,.,.,.,.,O,O,.,.,.,.,.,.',
+					'.,.,.,.,.,.,.,.,.,.,.,.,.,.',
+					'.,.,.,.,.,.,.,.,.,.,.,.,.,.',
+				],
+				colorMap : {
+					'O' : 'transparent',
+					'.' : 'red'
+				}
+			});
+			sm0.draw({node : flag});
+
+
+			var sm1 = JMVC.shadowMatrix({
+				scale : size,
+				matrix : [
+					' , ,L,#,#, , , ',
+					' , ,#,#,#,#, , ',
+					' ,#,#,#,#,#,#, ',
+					'#,#, ,#,#, ,#,#',
+					'#,#,#,#,#,#,#,#',
+					' ,#, ,#,#, ,#, ',
+					'#, , , , , , ,#',
+					' ,#, , , , ,#, '
+				],
+				colorMap :  {
+					'L' : [JMVC.shadowMatrix.triUL, {color : '#'}],
+					'R' : [JMVC.shadowMatrix.triUR, {color : '#'}],
+					'#' : '#0a0',
+					' ' : 'transparent'
+				}
+			});
+
+
+			var sm2 = JMVC.shadowMatrix({
+				scale : size,
+				matrix : [
+					' , ,#, , , , , ,#, , ',
+					' , , ,#, , , ,#, , , ',
+					' , ,#,#,#,#,#,#,#, , ',
+					' ,#,#, ,#,#,#, ,#,#, ',
+					'#,#,#,#,#,#,#,#,#,#,#',
+					'#, ,#,#,#,#,#,#,#, ,#',
+					'#, ,#, , , , , ,#, ,#',
+					' , , ,#,#, ,#,#, , , '
+				],
+				colorMap : {
+					'#' : '#008',
+					' ' : 'transparent'
+				}
+			});
+			sm2.draw({node : space2});
+
+			var sm3 = JMVC.shadowMatrix({
+				scale : size,
+				matrix : [
+					' , , , ,#,#,#,#, , , , ',
+					' ,#,#,#,#,#,#,#,#,#,#, ',
+					'#,#,#,#,#,#,#,#,#,#,#,#',
+					'#,#,#, , ,#,#, , ,#,#,#',
+					'#,#,#,#,#,#,#,#,#,#,#,#',
+					' , ,#,#,#, , ,#,#,#, , ',
+					' ,#,#, , ,#,#, , ,#,#, ',
+					' , ,#,#, , , , ,#,#, , '
+				],
+				colorMap : {
+					'#' : '#DD127D',
+					' ' : 'transparent'
+				}
+			});
+			sm3.draw({node : space3});
+
+
+
+			var sm4 = JMVC.shadowMatrix({
+				scale : size,
+				matrix : [
+					' , , , , ,#,#,#,#,#,#, , , , , ',
+					' , , ,#,#,#,#,#,#,#,#,#,#, , , ',
+					' , ,#,#,#,#,#,#,#,#,#,#,#,#, , ',
+					' ,#,#, ,#,#, ,#,#, ,#,#, ,#,#, ',
+					'#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#',
+					' , ,#,#,#, , ,#,#, , ,#,#,#, , ',
+					' , , ,#, , , , , , , , ,#, , , '
+				],
+				colorMap : {
+					'#' : '#ffdd00',
+					' ' : 'transparent'
+				}
+			});
+			sm4.draw({node : space4});
+
+			var sm5 = JMVC.shadowMatrix({
+				scale : size,
+				matrix : [
+					' , , , , , , ,#, , , , , , , ',
+					' , , , , , ,#,#,#, , , , , , ',
+					' , , , , , ,#,#,#, , , , , , ',
+					' ,#,#,#,#,#,#,#,#,#,#,#,#,#, ',
+					'#,#,#,#,#,#,#,#,#,#,#,#,#,#,#',
+					'#,#,#,#,#,#,#,#,#,#,#,#,#,#,#',
+					'#,#,#,#,#,#,#,#,#,#,#,#,#,#,#',
+					'#,#,#,#,#,#,#,#,#,#,#,#,#,#,#'
+				],
+				colorMap : {
+					'#' : '#0f0',
+					' ' : 'transparent'
+				}
+			});
+			sm5.draw({node : space5});
+
+			var sm6 = JMVC.shadowMatrix({
+				scale : size,
+				matrix : [
+					' , , ,#,#,#,#,#, , , , ',
+					' , ,#,#,#,#,#,#,#,#,#, ',
+					' , ,@,@,@,$,$,@,$, , , ',
+					' ,@,$,@,$,$,$,@,$,$,$, ',
+					' ,@,$,@,@,$,$,$,@,$,$,$',
+					' ,@,@,$,$,$,$,@,@,@,@, ',
+					' , , ,$,$,$,$,$,$,$, , ',
+					' , ,@,@,#,@,@,@, , , , ',
+					' ,@,@,@,#,@,@,#,@,@,@, ',
+					'@,@,@,@,#,#,#,#,@,@,@,@',
+					'$,$,@,#,$,#,#,$,#,@,$,$',
+					'$,$,$,#,#,#,#,#,#,$,$,$',
+					'$,$,#,#,#,#,#,#,#,#,$,$',
+					' , ,#,#,#, , ,#,#,#, , ',
+					' ,@,@,@, , , , ,@,@,@, ',
+					'@,@,@,@, , , , ,@,@,@,@'
+				],
+				colorMap : {
+					'#' : '#db0102',// red
+					'$' : '#f8aa00',// skin
+					'@' : '#706700',// hair
+					' ' : 'transparent'
+				}
+			});
+			sm6.draw({node : space5});
+			window.setInterval(function (){
+				sm6.mirror();
+			}, 500);
+
+
+			var sm7 = JMVC.shadowMatrix({
+				scale : size,
+				matrix : [
+					' , , ,y,y,y,y,y, , , , , , , , , , , , , , , , ,p,p,p,p, , , , , , , , , , , , , , ,c,c,c,c, , , , , ',
+					' ,y,y,y,y,y,y,y,y,y, , , , , , , , , , , , ,p,p,p,p,p,p,p,p, , , , , , , , , , ,c,c,c,c,c,c,c,c, , , ',
+					'y,y,y,y,y,y,y,y,y,y,y, , , , , , , , , , ,p,p,p,p,p,p,p,p,p,p, , , , , , , , ,c,c,c,c,c,c,c,c,c,c, , ',
+					'y,y,y,y,y,y,y,y,y,y,y, , , , , , , , , ,p,p,p, , ,p,p,p,p, , ,p, , , , , , ,c,c, , ,c,c,c,c, , ,c,c, ',
+					' , ,y,y,y,y,y,y,y,y,y,y, , , , , , , , ,p,p, , , , ,p,p, , , , , , , , , , ,c, , , , ,c,c, , , , ,c, ',
+					' , , , , , ,y,y,y,y,y,y, , , , , , , , ,p,p, , ,E,E,p,p, , ,E,E, , , , , , ,c, ,E,E, ,c,c, ,E,E, ,c, ',
+					' , , , , , , , ,y,y,y,y, , , , , , , ,p,p,p, , ,E,E,p,p, , ,E,E,p, , , , ,c,c, ,E,E, ,c,c, ,E,E, ,c,c',
+					' , , , , , ,y,y,y,y,y,y, , , , , , , ,p,p,p,p, , ,p,p,p,p, , ,p,p, , , , ,c,c,c, , ,c,c,c,c, , ,c,c,c',
+					' , ,y,y,y,y,y,y,y,y,y,y, , , , , , , ,p,p,p,p,p,p,p,p,p,p,p,p,p,p, , , , ,c,c,c,c,c,c,c,c,c,c,c,c,c,c',
+					'y,y,y,y,y,y,y,y,y,y,y, , , , , , , , ,p,p,p,p,p,p,p,p,p,p,p,p,p,p, , , , ,c,c,c,c,c,c,c,c,c,c,c,c,c,c',
+					'y,y,y,y,y,y,y,y,y,y,y, , , , , , , , ,p,p,p,p,p,p,p,p,p,p,p,p,p,p, , , , ,c,c,c,c,c,c,c,c,c,c,c,c,c,c',
+					' ,y,y,y,y,y,y,y,y,y, , , , , , , , , ,p,p, ,p,p,p, , ,p,p,p, ,p,p, , , , ,c,c, ,c,c,c, , ,c,c,c, ,c,c',
+					' , , ,y,y,y,y,y, , , , , , , , , , , ,p, , , ,p,p, , ,p,p, , , ,p, , , , ,c, , , ,c,c, , ,c,c, , , ,c'
+				],
+				colorMap : {
+					' ' : 'transparent',
+					'y' : '#ff0',// red
+					'r' : '#f00', // skin
+					'p' : '#faa', //hair
+					'a' : '#aaf', //hair
+					'c' : 'coral', //hair
+					'o' : '#f83',
+					'E' : '#005'
+				}
+			});
+			sm7.draw({node : pacman});
+
+            var sm8 = JMVC.shadowMatrix({
+                scale : size,
+                matrix : [
+                    ' , , , , , , , , , , , , , , , , , , , , , , , ',
+                    ' , , , , , , , , , , , , , , , , , , , , , , , ',
+                    ' , , , , , ,O,-,O,-,O,-,O,-,O,-,b, , , , , , , ',
+                    ' , , , , ,B,-,-,-,-,-,-,-,-,-,-,B, , , , , , , ',
+                    ' , , , , ,B,-,-,-,-,-,-,-,-,O,-,O, , , , , , , ',
+                    ' , , , ,B,-,-,-,-,-,-,-,-,-,-,-,-,B, , , , , , ',
+                    ' , , , ,B,-,-,-,-,-,-,-,-,-,-,-,O,B,B, , , , , ',
+                    ' , , , ,B,-,-,-,-,-,-,-,-,-,-,-,-,-,B, , , , , ',
+                    ' , , , ,B,-,-,-,-,-,-,-,-,-,-,-,-,-,B, , , , , ',
+                    ' , , , ,B,B,-,-,-,-,B,B,-,-,-,-,-,-,B, , , , , ',
+                    ' , , , ,O,B, ,O,O,O,O,B, , ,O,-,-,-,-,B, , , , ',
+                    ' , , , ,O, , ,O,O, ,O, , , ,O,-,-,-,-,B, , , , ',
+                    ' , , , ,B,O,O,-,-,-,-,O,O,O,-,-,-,-,-,B, , , , ',
+                    ' , , , ,B,-,-,B,B,-,-,-,-,-,-,-,-,-,-,B, , , , ',
+                    ' , , , , ,B,-,-,-,-,-,-,-,-,-,-,-,B,B, , , , , ',
+                    ' , , , , ,B,-,-,-,-,-,B,-,-,-,-,-,B, , , , , , ',
+                    ' , , , , ,B,-,-,B,B,B,-,-,-,-,-,B,B, , , , , , ',
+                    ' , , , ,B,+,B,-,-,-,-,-,-,-,B,B,+,+,B,B,B, , , ',
+                    ' , , , ,B,+,+,B,B,-,-,B,B,B,B,+,+,+,B,-,B, , , ',
+                    ' , ,B,B,-,+,+,+,+,B,B,+,+,+,+,+,B,B,B,-,-,B, , ',
+                    'B,B,-,-,-,+,+,+,+,+,+,+,+,+,+,+,B,-,-,-,-,B,B, ',
+                    'B,-,-,-,-,B,B,+,+,+,+,+,+,+,+,+,B,B,B,-,-,-,B, ',
+                    'B,-,-,-,B, ,B,+,+,+,c,c,+,+,+,B, , ,B,-,-,B,B, ',
+                    ' ,B,B,B, , ,B,+,+,c,+,+,x,+,+,B, , , ,B,-,B, , ',
+                    ' , , , , , ,B,+,+,c,+,+,y,+,+,B,B, , ,B,B,B, , ',
+                    ' , , , , , ,B,+,+,+,c,c,+,+,+,+,B,B, , , , , , '
+                ],
+                colorMap : {
+                    ' ' : 'transparent',
+                    'B' : '#000',
+                    '-' : '#f0d6b5', //pink
+                    'O' : '#5f3006', //marrone
+                    '+' : '#a8e00d', //green
+                    'c' : '#7b78e3', //celeste c
+                    'x' : '#928398', //riga1
+                    'y' : '#845500' //riga1
+                }
+            });
+			sm8.draw({node : dimonni});
+		});
+	};
+
+	this.action_shadowJMVC = function (){
+		var that = this;
+		JMVC.require(
+			'core/mobile/drawer/drawer',
+			'core/lorem',
+			'plotter/shadowMatrix'
+		);
+		
+		
+		JMVC.getView('vacuum')
+		.set({
+			style: 'padding:0px 10px 50px',
+			id: 'container'
+		})
+		.render(function() {
+
+			
+			var size = that.get('size') || 1,
+				cnt = JMVC.dom.find('#container'),
+				input = JMVC.dom.create('input', {type:'text', id:'imgurl'}),
+				butt = JMVC.dom.create('input', {type:'button', value:'get it'}),
+				logo = JMVC.dom.create('div', {id:'logo', style:'margin-top:10px'})
+
+			JMVC.css.style(JMVC.WDB, {padding : '50px'});
+
+			
+			JMVC.dom.append(cnt, [input,butt,logo]);
+			JMVC.dom.append(JMVC.WDB, cnt);
+
+			JMVC.events.on(butt, 'click', function (){
+				go(input.value);
+			})			
+
+
+			function go (img) {
+
+				JMVC.shadowMatrix.getMatrixFromImage({
+					size : size,
+					imgUrl : img || (JMVC.vars.baseurl + '/media/img/fgk.jpg')
+				})
+				// promise returned, done when image loaded and
+				// matrix done
+				.then(function(res) {
+					JMVC.shadowMatrix(res).draw({node : logo});
+				});
+			}
+			
+			go();
+
+		});
+	};
+
+
+	this.action_animation = function (){
+		var that = this;
+		JMVC.require(
+			'core/mobile/drawer/drawer',
+			'core/lorem',
+			'plotter/shadowMatrix'
+		);
+		
+		JMVC.getView('vacuum')
+		.set({
+			style: 'padding:0px 10px 50px',
+			id: 'container'
+		})
+		.render(function() {			
+			var size = that.get('size') || 10,
+				cnt = JMVC.dom.find('#container'),
+				space = JMVC.dom.create('div', {id:'space', style:'margin:50px'});
+
+			JMVC.css.style(JMVC.WDB, {padding : '50px'});
+
+			JMVC.dom.append(cnt, space);
+			JMVC.dom.append(JMVC.WDB, cnt);
+			
+			
+
+			var sm = JMVC.shadowMatrix({
+				scale : size,
+				frames : [
+					[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						'o, , , , , , , , , , , , , ',
+						'o, , , , , , , , , , , , , ',
+						'o, , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						'o, , , , , , , , , , , , , ',
+						' ,o, , , , , , , , , , , , ',
+						' ,o, , , , , , , , , , , , ',
+						' ,o, , , , , , , , , , , , ',
+						'o, , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						'o, , , , , , , , , , , , , ',
+						'.,o, , , , , , , , , , , , ',
+						'.,.,o, , , , , , , , , , , ',
+						'.,.,o, , , , , , , , , , , ',
+						'.,.,o, , , , , , , , , , , ',
+						'.,o, , , , , , , , , , , , ',
+						'o, , , , , , , , , , , , , '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						'o,o, , , , , , , , , , , , ',
+						' , ,o, , , , , , , , , , , ',
+						' , , ,o, , , , , , , , , , ',
+						'X, , ,o, , , , , , , , , , ',
+						' , , ,o, , , , , , , , , , ',
+						' , ,o, , , , , , , , , , , ',
+						'o,o, , , , , , , , , , , , '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						'o,o,o, , , , , , , , , , , ',
+						'.,.,.,o, , , , , , , , , , ',
+						'.,.,.,.,o, , , , , , , , , ',
+						'.,X,.,.,o, , , , , , , , , ',
+						'.,.,.,.,o, , , , , , , , , ',
+						'.,.,.,o, , , , , , , , , , ',
+						'o,o,o, , , , , , , , , , , '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' ,o,o,o, , , , , , , , , , ',
+						'o, , , ,o, , , , , , , , , ',
+						' , , , , ,o, , , , , , , , ',
+						' , ,X, , ,o, , , , , , , , ',
+						' , , , , ,o, , , , , , , , ',
+						'o, , , ,o, , , , , , , , , ',
+						' ,o,o,o, , , , , , , , , , '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , ,o,o,o, , , , , , , , , ',
+						' ,o,.,.,.,o, , , , , , , , ',
+						'o,.,.,.,.,.,o, , , , , , , ',
+						'o,.,.,X,.,.,o, , , , , , , ',
+						'o,.,.,.,.,.,o, , , , , , , ',
+						' ,o,.,.,.,o, , , , , , , , ',
+						' , ,o,o,o, , , , , , , , , '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , ,o,o,o, , , , , , , , ',
+						' , ,o, , , ,o, , , , , , , ',
+						' ,o, , , , , ,o, , , , , , ',
+						' ,o, , ,X, , ,o, , , , , , ',
+						' ,o, , , , , ,o, , , , , , ',
+						' , ,o, , , ,o, , , , , , , ',
+						' , , ,o,o,o, , , , , , , , '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , ,o,o,o, , , , , , , ',
+						' , , ,o,.,.,.,o, , , , , , ',
+						' , ,o,.,.,.,.,.,o, , , , , ',
+						' , ,o,.,.,X,.,.,o, , , , , ',
+						' , ,o,.,.,.,.,.,o, , , , , ',
+						' , , ,o,.,.,.,o, , , , , , ',
+						' , , , ,o,o,o, , , , , , , '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , ,o,o,o, , , , , , ',
+						' , , , ,o, , , ,o, , , , , ',
+						' , , ,o, , , , , ,o, , , , ',
+						' , , ,o, , ,X, , ,o, , , , ',
+						' , , ,o, , , , , ,o, , , , ',
+						' , , , ,o, , , ,o, , , , , ',
+						' , , , , ,o,o,o, , , , , , '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , ,o,o,o, , , , , ',
+						' , , , , ,o,.,.,.,o, , , , ',
+						' , , , ,o,.,.,.,.,.,o, , , ',
+						' , , , ,o,.,.,X,.,.,o, , , ',
+						' , , , ,o,.,.,.,.,.,o, , , ',
+						' , , , , ,o,.,.,.,o, , , , ',
+						' , , , , , ,o,o,o, , , , , '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , ,o,o,o, , , , ',
+						' , , , , , ,o, , , ,o, , , ',
+						' , , , , ,o, , , , , ,o, , ',
+						' , , , , ,o, , ,X, , ,o, , ',
+						' , , , , ,o, , , , , ,o, , ',
+						' , , , , , ,o, , , ,o, , , ',
+						' , , , , , , ,o,o,o, , , , '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , ,o,o,o, , , ',
+						' , , , , , , ,o,.,.,.,o, , ',
+						' , , , , , ,o,.,.,.,.,.,o, ',
+						' , , , , , ,o,.,.,X,.,.,o, ',
+						' , , , , , ,o,.,.,.,.,.,o, ',
+						' , , , , , , ,o,.,.,.,o, , ',
+						' , , , , , , , ,o,o,o, , , '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , ,o,o,o, , ',
+						' , , , , , , , ,o, , , ,o, ',
+						' , , , , , , ,o, , , , , ,o',
+						' , , , , , , ,o, , ,X, , ,o',
+						' , , , , , , ,o, , , , , ,o',
+						' , , , , , , , ,o, , , ,o, ',
+						' , , , , , , , , ,o,o,o, , '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , ,o,o,o, ',
+						' , , , , , , , , ,o,.,.,.,o',
+						' , , , , , , , ,o,.,.,.,.,.',
+						' , , , , , , , ,o,.,.,.,.,.',
+						' , , , , , , , ,o,.,.,.,.,.',
+						' , , , , , , , , ,o,.,.,.,o',
+						' , , , , , , , , , ,o,o,o, '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , ,o,o,o',
+						' , , , , , , , , , ,o, , , ',
+						' , , , , , , , , ,o, , , , ',
+						' , , , , , , , , ,o, , ,X, ',
+						' , , , , , , , , ,o, , , , ',
+						' , , , , , , , , , ,o, , , ',
+						' , , , , , , , , , , ,o,o,o'
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , ,o,o',
+						' , , , , , , , , , , ,o,.,.',
+						' , , , , , , , , , ,o,.,.,.',
+						' , , , , , , , , , ,o,.,.,X',
+						' , , , , , , , , , ,o,.,.,.',
+						' , , , , , , , , , , ,o,.,.',
+						' , , , , , , , , , , , ,o,o'
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , ,o',
+						' , , , , , , , , , , , ,o, ',
+						' , , , , , , , , , , ,o, , ',
+						' , , , , , , , , , , ,o, , ',
+						' , , , , , , , , , , ,o, , ',
+						' , , , , , , , , , , , ,o, ',
+						' , , , , , , , , , , , , ,o'
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , ,o',
+						' , , , , , , , , , , , ,o,.',
+						' , , , , , , , , , , , ,o,.',
+						' , , , , , , , , , , , ,o,.',
+						' , , , , , , , , , , , , ,o',
+						' , , , , , , , , , , , , , '
+					],[
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , ,o',
+						' , , , , , , , , , , , , ,o',
+						' , , , , , , , , , , , , ,o',
+						' , , , , , , , , , , , , , ',
+						' , , , , , , , , , , , , , '
+					]
+				],
+				colorMap : {
+					o : 'red',
+					' ' : 'white',
+					'.': 'coral'
+				}
+			});
+			
+			sm.animate({
+				node : space
+			}, 50);
+
+
+
+			
 		});
 	};
 
