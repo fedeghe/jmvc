@@ -68,6 +68,7 @@ $JMVC = {
     delegate : jmvc.delegate,
     code : jmvc.code,
     extend : jmvc.extend,
+    define : jmvc.define,
     factory:    jmvc.factory_method,
     inherit : jmvc.inherit,
     multinherit : jmvc.multi_inherit,
