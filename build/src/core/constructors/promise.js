@@ -1,48 +1,102 @@
-/*-----
-PROMISE
------*/
-// ty https://github.com/stackp/promisejs
-Promise = function () {
-    this.cbacks = [];
-    this.len = 0;
-    this.completed = false;
-    this.res = false;
-    this.err = false;
-    this.reset = function () {
-        this.len = 0;
-        this.cbacks = [];
+Promise = (function() {
+
+    /**
+     * [_promise description]
+     * @return {[type]} [description]
+     */
+    var _promise = function() {
+            this.cbacks = [];
+            this.len = 0;
+            this.solved = false;
+            this.result = null;
+        },
+        proto = _promise.prototype;
+
+    /**
+     * [then description]
+     * @param  {[type]} func [description]
+     * @return {[type]}      [description]
+     */
+    proto.then = function(func) {
+        var self = this,
+            f = function () {
+                self.solved = false;
+                func.call(self, self.result);
+            };
+        if (this.solved) {
+            f();
+        } else {
+            this.cbacks[this.len++] = f;
+        }
+        return this;
+        
     };
-};
-/**
- * [done description]
- * @param  {[type]}   res [description]
- * @param  {[type]}   err [description]
- * @return {Function}     [description]
- */
-Promise.prototype.done = function (res, err) {
-    var i = 0;
-    this.completed = true;
-    this.res = res;
-    this.err = err;
-    for (null; i < this.len; i += 1) {
-        this.cbacks[i](res, err);
+
+    /**
+     * [done description]
+     * @param  {[type]}   r [description]
+     * @return {Function}   [description]
+     */
+    proto.done = function(r) {
+        this.result = r;
+        if (!this.len) {
+            return this.result;
+        }
+        this.solved = true;
+        this.cbacks.shift()(r);
+        this.len--;
+    };
+
+    /**
+     * [chain description]
+     * @param  {[type]} funcs [description]
+     * @param  {[type]} args  [description]
+     * @return {[type]}       [description]
+     */
+    function chain(funcs, args) {
+        var first = (function () {
+                var p = new _promise();
+                funcs[0].apply(p, args);
+                return p;
+            })(),
+            tmp = [first];
+
+        for (var i = 1, l = funcs.length;  i < l; i++) {
+            tmp.push(tmp[i-1].then(funcs[i]));
+        }
     }
-    this.reset();
-};
-/**
- * [then description]
- * @param  {[type]} cback [description]
- * @param  {[type]} ctx   [description]
- * @return {[type]}       [description]
- */
-Promise.prototype.then = function (cback, ctx) {
-    var func = jmvc.delegate(cback, ctx);
-    if (this.completed) {
-        func(this.res, this.err);
-    } else {
-        this.cbacks[this.len] = func;
-        this.len += 1;
+
+    /**
+     * [join description]
+     * @param  {[type]} pros [description]
+     * @return {[type]}      [description]
+     */
+    function join(pros) {
+        var pros = [].splice.call(arguments, 0),
+            p = new _promise(),
+            res = [],
+            i = 0,
+            len = pros.length,
+            lengthToGo = len;
+        for (null; i < len; i++) {
+            (function (j) {
+                pros[j]().then(function (r) {
+                    res[j] = r;
+                    if (--lengthToGo == 0) {
+                        p.done(res);
+                    }
+                });
+            })(i);
+        }
+        return p;
     }
-    return this;
-};
-//-----------------------------------------------------------------------------
+
+    
+    return {
+        create : function () {
+            return new _promise();
+        },
+        chain : chain,
+        join : join
+    };
+})();
