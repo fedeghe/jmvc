@@ -6,27 +6,80 @@
     </params>
     <returns>the variable reference or value</returns>
     <status>incomplete</status>
-    <sample>function t(){&#10;
-    var p = new JMVC.Promise();&#10;
-    window.setTimeout(function () {&#10;
-        console.log('uan');&#10;
-        p.done();&#10;
-    }, 2000);&#10;
+    <sample>(function () {&#10;
+    var p = JMVC.Promise.create();&#10;
+    console.log('uan');&#10;
+    window.setTimeout(function () {p.done(1234); }, 1000);&#10;
     return p;&#10;
-};&#10;
-t().then(function(){console.log('two');})&#10;
-   .then(function(){console.log('tree');});</sample>
+})().then(function () {&#10;
+    var self = this,&#10;
+        a = [].splice.call(arguments, 0);&#10;
+    console.log('two ', a[0]);&#10;
+    window.setTimeout(function () {self.done(~~a[0]*2); }, 1000);&#10;
+}).then(function () {&#10;
+    var a = [].splice.call(arguments, 0);&#10;
+    console.log('three ', a[0]);&#10;
+    this.done();&#10;
+}).then(tryJoin);&#10;
+&#10;
+function tryJoin() {&#10;
+    console.debug('--- now a trial for Promise.join ---');&#10;
+    JMVC.Promise.join(&#10;
+        function () {&#10;
+            var p = JMVC.Promise.create();&#10;
+            window.setTimeout(function () {&#10;
+                p.done(1);&#10;
+            }, 1000);&#10;
+            return p;&#10;
+        },&#10;
+        function () {&#10;
+            var p = JMVC.Promise.create();&#10;
+            window.setTimeout(function () {&#10;
+                p.done(2);&#10;
+            }, 2000);&#10;
+            return p;&#10;
+        }&#10;
+    ).then(function (r) {&#10;
+        console.debug(r);&#10;
+    });&#10;
+}</sample>
 <status>complete</status>
     <code>
-function t(){
-    var p = new JMVC.Promise();
-    window.setTimeout(function () {
-        console.log('uan');
-        p.done();
-    }, 2000);
+(function (){
+    var p = JMVC.Promise.create();
+    console.log('uan');
+    window.setTimeout(function () {p.done(1234); }, 1000);
     return p;
-};
-t().then(function(){console.log('two');})
-   .then(function(){console.log('tree');});
+})().then(function(){
+    var self = this,
+        a = [].splice.call(arguments, 0);
+    console.log('two ', a[0]);
+    window.setTimeout(function () {self.done(~~a[0]*2); }, 1000);
+}).then(function(){
+    var a = [].splice.call(arguments, 0);
+    console.log('three ', a[0]);
+    this.done();
+}).then(tryJoin);
+function tryJoin() {
+    console.debug('--- now a trial for Promise.join ---');
+    JMVC.Promise.join(
+        function () {
+            var p = JMVC.Promise.create();
+            window.setTimeout(function () {
+                p.done(1);
+            }, 1000);
+            return p;
+        },
+        function () {
+            var p = JMVC.Promise.create();
+            window.setTimeout(function () {
+                p.done(2);
+            }, 2000);
+            return p;
+        }
+    ).then(function (r){
+        console.debug(r);
+    });
+}
     </code>
 </function>

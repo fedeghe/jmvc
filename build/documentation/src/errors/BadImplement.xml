@@ -7,7 +7,7 @@
     <returns>the variable reference or value</returns>
     <status>incomplete</status>
     <sample>function t(){&#10;
-var p = new JMVC.Promise();&#10;
+var p = JMVC.Promise();&#10;
 window.setTimeout(function () {&#10;
     console.debug('uan');&#10;
     p.done();&#10;
