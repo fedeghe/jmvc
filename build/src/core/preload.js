@@ -4,7 +4,7 @@ preload = function (url) {
     W.setTimeout(function () {
         //
         // get a new Promise
-        var p = new Promise(),
+        var p = Promise.create(),
             //
             // the iframe where preloading will take place
             ifr = null,

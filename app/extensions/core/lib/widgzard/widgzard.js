@@ -78,7 +78,7 @@ JMVC.extend('core/widgzard', function () {
         // all the child elements cb have called 
         // this.done OR this.resolve
         // 
-        this.node.WIDGZARD_promise = new JMVC.Promise();
+        this.node.WIDGZARD_promise = JMVC.Promise.create();
 
         // When called Promise.done means that 
         // the parent callback can be called

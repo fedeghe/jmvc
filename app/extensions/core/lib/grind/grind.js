@@ -95,7 +95,7 @@ JMVC.extend('grind', function () {
                     item.node = tag;
 
                     if (typeof item.cb === "function") {
-                        tag.promise = new JMVC.Promise();
+                        tag.promise = JMVC.Promise.create();
                         tag.promise.then(resolve);
                         promises.push(tag.promise);
                         item.cb.call(tag);
