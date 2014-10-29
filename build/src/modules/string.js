@@ -50,13 +50,20 @@ JMVC.string = {
     code2str : function (code) {
         return String.fromCharCode.apply(null, code);
     },
+
     /**
-     * [ description]
-     * @param  {[type]} s){return s.replace(/^\s+/g [description]
-     * @param  {[type]} ''         [description]
-     * @return {[type]}            [description]
+     * [EscapeEntities description]
+     * @param {[type]} str [description]
      */
-    triml : function (s) {return s.replace(/^\s+/g, ''); },
+    EscapeEntities : function (str) {
+        return str.replace(/[^\x20-\x7E]/g,
+            function (str) {
+                return _.string.charToEntity[str] ? '&' + _.string.charToEntity[str] + ';' : str;
+            }
+        );
+    },
+
+    
     /**
      * [multireplace description]
      * @param  {[type]} cnt [description]
@@ -147,7 +154,7 @@ JMVC.string = {
             straight = true,
             str, tmp, last;
 
-        if (options != undefined) {
+        if (undefined != options) {
             if ('delim' in options) {
                 start = options.delim[0];
                 end = options.delim[1];
@@ -233,13 +240,7 @@ JMVC.string = {
     //
     //
     //
-    /**
-     * [ description]
-     * @param  {[type]} s){return s.replace(/\s+$/g [description]
-     * @param  {[type]} ''         [description]
-     * @return {[type]}            [description]
-     */
-    trimr : function (s) {return s.replace(/\s+$/g, ''); },
+    
     /**
      * [ description]
      * @param  {[type]} str [description]
@@ -256,6 +257,27 @@ JMVC.string = {
         }
         return out;
     },
+
+    /**
+     * [str2hex description]
+     * @param  {[type]} str [description]
+     * @return {[type]}     [description]
+     */
+    str2hex : function (str) {
+        
+        var out = [],
+            i = 0,
+            l = str.length;
+        while (i < l) {
+            out.push(
+                '\\X' + 
+                parseInt(str.charCodeAt(i), 10).toString(16).toUpperCase()
+            );
+            i += 1;
+        }
+        return "" + out.join('').replace(/X/g, "x");
+    },
+
     /**
      * [ description]
      * @param  {[type]} s){return s.replace(/^\s+|\s+$/g [description]
@@ -263,6 +285,23 @@ JMVC.string = {
      * @return {[type]}            [description]
      */
     trim : function (s) {return s.replace(/^\s+|\s+$/g, ''); },
+
+    /**
+     * [ description]
+     * @param  {[type]} s){return s.replace(/^\s+/g [description]
+     * @param  {[type]} ''         [description]
+     * @return {[type]}            [description]
+     */
+    triml : function (s) {return s.replace(/^\s+/g, ''); },
+
+    /**
+     * [ description]
+     * @param  {[type]} s){return s.replace(/\s+$/g [description]
+     * @param  {[type]} ''         [description]
+     * @return {[type]}            [description]
+     */
+    trimr : function (s) {return s.replace(/\s+$/g, ''); },
+
     /**
      * [ucFirst description]
      * @param  {[type]} str [description]
@@ -281,18 +320,8 @@ JMVC.string = {
                 return String.fromCharCode(ent[0] !== '#' ? _.string.entities[ent] : ent[1] === 'x' ? parseInt(ent.substr(2), 16): parseInt(ent.substr(1), 10));
             }
         );
-    },
-    /**
-     * [EscapeEntities description]
-     * @param {[type]} str [description]
-     */
-    EscapeEntities : function (str) {
-        return str.replace(/[^\x20-\x7E]/g,
-            function (str) {
-                return _.string.charToEntity[str] ? '&' + _.string.charToEntity[str] + ';' : str;
-            }
-        );
     }
+    
 };
 for (var entityName in _.string.entities ) {
     _.string.charToEntity[String.fromCharCode(_.string.entities[entityName])] = entityName;
