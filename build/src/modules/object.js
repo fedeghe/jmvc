@@ -8,12 +8,12 @@
  */
 _.object = {
     /**
-     * [map description]
+     * [reduce description]
      * @param  {[type]}   o  [description]
      * @param  {Function} fn [description]
      * @return {[type]}      [description]
      */
-    map: function(o, fn) {
+    reduce: function(o, fn) {
         var ret = '',
             j;
         for (j in o) {
@@ -52,23 +52,25 @@ JMVC.object = {
     },
     // http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
     clone: function(obj) {
-        var self = this;
+        var self = this,
+            copy,
+            i, l;
         // Handle the 3 simple types, and null or undefined
-        if (null == obj || "object" != typeof obj) {
+        if (null === obj || "object" !== typeof obj) {
             return obj;
         }
 
         // Handle Date
         if (obj instanceof Date) {
-            var copy = new Date();
+            copy = new Date();
             copy.setTime(obj.getTime());
             return copy;
         }
 
         // Handle Array
         if (obj instanceof Array) {
-            var copy = [];
-            for (var i = 0, len = obj.length; i < len; i++) {
+            copy = [];
+            for (i = 0, l = obj.length; i < l; i++) {
                 copy[i] = self.clone(obj[i]);
             }
             return copy;
@@ -76,9 +78,11 @@ JMVC.object = {
 
         // Handle Object
         if (obj instanceof Object) {
-            var copy = {};
-            for (var attr in obj) {
-                if (obj.hasOwnProperty(attr)) copy[attr] = self.clone(obj[attr]);
+            copy = {};
+            for (i in obj) {
+                if (obj.hasOwnProperty(i)) {
+                    copy[i] = self.clone(obj[i]);
+                }
             }
             return copy;
         }
@@ -104,7 +108,7 @@ JMVC.object = {
         if (obj1 + '' !== obj2 + '') {
             return false;
         }
-        if (obj1 == obj2) {
+        if (obj1 === obj2) {
             return true;
         }
         for (i in obj1) {
@@ -171,13 +175,13 @@ JMVC.object = {
 
     order: function(obj) {
         var k = [],
-            i,
+            i, j, l,
             out = {};
         for (i in obj) {
             k.push(i);
         }
         k.sort();
-        for (var j = 0, l = k.length; j < l; j++) {
+        for (j = 0, l = k.length; j < l; j++) {
             out[k[j]] = obj[k[j]];
         }
         return out;
@@ -188,7 +192,7 @@ JMVC.object = {
      * @return {[type]}   [description]
      */
     toAttr: function(obj) {
-        return _.object.map(obj, function(o, i) {
+        return _.object.reduce(obj, function(o, i) {
             return ' ' + i + (o[i] ? '="' + o[i] + '"' : '');
         });
     },
@@ -198,10 +202,10 @@ JMVC.object = {
      * @return {[type]}   [description]
      */
     toCss: function(obj, straight) {
-        return _.object.map(obj, function(ob, i) {
+        return _.object.reduce(obj, function(ob, i) {
             return !!straight ?
                 i + '{' + ob[i] + '} ' :
-                i + ' {' + _.object.map(ob[i],
+                i + ' {' + _.object.reduce(ob[i],
                     function(o, j) {
                         return j + ':' + o[j] + ';';
                     }
@@ -214,8 +218,7 @@ JMVC.object = {
      * @return {[type]}   [description]
      */
     toQs: function(obj) {
-        return _.object.map(obj, function(o, i, r) {
-            //return (r ? '&' : '?') + encodeURIComponent(JMVC.htmlChars(i)) + '=' + encodeURIComponent(JMVC.htmlChars(o[i]));
+        return _.object.reduce(obj, function(o, i, r) {
             return ((r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i])).replace(/\'/g, '%27');
         });
     },
@@ -225,7 +228,7 @@ JMVC.object = {
      * @return {[type]}     [description]
      */
     toStr: function(obj) {
-        return _.object.map(obj, function(o, i) {
+        return _.object.reduce(obj, function(o, i) {
             return i + ':' + o[i] + ';';
         });
     },
