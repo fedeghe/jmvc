@@ -78,9 +78,15 @@ JMVC.css = {
         if (_.css.opera) {
             return JMVC.W.getComputedStyle(el, null).getPropertyValue(styleProperty);
         }
-        var computedStyle = typeof el.currentStyle !== 'undefined' ? el.currentStyle : JMVC.WD.defaultView.getComputedStyle(el, null);
+        var computedStyle = typeof el.currentStyle !== 'undefined' ?
+            el.currentStyle
+            :
+            JMVC.WD.defaultView.getComputedStyle(el, null);
 
-        return styleProperty ? computedStyle[_.css.css2js_rule(styleProperty)] : computedStyle;
+        return styleProperty ?
+            computedStyle[_.css.css2js_rule(styleProperty)]
+            :
+            computedStyle;
     },
 
     //
@@ -155,8 +161,9 @@ JMVC.css = {
         var tmp = JMVC.dom.find('#pest-css'),
             info = document.createElement('div'),
             enabled = true,
-            initialPosition = 0,
-            positions = ['tl','bl','br','tr'],
+            positionCookie = 'pestPanelPosition',
+            initialPosition = ~~JMVC.cookie.get(positionCookie) || 0,
+            positions = ['tr', 'br', 'bl', 'tl'],
 
             fnshow = function (e) {
                 if (!enabled) {
@@ -173,9 +180,13 @@ JMVC.css = {
                         backgroundColor: true,
                         fontSize: true
                     },
-                    styleList = document.createElement('ul'),
-                    c,
                     li,
+                    styleList = document.createElement('ul'),
+                    addToList = function (list, lab, val) {
+                        li = document.createElement('li');
+                        li.innerHTML = (lab ? ('<strong>' + lab + '</strong> : ') : '') + val;
+                        list.appendChild(li);
+                    },
                     tree;
 
                 if (trg === info) {
@@ -184,27 +195,18 @@ JMVC.css = {
                 info.innerHTML = '';
 
                 for (var s in cstyle) {
-                    if (s in filter) {
-                        c = document.createElement('li');
-                        c.innerHTML = '<strong>' + s + '</strong> : ' + cstyle[s];
-                        styleList.appendChild(c);
-                    }
+                    s in filter &&  addToList(styleList,s, cstyle[s]);
                 }
                 info.appendChild(styleList);
 
                 info.appendChild(document.createElement('hr'));
 
                 if (!! trg.id || !! trg.className) {
-                    styleList = document.createElement('ul');
                     if (trg.id) {
-                        li = document.createElement('li');
-                        li.innerHTML = '<strong>ID</strong> : ' + trg.id;
-                        styleList.appendChild(li);
+                        addToList(styleList, 'ID', trg.id);
                     }
                     if (trg.className) {
-                        li = document.createElement('li');
-                        li.innerHTML = '<strong>CLASS</strong> : ' + trg.className;
-                        styleList.appendChild(li);
+                        addToList(styleList, 'CLASS', trg.className);
                     }
                     info.appendChild(styleList);
                 }
@@ -213,9 +215,7 @@ JMVC.css = {
                 tree = document.createElement('ul');
 
                 while (!! trg.tagName) {
-                    li = document.createElement('li');
-                    li.innerHTML = trg.tagName;
-                    tree.appendChild(li);
+                    addToList(tree, false, trg.tagName);
                     trg = trg.parentNode;
                 }
                 info.appendChild(tree);
@@ -232,12 +232,13 @@ JMVC.css = {
             var old = initialPosition;
             initialPosition = (++initialPosition) % positions.length;
             JMVC.dom.switchClass(info, positions[old], positions[initialPosition]);
-        })
+            JMVC.cookie.set(positionCookie, initialPosition);
+        });
         
         JMVC.WD.body.appendChild(info);
 
         if (tmp) {
-            JMVC.dom.remove(tmp);
+            JMVC.dom.remove(tmp, info);
             JMVC.events.off(JMVC.WD, 'mousemove', fnshow);
         } else {
             this.mappedStyle(
