@@ -32,9 +32,11 @@ JMVC.array = {
 
         while (++i < l) {
             
-            if (arr[i] == undefined ||
+            if (
+                undefined == arr[i]
+                ||
                 (typeof arr[i] == 'number' && isNaN(arr[i]))
-            ){
+            ) {
                 arr.splice(i--, 1);
                 l--;
             }

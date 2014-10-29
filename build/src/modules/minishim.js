@@ -4,15 +4,19 @@ _.shimthags = 'canvas,audio,video,source,track,embed,datalist,keygen,output,head
 if (document.doctype !== null) {
 
     var node = document.doctype,
-        doctype_string = "<!DOCTYPE " + node.name + (node.publicId ? ' PUBLIC"' + node.publicId + '"' : '') + (!node.publicId && node.systemId ? ' SYSTEM' : '') + (node.systemId ? ' "' + node.systemId + '"' : '') + ">";
+        doctype_string = "<!DOCTYPE " +
+            node.name +
+            (node.publicId ? ' PUBLIC"' + node.publicId + '"' : '') +
+            (!node.publicId && node.systemId ? ' SYSTEM' : '') +
+            (node.systemId ? ' "' + node.systemId + '"' : '') +
+        ">";
 
-    if (doctype_string !== '<!DOCTYPE html>') {
+    if ('<!DOCTYPE html>' !== doctype_string) {
         var t = _.shimthags.split(','),
-            i = 0,
             l = t.length;
-
-        while (i < l) document.createElement(t[i++]);
-
+        while (l--) {
+            document.createElement(t[l]);
+        }
         JMVC.head.addStyle(_.shimthags + '{display:block}', true, true);
     }
 }

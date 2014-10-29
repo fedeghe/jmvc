@@ -15,7 +15,7 @@ _.events.drag = {
         
         d = Math.atan2(gd2[1] - gd1[1], gd2[0] - gd1[0]) * 180 / (Math.PI);
         JMVC.events.drag.direction = d.toFixed(2);
-        JMVC.events.drag.orientation = directions[~~(( (d + 180)% 360) / 22.5)] ;
+        JMVC.events.drag.orientation = directions[~~(((d + 180) % 360) / 22.5)] ;
         return true;
     }
 
@@ -24,6 +24,7 @@ _.events.drag = {
 JMVC.events.drag = {
     
     direction : false,
+    
     orientation : false,
 
     on : function (el, fn) {
@@ -70,7 +71,9 @@ JMVC.events.drag = {
             fStart.call(e, e, {start : _.events.drag.gd1});
             JMVC.events.on(el, 'mousemove', mmove);
         });
+
         JMVC.events.on(el, 'mouseup', mup);
+        
         JMVC.events.on(el, 'touchstart', function (e) {    
             _.events.drag.gd1 = JMVC.events.coord(e);
             fStart.call(e, e, {start : _.events.drag.gd1});

@@ -246,12 +246,6 @@ JMVC.head = {
             // 4) append it 
             JMVC.dom.append(JMVC.WDB, d);
         }
-    
-        
-
-        
-
-       
     },
 
     /**

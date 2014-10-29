@@ -72,7 +72,9 @@ jmvc = {
                     var args = [],
                         i = 0,
                         l = deps.length;
-                    while (i < l) args.push(jmvc.ns.check(deps[i++], $JMVC));
+                    while (i < l) {
+                        args.push(jmvc.ns.check(deps[i++], $JMVC));
+                    }
                     return jmvc.ns.make(ns, cb.apply(null, args), $JMVC);
                 }]));
     },
@@ -273,7 +275,7 @@ jmvc = {
                 special : /<(meta|link|br|hr|img|col|input|source)+(\s[^>]*|>)?\/?>/ // starts with <; is a meta of link or br
             },
             els = [],
-            i = 0, k = 0, l = 0,
+            i = 0, k = 0, l = 0, t,
             tag,
 
             TYPE = {special:1, open:2, close:3, autoclose:4, text:5},
@@ -329,7 +331,9 @@ jmvc = {
         l = cnt.length;
         
         for (; i < l; i++) {
-            if (!cnt[i]) continue;
+            if (!cnt[i]) {
+                continue;
+            }
             els.push(cnt[i]);           
         }
         
@@ -345,7 +349,7 @@ jmvc = {
                     break;
                 case TYPE.open:
                     out += nTab() + tag;
-                    if (tag == '<script>') {
+                    if (tag === '<script>') {
                         while (tag !== '</script>') {
                             tag = els[++i];
                             out += tag;
@@ -363,7 +367,7 @@ jmvc = {
                     break;
                 case TYPE.text: 
                     out += tag;
-                    if ((i + 1) < l && checktype(els[i+1]) == TYPE.close) {
+                    if ((i + 1) < l && checktype(els[i+1]) === TYPE.close) {
                         out += els[i + 1];
                         i++;
                         tb--;
@@ -853,7 +857,6 @@ jmvc = {
 
                     } else {
                         throw new JMVC.Errors.BadSetting('No way to use JMVC.require function: getmode not in ["ajax","script","scriptghost"]');
-                        return false;
                     }
                     $JMVC.extensions[arg[i]] = arg[i];
                 }
