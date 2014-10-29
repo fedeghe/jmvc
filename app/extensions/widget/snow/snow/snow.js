@@ -3,18 +3,18 @@ JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/widget/snow/snow.css', t
 JMVC.require('core/screen/screen');	
 //
 JMVC.extend('snow', {
-	'vars' : {
+	vars : {
 		flakes : [],
 		l : 0,
 		trg : null
 	},
-	'init' : function () {
+	init : function () {
 		
 		
 		
 	},
 	
-	'start' : function (trg, opts) {
+	start : function (trg, opts) {
 		
 		
 		JMVC.snow.vars.trg = JMVC.dom.find(trg);
@@ -25,8 +25,8 @@ JMVC.extend('snow', {
 		
 		
 		function Flake () {
-			var left = JMVC.util.rand(0, bodysize[0]-20),
-				top = JMVC.util.rand(0, bodysize[1]-20);
+			var left = JMVC.util.rand(0, bodysize[0] - 20),
+				top = JMVC.util.rand(0, bodysize[1] - 20);
 			this.s = JMVC.util.rand(5,40);
 			this.node = JMVC.dom.create(
 				'span',
@@ -60,18 +60,21 @@ JMVC.extend('snow', {
 			}
 			JMVC.snow.vars.flakes = newr;
 		}
+
 		function move(e) {
 			var el = e.node,
 				top = JMVC.num.getFloat(JMVC.css.style(el, 'top')),
 				left = JMVC.num.getFloat(JMVC.css.style(el ,'left'));
 			
+			//console.debug(top, left);
+
 			if(top > bodysize[1]-60){
 				top = 0;
 				//JMVC.dom.remove(el);
 				//return false;
 			}
 			
-			left = left + e.amplitude * Math.sin(top/e.length);
+			left = left + e.amplitude * Math.sin(top / e.length);
 			
 			if(left > bodysize[0] -60){
 				e.node.style.display = 'none';
