@@ -25,7 +25,9 @@
         proto = _constructor.prototype;
     
 
-
+    proto.resize = function () {
+        this.size = [this.matrix.length, this.matrix[0].split(',').length];
+    };
     
 
 
@@ -72,11 +74,13 @@
         }
         this.tpl['box-shadow'] = this.tpl['-webkit-box-shadow'] = this.tpl['-moz-box-shadow'] = out.join(',');
         JMVC.css.style(this.node, this.tpl);
+        return this;
     };
 
     proto.redraw = function (mat){
         if (mat) this.matrix = mat;
         this.draw();
+        return this;
     };
 
 
@@ -95,12 +99,34 @@
         return this;
     };
 
+    proto.fromImage = function (opts) {
+        var self = this;
+
+        JMVC.shadowMatrix.getMatrixFromImage(opts)
+        .then(function (res) {
+            self.matrix = res.matrix;
+            self.colorMap = res.colorMap;
+            self.scale = res.scale;
+            self.resize();
+            self.redraw();
+        });
+        return this;
+    };
+
 
 
     JMVC.shadowMatrix = function (opts) {
         return new _constructor(opts);
     }
 
+
+    /**
+     * getMatrixFromImage static method
+     * promise based
+     * 
+     * @param  {[type]} opts [description]
+     * @return {[type]}      [description]
+     */
     JMVC.shadowMatrix.getMatrixFromImage = function (opts) {
         var img,
             w, h,
@@ -139,7 +165,7 @@
             // the image is loaded
             // &&
             // the matrix is ready
-            promiseLoadAndDone = new JMVC.Promise(),
+            promiseLoadAndDone = JMVC.Promise.create(),
             proceed = function (){
                 var i, r, c, h, w, row, compon,
                     tmpColorMap,
