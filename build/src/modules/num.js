@@ -19,11 +19,14 @@ JMVC.num = {
 	//mCeil : function (n) {return (n >> 0) + (n > 0 ? 1 : -1); },
 	num : function (n) {return parseFloat(n.toFixed(10), 10); },
     dec2Bin : function (dec){
-        if(dec > 0) return dec.toString(2)>>>0;
+        if(dec > 0) {
+            return dec.toString(2) >>> 0;
+        }
         dec = Math.abs(dec);
-        var res = dec ^ parseInt((new Array(dec.toString(2).length+1)).join("1"),2);
-        return (res+1).toString(2)>>>0;
+        var res = dec ^ parseInt((new Array(dec.toString(2).length + 1)).join("1"), 2);
+        return (res + 1).toString(2) >>> 0;
     },
-    bin2Dec : function (b) {return parseInt(b>>>0, 2); }
+    bin2Dec : function (b) {return parseInt(b>>>0, 2); },
+    sgn : function (s) {return (s >= 0) ? 1 : -1; }
 };
 //-----------------------------------------------------------------------------
