@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 6) build: 3145
+ * @version :  3.5 (rev. 6) build: 3147
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.1.1 & a love heap
- *         glued with 39 files on 30/10/2014 at 1:11:29
+ *         glued with 39 files on 30/10/2014 at 9:18:18
  *
  * All rights reserved.
  *
@@ -115,7 +115,7 @@
                 JMVC_DATE = '30/10/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '1:11:29',
+                JMVC_TIME = '9:18:18',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -4198,6 +4198,15 @@
             }
             return _.events.bind(el, tipo, fn);
             //return _.events.bind(el, tipo, _.events.fixCurrentTarget(fn, el));
+        },
+    
+        /**
+         * [click description]
+         * @param  {[type]} el [description]
+         * @return {[type]}    [description]
+         */
+        click : function (el) {
+            JMVC.events.fire(el, 'click');
         },
     
         /**
