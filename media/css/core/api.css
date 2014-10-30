@@ -184,10 +184,10 @@ button.trynow{
 	width:30px;
 	text-align:center;
 	height:20px;
+	line-height:20px;
 	position:relative;
-	top:-4px;
 	color:#fff;
-	font-size:14px;
+	font-size:30px;
 }
 button.trynow:hover{
 	background-color: #0f0;

@@ -6,12 +6,17 @@
 */
 body {
   margin: 0px;
-  /*  font-family: Verdana,Arial,Helvetica,sans-serif;
-    "Lucida Console","Monaco",monospace*/
+  /* 
+        font-family: Verdana,Arial,Helvetica,sans-serif;
+        //"Lucida Console","Monaco",monospace
+    */
   font-family: "Lucida Grande", "Lucida Sans Unicode", sans-serif;
   font-size: 16px;
-  /* background-image: url($baseurl$/media/img/oy.png); */
-  /*background-color: $bgcolor$;*/
+  /*
+        background-image: url($baseurl$/media/img/oy.png);
+        margin-bottom:20px;
+        background-color: $bgcolor$;
+    */
   background-color: #ffffff;
   color: #000000;
 }
@@ -21,9 +26,9 @@ div#cent {
   margin: 0 auto;
   text-align: center;
   /*
-    background-image : url($baseurl$/media/css/sf1.jpeg);
-    background-repeat : repeat-x;
- */
+        background-image : url($baseurl$/media/css/sf1.jpeg);
+        background-repeat : repeat-x;
+    */
 }
 div.pagewrap h1 {
   padding-bottom: 40px;
@@ -46,7 +51,7 @@ div.pagewrap a:hover {
 #extralogo {
   text-align: center;
   margin: 0 auto;
-  margin-top: 80px;
+  margin-top: 140px;
   margin-bottom: 40px;
   padding: 0px 20px;
 }

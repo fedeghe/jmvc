@@ -873,7 +873,7 @@ c.pub('notice', ['hello','world'])</code>
 [MALTA] src/_constructors/Event.xml
 -->
 <function>
-    <signature name="Event">JMVC.Event(sender)</signature>
+    <signature name="Event">JMVC.Event.create(sender)</signature>
     <description>Event is a special constructor to get an Event object with an attach and notify method</description>
     <params>
         <param name="*sender">The sender object</param>
@@ -882,8 +882,8 @@ c.pub('notice', ['hello','world'])</code>
     <sample>&#10;
 var list = {&#10;
         els : [],&#10;
-        addedItem : JMVC.Event(list),&#10;
-        deletedItem : JMVC.Event(list),&#10;
+        addedItem : JMVC.Event.create(list),&#10;
+        deletedItem : JMVC.Event.create(list),&#10;
         add : function (s) {&#10;
             this.els.push(s) &amp;&amp;&#10;
             this.addedItem.notify({item : s});&#10;
@@ -906,7 +906,7 @@ list.els;</sample>
 [MALTA] src/_constructors/Interface.xml
 -->
 <function>
-    <signature name="Interface">JMVC.Interface(String name, [Strings] methods)</signature>
+    <signature name="Interface">JMVC.Interface.create(String name, [Strings] methods)</signature>
     <description>Create an interface object</description>
     <params>
         <param name="*name">the name for the interface (used in case of error)</param>

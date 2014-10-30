@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 5) build: 2897
+ * @version :  3.5 (rev. 6) build: 3145
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.1.1 & a love heap
- *         glued with 39 files on 23/10/2014 at 22:23:58
+ *         glued with 39 files on 30/10/2014 at 1:11:29
  *
  * All rights reserved.
  *
@@ -48,6 +48,7 @@
     // local reference for current window.document.location
     var WD = W.document,
         WDL = WD.location,
+        WDB = WD.body,
 
         // this function returns the JMVC object, globalized, after doing some stuff
         // @return {object literal} $JMVC inner object
@@ -108,13 +109,13 @@
                 JMVC_VERSION = '3.5',
             
                 // review (vars.json)
-                JMVC_REVIEW = '5',
+                JMVC_REVIEW = '6',
             
                 // review (vars.json)
-                JMVC_DATE = '23/10/2014',
+                JMVC_DATE = '30/10/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '22:23:58',
+                JMVC_TIME = '1:11:29',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -328,7 +329,9 @@
                                 var args = [],
                                     i = 0,
                                     l = deps.length;
-                                while (i < l) args.push(jmvc.ns.check(deps[i++], $JMVC));
+                                while (i < l) {
+                                    args.push(jmvc.ns.check(deps[i++], $JMVC));
+                                }
                                 return jmvc.ns.make(ns, cb.apply(null, args), $JMVC);
                             }]));
                 },
@@ -529,7 +532,7 @@
                             special : /<(meta|link|br|hr|img|col|input|source)+(\s[^>]*|>)?\/?>/ // starts with <; is a meta of link or br
                         },
                         els = [],
-                        i = 0, k = 0, l = 0,
+                        i = 0, k = 0, l = 0, t,
                         tag,
             
                         TYPE = {special:1, open:2, close:3, autoclose:4, text:5},
@@ -585,7 +588,9 @@
                     l = cnt.length;
                     
                     for (; i < l; i++) {
-                        if (!cnt[i]) continue;
+                        if (!cnt[i]) {
+                            continue;
+                        }
                         els.push(cnt[i]);           
                     }
                     
@@ -601,7 +606,7 @@
                                 break;
                             case TYPE.open:
                                 out += nTab() + tag;
-                                if (tag == '<script>') {
+                                if (tag === '<script>') {
                                     while (tag !== '</script>') {
                                         tag = els[++i];
                                         out += tag;
@@ -619,7 +624,7 @@
                                 break;
                             case TYPE.text: 
                                 out += tag;
-                                if ((i + 1) < l && checktype(els[i+1]) == TYPE.close) {
+                                if ((i + 1) < l && checktype(els[i+1]) === TYPE.close) {
                                     out += els[i + 1];
                                     i++;
                                     tb--;
@@ -1109,7 +1114,6 @@
             
                                 } else {
                                     throw new JMVC.Errors.BadSetting('No way to use JMVC.require function: getmode not in ["ajax","script","scriptghost"]');
-                                    return false;
                                 }
                                 $JMVC.extensions[arg[i]] = arg[i];
                             }
@@ -1290,7 +1294,7 @@
                 W.setTimeout(function () {
                     //
                     // get a new Promise
-                    var p = new Promise(),
+                    var p = Promise.create(),
                         //
                         // the iframe where preloading will take place
                         ifr = null,
@@ -1373,36 +1377,43 @@
             /*
             [MALTA] src/core/constructors/event.js
             */
-            /*
-            Event JMVC object
-            use mainly for observers
-            */
-            Event = function (sender) {
-                this.sender = sender;
-                this.listeners = [];
-            };
-            Event.prototype = {
-                /**
-                 * [ description]
-                 * @param  {[type]} listener [description]
-                 * @return {[type]}          [description]
-                 */
-                attach : function (listener) {
-                    this.listeners.push(listener);
-                },
-                /**
-                 * [ description]
-                 * @param  {[type]} args [description]
-                 * @return {[type]}      [description]
-                 */
-                notify : function (args) {
-                    var i = 0,
-                        l = this.listeners.length;
-                    while (i < l) {
-                        this.listeners[i++](this.sender, args);
+            Event = (function (){
+                /*
+                Event JMVC object
+                use mainly for observers
+                */
+                var _event = function (sender) {
+                    this.sender = sender;
+                    this.listeners = [];
+                };
+                _event.prototype = {
+                    /**
+                     * [ description]
+                     * @param  {[type]} listener [description]
+                     * @return {[type]}          [description]
+                     */
+                    attach : function (listener) {
+                        this.listeners.push(listener);
+                    },
+                    /**
+                     * [ description]
+                     * @param  {[type]} args [description]
+                     * @return {[type]}      [description]
+                     */
+                    notify : function (args) {
+                        var i = 0,
+                            l = this.listeners.length;
+                        while (i < l) {
+                            this.listeners[i++](this.sender, args);
+                        }
                     }
-                }
-            };
+                };
+                return {
+                    create : function(s) {
+                        return new _event(s);
+                    }
+                };
+            })();
             //-----------------------------------------------------------------------------
             /*
             [MALTA] src/core/constructors/channel.js
@@ -1627,9 +1638,8 @@
              * the non singleton named version is the Channel object
              * @return {Object} The Pipe object with pub, sub, reset, enable, disable
              */
-            Pipe = (function () {
-                return Channel('JMVC');
-            })();
+            Pipe = Channel('JMVC');
+            
             /*
             JMVC.Pipe.reset();
             
@@ -1664,57 +1674,134 @@
             /*
             [MALTA] src/core/constructors/promise.js
             */
-            /*-----
-            PROMISE
-            -----*/
-            // ty https://github.com/stackp/promisejs
-            Promise = function () {
-                this.cbacks = [];
-                this.len = 0;
-                this.completed = false;
-                this.res = false;
-                this.err = false;
-                this.reset = function () {
-                    this.len = 0;
-                    this.cbacks = [];
+            Promise = (function() {
+            
+                /**
+                 * [_promise description]
+                 * @return {[type]} [description]
+                 */
+                var _promise = function() {
+                        this.cbacks = [];
+                        this.len = 0;
+                        this.solved = false;
+                        this.result = null;
+                    },
+                    proto = _promise.prototype;
+            
+                /**
+                 * [then description]
+                 * @param  {[type]} func [description]
+                 * @return {[type]}      [description]
+                 */
+                proto.then = function(func) {
+                    var self = this,
+                        f = function () {
+                            self.solved = false;
+                            func.call(self, self.result);
+                        };
+                    if (this.solved) {
+                        f();
+                    } else {
+                        this.cbacks[this.len++] = f;
+                    }
+                    return this;
+                    
                 };
-            };
-            /**
-             * [done description]
-             * @param  {[type]}   res [description]
-             * @param  {[type]}   err [description]
-             * @return {Function}     [description]
-             */
-            Promise.prototype.done = function (res, err) {
-                var i = 0;
-                this.completed = true;
-                this.res = res;
-                this.err = err;
-                for (null; i < this.len; i += 1) {
-                    this.cbacks[i](res, err);
+            
+                /**
+                 * [done description]
+                 * @param  {[type]}   r [description]
+                 * @return {Function}   [description]
+                 */
+                proto.done = function(r) {
+                    this.result = r;
+                    if (!this.len) {
+                        return this.result;
+                    }
+                    this.solved = true;
+                    this.cbacks.shift()(r);
+                    this.len--;
+                };
+            
+                /**
+                 * [chain description]
+                 * @param  {[type]} funcs [description]
+                 * @param  {[type]} args  [description]
+                 * @return {[type]}       [description]
+                 */
+                function chain(funcs, args) {
+                    var first = (function () {
+                            var p = new _promise();
+                            funcs[0].apply(p, args);
+                            return p;
+                        })(),
+                        tmp = [first];
+            
+                    for (var i = 1, l = funcs.length;  i < l; i++) {
+                        tmp.push(tmp[i-1].then(funcs[i]));
+                    }
                 }
-                this.reset();
-            };
-            /**
-             * [then description]
-             * @param  {[type]} cback [description]
-             * @param  {[type]} ctx   [description]
-             * @return {[type]}       [description]
-             */
-            Promise.prototype.then = function (cback, ctx) {
-                var func = jmvc.delegate(cback, ctx);
-                if (this.completed) {
-                    func(this.res, this.err);
-                } else {
-                    this.cbacks[this.len] = func;
-                    this.len += 1;
+            
+                /**
+                 * [join description]
+                 * @param  {[type]} pros [description]
+                 * @return {[type]}      [description]
+                 */
+                function join(pros) {
+                    var pros = [].splice.call(arguments, 0),
+                        p = new _promise(),
+                        res = [],
+                        i = 0,
+                        len = pros.length,
+                        lengthToGo = len;
+                    for (null; i < len; i++) {
+                        (function (j) {
+                            pros[j]().then(function (r) {
+                                res[j] = r;
+                                if (--lengthToGo == 0) {
+                                    p.done(res);
+                                }
+                            });
+                        })(i);
+                    }
+                    return p;
                 }
-                return this;
-            };
-            //-----------------------------------------------------------------------------
+            
+                
+                return {
+                    create : function () {
+                        return new _promise();
+                    },
+                    chain : chain,
+                    join : join
+                };
+            })();
             /*
             [MALTA] src/core/constructors/interface.js
             */
+            Interface = (function (){
+                var _interface = function (name, a) {
+                    var i = 0,
+                        l;
+                    this.name = name;
+                    this.mthds = [];
+                    if (!(a instanceof Array)) {
+                        throw new Error('An array of strings must be passed to the Interface constructor');
+                    }
+                    l = a.length;
+                    for (null; i < l; i += 1) {
+                        typeof a[i] === 'string' && (this.mthds.push(a[i]));
+                        //console.debug(checkInterface(a[i]));
+                    }
+                };
+            
+                return {
+                    create : function (_n, _a) {
+                        return new _interface(_n, _a);
+                    }
+                };
+            })();
+            
             /**
              * [checkInterface description]
              * @param  {[type]} f [description]
@@ -1731,29 +1818,9 @@
                 } : false;
             }
             */
+            
             /**
-             * INTERFACE
-             * =========
-             * [Interface description]
-             * @param {[type]} name [description]
-             * @param {[type]} a    [description]
-             */
-            Interface = function (name, a) {
-                var i = 0,
-                    l;
-                this.name = name;
-                this.mthds = [];
-                if (!(a instanceof Array)) {
-                    throw new Error('An array of strings must be passed to the Interface constructor');
-                }
-                l = a.length;
-                for (null; i < l; i += 1) {
-                    typeof a[i] === 'string' && (this.mthds.push(a[i]));
-                    //console.debug(checkInterface(a[i]));
-                }
-            };
-            /**
-             * Static method to check if an instance inplements one or more Interfaces
+             * Static method to check if an instance implements one or more Interfaces
              * @param  {[type]} obj    [description]
              * @param  {[type]} intrfc [description]
              * @return {[type]}        [description]
@@ -2490,7 +2557,7 @@
                 W: W,
                 WD: WD,
                 WDL : WDL,
-                WDB : WD.body,
+                WDB : WDB,
                 US : US,
                 M : Math,
                 c_prepath : dispatched.controller_prepath,
@@ -3934,11 +4001,16 @@
         
     };
     JMVC.bom = {
-        'document' : JMVC.WD,
-        'frames' : JMVC.W.frames,
-        'history' : JMVC.W.history,
-        'location' : JMVC.W.location,
-        'navigator' : JMVC.W.navigator
+        document : JMVC.WD,
+        frames : JMVC.W.frames,
+        history : JMVC.W.history,
+        location : JMVC.W.location,
+        navigator : JMVC.W.navigator,
+    
+        // here or in JMVC.head? bah
+        qs : function (qs) {
+            this.location.search = JMVC.object.toQs(qs);
+        } 
     };
     
     /*
@@ -4929,12 +5001,6 @@
                 // 4) append it 
                 JMVC.dom.append(JMVC.WDB, d);
             }
-        
-            
-    
-            
-    
-           
         },
     
         /**
@@ -5085,9 +5151,15 @@
             if (_.css.opera) {
                 return JMVC.W.getComputedStyle(el, null).getPropertyValue(styleProperty);
             }
-            var computedStyle = typeof el.currentStyle !== 'undefined' ? el.currentStyle : JMVC.WD.defaultView.getComputedStyle(el, null);
+            var computedStyle = typeof el.currentStyle !== 'undefined' ?
+                el.currentStyle
+                :
+                JMVC.WD.defaultView.getComputedStyle(el, null);
     
-            return styleProperty ? computedStyle[_.css.css2js_rule(styleProperty)] : computedStyle;
+            return styleProperty ?
+                computedStyle[_.css.css2js_rule(styleProperty)]
+                :
+                computedStyle;
         },
     
         //
@@ -5162,8 +5234,9 @@
             var tmp = JMVC.dom.find('#pest-css'),
                 info = document.createElement('div'),
                 enabled = true,
-                initialPosition = 0,
-                positions = ['tl','bl','br','tr'],
+                positionCookie = 'pestPanelPosition',
+                initialPosition = ~~JMVC.cookie.get(positionCookie) || 0,
+                positions = ['tr', 'br', 'bl', 'tl'],
     
                 fnshow = function (e) {
                     if (!enabled) {
@@ -5180,9 +5253,13 @@
                             backgroundColor: true,
                             fontSize: true
                         },
-                        styleList = document.createElement('ul'),
-                        c,
                         li,
+                        styleList = document.createElement('ul'),
+                        addToList = function (list, lab, val) {
+                            li = document.createElement('li');
+                            li.innerHTML = (lab ? ('<strong>' + lab + '</strong> : ') : '') + val;
+                            list.appendChild(li);
+                        },
                         tree;
     
                     if (trg === info) {
@@ -5191,27 +5268,18 @@
                     info.innerHTML = '';
     
                     for (var s in cstyle) {
-                        if (s in filter) {
-                            c = document.createElement('li');
-                            c.innerHTML = '<strong>' + s + '</strong> : ' + cstyle[s];
-                            styleList.appendChild(c);
-                        }
+                        s in filter &&  addToList(styleList,s, cstyle[s]);
                     }
                     info.appendChild(styleList);
     
                     info.appendChild(document.createElement('hr'));
     
                     if (!! trg.id || !! trg.className) {
-                        styleList = document.createElement('ul');
                         if (trg.id) {
-                            li = document.createElement('li');
-                            li.innerHTML = '<strong>ID</strong> : ' + trg.id;
-                            styleList.appendChild(li);
+                            addToList(styleList, 'ID', trg.id);
                         }
                         if (trg.className) {
-                            li = document.createElement('li');
-                            li.innerHTML = '<strong>CLASS</strong> : ' + trg.className;
-                            styleList.appendChild(li);
+                            addToList(styleList, 'CLASS', trg.className);
                         }
                         info.appendChild(styleList);
                     }
@@ -5220,9 +5288,7 @@
                     tree = document.createElement('ul');
     
                     while (!! trg.tagName) {
-                        li = document.createElement('li');
-                        li.innerHTML = trg.tagName;
-                        tree.appendChild(li);
+                        addToList(tree, false, trg.tagName);
                         trg = trg.parentNode;
                     }
                     info.appendChild(tree);
@@ -5239,12 +5305,13 @@
                 var old = initialPosition;
                 initialPosition = (++initialPosition) % positions.length;
                 JMVC.dom.switchClass(info, positions[old], positions[initialPosition]);
-            })
+                JMVC.cookie.set(positionCookie, initialPosition);
+            });
             
             JMVC.WD.body.appendChild(info);
     
             if (tmp) {
-                JMVC.dom.remove(tmp);
+                JMVC.dom.remove(tmp, info);
                 JMVC.events.off(JMVC.WD, 'mousemove', fnshow);
             } else {
                 this.mappedStyle(
@@ -5471,9 +5538,11 @@
     
             while (++i < l) {
                 
-                if (arr[i] == undefined ||
+                if (
+                    undefined == arr[i]
+                    ||
                     (typeof arr[i] == 'number' && isNaN(arr[i]))
-                ){
+                ) {
                     arr.splice(i--, 1);
                     l--;
                 }
@@ -5786,13 +5855,20 @@
         code2str : function (code) {
             return String.fromCharCode.apply(null, code);
         },
+    
         /**
-         * [ description]
-         * @param  {[type]} s){return s.replace(/^\s+/g [description]
-         * @param  {[type]} ''         [description]
-         * @return {[type]}            [description]
+         * [EscapeEntities description]
+         * @param {[type]} str [description]
          */
-        triml : function (s) {return s.replace(/^\s+/g, ''); },
+        EscapeEntities : function (str) {
+            return str.replace(/[^\x20-\x7E]/g,
+                function (str) {
+                    return _.string.charToEntity[str] ? '&' + _.string.charToEntity[str] + ';' : str;
+                }
+            );
+        },
+    
+        
         /**
          * [multireplace description]
          * @param  {[type]} cnt [description]
@@ -5883,7 +5959,7 @@
                 straight = true,
                 str, tmp, last;
     
-            if (options != undefined) {
+            if (undefined != options) {
                 if ('delim' in options) {
                     start = options.delim[0];
                     end = options.delim[1];
@@ -5969,13 +6045,7 @@
         //
         //
         //
-        /**
-         * [ description]
-         * @param  {[type]} s){return s.replace(/\s+$/g [description]
-         * @param  {[type]} ''         [description]
-         * @return {[type]}            [description]
-         */
-        trimr : function (s) {return s.replace(/\s+$/g, ''); },
+        
         /**
          * [ description]
          * @param  {[type]} str [description]
@@ -5992,6 +6062,27 @@
             }
             return out;
         },
+    
+        /**
+         * [str2hex description]
+         * @param  {[type]} str [description]
+         * @return {[type]}     [description]
+         */
+        str2hex : function (str) {
+            
+            var out = [],
+                i = 0,
+                l = str.length;
+            while (i < l) {
+                out.push(
+                    '\\X' + 
+                    parseInt(str.charCodeAt(i), 10).toString(16).toUpperCase()
+                );
+                i += 1;
+            }
+            return "" + out.join('').replace(/X/g, "x");
+        },
+    
         /**
          * [ description]
          * @param  {[type]} s){return s.replace(/^\s+|\s+$/g [description]
@@ -5999,6 +6090,23 @@
          * @return {[type]}            [description]
          */
         trim : function (s) {return s.replace(/^\s+|\s+$/g, ''); },
+    
+        /**
+         * [ description]
+         * @param  {[type]} s){return s.replace(/^\s+/g [description]
+         * @param  {[type]} ''         [description]
+         * @return {[type]}            [description]
+         */
+        triml : function (s) {return s.replace(/^\s+/g, ''); },
+    
+        /**
+         * [ description]
+         * @param  {[type]} s){return s.replace(/\s+$/g [description]
+         * @param  {[type]} ''         [description]
+         * @return {[type]}            [description]
+         */
+        trimr : function (s) {return s.replace(/\s+$/g, ''); },
+    
         /**
          * [ucFirst description]
          * @param  {[type]} str [description]
@@ -6017,18 +6125,8 @@
                     return String.fromCharCode(ent[0] !== '#' ? _.string.entities[ent] : ent[1] === 'x' ? parseInt(ent.substr(2), 16): parseInt(ent.substr(1), 10));
                 }
             );
-        },
-        /**
-         * [EscapeEntities description]
-         * @param {[type]} str [description]
-         */
-        EscapeEntities : function (str) {
-            return str.replace(/[^\x20-\x7E]/g,
-                function (str) {
-                    return _.string.charToEntity[str] ? '&' + _.string.charToEntity[str] + ';' : str;
-                }
-            );
         }
+        
     };
     for (var entityName in _.string.entities ) {
         _.string.charToEntity[String.fromCharCode(_.string.entities[entityName])] = entityName;
@@ -6047,12 +6145,12 @@
      */
     _.object = {
         /**
-         * [map description]
+         * [reduce description]
          * @param  {[type]}   o  [description]
          * @param  {Function} fn [description]
          * @return {[type]}      [description]
          */
-        map: function(o, fn) {
+        reduce: function(o, fn) {
             var ret = '',
                 j;
             for (j in o) {
@@ -6091,23 +6189,25 @@
         },
         // http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
         clone: function(obj) {
-            var self = this;
+            var self = this,
+                copy,
+                i, l;
             // Handle the 3 simple types, and null or undefined
-            if (null == obj || "object" != typeof obj) {
+            if (null === obj || "object" !== typeof obj) {
                 return obj;
             }
     
             // Handle Date
             if (obj instanceof Date) {
-                var copy = new Date();
+                copy = new Date();
                 copy.setTime(obj.getTime());
                 return copy;
             }
     
             // Handle Array
             if (obj instanceof Array) {
-                var copy = [];
-                for (var i = 0, len = obj.length; i < len; i++) {
+                copy = [];
+                for (i = 0, l = obj.length; i < l; i++) {
                     copy[i] = self.clone(obj[i]);
                 }
                 return copy;
@@ -6115,9 +6215,11 @@
     
             // Handle Object
             if (obj instanceof Object) {
-                var copy = {};
-                for (var attr in obj) {
-                    if (obj.hasOwnProperty(attr)) copy[attr] = self.clone(obj[attr]);
+                copy = {};
+                for (i in obj) {
+                    if (obj.hasOwnProperty(i)) {
+                        copy[i] = self.clone(obj[i]);
+                    }
                 }
                 return copy;
             }
@@ -6143,7 +6245,7 @@
             if (obj1 + '' !== obj2 + '') {
                 return false;
             }
-            if (obj1 == obj2) {
+            if (obj1 === obj2) {
                 return true;
             }
             for (i in obj1) {
@@ -6210,13 +6312,13 @@
     
         order: function(obj) {
             var k = [],
-                i,
+                i, j, l,
                 out = {};
             for (i in obj) {
                 k.push(i);
             }
             k.sort();
-            for (var j = 0, l = k.length; j < l; j++) {
+            for (j = 0, l = k.length; j < l; j++) {
                 out[k[j]] = obj[k[j]];
             }
             return out;
@@ -6227,7 +6329,7 @@
          * @return {[type]}   [description]
          */
         toAttr: function(obj) {
-            return _.object.map(obj, function(o, i) {
+            return _.object.reduce(obj, function(o, i) {
                 return ' ' + i + (o[i] ? '="' + o[i] + '"' : '');
             });
         },
@@ -6237,10 +6339,10 @@
          * @return {[type]}   [description]
          */
         toCss: function(obj, straight) {
-            return _.object.map(obj, function(ob, i) {
+            return _.object.reduce(obj, function(ob, i) {
                 return !!straight ?
                     i + '{' + ob[i] + '} ' :
-                    i + ' {' + _.object.map(ob[i],
+                    i + ' {' + _.object.reduce(ob[i],
                         function(o, j) {
                             return j + ':' + o[j] + ';';
                         }
@@ -6253,8 +6355,7 @@
          * @return {[type]}   [description]
          */
         toQs: function(obj) {
-            return _.object.map(obj, function(o, i, r) {
-                //return (r ? '&' : '?') + encodeURIComponent(JMVC.htmlChars(i)) + '=' + encodeURIComponent(JMVC.htmlChars(o[i]));
+            return _.object.reduce(obj, function(o, i, r) {
                 return ((r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i])).replace(/\'/g, '%27');
             });
         },
@@ -6264,7 +6365,7 @@
          * @return {[type]}     [description]
          */
         toStr: function(obj) {
-            return _.object.map(obj, function(o, i) {
+            return _.object.reduce(obj, function(o, i) {
                 return i + ':' + o[i] + ';';
             });
         },
@@ -6346,12 +6447,15 @@
     	//mCeil : function (n) {return (n >> 0) + (n > 0 ? 1 : -1); },
     	num : function (n) {return parseFloat(n.toFixed(10), 10); },
         dec2Bin : function (dec){
-            if(dec > 0) return dec.toString(2)>>>0;
+            if(dec > 0) {
+                return dec.toString(2) >>> 0;
+            }
             dec = Math.abs(dec);
-            var res = dec ^ parseInt((new Array(dec.toString(2).length+1)).join("1"),2);
-            return (res+1).toString(2)>>>0;
+            var res = dec ^ parseInt((new Array(dec.toString(2).length + 1)).join("1"), 2);
+            return (res + 1).toString(2) >>> 0;
         },
-        bin2Dec : function (b) {return parseInt(b>>>0, 2); }
+        bin2Dec : function (b) {return parseInt(b>>>0, 2); },
+        sgn : function (s) {return (s >= 0) ? 1 : -1; }
     };
     //-----------------------------------------------------------------------------
     /*
@@ -6374,7 +6478,7 @@
             
             d = Math.atan2(gd2[1] - gd1[1], gd2[0] - gd1[0]) * 180 / (Math.PI);
             JMVC.events.drag.direction = d.toFixed(2);
-            JMVC.events.drag.orientation = directions[~~(( (d + 180)% 360) / 22.5)] ;
+            JMVC.events.drag.orientation = directions[~~(((d + 180) % 360) / 22.5)] ;
             return true;
         }
     
@@ -6383,6 +6487,7 @@
     JMVC.events.drag = {
         
         direction : false,
+        
         orientation : false,
     
         on : function (el, fn) {
@@ -6429,7 +6534,9 @@
                 fStart.call(e, e, {start : _.events.drag.gd1});
                 JMVC.events.on(el, 'mousemove', mmove);
             });
+    
             JMVC.events.on(el, 'mouseup', mup);
+            
             JMVC.events.on(el, 'touchstart', function (e) {    
                 _.events.drag.gd1 = JMVC.events.coord(e);
                 fStart.call(e, e, {start : _.events.drag.gd1});
@@ -6452,15 +6559,19 @@
     if (document.doctype !== null) {
     
         var node = document.doctype,
-            doctype_string = "<!DOCTYPE " + node.name + (node.publicId ? ' PUBLIC"' + node.publicId + '"' : '') + (!node.publicId && node.systemId ? ' SYSTEM' : '') + (node.systemId ? ' "' + node.systemId + '"' : '') + ">";
+            doctype_string = "<!DOCTYPE " +
+                node.name +
+                (node.publicId ? ' PUBLIC"' + node.publicId + '"' : '') +
+                (!node.publicId && node.systemId ? ' SYSTEM' : '') +
+                (node.systemId ? ' "' + node.systemId + '"' : '') +
+            ">";
     
-        if (doctype_string !== '<!DOCTYPE html>') {
+        if ('<!DOCTYPE html>' !== doctype_string) {
             var t = _.shimthags.split(','),
-                i = 0,
                 l = t.length;
-    
-            while (i < l) document.createElement(t[i++]);
-    
+            while (l--) {
+                document.createElement(t[l]);
+            }
             JMVC.head.addStyle(_.shimthags + '{display:block}', true, true);
         }
     }
