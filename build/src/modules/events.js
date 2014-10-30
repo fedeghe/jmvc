@@ -183,6 +183,15 @@ JMVC.events = {
     },
 
     /**
+     * [click description]
+     * @param  {[type]} el [description]
+     * @return {[type]}    [description]
+     */
+    click : function (el) {
+        JMVC.events.fire(el, 'click');
+    },
+
+    /**
      * [code description]
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
