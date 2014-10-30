@@ -121,11 +121,8 @@ JMVC.extend('tabs', {
 
 					JMVC.dom.switchClass(target, 'unsel', 'sel');
 
-				
 					//fix content height
 					JMVC.tabs.fixheight();
-
-
 				});
 			}
 			
