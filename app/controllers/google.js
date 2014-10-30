@@ -6,6 +6,8 @@ JMVC.controllers.google = function () {
 		JMVC.head.meta('generator', 'jmvc resident in your machine');
 		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/logoogle.css');
 
+		JMVC.head.title('Google logo plotted');
+
 		var M = Math,
 			v = JMVC.getView('vacuum'),
 			that = this;
