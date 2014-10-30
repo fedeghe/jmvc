@@ -3,10 +3,10 @@ JMVC.models.List = function () {
 	this._items =  a.length ? a : [];
 	this._selectedIndex = -1;
 
-	this.itemAdded = new JMVC.Event(this);
-	this.itemRemoved = new JMVC.Event(this);
-	this.listModified = new JMVC.Event(this);
-	this.selectedIndexChanged = new JMVC.Event(this);
+	this.itemAdded = JMVC.Event.create(this);
+	this.itemRemoved = JMVC.Event.create(this);
+	this.listModified = JMVC.Event.create(this);
+	this.selectedIndexChanged = JMVC.Event.create(this);
 	this.setBuildStrategy = function (f) {this.build = f; }
 };
 

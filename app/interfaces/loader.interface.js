@@ -1,3 +1,3 @@
-JMVC.interfaces.loader = new JMVC.Interface('loader', ['load', 'unload']);
-JMVC.interfaces.grep = new JMVC.Interface('grep', ['check', 'init', 'parse']);
-JMVC.interfaces.mankind = new JMVC.Interface('mankind', ['love', 'hate', 'destroy']);
+JMVC.interfaces.loader = JMVC.Interface.create('loader', ['load', 'unload']);
+JMVC.interfaces.grep = JMVC.Interface.create('grep', ['check', 'init', 'parse']);
+JMVC.interfaces.mankind = JMVC.Interface.create('mankind', ['love', 'hate', 'destroy']);

@@ -218,9 +218,8 @@ JMVC.Channel('optionsPalette').pub('closed');
  * the non singleton named version is the Channel object
  * @return {Object} The Pipe object with pub, sub, reset, enable, disable
  */
-Pipe = (function () {
-    return Channel('JMVC');
-})();
+Pipe = Channel('JMVC');
+
 /*
 JMVC.Pipe.reset();
 
