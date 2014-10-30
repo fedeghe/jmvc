@@ -15,7 +15,8 @@ JMVC.controllers.api = function () {
 		JMVC.events.loadify(500);
 		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/api.css', true, false);
 		
-		var main  = JMVC.getView('vacuum'),
+		var controller = this,
+			main  = JMVC.getView('vacuum'),
 			doc_tpl = JMVC.getView('api/doctpl'),
 			apintro = JMVC.getView('api/apintro'),
 			func_model = JMVC.getModel('api/function'),
@@ -70,9 +71,9 @@ JMVC.controllers.api = function () {
 						// prepare content
 						func_model.reset();
 						func_model.set({
-							'func' : section['function'][i].signature['#text'],
-							'description' : section['function'][i].description['#text'],
-							'status' : section['function'][i].status ? section['function'][i].status['#text'] : 'undefined'
+							func : section['function'][i].signature['#text'],
+							description : section['function'][i].description['#text'],
+							status : section['function'][i].status ? section['function'][i].status['#text'] : 'undefined'
 						});
 						
 						
@@ -175,7 +176,26 @@ JMVC.controllers.api = function () {
 				}
 			}, 0);
 
-			JMVC.tabs.render();
+			JMVC.tabs.render();	
+
+			// http://www.jmvc.dev/api/index/o/1_1/v/3_3 -> promise
+			// jvmc_tb1_1
+			// jvmc_tb3_3
+			
+			var tO = controller.get('o'),
+				tV = controller.get('v'),
+				elO = JMVC.dom.find('#jvmc_tb'+ tO),
+				elV;
+			if (tO) {
+				elO && JMVC.events.click(elO);
+				if (elO && tV){
+					JMVC.events.delay(function () {
+						elV = JMVC.dom.find('#jvmc_tb'+ tV);
+						elV && JMVC.events.click(elV);
+					}, 200);
+				}
+			}
+			
 		});
 	};
 };
