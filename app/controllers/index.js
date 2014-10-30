@@ -100,7 +100,9 @@ JMVC.controllers.index = function () {
 					logo, newlogo,
 					dims,
 					mapid,
-					body;
+					body,
+					today = new Date(),
+					todayMonth = today.getMonth();
 
 				JMVC.dom.append(links,  [morelink, apilink, demolink, sourcelink]);
 				JMVC.dom.append(el, links);
@@ -196,26 +198,26 @@ JMVC.controllers.index = function () {
 								,{location : [37.331889, -122.030747], speed : 20, duration : 10, streetView : {heading : 180, zoom:-2}}
 								*/
 							]);
-							
-							
-							
 						});
-						
 					}, {sensor : 'false'});
 				}
-
-				if (JMVC.p.snow && JMVC.p.snow === 'true') {
+				/*
+				if (
+					JMVC.array.find([9, 10, 11, 12, 1, 2, 3], todayMonth) > -1 ||
+					(JMVC.p.snow && JMVC.p.snow === 'true')
+				) {
+					JMVC.css.style(JMVC.WDB, {'backgroundColor': '#aab'});
 					JMVC.snow.start(JMVC.dom.body());
 				}
-
+				*/
 				if (!JMVC.sniffer.features.assets.touchDevice) {
 					JMVC.fx.threeDaniLogo(newlogo);
 				}
-
 			}
 		);
 	};
 	
+
 	
 	this.action_video = function () {
 		JMVC.require('core/html5/html5');
@@ -234,6 +236,7 @@ JMVC.controllers.index = function () {
 			JMVC.dom.append(JMVC.dom.find('#cent'), video);
 		});
 	};
+
 
 
 	this.action_audio = function () {
@@ -255,13 +258,13 @@ JMVC.controllers.index = function () {
 	};
 
 
-	//
-	//
-	//
+
 	this.action_index3 = function () {
 		/* directly render something */
 		this.render('<div id="space"></div>');
 	};
+
+
 
 	this.action_codesNoworkers = function () {
 		var content = '';
@@ -289,8 +292,9 @@ JMVC.controllers.index = function () {
 		//this.render(content);
 	};
 
-	this.action_codes = function () {
 
+
+	this.action_codes = function () {
 
 		//check webWorkers
 		if (!JMVC.sniffer.features.assets.webWorkers) {
@@ -311,8 +315,6 @@ JMVC.controllers.index = function () {
 				100
 			);
 		});
-
-
 
 		// create a inline worker
 		var blobURL = window.URL.createObjectURL(
@@ -343,6 +345,7 @@ JMVC.controllers.index = function () {
 		}
 		this.render(content);
 	};
+
 
 
 	this.action_gmaps = function () {
@@ -383,6 +386,8 @@ JMVC.controllers.index = function () {
 			}, {sensor : 'false'});
 		});
 	};
+
+
 
 	this.action_console = function () {
 		JMVC.events.loadify(500);
