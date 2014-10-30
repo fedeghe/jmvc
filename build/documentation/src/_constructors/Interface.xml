@@ -1,5 +1,5 @@
 <function>
-    <signature name="Interface">JMVC.Interface(String name, [Strings] methods)</signature>
+    <signature name="Interface">JMVC.Interface.create(String name, [Strings] methods)</signature>
     <description>Create an interface object</description>
     <params>
         <param name="*name">the name for the interface (used in case of error)</param>
