@@ -1174,6 +1174,7 @@ JMVC.controllers.demo = function() {
 		JMVC.require('widget/divrot/divrot');
 
 		JMVC.head.title('Use arrow keys');
+		
 		JMVC.css.style(JMVC.WD.body, {
 			'font-family': 'Verdana, sans-serif'
 		});
@@ -1616,17 +1617,42 @@ JMVC.controllers.demo = function() {
 				cnt = JMVC.dom.find('#container'),
 				input = JMVC.dom.create('input', {type:'text', id:'imgurl'}),
 				butt = JMVC.dom.create('input', {type:'button', value:'get it'}),
+				pestCss = JMVC.dom.create('input', {type:'button', value:'pest css'}),
+				size1 = JMVC.dom.create('input', {type:'button', value:'size 1'}),
+				size2 = JMVC.dom.create('input', {type:'button', value:'size 2'}),
+				size3 = JMVC.dom.create('input', {type:'button', value:'size 3'}),
+				size4 = JMVC.dom.create('input', {type:'button', value:'size 4'}),
 				logo = JMVC.dom.create('div', {id:'logo', style:'margin-top:10px'})
 
 			JMVC.css.style(JMVC.WDB, {padding : '50px'});
 
 			
-			JMVC.dom.append(cnt, [input,butt,logo]);
+			JMVC.dom.append(cnt, [input, butt, pestCss, size1, size2, size3, size4, logo]);
 			JMVC.dom.append(JMVC.WDB, cnt);
 
 			JMVC.events.on(butt, 'click', function (){
-				go(input.value);
-			})			
+				if (!input.value) {
+					document.location.search = '?size=1';	
+				} else {
+					go(input.value || 1);
+				}
+
+			});
+			JMVC.events.on(size1, 'click', function (){
+				JMVC.bom.qs({size : .5});
+			});
+			JMVC.events.on(size2, 'click', function (){
+				JMVC.bom.qs({size : 1});
+			});
+			JMVC.events.on(size3, 'click', function (){
+				JMVC.bom.qs({size : 1.5});
+			});
+			JMVC.events.on(size4, 'click', function (){
+				JMVC.bom.qs({size : 2});
+			});
+			JMVC.events.on(pestCss, 'click', function (){
+				JMVC.css.pest();
+			});
 
 
 			function go (img) {
@@ -1638,7 +1664,15 @@ JMVC.controllers.demo = function() {
 				// promise returned, done when image loaded and
 				// matrix done
 				.then(function(res) {
-					JMVC.shadowMatrix(res).draw({node : logo});
+					var sm = JMVC.shadowMatrix(res).draw({node : logo});
+					/*
+					window.setTimeout(function () {
+						sm.fromImage({
+							size : size,
+							imgUrl : JMVC.vars.baseurl + '/media/img/jmvc_n3.png'
+						});
+					}, 5000);
+					*/
 				});
 			}
 			
