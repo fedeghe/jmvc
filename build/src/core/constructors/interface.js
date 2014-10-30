@@ -1,3 +1,26 @@
+Interface = (function (){
+    var _interface = function (name, a) {
+        var i = 0,
+            l;
+        this.name = name;
+        this.mthds = [];
+        if (!(a instanceof Array)) {
+            throw new Error('An array of strings must be passed to the Interface constructor');
+        }
+        l = a.length;
+        for (null; i < l; i += 1) {
+            typeof a[i] === 'string' && (this.mthds.push(a[i]));
+            //console.debug(checkInterface(a[i]));
+        }
+    };
+
+    return {
+        create : function (_n, _a) {
+            return new _interface(_n, _a);
+        }
+    };
+})();
+
 /**
  * [checkInterface description]
  * @param  {[type]} f [description]
@@ -14,29 +37,9 @@ function checkInterface(f) {
     } : false;
 }
 */
+
 /**
- * INTERFACE
- * =========
- * [Interface description]
- * @param {[type]} name [description]
- * @param {[type]} a    [description]
- */
-Interface = function (name, a) {
-    var i = 0,
-        l;
-    this.name = name;
-    this.mthds = [];
-    if (!(a instanceof Array)) {
-        throw new Error('An array of strings must be passed to the Interface constructor');
-    }
-    l = a.length;
-    for (null; i < l; i += 1) {
-        typeof a[i] === 'string' && (this.mthds.push(a[i]));
-        //console.debug(checkInterface(a[i]));
-    }
-};
-/**
- * Static method to check if an instance inplements one or more Interfaces
+ * Static method to check if an instance implements one or more Interfaces
  * @param  {[type]} obj    [description]
  * @param  {[type]} intrfc [description]
  * @return {[type]}        [description]
