@@ -9,6 +9,7 @@ $$src/head.js$$
     // local reference for current window.document.location
     var WD = W.document,
         WDL = WD.location,
+        WDB = WD.body,
 
         // this function returns the JMVC object, globalized, after doing some stuff
         // @return {object literal} $JMVC inner object
