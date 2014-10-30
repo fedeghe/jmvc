@@ -4,7 +4,9 @@ JMVC.controllers.wcave = function () {
 
 	this.action_index = function () {
 
-		JMVC.require('games/wcave/wcave.min');
+		JMVC.require('games/wcave/wcave');
+
+		JMVC.head.title('Wcave game');
 
 		JMVC.events.loadify(500);
 		var v = JMVC.getView('vacuum'),

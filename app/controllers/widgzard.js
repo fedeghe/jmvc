@@ -364,7 +364,7 @@ JMVC.controllers.widgzard = function () {
 
         
         JMVC.head.addStyle('/media/css/widgzard.css');
-
+        JMVC.head.title('Widgzard dom creator, postorder callback execution');
 
         //JMVC.dom.addClass(JMVC.WD.body, 'resp');
         JMVC.css.beResponsive();
