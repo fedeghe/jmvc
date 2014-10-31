@@ -10,6 +10,6 @@ JMVC.bom = {
 
     // here or in JMVC.head? bah
     qs : function (qs) {
-        this.location.search = JMVC.object.toQs(qs);
+        JMVC.bom.location.search = JMVC.object.toQs(qs);
     } 
 };

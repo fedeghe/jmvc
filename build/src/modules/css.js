@@ -127,7 +127,7 @@ JMVC.css = {
     hide: function (el) {
         if (el instanceof Array) {
             for (var i = 0, l = el.length; i < l; i += 1) {
-                this.hide(el[i]);
+                JMVC.css.hide(el[i]);
             }
             return;
         }
@@ -241,7 +241,7 @@ JMVC.css = {
             JMVC.dom.remove(tmp, info);
             JMVC.events.off(JMVC.WD, 'mousemove', fnshow);
         } else {
-            this.mappedStyle(
+            JMVC.css.mappedStyle(
                 'pest-css',
                 '* {outline : 1px dotted black !important; opacity : .7}' +
                 '*:hover {outline : 1px solid red !important; opacity:1 }' +
@@ -306,7 +306,7 @@ JMVC.css = {
     show: function (el) {
         if (el instanceof Array) {
             for (var i = 0, l = el.length; i < l; i += 1) {
-                this.show(el[i]);
+                JMVC.css.show(el[i]);
             }
             return;
         }
@@ -341,7 +341,7 @@ JMVC.css = {
                         JMVC.core.color.getRandomColor() : '#000000';
                     prop[k] = prop[k].replace(/rand/, newval);
                 }
-                if (JMVC.array.find(this.css3_map, k) + 1) {
+                if (JMVC.array.find(JMVC.css.css3_map, k) + 1) {
                     el.style.cssText += ';' + k + ' : ' + prop[k];
                 } else {
                     //el.style[_.css.css_propertymap[k] || k + ""] = prop[k];
@@ -355,7 +355,7 @@ JMVC.css = {
                     JMVC.core.color.getRandomColor() : '#000000';
                 val = val.replace(/rand/, newval);
             }
-            if (JMVC.array.find(this.css3_map, prop) + 1) {
+            if (JMVC.array.find(JMVC.css.css3_map, prop) + 1) {
                 el.style.cssText += ';' + prop + ' : ' + val;
             } else {
                 //el.style[_.css.css_propertymap[prop] || prop + ""] = val;
@@ -366,7 +366,7 @@ JMVC.css = {
                 } /* IE */
             }
         }
-        return this;
+        return JMVC.css;
     },
 
     /**

@@ -23,7 +23,7 @@ JMVC.head = {
         var script,
             head,
             tmp,
-            that = this,
+            that = JMVC.head,
             //postmode = true,
             sync = true,
             script_content;
@@ -48,7 +48,7 @@ JMVC.head = {
                 JMVC.dom.create('script', {type: 'text/javascript'}, src)
                 :
                 JMVC.dom.create('script', {type: 'text/javascript', src: src}, ' ');
-            head = this.element;
+            head = JMVC.head.element;
             head.appendChild(script);
         }
         return script;
@@ -64,7 +64,7 @@ JMVC.head = {
         var style,
             head,
             tmp,
-            that = this,
+            that = JMVC.head,
             //postmode = true,
             sync = true,
             rules,
@@ -111,7 +111,7 @@ JMVC.head = {
                 rel : 'stylesheet',
                 href : src
             });
-            head = this.element;
+            head = JMVC.head.element;
             head.appendChild(style);
         }
         return style;
@@ -129,7 +129,7 @@ JMVC.head = {
      * @return {[type]}      [description]
      */
     favicon : function (file) {
-        this.link('icon', {
+        JMVC.head.link('icon', {
             rel : 'shortcut icon',
             href : JMVC.vars.baseurl + file
         });
@@ -155,7 +155,7 @@ JMVC.head = {
      * @return {[type]}   [description]
      */
     lastModified : function (d) {
-        var meta = this.element.getElementsByTagName('meta'),
+        var meta = JMVC.head.element.getElementsByTagName('meta'),
             newmeta = JMVC.dom.create(
                 'meta',
                 {'http-equiv': 'last-modified', 'content': (d || JMVC.vars.last_modified || new Date()).toString()}
@@ -164,7 +164,7 @@ JMVC.head = {
         if (len) {
             JMVC.dom.insertAfter(newmeta, meta.item(len - 1));
         } else {
-            this.element.appendChild(newmeta);
+            JMVC.head.element.appendChild(newmeta);
         }
     },
     /**
@@ -180,7 +180,7 @@ JMVC.head = {
             'prototype' : 'https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js',
             dropbox : 'https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js'
         };
-        l in libs && this.addScript(libs[l]);
+        l in libs && JMVC.head.addScript(libs[l]);
     },
     /**
      * [link description]
@@ -190,7 +190,7 @@ JMVC.head = {
      */
     link : function (rel, attrs) {
         attrs.rel = rel;
-        JMVC.dom.add(this.element, 'link', attrs);
+        JMVC.dom.add(JMVC.head.element, 'link', attrs);
     },
 
     /**
@@ -257,7 +257,7 @@ JMVC.head = {
      */
     meta : function (name, value, rewrite) {
         rewrite = !!rewrite;
-        var metas = this.metas(),
+        var metas = JMVC.head.metas(),
             maybeExisting = JMVC.dom.findByAttribute('name', name, metas);
         if (!!maybeExisting.length) {
             //exit if rewrite is not set and the meta name already exists
@@ -267,10 +267,10 @@ JMVC.head = {
             JMVC.dom.remove(maybeExisting[0]);
         }
         //get last meta if exists
-        var meta = this.element.getElementsByTagName('meta'),
+        var meta = JMVC.head.element.getElementsByTagName('meta'),
             newmeta = JMVC.dom.create('meta', {'name' : name, 'content' : value}),
             len = meta.length;
-        return len ? JMVC.dom.insertAfter(newmeta, meta.item(len - 1)) : this.element.appendChild(newmeta);
+        return len ? JMVC.dom.insertAfter(newmeta, meta.item(len - 1)) : JMVC.head.element.appendChild(newmeta);
     },
     /**
      * return all document meta tags
@@ -295,7 +295,7 @@ JMVC.head = {
      * @return {[type]}      [description]
      */
     removeMeta : function (name) {
-        var maybeExisting = JMVC.dom.findByAttribute('name', name, this.metas());
+        var maybeExisting = JMVC.dom.findByAttribute('name', name, JMVC.head.metas());
         !!maybeExisting.length && JMVC.dom.remove(maybeExisting[0]);
     },
     

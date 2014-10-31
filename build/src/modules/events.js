@@ -226,9 +226,9 @@ JMVC.events = {
             return false;
         }
         _.events.disabledRightClick = true;
-        var self = this;
+        var self = JMVC.events;
         JMVC.dom.attr(JMVC.WD.body, 'oncontextmenu', 'return false');
-        this.on(JMVC.WD, 'mousedown', function(e) {
+        self.on(JMVC.WD, 'mousedown', function(e) {
             if (~~(e.button) === 2) {
                 self.preventDefault(e);
                 return false;
@@ -296,7 +296,7 @@ JMVC.events = {
         node = node || JMVC.WD;
         if (typeof evnt === 'undefined') {
             for (var j in _.events.bindings) {
-                this.free(node, j);
+                JMVC.events.free(node, j);
             }
             return true;
         }
@@ -345,16 +345,16 @@ JMVC.events = {
      */
     loadify: function(ms) {
 
-        var self = this;
+        var self = JMVC.events;
         self.loadifyCalled = true;
-        this.start(function() {
+        self.start(function() {
             //otherwise some browser hangs (opera)
             self.delay(function() {
                 WD.body.style.opacity = 0;
                 WD.body.style.filter = 'alpha(opacity=0)';
             }, 0);
         });
-        this.end(function() {
+        self.end(function() {
             var i = 0,
                 step = 0.05,
                 top = 1,
@@ -402,14 +402,14 @@ JMVC.events = {
      * @return {[type]}        [description]
      */
     one: function(el, tipo, fn) {
-        var self = this;
+        var self = JMVC.events;
         if (el instanceof Array) {
             for (var i = 0, l = el.length; i < l; i++) {
-                this.one(el[i], tipo, fn);
+                self.one(el[i], tipo, fn);
             }
             return;
         }
-        this.on(el, tipo, function f(e) {
+        self.on(el, tipo, function f(e) {
             fn(e); 
             self.off(el, tipo, f);
         });
@@ -426,10 +426,10 @@ JMVC.events = {
      * || JMVC.events.clickout(tr, function (){console.debug('out')});
      */
     onEventOut: function(evnt, el, cb) {
-        var self = this,
+        var self = JMVC.events,
             root = JMVC.dom.body();
 
-        this.on(root, evnt, function f(e) {
+        self.on(root, evnt, function f(e) {
             var trg = self.eventTarget(e);
             while (trg !== el) {
                 trg = JMVC.dom.parent(trg);
@@ -449,7 +449,7 @@ JMVC.events = {
      */
     onEsc: function (cb, w) {
         w = w || JMVC.W;
-        this.on(w.document, 'keyup', function (e) {
+        JMVC.events.on(w.document, 'keyup', function (e) {
             if (e.keyCode == 27) {
                 cb.call(w, e);
             }
@@ -463,8 +463,8 @@ JMVC.events = {
      * @return {[type]}    [description]
      */
     onRight: function(el, f) {
-        this.disableRightClick();
-        this.on(el, 'mousedown', function(e) {
+        JMVC.events.disableRightClick();
+        JMVC.events.on(el, 'mousedown', function(e) {
 
             if (~~(e.button) === 2) {
                 f.call(el, e);
@@ -594,7 +594,7 @@ JMVC.events = {
      * @return {[type]}      [description]
      */
     scrollBy: function(left, top) {
-        this.delay(function() {
+        JMVC.events.delay(function() {
             W.scrollBy(left, top);
         }, 1);
     },
@@ -606,7 +606,7 @@ JMVC.events = {
      * @return {[type]}      [description]
      */
     scrollTo: function(left, top) {
-        this.delay(function() {
+        JMVC.events.delay(function() {
             W.scrollTo(left, top);
         }, 1);
     },
@@ -638,7 +638,7 @@ JMVC.events = {
      * @return {[type]} [description]
      */
     unload: function (){
-        this.on(W, 'beforeunload', function (e) {
+        JMVC.events.on(W, 'beforeunload', function (e) {
             
             var confirmationMessage = /\//;//'Are you sure to leave or reload this page?';//"\o/";
             (e || window.event).returnValue = confirmationMessage;     //Gecko + IE

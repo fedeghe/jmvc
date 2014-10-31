@@ -45,14 +45,14 @@ JMVC.object = {
         temp = obj.constructor();
         for (key in obj) {
             if (obj.hasOwnProperty(key)) {
-                temp[key] = this.clone(obj[key]);
+                temp[key] = JMVC.object.clone(obj[key]);
             }
         }
         return temp;
     },
     // http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
     clone: function(obj) {
-        var self = this,
+        var self = JMVC.object,
             copy,
             i, l;
         // Handle the 3 simple types, and null or undefined
@@ -141,7 +141,7 @@ JMVC.object = {
      * @return {[type]}     [description]
      */
     extend: function(o, ext, force) {
-        var obj = this.clone(o),
+        var obj = JMVC.object.clone(o),
             j;
         for (j in ext) {
             if (ext.hasOwnProperty(j) && (!(j in obj) || force)) {

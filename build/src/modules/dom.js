@@ -22,8 +22,8 @@ JMVC.dom = {
      * @return {[type]}       [description]
      */
     add : function (where, tag, attrs, inner) {
-        var n = this.create(tag, attrs, inner);
-        this.append(where, n);
+        var n = JMVC.dom.create(tag, attrs, inner);
+        JMVC.dom.append(where, n);
         return n;
     },
 
@@ -148,7 +148,7 @@ JMVC.dom = {
      * @return {[type]} [description]
      */
     clearer : function () {
-        return this.create('br', {'class': 'clearer'});
+        return JMVC.dom.create('br', {'class': 'clearer'});
     },
 
     /**
@@ -179,9 +179,9 @@ JMVC.dom = {
         if (typeof inner !== 'undefined') {
             if (inner.nodeType && inner.nodeType === 1) {
             //if (Object.prototype.hasOwnProperty.call(inner, 'nodeType') && inner.nodeType === 1) {
-                this.append(node, inner);
+                JMVC.dom.append(node, inner);
             } else {
-                this.html(node, inner);
+                JMVC.dom.html(node, inner);
             }
         }
         return node;
@@ -421,22 +421,22 @@ JMVC.dom = {
      */
     html : function (el, html) {
         if (!el) {
-            return this;
+            return JMVC.dom;
         }
         var t = '';
         if (typeof html !== 'undefined') {
             if (el) {
                 try {
-                    this.empty(el);
-                    if (this.isElement(html)) {
-                        this.append(el, html);
+                    JMVC.dom.empty(el);
+                    if (JMVC.dom.isElement(html)) {
+                        JMVC.dom.append(el, html);
                     } else {
                         el.innerHTML = html + '';
                     }
                     
                 } catch (e) {}
             }
-            return this;
+            return JMVC.dom;
         } else {
             t = (el.nodeType === 1) ? el.innerHTML : el;
         }
@@ -565,7 +565,7 @@ JMVC.dom = {
             type2consider = types || ['TEXT_NODE'];
             // clean text ones
         while (len) {
-            if (JMVC.array.find(type2consider, this.nodeTypeString(childs[i]))) {
+            if (JMVC.array.find(type2consider, JMVC.dom.nodeTypeString(childs[i]))) {
                 tagChilds.push(childs[i]);
                 i += 1;
             }
@@ -623,11 +623,11 @@ JMVC.dom = {
         afterFreeMem && JMVC.events.free(el);
 
         var parent;
-        typeof el === 'string' && (el = this.find(el));
+        typeof el === 'string' && (el = JMVC.dom.find(el));
 
         if (JMVC.util.isArray(el)) {
             for (var i  = 0, l = el.length; i < l; i++) {
-                this.remove(el[i]);
+                JMVC.dom.remove(el[i]);
             }
             return true;
         }
@@ -671,7 +671,7 @@ JMVC.dom = {
         }
         var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
         el.className = el.className.replace(reg, ' ');
-        return this;
+        return JMVC.dom;
     },
 
     /**
@@ -683,8 +683,8 @@ JMVC.dom = {
     replace : function (going, coming) {
         var display = coming.style.display;
         coming.style.display = 'none';
-        this.insertAfter(coming, going);
-        this.remove(going) && (coming.style.display = display);
+        JMVC.dom.insertAfter(coming, going);
+        JMVC.dom.remove(going) && (coming.style.display = display);
     },
 
     /**
@@ -710,9 +710,9 @@ JMVC.dom = {
      * @return {[type]}          [description]
      */
     switchClass : function (el, oldclass, newclass) {
-        if (this.hasClass(el, oldclass)) {
-            this.removeClass(el, oldclass);
-            !this.hasClass(el, newclass) && this.addClass(el, newclass);
+        if (JMVC.dom.hasClass(el, oldclass)) {
+            JMVC.dom.removeClass(el, oldclass);
+            !JMVC.dom.hasClass(el, newclass) && JMVC.dom.addClass(el, newclass);
         }
         return el;
     },
@@ -724,7 +724,7 @@ JMVC.dom = {
      * @return {[type]}     [description]
      */
     toggleClass : function (el, cls) {
-        this[this.hasClass(el, cls) ? 'removeClass' : 'addClass'](el, cls);
+        JMVC.dom[JMVC.dom.hasClass(el, cls) ? 'removeClass' : 'addClass'](el, cls);
     },
 
     /**
@@ -748,7 +748,7 @@ JMVC.dom = {
                                     // must test, cause eulerWalk do even postorder
         node = node.firstChild;
         while (node) {
-            this.walk(node, func);
+            JMVC.dom.walk(node, func);
             node = node.nextSibling;
         }
     },
@@ -761,7 +761,7 @@ JMVC.dom = {
      */
     wrap : function (node, tag, attrs) {
         var wrap = JMVC.dom.create(tag || 'div', attrs || {});
-        this.insertAfter(wrap, node);
+        JMVC.dom.insertAfter(wrap, node);
         wrap.appendChild(node);
         return wrap;
     },

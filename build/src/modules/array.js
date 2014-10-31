@@ -143,7 +143,7 @@ JMVC.array = {
             sum = 0,
             tmp;
         while (true) {
-            tmp = this.find(arr, mvar);
+            tmp = JMVC.array.find(arr, mvar);
             // not found exit
             if (tmp < 0) {break; }
             // track position, cause of slicing
@@ -199,7 +199,7 @@ JMVC.array = {
      * @param  {[type]} a [description]
      * @return {[type]}   [description]
      */
-    mean : function (a) {return this.sum(a) / a.length; },
+    mean : function (a) {return JMVC.array.sum(a) / a.length; },
 
     /**
      * [min description]
