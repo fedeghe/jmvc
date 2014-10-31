@@ -37,7 +37,8 @@ Promise = (function() {
      * @param  {[type]}   r [description]
      * @return {Function}   [description]
      */
-    proto.done = function(r) {
+    proto.done =
+    proto.resolve = function(r) {
         this.result = r;
         if (!this.len) {
             return this.result;
