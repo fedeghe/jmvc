@@ -29,21 +29,29 @@
         this.size = [this.matrix.length, this.matrix[0].split(',').length];
     };
     
-
-
     proto.animate = function (opts, ms) {
         var n = this.frames.length,
             self = this,
+
+            backAndForth = opts.backAndForth,
+            nextIndex = (function () {
+                var versus = 1;
+                if (backAndForth) {
+                    return function () {
+                        versus = versus > 0 ? (i == n - 1 ? -1 : versus) : (i == 0 ? 1 : versus); 
+                        i = (i + versus + n) % n;
+                    };
+                } else {
+                    return function () {i = (i + versus) % n;};
+                }
+            })(),
             i = 0;
         window.setInterval(function () {
             self.matrix = self.frames[i]
             self.draw({node : opts.node});
-            i = (i + 1) % n;
+            nextIndex();
         }, ms);
     };
-
-    
-
 
     proto.draw = function (opts) {
         this.node || (this.node = opts.node || (function (){alert('target node missing!!!'); })());
@@ -83,6 +91,9 @@
         return this;
     };
 
+    proto.replaceMap = function (m){
+        this.colorMap = m;
+    };
 
     proto.mirror = function () {
         var m = [],

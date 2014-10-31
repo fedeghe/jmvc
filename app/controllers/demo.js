@@ -214,9 +214,10 @@ JMVC.controllers.demo = function() {
 					style:{padding : '10px 0px'},
 					html : '<strong>' + title + '</strong>'
 				}],
-				inner = {tag : 'ul', content : []};
+				inner = {tag : 'ul', content : []},
+				k;
 
-			for (var k in links) {
+			for (k in links) {
 				inner.content.push({
 					tag : 'li',
 					content : [{
@@ -227,11 +228,16 @@ JMVC.controllers.demo = function() {
 				});
 			}
 			cnt.push(inner);
-
 			return {
 				content : cnt,
-				style : {backgroundColor : 'yellow', margin : '5px', 'float' : 'left'},
-				attrs : {'class' : 'round8 pad5 respfixed'}
+				style : {
+					backgroundColor : 'yellow',
+					margin : '5px',
+					'float' : 'left'
+				},
+				attrs : {
+					'class' : 'round8 pad5 respfixed'
+				}
 			};
 		}
 
@@ -1614,20 +1620,25 @@ JMVC.controllers.demo = function() {
 
 			
 			var size = that.get('size') || 1,
+				JMVCdomCreate = JMVC.dom.create,
 				cnt = JMVC.dom.find('#container'),
-				input = JMVC.dom.create('input', {type:'text', id:'imgurl'}),
-				butt = JMVC.dom.create('input', {type:'button', value:'get it'}),
-				pestCss = JMVC.dom.create('input', {type:'button', value:'pest css'}),
-				size1 = JMVC.dom.create('input', {type:'button', value:'size 1'}),
-				size2 = JMVC.dom.create('input', {type:'button', value:'size 2'}),
-				size3 = JMVC.dom.create('input', {type:'button', value:'size 3'}),
-				size4 = JMVC.dom.create('input', {type:'button', value:'size 4'}),
-				logo = JMVC.dom.create('div', {id:'logo', style:'margin-top:10px'})
+				input = JMVCdomCreate('input', {type:'text', id:'imgurl'}),
+				butt = JMVCdomCreate('input', {type:'button', value:'get it'}),
+				pestCss = JMVCdomCreate('input', {type:'button', value:'pest css'}),
+				size1 = JMVCdomCreate('input', {type:'button', value:'size 1'}),
+				size2 = JMVCdomCreate('input', {type:'button', value:'size 2'}),
+				size3 = JMVCdomCreate('input', {type:'button', value:'size 3'}),
+				size4 = JMVCdomCreate('input', {type:'button', value:'size 4'}),
+				logo = JMVCdomCreate('div', {id:'logo', style:'margin-top:10px'}),
+				img1 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/js.jpg'}, 'js'),
+				img2 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/code.jpg'}, 'code'),
+				img3 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/javascript-save-all.jpg'}, 'will save us all');
 
 			JMVC.css.style(JMVC.WDB, {padding : '50px'});
+			JMVC.css.mappedStyle('xxx', 'a{margin-left:5px}');
 
 			
-			JMVC.dom.append(cnt, [input, butt, pestCss, size1, size2, size3, size4, logo]);
+			JMVC.dom.append(cnt, [input, butt, pestCss, size1, size2, size3, size4, img1, img2, img3, logo]);
 			JMVC.dom.append(JMVC.WDB, cnt);
 
 			JMVC.events.on(butt, 'click', function (){
@@ -1637,6 +1648,9 @@ JMVC.controllers.demo = function() {
 					go(input.value || 1);
 				}
 
+			});
+			JMVC.events.on([img1, img2, img3], 'click', function (){
+				go(JMVC.vars.baseurl + JMVC.dom.attr(this, 'alt'));
 			});
 			JMVC.events.on(size1, 'click', function (){
 				JMVC.bom.qs({size : .5});
@@ -1882,7 +1896,7 @@ JMVC.controllers.demo = function() {
 						' , , , , , , , , , ,o,o,o, ',
 						' , , , , , , , , ,o,.,.,.,o',
 						' , , , , , , , ,o,.,.,.,.,.',
-						' , , , , , , , ,o,.,.,.,.,.',
+						' , , , , , , , ,o,.,.,X,.,.',
 						' , , , , , , , ,o,.,.,.,.,.',
 						' , , , , , , , , ,o,.,.,.,o',
 						' , , , , , , , , , ,o,o,o, '
@@ -1951,10 +1965,19 @@ JMVC.controllers.demo = function() {
 			});
 			
 			sm.animate({
-				node : space
+				node : space,
+				backAndForth : true
 			}, 50);
 
 
+			window.setTimeout(function () {
+				sm.replaceMap({
+					o : 'red',
+					' ' : 'black',
+					'.': 'white',
+					'x' : 'white'
+				});
+			}, 3000);
 
 			
 		});
