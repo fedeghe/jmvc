@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 6) build: 3147
+ * @version :  3.5 (rev. 7) build: 3161
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.1.1 & a love heap
- *         glued with 39 files on 30/10/2014 at 9:18:18
+ *         glued with 39 files on 31/10/2014 at 17:35:15
  *
  * All rights reserved.
  *
@@ -109,13 +109,13 @@
                 JMVC_VERSION = '3.5',
             
                 // review (vars.json)
-                JMVC_REVIEW = '6',
+                JMVC_REVIEW = '7',
             
                 // review (vars.json)
-                JMVC_DATE = '30/10/2014',
+                JMVC_DATE = '31/10/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '9:18:18',
+                JMVC_TIME = '17:35:15',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -1713,7 +1713,8 @@
                  * @param  {[type]}   r [description]
                  * @return {Function}   [description]
                  */
-                proto.done = function(r) {
+                proto.done =
+                proto.resolve = function(r) {
                     this.result = r;
                     if (!this.len) {
                         return this.result;
@@ -3235,8 +3236,8 @@
          * @return {[type]}       [description]
          */
         add : function (where, tag, attrs, inner) {
-            var n = this.create(tag, attrs, inner);
-            this.append(where, n);
+            var n = JMVC.dom.create(tag, attrs, inner);
+            JMVC.dom.append(where, n);
             return n;
         },
     
@@ -3361,7 +3362,7 @@
          * @return {[type]} [description]
          */
         clearer : function () {
-            return this.create('br', {'class': 'clearer'});
+            return JMVC.dom.create('br', {'class': 'clearer'});
         },
     
         /**
@@ -3392,9 +3393,9 @@
             if (typeof inner !== 'undefined') {
                 if (inner.nodeType && inner.nodeType === 1) {
                 //if (Object.prototype.hasOwnProperty.call(inner, 'nodeType') && inner.nodeType === 1) {
-                    this.append(node, inner);
+                    JMVC.dom.append(node, inner);
                 } else {
-                    this.html(node, inner);
+                    JMVC.dom.html(node, inner);
                 }
             }
             return node;
@@ -3634,22 +3635,22 @@
          */
         html : function (el, html) {
             if (!el) {
-                return this;
+                return JMVC.dom;
             }
             var t = '';
             if (typeof html !== 'undefined') {
                 if (el) {
                     try {
-                        this.empty(el);
-                        if (this.isElement(html)) {
-                            this.append(el, html);
+                        JMVC.dom.empty(el);
+                        if (JMVC.dom.isElement(html)) {
+                            JMVC.dom.append(el, html);
                         } else {
                             el.innerHTML = html + '';
                         }
                         
                     } catch (e) {}
                 }
-                return this;
+                return JMVC.dom;
             } else {
                 t = (el.nodeType === 1) ? el.innerHTML : el;
             }
@@ -3778,7 +3779,7 @@
                 type2consider = types || ['TEXT_NODE'];
                 // clean text ones
             while (len) {
-                if (JMVC.array.find(type2consider, this.nodeTypeString(childs[i]))) {
+                if (JMVC.array.find(type2consider, JMVC.dom.nodeTypeString(childs[i]))) {
                     tagChilds.push(childs[i]);
                     i += 1;
                 }
@@ -3836,11 +3837,11 @@
             afterFreeMem && JMVC.events.free(el);
     
             var parent;
-            typeof el === 'string' && (el = this.find(el));
+            typeof el === 'string' && (el = JMVC.dom.find(el));
     
             if (JMVC.util.isArray(el)) {
                 for (var i  = 0, l = el.length; i < l; i++) {
-                    this.remove(el[i]);
+                    JMVC.dom.remove(el[i]);
                 }
                 return true;
             }
@@ -3884,7 +3885,7 @@
             }
             var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
             el.className = el.className.replace(reg, ' ');
-            return this;
+            return JMVC.dom;
         },
     
         /**
@@ -3896,8 +3897,8 @@
         replace : function (going, coming) {
             var display = coming.style.display;
             coming.style.display = 'none';
-            this.insertAfter(coming, going);
-            this.remove(going) && (coming.style.display = display);
+            JMVC.dom.insertAfter(coming, going);
+            JMVC.dom.remove(going) && (coming.style.display = display);
         },
     
         /**
@@ -3923,9 +3924,9 @@
          * @return {[type]}          [description]
          */
         switchClass : function (el, oldclass, newclass) {
-            if (this.hasClass(el, oldclass)) {
-                this.removeClass(el, oldclass);
-                !this.hasClass(el, newclass) && this.addClass(el, newclass);
+            if (JMVC.dom.hasClass(el, oldclass)) {
+                JMVC.dom.removeClass(el, oldclass);
+                !JMVC.dom.hasClass(el, newclass) && JMVC.dom.addClass(el, newclass);
             }
             return el;
         },
@@ -3937,7 +3938,7 @@
          * @return {[type]}     [description]
          */
         toggleClass : function (el, cls) {
-            this[this.hasClass(el, cls) ? 'removeClass' : 'addClass'](el, cls);
+            JMVC.dom[JMVC.dom.hasClass(el, cls) ? 'removeClass' : 'addClass'](el, cls);
         },
     
         /**
@@ -3961,7 +3962,7 @@
                                         // must test, cause eulerWalk do even postorder
             node = node.firstChild;
             while (node) {
-                this.walk(node, func);
+                JMVC.dom.walk(node, func);
                 node = node.nextSibling;
             }
         },
@@ -3974,7 +3975,7 @@
          */
         wrap : function (node, tag, attrs) {
             var wrap = JMVC.dom.create(tag || 'div', attrs || {});
-            this.insertAfter(wrap, node);
+            JMVC.dom.insertAfter(wrap, node);
             wrap.appendChild(node);
             return wrap;
         },
@@ -4009,7 +4010,7 @@
     
         // here or in JMVC.head? bah
         qs : function (qs) {
-            this.location.search = JMVC.object.toQs(qs);
+            JMVC.bom.location.search = JMVC.object.toQs(qs);
         } 
     };
     
@@ -4244,9 +4245,9 @@
                 return false;
             }
             _.events.disabledRightClick = true;
-            var self = this;
+            var self = JMVC.events;
             JMVC.dom.attr(JMVC.WD.body, 'oncontextmenu', 'return false');
-            this.on(JMVC.WD, 'mousedown', function(e) {
+            self.on(JMVC.WD, 'mousedown', function(e) {
                 if (~~(e.button) === 2) {
                     self.preventDefault(e);
                     return false;
@@ -4314,7 +4315,7 @@
             node = node || JMVC.WD;
             if (typeof evnt === 'undefined') {
                 for (var j in _.events.bindings) {
-                    this.free(node, j);
+                    JMVC.events.free(node, j);
                 }
                 return true;
             }
@@ -4363,16 +4364,16 @@
          */
         loadify: function(ms) {
     
-            var self = this;
+            var self = JMVC.events;
             self.loadifyCalled = true;
-            this.start(function() {
+            self.start(function() {
                 //otherwise some browser hangs (opera)
                 self.delay(function() {
                     WD.body.style.opacity = 0;
                     WD.body.style.filter = 'alpha(opacity=0)';
                 }, 0);
             });
-            this.end(function() {
+            self.end(function() {
                 var i = 0,
                     step = 0.05,
                     top = 1,
@@ -4420,14 +4421,14 @@
          * @return {[type]}        [description]
          */
         one: function(el, tipo, fn) {
-            var self = this;
+            var self = JMVC.events;
             if (el instanceof Array) {
                 for (var i = 0, l = el.length; i < l; i++) {
-                    this.one(el[i], tipo, fn);
+                    self.one(el[i], tipo, fn);
                 }
                 return;
             }
-            this.on(el, tipo, function f(e) {
+            self.on(el, tipo, function f(e) {
                 fn(e); 
                 self.off(el, tipo, f);
             });
@@ -4444,10 +4445,10 @@
          * || JMVC.events.clickout(tr, function (){console.debug('out')});
          */
         onEventOut: function(evnt, el, cb) {
-            var self = this,
+            var self = JMVC.events,
                 root = JMVC.dom.body();
     
-            this.on(root, evnt, function f(e) {
+            self.on(root, evnt, function f(e) {
                 var trg = self.eventTarget(e);
                 while (trg !== el) {
                     trg = JMVC.dom.parent(trg);
@@ -4467,7 +4468,7 @@
          */
         onEsc: function (cb, w) {
             w = w || JMVC.W;
-            this.on(w.document, 'keyup', function (e) {
+            JMVC.events.on(w.document, 'keyup', function (e) {
                 if (e.keyCode == 27) {
                     cb.call(w, e);
                 }
@@ -4481,8 +4482,8 @@
          * @return {[type]}    [description]
          */
         onRight: function(el, f) {
-            this.disableRightClick();
-            this.on(el, 'mousedown', function(e) {
+            JMVC.events.disableRightClick();
+            JMVC.events.on(el, 'mousedown', function(e) {
     
                 if (~~(e.button) === 2) {
                     f.call(el, e);
@@ -4612,7 +4613,7 @@
          * @return {[type]}      [description]
          */
         scrollBy: function(left, top) {
-            this.delay(function() {
+            JMVC.events.delay(function() {
                 W.scrollBy(left, top);
             }, 1);
         },
@@ -4624,7 +4625,7 @@
          * @return {[type]}      [description]
          */
         scrollTo: function(left, top) {
-            this.delay(function() {
+            JMVC.events.delay(function() {
                 W.scrollTo(left, top);
             }, 1);
         },
@@ -4656,7 +4657,7 @@
          * @return {[type]} [description]
          */
         unload: function (){
-            this.on(W, 'beforeunload', function (e) {
+            JMVC.events.on(W, 'beforeunload', function (e) {
                 
                 var confirmationMessage = /\//;//'Are you sure to leave or reload this page?';//"\o/";
                 (e || window.event).returnValue = confirmationMessage;     //Gecko + IE
@@ -4787,7 +4788,7 @@
             var script,
                 head,
                 tmp,
-                that = this,
+                that = JMVC.head,
                 //postmode = true,
                 sync = true,
                 script_content;
@@ -4812,7 +4813,7 @@
                     JMVC.dom.create('script', {type: 'text/javascript'}, src)
                     :
                     JMVC.dom.create('script', {type: 'text/javascript', src: src}, ' ');
-                head = this.element;
+                head = JMVC.head.element;
                 head.appendChild(script);
             }
             return script;
@@ -4828,7 +4829,7 @@
             var style,
                 head,
                 tmp,
-                that = this,
+                that = JMVC.head,
                 //postmode = true,
                 sync = true,
                 rules,
@@ -4875,7 +4876,7 @@
                     rel : 'stylesheet',
                     href : src
                 });
-                head = this.element;
+                head = JMVC.head.element;
                 head.appendChild(style);
             }
             return style;
@@ -4893,7 +4894,7 @@
          * @return {[type]}      [description]
          */
         favicon : function (file) {
-            this.link('icon', {
+            JMVC.head.link('icon', {
                 rel : 'shortcut icon',
                 href : JMVC.vars.baseurl + file
             });
@@ -4919,7 +4920,7 @@
          * @return {[type]}   [description]
          */
         lastModified : function (d) {
-            var meta = this.element.getElementsByTagName('meta'),
+            var meta = JMVC.head.element.getElementsByTagName('meta'),
                 newmeta = JMVC.dom.create(
                     'meta',
                     {'http-equiv': 'last-modified', 'content': (d || JMVC.vars.last_modified || new Date()).toString()}
@@ -4928,7 +4929,7 @@
             if (len) {
                 JMVC.dom.insertAfter(newmeta, meta.item(len - 1));
             } else {
-                this.element.appendChild(newmeta);
+                JMVC.head.element.appendChild(newmeta);
             }
         },
         /**
@@ -4944,7 +4945,7 @@
                 'prototype' : 'https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js',
                 dropbox : 'https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js'
             };
-            l in libs && this.addScript(libs[l]);
+            l in libs && JMVC.head.addScript(libs[l]);
         },
         /**
          * [link description]
@@ -4954,7 +4955,7 @@
          */
         link : function (rel, attrs) {
             attrs.rel = rel;
-            JMVC.dom.add(this.element, 'link', attrs);
+            JMVC.dom.add(JMVC.head.element, 'link', attrs);
         },
     
         /**
@@ -5021,7 +5022,7 @@
          */
         meta : function (name, value, rewrite) {
             rewrite = !!rewrite;
-            var metas = this.metas(),
+            var metas = JMVC.head.metas(),
                 maybeExisting = JMVC.dom.findByAttribute('name', name, metas);
             if (!!maybeExisting.length) {
                 //exit if rewrite is not set and the meta name already exists
@@ -5031,10 +5032,10 @@
                 JMVC.dom.remove(maybeExisting[0]);
             }
             //get last meta if exists
-            var meta = this.element.getElementsByTagName('meta'),
+            var meta = JMVC.head.element.getElementsByTagName('meta'),
                 newmeta = JMVC.dom.create('meta', {'name' : name, 'content' : value}),
                 len = meta.length;
-            return len ? JMVC.dom.insertAfter(newmeta, meta.item(len - 1)) : this.element.appendChild(newmeta);
+            return len ? JMVC.dom.insertAfter(newmeta, meta.item(len - 1)) : JMVC.head.element.appendChild(newmeta);
         },
         /**
          * return all document meta tags
@@ -5059,7 +5060,7 @@
          * @return {[type]}      [description]
          */
         removeMeta : function (name) {
-            var maybeExisting = JMVC.dom.findByAttribute('name', name, this.metas());
+            var maybeExisting = JMVC.dom.findByAttribute('name', name, JMVC.head.metas());
             !!maybeExisting.length && JMVC.dom.remove(maybeExisting[0]);
         },
         
@@ -5209,7 +5210,7 @@
         hide: function (el) {
             if (el instanceof Array) {
                 for (var i = 0, l = el.length; i < l; i += 1) {
-                    this.hide(el[i]);
+                    JMVC.css.hide(el[i]);
                 }
                 return;
             }
@@ -5323,7 +5324,7 @@
                 JMVC.dom.remove(tmp, info);
                 JMVC.events.off(JMVC.WD, 'mousemove', fnshow);
             } else {
-                this.mappedStyle(
+                JMVC.css.mappedStyle(
                     'pest-css',
                     '* {outline : 1px dotted black !important; opacity : .7}' +
                     '*:hover {outline : 1px solid red !important; opacity:1 }' +
@@ -5388,7 +5389,7 @@
         show: function (el) {
             if (el instanceof Array) {
                 for (var i = 0, l = el.length; i < l; i += 1) {
-                    this.show(el[i]);
+                    JMVC.css.show(el[i]);
                 }
                 return;
             }
@@ -5423,7 +5424,7 @@
                             JMVC.core.color.getRandomColor() : '#000000';
                         prop[k] = prop[k].replace(/rand/, newval);
                     }
-                    if (JMVC.array.find(this.css3_map, k) + 1) {
+                    if (JMVC.array.find(JMVC.css.css3_map, k) + 1) {
                         el.style.cssText += ';' + k + ' : ' + prop[k];
                     } else {
                         //el.style[_.css.css_propertymap[k] || k + ""] = prop[k];
@@ -5437,7 +5438,7 @@
                         JMVC.core.color.getRandomColor() : '#000000';
                     val = val.replace(/rand/, newval);
                 }
-                if (JMVC.array.find(this.css3_map, prop) + 1) {
+                if (JMVC.array.find(JMVC.css.css3_map, prop) + 1) {
                     el.style.cssText += ';' + prop + ' : ' + val;
                 } else {
                     //el.style[_.css.css_propertymap[prop] || prop + ""] = val;
@@ -5448,7 +5449,7 @@
                     } /* IE */
                 }
             }
-            return this;
+            return JMVC.css;
         },
     
         /**
@@ -5658,7 +5659,7 @@
                 sum = 0,
                 tmp;
             while (true) {
-                tmp = this.find(arr, mvar);
+                tmp = JMVC.array.find(arr, mvar);
                 // not found exit
                 if (tmp < 0) {break; }
                 // track position, cause of slicing
@@ -5714,7 +5715,7 @@
          * @param  {[type]} a [description]
          * @return {[type]}   [description]
          */
-        mean : function (a) {return this.sum(a) / a.length; },
+        mean : function (a) {return JMVC.array.sum(a) / a.length; },
     
         /**
          * [min description]
@@ -6191,14 +6192,14 @@
             temp = obj.constructor();
             for (key in obj) {
                 if (obj.hasOwnProperty(key)) {
-                    temp[key] = this.clone(obj[key]);
+                    temp[key] = JMVC.object.clone(obj[key]);
                 }
             }
             return temp;
         },
         // http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
         clone: function(obj) {
-            var self = this,
+            var self = JMVC.object,
                 copy,
                 i, l;
             // Handle the 3 simple types, and null or undefined
@@ -6287,7 +6288,7 @@
          * @return {[type]}     [description]
          */
         extend: function(o, ext, force) {
-            var obj = this.clone(o),
+            var obj = JMVC.object.clone(o),
                 j;
             for (j in ext) {
                 if (ext.hasOwnProperty(j) && (!(j in obj) || force)) {
