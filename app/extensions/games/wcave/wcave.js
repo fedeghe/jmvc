@@ -5,7 +5,7 @@ JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/wcave.css');
 JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css', true);
 /**
  * 
- * wcave build n.175
+ * wcave build n.176
  * 
  * @version: 1.4.13
  * @date : 25-04-2013
