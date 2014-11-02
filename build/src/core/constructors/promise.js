@@ -1,3 +1,4 @@
+
 Promise = (function() {
 
     /**
@@ -17,11 +18,11 @@ Promise = (function() {
      * @param  {[type]} func [description]
      * @return {[type]}      [description]
      */
-    proto.then = function(func) {
+    proto.then = function(func, ctx) {
         var self = this,
             f = function () {
                 self.solved = false;
-                func.call(self, self.result);
+                func.call(ctx || self, self, self.result);
             };
         if (this.solved) {
             f();
@@ -29,7 +30,6 @@ Promise = (function() {
             this.cbacks[this.len++] = f;
         }
         return this;
-        
     };
 
     /**

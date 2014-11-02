@@ -1677,8 +1677,10 @@ JMVC.controllers.demo = function() {
 				})
 				// promise returned, done when image loaded and
 				// matrix done
-				.then(function(res) {
-					var sm = JMVC.shadowMatrix(res).draw({node : logo});
+				.then(function(pro, result) {
+					// pro is the promise
+					// res is the result that can be even found as pro.result
+					var sm = JMVC.shadowMatrix(pro.result).draw({node : logo});
 					/*
 					window.setTimeout(function () {
 						sm.fromImage({

@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 7) build: 3161
+ * @version :  3.5 (rev. 7) build: 3167
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.1.1 & a love heap
- *         glued with 39 files on 31/10/2014 at 17:35:15
+ *         glued with 39 files on 2/11/2014 at 23:50:1
  *
  * All rights reserved.
  *
@@ -112,10 +112,10 @@
                 JMVC_REVIEW = '7',
             
                 // review (vars.json)
-                JMVC_DATE = '31/10/2014',
+                JMVC_DATE = '2/11/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '17:35:15',
+                JMVC_TIME = '23:50:1',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -1674,6 +1674,7 @@
             /*
             [MALTA] src/core/constructors/promise.js
             */
+            
             Promise = (function() {
             
                 /**
@@ -1693,11 +1694,11 @@
                  * @param  {[type]} func [description]
                  * @return {[type]}      [description]
                  */
-                proto.then = function(func) {
+                proto.then = function(func, ctx) {
                     var self = this,
                         f = function () {
                             self.solved = false;
-                            func.call(self, self.result);
+                            func.call(ctx || self, self, self.result);
                         };
                     if (this.solved) {
                         f();
@@ -1705,7 +1706,6 @@
                         this.cbacks[this.len++] = f;
                     }
                     return this;
-                    
                 };
             
                 /**
@@ -3453,7 +3453,7 @@
             var nope = function () {},
                 pre = mode === 'pre' ? func : nope,
                 post = mode === 'post' ? func : nope,
-                walk = (function (m) {
+                walk = (function () {
                     return function (n, _n) {
                         pre(n);
                         _n = n.firstChild;
@@ -3463,7 +3463,7 @@
                         }
                         post(n);
                     };
-                })(mode);
+                })();
             walk(root);
         },
     
