@@ -239,7 +239,7 @@ JMVC.dom = {
         var nope = function () {},
             pre = mode === 'pre' ? func : nope,
             post = mode === 'post' ? func : nope,
-            walk = (function (m) {
+            walk = (function () {
                 return function (n, _n) {
                     pre(n);
                     _n = n.firstChild;
@@ -249,7 +249,7 @@ JMVC.dom = {
                     }
                     post(n);
                 };
-            })(mode);
+            })();
         walk(root);
     },
 
