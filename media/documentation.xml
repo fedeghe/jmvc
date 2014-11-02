@@ -931,15 +931,12 @@ list.els;</sample>
     console.log('uan');&#10;
     window.setTimeout(function () {p.done(1234); }, 1000);&#10;
     return p;&#10;
-})().then(function () {&#10;
-    var self = this,&#10;
-        a = [].splice.call(arguments, 0);&#10;
-    console.log('two ', a[0]);&#10;
-    window.setTimeout(function () {self.done(~~a[0]*2); }, 1000);&#10;
-}).then(function () {&#10;
-    var a = [].splice.call(arguments, 0);&#10;
-    console.log('three ', a[0]);&#10;
-    this.done();&#10;
+})().then(function (p) {&#10;
+    console.log('two ', p.result);&#10;
+    window.setTimeout(function () {p.done(~~p.result * 2); }, 1000);&#10;
+}).then(function (p) {&#10;
+    console.log('three ', p.result);&#10;
+    p.done();&#10;
 }).then(tryJoin);&#10;
 &#10;
 function tryJoin() {&#10;
@@ -965,21 +962,19 @@ function tryJoin() {&#10;
 }</sample>
 <status>complete</status>
     <code>
-(function (){
+(function () {
     var p = JMVC.Promise.create();
     console.log('uan');
     window.setTimeout(function () {p.done(1234); }, 1000);
     return p;
-})().then(function(){
-    var self = this,
-        a = [].splice.call(arguments, 0);
-    console.log('two ', a[0]);
-    window.setTimeout(function () {self.done(~~a[0]*2); }, 1000);
-}).then(function(){
-    var a = [].splice.call(arguments, 0);
-    console.log('three ', a[0]);
-    this.done();
+})().then(function (p) {
+    console.log('two ', p.result);
+    window.setTimeout(function () {p.done(~~p.result * 2); }, 1000);
+}).then(function (p) {
+    console.log('three ', p.result);
+    p.done();
 }).then(tryJoin);
+
 function tryJoin() {
     console.debug('--- now a trial for Promise.join ---');
     JMVC.Promise.join(
@@ -997,7 +992,7 @@ function tryJoin() {
             }, 2000);
             return p;
         }
-    ).then(function (r){
+    ).then(function (r) {
         console.debug(r);
     });
 }
