@@ -20,6 +20,23 @@ Promise = (function() {
      */
     proto.then = function(func, ctx) {
         var self = this,
+            call = function () {
+                func.call(ctx || self, self, self.result);
+            },
+            f = function () {
+                self.solved = false;
+                call();
+            };
+        if (this.solved) {
+            call();
+        } else {
+            this.cbacks[this.len++] = f;
+        }
+        return this;
+    };
+    /*
+    proto.then = function(func, ctx) {
+        var self = this,
             f = function () {
                 self.solved = false;
                 func.call(ctx || self, self, self.result);
@@ -30,7 +47,7 @@ Promise = (function() {
             this.cbacks[this.len++] = f;
         }
         return this;
-    };
+    };*/
 
     /**
      * [done description]
