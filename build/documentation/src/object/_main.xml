@@ -1,5 +1,7 @@
 <object>
     $$src/object/clone.xml$$
+    $$src/object/digForKey.xml$$
+    $$src/object/digForValue.xml$$
     $$src/object/extend.xml$$
     $$src/object/compare.xml$$
     $$src/object/contains.xml$$

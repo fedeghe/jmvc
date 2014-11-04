@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 7) build: 3167
+ * @version :  3.5 (rev. 7) build: 3207
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.1.1.1 & a love heap
- *         glued with 39 files on 2/11/2014 at 23:50:1
+ *         glued with 39 files on 4/11/2014 at 11:43:28
  *
  * All rights reserved.
  *
@@ -112,10 +112,10 @@
                 JMVC_REVIEW = '7',
             
                 // review (vars.json)
-                JMVC_DATE = '2/11/2014',
+                JMVC_DATE = '4/11/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '23:50:1',
+                JMVC_TIME = '11:43:28',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -1696,6 +1696,23 @@
                  */
                 proto.then = function(func, ctx) {
                     var self = this,
+                        call = function () {
+                            func.call(ctx || self, self, self.result);
+                        },
+                        f = function () {
+                            self.solved = false;
+                            call();
+                        };
+                    if (this.solved) {
+                        call();
+                    } else {
+                        this.cbacks[this.len++] = f;
+                    }
+                    return this;
+                };
+                /*
+                proto.then = function(func, ctx) {
+                    var self = this,
                         f = function () {
                             self.solved = false;
                             func.call(ctx || self, self, self.result);
@@ -1706,7 +1723,7 @@
                         this.cbacks[this.len++] = f;
                     }
                     return this;
-                };
+                };*/
             
                 /**
                  * [done description]
@@ -6154,6 +6171,41 @@
      * @type {Object}
      */
     _.object = {
+        digFor : function (what, obj, target) {
+            if(!what.match(/key|value/)) {
+                throw new JMVC.Errors.BadParams('Bad param for JMVC._.object.digFor');
+            }
+            var matches = {
+                    key : function (k1, k2, v) {return JMVC.object.jCompare(k1, v);},
+                    value : function (k1, k2, v) {return JMVC.object.jCompare(k2, v);}
+                }[what],
+                res = [];
+    
+            function dig(o, k, path) {
+                var i, l, p;
+                if (typeof o === 'object') {
+                    for (i in o) {
+                        p = [].concat.call(path, [i]);
+                        if(matches(i, o[i], k)) {
+                            res.push({value: o[i], path : p.join('/')});
+                        }
+                        dig (o[i], k, p);
+                    }
+                } else if (o instanceof Array) {                
+                    for (i = 0, l = o.length; i < l; i++) {
+                        p = [].concat.call(path, [i]);
+                        if(matches(i, o[i], k)) {
+                            res.push({value: o[i], path : p.join('/')});
+                        }
+                        dig(o[i], k, p);
+                    }
+                } else {
+                    return;
+                }
+            }
+            dig(obj, target, []);
+            return res;
+        },
         /**
          * [reduce description]
          * @param  {[type]}   o  [description]
@@ -6169,7 +6221,8 @@
                 }
             }
             return ret;
-        }
+        },
+    
     };
     /**
      * [object description]
@@ -6281,6 +6334,62 @@
         contains: function(obj, field) {
             return (typeof obj === 'object' && field in obj);
         },
+    
+        /**
+         * [digForKeys description]
+         * @param  {[type]} obj [description]
+         * @param  {[type]} key [description]
+         * @return {[type]}     [description]
+         */
+        /*
+        digForKeys : function (obj, key) {
+            var res = [];
+            function dig(o, k, path) {
+                var i, l, p;
+                if (typeof o === 'object') {
+                    for (i in o) {
+                        p = [].concat.call(path, [i]);
+                        if(i == k) {
+                            res.push({value: o[i], path : p.join('/')});
+                        }
+                        dig (o[i], k, p);
+                    }
+                } else if (o instanceof Array) {                
+                    for (i = 0, l = o.length; i < l; i++) {
+                        p = [].concat.call(path, [i]);
+                        if (i == k) {
+                            res.push({value: o[i], path : p.join('/')});
+                        }
+                        dig(o[i], k, p);
+                    }
+                } else {
+                    return;
+                }
+            }
+            dig(obj, key, []);
+            return res;
+        },*/
+    
+        /**
+         * [digForKeys description]
+         * @param  {[type]} o [description]
+         * @param  {[type]} k [description]
+         * @return {[type]}   [description]
+         */
+        digForKey : function (o, k) {
+            return _.object.digFor('key', o, k);
+        },
+    
+        /**
+         * [digForValues description]
+         * @param  {[type]} o [description]
+         * @param  {[type]} k [description]
+         * @return {[type]}   [description]
+         */
+        digForValue : function (o, k) {
+            return _.object.digFor('value', o, k);
+        },
+    
         /**
          * [ description]
          * @param  {[type]} obj [description]
