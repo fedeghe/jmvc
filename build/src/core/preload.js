@@ -1,5 +1,5 @@
 //
-// preloadign function                                
+// preloading function                                
 preload = function (url) {
     W.setTimeout(function () {
         //
@@ -11,7 +11,7 @@ preload = function (url) {
             //
             // a function used to remove the imframe once
             // everything is loaded, hence cached
-            cleanup = function (i) {JMVC.dom.remove(i); };
+            cleanup = function (pro, i) {JMVC.dom.remove(i); };
         //
         // when `done` will be called on the promise
         // cleanup will be called, params follows the chain

@@ -10,8 +10,7 @@ JMVC.require(
 	'vendors/google/analytics/analytics',
 	'core/fx/fx',
 	'widget/lang/lang',
-	'vendors/github/forkme/forkme',
-	'widget/snow/snow/snow'
+	'vendors/github/forkme/forkme'
 );
 
 JMVC.controllers.index = function () {
@@ -201,15 +200,21 @@ JMVC.controllers.index = function () {
 						});
 					}, {sensor : 'false'});
 				}
-				/*
-				if (
-					JMVC.array.find([9, 10, 11, 12, 1, 2, 3], todayMonth) > -1 ||
-					(JMVC.p.snow && JMVC.p.snow === 'true')
-				) {
-					JMVC.css.style(JMVC.WDB, {'backgroundColor': '#aab'});
+				
+				// stil opera unfriendly somehow, must dig it!
+				
+				JMVC.sniffer.browser.name !== 'Opera'
+				&& (
+					JMVC.array.find([10, 11, 12, 1, 2, 3], todayMonth) > -1
+					&&
+					JMVC.p.snow && JMVC.p.snow === 'true'
+				)
+				&& JMVC.require('widget/snow/snow/snow', function () {
+					JMVC.css.style(JMVC.WDB, {'backgroundColor': '#eef'});
 					JMVC.snow.start(JMVC.dom.body());
-				}
-				*/
+				});
+				
+				
 				if (!JMVC.sniffer.features.assets.touchDevice) {
 					JMVC.fx.threeDaniLogo(newlogo);
 				}

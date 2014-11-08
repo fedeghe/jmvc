@@ -1,6 +1,3 @@
-_.bom = {
-    
-};
 JMVC.bom = {
     document : JMVC.WD,
     frames : JMVC.W.frames,

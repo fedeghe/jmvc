@@ -31,6 +31,8 @@ JMVC.extend('tabs', {
 			this.num += 1;
 		};
 
+		this.current = null;
+
 		this.render = function (idcontainer, idul, show) {
 
 			//utility function to hide all tabs
@@ -44,12 +46,13 @@ JMVC.extend('tabs', {
 				return str.split('').join('<br />');
 			}
 			
-			var num2show = show || 0,
+			var self = this,
+				num2show = show || 0,
 				ul_id = idul + bid,
 				anchorName = JMVC.util.uniqueid + '',
 				anchor = JMVC.dom.create('a', {name : anchorName}),
 				ul = JMVC.dom.create('ul', {id : ul_id, 'class' : 'tablabels_' + direction}),
-				tabcontainer = JMVC.dom.create('div', {'class' : 'tabcontainer_' + direction, 'data-ul' : ul_id}),
+				tabcontainer = JMVC.dom.create('div', {'class' : 'respfixed tabcontainer_' + direction, 'data-ul' : ul_id}),
 				i = 0,
 				j = 0,
 				l = 0,
@@ -116,8 +119,8 @@ JMVC.extend('tabs', {
 						id_orig = JMVC.dom.attr(target, 'id'),
 						id_tab2show = id_orig.replace('jvmc_tb', 'jvmc_cont');
 
-					//JMVC.css.style(JMVC.dom.find('#'+id_tab2show), 'display', 'block');
-					JMVC.css.show(JMVC.dom.find('#' + id_tab2show));
+					self.current = '#' + id_tab2show;
+					JMVC.css.show(JMVC.dom.find(self.current));
 
 					JMVC.dom.switchClass(target, 'unsel', 'sel');
 
@@ -125,7 +128,6 @@ JMVC.extend('tabs', {
 					JMVC.tabs.fixheight();
 				});
 			}
-			
 
 			JMVC.events.delay(function () {JMVC.tabs.fixheight(); }, 0);
 			return ids2return;

@@ -9,7 +9,8 @@ _.css = {
         return s[0] === '-' ? s : s.replace(/-(\w)/g, function (str, $1) {
             return $1.toUpperCase();
         });
-    }
+    },
+    css3_map: ['-o-transform', '-moz-transform', '-webkit-transform', '-ms-transform']
 };
 
 JMVC.css = {
@@ -17,16 +18,9 @@ JMVC.css = {
      * [clearer description]
      * @type {[type]}
      */
-    clearer: JMVC.dom.create('br', {
-        'class': 'clearer'
-    }),
-
-    /**
-     * [css3_map description]
-     * @type {Array}
-     */
-    css3_map: ['-o-transform', '-moz-transform'],
-
+    clearer: function () {
+        return JMVC.dom.create('br', {'class': 'clearer'});
+    },
 
     /**
      * [addRule description]
@@ -52,20 +46,20 @@ JMVC.css = {
      */
     autoHeadings : function () {
         JMVC.head.addStyle(
-            'h1{font-size:24px; line-height:48px; padding:24px 0px 12px;}'+
-            'h2{font-size:20px; line-height:36px; padding:18px 0px 9px;}'+
-            'h3{font-size:16px; line-height:28px; padding:14px 0px 7px;}'+
-            'h4{font-size:12px; line-height:24px; padding:12px 0px 6px;}'+
-            'h5{font-size:10px; line-height:20px; padding:10px 0px 5px;}'+
-            'h6{font-size:8px; line-height:16px; padding:8px 0px 4px;}', true, true);
+            'h1{font-size:24px !important; line-height:48px !important; padding:24px 0px 12px !important;}'+
+            'h2{font-size:20px !important; line-height:36px !important; padding:18px 0px 9px !important;}'+
+            'h3{font-size:16px !important; line-height:28px !important; padding:14px 0px 7px !important;}'+
+            'h4{font-size:12px !important; line-height:24px !important; padding:12px 0px 6px !important;}'+
+            'h5{font-size:10px !important; line-height:20px !important; padding:10px 0px 5px !important;}'+
+            'h6{font-size:8px !important; line-height:16px !important; padding:8px 0px 4px !important;}', true, true);
     },
 
     /**
      * [beResponsive description]
      * @return {[type]} [description]
      */
-    beResponsive : function () {
-        JMVC.dom.addClass(JMVC.WDB, 'resp');
+    beResponsive : function (on) {
+        JMVC.dom[typeof on === 'undefined' || !!on ? 'addClass' : 'removeClass'](JMVC.WDB, 'resp');
     },
 
     /**
@@ -97,9 +91,11 @@ JMVC.css = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    getPosition: function (el) {
+    getPosition: function (el, rel) {
         var curleft = 0,
-            curtop = 0;
+            curtop = 0,
+            sT = JMVC.WD.body.scrollTop + JMVC.WD.documentElement.scrollTop,
+            sL = JMVC.WD.body.scrollLeft + JMVC.WD.documentElement.scrollLeft;
         if (el.offsetParent) {
             do {
                 curleft += el.offsetLeft;
@@ -107,7 +103,7 @@ JMVC.css = {
                 el = el.offsetParent;
             } while (el);
         }
-        return [curleft, curtop];
+        return [!!rel ? curleft - sL : curleft, !!rel ? curtop - sT : curtop];
     },
 
     /**
@@ -152,23 +148,35 @@ JMVC.css = {
         JMVC.dom.append(JMVC.head.element, _.css.mappedStyles[idn]);
     },
 
+    mappedStyleRemove : function (idn) {
+        idn in _.css.mappedStyles
+        &&
+        JMVC.dom.remove(_.css.mappedStyles[idn]);
+    },
+
     /**
      * [pest description]
      * @param  {[type]} mode [description]
      * @return {[type]}      [description]
      */
-    pest: function (mode) {
+    pest: function () {
         var tmp = JMVC.dom.find('#pest-css'),
-            info = document.createElement('div'),
-            enabled = true,
+            tmpinfo = JMVC.dom.find('#pest-css-info');
+
+        if (tmp && tmpinfo) {
+            JMVC.events.off(JMVC.WD, 'mousemove', fnshow);
+            JMVC.dom.remove(tmpinfo);
+            JMVC.css.mappedStyleRemove('pest-css');
+            return ;
+        }
+
+
+        var info = JMVC.dom.create('div', {id : 'pest-css-info'}),
             positionCookie = 'pestPanelPosition',
             initialPosition = ~~JMVC.cookie.get(positionCookie) || 0,
             positions = ['tr', 'br', 'bl', 'tl'],
 
             fnshow = function (e) {
-                if (!enabled) {
-                    return;
-                }
                 var trg = JMVC.events.eventTarget(e),
                     cstyle = JMVC.css.getComputedStyle(trg),
                     filter = {
@@ -224,7 +232,9 @@ JMVC.css = {
                 JMVC.dom.remove(info);
             };
 
+
         info.className = 'report respfixed ' + positions[initialPosition];
+
         info.style.position = 'fixed';
         info.style.zIndex = 999;
 
@@ -236,31 +246,19 @@ JMVC.css = {
         });
         
         JMVC.WD.body.appendChild(info);
-
-        if (tmp) {
-            JMVC.dom.remove(tmp, info);
-            JMVC.events.off(JMVC.WD, 'mousemove', fnshow);
-        } else {
-            JMVC.css.mappedStyle(
-                'pest-css',
-                '* {outline : 1px dotted black !important; opacity : .7}' +
-                '*:hover {outline : 1px solid red !important; opacity:1 }' +
-                '.report {padding:10px; position:fixed; margin:10px; border:1px solid #333;}' +
-                '.report, .report *{opacity:1; line-height:14px; font-family:verdana, sans; font-size:9px; outline:0 !important; background-color:white;}' +
-                '.report.tl{top:0px; left:0px;}' +
-                '.report.tr{top:0px; right:0px;}' +
-                '.report.bl{bottom:0px; left:0px;}' +
-                '.report.br{bottom:0px; right:0px;}' +
-                'html , body , .report, .report *{opacity: 1}'
-            );
-            JMVC.events.on(JMVC.WD, 'mousemove', fnshow);
-            JMVC.events.on(info, 'mouseenter', function () {
-                enabled = false;
-            });
-            JMVC.events.on(info, 'mouseout', function () {
-                enabled = true;
-            });
-        }
+        JMVC.css.mappedStyle(
+            'pest-css',
+            '* {outline : 1px dotted black !important; opacity : .7}' +
+            '*:hover {outline : 1px solid red !important; opacity:1 }' +
+            '.report {padding:10px; position:fixed; margin:10px; border:1px solid #333;}' +
+            '.report, .report *{opacity:1; line-height:14px; font-family:verdana, sans; font-size:9px; outline:0 !important; background-color:white;}' +
+            '.report.tl{top:0px; left:0px;}' +
+            '.report.tr{top:0px; right:0px;}' +
+            '.report.bl{bottom:0px; left:0px;}' +
+            '.report.br{bottom:0px; right:0px;}' +
+            'html , body , .report, .report *{opacity: 1}'
+        );
+        JMVC.events.on(JMVC.WD, 'mousemove', fnshow);
     },
 
     /**
@@ -310,7 +308,7 @@ JMVC.css = {
             }
             return;
         }
-        JMVC.css.style(el, 'display', 'block');
+        JMVC.css.style(el, 'display', '');
     },
 
     /**
@@ -341,7 +339,7 @@ JMVC.css = {
                         JMVC.core.color.getRandomColor() : '#000000';
                     prop[k] = prop[k].replace(/rand/, newval);
                 }
-                if (JMVC.array.find(JMVC.css.css3_map, k) + 1) {
+                if (JMVC.array.find(_.css.css3_map, k) + 1) {
                     el.style.cssText += ';' + k + ' : ' + prop[k];
                 } else {
                     //el.style[_.css.css_propertymap[k] || k + ""] = prop[k];
@@ -355,7 +353,7 @@ JMVC.css = {
                     JMVC.core.color.getRandomColor() : '#000000';
                 val = val.replace(/rand/, newval);
             }
-            if (JMVC.array.find(JMVC.css.css3_map, prop) + 1) {
+            if (JMVC.array.find(_.css.css3_map, prop) + 1) {
                 el.style.cssText += ';' + prop + ' : ' + val;
             } else {
                 //el.style[_.css.css_propertymap[prop] || prop + ""] = val;

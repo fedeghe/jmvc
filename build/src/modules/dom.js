@@ -206,6 +206,20 @@ JMVC.dom = {
         return JMVC.WD.createElementNS(ns, name);
     },
 
+
+    /**
+     * [domStats description]
+     * @return {[type]} [description]
+     */
+    domStats : function () {
+        var allnodes = JMVC.array.coll2array(document.getElementsByTagName('*')),
+            anLength = allnodes.length;
+        return {
+            numberOfNodes : anLength,
+            KBytes : parseFloat((document.documentElement.outerHTML.split('').length / (2<<9)).toFixed(2), 10)
+        };
+    },
+
     /**
      * [ description]
      * @param  {[type]} el [description]

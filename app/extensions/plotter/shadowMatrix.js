@@ -139,6 +139,7 @@
      * @return {[type]}      [description]
      */
     JMVC.shadowMatrix.getMatrixFromImage = function (opts) {
+        
         var img,
             w, h,
             cnv, ctx,

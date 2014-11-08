@@ -34,9 +34,7 @@ $$src/head.js$$
             $$src/core/cleanup.js$$
             $$src/core/end.js$$
         })(),
-
-        // private ns for modules
-        _ = {};
+        $$src/core/private.js$$
 
     /////////////////////
     // MANDATORY MODULES
