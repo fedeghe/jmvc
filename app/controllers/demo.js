@@ -1602,6 +1602,72 @@ JMVC.controllers.demo = function() {
 		});
 	};
 
+	this.action_Mario = function (){
+		var that = this;
+		JMVC.require(
+			'core/mobile/drawer/drawer',
+			'core/lorem',
+			'plotter/shadowMatrix'
+		);
+		
+		JMVC.getView('vacuum')
+		.set({
+			style: 'padding:0px 10px 50px',
+			id: 'container'
+		})
+		.render(function() {
+
+			
+			var size = that.get('size') || 5,
+				cnt = JMVC.dom.find('#container'),
+				mario = JMVC.dom.create('div', {id:'mario'}),
+
+				ul = JMVC.dom.create('div'),
+				li0 = JMVC.dom.add(ul, 'div', {style:'height:'+(50 * size)+'px'});
+
+			JMVC.css.style(JMVC.WDB, {padding : '50px'});
+
+			JMVC.dom.append(li0, mario);
+			JMVC.dom.append(cnt, ul);
+			JMVC.dom.append(JMVC.WDB, cnt);
+
+			
+
+			var sm0 = JMVC.shadowMatrix({
+				scale : size,
+				matrix : [
+					' , , ,#,#,#,#,#, , , , ',
+					' , ,#,#,#,#,#,#,#,#,#, ',
+					' , ,@,@,@,$,$,@,$, , , ',
+					' ,@,$,@,$,$,$,@,$,$,$, ',
+					' ,@,$,@,@,$,$,$,@,$,$,$',
+					' ,@,@,$,$,$,$,@,@,@,@, ',
+					' , , ,$,$,$,$,$,$,$, , ',
+					' , ,@,@,#,@,@,@, , , , ',
+					' ,@,@,@,#,@,@,#,@,@,@, ',
+					'@,@,@,@,#,#,#,#,@,@,@,@',
+					'$,$,@,#,$,#,#,$,#,@,$,$',
+					'$,$,$,#,#,#,#,#,#,$,$,$',
+					'$,$,#,#,#,#,#,#,#,#,$,$',
+					' , ,#,#,#, , ,#,#,#, , ',
+					' ,@,@,@, , , , ,@,@,@, ',
+					'@,@,@,@, , , , ,@,@,@,@'
+				],
+				colorMap : {
+					'#' : '#db0102',// red
+					'$' : '#f8aa00',// skin
+					'@' : '#706700',// hair
+					' ' : 'transparent'
+				}
+			});
+			sm0.draw({node : mario});
+			window.setInterval(function (){
+				sm0.mirror();
+			}, 500);
+
+		});
+	};
+
 	this.action_shadowJMVC = function (){
 		var that = this;
 		JMVC.require(
@@ -1678,9 +1744,13 @@ JMVC.controllers.demo = function() {
 				// promise returned, done when image loaded and
 				// matrix done
 				.then(function(pro, result) {
+					
+
 					// pro is the promise
 					// res is the result that can be even found as pro.result
-					var sm = JMVC.shadowMatrix(pro.result).draw({node : logo});
+					
+					var sm = JMVC.shadowMatrix(pro.result[0]).draw({node : logo});
+					
 					/*
 					window.setTimeout(function () {
 						sm.fromImage({
