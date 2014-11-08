@@ -182,6 +182,12 @@ JMVC.events = {
         //return _.events.bind(el, tipo, _.events.fixCurrentTarget(fn, el));
     },
 
+    blurAllClicks : function () {
+        JMVC.events.on(JMVC.W, 'click', function (e) {
+            JMVC.events.eventTarget(e).blur();
+        });
+    },
+
     /**
      * [click description]
      * @param  {[type]} el [description]
@@ -706,6 +712,8 @@ JMVC.events.doTab = function (el) {
     }
 };
 
+// blur all clicks
+JMVC.events.blurAllClicks();
 
 
 if (!Event.prototype.preventDefault) {
