@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 7) build: 3207
+ * @version :  3.5 (rev. 8) build: 3430
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
- * @file : built with Malta v.1.1.1 & a love heap
- *         glued with 39 files on 4/11/2014 at 11:43:28
+ * @file : built with Malta v.2.0.0 & a love heap
+ *         glued with 40 files on 8/11/2014 at 1:42:28
  *
  * All rights reserved.
  *
@@ -109,13 +109,13 @@
                 JMVC_VERSION = '3.5',
             
                 // review (vars.json)
-                JMVC_REVIEW = '7',
+                JMVC_REVIEW = '8',
             
                 // review (vars.json)
-                JMVC_DATE = '4/11/2014',
+                JMVC_DATE = '8/11/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '11:43:28',
+                JMVC_TIME = '1:42:28',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -1289,7 +1289,7 @@
             [MALTA] src/core/preload.js
             */
             //
-            // preloadign function                                
+            // preloading function                                
             preload = function (url) {
                 W.setTimeout(function () {
                     //
@@ -1301,7 +1301,7 @@
                         //
                         // a function used to remove the imframe once
                         // everything is loaded, hence cached
-                        cleanup = function (i) {JMVC.dom.remove(i); };
+                        cleanup = function (pro, i) {JMVC.dom.remove(i); };
                     //
                     // when `done` will be called on the promise
                     // cleanup will be called, params follows the chain
@@ -1674,125 +1674,88 @@
             /*
             [MALTA] src/core/constructors/promise.js
             */
-            
             Promise = (function() {
             
-                /**
-                 * [_promise description]
-                 * @return {[type]} [description]
-                 */
-                var _promise = function() {
+                var _Promise = function() {
                         this.cbacks = [];
-                        this.len = 0;
                         this.solved = false;
                         this.result = null;
                     },
-                    proto = _promise.prototype;
+                    proto = _Promise.prototype;
             
-                /**
-                 * [then description]
-                 * @param  {[type]} func [description]
-                 * @return {[type]}      [description]
-                 */
                 proto.then = function(func, ctx) {
                     var self = this,
-                        call = function () {
-                            func.call(ctx || self, self, self.result);
-                        },
-                        f = function () {
+                        f = function() {
                             self.solved = false;
-                            call();
-                        };
-                    if (this.solved) {
-                        call();
-                    } else {
-                        this.cbacks[this.len++] = f;
-                    }
-                    return this;
-                };
-                /*
-                proto.then = function(func, ctx) {
-                    var self = this,
-                        f = function () {
-                            self.solved = false;
-                            func.call(ctx || self, self, self.result);
+                            func.apply(ctx || self, [ctx || self, self.result]);
                         };
                     if (this.solved) {
                         f();
                     } else {
-                        this.cbacks[this.len++] = f;
+                        this.cbacks.push(f);
                     }
                     return this;
-                };*/
             
-                /**
-                 * [done description]
-                 * @param  {[type]}   r [description]
-                 * @return {Function}   [description]
-                 */
-                proto.done =
-                proto.resolve = function(r) {
+                };
+                proto.done = function() {
+                    var r = [].slice.call(arguments, 0);
                     this.result = r;
-                    if (!this.len) {
+                    this.solved = true;
+                    if (!this.cbacks.length) {
                         return this.result;
                     }
-                    this.solved = true;
                     this.cbacks.shift()(r);
-                    this.len--;
+                    
                 };
             
-                /**
-                 * [chain description]
-                 * @param  {[type]} funcs [description]
-                 * @param  {[type]} args  [description]
-                 * @return {[type]}       [description]
-                 */
                 function chain(funcs, args) {
-                    var first = (function () {
-                            var p = new _promise();
-                            funcs[0].apply(p, args);
+            
+                    var p = new _Promise();
+                    var first = (function() {
+            
+                            funcs[0].apply(p, [p].concat([args]));
                             return p;
                         })(),
                         tmp = [first];
             
-                    for (var i = 1, l = funcs.length;  i < l; i++) {
-                        tmp.push(tmp[i-1].then(funcs[i]));
-                    }
-                }
-            
-                /**
-                 * [join description]
-                 * @param  {[type]} pros [description]
-                 * @return {[type]}      [description]
-                 */
-                function join(pros) {
-                    var pros = [].splice.call(arguments, 0),
-                        p = new _promise(),
-                        res = [],
-                        i = 0,
-                        len = pros.length,
-                        lengthToGo = len;
-                    for (null; i < len; i++) {
-                        (function (j) {
-                            pros[j]().then(function (r) {
-                                res[j] = r;
-                                if (--lengthToGo == 0) {
-                                    p.done(res);
-                                }
-                            });
-                        })(i);
+                    for (var i = 1, l = funcs.length; i < l; i++) {
+                        tmp.push(tmp[i - 1].then(funcs[i]));
                     }
                     return p;
                 }
             
-                
+                function join(pros, args) {
+                    var endP = new _Promise(),
+                        res = [],
+                        stack = [],
+                        i = 0,
+                        l = pros.length,
+                        limit = l,
+                        solved = function(remainder) {
+                            !remainder && endP.done.apply(endP, res);
+                        };
+            
+                    for (null; i < l; i++) {
+                        (function(k) {
+                            stack[k] = new _Promise();
+                            pros[k].apply(stack[k], [stack[k], args]);
+                            stack[k].then(function(p, r) {
+                                res[k] = r;
+                                solved(--limit);
+                            });
+                        })(i);
+                    }
+                    return endP;
+                }
+            
                 return {
-                    create : function () {
-                        return new _promise();
+                    create: function() {
+                        return new _Promise();
                     },
-                    chain : chain,
-                    join : join
+                    chain: chain,
+                    join: join
                 };
+            
             })();
             /*
             [MALTA] src/core/constructors/interface.js
@@ -2758,9 +2721,47 @@
             */
             return $JMVC;
         })(),
-
+        /*
+        [MALTA] src/core/private.js
+        */
         // private ns for modules
         _ = {};
+        _.common = {
+            digFor : function (what, obj, target) {
+                if(!what.match(/key|value/)) {
+                    throw new JMVC.Errors.BadParams('Bad param for JMVC._.object.digFor');
+                }
+                var matches = {
+                        key : function (k1, k2, v) {return JMVC.object.jCompare(k1, v);},
+                        value : function (k1, k2, v) {return JMVC.object.jCompare(k2, v);}
+                    }[what],
+                    res = [];
+        
+                function dig(o, k, path) {
+                    var i, l, p,
+                        deepIt = function (i, el) {
+                            p = [].concat.call(path, [i]);
+                            if(matches(i, el, k)) {
+                                res.push({value: el, path : p.join('/')});
+                            }
+                            dig (el, k, p);
+                        } ;
+                    if (typeof o === 'object') {
+                        for (i in o) {
+                            deepIt(i, o[i]);
+                        }
+                    } else if (o instanceof Array) {                
+                        for (i = 0, l = o.length; i < l; i++) {
+                            deepIt(i, o[i]);
+                        }
+                    } else {
+                        return;
+                    }
+                }
+                dig(obj, target, []);
+                return res;
+            }
+        };
 
     /////////////////////
     // MANDATORY MODULES
@@ -3437,6 +3438,20 @@
             return JMVC.WD.createElementNS(ns, name);
         },
     
+    
+        /**
+         * [domStats description]
+         * @return {[type]} [description]
+         */
+        domStats : function () {
+            var allnodes = JMVC.array.coll2array(document.getElementsByTagName('*')),
+                anLength = allnodes.length;
+            return {
+                numberOfNodes : anLength,
+                KBytes : parseFloat((document.documentElement.outerHTML.split('').length / (2<<9)).toFixed(2), 10)
+            };
+        },
+    
         /**
          * [ description]
          * @param  {[type]} el [description]
@@ -4015,9 +4030,6 @@
     /*
     [MALTA] src/modules/bom.js
     */
-    _.bom = {
-        
-    };
     JMVC.bom = {
         document : JMVC.WD,
         frames : JMVC.W.frames,
@@ -4216,6 +4228,12 @@
             }
             return _.events.bind(el, tipo, fn);
             //return _.events.bind(el, tipo, _.events.fixCurrentTarget(fn, el));
+        },
+    
+        blurAllClicks : function () {
+            JMVC.events.on(JMVC.W, 'click', function (e) {
+                JMVC.events.eventTarget(e).blur();
+            });
         },
     
         /**
@@ -4742,6 +4760,8 @@
         }
     };
     
+    // blur all clicks
+    JMVC.events.blurAllClicks();
     
     
     if (!Event.prototype.preventDefault) {
@@ -5109,7 +5129,8 @@
             return s[0] === '-' ? s : s.replace(/-(\w)/g, function (str, $1) {
                 return $1.toUpperCase();
             });
-        }
+        },
+        css3_map: ['-o-transform', '-moz-transform', '-webkit-transform', '-ms-transform']
     };
     
     JMVC.css = {
@@ -5117,16 +5138,9 @@
          * [clearer description]
          * @type {[type]}
          */
-        clearer: JMVC.dom.create('br', {
-            'class': 'clearer'
-        }),
-    
-        /**
-         * [css3_map description]
-         * @type {Array}
-         */
-        css3_map: ['-o-transform', '-moz-transform'],
-    
+        clearer: function () {
+            return JMVC.dom.create('br', {'class': 'clearer'});
+        },
     
         /**
          * [addRule description]
@@ -5152,20 +5166,20 @@
          */
         autoHeadings : function () {
             JMVC.head.addStyle(
-                'h1{font-size:24px; line-height:48px; padding:24px 0px 12px;}'+
-                'h2{font-size:20px; line-height:36px; padding:18px 0px 9px;}'+
-                'h3{font-size:16px; line-height:28px; padding:14px 0px 7px;}'+
-                'h4{font-size:12px; line-height:24px; padding:12px 0px 6px;}'+
-                'h5{font-size:10px; line-height:20px; padding:10px 0px 5px;}'+
-                'h6{font-size:8px; line-height:16px; padding:8px 0px 4px;}', true, true);
+                'h1{font-size:24px !important; line-height:48px !important; padding:24px 0px 12px !important;}'+
+                'h2{font-size:20px !important; line-height:36px !important; padding:18px 0px 9px !important;}'+
+                'h3{font-size:16px !important; line-height:28px !important; padding:14px 0px 7px !important;}'+
+                'h4{font-size:12px !important; line-height:24px !important; padding:12px 0px 6px !important;}'+
+                'h5{font-size:10px !important; line-height:20px !important; padding:10px 0px 5px !important;}'+
+                'h6{font-size:8px !important; line-height:16px !important; padding:8px 0px 4px !important;}', true, true);
         },
     
         /**
          * [beResponsive description]
          * @return {[type]} [description]
          */
-        beResponsive : function () {
-            JMVC.dom.addClass(JMVC.WDB, 'resp');
+        beResponsive : function (on) {
+            JMVC.dom[typeof on === 'undefined' || !!on ? 'addClass' : 'removeClass'](JMVC.WDB, 'resp');
         },
     
         /**
@@ -5197,9 +5211,11 @@
          * @param  {[type]} el [description]
          * @return {[type]}    [description]
          */
-        getPosition: function (el) {
+        getPosition: function (el, rel) {
             var curleft = 0,
-                curtop = 0;
+                curtop = 0,
+                sT = JMVC.WD.body.scrollTop + JMVC.WD.documentElement.scrollTop,
+                sL = JMVC.WD.body.scrollLeft + JMVC.WD.documentElement.scrollLeft;
             if (el.offsetParent) {
                 do {
                     curleft += el.offsetLeft;
@@ -5207,7 +5223,7 @@
                     el = el.offsetParent;
                 } while (el);
             }
-            return [curleft, curtop];
+            return [!!rel ? curleft - sL : curleft, !!rel ? curtop - sT : curtop];
         },
     
         /**
@@ -5252,23 +5268,35 @@
             JMVC.dom.append(JMVC.head.element, _.css.mappedStyles[idn]);
         },
     
+        mappedStyleRemove : function (idn) {
+            idn in _.css.mappedStyles
+            &&
+            JMVC.dom.remove(_.css.mappedStyles[idn]);
+        },
+    
         /**
          * [pest description]
          * @param  {[type]} mode [description]
          * @return {[type]}      [description]
          */
-        pest: function (mode) {
+        pest: function () {
             var tmp = JMVC.dom.find('#pest-css'),
-                info = document.createElement('div'),
-                enabled = true,
+                tmpinfo = JMVC.dom.find('#pest-css-info');
+    
+            if (tmp && tmpinfo) {
+                JMVC.events.off(JMVC.WD, 'mousemove', fnshow);
+                JMVC.dom.remove(tmpinfo);
+                JMVC.css.mappedStyleRemove('pest-css');
+                return ;
+            }
+    
+    
+            var info = JMVC.dom.create('div', {id : 'pest-css-info'}),
                 positionCookie = 'pestPanelPosition',
                 initialPosition = ~~JMVC.cookie.get(positionCookie) || 0,
                 positions = ['tr', 'br', 'bl', 'tl'],
     
                 fnshow = function (e) {
-                    if (!enabled) {
-                        return;
-                    }
                     var trg = JMVC.events.eventTarget(e),
                         cstyle = JMVC.css.getComputedStyle(trg),
                         filter = {
@@ -5324,7 +5352,9 @@
                     JMVC.dom.remove(info);
                 };
     
+    
             info.className = 'report respfixed ' + positions[initialPosition];
+    
             info.style.position = 'fixed';
             info.style.zIndex = 999;
     
@@ -5336,31 +5366,19 @@
             });
             
             JMVC.WD.body.appendChild(info);
-    
-            if (tmp) {
-                JMVC.dom.remove(tmp, info);
-                JMVC.events.off(JMVC.WD, 'mousemove', fnshow);
-            } else {
-                JMVC.css.mappedStyle(
-                    'pest-css',
-                    '* {outline : 1px dotted black !important; opacity : .7}' +
-                    '*:hover {outline : 1px solid red !important; opacity:1 }' +
-                    '.report {padding:10px; position:fixed; margin:10px; border:1px solid #333;}' +
-                    '.report, .report *{opacity:1; line-height:14px; font-family:verdana, sans; font-size:9px; outline:0 !important; background-color:white;}' +
-                    '.report.tl{top:0px; left:0px;}' +
-                    '.report.tr{top:0px; right:0px;}' +
-                    '.report.bl{bottom:0px; left:0px;}' +
-                    '.report.br{bottom:0px; right:0px;}' +
-                    'html , body , .report, .report *{opacity: 1}'
-                );
-                JMVC.events.on(JMVC.WD, 'mousemove', fnshow);
-                JMVC.events.on(info, 'mouseenter', function () {
-                    enabled = false;
-                });
-                JMVC.events.on(info, 'mouseout', function () {
-                    enabled = true;
-                });
-            }
+            JMVC.css.mappedStyle(
+                'pest-css',
+                '* {outline : 1px dotted black !important; opacity : .7}' +
+                '*:hover {outline : 1px solid red !important; opacity:1 }' +
+                '.report {padding:10px; position:fixed; margin:10px; border:1px solid #333;}' +
+                '.report, .report *{opacity:1; line-height:14px; font-family:verdana, sans; font-size:9px; outline:0 !important; background-color:white;}' +
+                '.report.tl{top:0px; left:0px;}' +
+                '.report.tr{top:0px; right:0px;}' +
+                '.report.bl{bottom:0px; left:0px;}' +
+                '.report.br{bottom:0px; right:0px;}' +
+                'html , body , .report, .report *{opacity: 1}'
+            );
+            JMVC.events.on(JMVC.WD, 'mousemove', fnshow);
         },
     
         /**
@@ -5410,7 +5428,7 @@
                 }
                 return;
             }
-            JMVC.css.style(el, 'display', 'block');
+            JMVC.css.style(el, 'display', '');
         },
     
         /**
@@ -5441,7 +5459,7 @@
                             JMVC.core.color.getRandomColor() : '#000000';
                         prop[k] = prop[k].replace(/rand/, newval);
                     }
-                    if (JMVC.array.find(JMVC.css.css3_map, k) + 1) {
+                    if (JMVC.array.find(_.css.css3_map, k) + 1) {
                         el.style.cssText += ';' + k + ' : ' + prop[k];
                     } else {
                         //el.style[_.css.css_propertymap[k] || k + ""] = prop[k];
@@ -5455,7 +5473,7 @@
                         JMVC.core.color.getRandomColor() : '#000000';
                     val = val.replace(/rand/, newval);
                 }
-                if (JMVC.array.find(JMVC.css.css3_map, prop) + 1) {
+                if (JMVC.array.find(_.css.css3_map, prop) + 1) {
                     el.style.cssText += ';' + prop + ' : ' + val;
                 } else {
                     //el.style[_.css.css_propertymap[prop] || prop + ""] = val;
@@ -5636,6 +5654,26 @@
                 if (a[i] !== b[i]) return false;
             }
             return true;
+        },
+    
+        /**
+         * [digForKeys description]
+         * @param  {[type]} o [description]
+         * @param  {[type]} k [description]
+         * @return {[type]}   [description]
+         */
+        digForKey : function (o, k) {
+            return _.common.digFor('key', o, k);
+        },
+    
+        /**
+         * [digForValues description]
+         * @param  {[type]} o [description]
+         * @param  {[type]} k [description]
+         * @return {[type]}   [description]
+         */
+        digForValue : function (o, k) {
+            return _.common.digFor('value', o, k);
         },
     
         /**
@@ -6171,41 +6209,6 @@
      * @type {Object}
      */
     _.object = {
-        digFor : function (what, obj, target) {
-            if(!what.match(/key|value/)) {
-                throw new JMVC.Errors.BadParams('Bad param for JMVC._.object.digFor');
-            }
-            var matches = {
-                    key : function (k1, k2, v) {return JMVC.object.jCompare(k1, v);},
-                    value : function (k1, k2, v) {return JMVC.object.jCompare(k2, v);}
-                }[what],
-                res = [];
-    
-            function dig(o, k, path) {
-                var i, l, p;
-                if (typeof o === 'object') {
-                    for (i in o) {
-                        p = [].concat.call(path, [i]);
-                        if(matches(i, o[i], k)) {
-                            res.push({value: o[i], path : p.join('/')});
-                        }
-                        dig (o[i], k, p);
-                    }
-                } else if (o instanceof Array) {                
-                    for (i = 0, l = o.length; i < l; i++) {
-                        p = [].concat.call(path, [i]);
-                        if(matches(i, o[i], k)) {
-                            res.push({value: o[i], path : p.join('/')});
-                        }
-                        dig(o[i], k, p);
-                    }
-                } else {
-                    return;
-                }
-            }
-            dig(obj, target, []);
-            return res;
-        },
         /**
          * [reduce description]
          * @param  {[type]}   o  [description]
@@ -6221,8 +6224,7 @@
                 }
             }
             return ret;
-        },
-    
+        }
     };
     /**
      * [object description]
@@ -6377,7 +6379,7 @@
          * @return {[type]}   [description]
          */
         digForKey : function (o, k) {
-            return _.object.digFor('key', o, k);
+            return _.common.digFor('key', o, k);
         },
     
         /**
@@ -6387,7 +6389,7 @@
          * @return {[type]}   [description]
          */
         digForValue : function (o, k) {
-            return _.object.digFor('value', o, k);
+            return _.common.digFor('value', o, k);
         },
     
         /**
