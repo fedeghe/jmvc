@@ -1,12 +1,21 @@
 <function>
-    <signature name="hide">JMVC.css.hide(Element where, String tag, Literal attrs, String inner)</signature>
-    <description>this is a shortcut that merges create+append</description>
+    <signature name="hide">JMVC.css.hide(DOMNode trg)</signature>
+    <description>Hides a node, using the display:none css rule</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="*trg">dom element target</param>
     </params>
     <returns>void (undefined)</returns>
+    <sample>var trg = JMVC.dom.find('.intro')[0];&#10;
+JMVC.css.hide(trg);&#10;
+window.setTimeout(function () { // show it back&#10;
+    JMVC.css.show(trg);         // after 1 s&#10;
+},1000);</sample>
+    <code>
+        var trg = JMVC.dom.find('.intro')[0];
+        JMVC.css.hide(trg);
+        window.setTimeout(function () {
+            JMVC.css.show(trg);
+        },1000);
+    </code>
     <status>incomplete</status>
 </function>

@@ -7,4 +7,18 @@
     </params>
     <returns>void (undefined)</returns>
     <status>incomplete</status>
+    <sample>var res = JMVC.object.digForKey({&#10;
+    a : [1,2,3,4],&#10;
+    b : "ciao",&#10;
+    c : function () {},&#10;
+    d : [{b : 1}, {b : 2}, {jo : {yu :{a:1234}}}]&#10;
+}, 'a');&#10;
+console.log(res);</sample>
+    <code>var res = JMVC.object.digForKey({
+  a : [1,2,3,4],
+  b : 'ciao',
+  c : function () {},
+  d : [{b : 1}, {b : 2}, {jo : {yu :{a:1234}}}]
+}, 'a');
+console.log(res);</code>
 </function>

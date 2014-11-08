@@ -9,12 +9,12 @@
     <status>testing</status>
     <sample>var me = JMVC.getModel('Persona', ['Federico', 35]),&#10;
     you = JMVC.getModel('Persona', ['Frances', 4]);&#10;
-console.debug(me.hello());&#10;
-console.debug(you.hello());</sample>
+console.log(me.hello());&#10;
+console.log(you.hello());</sample>
     <code>
         var me = JMVC.getModel('Persona', ['Federico', 35]),
             you = JMVC.getModel('Persona', ['Frances', 4]);
-        console.debug(me.hello());
-        console.debug(you.hello());
+        console.log(me.hello());
+        console.log(you.hello());
     </code>
 </function>

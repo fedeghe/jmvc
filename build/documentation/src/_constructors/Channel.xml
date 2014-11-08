@@ -40,15 +40,15 @@
     </returns>
     <sample>var c = JMVC.Channel('trial');&#10;
 c.sub('notice', function (a, b, c) {&#10;
-    alert('first notice');&#10;
-    console.debug(a, b, c);&#10;
+    console.log('first notice');&#10;
+    console.log(a, b, c);&#10;
 });&#10;
 c.pub('notice', ['hello','world']);</sample>
     <status>incomplete</status>
     <code>var c = JMVC.Channel('trial');
 c.sub('notice', function (a, b, c) {
-    alert('first notice');
-    console.debug(a, b, c);
+    console.log('first notice');
+    console.log(a, b, c);
 });
 c.pub('notice', ['hello','world'])</code>
 </function>

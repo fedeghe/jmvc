@@ -5,76 +5,172 @@
         <param name="*name">the name of the new variable to be removed</param>
     </params>
     <returns>the variable reference or value</returns>
+    <testlink>test_api_constructors_promise</testlink>
     <status>incomplete</status>
     <sample>(function () {&#10;
     var p = JMVC.Promise.create();&#10;
-    console.log('uan');&#10;
-    window.setTimeout(function () {p.done(1234); }, 1000);&#10;
+    window.setTimeout(function() {&#10;
+        console.log('1 done');&#10;
+        p.done(0, 1, 2, 3, 4);&#10;
+    }, 500);&#10;
     return p;&#10;
-})().then(function (p) {&#10;
-    console.log('two ', p.result);&#10;
-    window.setTimeout(function () {p.done(~~p.result * 2); }, 1000);&#10;
-}).then(function (p) {&#10;
-    console.log('three ', p.result);&#10;
-    p.done();&#10;
-}).then(tryJoin);&#10;
-&#10;
-function tryJoin() {&#10;
-    console.debug('--- now a trial for Promise.join ---');&#10;
-    JMVC.Promise.join(&#10;
-        function () {&#10;
-            var p = JMVC.Promise.create();&#10;
-            window.setTimeout(function () {&#10;
-                p.done(1);&#10;
-            }, 1000);&#10;
-            return p;&#10;
+})().then(function(p, r) {&#10;
+    console.log(r);&#10;
+    var self = this;&#10;
+    window.setTimeout(function() {&#10;
+        console.log('2 done');&#10;
+        self.done(5, 6, 7, 8, 9);&#10;
+    }, 500);&#10;
+}).then(function(p, r) {&#10;
+    console.log(r);&#10;
+    var self = this;&#10;
+    window.setTimeout(function() {&#10;
+        self.done(3);&#10;
+    }, 500);&#10;
+}).then(startJoin).then(startChain);&#10;
+function startJoin(pr) {&#10;
+    var t1 = 10,&#10;
+        t2 = 1000;&#10;
+    console.log('------ join started ------');&#10;
+    console.log('> will require max(' + t1 + ', ' + t2 + ') ms');&#10;
+    return JMVC.Promise.join([&#10;
+        function(p, a) {&#10;
+            console.log('first receive params: ', a);&#10;
+            window.setTimeout(function() {&#10;
+                p.done('a', 'b', 'c');&#10;
+            }, t1);&#10;
         },&#10;
-        function () {&#10;
-            var p = JMVC.Promise.create();&#10;
-            window.setTimeout(function () {&#10;
-                p.done(2);&#10;
-            }, 2000);&#10;
-            return p;&#10;
+        function(p, a) {&#10;
+            console.log('second receive params: ', a);&#10;
+            window.setTimeout(function() {&#10;
+                p.done('d', 'e', 'f');&#10;
+            }, t2);&#10;
         }&#10;
-    ).then(function (r) {&#10;
-        console.debug(r);&#10;
-    });&#10;
+    ], [2, 3, 4]).then(function(p, r) {&#10;
+        console.log('Join result : ', r);&#10;
+        p.done();&#10;
+        pr.done();&#10;
+    })&#10;
+}&#10;
+function startChain(pr) {&#10;
+    console.log('------ chain started ------');&#10;
+    JMVC.Promise.chain([&#10;
+        function(p, r) {&#10;
+            console.log('res one ', r);&#10;
+            window.setTimeout(function() {&#10;
+                p.done(r[0]);&#10;
+            }, 500);&#10;
+        },&#10;
+        function(p, r) {&#10;
+            console.log('res two ', r);&#10;
+            window.setTimeout(function() {&#10;
+                p.done(r[0] + r[0]);&#10;
+            }, 500);&#10;
+        },&#10;
+        function(p, r) {&#10;
+            console.log('res three ', r);&#10;
+            window.setTimeout(function() {&#10;
+                p.done(r[0] + r[0] + r[0]);&#10;
+            }, 500);&#10;
+        },&#10;
+        function(p, r) {&#10;
+            console.log('last ', r);&#10;
+            this.done(r[0]);&#10;
+        }&#10;
+    ], [1, 2, 3]).then(&#10;
+        function(p, r) {&#10;
+            console.log('the end ', r[0]);&#10;
+            this.done(r[0]);&#10;
+            pr.done(r[0]);&#10;
+            console.log(this);&#10;
+            console.log(pr);&#10;
+        }&#10;
+    );&#10;
 }</sample>
-<status>complete</status>
-    <code>
-(function () {
+    <code>(function() {
     var p = JMVC.Promise.create();
-    console.log('uan');
-    window.setTimeout(function () {p.done(1234); }, 1000);
+    window.setTimeout(function() {
+        console.log('1 done');
+        p.done(0, 1, 2, 3, 4);
+    }, 500);
     return p;
-})().then(function (p) {
-    console.log('two ', p.result);
-    window.setTimeout(function () {p.done(~~p.result * 2); }, 1000);
-}).then(function (p) {
-    console.log('three ', p.result);
-    p.done();
-}).then(tryJoin);
+})().then(function(p, r) {
+    console.log(r);
+    
+    var self = this;
+    window.setTimeout(function() {
+        console.log('2 done');
+        self.done(5, 6, 7, 8, 9);
+    }, 500);
+}).then(function(p, r) {
+    console.log(r);
+    
+    var self = this;
+    window.setTimeout(function() {
 
-function tryJoin() {
-    console.debug('--- now a trial for Promise.join ---');
-    JMVC.Promise.join(
-        function () {
-            var p = JMVC.Promise.create();
-            window.setTimeout(function () {
-                p.done(1);
-            }, 1000);
-            return p;
+        self.done(3);
+    }, 500);
+}).then(startJoin).then(startChain);
+function startJoin(pr) {
+    var t1 = 10,
+        t2 = 1000;
+    console.log('------ join started ------');
+    console.log('> will require max(' + t1 + ', ' + t2 + ') ms');
+
+    return JMVC.Promise.join([
+        function(p, a) {
+            console.log('first receive params: ', a);
+            window.setTimeout(function() {
+                
+                p.done('a', 'b', 'c');
+            }, t1);
         },
-        function () {
-            var p = JMVC.Promise.create();
-            window.setTimeout(function () {
-                p.done(2);
-            }, 2000);
-            return p;
+        function(p, a) {
+            console.log('second receive params: ', a);
+            window.setTimeout(function() {
+                p.done('d', 'e', 'f');
+            }, t2);
         }
-    ).then(function (r) {
-        console.debug(r);
-    });
+    ], [2, 3, 4]).then(function(p, r) {
+        console.log('Join result : ', r);
+        p.done();
+        pr.done();
+    })
 }
-    </code>
+function startChain(pr) {
+    console.log('------ chain started ------');
+    JMVC.Promise.chain([
+        function(p, r) {
+
+            console.log('res one ', r);
+            window.setTimeout(function() {
+                p.done(r[0]);
+            }, 500);
+        },
+        function(p, r) {
+            console.log('res two ', r);
+            window.setTimeout(function() {
+                p.done(r[0] + r[0]);
+            }, 500);
+        },
+        function(p, r) {
+            console.log('res three ', r);
+            window.setTimeout(function() {
+                p.done(r[0] + r[0] + r[0]);
+            }, 500);
+        },
+        function(p, r) {
+            console.log('last ', r);
+            this.done(r[0]);
+        }
+    ], [1, 2, 3]).then(
+        function(p, r) {
+            console.log('the end ', r[0]);
+            this.done(r[0]);
+            pr.done(r[0]);
+            console.log(this);
+            console.log(pr);
+        }
+    );
+}</code>
 </function>

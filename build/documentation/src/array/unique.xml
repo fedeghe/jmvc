@@ -1,10 +1,28 @@
 <function>
     <signature name="unique">JMVC.array.unique(Array a)</signature>
-    <description>Return the passed array free of duplicated</description>
+    <description>Return the passed array free of duplicated; the comparison is based on ===, so different
+        references to equal object will remain untouched. In fact Strings, Numbers and Booleans are passed 
+        by value while Arrays, Objects (thus functions) are passed by reference.</description>
     <params>
         <param name="a">The array to clean</param>
     </params>
-    <returns>void (undefined)</returns>
+    <returns>Array</returns>
     <testlink>test_api_array_unique</testlink>
+    <sample>var a = [&#10;
+    5,2,3,7,54,12,34,45,56,54,43,3,3,22,&#10;
+    function (){},2,2,2,2,1,1,1,1,1,1,1,&#10;
+    'name', 'surname',8,8,8,1,'address',&#10;
+    function (){}, 'name', 'surname',&#10;
+];&#10;
+console.log(JMVC.array.unique(a));</sample>
+    <code>
+        var a = [
+            5,2,3,7,54,12,34,45,56,54,43,3,3,22,
+            function (){},2,2,2,2,1,1,1,1,1,1,1,
+            'name', 'surname',8,8,8,1,'address',
+            function (){}, 'name', 'surname'
+        ];
+        console.log(JMVC.array.unique(a));
+    </code>
     <status>incomplete</status>
 </function>

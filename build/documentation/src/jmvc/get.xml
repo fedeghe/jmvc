@@ -7,21 +7,34 @@
     </params>
     <returns>the variable reference or value if found, or undefined</returns>
     <sample>JMVC.set('a', 10);&#10;
-JMVC.debug(JMVC.get('a'));&#10;
+console.log(JMVC.get('a'));&#10;
 JMVC.del('a');&#10;
-JMVC.debug(JMVC.get('a'));&#10;
+console.log(JMVC.get('a'));&#10;
 &#10;
 JMVC.set('a', 11, localStorage);&#10;
-JMVC.debug(JMVC.get('a', localStorage));&#10;
+console.log(JMVC.get('a', localStorage));&#10;
 JMVC.del('a', localStorage);&#10;
-JMVC.debug(JMVC.get('a', localStorage));&#10;
+console.log(JMVC.get('a', localStorage));&#10;
 &#10;
 JMVC.set('a', 12, sessionStorage);&#10;
-JMVC.debug(JMVC.get('a', sessionStorage));&#10;
+console.log(JMVC.get('a', sessionStorage));&#10;
 JMVC.del('a', sessionStorage);&#10;
-JMVC.debug(JMVC.get('a', sessionStorage));&#10;
+console.log(JMVC.get('a', sessionStorage));&#10;
 </sample>
     <status>testing</status>
     <testlink>test_api_jmvc_delgetset</testlink>
-    <code>JMVC.set('a', 10);JMVC.debug(JMVC.get('a'));JMVC.del('a');JMVC.debug(JMVC.get('a'));JMVC.set('a', 11, localStorage);JMVC.debug(JMVC.get('a', localStorage));JMVC.del('a', localStorage);JMVC.debug(JMVC.get('a', localStorage));JMVC.set('a', 12, sessionStorage);JMVC.debug(JMVC.get('a', sessionStorage));JMVC.del('a', sessionStorage);JMVC.debug(JMVC.get('a', sessionStorage));</code>
+    <code>
+        JMVC.set('a', 10);
+        console.log(JMVC.get('a'));
+        JMVC.del('a');
+        console.log(JMVC.get('a'));
+        JMVC.set('a', 11, localStorage);
+        console.log(JMVC.get('a', localStorage));
+        JMVC.del('a', localStorage);
+        console.log(JMVC.get('a', localStorage));
+        JMVC.set('a', 12, sessionStorage);
+        console.log(JMVC.get('a', sessionStorage));
+        JMVC.del('a', sessionStorage);
+        console.log(JMVC.get('a', sessionStorage));
+    </code>
 </function>

@@ -6,10 +6,12 @@
     </params>
     <returns>the view instance or false</returns>
     <status>testing</status>
-    <sample>var me = JMVC.getView('foot');&#10;console.dir(me);&#10;console.debug(me.content);</sample>
+    <sample>var me = JMVC.getView('foot');&#10;
+        console.dir(me);&#10;
+        console.log(me.content);</sample>
     <code>
         var me = JMVC.getView('foot');
         console.dir(me);
-        console.debug(me.content);
+        console.log(me.content);
     </code>
 </function>

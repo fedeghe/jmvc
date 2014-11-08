@@ -1,12 +1,14 @@
 <function>
-    <signature name="getComputedStyle">JMVC.css.getComputedStyle(Element where, String tag, Literal attrs, String inner)</signature>
+    <signature name="getComputedStyle">JMVC.css.getComputedStyle(Element el, String property)</signature>
     <description>this is a shortcut that merges create+append</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="*el">dom element target</param>
+        <param name="*property">the style to be retrieved</param>
     </params>
     <returns>void (undefined)</returns>
+    <sample>var h = JMVC.css.getComputedStyle(document.body, 'height');&#10;
+console.log(h);</sample>
+    <code>var h = JMVC.css.getComputedStyle(document.body, 'height');
+console.log(h);</code>
     <status>incomplete</status>
 </function>

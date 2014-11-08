@@ -54,7 +54,7 @@ window.setTimeout(function () {&#10;
     <returns>void (undefined)</returns>
     <sample>var arr = [1,2,3,4,5],&#10;
     obj =  {name : "Federico", surname : "Ghedina", say : "WAT"},&#10;
-    foo = function (){alert('foo'); };&#10;&#10;
+    foo = function (){console.log('foo'); };&#10;&#10;
 // open the console before running&#10;
 //&#10;
 JMVC.debug(arr), JMVC.debug(obj), JMVC.debug(foo);
@@ -68,7 +68,7 @@ JMVC.debug(arr), JMVC.debug(obj), JMVC.debug(foo);
                 say : 'WAT'
             },
             foo = function (){
-                alert('foo');
+                console.log('foo');
             };
         JMVC.debug(arr),
         JMVC.debug(obj),
@@ -97,25 +97,27 @@ var t = JMVC.define(&#10;
     function (x, y) {&#10;
         return {&#10;
             one : function () {&#10;
-                alert(y.getName() + ' extends ' + x.name);&#10;
+                console.log(y.getName() + ' extends ' + x.name);&#10;
             }&#10;
         }&#10;
     }&#10;
 );&#10;
-JMVC.xxx.sss.one();&#10;
-console.debug(t);
+t.one();&#10;
+console.log(t);&#10;
+console.log(JMVC.xxx.sss);
 </sample>
     <status>complete</status>
     <code>
         var t = JMVC.define('xxx.sss', ['def.xxx', 'def.yyy'], function (x, y) {
             return {
                 one : function () {
-                    alert(y.getName() + ' extends ' + x.name);
+                    console.log(y.getName() + ' extends ' + x.name);
                 }
             }
         });
-        JMVC.xxx.sss.one();
-        console.debug(t);
+        t.one();
+        console.log(t);
+        console.log(JMVC.xxx.sss);
     </code>
 </function>
 <!--
@@ -130,23 +132,36 @@ console.debug(t);
     </params>
     <returns>JMVC</returns>
     <sample>JMVC.set('a', 10);&#10;
-JMVC.debug(JMVC.get('a'));&#10;
+console.log(JMVC.get('a'));&#10;
 JMVC.del('a');&#10;
-JMVC.debug(JMVC.get('a'));&#10;
+console.log(JMVC.get('a'));&#10;
 &#10;
 JMVC.set('a', 11, localStorage);&#10;
-JMVC.debug(JMVC.get('a', localStorage));&#10;
+console.log(JMVC.get('a', localStorage));&#10;
 JMVC.del('a', localStorage);&#10;
-JMVC.debug(JMVC.get('a', localStorage));&#10;
+console.log(JMVC.get('a', localStorage));&#10;
 &#10;
 JMVC.set('a', 12, sessionStorage);&#10;
-JMVC.debug(JMVC.get('a', sessionStorage));&#10;
+console.log(JMVC.get('a', sessionStorage));&#10;
 JMVC.del('a', sessionStorage);&#10;
-JMVC.debug(JMVC.get('a', sessionStorage));&#10;
+console.log(JMVC.get('a', sessionStorage));&#10;
 </sample>
     <status>complete</status>
     <testlink>test_api_jmvc_delgetset</testlink>
-    <code>JMVC.set('a', 10);JMVC.debug(JMVC.get('a'));JMVC.del('a');JMVC.debug(JMVC.get('a'));JMVC.set('a', 11, localStorage);JMVC.debug(JMVC.get('a', localStorage));JMVC.del('a', localStorage);JMVC.debug(JMVC.get('a', localStorage));JMVC.set('a', 12, sessionStorage);JMVC.debug(JMVC.get('a', sessionStorage));JMVC.del('a', sessionStorage);JMVC.debug(JMVC.get('a', sessionStorage));</code>
+    <code>
+        JMVC.set('a', 10);
+        console.log(JMVC.get('a'));
+        JMVC.del('a');
+        console.log(JMVC.get('a'));
+        JMVC.set('a', 11, localStorage);
+        console.log(JMVC.get('a', localStorage));
+        JMVC.del('a', localStorage);
+        console.log(JMVC.get('a', localStorage));
+        JMVC.set('a', 12, sessionStorage);
+        console.log(JMVC.get('a', sessionStorage));
+        JMVC.del('a', sessionStorage);
+        console.log(JMVC.get('a', sessionStorage));
+    </code>
 </function>
 <!--
 [MALTA] src/jmvc/delegate.xml
@@ -164,7 +179,10 @@ JMVC.debug(JMVC.get('a', sessionStorage));&#10;
 t(); // literal&#10;</sample>
     <status>complete</status>
     <testlink>test_api_jmvc_delegate</testlink>
-    <code>var y = {type:'literal'}, t = JMVC.delegate(function(){alert(this.type);}, y);t();</code>
+    <code>
+        var y = {type:'literal'},
+            t = JMVC.delegate(function(){alert(this.type);}, y);
+        t();</code>
 </function>
 <!--
 [MALTA] src/jmvc/each.xml
@@ -188,7 +206,7 @@ var obj = {&#10;
     },&#10;
     arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],&#10;
     objAfter = JMVC.each(obj, function (el, i) {&#10;
-        console.debug(i, el);&#10;
+        console.log(i, el);&#10;
         return i + '-' + el;&#10;
     }),&#10;
     arrAfter = JMVC.each(arr, function f(el, i) {&#10;
@@ -197,8 +215,8 @@ var obj = {&#10;
         }&#10;
         return i;&#10;
     });&#10;
-console.debug(obj, objAfter);&#10;
-console.debug(arr, arrAfter);&#10;</sample>
+console.log(obj, objAfter);&#10;
+console.log(arr, arrAfter);&#10;</sample>
     <status>complete</status>
     <testlink>test_api_jmvc_each</testlink>
     <code>
@@ -210,7 +228,7 @@ console.debug(arr, arrAfter);&#10;</sample>
             arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             objAfter = JMVC.each(obj,
                 function (el, i) {
-                    console.debug(i, el);
+                    console.log(i, el);
                     return i + '-' + el;
                 }),
             arrAfter = JMVC.each(arr,
@@ -221,8 +239,8 @@ console.debug(arr, arrAfter);&#10;</sample>
                     return i;
                 }
             );
-        console.debug(obj, objAfter),
-        console.debug(arr, arrAfter);
+        console.log(obj, objAfter),
+        console.log(arr, arrAfter);
     </code>
 </function>
 <!--
@@ -333,13 +351,13 @@ JMVC.fooWidget2.start();    // that will throw a TypeError&#10;
     <status>testing</status>
     <sample>var me = JMVC.factory('model', 'Persona', ['Fred', 35]),&#10;
     you = JMVC.factory('model', 'Persona', ['Jenny', 23]);&#10;
-console.debug(me.hello());&#10;
-console.debug(you.hello());</sample>
+console.log(me.hello());&#10;
+console.log(you.hello());</sample>
     <code>
         var me = JMVC.factory('model', 'Persona', ['Fred', 35]),
             you = JMVC.factory('model', 'Persona', ['Jenny', 23]);
-        console.debug(me.hello());
-        console.debug(you.hello());
+        console.log(me.hello());
+        console.log(you.hello());
     </code>
 </function>
 <!--
@@ -354,23 +372,36 @@ console.debug(you.hello());</sample>
     </params>
     <returns>the variable reference or value if found, or undefined</returns>
     <sample>JMVC.set('a', 10);&#10;
-JMVC.debug(JMVC.get('a'));&#10;
+console.log(JMVC.get('a'));&#10;
 JMVC.del('a');&#10;
-JMVC.debug(JMVC.get('a'));&#10;
+console.log(JMVC.get('a'));&#10;
 &#10;
 JMVC.set('a', 11, localStorage);&#10;
-JMVC.debug(JMVC.get('a', localStorage));&#10;
+console.log(JMVC.get('a', localStorage));&#10;
 JMVC.del('a', localStorage);&#10;
-JMVC.debug(JMVC.get('a', localStorage));&#10;
+console.log(JMVC.get('a', localStorage));&#10;
 &#10;
 JMVC.set('a', 12, sessionStorage);&#10;
-JMVC.debug(JMVC.get('a', sessionStorage));&#10;
+console.log(JMVC.get('a', sessionStorage));&#10;
 JMVC.del('a', sessionStorage);&#10;
-JMVC.debug(JMVC.get('a', sessionStorage));&#10;
+console.log(JMVC.get('a', sessionStorage));&#10;
 </sample>
     <status>testing</status>
     <testlink>test_api_jmvc_delgetset</testlink>
-    <code>JMVC.set('a', 10);JMVC.debug(JMVC.get('a'));JMVC.del('a');JMVC.debug(JMVC.get('a'));JMVC.set('a', 11, localStorage);JMVC.debug(JMVC.get('a', localStorage));JMVC.del('a', localStorage);JMVC.debug(JMVC.get('a', localStorage));JMVC.set('a', 12, sessionStorage);JMVC.debug(JMVC.get('a', sessionStorage));JMVC.del('a', sessionStorage);JMVC.debug(JMVC.get('a', sessionStorage));</code>
+    <code>
+        JMVC.set('a', 10);
+        console.log(JMVC.get('a'));
+        JMVC.del('a');
+        console.log(JMVC.get('a'));
+        JMVC.set('a', 11, localStorage);
+        console.log(JMVC.get('a', localStorage));
+        JMVC.del('a', localStorage);
+        console.log(JMVC.get('a', localStorage));
+        JMVC.set('a', 12, sessionStorage);
+        console.log(JMVC.get('a', sessionStorage));
+        JMVC.del('a', sessionStorage);
+        console.log(JMVC.get('a', sessionStorage));
+    </code>
 </function>
 <!--
 [MALTA] src/jmvc/getModel.xml
@@ -386,13 +417,13 @@ JMVC.debug(JMVC.get('a', sessionStorage));&#10;
     <status>testing</status>
     <sample>var me = JMVC.getModel('Persona', ['Federico', 35]),&#10;
     you = JMVC.getModel('Persona', ['Frances', 4]);&#10;
-console.debug(me.hello());&#10;
-console.debug(you.hello());</sample>
+console.log(me.hello());&#10;
+console.log(you.hello());</sample>
     <code>
         var me = JMVC.getModel('Persona', ['Federico', 35]),
             you = JMVC.getModel('Persona', ['Frances', 4]);
-        console.debug(me.hello());
-        console.debug(you.hello());
+        console.log(me.hello());
+        console.log(you.hello());
     </code>
 </function>
 <!--
@@ -406,11 +437,13 @@ console.debug(you.hello());</sample>
     </params>
     <returns>the view instance or false</returns>
     <status>testing</status>
-    <sample>var me = JMVC.getView('foot');&#10;console.dir(me);&#10;console.debug(me.content);</sample>
+    <sample>var me = JMVC.getView('foot');&#10;
+        console.dir(me);&#10;
+        console.log(me.content);</sample>
     <code>
         var me = JMVC.getView('foot');
         console.dir(me);
-        console.debug(me.content);
+        console.log(me.content);
     </code>
 </function>
 <!--
@@ -429,7 +462,7 @@ console.debug(you.hello());</sample>
     <sample>// INNER HOOK&#10;
 JMVC.hook({&#10;
     'onAfterRender': function () {&#10;
-        alert('You`ll never see that message booking that function from the console!!!');&#10;
+        console.log('You`ll never see that message booking that function from the console!!!');&#10;
     }&#10;
 });&#10;
 &#10;
@@ -446,15 +479,15 @@ JMVC.hook({&#10;
                 sum += o;&#10;
             }&#10;
         );&#10;
-        console.debug(sum);&#10;
-        console.debug(arguments);&#10;
+        console.log(sum);&#10;
+        console.log(arguments);&#10;
     }&#10;
 }, true);&#10;
 foo();</sample>
     <code>
         JMVC.hook({
             onAfterRender: function () {
-                alert('You`ll never see that message booking that function from the console!!!');
+                console.log('You`ll never see that message booking that function from the console!!!');
             }
         });
         function foo() {
@@ -469,8 +502,8 @@ foo();</sample>
                         sum += o;
                     }
                 );
-                console.debug(sum);
-                console.debug(arguments);
+                console.log(sum);
+                console.log(arguments);
             }}, true);
         foo();</code>
 </function>
@@ -491,32 +524,32 @@ foo();</sample>
 };&#10;
 JMVC.hook({'myhook': function () {&#10;
     var a = Array.prototype.slice.call(arguments, 1);&#10;
-    console.debug('inner 1: ', a);&#10;
+    console.log('inner 1: ', a);&#10;
     return a;&#10;
 }}, true);&#10;
 //&#10;
 // add another function to the hook queue&#10;
 JMVC.hook({'myhook': function () {&#10;
     var a = Array.prototype.slice.call(arguments, 1);&#10;
-    console.debug('inner 2: ', a);&#10;
+    console.log('inner 2: ', a);&#10;
     return a;&#10;
 }}, true);&#10;
-console.debug(foo());</sample>
+console.log(foo());</sample>
     <code>
         function foo() {
             return JMVC.hookCheck('myhook', [1,2,3]);
         };
         JMVC.hook({'myhook': function () {
             var a = Array.prototype.slice.call(arguments, 1);
-            console.debug('inner 1: ', a);
+            console.log('inner 1: ', a);
             return a;
         }}, true);
         JMVC.hook({'myhook': function () {
             var a = Array.prototype.slice.call(arguments, 1);
-            console.debug('inner 2: ', a);
+            console.log('inner 2: ', a);
             return a;
         }}, true);
-        console.debug(foo());
+        console.log(foo());
     </code>
 </function>
 <!--
@@ -530,9 +563,11 @@ console.debug(foo());</sample>
     </params>
     <returns>the string with substituted char</returns>
     <status>complete</status>
-    <sample>&#10;
-console.debug(JMVC.htmlChars("&amp;me"));&#10;
-    </sample>
+    <sample>console.log(&#10;
+    JMVC.htmlChars(document.documentElement.innerHTML)&#10;
+    .substring(0,500)&#10;
+);</sample>
+    <code>console.log(JMVC.htmlChars(document.documentElement.innerHTML).substring(0,500));</code>
 </function>
 <!--
 [MALTA] src/jmvc/htmlCharsDecode.xml
@@ -585,7 +620,13 @@ console.debug(JMVC.htmlChars("&amp;me"));&#10;
     </params>
     <returns>what is returned by code evaluation</returns>
     <status>incomplete</status>
-    <sample>var t  = JMVC.jeval('return "yess";');&#10;console.debug(t);</sample>
+    <sample>JMVC.jeval('var t = "evaluated";');&#10;
+        console.log(t);
+    </sample>
+    <code>
+        JMVC.jeval('var t = \'evaluated\';');
+        console.log(t);
+    </code>
 </function>
 <!--
 [MALTA] src/jmvc/lang.xml
@@ -648,8 +689,16 @@ var loaded_extensions = JMVC.nsCheck('extensions', JMVC),&#10;
     </params>
     <returns>the brand new ns</returns>
     <status>incomplete</status>
-    <sample>JMVC.nsMake('y.d',{name:'Fred'}, JMVC);&#10;console.debug(JMVC.y.d.name);&#10;//&#10;
-JMVC.nsMake('y.d');&#10;console.debug(y.d);</sample>
+    <sample>JMVC.nsMake('y.d',{name:'Fred'}, JMVC);&#10;
+        console.log(JMVC.y.d.name);&#10;//&#10;
+JMVC.nsMake('y.d');&#10;
+console.log(y.d);</sample>
+    <code>
+        JMVC.nsMake('y.d',{name:'Fred'}, JMVC);
+        console.log(JMVC.y.d.name);
+        JMVC.nsMake('y.d');
+        console.log(y.d);
+    </code>
 </function>
 <!--
 [MALTA] src/jmvc/parseLang.xml
@@ -664,18 +713,34 @@ JMVC.nsMake('y.d');&#10;console.debug(y.d);</sample>
     <status>incomplete</status>
     <sample>var txt = "[L[ciao]] Federico, [L[come stai]]?";&#10;
 &#10;
-//default lang is en, and app/i18n/en.js contains tha translations&#10;
-console.debug(JMVC.parseLang(txt));&#10;
+// default lang is en, and app/i18n/en.js&#10;
+// contains all translations&#10;
+console.log(JMVC.parseLang(txt));&#10;
 &#10;
-//but You set any language es: app/i18n/en.js&#10;
-JMVC.cookie.set("lang", "en");&#10;
-console.debug(JMVC.parseLang(txt));&#10;
+// but You cen pick any language you provided&#10;
+// es: app/i18n/en.js&#10;
 JMVC.cookie.set("lang", "it");&#10;
-console.debug(JMVC.parseLang(txt));&#10;
+console.log(JMVC.parseLang(txt));&#10;
 JMVC.cookie.set("lang", "de");&#10;
-console.debug(JMVC.parseLang(txt));&#10;
+console.log(JMVC.parseLang(txt));&#10;
 JMVC.cookie.set("lang", "jp");&#10;
-console.debug(JMVC.parseLang(txt));&#10;</sample>
+console.log(JMVC.parseLang(txt));&#10;
+&#10;
+// back to eng&#10;
+JMVC.cookie.set("lang", "en");&#10;
+console.log(JMVC.parseLang(txt));&#10;</sample>
+    <code>
+        var txt = '[L[ciao]] Federico, [L[come stai]]?';
+        console.log(JMVC.parseLang(txt));
+        JMVC.cookie.set('lang', 'it');
+        console.log(JMVC.parseLang(txt));
+        JMVC.cookie.set('lang', 'de');
+        console.log(JMVC.parseLang(txt));
+        JMVC.cookie.set('lang', 'jp');
+        console.log(JMVC.parseLang(txt));
+        JMVC.cookie.set('lang', 'en');
+        console.log(JMVC.parseLang(txt));
+    </code>
 </function>
 <!--
 [MALTA] src/jmvc/preload.xml
@@ -733,8 +798,8 @@ JMVC.prototipize(Complex, {&#10;
 });&#10;
 var c1 = new Complex(3, 4),&#10;
     c2 = new Complex(7, 2);&#10;
-console.debug(c1.mod());&#10;
-console.debug(c1.add(c2) + '');&#10;</sample>
+console.log(c1.mod());&#10;
+console.log(c1.add(c2) + '');&#10;</sample>
 </function>
 <!--
 [MALTA] src/jmvc/purge.xml
@@ -769,7 +834,9 @@ console.log(t);</sample>
     </params>
     <returns>void (undefined)</returns>
     <status>incomplete</status>
-    <sample>JMVC.require('animator','tricks');&#10;JMVC.tricks.makeEditable();&#10;alert('Now try to edit the document');</sample>
+    <sample>JMVC.require('animator','tricks');&#10;
+JMVC.tricks.makeEditable();&#10;
+console.debug('Now try to edit the document');</sample>
 </function>
 <!--
 [MALTA] src/jmvc/set.xml
@@ -784,23 +851,36 @@ console.log(t);</sample>
     </params>
     <returns>void (undefined)</returns>
     <sample>JMVC.set('a', 10);&#10;
-JMVC.debug(JMVC.get('a'));&#10;
+console.log(JMVC.get('a'));&#10;
 JMVC.del('a');&#10;
-JMVC.debug(JMVC.get('a'));&#10;
+console.log(JMVC.get('a'));&#10;
 &#10;
 JMVC.set('a', 11, localStorage);&#10;
-JMVC.debug(JMVC.get('a', localStorage));&#10;
+console.log(JMVC.get('a', localStorage));&#10;
 JMVC.del('a', localStorage);&#10;
-JMVC.debug(JMVC.get('a', localStorage));&#10;
+console.log(JMVC.get('a', localStorage));&#10;
 &#10;
 JMVC.set('a', 12, sessionStorage);&#10;
-JMVC.debug(JMVC.get('a', sessionStorage));&#10;
+console.log(JMVC.get('a', sessionStorage));&#10;
 JMVC.del('a', sessionStorage);&#10;
-JMVC.debug(JMVC.get('a', sessionStorage));&#10;
+console.log(JMVC.get('a', sessionStorage));&#10;
 </sample>
     <status>testing</status>
     <testlink>test_api_jmvc_delgetset</testlink>
-    <code>JMVC.set('a', 10);JMVC.debug(JMVC.get('a'));JMVC.del('a');JMVC.debug(JMVC.get('a'));JMVC.set('a', 11, localStorage);JMVC.debug(JMVC.get('a', localStorage));JMVC.del('a', localStorage);JMVC.debug(JMVC.get('a', localStorage));JMVC.set('a', 12, sessionStorage);JMVC.debug(JMVC.get('a', sessionStorage));JMVC.del('a', sessionStorage);JMVC.debug(JMVC.get('a', sessionStorage));</code>
+    <code>
+        JMVC.set('a', 10);
+        console.log(JMVC.get('a'));
+        JMVC.del('a');
+        console.log(JMVC.get('a'));
+        JMVC.set('a', 11, localStorage);
+        console.log(JMVC.get('a', localStorage));
+        JMVC.del('a', localStorage);
+        console.log(JMVC.get('a', localStorage));
+        JMVC.set('a', 12, sessionStorage);
+        console.log(JMVC.get('a', sessionStorage));
+        JMVC.del('a', sessionStorage);
+        console.log(JMVC.get('a', sessionStorage));
+    </code>
 </function>
     <param>
         <name>W</name>
@@ -857,15 +937,15 @@ JMVC.debug(JMVC.get('a', sessionStorage));&#10;
     </returns>
     <sample>var c = JMVC.Channel('trial');&#10;
 c.sub('notice', function (a, b, c) {&#10;
-    alert('first notice');&#10;
-    console.debug(a, b, c);&#10;
+    console.log('first notice');&#10;
+    console.log(a, b, c);&#10;
 });&#10;
 c.pub('notice', ['hello','world']);</sample>
     <status>incomplete</status>
     <code>var c = JMVC.Channel('trial');
 c.sub('notice', function (a, b, c) {
-    alert('first notice');
-    console.debug(a, b, c);
+    console.log('first notice');
+    console.log(a, b, c);
 });
 c.pub('notice', ['hello','world'])</code>
 </function>
@@ -880,7 +960,8 @@ c.pub('notice', ['hello','world'])</code>
     </params>
     <returns>the breand new object</returns>
     <sample>&#10;
-var list = {&#10;
+var list = {};
+list = {&#10;
         els : [],&#10;
         addedItem : JMVC.Event.create(list),&#10;
         deletedItem : JMVC.Event.create(list),&#10;
@@ -893,13 +974,34 @@ var list = {&#10;
             this.deletedItem.notify({index : i});&#10;
         }&#10;
     };&#10;
-list.addedItem.attach(function () {console.debug(arguments)});&#10;
-list.deletedItem.attach(function () {console.debug(arguments)});&#10;
+list.addedItem.attach(function () {console.log(arguments)});&#10;
+list.deletedItem.attach(function () {console.log(arguments)});&#10;
 list.add('a');&#10;
 list.add('b');&#10;
 list.add('c');&#10;
 list.del(1);&#10;
-list.els;</sample>
+console.log(list.els);</sample>
+    <code>
+var list = {};
+list = {
+    els : [],
+    addedItem : JMVC.Event.create(list),
+    deletedItem : JMVC.Event.create(list),
+    add : function (s) {
+        if(this.els.push(s)) this.addedItem.notify({item : s});
+    },
+    del : function (i) {
+        if (this.els.splice(i, 1)) this.deletedItem.notify({index : i});
+    }
+};
+list.addedItem.attach(function () {console.log(arguments)});
+list.deletedItem.attach(function () {console.log(arguments)});
+list.add('a');
+list.add('b');
+list.add('c');
+list.del(1);
+console.log(list.els);
+    </code>
     <status>incomplete</status>
 </function>
 <!--
@@ -925,78 +1027,174 @@ list.els;</sample>
         <param name="*name">the name of the new variable to be removed</param>
     </params>
     <returns>the variable reference or value</returns>
+    <testlink>test_api_constructors_promise</testlink>
     <status>incomplete</status>
     <sample>(function () {&#10;
     var p = JMVC.Promise.create();&#10;
-    console.log('uan');&#10;
-    window.setTimeout(function () {p.done(1234); }, 1000);&#10;
+    window.setTimeout(function() {&#10;
+        console.log('1 done');&#10;
+        p.done(0, 1, 2, 3, 4);&#10;
+    }, 500);&#10;
     return p;&#10;
-})().then(function (p) {&#10;
-    console.log('two ', p.result);&#10;
-    window.setTimeout(function () {p.done(~~p.result * 2); }, 1000);&#10;
-}).then(function (p) {&#10;
-    console.log('three ', p.result);&#10;
-    p.done();&#10;
-}).then(tryJoin);&#10;
-&#10;
-function tryJoin() {&#10;
-    console.debug('--- now a trial for Promise.join ---');&#10;
-    JMVC.Promise.join(&#10;
-        function () {&#10;
-            var p = JMVC.Promise.create();&#10;
-            window.setTimeout(function () {&#10;
-                p.done(1);&#10;
-            }, 1000);&#10;
-            return p;&#10;
+})().then(function(p, r) {&#10;
+    console.log(r);&#10;
+    var self = this;&#10;
+    window.setTimeout(function() {&#10;
+        console.log('2 done');&#10;
+        self.done(5, 6, 7, 8, 9);&#10;
+    }, 500);&#10;
+}).then(function(p, r) {&#10;
+    console.log(r);&#10;
+    var self = this;&#10;
+    window.setTimeout(function() {&#10;
+        self.done(3);&#10;
+    }, 500);&#10;
+}).then(startJoin).then(startChain);&#10;
+function startJoin(pr) {&#10;
+    var t1 = 10,&#10;
+        t2 = 1000;&#10;
+    console.log('------ join started ------');&#10;
+    console.log('> will require max(' + t1 + ', ' + t2 + ') ms');&#10;
+    return JMVC.Promise.join([&#10;
+        function(p, a) {&#10;
+            console.log('first receive params: ', a);&#10;
+            window.setTimeout(function() {&#10;
+                p.done('a', 'b', 'c');&#10;
+            }, t1);&#10;
         },&#10;
-        function () {&#10;
-            var p = JMVC.Promise.create();&#10;
-            window.setTimeout(function () {&#10;
-                p.done(2);&#10;
-            }, 2000);&#10;
-            return p;&#10;
+        function(p, a) {&#10;
+            console.log('second receive params: ', a);&#10;
+            window.setTimeout(function() {&#10;
+                p.done('d', 'e', 'f');&#10;
+            }, t2);&#10;
         }&#10;
-    ).then(function (r) {&#10;
-        console.debug(r);&#10;
-    });&#10;
+    ], [2, 3, 4]).then(function(p, r) {&#10;
+        console.log('Join result : ', r);&#10;
+        p.done();&#10;
+        pr.done();&#10;
+    })&#10;
+}&#10;
+function startChain(pr) {&#10;
+    console.log('------ chain started ------');&#10;
+    JMVC.Promise.chain([&#10;
+        function(p, r) {&#10;
+            console.log('res one ', r);&#10;
+            window.setTimeout(function() {&#10;
+                p.done(r[0]);&#10;
+            }, 500);&#10;
+        },&#10;
+        function(p, r) {&#10;
+            console.log('res two ', r);&#10;
+            window.setTimeout(function() {&#10;
+                p.done(r[0] + r[0]);&#10;
+            }, 500);&#10;
+        },&#10;
+        function(p, r) {&#10;
+            console.log('res three ', r);&#10;
+            window.setTimeout(function() {&#10;
+                p.done(r[0] + r[0] + r[0]);&#10;
+            }, 500);&#10;
+        },&#10;
+        function(p, r) {&#10;
+            console.log('last ', r);&#10;
+            this.done(r[0]);&#10;
+        }&#10;
+    ], [1, 2, 3]).then(&#10;
+        function(p, r) {&#10;
+            console.log('the end ', r[0]);&#10;
+            this.done(r[0]);&#10;
+            pr.done(r[0]);&#10;
+            console.log(this);&#10;
+            console.log(pr);&#10;
+        }&#10;
+    );&#10;
 }</sample>
-<status>complete</status>
-    <code>
-(function () {
+    <code>(function() {
     var p = JMVC.Promise.create();
-    console.log('uan');
-    window.setTimeout(function () {p.done(1234); }, 1000);
+    window.setTimeout(function() {
+        console.log('1 done');
+        p.done(0, 1, 2, 3, 4);
+    }, 500);
     return p;
-})().then(function (p) {
-    console.log('two ', p.result);
-    window.setTimeout(function () {p.done(~~p.result * 2); }, 1000);
-}).then(function (p) {
-    console.log('three ', p.result);
-    p.done();
-}).then(tryJoin);
+})().then(function(p, r) {
+    console.log(r);
+    
+    var self = this;
+    window.setTimeout(function() {
+        console.log('2 done');
+        self.done(5, 6, 7, 8, 9);
+    }, 500);
+}).then(function(p, r) {
+    console.log(r);
+    
+    var self = this;
+    window.setTimeout(function() {
 
-function tryJoin() {
-    console.debug('--- now a trial for Promise.join ---');
-    JMVC.Promise.join(
-        function () {
-            var p = JMVC.Promise.create();
-            window.setTimeout(function () {
-                p.done(1);
-            }, 1000);
-            return p;
+        self.done(3);
+    }, 500);
+}).then(startJoin).then(startChain);
+function startJoin(pr) {
+    var t1 = 10,
+        t2 = 1000;
+    console.log('------ join started ------');
+    console.log('> will require max(' + t1 + ', ' + t2 + ') ms');
+
+    return JMVC.Promise.join([
+        function(p, a) {
+            console.log('first receive params: ', a);
+            window.setTimeout(function() {
+                
+                p.done('a', 'b', 'c');
+            }, t1);
         },
-        function () {
-            var p = JMVC.Promise.create();
-            window.setTimeout(function () {
-                p.done(2);
-            }, 2000);
-            return p;
+        function(p, a) {
+            console.log('second receive params: ', a);
+            window.setTimeout(function() {
+                p.done('d', 'e', 'f');
+            }, t2);
         }
-    ).then(function (r) {
-        console.debug(r);
-    });
+    ], [2, 3, 4]).then(function(p, r) {
+        console.log('Join result : ', r);
+        p.done();
+        pr.done();
+    })
 }
-    </code>
+function startChain(pr) {
+    console.log('------ chain started ------');
+    JMVC.Promise.chain([
+        function(p, r) {
+
+            console.log('res one ', r);
+            window.setTimeout(function() {
+                p.done(r[0]);
+            }, 500);
+        },
+        function(p, r) {
+            console.log('res two ', r);
+            window.setTimeout(function() {
+                p.done(r[0] + r[0]);
+            }, 500);
+        },
+        function(p, r) {
+            console.log('res three ', r);
+            window.setTimeout(function() {
+                p.done(r[0] + r[0] + r[0]);
+            }, 500);
+        },
+        function(p, r) {
+            console.log('last ', r);
+            this.done(r[0]);
+        }
+    ], [1, 2, 3]).then(
+        function(p, r) {
+            console.log('the end ', r[0]);
+            this.done(r[0]);
+            pr.done(r[0]);
+            console.log(this);
+            console.log(pr);
+        }
+    );
+}</code>
 </function>
 </constructors>    
 <!--
@@ -1017,14 +1215,14 @@ function tryJoin() {
     <sample>function t(){&#10;
 var p = JMVC.Promise.create();&#10;
 window.setTimeout(function () {&#10;
-    console.debug('uan');&#10;
+    console.log('uan');&#10;
     p.done();&#10;
 }, 2000);&#10;
 return p;&#10;
 };&#10;
 t()&#10;
-.then(function(){console.debug('two');})&#10;
-.then(function(){console.debug('tree');});</sample>
+.then(function(){console.log('two');})&#10;
+.then(function(){console.log('tree');});</sample>
 </function>
 <!--
 [MALTA] src/errors/BadImplement.xml
@@ -1040,14 +1238,14 @@ t()&#10;
     <sample>function t(){&#10;
 var p = JMVC.Promise();&#10;
 window.setTimeout(function () {&#10;
-    console.debug('uan');&#10;
+    console.log('uan');&#10;
     p.done();&#10;
 }, 2000);&#10;
 return p;&#10;
 };&#10;
 t()&#10;
-.then(function(){console.debug('two');})&#10;
-.then(function(){console.debug('tree');});</sample>
+.then(function(){console.log('two');})&#10;
+.then(function(){console.log('tree');});</sample>
 </function>
 <!--
 [MALTA] src/errors/BadName.xml
@@ -1063,14 +1261,14 @@ t()&#10;
     <sample>function t(){&#10;
 var p = JMVC.Promise();&#10;
 window.setTimeout(function () {&#10;
-    console.debug('uan');&#10;
+    console.log('uan');&#10;
     p.done();&#10;
 }, 2000);&#10;
 return p;&#10;
 };&#10;
 t()&#10;
-.then(function(){console.debug('two');})&#10;
-.then(function(){console.debug('tree');});</sample>
+.then(function(){console.log('two');})&#10;
+.then(function(){console.log('tree');});</sample>
 </function>
 <!--
 [MALTA] src/errors/BadParams.xml
@@ -1086,14 +1284,14 @@ t()&#10;
     <sample>function t(){&#10;
 var p = JMVC.Promise();&#10;
 window.setTimeout(function () {&#10;
-    console.debug('uan');&#10;
+    console.log('uan');&#10;
     p.done();&#10;
 }, 2000);&#10;
 return p;&#10;
 };&#10;
 t()&#10;
-.then(function(){console.debug('two');})&#10;
-.then(function(){console.debug('tree');});</sample>
+.then(function(){console.log('two');})&#10;
+.then(function(){console.log('tree');});</sample>
 </function> 
 <!--
 [MALTA] src/errors/ControllerNotFound.xml
@@ -1109,14 +1307,14 @@ t()&#10;
     <sample>function t(){&#10;
 var p = JMVC.Promise();&#10;
 window.setTimeout(function () {&#10;
-    console.debug('uan');&#10;
+    console.log('uan');&#10;
     p.done();&#10;
 }, 2000);&#10;
 return p;&#10;
 };&#10;
 t()&#10;
-.then(function(){console.debug('two');})&#10;
-.then(function(){console.debug('tree');});</sample>
+.then(function(){console.log('two');})&#10;
+.then(function(){console.log('tree');});</sample>
 </function>
 <!--
 [MALTA] src/errors/Network.xml
@@ -1132,14 +1330,14 @@ t()&#10;
         <sample>function t(){&#10;
 var p = JMVC.Promise();&#10;
 window.setTimeout(function () {&#10;
-    console.debug('uan');&#10;
+    console.log('uan');&#10;
     p.done();&#10;
 }, 2000);&#10;
 return p;&#10;
 };&#10;
 t()&#10;
-.then(function(){console.debug('two');})&#10;
-.then(function(){console.debug('tree');});</sample>
+.then(function(){console.log('two');})&#10;
+.then(function(){console.log('tree');});</sample>
     </function>
 </errors>
 <!--
@@ -1401,199 +1599,262 @@ t()&#10;
 [MALTA] src/css/clearer.xml
 -->
 <function>
-    <signature name="clearer">JMVC.css.clearer(Element where, String tag, Literal attrs, String inner)</signature>
-    <description>this is a shortcut that merges create+append</description>
+    <signature name="clearer">JMVC.css.clearer()</signature>
+    <description>Returns a clearer tag</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="">no parameters</param>
     </params>
-    <returns>void (undefined)</returns>
-    <status>incomplete</status>
+    <returns>the DOMNode</returns>
+    <sample>console.log(JMVC.css.clearer());</sample>
+    <code>console.log(JMVC.css.clearer());</code>
+    <status>complete</status>
 </function>
 
 <!--
 [MALTA] src/css/addRule.xml
 -->
 <function>
-    <signature name="addRule">JMVC.css.addRule(Element where, String tag, Literal attrs, String inner)</signature>
-    <description>this is a shortcut that merges create+append</description>
+    <signature name="addRule">JMVC.css.addRule(DOMNode sheet, String selector, String rules, Integer index)</signature>
+    <description>Adds a rule to an existing stylesheet</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="*sheet">stylesheet node</param>
+        <param name="*selector">the selector</param>
+        <param name="*rules">selector rules</param>
+        <param name="index" default="appended as last">the position for the new rule</param>
     </params>
     <returns>void (undefined)</returns>
-    <status>incomplete</status>
+    <sample>JMVC.css.addRule(&#10;
+    JMVC.dom.find('style')[0],&#10;
+    'body',&#10;
+    'background-color:#0DD'&#10;
+);</sample>
+    <code>JMVC.css.addRule(
+JMVC.dom.find('style')[0],
+'body',
+'background-color:#0DD'
+);</code>
+    <status>complete</status>
 </function>
 <!--
 [MALTA] src/css/autoHeadings.xml
 -->
 <function>
-    <signature name="autoHeadings">JMVC.css.autoHeadings(Element where, String tag, Literal attrs, String inner)</signature>
-    <description>this is a shortcut that merges create+append</description>
+    <signature name="autoHeadings">JMVC.css.autoHeadings()</signature>
+    <description>Normalize heading tags font-size, line-height and padding </description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="">no parameters</param>
     </params>
     <returns>void (undefined)</returns>
-    <status>incomplete</status>
+    <sample>JMVC.css.autoHeadings();</sample>
+    <code>JMVC.css.autoHeadings();</code>
+    <status>complete</status>
 </function>
 <!--
 [MALTA] src/css/beResponsive.xml
 -->
 <function>
-    <signature name="beResponsive">JMVC.css.autoHeadings(Element where, String tag, Literal attrs, String inner)</signature>
-    <description>this is a shortcut that merges create+append</description>
+    <signature name="beResponsive">JMVC.css.beResponsive(Boolean yn)</signature>
+    <description>Adds to body tag a class 'resp' mentioned in a set of responsive media queries</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="yn" default="true">to switch it on/off</param>
     </params>
     <returns>void (undefined)</returns>
-    <status>incomplete</status>
+    <sample>JMVC.css.beResponsive();&#10;
+&#10;
+window.setTimeout(function () {     // and after 10 s get back&#10;
+    JMVC.css.beResponsive(0);       // try to strech it before,&#10;
+},10000);                           // meanwhile and after&#10;</sample>
+    <code>JMVC.css.beResponsive();
+window.setTimeout(function () {
+    JMVC.css.beResponsive(0);
+},10000);</code>
+    <status>complete</status>
 </function>
 <!--
 [MALTA] src/css/getComputedStyle.xml
 -->
 <function>
-    <signature name="getComputedStyle">JMVC.css.getComputedStyle(Element where, String tag, Literal attrs, String inner)</signature>
+    <signature name="getComputedStyle">JMVC.css.getComputedStyle(Element el, String property)</signature>
     <description>this is a shortcut that merges create+append</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="*el">dom element target</param>
+        <param name="*property">the style to be retrieved</param>
     </params>
     <returns>void (undefined)</returns>
+    <sample>var h = JMVC.css.getComputedStyle(document.body, 'height');&#10;
+console.log(h);</sample>
+    <code>var h = JMVC.css.getComputedStyle(document.body, 'height');
+console.log(h);</code>
     <status>incomplete</status>
 </function>
 <!--
 [MALTA] src/css/getPosition.xml
 -->
 <function>
-    <signature name="getPosition">JMVC.css.getPosition(Element where, String tag, Literal attrs, String inner)</signature>
-    <description>this is a shortcut that merges create+append</description>
+    <signature name="getPosition">JMVC.css.getPosition(DOMNode node, Boolean scrollRelative)</signature>
+    <description>attempts to get the absolute position of a node</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="*node">target dom element</param>
+        <param name="scrollRelative">pass a truly element to get measures relative to to the viewport</param>
     </params>
-    <returns>void (undefined)</returns>
+    <returns>Array [left, top]</returns>
+    <sample>var trg = JMVC.dom.find('.intro')[0];&#10;
+JMVC.css.style(trg, 'backgroundColor', 'coral');&#10;
+console.log('absolute: ', JMVC.css.getPosition(trg));&#10;
+console.log('viewport rel: ', JMVC.css.getPosition(trg, true));</sample>
+    <code>
+        var trg = JMVC.dom.find('.intro')[0];
+        JMVC.css.style(trg, 'backgroundColor', 'coral');
+        console.log('absolute: ', JMVC.css.getPosition(trg));
+        console.log('viewport rel: ', JMVC.css.getPosition(trg, true));
+    </code>
     <status>incomplete</status>
 </function>
-
 <!--
 [MALTA] src/css/height.xml
 -->
 <function>
-    <signature name="height">JMVC.css.height(Element where, String tag, Literal attrs, String inner)</signature>
-    <description>this is a shortcut that merges create+append</description>
+    <signature name="height">JMVC.css.height(DOMNode target)</signature>
+    <description>attempt to get the height of the node passed</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="*target">dom element target</param>
     </params>
     <returns>void (undefined)</returns>
+    <sample>var h = JMVC.css.height(document.body);&#10;
+console.log(h);</sample>
+    <code>var h = JMVC.css.height(document.body);
+console.log(h);</code>
     <status>incomplete</status>
 </function>
 <!--
 [MALTA] src/css/hide.xml
 -->
 <function>
-    <signature name="hide">JMVC.css.hide(Element where, String tag, Literal attrs, String inner)</signature>
-    <description>this is a shortcut that merges create+append</description>
+    <signature name="hide">JMVC.css.hide(DOMNode trg)</signature>
+    <description>Hides a node, using the display:none css rule</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="*trg">dom element target</param>
     </params>
     <returns>void (undefined)</returns>
+    <sample>var trg = JMVC.dom.find('.intro')[0];&#10;
+JMVC.css.hide(trg);&#10;
+window.setTimeout(function () { // show it back&#10;
+    JMVC.css.show(trg);         // after 1 s&#10;
+},1000);</sample>
+    <code>
+        var trg = JMVC.dom.find('.intro')[0];
+        JMVC.css.hide(trg);
+        window.setTimeout(function () {
+            JMVC.css.show(trg);
+        },1000);
+    </code>
     <status>incomplete</status>
 </function>
-
-
 <!--
 [MALTA] src/css/pest.xml
 -->
 <function>
-    <signature name="pest">JMVC.css.pest(Element where, String tag, Literal attrs, String inner)</signature>
-    <description>this is a shortcut that merges create+append</description>
+    <signature name="pest">JMVC.css.pest()</signature>
+    <description>Toggles a in-browser experimental style inspector</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="">no params</param>
     </params>
     <returns>void (undefined)</returns>
+    <sample>JMVC.css.pest();</sample>
+    <code>JMVC.css.pest();</code>
     <status>incomplete</status>
 </function>
 <!--
 [MALTA] src/css/reset.xml
 -->
 <function>
-    <signature name="reset">JMVC.css.reset(Element where, String tag, Literal attrs, String inner)</signature>
-    <description>this is a shortcut that merges create+append</description>
+    <signature name="reset">JMVC.css.reset()</signature>
+    <description>Adds the reset css (http://meyerweb.com/eric/tools/css/reset/) thx to Eric A. and Kathryn S. Meyer</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="">no params</param>
     </params>
     <returns>void (undefined)</returns>
+    <sample>JMVC.css.reset();   // here has no effect&#10;
+                    // since jmvc uses it always
+    </sample>
+    <code>JMVC.css.reset();</code>
     <status>incomplete</status>
 </function>
 <!--
 [MALTA] src/css/show.xml
 -->
 <function>
-    <signature name="show">JMVC.css.show(Element where, String tag, Literal attrs, String inner)</signature>
-    <description>this is a shortcut that merges create+append</description>
+    <signature name="show">JMVC.css.show(DOMNode trg)</signature>
+    <description>Shows a node, using the display:initial css rule</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="*trg">dom element target</param>
     </params>
     <returns>void (undefined)</returns>
+    <sample>var trg = JMVC.dom.find('.intro')[0];&#10;
+JMVC.css.hide(trg);&#10;
+window.setTimeout(function () { // show it back&#10;
+    JMVC.css.show(trg);         // after 1 s&#10;
+},1000);</sample>
+    <code>
+        var trg = JMVC.dom.find('.intro')[0];
+        JMVC.css.hide(trg);
+        window.setTimeout(function () {
+            JMVC.css.show(trg);
+        },1000);
+    </code>
     <status>incomplete</status>
 </function>
 <!--
 [MALTA] src/css/style.xml
 -->
 <function>
-    <signature name="style">JMVC.css.style(Element where, String tag, Literal attrs, String inner)</signature>
-    <description>this is a shortcut that merges create+append</description>
+    <signature name="style">JMVC.css.style(DOMNode trg, Mixed prop, String val)</signature>
+    <description>Add inline styles to nodes</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="*trg">dom element target</param>
+        <param name="*prop">either a String for a single value or a literal for a bunch of rules, in this case val is ignored</param>
+        <param name="val">the value, given prop is a string for a property</param>
     </params>
     <returns>void (undefined)</returns>
+    <sample>JMVC.css.style(document.body, 'color', 'red');&#10;
+window.setTimeout(function () {&#10;
+    JMVC.css.style(document.body, {&#10;
+        color:'black',&#10;
+        backgroundColor : 'black'&#10;
+    });&#10;
+}, 1000);&#10;
+window.setTimeout(function () {&#10;
+    JMVC.css.style(&#10;
+        document.body, 'backgroundColor', 'white'&#10;
+    );&#10;
+}, 2000);</sample>
+    <code>
+        JMVC.css.style(document.body, 'color', 'red');
+        window.setTimeout(function () {
+            JMVC.css.style(document.body, {color:'black', backgroundColor : 'black'});
+        }, 1000);
+        window.setTimeout(function () {
+            JMVC.css.style(document.body, 'backgroundColor', 'white');
+        }, 2000);
+    </code>
     <status>incomplete</status>
 </function>
 <!--
 [MALTA] src/css/width.xml
 -->
 <function>
-    <signature name="width">JMVC.css.width(Element where, String tag, Literal attrs, String inner)</signature>
-    <description>this is a shortcut that merges create+append</description>
+    <signature name="width">JMVC.css.width(DOMNode target)</signature>
+    <description>attempt to get the width of the node passed</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="*target">dom element target</param>
     </params>
     <returns>void (undefined)</returns>
+    <sample>var hb = JMVC.css.width(document.body),&#10;
+    hd = JMVC.css.width(document.documentElement);&#10;
+console.log(hb, hd);</sample>
+    <code>var hb = JMVC.css.width(document.body),
+    hd = JMVC.css.width(document.documentElement);
+console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 </css>
@@ -2769,6 +3030,20 @@ console.log(t);
     </params>
     <returns>void (undefined)</returns>
     <status>incomplete</status>
+    <sample>var res = JMVC.object.digForKey({&#10;
+    a : [1,2,3,4],&#10;
+    b : "ciao",&#10;
+    c : function () {},&#10;
+    d : [{b : 1}, {b : 2}, {jo : {yu :{a:1234}}}]&#10;
+}, 'a');&#10;
+console.log(res);</sample>
+    <code>var res = JMVC.object.digForKey({
+  a : [1,2,3,4],
+  b : 'ciao',
+  c : function () {},
+  d : [{b : 1}, {b : 2}, {jo : {yu :{a:1234}}}]
+}, 'a');
+console.log(res);</code>
 </function>
 <!--
 [MALTA] src/object/digForValue.xml
@@ -2782,6 +3057,20 @@ console.log(t);
     </params>
     <returns>void (undefined)</returns>
     <status>incomplete</status>
+    <sample>var res = JMVC.object.digForValue({&#10;
+    a : [1,2,3,4],&#10;
+    b : "ciao",&#10;
+    c : function () {},&#10;
+    d : [{b : 1}, {b : 2}, {jo : {yu :{a:1234}}}]&#10;
+}, 1);&#10;
+console.log(res);</sample>
+    <code>var res = JMVC.object.digForValue({
+  a : [1,2,3,4],
+  b : 'ciao',
+  c : function () {},
+  d : [{b : 1}, {b : 2}, {jo : {yu :{a:1234}}}]
+}, 1);
+console.log(res);</code>
 </function>
 <!--
 [MALTA] src/object/extend.xml
@@ -2891,6 +3180,27 @@ console.log(t);
     </params>
     <returns>The cloned array (Array)</returns>
     <testlink>test_api_array_arrayclone</testlink>
+    <sample>var a1 = [1,2,3,4,5,function (){return 'Array';}],&#10;
+    a2 = JMVC.array.clone(a1);&#10;
+a2.shift();&#10;
+a2.push(function () {return 'another Array';});&#10;
+a2[4] = function () {return 'Array clone';};&#10;
+console.log(a1);&#10;
+console.log(a1[5]());&#10;
+console.log(a2);&#10;
+console.log(a2[4]());&#10;
+console.log(a2[5]());</sample>
+    <code>var a1 = [1,2,3,4,5,function (){return 'Array';}],
+    a2 = JMVC.array.clone(a1);
+a2.shift();
+a2.push(function () {return 'another Array';});
+a2[4] = function () {return 'Array clone';};
+console.log(a1);
+console.log(a1[5]());
+console.log(a2);
+console.log(a2[4]());
+console.log(a2[5]());
+</code>
     <status>incomplete</status>
 </function>
 <!--
@@ -2905,8 +3215,20 @@ console.log(t);
     <returns>array containing the HTMLCollection elements (array)</returns>
     <testlink>test_api_array_coll2array</testlink>
     <sample>&#10;
-var a = JMVC.array.coll2array(document.getElementsByTagName('div'));&#10;
-console.debug(JMVC.util.getType(a));</sample>
+var coll = document.getElementsByTagName('div'),&#10;
+    a = JMVC.array.coll2array(coll);&#10;
+console.log(coll.constructor);&#10;
+console.log(coll instanceof HTMLCollection);&#10;
+console.log(a.constructor);&#10;
+console.log(a instanceof Array);</sample>
+    <code>
+        var coll = document.getElementsByTagName('div'),
+            a = JMVC.array.coll2array(coll);
+        console.log(coll.constructor);
+        console.log(coll instanceof HTMLCollection)
+        console.log(a.constructor);
+        console.log(a instanceof Array);
+    </code>
     <status>testing</status>
 </function>
 <!--
@@ -2921,6 +3243,15 @@ console.debug(JMVC.util.getType(a));</sample>
     </params>
     <returns>The index of the element if found or -1 (integer)</returns>
     <testlink>test_api_array_find</testlink>
+    <sample>var a = [10, 7, 6, 1, 2, 9, 2, [1,2,3], function(){}, {a:{c:2}, b:3}];&#10;
+console.log(JMVC.array.find(a, 2));&#10;
+console.log(JMVC.array.find(a, [1,2,3]));
+    </sample>
+    <code>
+        var a = [10, 7, 6, 1, 2, 9, 2, [1,2,3], function(){}, {a:{c:2}, b:3}];
+        console.log(JMVC.array.find(a, 2));
+        console.log(JMVC.array.find(a, [1,2,3]));
+    </code>
     <status>testing</status>
 </function>
 <!--
@@ -2935,6 +3266,15 @@ console.debug(JMVC.util.getType(a));</sample>
     </params>
     <returns>The index of the element if found or -1 (integer)</returns>
     <testlink>test_api_array_findAll</testlink>
+    <sample>var a = [10, 7, 6, 1, 2, 9, 2, [1,2,3], function(){}, {a:{c:2}, b:3}];&#10;
+console.log(JMVC.array.findAll(a, 2));&#10;
+console.log(JMVC.array.findAll(a, [1,2,3]));
+    </sample>
+    <code>
+        var a = [10, 7, 6, 1, 2, 9, 2, [1,2,3], function(){}, {a:{c:2}, b:3}];
+        console.log(JMVC.array.findAll(a, 2));
+        console.log(JMVC.array.findAll(a, [1,2,3]));
+    </code>
     <status>testing</status>
 </function>
 <!--
@@ -2948,7 +3288,20 @@ console.debug(JMVC.util.getType(a));</sample>
         <param name="value">The value of the meta You want to add</param>
     </params>
     <returns>void (undefined)</returns>
-    <testlink>test_api_array_inarrayrich</testlink>
+    <testlink>test_api_array_inarraydeep</testlink>
+    <sample>var a = [10, 7, 6, 1, 2, 9, 2, [1,2,3], function(){}, {a:{c:2}, b:3}];&#10;
+console.log(JMVC.array.findRich(a, 2),&#10;
+console.log(JMVC.array.findRich(a, [1,2,3]));&#10;
+console.log(JMVC.array.findRich(a, function (){}));&#10;
+console.log(JMVC.array.findRich(a, {c:2}));
+    </sample>
+    <code>
+        var a = [10, 7, 6, 1, 2, 9, 2, [1,2,3], function(){}, {a:{c:2}, b:3}];
+        console.log(JMVC.array.findRich(a, 2));
+        console.log(JMVC.array.findRich(a, [1,2,3]));
+        console.log(JMVC.array.findRich(a, function(){}));
+        console.log(JMVC.array.findRich(a, {c:2}));
+    </code>
     <status>incomplete</status>
 </function>
 <!--
@@ -2961,19 +3314,37 @@ console.debug(JMVC.util.getType(a));</sample>
         <param name="arg">The 'arguments' of a function</param>
     </params>
     <returns>The array of arguments</returns>
+    <sample>!function () {&#10;
+    var args = JMVC.array.fromArguments(arguments);&#10;
+    console.log(arguments);&#10;
+    console.log(arguments instanceof Array); // false&#10;
+    console.log(args);&#10;
+    console.log(args instanceof Array); // true&#10;
+}(1, {theme : 'dark'}, [2,8,6]);</sample>
+    <code>
+        !function () {
+            var args = JMVC.array.fromArguments(arguments);
+            console.log(arguments);
+            console.log(arguments instanceof Array);
+            console.log(args);
+            console.log(args instanceof Array);
+        }(1, {theme : 'dark'}, [2,8,6]);
+    </code>
 </function>
 <!--
 [MALTA] src/array/range.xml
 -->
 <function>
-    <signature name="range">JMVC.array.range(String name, String value)</signature>
-    <description>Gets/sets document title</description>
+    <signature name="range">JMVC.array.range(Integer from, Integer to)</signature>
+    <description>Gets an array of all the numbers [from, to]</description>
     <params>
-        <param name="name">The name of the meta You want to add</param>
-        <param name="value">The value of the meta You want to add</param>
+        <param name="from">The name of the meta You want to add</param>
+        <param name="to">The value of the meta You want to add</param>
     </params>
     <returns>void (undefined)</returns>
     <testlink>test_api_array_inarrayrich</testlink>
+    <sample>console.log(JMVC.array.range(5,15));</sample>
+    <code>console.log(JMVC.array.range(5,15));</code>
     <status>incomplete</status>
 </function>
 <!--
@@ -2981,12 +3352,30 @@ console.debug(JMVC.util.getType(a));</sample>
 -->
 <function>
     <signature name="unique">JMVC.array.unique(Array a)</signature>
-    <description>Return the passed array free of duplicated</description>
+    <description>Return the passed array free of duplicated; the comparison is based on ===, so different
+        references to equal object will remain untouched. In fact Strings, Numbers and Booleans are passed 
+        by value while Arrays, Objects (thus functions) are passed by reference.</description>
     <params>
         <param name="a">The array to clean</param>
     </params>
-    <returns>void (undefined)</returns>
+    <returns>Array</returns>
     <testlink>test_api_array_unique</testlink>
+    <sample>var a = [&#10;
+    5,2,3,7,54,12,34,45,56,54,43,3,3,22,&#10;
+    function (){},2,2,2,2,1,1,1,1,1,1,1,&#10;
+    'name', 'surname',8,8,8,1,'address',&#10;
+    function (){}, 'name', 'surname',&#10;
+];&#10;
+console.log(JMVC.array.unique(a));</sample>
+    <code>
+        var a = [
+            5,2,3,7,54,12,34,45,56,54,43,3,3,22,
+            function (){},2,2,2,2,1,1,1,1,1,1,1,
+            'name', 'surname',8,8,8,1,'address',
+            function (){}, 'name', 'surname'
+        ];
+        console.log(JMVC.array.unique(a));
+    </code>
     <status>incomplete</status>
 </function>
 </array>

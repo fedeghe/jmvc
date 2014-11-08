@@ -8,16 +8,32 @@
     <status>incomplete</status>
     <sample>var txt = "[L[ciao]] Federico, [L[come stai]]?";&#10;
 &#10;
-//default lang is en, and app/i18n/en.js contains tha translations&#10;
-console.debug(JMVC.parseLang(txt));&#10;
+// default lang is en, and app/i18n/en.js&#10;
+// contains all translations&#10;
+console.log(JMVC.parseLang(txt));&#10;
 &#10;
-//but You set any language es: app/i18n/en.js&#10;
-JMVC.cookie.set("lang", "en");&#10;
-console.debug(JMVC.parseLang(txt));&#10;
+// but You cen pick any language you provided&#10;
+// es: app/i18n/en.js&#10;
 JMVC.cookie.set("lang", "it");&#10;
-console.debug(JMVC.parseLang(txt));&#10;
+console.log(JMVC.parseLang(txt));&#10;
 JMVC.cookie.set("lang", "de");&#10;
-console.debug(JMVC.parseLang(txt));&#10;
+console.log(JMVC.parseLang(txt));&#10;
 JMVC.cookie.set("lang", "jp");&#10;
-console.debug(JMVC.parseLang(txt));&#10;</sample>
+console.log(JMVC.parseLang(txt));&#10;
+&#10;
+// back to eng&#10;
+JMVC.cookie.set("lang", "en");&#10;
+console.log(JMVC.parseLang(txt));&#10;</sample>
+    <code>
+        var txt = '[L[ciao]] Federico, [L[come stai]]?';
+        console.log(JMVC.parseLang(txt));
+        JMVC.cookie.set('lang', 'it');
+        console.log(JMVC.parseLang(txt));
+        JMVC.cookie.set('lang', 'de');
+        console.log(JMVC.parseLang(txt));
+        JMVC.cookie.set('lang', 'jp');
+        console.log(JMVC.parseLang(txt));
+        JMVC.cookie.set('lang', 'en');
+        console.log(JMVC.parseLang(txt));
+    </code>
 </function>

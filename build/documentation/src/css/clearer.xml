@@ -1,12 +1,11 @@
 <function>
-    <signature name="clearer">JMVC.css.clearer(Element where, String tag, Literal attrs, String inner)</signature>
-    <description>this is a shortcut that merges create+append</description>
+    <signature name="clearer">JMVC.css.clearer()</signature>
+    <description>Returns a clearer tag</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="">no parameters</param>
     </params>
-    <returns>void (undefined)</returns>
-    <status>incomplete</status>
+    <returns>the DOMNode</returns>
+    <sample>console.log(JMVC.css.clearer());</sample>
+    <code>console.log(JMVC.css.clearer());</code>
+    <status>complete</status>
 </function>

@@ -8,6 +8,14 @@
     </params>
     <returns>the brand new ns</returns>
     <status>incomplete</status>
-    <sample>JMVC.nsMake('y.d',{name:'Fred'}, JMVC);&#10;console.debug(JMVC.y.d.name);&#10;//&#10;
-JMVC.nsMake('y.d');&#10;console.debug(y.d);</sample>
+    <sample>JMVC.nsMake('y.d',{name:'Fred'}, JMVC);&#10;
+        console.log(JMVC.y.d.name);&#10;//&#10;
+JMVC.nsMake('y.d');&#10;
+console.log(y.d);</sample>
+    <code>
+        JMVC.nsMake('y.d',{name:'Fred'}, JMVC);
+        console.log(JMVC.y.d.name);
+        JMVC.nsMake('y.d');
+        console.log(y.d);
+    </code>
 </function>

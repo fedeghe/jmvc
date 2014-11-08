@@ -36,6 +36,6 @@ JMVC.prototipize(Complex, {&#10;
 });&#10;
 var c1 = new Complex(3, 4),&#10;
     c2 = new Complex(7, 2);&#10;
-console.debug(c1.mod());&#10;
-console.debug(c1.add(c2) + '');&#10;</sample>
+console.log(c1.mod());&#10;
+console.log(c1.add(c2) + '');&#10;</sample>
 </function>

@@ -7,7 +7,7 @@
     <returns>void (undefined)</returns>
     <sample>var arr = [1,2,3,4,5],&#10;
     obj =  {name : "Federico", surname : "Ghedina", say : "WAT"},&#10;
-    foo = function (){alert('foo'); };&#10;&#10;
+    foo = function (){console.log('foo'); };&#10;&#10;
 // open the console before running&#10;
 //&#10;
 JMVC.debug(arr), JMVC.debug(obj), JMVC.debug(foo);
@@ -21,7 +21,7 @@ JMVC.debug(arr), JMVC.debug(obj), JMVC.debug(foo);
                 say : 'WAT'
             },
             foo = function (){
-                alert('foo');
+                console.log('foo');
             };
         JMVC.debug(arr),
         JMVC.debug(obj),

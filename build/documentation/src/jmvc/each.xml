@@ -17,7 +17,7 @@ var obj = {&#10;
     },&#10;
     arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],&#10;
     objAfter = JMVC.each(obj, function (el, i) {&#10;
-        console.debug(i, el);&#10;
+        console.log(i, el);&#10;
         return i + '-' + el;&#10;
     }),&#10;
     arrAfter = JMVC.each(arr, function f(el, i) {&#10;
@@ -26,8 +26,8 @@ var obj = {&#10;
         }&#10;
         return i;&#10;
     });&#10;
-console.debug(obj, objAfter);&#10;
-console.debug(arr, arrAfter);&#10;</sample>
+console.log(obj, objAfter);&#10;
+console.log(arr, arrAfter);&#10;</sample>
     <status>complete</status>
     <testlink>test_api_jmvc_each</testlink>
     <code>
@@ -39,7 +39,7 @@ console.debug(arr, arrAfter);&#10;</sample>
             arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             objAfter = JMVC.each(obj,
                 function (el, i) {
-                    console.debug(i, el);
+                    console.log(i, el);
                     return i + '-' + el;
                 }),
             arrAfter = JMVC.each(arr,
@@ -50,7 +50,7 @@ console.debug(arr, arrAfter);&#10;</sample>
                     return i;
                 }
             );
-        console.debug(obj, objAfter),
-        console.debug(arr, arrAfter);
+        console.log(obj, objAfter),
+        console.log(arr, arrAfter);
     </code>
 </function>

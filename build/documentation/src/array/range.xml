@@ -1,11 +1,13 @@
 <function>
-    <signature name="range">JMVC.array.range(String name, String value)</signature>
-    <description>Gets/sets document title</description>
+    <signature name="range">JMVC.array.range(Integer from, Integer to)</signature>
+    <description>Gets an array of all the numbers [from, to]</description>
     <params>
-        <param name="name">The name of the meta You want to add</param>
-        <param name="value">The value of the meta You want to add</param>
+        <param name="from">The name of the meta You want to add</param>
+        <param name="to">The value of the meta You want to add</param>
     </params>
     <returns>void (undefined)</returns>
     <testlink>test_api_array_inarrayrich</testlink>
+    <sample>console.log(JMVC.array.range(5,15));</sample>
+    <code>console.log(JMVC.array.range(5,15));</code>
     <status>incomplete</status>
 </function>

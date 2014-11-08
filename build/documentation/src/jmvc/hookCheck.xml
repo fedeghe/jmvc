@@ -12,31 +12,31 @@
 };&#10;
 JMVC.hook({'myhook': function () {&#10;
     var a = Array.prototype.slice.call(arguments, 1);&#10;
-    console.debug('inner 1: ', a);&#10;
+    console.log('inner 1: ', a);&#10;
     return a;&#10;
 }}, true);&#10;
 //&#10;
 // add another function to the hook queue&#10;
 JMVC.hook({'myhook': function () {&#10;
     var a = Array.prototype.slice.call(arguments, 1);&#10;
-    console.debug('inner 2: ', a);&#10;
+    console.log('inner 2: ', a);&#10;
     return a;&#10;
 }}, true);&#10;
-console.debug(foo());</sample>
+console.log(foo());</sample>
     <code>
         function foo() {
             return JMVC.hookCheck('myhook', [1,2,3]);
         };
         JMVC.hook({'myhook': function () {
             var a = Array.prototype.slice.call(arguments, 1);
-            console.debug('inner 1: ', a);
+            console.log('inner 1: ', a);
             return a;
         }}, true);
         JMVC.hook({'myhook': function () {
             var a = Array.prototype.slice.call(arguments, 1);
-            console.debug('inner 2: ', a);
+            console.log('inner 2: ', a);
             return a;
         }}, true);
-        console.debug(foo());
+        console.log(foo());
     </code>
 </function>

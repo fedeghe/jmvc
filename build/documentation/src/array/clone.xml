@@ -6,5 +6,26 @@
     </params>
     <returns>The cloned array (Array)</returns>
     <testlink>test_api_array_arrayclone</testlink>
+    <sample>var a1 = [1,2,3,4,5,function (){return 'Array';}],&#10;
+    a2 = JMVC.array.clone(a1);&#10;
+a2.shift();&#10;
+a2.push(function () {return 'another Array';});&#10;
+a2[4] = function () {return 'Array clone';};&#10;
+console.log(a1);&#10;
+console.log(a1[5]());&#10;
+console.log(a2);&#10;
+console.log(a2[4]());&#10;
+console.log(a2[5]());</sample>
+    <code>var a1 = [1,2,3,4,5,function (){return 'Array';}],
+    a2 = JMVC.array.clone(a1);
+a2.shift();
+a2.push(function () {return 'another Array';});
+a2[4] = function () {return 'Array clone';};
+console.log(a1);
+console.log(a1[5]());
+console.log(a2);
+console.log(a2[4]());
+console.log(a2[5]());
+</code>
     <status>incomplete</status>
 </function>

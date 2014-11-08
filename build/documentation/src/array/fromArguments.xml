@@ -5,4 +5,20 @@
         <param name="arg">The 'arguments' of a function</param>
     </params>
     <returns>The array of arguments</returns>
+    <sample>!function () {&#10;
+    var args = JMVC.array.fromArguments(arguments);&#10;
+    console.log(arguments);&#10;
+    console.log(arguments instanceof Array); // false&#10;
+    console.log(args);&#10;
+    console.log(args instanceof Array); // true&#10;
+}(1, {theme : 'dark'}, [2,8,6]);</sample>
+    <code>
+        !function () {
+            var args = JMVC.array.fromArguments(arguments);
+            console.log(arguments);
+            console.log(arguments instanceof Array);
+            console.log(args);
+            console.log(args instanceof Array);
+        }(1, {theme : 'dark'}, [2,8,6]);
+    </code>
 </function>

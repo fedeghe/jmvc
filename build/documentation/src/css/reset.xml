@@ -1,12 +1,13 @@
 <function>
-    <signature name="reset">JMVC.css.reset(Element where, String tag, Literal attrs, String inner)</signature>
-    <description>this is a shortcut that merges create+append</description>
+    <signature name="reset">JMVC.css.reset()</signature>
+    <description>Adds the reset css (http://meyerweb.com/eric/tools/css/reset/) thx to Eric A. and Kathryn S. Meyer</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="">no params</param>
     </params>
     <returns>void (undefined)</returns>
+    <sample>JMVC.css.reset();   // here has no effect&#10;
+                    // since jmvc uses it always
+    </sample>
+    <code>JMVC.css.reset();</code>
     <status>incomplete</status>
 </function>

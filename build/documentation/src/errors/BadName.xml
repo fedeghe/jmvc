@@ -9,12 +9,12 @@
     <sample>function t(){&#10;
 var p = JMVC.Promise();&#10;
 window.setTimeout(function () {&#10;
-    console.debug('uan');&#10;
+    console.log('uan');&#10;
     p.done();&#10;
 }, 2000);&#10;
 return p;&#10;
 };&#10;
 t()&#10;
-.then(function(){console.debug('two');})&#10;
-.then(function(){console.debug('tree');});</sample>
+.then(function(){console.log('two');})&#10;
+.then(function(){console.log('tree');});</sample>
 </function>

@@ -11,7 +11,7 @@
     <sample>// INNER HOOK&#10;
 JMVC.hook({&#10;
     'onAfterRender': function () {&#10;
-        alert('You`ll never see that message booking that function from the console!!!');&#10;
+        console.log('You`ll never see that message booking that function from the console!!!');&#10;
     }&#10;
 });&#10;
 &#10;
@@ -28,15 +28,15 @@ JMVC.hook({&#10;
                 sum += o;&#10;
             }&#10;
         );&#10;
-        console.debug(sum);&#10;
-        console.debug(arguments);&#10;
+        console.log(sum);&#10;
+        console.log(arguments);&#10;
     }&#10;
 }, true);&#10;
 foo();</sample>
     <code>
         JMVC.hook({
             onAfterRender: function () {
-                alert('You`ll never see that message booking that function from the console!!!');
+                console.log('You`ll never see that message booking that function from the console!!!');
             }
         });
         function foo() {
@@ -51,8 +51,8 @@ foo();</sample>
                         sum += o;
                     }
                 );
-                console.debug(sum);
-                console.debug(arguments);
+                console.log(sum);
+                console.log(arguments);
             }}, true);
         foo();</code>
 </function>

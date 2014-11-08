@@ -1,12 +1,22 @@
 <function>
-    <signature name="addRule">JMVC.css.addRule(Element where, String tag, Literal attrs, String inner)</signature>
-    <description>this is a shortcut that merges create+append</description>
+    <signature name="addRule">JMVC.css.addRule(DOMNode sheet, String selector, String rules, Integer index)</signature>
+    <description>Adds a rule to an existing stylesheet</description>
     <params>
-        <param name="*where">dom element target</param>
-        <param name="*tag">tag to be created</param>
-        <param name="attrs">object literal for attributes</param>
-        <param name="inner">html content</param>
+        <param name="*sheet">stylesheet node</param>
+        <param name="*selector">the selector</param>
+        <param name="*rules">selector rules</param>
+        <param name="index" default="appended as last">the position for the new rule</param>
     </params>
     <returns>void (undefined)</returns>
-    <status>incomplete</status>
+    <sample>JMVC.css.addRule(&#10;
+    JMVC.dom.find('style')[0],&#10;
+    'body',&#10;
+    'background-color:#0DD'&#10;
+);</sample>
+    <code>JMVC.css.addRule(
+JMVC.dom.find('style')[0],
+'body',
+'background-color:#0DD'
+);</code>
+    <status>complete</status>
 </function>

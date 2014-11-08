@@ -6,7 +6,9 @@
     </params>
     <returns>the string with substituted char</returns>
     <status>complete</status>
-    <sample>&#10;
-console.debug(JMVC.htmlChars("&amp;me"));&#10;
-    </sample>
+    <sample>console.log(&#10;
+    JMVC.htmlChars(document.documentElement.innerHTML)&#10;
+    .substring(0,500)&#10;
+);</sample>
+    <code>console.log(JMVC.htmlChars(document.documentElement.innerHTML).substring(0,500));</code>
 </function>
