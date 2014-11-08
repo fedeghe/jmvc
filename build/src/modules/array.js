@@ -106,6 +106,26 @@ JMVC.array = {
     },
 
     /**
+     * [digForKeys description]
+     * @param  {[type]} o [description]
+     * @param  {[type]} k [description]
+     * @return {[type]}   [description]
+     */
+    digForKey : function (o, k) {
+        return _.common.digFor('key', o, k);
+    },
+
+    /**
+     * [digForValues description]
+     * @param  {[type]} o [description]
+     * @param  {[type]} k [description]
+     * @return {[type]}   [description]
+     */
+    digForValue : function (o, k) {
+        return _.common.digFor('value', o, k);
+    },
+
+    /**
      * Empties an array
      * @param  {Array} arr the array to be emptied
      * @return {undefined}

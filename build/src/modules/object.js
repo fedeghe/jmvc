@@ -7,41 +7,6 @@
  * @type {Object}
  */
 _.object = {
-    digFor : function (what, obj, target) {
-        if(!what.match(/key|value/)) {
-            throw new JMVC.Errors.BadParams('Bad param for JMVC._.object.digFor');
-        }
-        var matches = {
-                key : function (k1, k2, v) {return JMVC.object.jCompare(k1, v);},
-                value : function (k1, k2, v) {return JMVC.object.jCompare(k2, v);}
-            }[what],
-            res = [];
-
-        function dig(o, k, path) {
-            var i, l, p;
-            if (typeof o === 'object') {
-                for (i in o) {
-                    p = [].concat.call(path, [i]);
-                    if(matches(i, o[i], k)) {
-                        res.push({value: o[i], path : p.join('/')});
-                    }
-                    dig (o[i], k, p);
-                }
-            } else if (o instanceof Array) {                
-                for (i = 0, l = o.length; i < l; i++) {
-                    p = [].concat.call(path, [i]);
-                    if(matches(i, o[i], k)) {
-                        res.push({value: o[i], path : p.join('/')});
-                    }
-                    dig(o[i], k, p);
-                }
-            } else {
-                return;
-            }
-        }
-        dig(obj, target, []);
-        return res;
-    },
     /**
      * [reduce description]
      * @param  {[type]}   o  [description]
@@ -57,8 +22,7 @@ _.object = {
             }
         }
         return ret;
-    },
-
+    }
 };
 /**
  * [object description]
@@ -213,7 +177,7 @@ JMVC.object = {
      * @return {[type]}   [description]
      */
     digForKey : function (o, k) {
-        return _.object.digFor('key', o, k);
+        return _.common.digFor('key', o, k);
     },
 
     /**
@@ -223,7 +187,7 @@ JMVC.object = {
      * @return {[type]}   [description]
      */
     digForValue : function (o, k) {
-        return _.object.digFor('value', o, k);
+        return _.common.digFor('value', o, k);
     },
 
     /**
