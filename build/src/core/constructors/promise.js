@@ -1,120 +1,83 @@
-
 Promise = (function() {
 
-    /**
-     * [_promise description]
-     * @return {[type]} [description]
-     */
-    var _promise = function() {
+    var _Promise = function() {
             this.cbacks = [];
-            this.len = 0;
             this.solved = false;
             this.result = null;
         },
-        proto = _promise.prototype;
+        proto = _Promise.prototype;
 
-    /**
-     * [then description]
-     * @param  {[type]} func [description]
-     * @return {[type]}      [description]
-     */
     proto.then = function(func, ctx) {
         var self = this,
-            call = function () {
-                func.call(ctx || self, self, self.result);
-            },
-            f = function () {
+            f = function() {
                 self.solved = false;
-                call();
-            };
-        if (this.solved) {
-            call();
-        } else {
-            this.cbacks[this.len++] = f;
-        }
-        return this;
-    };
-    /*
-    proto.then = function(func, ctx) {
-        var self = this,
-            f = function () {
-                self.solved = false;
-                func.call(ctx || self, self, self.result);
+                func.apply(ctx || self, [ctx || self, self.result]);
             };
         if (this.solved) {
             f();
         } else {
-            this.cbacks[this.len++] = f;
+            this.cbacks.push(f);
         }
         return this;
-    };*/
 
-    /**
-     * [done description]
-     * @param  {[type]}   r [description]
-     * @return {Function}   [description]
-     */
-    proto.done =
-    proto.resolve = function(r) {
+    };
+    proto.done = function() {
+        var r = [].slice.call(arguments, 0);
         this.result = r;
-        if (!this.len) {
+        this.solved = true;
+        if (!this.cbacks.length) {
             return this.result;
         }
-        this.solved = true;
         this.cbacks.shift()(r);
-        this.len--;
+        
     };
 
-    /**
-     * [chain description]
-     * @param  {[type]} funcs [description]
-     * @param  {[type]} args  [description]
-     * @return {[type]}       [description]
-     */
     function chain(funcs, args) {
-        var first = (function () {
-                var p = new _promise();
-                funcs[0].apply(p, args);
+
+        var p = new _Promise();
+        var first = (function() {
+
+                funcs[0].apply(p, [p].concat([args]));
                 return p;
             })(),
             tmp = [first];
 
-        for (var i = 1, l = funcs.length;  i < l; i++) {
-            tmp.push(tmp[i-1].then(funcs[i]));
-        }
-    }
-
-    /**
-     * [join description]
-     * @param  {[type]} pros [description]
-     * @return {[type]}      [description]
-     */
-    function join(pros) {
-        var pros = [].splice.call(arguments, 0),
-            p = new _promise(),
-            res = [],
-            i = 0,
-            len = pros.length,
-            lengthToGo = len;
-        for (null; i < len; i++) {
-            (function (j) {
-                pros[j]().then(function (r) {
-                    res[j] = r;
-                    if (--lengthToGo == 0) {
-                        p.done(res);
-                    }
-                });
-            })(i);
+        for (var i = 1, l = funcs.length; i < l; i++) {
+            tmp.push(tmp[i - 1].then(funcs[i]));
         }
         return p;
     }
 
-    
+    function join(pros, args) {
+        var endP = new _Promise(),
+            res = [],
+            stack = [],
+            i = 0,
+            l = pros.length,
+            limit = l,
+            solved = function(remainder) {
+                !remainder && endP.done.apply(endP, res);
+            };
+
+        for (null; i < l; i++) {
+            (function(k) {
+                stack[k] = new _Promise();
+                pros[k].apply(stack[k], [stack[k], args]);
+                stack[k].then(function(p, r) {
+                    res[k] = r;
+                    solved(--limit);
+                });
+            })(i);
+        }
+        return endP;
+    }
+
     return {
-        create : function () {
-            return new _promise();
+        create: function() {
+            return new _Promise();
         },
-        chain : chain,
-        join : join
+        chain: chain,
+        join: join
     };
+
 })();
