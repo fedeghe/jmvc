@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 8) build: 3430
+ * @version :  3.5 (rev. 8) build: 3476
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.2.0.0 & a love heap
- *         glued with 40 files on 8/11/2014 at 1:42:28
+ *         glued with 40 files on 11/11/2014 at 0:50:10
  *
  * All rights reserved.
  *
@@ -112,10 +112,10 @@
                 JMVC_REVIEW = '8',
             
                 // review (vars.json)
-                JMVC_DATE = '8/11/2014',
+                JMVC_DATE = '11/11/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '1:42:28',
+                JMVC_TIME = '0:50:10',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -762,14 +762,21 @@
                  * @param  {[type]} Parent [description]
                  * @return {[type]}        [description]
                  */
-                inherit: function(Child, Parent) {
-                    function T() {}
-                    T.prototype = Parent.prototype;
-                    Child.prototype = new T();
-                    Child.prototype.constructor = Child;
-                    Child.superClass = Parent.prototype;
-                    Child.baseConstructor = Parent;
-                    //Child.constructor = Child;
+                // child, parent ,grandpa, ultrapa .... 
+                inherit: function() {
+                    var a = [].slice.call(arguments, 0),
+                        cur = a.length - 1;
+                    while (cur > 0) {
+                        (function (Child, Parent){
+                            function T() {}
+                            T.prototype = Parent.prototype;
+                            Child.prototype = new T();
+                            Child.prototype.constructor = Child;
+                            Child.superClass = Parent.prototype;
+                            Child.baseConstructor = Parent;    
+                        })(a[cur-1], a[cur]); 
+                        cur--;  
+                    }
                 },
             
                 /**
@@ -1060,7 +1067,7 @@
                  * @param {String} none [description]
                  * @return {void} undefined
                  */
-                require: function() {
+                require: function (/*hello guys*/) {
                     var path, extNS, extNSlength, extname, s,
                         i = 0,
                         arg = arguments,
@@ -3090,7 +3097,7 @@
                 i = -1, l = params.length,
                 tmp;
             while (++i < l) {
-                tmp = JMVC.string.trim(params[i]).match(/(\w*)\s?(\/\*\*?(\w*)\*\*?\/)?/);
+                tmp = JMVC.string.trim(params[i]).match(/(\w*)\s?(\/\*\*?([^*]*)\*\*?\/)?/);
                 out[tmp[1]] = tmp.length == 4 ? tmp[3] : 'not specified';
             }
             return out;
@@ -3105,6 +3112,17 @@
         getType : function (o) {
             return ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
         },
+    
+        typeOf : function(o) {
+            if (o === null) {
+                return 'null';
+            }
+            if (isArray(o)) {
+                return 'array';
+            }
+            return typeof o;
+        },
+    
         /**
          * [ description]
          * @param  {[type]} hex [description]
@@ -3135,6 +3153,16 @@
     
             return t1 && !!(t2 && t2.length);
         },
+    
+    
+        isBoolean : function(o) {
+            return typeof o === 'boolean' || o instanceof Boolean;
+        },
+    
+        isDefined : function(o) {
+            return o !== null && o !== void 0;
+        },
+    
         /**
          * [isFunction description]
          * @param  {[type]}  f [description]
@@ -3143,16 +3171,30 @@
         isFunction : function (f) {
             return typeof f === 'function';
         },
+    
+    
+        isNumber : function(o) {
+            return typeof o === 'number' || o instanceof Number;
+        },
+    
         /**
          * [ description]
          * @param  {[type]} o [description]
          * @return {[type]}   [description]
          */
         isObject : function (o) {
-            var t1 = String(o) !== o,
-                t2 = {}.toString.call(o).match(/\[object\sObject\]/);
-            return t1 && !!(t2 && t2.length);
+            var t0 = String(o) !== o,
+                t1 = o === Object(o),
+                t2 = typeof o !== 'function',
+                t3 = {}.toString.call(o).match(/\[object\sObject\]/);
+            return t0 && t1 && t2 && !!(t3 && t3.length);
         },
+    
+    
+        isPrimitive : function(o) {
+            return /string|number|boolean/.test(typeof o);
+        },
+    
         /**
          * [ description]
          * @param  {[type]} e [description]
@@ -3161,6 +3203,12 @@
         isSet : function (e) {
             return typeof e !== 'undefined';
         },
+    
+    
+        isString : function(o) {
+            return typeof o === 'string' || o instanceof String;
+        },
+    
         /**
          * [ description]
          * @param  {[type]} el   [description]
@@ -3169,6 +3217,10 @@
          */
         isTypeOf : function (el, type) {
             return typeof el === type;
+        },
+    
+        isUndefined : function(o) {
+            return o === null || o === void 0;
         },
     
         /**
@@ -3226,6 +3278,8 @@
             };
         }
     };
+    
+    
     //-----------------------------------------------------------------------------
     /*
     [MALTA] src/modules/dom.js
@@ -5428,7 +5482,7 @@
                 }
                 return;
             }
-            JMVC.css.style(el, 'display', '');
+            JMVC.css.style(el, 'display', 'block');
         },
     
         /**
@@ -5438,7 +5492,7 @@
          * @param  {[type]} val  [description]
          * @return {[type]}      [description]
          */
-        style: function (el, prop, val) {
+        style: function (el /*DOMNode*/, prop/*String|Object*/, val /*String*/) {
     
             var prop_is_obj = (typeof prop === 'object' && typeof val === 'undefined'),
                 ret = false,
