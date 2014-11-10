@@ -308,7 +308,7 @@ JMVC.css = {
             }
             return;
         }
-        JMVC.css.style(el, 'display', '');
+        JMVC.css.style(el, 'display', 'block');
     },
 
     /**
@@ -318,7 +318,7 @@ JMVC.css = {
      * @param  {[type]} val  [description]
      * @return {[type]}      [description]
      */
-    style: function (el, prop, val) {
+    style: function (el /*DOMNode*/, prop/*String|Object*/, val /*String*/) {
 
         var prop_is_obj = (typeof prop === 'object' && typeof val === 'undefined'),
             ret = false,
