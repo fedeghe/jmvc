@@ -54,7 +54,7 @@ JMVC.util = {
             i = -1, l = params.length,
             tmp;
         while (++i < l) {
-            tmp = JMVC.string.trim(params[i]).match(/(\w*)\s?(\/\*\*?(\w*)\*\*?\/)?/);
+            tmp = JMVC.string.trim(params[i]).match(/(\w*)\s?(\/\*\*?([^*]*)\*\*?\/)?/);
             out[tmp[1]] = tmp.length == 4 ? tmp[3] : 'not specified';
         }
         return out;
@@ -69,6 +69,17 @@ JMVC.util = {
     getType : function (o) {
         return ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
     },
+
+    typeOf : function(o) {
+        if (o === null) {
+            return 'null';
+        }
+        if (isArray(o)) {
+            return 'array';
+        }
+        return typeof o;
+    },
+
     /**
      * [ description]
      * @param  {[type]} hex [description]
@@ -99,6 +110,16 @@ JMVC.util = {
 
         return t1 && !!(t2 && t2.length);
     },
+
+
+    isBoolean : function(o) {
+        return typeof o === 'boolean' || o instanceof Boolean;
+    },
+
+    isDefined : function(o) {
+        return o !== null && o !== void 0;
+    },
+
     /**
      * [isFunction description]
      * @param  {[type]}  f [description]
@@ -107,16 +128,30 @@ JMVC.util = {
     isFunction : function (f) {
         return typeof f === 'function';
     },
+
+
+    isNumber : function(o) {
+        return typeof o === 'number' || o instanceof Number;
+    },
+
     /**
      * [ description]
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
     isObject : function (o) {
-        var t1 = String(o) !== o,
-            t2 = {}.toString.call(o).match(/\[object\sObject\]/);
-        return t1 && !!(t2 && t2.length);
+        var t0 = String(o) !== o,
+            t1 = o === Object(o),
+            t2 = typeof o !== 'function',
+            t3 = {}.toString.call(o).match(/\[object\sObject\]/);
+        return t0 && t1 && t2 && !!(t3 && t3.length);
     },
+
+
+    isPrimitive : function(o) {
+        return /string|number|boolean/.test(typeof o);
+    },
+
     /**
      * [ description]
      * @param  {[type]} e [description]
@@ -125,6 +160,12 @@ JMVC.util = {
     isSet : function (e) {
         return typeof e !== 'undefined';
     },
+
+
+    isString : function(o) {
+        return typeof o === 'string' || o instanceof String;
+    },
+
     /**
      * [ description]
      * @param  {[type]} el   [description]
@@ -133,6 +174,10 @@ JMVC.util = {
      */
     isTypeOf : function (el, type) {
         return typeof el === type;
+    },
+
+    isUndefined : function(o) {
+        return o === null || o === void 0;
     },
 
     /**
@@ -190,4 +235,6 @@ JMVC.util = {
         };
     }
 };
+
+
 //-----------------------------------------------------------------------------
