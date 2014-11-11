@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 8) build: 3476
+ * @version :  3.5 (rev. 9) build: 3484
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.2.0.0 & a love heap
- *         glued with 40 files on 11/11/2014 at 0:50:10
+ *         glued with 40 files on 11/11/2014 at 17:30:51
  *
  * All rights reserved.
  *
@@ -109,13 +109,13 @@
                 JMVC_VERSION = '3.5',
             
                 // review (vars.json)
-                JMVC_REVIEW = '8',
+                JMVC_REVIEW = '9',
             
                 // review (vars.json)
                 JMVC_DATE = '11/11/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '0:50:10',
+                JMVC_TIME = '17:30:51',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -4284,9 +4284,10 @@
             //return _.events.bind(el, tipo, _.events.fixCurrentTarget(fn, el));
         },
     
-        blurAllClicks : function () {
+        blurAllAnchorClicks : function () {
             JMVC.events.on(JMVC.W, 'click', function (e) {
-                JMVC.events.eventTarget(e).blur();
+                var target = JMVC.events.eventTarget(e); 
+                target.tagName && target.tagName.toLowerCase() == 'a' && target.blur();
             });
         },
     
@@ -4815,7 +4816,7 @@
     };
     
     // blur all clicks
-    JMVC.events.blurAllClicks();
+    JMVC.events.blurAllAnchorClicks();
     
     
     if (!Event.prototype.preventDefault) {
