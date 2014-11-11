@@ -505,14 +505,21 @@ jmvc = {
      * @param  {[type]} Parent [description]
      * @return {[type]}        [description]
      */
-    inherit: function(Child, Parent) {
-        function T() {}
-        T.prototype = Parent.prototype;
-        Child.prototype = new T();
-        Child.prototype.constructor = Child;
-        Child.superClass = Parent.prototype;
-        Child.baseConstructor = Parent;
-        //Child.constructor = Child;
+    // child, parent ,grandpa, ultrapa .... 
+    inherit: function() {
+        var a = [].slice.call(arguments, 0),
+            cur = a.length - 1;
+        while (cur > 0) {
+            (function (Child, Parent){
+                function T() {}
+                T.prototype = Parent.prototype;
+                Child.prototype = new T();
+                Child.prototype.constructor = Child;
+                Child.superClass = Parent.prototype;
+                Child.baseConstructor = Parent;    
+            })(a[cur-1], a[cur]); 
+            cur--;  
+        }
     },
 
     /**
@@ -803,7 +810,7 @@ jmvc = {
      * @param {String} none [description]
      * @return {void} undefined
      */
-    require: function() {
+    require: function (/*hello guys*/) {
         var path, extNS, extNSlength, extname, s,
             i = 0,
             arg = arguments,
