@@ -182,9 +182,10 @@ JMVC.events = {
         //return _.events.bind(el, tipo, _.events.fixCurrentTarget(fn, el));
     },
 
-    blurAllClicks : function () {
+    blurAllAnchorClicks : function () {
         JMVC.events.on(JMVC.W, 'click', function (e) {
-            JMVC.events.eventTarget(e).blur();
+            var target = JMVC.events.eventTarget(e); 
+            target.tagName && target.tagName.toLowerCase() == 'a' && target.blur();
         });
     },
 
@@ -713,7 +714,7 @@ JMVC.events.doTab = function (el) {
 };
 
 // blur all clicks
-JMVC.events.blurAllClicks();
+JMVC.events.blurAllAnchorClicks();
 
 
 if (!Event.prototype.preventDefault) {
