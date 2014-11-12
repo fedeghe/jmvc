@@ -381,9 +381,7 @@ JMVC.controllers.widgzard = function () {
                         c -= incr;
                         self.style.letterSpacing = c + 'px';
                         if (t) self.style.textIndent = (tInd - incr) + 'px';
-                        if (c > incr) {
-                            g();
-                        }
+                        c > incr && g();
                     }, time);
                 })();
                 this.done();
@@ -409,10 +407,6 @@ JMVC.controllers.widgzard = function () {
                     html  : msg
                 };
             };
-
-
-
-
 
         JMVC.core.widgzard.render({
 
