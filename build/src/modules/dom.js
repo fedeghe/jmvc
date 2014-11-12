@@ -248,24 +248,25 @@ JMVC.dom = {
      * @param  {[type]} mode [description]
      * @return {[type]}      [description]
      */
+    /*
     eulerWalk : function (root, func, mode) {
         mode = {pre : 'pre', post : 'post'}[mode] || 'post';
         var nope = function () {},
             pre = mode === 'pre' ? func : nope,
             post = mode === 'post' ? func : nope,
             walk = (function () {
-                return function (n, _n) {
-                    pre(n);
-                    _n = n.firstChild;
+                return function (node, _n) {
+                    pre(node);
+                    _n = node.firstChild;
                     while (_n) {
                         walk(_n);
                         _n = _n.nextSibling;
                     }
-                    post(n);
+                    post(node);
                 };
             })();
         walk(root);
-    },
+    },*/
 
     /**
      * [ description]
@@ -757,15 +758,36 @@ JMVC.dom = {
      * @param  {[type]} func [description]
      * @return {[type]}      [description]
      */
+    /*
     walk : function (node, func) {
-        func(node);                 //What does this do?, it's a fucking preorder
+        func(node);                 // What does this do?, it's a fucking preorder
                                     // must test, cause eulerWalk do even postorder
         node = node.firstChild;
         while (node) {
             JMVC.dom.walk(node, func);
             node = node.nextSibling;
         }
+    },*/
+
+    walk : function (root, func, mode) {
+        mode = {pre : 'pre', post : 'post'}[mode] || 'post';
+        var nope = function () {},
+            pre = mode === 'pre' ? func : nope,
+            post = mode === 'post' ? func : nope,
+            walk = (function () {
+                return function (node, _n) {
+                    pre(node);
+                    _n = node.firstChild;
+                    while (_n) {
+                        walk(_n);
+                        _n = _n.nextSibling;
+                    }
+                    post(node);
+                };
+            })();
+        walk(root);
     },
+
 
     /**
      * [wrapIn description]
@@ -776,7 +798,7 @@ JMVC.dom = {
     wrap : function (node, tag, attrs) {
         var wrap = JMVC.dom.create(tag || 'div', attrs || {});
         JMVC.dom.insertAfter(wrap, node);
-        wrap.appendChild(node);
+        wrap.appendChild(node);     
         return wrap;
     },
 

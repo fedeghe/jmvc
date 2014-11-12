@@ -309,7 +309,7 @@ JMVC.events = {
         }
         JMVC.dom.walk(node, function(n) {
             JMVC.events.off(n, evnt);
-        });
+        }, 'pre');
     },
 
     /**

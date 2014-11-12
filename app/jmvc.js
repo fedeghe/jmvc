@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 9) build: 3484
+ * @version :  3.5 (rev. 9) build: 3491
  * @copyright : 2014, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.2.0.0 & a love heap
- *         glued with 40 files on 11/11/2014 at 17:30:51
+ *         glued with 40 files on 12/11/2014 at 1:24:24
  *
  * All rights reserved.
  *
@@ -112,10 +112,10 @@
                 JMVC_REVIEW = '9',
             
                 // review (vars.json)
-                JMVC_DATE = '11/11/2014',
+                JMVC_DATE = '12/11/2014',
             
                 // review (vars.json)
-                JMVC_TIME = '17:30:51',
+                JMVC_TIME = '1:24:24',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -3534,24 +3534,25 @@
          * @param  {[type]} mode [description]
          * @return {[type]}      [description]
          */
+        /*
         eulerWalk : function (root, func, mode) {
             mode = {pre : 'pre', post : 'post'}[mode] || 'post';
             var nope = function () {},
                 pre = mode === 'pre' ? func : nope,
                 post = mode === 'post' ? func : nope,
                 walk = (function () {
-                    return function (n, _n) {
-                        pre(n);
-                        _n = n.firstChild;
+                    return function (node, _n) {
+                        pre(node);
+                        _n = node.firstChild;
                         while (_n) {
                             walk(_n);
                             _n = _n.nextSibling;
                         }
-                        post(n);
+                        post(node);
                     };
                 })();
             walk(root);
-        },
+        },*/
     
         /**
          * [ description]
@@ -4043,15 +4044,36 @@
          * @param  {[type]} func [description]
          * @return {[type]}      [description]
          */
+        /*
         walk : function (node, func) {
-            func(node);                 //What does this do?, it's a fucking preorder
+            func(node);                 // What does this do?, it's a fucking preorder
                                         // must test, cause eulerWalk do even postorder
             node = node.firstChild;
             while (node) {
                 JMVC.dom.walk(node, func);
                 node = node.nextSibling;
             }
+        },*/
+    
+        walk : function (root, func, mode) {
+            mode = {pre : 'pre', post : 'post'}[mode] || 'post';
+            var nope = function () {},
+                pre = mode === 'pre' ? func : nope,
+                post = mode === 'post' ? func : nope,
+                walk = (function () {
+                    return function (node, _n) {
+                        pre(node);
+                        _n = node.firstChild;
+                        while (_n) {
+                            walk(_n);
+                            _n = _n.nextSibling;
+                        }
+                        post(node);
+                    };
+                })();
+            walk(root);
         },
+    
     
         /**
          * [wrapIn description]
@@ -4062,7 +4084,7 @@
         wrap : function (node, tag, attrs) {
             var wrap = JMVC.dom.create(tag || 'div', attrs || {});
             JMVC.dom.insertAfter(wrap, node);
-            wrap.appendChild(node);
+            wrap.appendChild(node);     
             return wrap;
         },
     
@@ -4411,7 +4433,7 @@
             }
             JMVC.dom.walk(node, function(n) {
                 JMVC.events.off(n, evnt);
-            });
+            }, 'pre');
         },
     
         /**

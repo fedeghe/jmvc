@@ -24,7 +24,7 @@ JMVC.extend('core/widgzard', function () {
         nodeIdentifier = 'wid',
         noop = function () {},
         delegate,
-        eulerWalk = JMVC.dom.eulerWalk,
+        eulerWalk = JMVC.dom.walk,
         autoclean = true,
         htmlspecialchars,
         load;
