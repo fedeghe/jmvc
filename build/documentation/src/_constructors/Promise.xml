@@ -1,10 +1,14 @@
 <function>
-    <signature name="Promise">JMVC.Promise(String name)</signature>
-    <description>Retrieves a variable from the global JMVC scope</description>
+    <signature name="Promise">JMVC.Promise.create()</signature>
+    <description>JMVC.Promise offers a generator called `create` and two static functions: `chain` and `join`.
+    You can claim You`ve honoured Your Promise calling the done/solve method on it passing all the arguments needed,
+    on the other hand You can use may times the then function passing a callback that will receive as first parameter the promise itself,
+    and as second paramter the array of what`s passed when calling done/solve. Chain and Join are some useful function to concatenate and join many calls.
+    </description>
     <params>
-        <param name="*name">the name of the new variable to be removed</param>
+        <param name="">no parameters</param>
     </params>
-    <returns>the variable reference or value</returns>
+    <returns>the Promise object</returns>
     <testlink>test_api_constructors_promise</testlink>
     <status>incomplete</status>
     <sample>(function () {&#10;
