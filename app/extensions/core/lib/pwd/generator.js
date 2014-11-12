@@ -39,12 +39,12 @@ JMVC.extend('core.lib.pwd', {
         
         // raw brute-force strenght 
         //
-        strength = Math.log10(Math.pow(basestrength, size));
+        strength = Math.log10(Math.pow(basestrength, size)).toFixed(2);
 
-        for (i = 0; i < alphaLower; i++) tmp = tmp.concat(sets.alpha.lower)
-        for (i = 0; i < alphaUpper; i++) tmp = tmp.concat(sets.alpha.upper);
-        for (i = 0; i < number; i++) tmp = tmp.concat(sets.number);
-        for (i = 0; i < symbol; i++) tmp = tmp.concat(sets.symbol);
+        while (alphaLower--) tmp = tmp.concat(sets.alpha.lower)
+        while (alphaUpper--) tmp = tmp.concat(sets.alpha.upper);
+        while (number--) tmp = tmp.concat(sets.number);
+        while (symbol--) tmp = tmp.concat(sets.symbol);
 
         while (size--) {
             pwd += String.fromCharCode(JMVC.array.rand(tmp));
