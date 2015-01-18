@@ -1,13 +1,11 @@
 /*- INIT -*/
-
 /**
  * Override window.onerror enhancement
  * 
  * thx to Venerons
  * https://gist.github.com/Venerons/f54b7fbc17f9df4302cf
  */
-
-(function (previousOnError){
+(function (previousOnError) {
     // uh!...want to do something with previousOnError?
     // ...really?
     function reportError(error, message) {
@@ -71,7 +69,7 @@ var time_begin = +new Date(),
 
     /*
     in some cases is useful to automatically distinguish between a
-    developing url and production url
+    developing url and production url (ex: analytics extension)
     will be returned in a var container accessible from the JMVC object
     through JMVC.vars.baseurl & JMVC.vars.devurl
     */
@@ -109,7 +107,13 @@ var time_begin = +new Date(),
          * path for lang files, loaded with the JMVC.lang function
          * @type {[type]}
          */
-        lang : US + 'app' + US + 'i18n' + US
+        lang : US + 'app' + US + 'i18n' + US,
+
+        /**
+         * path for engy component files, engy requires widgzard v.2
+         * @type {[type]}
+         */
+        engyComponents : US + 'app' + US + 'eComp' + US
     },
     //
     JMVC_EXT = {
@@ -120,10 +124,17 @@ var time_begin = +new Date(),
     },
 
     /*
-     * all these extensions can be used just after the action
+     * all these extensions can be used in the url
+     * pay attention to the order
+     *
      * @type {Array}
      */
-    URL_ALLOWED_EXTENSIONS = ['html', 'htm', 'jsp', 'php', 'js', 'jmvc', 'j', 'mvc', 'do', 'asp'],
+    URL_ALLOWED_EXTENSIONS = [
+        'asp', 'do', 'exe', 'html', 'htm', 'jmvc',  'jsp', 'js', 'jeti', 'j', 'ninja',  'mvc', 'ohmygod', 'omg', 'php', 'wtf', 'whathafuck', 'trojan'
+        //
+        // ... seriously I should find someone able to help me!!!
+        //  
+    ],
     //
     /**
      * default values for controller & action
@@ -163,7 +174,8 @@ var time_begin = +new Date(),
     Extension,
     FunctionQueue,
 
-    // in case some modules need to be always loaded here's the place to set them
+    // in case some modules need to be always
+    // loaded here's the place to set them
     Modules = ['vendors/google/analytics/analytics', 'core/cookie/cookie'],
 
     // preloader
@@ -178,19 +190,19 @@ var time_begin = +new Date(),
 
     currentlang = defaultlang,
 
-
     //undefined string for typeof
     undef = 'undefined',
+
     //
     // getmode used in the require function
     // ajax         : use xhr to get the source and evals
-    // script       : creates a script tag with the right url to the source
-    // scriptghost  : same as script but removes all injected script from the DOM after load
+    // script       : creates a script tag with the right url to the source, unsafe sync
+    // scriptghost  : same as script but removes all injected script from the DOM after load, same problem
     // NOTE > it seems like script mode load faster but ...
     getmode = 'ajax', // {ajax, script, scriptghost}
     //
     // ===========================================
     //
-    returnTrue = function () {return !0; },
-    returnFalse = function () {return !1; };
+    returnTrue = function () {return true; },
+    returnFalse = function () {return false; };
     //-----------------------------------------------------------------------------

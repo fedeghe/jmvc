@@ -69,8 +69,8 @@ JMVC.controllers.checkns = function() {
 			JMVC.test.testValue("JSON.stringify(JMVC.nsCheck('vars.data', ns));", function(){return JSON.stringify(JMVC.nsCheck('vars.data', ns));}, '{"cities":{"names":{"properties":"no properties"}},"calendars":[1,2,3]}');
 			JMVC.test.testValue("JMVC.nsCheck('vars.data.calendars.1', ns);", function(){return JMVC.nsCheck('vars.data.calendars.1', ns);}, 2);
 			JMVC.test.message('Now check some unexistent ns');
-			JMVC.test.testValue("JMVC.nsCheck('vars.foo', ns);", function(){return JMVC.nsCheck('vars.foo', ns);}, false);
-			JMVC.test.testValue("JMVC.nsCheck('vars.data.calendars.10', ns);", function(){return JMVC.nsCheck('vars.data.calendars.10', ns);}, false);
+			JMVC.test.testValue("JMVC.nsCheck('vars.foo', ns);", function(){return JMVC.nsCheck('vars.foo', ns);}, undefined);
+			JMVC.test.testValue("JMVC.nsCheck('vars.data.calendars.10', ns);", function(){return JMVC.nsCheck('vars.data.calendars.10', ns);}, undefined);
 
 			JMVC.test.finishAll();			
 			

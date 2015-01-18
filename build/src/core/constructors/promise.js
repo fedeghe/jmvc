@@ -62,11 +62,21 @@ Promise = (function() {
         for (null; i < l; i++) {
             (function(k) {
                 stack[k] = new _Promise();
-                pros[k].apply(stack[k], [stack[k], args]);
-                stack[k].then(function(p, r) {
+
+                // inside every join function the context is a Promise, and
+                // is possible to return it or not 
+                var _p = pros[k].apply(stack[k], [stack[k], args]);
+                (_p instanceof _Promise ? _p : stack[k])
+                .then(function(p, r) {
                     res[k] = r;
                     solved(--limit);
                 });
+                // pros[k].apply(stack[k], [stack[k], args]);
+                // stack[k].then(function(p, r) {
+                //     res[k] = r;
+                //     solved(--limit);
+                // });
+
             })(i);
         }
         return endP;

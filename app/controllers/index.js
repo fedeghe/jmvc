@@ -37,7 +37,6 @@ JMVC.controllers.index = function () {
 		JMVC.head.title('JMVC');
 		JMVC.lang.apply(null, JMVC.util.getParameters('jmvcscript').langs || ['en', 'de', 'it']);
 
-
 		/*
 		JMVC.head.addScript(JMVC.vars.baseurl+"/media/js/plus_one.js");
 		see plus_one view
@@ -51,19 +50,14 @@ JMVC.controllers.index = function () {
 		//JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-night.min.css', true);
 		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-day.min.css', true);
 
-
 		/*
 		u can namespace views in folders
 		var index = JMVC.getView('xxx/index');
 		*/
-		var index = JMVC.getView('home/index'),
-			n = this.get('name') || 'Federico';
+		var index = JMVC.getView('home/index');
 		//
-		index.set('nome', n);
+		//index.set('nome', this.get('name') || 'Federico');
 		index.set('i_say', '[L[pure javascript mvc framework]]');
-		//
-		
-
 		
 		index.parse().render(
 			function () {
@@ -76,6 +70,7 @@ JMVC.controllers.index = function () {
 				JMVC.github.forkme('fedeghe');
 
 				JMVC.mobile.topHide();
+
 				JMVC.widget.langs.create(JMVC.dom.find('#topbar'));
 /*
 				JMVC.responsive.onChange(
@@ -125,7 +120,7 @@ JMVC.controllers.index = function () {
 					JMVC.dom.append(body, JMVC.dom.create('div', {id : mapid, style : 'opacity:0.8;position:absolute;z-index:1;top:0px;left:0px;width:' + dims.width + 'px;height:' + dims.height + 'px'}));
 					
 					JMVC.gmap2.initialize(function () {
-						JMVC.gmap2.mapme('via Maggio 18, Lugano, Svizzera', function (latlng) {
+						JMVC.gmap2.mapme('Dällikerstrasse 35, Regensdorf, Svizzera', function (latlng) {
 							var mapDiv = document.getElementById(mapid),
 								map = new google.maps.Map(mapDiv, {
 									center : new google.maps.LatLng(latlng.lat(), latlng.lng()),
@@ -156,6 +151,18 @@ JMVC.controllers.index = function () {
 							]);*/
 							JMVC.gmap2.animator(map, [
 								//http://maps.google.com/maps?q=cortina+d%27ampezzo&hl=en&ll=46.545509,12.135808&spn=0.001018,0.002519&sll=37.0625,-95.677068&sspn=38.365962,82.529297&hnear=Cortina+d%27Ampezzo,+Province+of+Belluno,+Veneto,+Italy&t=h&z=19&layer=c&cbll=46.545509,12.135808&panoid=AK2j0F5pNJw6qwjw5UuG3w&cbp=12,232.07,,0,0.26
+								
+								// maggiolo
+								//{location : [21.2017064,-86.7274194], speed : 20, duration : 20, streetView : {heading : 90, zoom : -2}},
+								//museo sub
+								//{location : [21.2016294,-86.7269795], speed : 20, duration : 20, streetView : {heading : 0, pitch : 0, zoom : -5}},
+								// NY
+								{location : [40.764087, -73.973104], speed : 20, duration : 20, streetView : {heading : 90, zoom : -2}},
+								
+								//JAPO
+								{location : [34.3828365,133.8191008], speed : 20, duration : 20, streetView : {heading : 270, zoom : -2}},
+
+
 								{location : [46.545509, 12.135808], speed : 20, duration : 20, streetView : {heading : 180, pitch : 15, zoom : 0}},
 								{location : 'prato della valle, Padova Italia', speed : 20, duration : 10, streetView : {heading : 230, pitch : 0, zoom : -2}},
 								//piazza dam
@@ -166,7 +173,7 @@ JMVC.controllers.index = function () {
 								//zurigo
 								////https://maps.google.com/maps?q=zurich&hl=en&ll=47.369227,8.543485&spn=0.004556,0.010074&sll=52.372652,4.893193&sspn=0.002067,0.005037&hnear=Zurich,+Canton+of+Zurich,+Switzerland&t=m&z=17&layer=c&cbll=47.369227,8.543485&panoid=VY2rgUeHf9tPBIWMo4-Dmw&cbp=12,231.49,,0,0.26
 								{location : [47.369227, 8.543485], speed : 20, duration : 20, streetView : {heading : 195, zoom : -2}},
-								{location : '767 5th Avenue, New York USA', speed : 20, duration : 20, streetView : {heading : 90, zoom : -2}},
+								
 								
 								/*
 								heron island underwater
@@ -266,7 +273,7 @@ JMVC.controllers.index = function () {
 
 	this.action_index3 = function () {
 		/* directly render something */
-		this.render('<div id="space"></div>');
+		this.render('<div id="space">Direct render</div>');
 	};
 
 
@@ -294,7 +301,6 @@ JMVC.controllers.index = function () {
 				3000
 			);
 		}
-		//this.render(content);
 	};
 
 
@@ -346,7 +352,7 @@ JMVC.controllers.index = function () {
 	this.action_ascii = function () {
 		var content = '', i = 0;
 		for (null; i < 256; i += 1) {
-			content += '"' + i + '" : "' + String.fromCharCode(i) + '",<br />';
+			content += i + ' : ' + String.fromCharCode(i) + '<br />';
 		}
 		this.render(content);
 	};

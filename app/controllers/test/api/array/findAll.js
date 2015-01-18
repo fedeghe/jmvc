@@ -16,7 +16,7 @@ JMVC.controllers.findAll = function () {
                 false,
                 "asdasda",
                 4,3,
-                'hellp',
+                'hello',
                 'y',
                 true,
                 true,

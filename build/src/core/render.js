@@ -4,15 +4,12 @@
         l = JMVC.modules.length;
     if (!W.JMVCshut) {
         while (i < l) {
-            JMVC.require(JMVC.modules[i]);
-            i += 1;
+            JMVC.require(JMVC.modules[i++]);
         }
-        
         if (JMVC.p.lang) {
             JMVC.cookie.set('lang', JMVC.p.lang);
         }
     }
-
     try {
         if (W.JMVCshut) {
             JMVC.loaded = true;

@@ -1,14 +1,17 @@
 {
-    "jmvc.js" :  "../app",
-    "documentation/documentation.xml" : "../media",
+    "jmvc.js" :  "../app"
+    ,"documentation/documentation.xml" : "../media"
 
-    "../app/extensions/games/wcave/build/wcave.js" : "../app/extensions/games/wcave/",
+    ,"styles/widgzard.less" : "../app/extensions/core/lib/widgzard"
+    ,"styles/engy.less" : "../app/extensions/core/lib/widgzard"
+
+    ,"styles/jmvc.less" : "../media/css/core"
+    ,"styles/jmvc-day.less" : "../media/css/core"
+    ,"styles/jmvc-night.less" : "../media/css/core"
+
+    ,"styles/api.css" :  "../media/css/core"
+    ,"styles/grind.less" : "../app/extensions/core/lib/grind"
+
     
-    "styles/jmvc.less" : "../media/css/core",
-    "styles/jmvc-day.less" : "../media/css/core",
-    "styles/jmvc-night.less" : "../media/css/core",
-
-    "styles/api.css" :  "../media/css/core",
-    "styles/grind.less" : "../app/extensions/core/lib/grind",
-    "styles/widgzard.less" : "../app/extensions/core/lib/widgzard"
+    ,"!../app/extensions/games/wcave/build/wcave.js" : "../app/extensions/games/wcave/"
 }

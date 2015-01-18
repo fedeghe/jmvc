@@ -17,6 +17,7 @@ $$src/head.js$$
             $$src/core/init.js$$
             $$src/core/innerjmvc.js$$
             $$src/core/preload.js$$
+
             $$src/core/constructors/errors.js$$
             $$src/core/constructors/event.js$$
             $$src/core/constructors/channel.js$$
@@ -28,6 +29,7 @@ $$src/head.js$$
             $$src/core/constructors/model.js$$
             $$src/core/constructors/view.js$$
             $$src/core/constructors/mvc_common.js$$
+
             $$src/core/parser.js$$
             $$src/core/dispatched.js$$
             $$src/core/outerjmvc.js$$
@@ -37,7 +39,7 @@ $$src/head.js$$
         $$src/core/private.js$$
 
     /////////////////////
-    // MANDATORY MODULES
+    // MANDATORY MODULES START
     //
     $$src/modules/io.js$$
     $$src/modules/util.js$$
@@ -54,7 +56,7 @@ $$src/head.js$$
     $$src/modules/dnd.js$$
     $$src/modules/minishim.js$$
     //
-    // modules end
+    // MANDATORY MODULES END
     ///////////////
 
     //////////////////

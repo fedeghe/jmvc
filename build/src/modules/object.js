@@ -213,7 +213,7 @@ JMVC.object = {
      * @return {[type]}      [description]
      */
     jCompare: function(obj1, obj2) {
-        return JSON.stringify(obj1) === JSON.stringify(obj2);
+        return typeof JSON !== 'undefined' ? JSON.stringify(obj1) === JSON.stringify(obj2) : obj1 == obj2;
     },
     /**
      * [keys description]

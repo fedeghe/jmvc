@@ -42,7 +42,7 @@ JMVC.extend('timer',{
 				DD = this.l.days[d.getDay()],
 				MM = this.l.months[M-1];
 
-			return JMVC.string.replaceall(
+			return JMVC.string.replaceAll(
 				this.format,
 				{APM : APM, H12 : H12, H24 : H24, I : I, S : S, YY : YY, YYYY : YYYY, M : M, D : D, MM : MM, DD : DD}
 			);

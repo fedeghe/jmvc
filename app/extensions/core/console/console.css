@@ -69,10 +69,10 @@ div.input-divs>div{
 }
 div.input-divs div textarea{
 	color:white;
-	background-color: black;
+	background-color: #222;
 	resize:none;
-	line-height:20px;
-	font-size:14px;
+	line-height:18px;
+	font-size:12px;
 	padding:15px;
 	width:100%;
 	-moz-tab-size:4;

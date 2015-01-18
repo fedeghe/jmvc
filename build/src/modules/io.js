@@ -35,14 +35,8 @@ _.io = {
             cb_loading = (options && options.loading) || function () {},
             cb_error = (options && options.error) || function () {},
             cb_abort = (options && options.abort) || function () {return false; },
-
             cb_loadstart = (options && options.loadstart) || function () {},
-            // cb_progress = (options && options.progress) || function () {},
-            // cb_abort = (options && options.abort) || function () {},
-            // cb_error = (options && options.error) || function () {},
-            // cb_load = (options && options.load) || function () {},
             cb_timeout = (options && options.timeout) || function () {},
-            // cb_loadend = (options && options.loadend) || function () {},
             
             sync = options && options.sync,
             data = (options && options.data) || false,
@@ -84,12 +78,10 @@ _.io = {
                         //JMVC.purge(xhr);
                     }, 50);
                     return ret;
-
                 } else {
                     cb_error(xhr);
                     return false;
                 }
-
             } else if (xhr.readyState === 3) {
                 //loading data
                 cb_loading(xhr);
@@ -98,7 +90,6 @@ _.io = {
                 cb_opened(xhr);
             } else if (xhr.readyState === 1) {
                 cb_loadstart(xhr);
-
                 switch (method) {
                 case 'POST':
                     try {
@@ -113,13 +104,11 @@ _.io = {
                             html : 'text/html',
                             json : 'application/json'
                         }[type] || 'text/html';
-
                         xhr.setRequestHeader('Accept', tmp + '; charset=utf-8');
                         xhr.send(null);
                     } catch (e2) {}
                     break;
                 default :
-                    //alert(method);
                     xhr.send(null);
                     break;
                 }
@@ -134,13 +123,11 @@ _.io = {
             cb_abort && cb_abort.apply(null, arguments);
         };
 
-        //open request
+        // open request
         //
-        
         xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri, sync);
         
-        
-        //thread abortion
+        // thread abortion
         //
         W.setTimeout(function () {
             if (!complete) {
@@ -155,8 +142,9 @@ _.io = {
         return true;
     }
 };
-//
+
 // public section
+// 
 JMVC.io = {
     xhrcount : 0,
     getxhr : _.io.getxhr,

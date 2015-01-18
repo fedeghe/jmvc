@@ -123,7 +123,10 @@ JMVC.controllers.strict = function() {
 
 			//It is a SyntaxError if strict mode code contains an ObjectLiteral with more than one
 			//definition of any data property (11.1.5).
-			JMVC.test.testException("no duplicate properties", "({a:1, a:2})", SyntaxError);
+			//
+			// but no more in firefox
+			if (JMVC.sniffer.browser.name != 'Firefox')
+				JMVC.test.testException("no duplicate properties", "{a:1, a:2}", SyntaxError);
 
 			//It is a SyntaxError if the Identifier "eval" or the Identifier "arguments occurs as the
 			//Identifier in a PropertySetParameterList of a PropertyAssignment that is contained in

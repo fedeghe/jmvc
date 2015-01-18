@@ -15,6 +15,7 @@ JMVC.controllers.info = function () {
 			'core/screen/screen',
 			'vendors/github/forkme/forkme'
 		);
+
 		var main  = JMVC.getView('info/info'),
 			readme = JMVC.getView('info/readme'),
 			extend = JMVC.getView('info/extend'),

@@ -70,9 +70,9 @@ at the end there is an execution <a href="#times">time comparison</a>:');
             JMVC.test.code(JMVC.array.unique.toString());
             JMVC.test.testTime('JMVC.array.unique', JMVC.array.unique, times, [s]);
             
-            JMVC.test.describe('JMVC.array.unique2');
-            JMVC.test.code(JMVC.array.unique2.toString());
-            JMVC.test.testTime('JMVC.array.unique2', JMVC.array.unique2, times, [s]);
+            // JMVC.test.describe('JMVC.array.unique2');
+            // JMVC.test.code(JMVC.array.unique2.toString());
+            // JMVC.test.testTime('JMVC.array.unique2', JMVC.array.unique2, times, [s]);
             
             JMVC.test.describe('JMVC.array.fast');
             JMVC.test.code(JMVC.array.fast.toString());

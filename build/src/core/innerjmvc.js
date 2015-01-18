@@ -104,8 +104,11 @@ jmvc = {
     delegate: function (func, ctx) {
         // get relevant arguments
         var args = Array.prototype.slice.call(arguments, 2);
-        return function() {
-            return func.apply(ctx || $JMVC, [].concat(args, Array.prototype.slice.call(arguments)));
+        return function () {
+            return func.apply(
+                ctx || $JMVC,
+                [].concat(args, Array.prototype.slice.call(arguments, 0))
+            );
         };
     },
 
@@ -120,15 +123,14 @@ jmvc = {
         //var type = ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase(),
         // speed up
         var type = 'length' in o ? 'array' : 'object',
-            i,
-            l,
-            ret;
+            i, l, ret;
+
         func._break = false;
         func._continue = false;
-        func['break'] = /*func.exit = */ function() {
+        func['break'] = /*func.exit = */ function () {
             func._break = true;
         };
-        func['continue'] = /*func.skip = */ function() {
+        func['continue'] = /*func.skip = */ function () {
             func._continue = true;
         };
 
@@ -185,14 +187,15 @@ jmvc = {
         }
 
         // if is a function return its execution
+        // 
         if (typeof obj === 'function') {
             return jmvc.extend(label, obj());
         }
 
-        // and set a flag, that can be switched off as far as
+        // and set a flag, that can be switched off.
         // if the object passed has a initCheck function
         // the extension will take place only if the initCheck
-        // return truly value
+        // returns truly value
         // 
         if (typeof obj.initCheck === 'function') {
             if (!obj.initCheck.call($JMVC)) {
@@ -260,7 +263,12 @@ jmvc = {
         return ret;
     },
 
-    formatCode : function (mup) {
+    /**
+     * [formatCode description]
+     * @param  {[type]} mup [description]
+     * @return {[type]}     [description]
+     */
+    formatCode: function (mup) {
         var cnt = mup || document.documentElement.outerHTML,
             tb = 0,
             out = "",
@@ -454,13 +462,16 @@ jmvc = {
      * @param  {[type]} text [description]
      * @return {[type]}      [description]
      */ 
-    htmlChars: function(text) {
-        return text
-            .replace(/&(?![\w\#]+;)/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
+    htmlChars: function(text, pre) {
+
+        return (pre ? '<pre>' : '') +
+            (text
+                .replace(/&(?![\w\#]+;)/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;')
+            ) + (pre ? '</pre>' : '');
     },
 
     /**
@@ -607,7 +618,7 @@ jmvc = {
 
         /**
          * check if a namespace already exists
-         * @param  {[type]} ns  namesoace dot glued
+         * @param  {[type]} ns  namespace dot glued
          * @param  {[type]} ctx [description]
          * @return {[type]}     [description]
          */
@@ -617,13 +628,15 @@ jmvc = {
                 l = els.length;
             ctx = (ctx !== undefined) ? ctx : W;
 
+            if (!ns) return ctx;
+
             for (null; i < l; i += 1) {
 
-                if (ctx[els[i]]) {
+                if (typeof ctx[els[i]] !== 'undefined') {
                     ctx = ctx[els[i]];
                 } else {
                     // break it
-                    return false;
+                    return undefined;
                 }
             }
             return ctx;
@@ -848,6 +861,8 @@ jmvc = {
                         PATHS[(arg[i] === 'testsuite' ? 'test' : 'ext')] +
                         arg[i].replace(/\./, '/') + (JMVC_PACKED || '') + '.js';
 
+
+                    // mode ? 
                     if (getmode.match(/ajax/)) {
 
                         $JMVC.io.get(path, function(jres) {
@@ -862,6 +877,7 @@ jmvc = {
                         head.appendChild(s);
                         getmode === 'scriptghost' && head.removeChild(s);
 
+                    // damnme!!!
                     } else {
                         throw new JMVC.Errors.BadSetting('No way to use JMVC.require function: getmode not in ["ajax","script","scriptghost"]');
                     }

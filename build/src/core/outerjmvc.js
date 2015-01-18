@@ -20,7 +20,8 @@ $JMVC = {
     interfaces : {},
     vars : {
         baseurl:    dispatched.baseurl + dispatched.port,
-        extensions : dispatched.baseurl + dispatched.port + PATHS.ext, //'/app/extensions',
+        extensions : dispatched.baseurl + dispatched.port + PATHS.ext, 
+        engyComponents : dispatched.baseurl + dispatched.port + PATHS.engyComponents, 
         devurl : DEV_URL,
         produrl : PROD_URL,
         devurlstatic : DEV_URLstatic,
@@ -128,13 +129,20 @@ $JMVC = {
      */
     console : function (opts) {
         opts = opts || {};
-        if (!('core/console/console' in $JMVC.extensions)) {
-            $JMVC.require('core/console/console');
-        }
+        
         if (opts.clear) {
             opts.h = opts.j = opts.c = '';
         }
-        JMVC.console.toggle(opts.h, opts.j, opts.c, opts.tab);
+
+        if (!('core/console/console' in $JMVC.extensions)) {
+            $JMVC.require('core/console/console', inner);
+        } else {
+            inner();
+        }
+
+        function inner () {
+            JMVC.console.toggle(opts.h, opts.j, opts.c, opts.tab);    
+        }
     },
 
     // xdoc
@@ -150,13 +158,15 @@ $JMVC = {
         /*
         MARKUP NEEDED to use that function:
         to make it work move the jmvc.js at the end of the body
+
         <div style="width:30%;margin:0 auto;margin-top:10px;display:none" id="JMVCisloading">
             <div id="JMVCloadingmessage" style="text-align:center;font-size:10px;font-family:Verdana, sans serif; color:#aaa"></div>
             <div style="background-color:#f5f5f5;margin-top:5px;border:1px solid #aaa;">
                 <div style="width:0px;background-color:#8f8;height:3px" id="JMVCloading"></div>
             </div>
         </div>
-         */
+
+        */
         try {
             document.getElementById('JMVCisloading').style.display = 'block';
             document.getElementById('JMVCloading').style.width =  ~~intperc + '%';
