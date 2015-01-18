@@ -4,7 +4,8 @@
 JMVC.require(
     'core/screen/screen',
     'core/lib/widgzard/widgzard',
-    'event_scroll/event_scroll'
+    'event_scroll/event_scroll',
+    'core/responsive/basic/basic'
 );
 
 JMVC.extend('console', {
@@ -77,8 +78,6 @@ JMVC.extend('console', {
                     c : c != undefined ? c : (JMVC.p.c ? decodeURIComponent(JMVC.p.c) : defaultContent.c)
                 },
                 
-                //brd = '<div class="gbox console-brd"></div>',
-                
                 version = 0.4,
                 
                 defaults = {
@@ -93,31 +92,30 @@ JMVC.extend('console', {
                         attrs : {"class" : "console-head"},
                         content : [
                             {
+                                tag : "a",
+                                attrs : {
+                                    href : JMVC.vars.baseurl,
+                                    title : "web console v." + version
+                                },
                                 content : [{
-                                    tag : "a",
+                                    tag : "img",
                                     attrs : {
-                                        href : JMVC.vars.baseurl,
-                                    },
-                                    content : [{
-                                        tag : "img",
-                                        attrs : {
-                                            src : "/media/img/jmvc_n3.png",
-                                            width : "60"
-                                        }
-                                    }]
+                                        src : "/media/img/jmvc_n3.png",
+                                        width : "60"
+                                    }
                                 }],
                                 style : {
                                     "float" : "left",
                                     marginTop : "12px",
                                     marginLeft : "10px"
-                                },
-                                attrs : {title : "web console v." + version}
+                                }
                             },{
                                 tag : "button",
-                                html : "GET URL",
+                                html : "get url",
                                 attrs : {
                                     id : "get-url",
-                                    "class" : "round4"
+                                    "class" : "round4",
+                                    title : 'get url'
                                 },
                                 style : {
                                     "float" : "left",
@@ -127,10 +125,11 @@ JMVC.extend('console', {
                                 }
                             },{
                                 tag : "button",
-                                html : "FullScreen",
+                                html : "FScreen",
                                 attrs : {
                                     id : "go-fs",
-                                    "class" : "round4"
+                                    "class" : "round4",
+                                    title : 'go fullscreen'
                                 },
                                 style : {
                                     "float" : "left",
@@ -140,10 +139,11 @@ JMVC.extend('console', {
                                 }
                             },{
                                 tag : "button",
-                                html : "Reset",
+                                html : "reset",
                                 attrs : {
                                     id : "reset",
-                                    "class" : "round4"
+                                    "class" : "round4",
+                                    title : 'reset'
                                 },
                                 style : {
                                     "float" : "left",
@@ -153,10 +153,11 @@ JMVC.extend('console', {
                                 }
                             },{
                                 tag : "button",
-                                html : "Reset All",
+                                html : "reset all",
                                 attrs : {
                                     id : "resetall",
-                                    "class" : "round4"
+                                    "class" : "round4",
+                                    title : 'reset all'
                                 },
                                 style : {
                                     "float" : "left",
@@ -178,13 +179,11 @@ JMVC.extend('console', {
                                 style : {"float" : "right"},
                                 content : [
                                     {
-                                        "tag":"div",
                                         attrs : {"class":"round4 roundtop text"},
                                         style : {"float":"right"}
                                     },{
-                                        "tag":"div",
                                         style : {"float":"right"},
-                                        attrs : {"class":"tri"}
+                                        attrs : {"class":"tri resp_dskt"}
                                     }
                                 ]
                             },{
@@ -201,7 +200,7 @@ JMVC.extend('console', {
                                         style : {"float":"right"},
                                     },{
                                         style : {"float":"right"},
-                                        attrs : {"class":"tri"}
+                                        attrs : {"class":"tri resp_dskt"}
                                     }
                                 ]
                             },{
@@ -214,12 +213,16 @@ JMVC.extend('console', {
                                 style : {"float":"right"},
                                 content : [
                                     {
-                                        attrs : {"class":"round4 roundtop text"},
+                                        attrs : {"class":"round4 roundtop text resp_dskt"},
                                         style : {"float":"right"},
                                         html : "CSS"
                                     },{
+                                        attrs : {"class":"round4 roundtop text resp_mobi"},
+                                        style : {"float":"right"},
+                                        html : "{}"
+                                    },{
                                         style : {"float" : "right"},
-                                        attrs : {"class" : "tri"}
+                                        attrs : {"class" : "tri resp_dskt"}
                                     }
                                 ]
                             },{
@@ -232,14 +235,16 @@ JMVC.extend('console', {
                                 style : {"float" : "right"},
                                 content : [
                                     {
-                                        tag : "div",
-                                        attrs : {"class" : "round4 roundtop text"},
+                                        attrs : {"class" : "round4 roundtop text resp_dskt"},
                                         style : {"float" : "right"},
                                         html : "JS"
                                     },{
-                                        tag : "div",
+                                        attrs : {"class" : "round4 roundtop text resp_mobi"},
                                         style : {"float" : "right"},
-                                        attrs : {"class" : "tri"}
+                                        html : "{;}"
+                                    },{
+                                        style : {"float" : "right"},
+                                        attrs : {"class" : "tri resp_dskt"}
                                     }
                                 ]
                             },{
@@ -252,25 +257,28 @@ JMVC.extend('console', {
                                 style : {"float":"right"},
                                 content : [
                                     {
-                                        attrs : {"class":"round4 roundtop text"},
+                                        attrs : {"class":"round4 roundtop text resp_dskt"},
                                         style : {"float":"right"},
                                         html : "HTML"
                                     },{
+                                        attrs : {"class":"round4 roundtop text resp_mobi"},
                                         style : {"float":"right"},
-                                        attrs : {"class":"tri"}
+                                        html : "&lt;&gt;"
+                                    },{
+                                        style : {"float":"right"},
+                                        attrs : {"class":"tri resp_dskt"}
                                     }
                                 ]
                             },
                             "clearer"
                         ]
                     },{
-                        target : container,
-                        attrs : {"class" : "input-divs"},
+                        attrs : {"class" : "input-divs respfixed"},
                         content : [
                             {
                                 attrs : {
                                     id : "in-html",
-                                    "class" : "in-html inputdiv"
+                                    "class" : "in-html inputdiv respfixed"
                                 },
                                 content : [{
                                     tag : "textarea",
@@ -284,7 +292,10 @@ JMVC.extend('console', {
                                     html : content.h
                                 }]
                             },{
-                                attrs : {"id" : "in-javascript", "class" : "in-javascript inputdiv"},
+                                attrs : {
+                                    id : "in-javascript",
+                                    "class" : "in-javascript inputdiv respfixed"
+                                },
                                 content: [{
                                     tag : "textarea",
                                     attrs : {
@@ -299,7 +310,7 @@ JMVC.extend('console', {
                             },{
                                 attrs : {
                                     id : "in-css",
-                                    "class" : "in-css inputdiv"
+                                    "class" : "in-css inputdiv respfixed"
                                 },
                                 content: [{
                                     tag : "textarea",
@@ -313,7 +324,7 @@ JMVC.extend('console', {
                             },{
                                 attrs : {
                                     id : "in-preview",
-                                    "class" : "in-preview inputdiv"
+                                    "class" : "in-preview inputdiv respfixed"
                                 },
                                 content: [{
                                     tag : "iframe",
@@ -327,141 +338,228 @@ JMVC.extend('console', {
                             },{
                                 attrs : {
                                     id : "in-options",
-                                    "class" : "in-options inputdiv"
+                                    "class" : "in-options inputdiv respfixed"
                                 },
                                 html : JMVC.console._.options
                             }
                         ]
-                    }]
+                    }],
+                    cb : function () {
+                        start();
+                    }
 
                 },
                 hash = false;
 
-            function getUrl() {
-                var vals = getValues(),
 
-                    url = [JMVC.vars.baseurl, JMVC.c, JMVC.a].join(JMVC.US) +
-                        JMVC.object.toQs({
-                            h : vals[0] || defaults.h,
-                            j : vals[1] || defaults.j,
-                            c : vals[2] || defaults.c,
-                            l : JMVC.dom.find('#options').value || ''
-                        }) +
-                        (hash ? "#" + hash : ''),
 
-                    l = url.length,
+            //
+            // ending Widgzard cb
+            // 
+            function start() {
 
-                    limit = 2047;
+                var contentHTML = JMVC.dom.find('#content-html'),
+                    contentJAVASCRIPT = JMVC.dom.find('#content-javascript'),
+                    contentCSS = JMVC.dom.find('#content-css'),
+                    contentOPTIONS = JMVC.dom.find('#content-options'),
+                    tongueOPTIONS = JMVC.dom.find('#options'),
+                    tonguePREVIEW = JMVC.dom.find('#preview'),
+                    buttGOFS = JMVC.dom.find('#go-fs'),
+                    buttRESET = JMVC.dom.find('#reset'),
+                    buttRESETALL = JMVC.dom.find('#resetall'),
+                    buttGETURL = JMVC.dom.find('#get-url'),
+                    outarea = JMVC.dom.find('#outarea');
 
-                // just let the user know about url 2k limit
-                if (l > limit) {
-                    alert('Url length : ' + l + "\n"  + "It seems like all content cannot be safely put in a url,\nit WON`T WORK in some browsers.");
-                }
-                prompt("Copy the following url", url);
-            }
 
-            function getValues() {
-                return [
-                    JMVC.dom.find('#content-html').value,
-                    JMVC.dom.find('#content-javascript').value,
-                    JMVC.dom.find('#content-css').value
-                ];
-            }
-            
-            function appendScript (src, w, cb) {
-                w = w || JMVC.W;
-                var l = w.document.createElement("script");
-                l.type = "text/javascript";
-                if (cb) {
-                    l.onload = cb;
-                }
-                l.src = src;
-                var s = w.document.getElementsByTagName("head")[0];
-                s.appendChild(l);
-            }
-            
-            function update(){
-                var vals = getValues(),
-                    h = vals[0] || defaults.h,
-                    j = vals[1] || defaults.j,
-                    c = vals[2] || defaults.c,
-                    iframe = JMVC.dom.find('#outarea'),
-                    lib = JMVC.dom.find('#content-options').value || false,
-                    scriptTag;
+                function getUrl() {
+                    var vals = getValues(),
+                        url = [JMVC.vars.baseurl, JMVC.c, JMVC.a].join(JMVC.US) +
+                            JMVC.object.toQs({
+                                h : vals[0] || defaults.h,
+                                j : vals[1] || defaults.j,
+                                c : vals[2] || defaults.c,
+                                l : tongueOPTIONS.value || ''
+                            }) +
+                            (hash ? "#" + hash : ''),
+                        l = url.length,
+                        limit = 2047;
 
-                ///reset iframe
-                scriptTag = document.createElement('script');
-                scriptTag.innerHTML = j;
-
-                if ('_af' in JMVC.dom.find('#outarea').contentWindow) {
-                    JMVC.dom.find('#outarea').contentWindow.cancelAnimationFrame(JMVC.dom.find('#outarea').contentWindow._af);
+                    // just let the user know about url 2k limit
+                    l > limit && alert('Url length : ' + l + "\n"  + "It seems like all content cannot be safely put in a url,\nit WON`T WORK in some browsers.");
+                    prompt("Copy the following url", url);
                 }
 
-                JMVC.dom.find('#outarea').contentDocument.documentElement.innerHTML = JMVC.string.replaceAll(
-                    JMVC.console._.tpl, {
-                        'style' : c,
-                        'body' : h,
-                        'options' : JMVC.console._.options
-                    }
-                );
-
-                //exit fullscreen
-                JMVC.dom.find('#outarea').contentWindow.document.onkeyup =  function (e) {
-                    if (fsmode && e.keyCode == 27) {
-                        JMVC.head.title(title);
-                        JMVC.css.style(JMVC.dom.find('#outarea'),{'position':'relative'});
-                        fsmode = false;
-                        //update();
-                    };
+                function getValues() {
+                    return [
+                        contentHTML.value,
+                        contentJAVASCRIPT.value,
+                        contentCSS.value
+                    ];
                 }
                 
-                try {
-                    var dl = JMVC.WD.location,
-                        loaded = false,
-                        innerload = function () {
-                            appendScript('/app/' + jmvc_iframe_file, iframe.contentWindow, function () {
-                                iframe.contentWindow.document.getElementsByTagName('head').item(0).appendChild(scriptTag);    
-                            });
-                        }
-                    
-                    iframe.contentWindow.eval('var JMVCshut = true; ');
+                function appendScript (src, w, cb) {
+                    w = w || JMVC.W;
+                    var l = w.document.createElement("script");
+                    l.type = "text/javascript";
+                    if (cb) {
+                        l.onload = cb;
+                    }
+                    l.src = src;
+                    var s = w.document.getElementsByTagName("head")[0];
+                    s.appendChild(l);
+                }
+                
+                function update(){
+                    var vals = getValues(),
+                        h = vals[0] || defaults.h,
+                        j = vals[1] || defaults.j,
+                        c = vals[2] || defaults.c,
+                        iframe = outarea,
+                        lib = contentOPTIONS.value || false,
+                        scriptTag;
 
-                    if (lib) {
-                        appendScript(lib, iframe.contentWindow, innerload);
-                    } else {
-                       innerload(); 
+                    ///reset iframe
+                    scriptTag = document.createElement('script');
+                    scriptTag.innerHTML = j;
+
+                    if ('_af' in outarea.contentWindow) {
+                        outarea.contentWindow.cancelAnimationFrame(outarea.contentWindow._af);
                     }
 
-                }catch(e){
-                    console.error(e);
+                    outarea.contentDocument.documentElement.innerHTML = JMVC.string.replaceAll(
+                        JMVC.console._.tpl, {
+                            'style' : c,
+                            'body' : h,
+                            'options' : JMVC.console._.options
+                        }
+                    );
+
+                    //exit fullscreen
+                    outarea.contentWindow.document.onkeyup =  function (e) {
+                        if (fsmode && e.keyCode == 27) {
+                            JMVC.head.title(title);
+                            JMVC.css.style(outarea,{'position':'relative'});
+                            fsmode = false;
+                            //update();
+                        };
+                    }
+                    
+                    try {
+                        var dl = JMVC.WD.location,
+                            loaded = false,
+                            innerload = function () {
+                                appendScript('/app/' + jmvc_iframe_file, iframe.contentWindow, function () {
+                                    iframe.contentWindow.document.getElementsByTagName('head').item(0).appendChild(scriptTag);    
+                                });
+                            }
+                        
+                        iframe.contentWindow.eval('var JMVCshut = true; ');
+
+                        (lib && appendScript(lib, iframe.contentWindow, innerload))
+                        ||
+                        innerload();
+
+                    }catch(e){
+                        console.error(e);
+                    }
                 }
-            }
 
-            function gofs(){
-                JMVC.head.title('Press esc to exit preview');   
-                JMVC.css.style(JMVC.dom.find('#outarea'), {
-                    position : 'absolute',
-                    top :'0px',
-                    left :'0px',
-                    width :'100%',
-                    height :'100%'
-                });
-                JMVC.dom.find('#outarea').contentDocument.documentElement.focus();
-            
-                fsmode = true;
-                //update();
-            }
+                function gofs(){
+                    JMVC.head.title('Press esc to exit preview');   
+                    JMVC.css.style(outarea, {
+                        position : 'absolute',
+                        top :'0px',
+                        left :'0px',
+                        width :'100%',
+                        height :'100%'
+                    });
+                    outarea.contentDocument.documentElement.focus();
+                
+                    fsmode = true;
+                }
 
-            function reset(current) {
-                if (!!current) {
-                    JMVC.dom.find('#content-' + visibleTab).value = '';
+                function reset(current) {
+                    if (!!current) {
+                        JMVC.dom.find('#content-' + visibleTab).value = '';
+                    } else {
+                        contentHTML.value = 
+                        contentJAVASCRIPT.value = 
+                        contentCSS.value = 
+                        contentOPTIONS.value = '';
+                    }
+                }
+
+                function previewMode(onoff) {
+                    var mode = ['show', 'hide'];
+                    fsmode = onoff;
+                    !onoff && mode.reverse();
+                    JMVC.css[mode[0]](buttGOFS);
+                    JMVC.css[mode[1]](buttRESET);
+                    JMVC.css[mode[1]](buttRESETALL);
+                }
+
+                //lib
+                if(JMVC.p.l) {
+                    tongueOPTIONS.value = decodeURIComponent(JMVC.p.l);
+                }
+
+                if (tab && tab.match(/html|css|javascript|preview|options/)) {
+                    JMVC.dom.addClass(JMVC.dom.find('#' + tab), 'active');
+                    JMVC.css.show(JMVC.dom.find('#in-' + tab));
+                    hash = tab;
                 } else {
-                    JMVC.dom.find('#content-html').value = 
-                    JMVC.dom.find('#content-javascript').value = 
-                    JMVC.dom.find('#content-css').value = 
-                    JMVC.dom.find('#content-options').value = '';
+                    if (JMVC.hash.match(/html|css|javascript|preview|options/)) {
+                        JMVC.dom.addClass(JMVC.dom.find('#' + JMVC.hash), 'active');
+                        JMVC.css.show(JMVC.dom.find('#in-' + JMVC.hash));
+                        hash = JMVC.hash;
+                    } else {
+                        JMVC.dom.addClass(JMVC.dom.find('#html'), 'active');
+                        JMVC.css.show(JMVC.dom.find('#in-html'));
+                    }
                 }
+                visibleTab = hash;
+                
+                previewMode(hash == 'preview');
+                
+                JMVC.events.on(JMVC.dom.find('.ablock'), 'click', function (e) {
+                    var butt = JMVC.dom.find(this),
+                        id =  JMVC.dom.attr(butt, 'id') || 'xxx';
+
+                    visibleTab = id;
+                    butt.blur();
+
+                    JMVC.each(JMVC.dom.find('.ablock'), function (elbutt){
+                        JMVC.dom.removeClass(elbutt, 'active');
+                    });
+                    JMVC.dom.addClass(butt, 'active');
+                    hash = id;
+
+                    JMVC.each(JMVC.dom.find('.inputdiv'), function (el){
+                        JMVC.css.style(el, 'display', 'none');
+                    });
+                    JMVC.css.style(JMVC.dom.find('#in-' + id), 'display', 'block');
+
+
+                    previewMode(id == 'preview');
+
+                });
+
+                //enable tab on textareas
+                JMVC.each(JMVC.dom.find('textarea'), JMVC.events.doTab);
+
+                JMVC.events.on(buttGETURL, 'click', getUrl);
+                JMVC.events.on(buttGOFS, 'click', gofs);
+                JMVC.events.on(tonguePREVIEW, 'click', update);
+                JMVC.events.on(buttRESETALL, 'click', function () {reset(); });
+                JMVC.events.on(buttRESET, 'click', function () {reset(true); });
+
+
+                JMVC.events.delay(function () {update(); }, 0);
+
+                //fullscreen ?
+                !!JMVC.p.fullscreen && gofs();
             }
+
 
             //save scroll vertical position
             JMVC.console._.scroll = scrollTop;
@@ -480,80 +578,7 @@ JMVC.extend('console', {
             JMVC.core.widgzard.render(config, true);
             // -------------------------------------
 
-            //lib
-            if(JMVC.p.l) {
-                JMVC.dom.find('#options').value = decodeURIComponent(JMVC.p.l);
-            }
 
-            if (tab && tab.match(/html|css|javascript|preview|options/)) {
-                JMVC.dom.addClass(JMVC.dom.find('#' + tab), 'active');
-                JMVC.css.show(JMVC.dom.find('#in-' + tab));
-                hash = tab;
-            } else {
-                if (JMVC.hash.match(/html|css|javascript|preview|options/)) {
-                    JMVC.dom.addClass(JMVC.dom.find('#' + JMVC.hash), 'active');
-                    JMVC.css.show(JMVC.dom.find('#in-' + JMVC.hash));
-                    hash = JMVC.hash;
-                } else {
-                    JMVC.dom.addClass(JMVC.dom.find('#html'), 'active');
-                    JMVC.css.show(JMVC.dom.find('#in-html'));
-                }
-            }
-            if (hash == 'preview') {
-                JMVC.css.show(JMVC.dom.find('#go-fs'));
-                JMVC.css.hide(JMVC.dom.find('#reset'));
-                JMVC.css.hide(JMVC.dom.find('#resetall'));
-            } else {
-                JMVC.css.hide(JMVC.dom.find('#go-fs'));
-                JMVC.css.show(JMVC.dom.find('#reset'));
-                JMVC.css.show(JMVC.dom.find('#resetall'));
-            }
-
-            JMVC.events.on(JMVC.dom.find('.ablock'), 'click', function (e) {
-                var butt = JMVC.dom.find(this),
-                    id =  JMVC.dom.attr(butt, 'id') || 'xxx';
-
-                visibleTab = id;
-                butt.blur();
-
-                JMVC.each(JMVC.dom.find('.ablock'), function (elbutt){
-                    JMVC.dom.removeClass(elbutt, 'active');
-                });
-                JMVC.dom.addClass(butt, 'active');
-                hash = id;
-
-                JMVC.each(JMVC.dom.find('.inputdiv'), function (el){
-                    JMVC.css.style(el, 'display', 'none');
-                });
-                JMVC.css.style(JMVC.dom.find('#in-' + id), 'display', 'block');
-
-                if (id == 'preview') {
-                    fsmode = false;
-                    JMVC.css.show(JMVC.dom.find('#go-fs'));
-                    JMVC.css.hide(JMVC.dom.find('#reset'));
-                    JMVC.css.hide(JMVC.dom.find('#resetall'));
-                } else {
-                    JMVC.css.hide(JMVC.dom.find('#go-fs'));
-                    JMVC.css.show(JMVC.dom.find('#reset'));
-                    JMVC.css.show(JMVC.dom.find('#resetall'));
-                }
-
-            });
-
-            //enable tab on textareas
-            JMVC.each(JMVC.dom.find('textarea'), JMVC.events.doTab);
-
-            JMVC.events.on(JMVC.dom.find('#get-url'), 'click', getUrl);
-            JMVC.events.on(JMVC.dom.find('#go-fs'), 'click', gofs);
-            JMVC.events.on(JMVC.dom.find('#preview'), 'click', update);
-            JMVC.events.on(JMVC.dom.find('#resetall'), 'click', function () {reset(); });
-            JMVC.events.on(JMVC.dom.find('#reset'), 'click', function () {reset(true); });
-
-
-            JMVC.events.delay(function () {update(); }, 0);
-
-            //fullscreen ?
-            !!JMVC.p.fullscreen && gofs();
         }
         JMVC.console._.status = !JMVC.console._.status;
     }
