@@ -141,7 +141,7 @@ _.events = {
             return true;
         }
 
-        JMVC.W.exp = _.events.bindings;
+        //JMVC.W.exp = _.events.bindings;
         index = JMVC.array.find(_.events.bindings[evnt][nodeid], cb);
 
         if (index === -1) {
