@@ -6,6 +6,7 @@
         <param name="value">The value of the meta You want to add</param>
     </params>
     <returns>void (undefined)</returns>
+    <testlink>test_api_digfor</testlink>
     <status>incomplete</status>
     <sample>var res = JMVC.object.digForKey({&#10;
     a : [1,2,3,4],&#10;
