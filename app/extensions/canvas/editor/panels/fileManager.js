@@ -28,12 +28,13 @@ JMVC.canvas.Editor.getFileManager = function (instance) {
                             attrs : {'class':'pointer', 'data-action' : 'close'},
                             html : 'X',
                             cb : function () {
-                                var node = this;
-                                JMVC.events.on(node, 'click', function () {
-                                    panel = node.getNode('modalPanel');
+                                var self = this;
+                                JMVC.events.on(self.node, 'click', function () {
+                                    panel = self.getNode('modalPanel').node;
                                     JMVC.css.style(panel, 'display', 'none');
                                     visible = false;
                                 })
+                                self.done();
                             }
                         }]
                     },{
@@ -49,6 +50,7 @@ JMVC.canvas.Editor.getFileManager = function (instance) {
         init : function () {
             console.debug('initilized');
         },
+
         open : function (){
             if (visible) {
                 return false;
@@ -60,12 +62,13 @@ JMVC.canvas.Editor.getFileManager = function (instance) {
                 JMVC.core.widgzard.render(mup);     
             }
         },
+
         save : function () {
-            
             pubsave();
         },
+
         load : function () {
-            
+    
             pubload();
         }
     };

@@ -28,7 +28,7 @@ JMVC.head.addStyle('/media/css/widgzard/sample3.css');
                 html : 'back',
                 cb : function () {
                     var self = this;
-                    JMVC.events.on(self, 'click', function () {
+                    JMVC.events.on(self.node, 'click', function () {
                         JMVC.head.goto('widgzard', 'sample');
                     })
                 }
@@ -54,14 +54,14 @@ JMVC.head.addStyle('/media/css/widgzard/sample3.css');
             if(i > 0 && !(i%s)) {
                 tmp = document.createElement('br');
                 tmp.className = 'clearer';
-                SELF.appendChild(tmp); 
+                SELF.node.appendChild(tmp); 
                 c++;    
             }
 
             tmp = document.createElement('div');
             tmp.className = 'respfixed square ' + (c % 2 ? 'w' : 'b');
             tmp.innerHTML = pieces.white[keys[Math.floor(Math.random() * 6)] ];
-            SELF.appendChild(tmp);
+            SELF.node.appendChild(tmp);
             c++;
             
         }

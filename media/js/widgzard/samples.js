@@ -21,7 +21,7 @@ JMVC.core.widgzard.render({
                 attrs : {'class' : 'round respfixed'},
                 html : 'x',
                 cb : function () {
-                    JMVC.events.on(this, 'click', function (){
+                    JMVC.events.on(this.node, 'click', function (){
                         JMVC.core.widgzard.load('/media/js/widgzard/samplesback.js');
                     });
                     this.done();
@@ -47,9 +47,10 @@ JMVC.core.widgzard.render({
                         }],
                         
                         cb : function () {
-                            JMVC.events.on(this, 'click', function () {
+                            JMVC.events.on(this.node, 'click', function () {
                                 JMVC.core.widgzard.load('/media/js/widgzard/script1.js');
-                            })
+                            });
+                            this.done();
                         }
                     }]
                 },{
@@ -67,9 +68,10 @@ JMVC.core.widgzard.render({
                             html : '3Maps'
                         }],
                         cb : function () {
-                            JMVC.events.on(this, 'click', function () {
+                            JMVC.events.on(this.node, 'click', function () {
                                 JMVC.core.widgzard.load('/media/js/widgzard/script2.js');
                             })
+                            this.done();
                         }
                     }]
                 },{
@@ -87,13 +89,14 @@ JMVC.core.widgzard.render({
                             html : 'chessboard'
                         }],
                         cb : function () {
-                            JMVC.events.on(this, 'click', function () {
+                            JMVC.events.on(this.node, 'click', function () {
                                 JMVC.core.widgzard.load('/media/js/widgzard/script3.js');
-                            })
+                            });
+                            this.done();
                         }
                     }]
                 }
             ]
         }
     ]
-},true);
+}, true);

@@ -4,14 +4,14 @@
 JMVC.require(
     'core/lib/border/border',
     'widget/snow/snow',
-    'core/lorem',
-    'core/captcha/captcha'
+    'core/lorem'
+    //,'core/captcha/captcha'
     //,'vendors/dropbox/dropbox'
 );
 JMVC.controllers.widgzard = function () {
     "use strict";
 
-    //JMVC.css.autoHeadings();
+    JMVC.css.autoHeadings();
 
     var drawText = !JMVC.p.draw,
         link = drawText ?
@@ -23,6 +23,19 @@ JMVC.controllers.widgzard = function () {
         return drawText ? JMVC.string.lorem(n) : '';
     }
 
+
+    // this.before = function () {
+    //     JMVC.debug('before');
+    // };
+
+    // this.after = function () {
+    //     JMVC.debug('after');
+    // };
+
+    /**
+     * [action_index description]
+     * @return {[type]} [description]
+     */
     this.action_index = function (){
         
         JMVC.events.loadify(1000);
@@ -30,11 +43,12 @@ JMVC.controllers.widgzard = function () {
         JMVC.require(
             'core/lib/widgzard/widgzard'
             ,'core/screen/screen'
+            ,'core/captcha/captcha'
         );
 
         JMVC.css.autoHeadings();
 
-        JMVC.css.beResponsive(); //document.body.className = 'resp';
+        JMVC.css.beResponsive();
 
         function getConfig() {
             return {
@@ -42,7 +56,6 @@ JMVC.controllers.widgzard = function () {
                 cb : function (){
                     JMVC.dom.addClass(document.body, 'b960');
                     JMVC.debug('end RENDER MAIN');
-                    //console.debug(this.getNode('tree'))
                 },
                 content : [
                     {
@@ -67,7 +80,6 @@ JMVC.controllers.widgzard = function () {
                             {
                                 attrs : {'id' : 'prova3', 'class' : 'p30'},
                                 style : {'float' : 'left'},
-                                sameHeight : true,
                                 content : [
                                     {
                                         tag : 'style',
@@ -82,16 +94,9 @@ JMVC.controllers.widgzard = function () {
                                                 'background-color:white;'+
                                                 'cursor:default'+
                                             '}'+
-                                            '.tongue:hover{'+
-                                                'background-color:#ddd'+
-                                            '}'+
-                                            '.tongue.active:hover{'+
-                                                'background-color:white'+
-                                            '}'+
-                                            '.cnt{'+
-                                                'background-color:white;'+
-                                                'padding:5px'+
-                                            '}'
+                                            '.tongue:hover{background-color:#ddd}'+
+                                            '.tongue.active:hover{background-color:white}'+
+                                            '.cnt{background-color:white;padding:5px}'
                                     },
                                     {
                                         style : {
@@ -135,20 +140,20 @@ JMVC.controllers.widgzard = function () {
                                             }]
                                         }],
                                         cb : function () {
-                                            var tb1 = this.getNode('tb1'),
-                                                tb2 = this.getNode('tb2'),
-                                                tb3 = this.getNode('tb3'),
-                                                cnt1 = this.getNode('cnt1'),
-                                                cnt2 = this.getNode('cnt2'),
-                                                cnt3 = this.getNode('cnt3');
-                                            function clear() {
-                                                cnt1.style.display = 'none';
-                                                cnt2.style.display = 'none';
-                                                cnt3.style.display = 'none';
-                                                JMVC.dom.removeClass(tb1, 'active');
-                                                JMVC.dom.removeClass(tb2, 'active');
-                                                JMVC.dom.removeClass(tb3, 'active');
-                                            }
+                                            var tb1 = this.getNode('tb1').node,
+                                                tb2 = this.getNode('tb2').node,
+                                                tb3 = this.getNode('tb3').node,
+                                                cnt1 = this.getNode('cnt1').node,
+                                                cnt2 = this.getNode('cnt2').node,
+                                                cnt3 = this.getNode('cnt3').node,
+                                                clear = function () {
+                                                    cnt1.style.display = 
+                                                    cnt2.style.display = 
+                                                    cnt3.style.display = 'none';
+                                                    JMVC.dom.removeClass(tb1, 'active');
+                                                    JMVC.dom.removeClass(tb2, 'active');
+                                                    JMVC.dom.removeClass(tb3, 'active');
+                                                }
                                             JMVC.events.on(tb1, 'click', function () {
                                                 clear();
                                                 JMVC.dom.addClass(tb1, 'active');
@@ -205,6 +210,7 @@ JMVC.controllers.widgzard = function () {
                                         html : lorem(30)
                                     }, {
                                         style : {margin : '5px'},
+                                        sameHeight : true,
                                         content : [
                                             {
                                                 style : {'float' : 'left',width:'33.3%'},
@@ -287,21 +293,21 @@ JMVC.controllers.widgzard = function () {
                             tag : 'span',
                             style : {cursor:'pointer', color:'white', textDecoration : 'none', fontFamily: 'verdana', fontSize:'10px'},
                             html : (drawText ? 'hide' : 'show') + ' content'
-                        }]
-                        ,cb : toggleText
+                        }],
+                        cb : toggleText
                     }
                 ]
             };
         }
 
         function doCaptcha() {
-            JMVC.core.captcha.create(this);
+            JMVC.core.captcha.create(this.node);
             this.done();
         }
 
         function another () {
             var self = this,
-                footer = self.getNode('footer');
+                footer = self.getNode('footer').node;
 
             JMVC.core.widgzard.render({
                     target : footer,
@@ -325,9 +331,10 @@ JMVC.controllers.widgzard = function () {
             
         }
 
+
         function toggleText (){
             
-            JMVC.events.one(this, 'click', function () {
+            JMVC.events.one(this.node, 'click', function () {
                 drawText = !drawText;
                 JMVC.core.widgzard.render(getConfig(), true);
             });
@@ -345,11 +352,10 @@ JMVC.controllers.widgzard = function () {
             });
     };
 
-
-
-
-
-
+    /**
+     * [action_sample description]
+     * @return {[type]} [description]
+     */
     this.action_sample = function (){
 
         JMVC.require(
@@ -371,22 +377,6 @@ JMVC.controllers.widgzard = function () {
 
         var incr = 5,
             time = 2,
-            shrinkFonts = function (t) {
-                var self = this,
-                    n = 0;
-                (function g (){
-                    window.setTimeout(function () {
-                        var c = parseInt(self.style.letterSpacing, 10),
-                            tInd = parseInt(self.style.textIndent, 10);
-                        c -= incr;
-                        self.style.letterSpacing = c + 'px';
-                        if (t) self.style.textIndent = (tInd - incr) + 'px';
-                        c > incr && g();
-                    }, time);
-                })();
-                this.done();
-            },
-            
             color0 = '#FFFFFF',
             color1 = '#FF8800',
             color1a = '#FF8800',
@@ -399,6 +389,22 @@ JMVC.controllers.widgzard = function () {
             spacing = spaPX + 'px',
             margin = 2 * spaPX + 'px',
             padding = '10px',
+            shrinkFonts = function (t) {
+                var self = this,
+                    node = self.node,
+                    n = 0;
+                (function g (){
+                    window.setTimeout(function () {
+                        var c = parseInt(node.style.letterSpacing, 10),
+                            tInd = parseInt(node.style.textIndent, 10);
+                        c -= incr;
+                        node.style.letterSpacing = c + 'px';
+                        if (t) node.style.textIndent = (tInd - incr) + 'px';
+                        c > incr && g();
+                    }, time);
+                })();
+                this.done();
+            },
             li = function (msg) {
                 return {
                     tag : 'li',
@@ -411,30 +417,27 @@ JMVC.controllers.widgzard = function () {
         JMVC.core.widgzard.render({
 
             cb : function (){
-                
-                
-/*
-                var self = this,
-                    dbox = JMVC.vendors.dropbox.create();
-                
-                dbox.login(function (){
-                    dbox.getFileContent('hw.html', function (err, cnt) {
-                        self.getNode('db').innerHTML = cnt;
-                    });
-                });
-*/              
-               //console.debug('end')
+                // var self = this,
+                    // dbox = JMVC.vendors.dropbox.create();
+                // 
+                // dbox.login(function (){
+                    // dbox.getFileContent('hw.html', function (err, cnt) {
+                        // self.getNode('db').innerHTML = cnt;
+                    // });
+                // });
+               console.debug('end')
                //this.getNode('db').innerHTML = '<b>not FINISHED</b>';
-                
             }, 
             style : {backgroundColor: color2},
             content : [{
+                wid : 'first',
+                data : {who : 'The Widgzard'},
                 attrs : {'class' : 'round respfixed'},
                 style : {
                     backgroundColor : color1,
                     padding : '40px',
                     margin : margin + ' 0px',
-                    fontSize : '44px',
+                    fontSize : '56px',
                     lineHeight : '50px',
                     height:'105px',
                     fontWeight:'bold',
@@ -493,13 +496,25 @@ JMVC.controllers.widgzard = function () {
                             attrs : {'class':'round respfixed', id : 'getsamples'},
                             style : {margin:spacing, backgroundColor:color3},
                             content : [{
+                                data : {what : 'rulez'},
                                 style : {padding:padding, cursor:'pointer', textTransform : 'uppercase'},
                                 html : 'load some samples',
                                 cb : function () {
-                                    JMVC.events.on(this, 'click', function (){
+                                    JMVC.events.on(this.node, 'click', function () {
                                         JMVC.core.widgzard.load('/media/js/widgzard/samples.js');
                                     });
                                     this.done();
+                                    
+                                    if(
+                                        this.parent === this.climb()
+                                        &&
+                                        this.parent.node.parentNode === this.climb(2).node
+                                        &&
+                                        this.root === document.body
+                                    ) console.debug(this.getNode('first').data.who + ' ' + this.data.what);
+                                    // console.debug(this.climb(2));
+                                    // console.debug(this.climb(3));
+                                    // console.debug(this.climb(4));
                                 }
                             }]
                             
@@ -548,7 +563,7 @@ JMVC.controllers.widgzard = function () {
                             content : [{
                                 style : {padding:padding},
                                 html : JMVC.core.widgzard.htmlspecialchars(
-                                    "var $ = document.getElementById;\n"+
+                                    "var $ = document.getElementById; \n"+
                                     "Widgzard.render({\n"+
                                     "   target : $('cnt'),\n" +
                                     "   cb : function() {\n"+
@@ -564,7 +579,7 @@ JMVC.controllers.widgzard = function () {
                                     "       }\n"+
                                     "   }]\n" +
                                     "});"
-                                )
+                                , true)
                             }]
                         }]    
                     },{
@@ -589,7 +604,7 @@ JMVC.controllers.widgzard = function () {
                             content : [{
                                 
                                 content : [{
-                                    html : JMVC.core.widgzard.htmlspecialchars('<div id="cnt">')
+                                    html : JMVC.core.widgzard.htmlspecialchars('<div id="cnt">', true)
                                 },{
 
                                     attrs : {'class':'round'},
@@ -597,9 +612,9 @@ JMVC.controllers.widgzard = function () {
                                     html : JMVC.core.widgzard.htmlspecialchars(
                                         "  <div style='color:red'>hello</div>\n" + 
                                         "  <div style='color:green'>world</div>"
-                                    ) 
+                                    ,true) 
                                 },{
-                                   html : JMVC.core.widgzard.htmlspecialchars('</div>') 
+                                   html : JMVC.core.widgzard.htmlspecialchars('</div>', true) 
                                 }]  
                             }]
                         }]    
@@ -651,7 +666,7 @@ JMVC.controllers.widgzard = function () {
                                 "       ...other\n" +
                                 "       nodes here\n" +
                                 "   ]\n" +
-                                "});"
+                                "});", true
                             )
                         },{
                             content : [{
@@ -703,6 +718,203 @@ JMVC.controllers.widgzard = function () {
         }, true);
     };
 
+    /**
+     * [action_engy description]
+     * @return {[type]} [description]
+     */
+    this.action_engy = function () {
+
+        var timeStart = +new Date,
+            timeEnd;
+
+        document.body.style.fontFamily = 'Verdana, sans';
+            
+        JMVC.require('core/lib/widgzard/engy', function () {
+            JMVC.core.engy.process({
+                component: "carousel",
+                params: {
+                    id: "d23q2qdd2q243",
+                    layout: {
+                        bgImage :'http://static.stailamedia.com/svp/interactive/images/1/1/800/526/http%253A%252F%252F25.media.tumblr.com%252Fec1ecfbc92e8673eeb18f9df2fb029a0%252Ftumblr_n2wsdoydBx1qkegsbo1_1280.jpg',
+
+                        size: {
+                            width: "462px",
+                            height: "230px"
+                        }
+
+                        // brd: "0px solid black",
+
+                        ,padding : '10px'
+                        // ,button : {theme : 'default'}
+                        // ,button : {theme : 'darkDefault'}
+                        // ,button : {theme : 'whiteRound'}
+                        // ,button : {theme : 'darkRound brdWhite'}
+                        // ,orientation : 'vertical'
+                        // ,ballList : true
+                    },
+                    
+                    link : "http://www.jmvc.dev",
+                    linkOut : true,
+                    speed : .2,
+                    cards: [
+                        {
+                            component: "video",
+                            params: {
+                                oggUrl: "http://www.w3schools.com/html/mov_bbb.ogg"
+                                ,mp4Url: "http://www.w3schools.com/html/mov_bbb.mp4"
+                                ,autoplay : false
+                                ,controls : true
+                                
+                                // ,onEnd : {
+                                //     content : [{
+                                //         tag : 'p',
+                                //         html : 'The end',
+                                //         style : {
+                                //             color:'red',
+                                //             textAlign :'center',
+                                //             fontSize : '100px',
+                                //             textTransform : 'uppercase'
+                                //         }
+                                //     }]
+                                // }
+                                
+                                // ,onEnd : {
+                                //     component: "contactBasic",
+                                //     params: {
+                                //         submitUrl: "http://www.sm.dev/post.php"
+                                //     }
+                                // }
+                                
+                                // ,onEnd : {
+                                //     component : "modal",
+                                //     params : {
+                                //         html : '<h1>Hello World</h1><p>This is a simple description</p>'
+                                //     }
+                                // }
+                            }
+                        },
+
+
+                        {
+                            component: "image-link",
+                            params: {
+                                imageUrl: "http://www.jmvc.org/media/img/jmvc_n2.png",
+                                link: "http://www.jmvc.org?ga=false"
+                            }
+                        },
+
+
+                        {
+                            component: "image-text-link",
+                            params: {
+                                imageUrl: "http://www.stailamedia.com/wp-content/themes/staila/images/logo4.svg",
+                                text: "Greetings from",
+                                link: "http://www.stailamedia.com"
+                            }
+                        },
+
+
+                        {
+                            component: "video-text",
+                            params: {
+                                oggUrl: "http://www.w3schools.com/html/mov_bbb.ogg",
+                                mp4Url: "http://www.w3schools.com/html/mov_bbb.mp4",
+                                autoplay : true,
+                                heading : "Let`s dance?",
+                                text : "Google announces project Tango"
+                            }
+                        },
+
+
+                        {
+                            component: "video",
+                            params: {
+                                mp4Url: "http://banner.stailamedia.com/interactive/Lidl/ON-01445/su12/de/movie.mp4"
+                                ,oggUrl: "http://banner.stailamedia.com/interactive/Lidl/ON-01445/su12/de/movie.webm"
+                                 //// ???????? WAT ...hahahahah ogg !== webm
+                                 ///
+                                ,autoplay : false
+                                ,controls : true
+                            }
+                        },
+
+
+                        {
+                            component : 'fb',
+                            params : {
+                                fbPageUrl: "https:\/\/www.facebook.com\/lidlch",
+                                scrolling : 'yes',
+                                colorscheme : 'light'
+                            }
+                        },
+
+
+                        {
+                            component: "contactBasic",
+                            params: {
+                                submitUrl: "http://www.sm.dev/post.php"
+                            }
+                        },
+
+
+                        {
+                            component: "poll",
+                            params: {
+                                submitUrl: "http://www.sm.dev/poll.php",
+                                questionsAnswers: [{
+                                    name : 'rateType',
+                                    question : 'Do you charge on an hourly or project basis?',
+                                    multi : true,
+                                    answers :[
+                                        'I charge hourly',
+                                        'I charge flat project fees',
+                                        'A mix of both'
+                                    ]
+                                },{
+                                    name : 'hourlyRate',
+                                    question : 'What is your hourly rate?',
+
+                                    answers :[
+                                        '$10-$49/hour',
+                                        '$50-$99/hour',
+                                        '$100-$149/hour',
+                                        '+$150/hour'
+                                    ] 
+                                },{
+                                    name : 'yearIncome',
+                                    question : 'What is your income per year?',
+                                    answers :[
+                                        '$50K-$100K/y',
+                                        '$100K-$150K/y',
+                                        '$150K-$250K/y',
+                                        '+$250K/y'
+                                    ] 
+                                }]
+                            }
+                        }
+                    ]
+                }
+            }).then(function(p, r) {
+
+                // Add a target, if not body is used
+                // and
+                // all scripts tag will be removed
+                // 
+                // then unleash the Widgzard
+                // using the engy generated config
+                //
+                var doCleanUpTheWholeTarget = true;
+                JMVC.core.widgzard.render(
+                    r[0],
+                    doCleanUpTheWholeTarget
+                );
+
+            });
+
+        });
+
+    };
+
 
 
     this.action_extreme = function () {
@@ -715,9 +927,17 @@ JMVC.controllers.widgzard = function () {
         JMVC.dom.addClass(JMVC.WDB, 'resp');
 
         JMVC.core.widgzard.render({
-            html : '<h1>Hello world</h1>',
-            content : false,
-            cb : function () {}
+            content : [{
+                html : '<h1>Hello world</h1>',
+                style : {
+                    fontFamily:'"Luckiest Guy",cursive',
+                    fontSize : '30px',
+                    marginTop : '20px'
+                }
+            }, {
+                tag : 'p',
+                html : JMVC.string.lorem(JMVC.util.rand(100, 500))
+            }]
         }, true);
 
     };

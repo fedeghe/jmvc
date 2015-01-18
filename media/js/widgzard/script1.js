@@ -16,9 +16,10 @@ JMVC.core.widgzard.render({
                 html : 'back',
                 cb : function () {
                     var self = this;
-                    JMVC.events.on(self, 'click', function () {
+                    JMVC.events.on(self.node, 'click', function () {
                         JMVC.head.goto('widgzard', 'sample');
-                    })
+                    });
+                    this.done();
                 }
             }]
         },{
@@ -55,12 +56,12 @@ JMVC.core.widgzard.render({
                 }
             ],
             cb : function () {
-                var cnt1 = this.getNode('cnt1'),
-                    cnt2 = this.getNode('cnt2'),
-                    cnt3 = this.getNode('cnt3'),
-                    tng1 = this.getNode('tb1'),
-                    tng2 = this.getNode('tb2'),
-                    tng3 = this.getNode('tb3');
+                var cnt1 = this.getNode('cnt1').node,
+                    cnt2 = this.getNode('cnt2').node,
+                    cnt3 = this.getNode('cnt3').node,
+                    tng1 = this.getNode('tb1').node,
+                    tng2 = this.getNode('tb2').node,
+                    tng3 = this.getNode('tb3').node;
 
                 function hide (cnt, tng) {
                     cnt.style.display = 'none';
@@ -76,22 +77,18 @@ JMVC.core.widgzard.render({
                     hide(cnt2, tng2);
                     hide(cnt3, tng3);
                 }
-
                 JMVC.events.on(tng1, 'click', function () {
                     hideall();
                     show(cnt1, tng1);
                 });
-
                 JMVC.events.on(tng2, 'click', function () {
                     hideall();
                     show(cnt2, tng2);
                 });
-
                 JMVC.events.on(tng3, 'click', function () {
                     hideall();
                     show(cnt3, tng3);
                 });
-
                 this.done();
             }
         }

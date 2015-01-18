@@ -6,7 +6,7 @@ JMVC.core.widgzard.render({
         style : {padding:'10px', cursor:'pointer', textTransform : 'uppercase'},
         html : 'load some samples',
         cb : function () {
-            JMVC.events.on(this, 'click', function (){
+            JMVC.events.on(this.node, 'click', function (){
                 JMVC.core.widgzard.load('/media/js/widgzard/samples.js');
             });
             this.done();

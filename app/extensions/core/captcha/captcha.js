@@ -22,7 +22,7 @@ JMVC.extend('core/captcha', function () {
         getMarkup = function (captchaInst) {
             
             function enableChk () {
-                var butt = this;
+                var butt = this.node;
                 
                 JMVC.events.on(butt, 'click', function () {
                     var input = butt.getNode('inputTxt'),
@@ -34,7 +34,7 @@ JMVC.extend('core/captcha', function () {
             }
 
             function refresh () {
-                var self = this;
+                var self = this.node;
                 JMVC.events.on(self, 'click', function () {
                     captchaInst.imgName = getRandImg();
                     JMVC.dom.attr(self, 'src', path + captchaInst.imgName);

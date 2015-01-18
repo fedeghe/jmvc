@@ -25,6 +25,7 @@ JMVC.head.addStyle('/media/css/widgzard/sample2.css');
             cb : function () {
                 console.log('THE END');
                 document.body.style.backgroundColor = 'green';
+                
             },
             
             content : [{
@@ -33,9 +34,10 @@ JMVC.head.addStyle('/media/css/widgzard/sample2.css');
                         html : 'back',
                         cb : function () {
                             var self = this;
-                            JMVC.events.on(self, 'click', function () {
+                            JMVC.events.on(self.node, 'click', function () {
                                 JMVC.head.goto('widgzard', 'sample');
-                            })
+                            });
+                            this.done();
                         }
                     }]
                 },{
@@ -96,7 +98,7 @@ JMVC.head.addStyle('/media/css/widgzard/sample2.css');
                         center: new google.maps.LatLng(self.data.position.lat, self.data.position.lng),
                         zoom: self.data.position.zoom
                     },
-                    map = new google.maps.Map(self, mapOptions);
+                    map = new google.maps.Map(self.node, mapOptions);
                 google.maps.event.addListenerOnce(map, 'idle', function(){
                     self.done();
                 });

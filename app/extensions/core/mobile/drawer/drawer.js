@@ -39,8 +39,8 @@ JMVC.extend('mobile.drawer', function () {
         return {
             cb : function () {
                 
-                var node = this,
-                    n = node.getNode(drwID),
+                var self = this,
+                    n = self.getNode(drwID).node,
                     left,
                     moving = false,
                     moved = false,
@@ -105,7 +105,6 @@ JMVC.extend('mobile.drawer', function () {
                         moving = false;
                     }
                 });
-
             },
             content : [{
                 wid : drwID,
@@ -136,9 +135,10 @@ JMVC.extend('mobile.drawer', function () {
                     },
                     html : JMVC.core.widgzard.htmlspecialchars('>'),
                     cb : function () {
-                        var node = this;
+                        var self = this,
+                            node = self.node;
                         JMVC.events.on(node, 'click', function () {
-                            var n = node.getNode(drwID),
+                            var n = node.getNode(drwID).node,
                                 
                                 st = parseInt(JMVC.css.style(n, 'width'), dim.width + 'px');
 
@@ -158,7 +158,7 @@ JMVC.extend('mobile.drawer', function () {
                             }
                             
                         });
-                        node.done();  
+                        self.done();  
                         
                     }
                 }]

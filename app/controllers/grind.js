@@ -1,11 +1,11 @@
 
 // http://www.jmvc.dev/grind/index/draw/true
-
 JMVC.require(
 	'core/lib/border/border',
 	'widget/snow/snow',
 	'core/lorem'
 );
+
 JMVC.controllers.grind = function () {
 	"use strict";
 
@@ -33,10 +33,10 @@ JMVC.controllers.grind = function () {
 
 		function getConfig() {
 			return {
-				cb : function (){
+				cb : function () {
 					JMVC.debug('end RENDER MAIN');
 				},
-				target : JMVC.dom.find("#extralogo"),
+				target : JMVC.dom.find('#extralogo'),
 				content : [
 					{
 						attrs : {
@@ -74,14 +74,11 @@ JMVC.controllers.grind = function () {
 										},
 										attrs : {'class' : 'pad10 round8'},
 										html : lorem(30),
-
-
-
 										cb : function () {
-											var p = this.promise;
+											var self = this;
 											setTimeout(function () {
 												JMVC.debug(2)
-												p.done();
+												self.done();
 											}, 2000);
 										}
 									}, {
@@ -91,9 +88,6 @@ JMVC.controllers.grind = function () {
 										},
 										attrs : {'class' : 'pad10 round8'},
 										html : lorem(30),
-
-
-
 										cb : function () {
 											var self = this;
 											setTimeout(function () {
@@ -101,8 +95,6 @@ JMVC.controllers.grind = function () {
 												self.done();
 											}, 3000);
 										}
-
-
 									}
 								]
 							}, {
@@ -191,11 +183,19 @@ JMVC.controllers.grind = function () {
 					{
 						attrs : {'id' : 'prova6'},
 						style : {backgroundColor : 'magenta'},
-						html : 'magenta'
-						,cb : anotherGrind
+						html : 'magenta',
+						content : [
+							{
+								html : 'hellooooooooo',
+								cb	: function () {
+									console.debug('inner done');
+									this.done();
+								}
+							}
+						]
 					},
 					{
-						target:JMVC.dom.find('body'),
+						target:document.body,
 						style:{position:'absolute', top:'0px', left:'5px', color:'white'},
 						content : [{
 							//wid : 'txtButt',
@@ -203,45 +203,23 @@ JMVC.controllers.grind = function () {
 							style : {cursor:'pointer', color:'white', textDecoration : 'none', fontFamily: 'verdana', fontSize:'10px'},
 							html : 'toggle text'
 						}],
-						cb : toggleText
+						cb : function (){
+
+							this.done();
+							JMVC.events.on(this.node, 'click', function () {
+								drawText = !drawText;
+							
+								JMVC.core.widgzard.render(getConfig(), true);
+							});
+						}
 					}
 				]
 			};
 		}
 		
-		var config = getConfig();
+		
 
-
-		function toggleText (){
-			this.done();
-			JMVC.events.on(this, 'click', function () {
-				drawText = !drawText;
-				/*
-				JMVC.grind.render(getConfig(), function (){
-					JMVC.debug('end of re-render');
-				}, 'b960');
-				*/
-				JMVC.core.widgzard.render(getConfig(), true);
-			});
-		}
-
-		function anotherGrind () {
-			var node = this;
-				
-			JMVC.core.widgzard.render({
-				target : node,
-				content : [
-					{
-						html : 'hellooooooooo',
-						cb	: function () {console.debug('inner done');}
-					}
-				],
-				cb : function () {
-					node.done();
-				}
-			}, true);
-
-		}
+		
 
 		JMVC.getView('vacuum')
 			.set({
@@ -253,9 +231,15 @@ JMVC.controllers.grind = function () {
 				JMVC.grind.render(config, function (){
 					JMVC.debug('end RENDER MAIN');
 				},  'b960');*/
-				JMVC.core.widgzard.render(config, true);
+				//console.dir(config);
+				JMVC.core.widgzard.render(getConfig(), true);
 			});
 	};
+
+
+
+
+
 
 	this.action_direct = function () {
 		JMVC.events.loadify(500);
@@ -267,7 +251,7 @@ JMVC.controllers.grind = function () {
 		JMVC.head.meta('generator', 'jmvc resident in your machine');
 
 		var config  = {
-			target : 'body',
+			target : document.body,
 			content : [
 				{
 					attrs : {
@@ -281,7 +265,7 @@ JMVC.controllers.grind = function () {
 				}, {
 					attrs : {id : 'prova1', 'class' : 'p100 pad10 round8 roundbottomleft'},
 					style : {'float' : 'left'},
-					html : lorem(30)
+					html : JMVC.string.lorem(30)
 				}, {
 					attrs : {'id' : 'prova2', 'class' : 'p100'},
 					style : {'float' : 'left'},
@@ -295,19 +279,19 @@ JMVC.controllers.grind = function () {
 										marginTop : '5px'
 									},
 									attrs : {'class' : 'pad10 round8'},
-									html : lorem(30)
+									html : JMVC.string.lorem(30)
 								}, {
 									style : {
 										marginTop : '5px'
 									},
 									attrs : {'class' : 'pad10 round8'},
-									html : lorem(30)
+									html : JMVC.string.lorem(30)
 								}, {
 									style : {
 										marginTop : '5px'
 									},
 									attrs : {'class' : 'pad10 round8'},
-									html : lorem(30)
+									html : JMVC.string.lorem(30)
 								}
 							]
 						}, {
@@ -320,14 +304,14 @@ JMVC.controllers.grind = function () {
 										marginBottom : '0px'
 									},
 									attrs : {'class' : 'pad10 round8'},
-									html : lorem(5)
+									html : JMVC.string.lorem(5)
 								}, {
 									style : {
 										margin : '5px',
 										marginBottom : '0px'
 									},
 									attrs : {'class' : 'pad10 round8'},
-									html : lorem(5)
+									html : JMVC.string.lorem(5)
 								}, {
 									style : {margin : '5px'},
 									content : [
@@ -337,7 +321,7 @@ JMVC.controllers.grind = function () {
 											content : [{
 												style : {marginRight:'5px'},
 												attrs : {'class' : 'round8 pad10'},
-												html : lorem(60)
+												html : JMVC.string.lorem(60)
 											}]
 										}, {
 											attrs : {'class' : 'p33'},
@@ -352,7 +336,7 @@ JMVC.controllers.grind = function () {
 											style : {'float' : 'left'},
 											content : [{
 												attrs : {'class' : 'round8 pad10'},
-												html : lorem(20)
+												html : JMVC.string.lorem(20)
 											}]
 										},
 										'clearer'
@@ -365,7 +349,7 @@ JMVC.controllers.grind = function () {
 								'float' : 'left',
 								minHeight : '140px'
 							},
-							html : lorem()
+							html : JMVC.string.lorem()
 
 						},
 						'clearer'
@@ -378,15 +362,15 @@ JMVC.controllers.grind = function () {
 						{
 							attrs : {id : 'brd1', 'class' : 'p25 round12 roundleft pad5'},
 							style : {'float' : 'left'},
-							html : lorem(10)
+							html : JMVC.string.lorem(10)
 						}, {
 							attrs : {id : 'brd2', 'class' : 'p50 pad5'},
 							style : {'float' : 'left'},
-							html : lorem(20)
+							html : JMVC.string.lorem(20)
 						}, {
 							attrs : {id : 'brd3', 'class' : 'p25 round12 roundbottomright pad5'},
 							style : {'float' : 'left'},
-							html : lorem(10)
+							html : JMVC.string.lorem(10)
 						},
 						'clearer'
 					]
