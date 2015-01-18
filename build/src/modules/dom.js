@@ -96,17 +96,23 @@ JMVC.dom = {
             }
             return true;
         }
-        //
+        
         // Make sure that avalid name was provided, here cannot be an object
+        // 
         if (!name || name.constructor !== String) {
             return '';
         }
-        //
+        
         // If the user is setting a value
+        // 
         if (typeof value !== 'undefined') {
+            
             // Set the quick way first 
+            // 
             elem[{'for': 'htmlFor', 'class': 'className'}[name] || name] = value;
+            
             // If we can, use setAttribute
+            // 
             if (elem.setAttribute) {
                 elem.setAttribute(name, value);
             }
@@ -139,8 +145,8 @@ JMVC.dom = {
      * @param  {[type]} node [description]
      * @return {[type]}      [description]
      */
-    childs : function (node) {
-        return node.childNodes;
+    childs : function (node, only_elements) {
+        return only_elements? node.children : node.childNodes;
     },
 
     /**
@@ -204,6 +210,24 @@ JMVC.dom = {
      */
     createNS : function (ns, name) {
         return JMVC.WD.createElementNS(ns, name);
+    },
+
+    
+    /**
+     * consider only elements (in fact uses children)
+     * 
+     * @return {[type]}
+     */
+    descendant : function () {
+        var args = Array.prototype.slice.call(arguments, 0),
+            i = 0,
+            res = args.shift(),
+            l = args.length;
+        if (!l) return res;
+        while (i < l) {
+            res = res.children.item(~~args[i++]);
+        }
+        return res;
     },
 
 
