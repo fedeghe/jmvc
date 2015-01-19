@@ -53,25 +53,37 @@ JMVC.controllers.bucket = function () {
 			
 			JMVC.test.testValue('Bucket is empty', function () {return !!a.hasMore(); }, false);
 
-			JMVC.test.message('fill it again with 10 elements a0, ... a9');
+
+			var refill1 = JMVC.util.rand(5, 10);
+			JMVC.test.message('fill it again with ' + refill1 + ' elements a0, ... a9');
 			inArr.splice(0, inArr.length);
 
-			for (var i = 0, l = 10; i < l; i += 1){
+			
+			for (var i = 0, l = refill1; i < l; i += 1){
 				inArr.push('a' + i);
 			}
 			a.fill(inArr);
-			JMVC.test.message(a.show());	
+			JMVC.test.testValue('Bucket has ' + refill1 + ' elements', function () {return a.size(); }, refill1);
+
 			JMVC.test.message('create another b0, ... b19, merge`em and shuffle');
-			var b = new JMVC.bucket.create();
+
+			
+			var b = new JMVC.bucket.create(),
+				refill2 = JMVC.util.rand(10, 100);
+
 			inArr.splice(0, inArr.length);	
-			for (var i = 0, l = 20; i < l; i += 1){
+			for (var i = 0, l = refill2; i < l; i += 1){
 				inArr.push('b' + i);
 			}
 
 			b.fill(inArr);
 
+			JMVC.test.message(b.show());
+			JMVC.test.testValue('New bucket has ' + refill2 + ' elements', function () {return b.size(); }, refill2);
+			JMVC.test.message('Let`s merge`em');
 			a.merge(b);
 			a.shuffle(102);
+			JMVC.test.testValue('Merged bucket has ' + (refill1 + refill2) + ' elements', function () {return a.size(); }, refill1 + refill2);
 			JMVC.test.message(a.show());
 
 			
