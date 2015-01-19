@@ -7,8 +7,10 @@ JMVC.controllers.key = function() {
 			"use strict";
 			
 			JMVC.test.initialize(true);
+
 			JMVC.test.startAll();
-			//JMVC.test.describe('<time datetime="2012-09-20">2012-09-20</time>');
+			
+			JMVC.test.describe('<time datetime="2012-09-20">2012-09-20</time>');
 			
 			JMVC.test.finishAll();
 		});

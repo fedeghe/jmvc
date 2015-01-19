@@ -216,10 +216,6 @@ JMVC.controllers.grind = function () {
 				]
 			};
 		}
-		
-		
-
-		
 
 		JMVC.getView('vacuum')
 			.set({
@@ -235,11 +231,6 @@ JMVC.controllers.grind = function () {
 				JMVC.core.widgzard.render(getConfig(), true);
 			});
 	};
-
-
-
-
-
 
 	this.action_direct = function () {
 		JMVC.events.loadify(500);

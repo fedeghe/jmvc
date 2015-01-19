@@ -41,14 +41,11 @@ JMVC.controllers.canvas = function () {
 			
 			JMVC.events.on(JMVC.dom.find('#mycanvas'), 'mousemove', function(e){
 				var c = cnv.getCoord(e);
-				s1.oregon.x = c[0] - sdim.w/2;
-				s1.oregon.y = c[1] - sdim.h/2;
+				s1.oregon.x = c[0] - sdim.w / 2;
+				s1.oregon.y = c[1] - sdim.h / 2;
 				//cnv.redraw();
 				//cnv.render();
 				s1.draw();
-				
-				//c = null;
-				
 			});
 			
 			window.cnv = cnv;
