@@ -401,6 +401,7 @@ JMVC.controllers.widgzard = function () {
                         node.style.letterSpacing = c + 'px';
                         if (t) node.style.textIndent = (tInd - incr) + 'px';
                         c > incr && g();
+
                     }, time);
                 })();
                 this.done();
@@ -445,14 +446,14 @@ JMVC.controllers.widgzard = function () {
                     fontFamily: "'Luckiest Guy', cursive"
                 },
                 content : [{
-                    style : {textAlign : 'right', 'float':'left', width: '50%',letterSpacing : '600px', textIndent:'-2000px'},
+                    style : {textAlign : 'right', 'float':'left', width: '50%',letterSpacing : '600px', textIndent:'-2000px', fontSize : '80px'},
                     html : 'Widg',
-                    tag : 'h1'
+                    tag : 'span'
                     ,cb : function () {shrinkFonts.call(this, false);}
                 },{
-                    style : {textAlign : 'left', 'float':'left', width: '50%', letterSpacing : '600px', textIndent:'600px'},
+                    style : {textAlign : 'left', 'float':'left', width: '50%', letterSpacing : '600px', textIndent:'600px', fontSize : '80px'},
                     html : 'Zard',
-                    tag : 'h1'
+                    tag : 'span'
                     ,cb : function () {shrinkFonts.call(this, true);}
                 },'clearer']
 
@@ -505,13 +506,16 @@ JMVC.controllers.widgzard = function () {
                                     });
                                     this.done();
                                     
-                                    if(
+                                    if (
                                         this.parent === this.climb()
                                         &&
                                         this.parent.node.parentNode === this.climb(2).node
                                         &&
-                                        this.root === document.body
-                                    ) console.debug(this.getNode('first').data.who + ' ' + this.data.what);
+                                        this.root.node === document.body
+                                    ) {
+
+                                        console.debug(this.getNode('first').data.who + '® ' + this.data.what);
+                                    }   
                                     // console.debug(this.climb(2));
                                     // console.debug(this.climb(3));
                                     // console.debug(this.climb(4));

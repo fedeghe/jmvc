@@ -111,6 +111,9 @@ JMVC.extend('core/widgzard', function () {
         //
         this.map = mapcnt.map;
 
+        //function to stop all
+        this.stop = mapcnt.stop;
+
         // publish in the node the getNode fucntion that allows for
         // getting any node produced from the same json having a 
         // `nodeIdentifier` with a valid value
@@ -340,7 +343,8 @@ JMVC.extend('core/widgzard', function () {
             },
             targetFragment = {
                 node : document.createDocumentFragment('div')
-            };
+            },
+            active = true;
 
         // debug ? 
         debug = !!params.debug;
@@ -359,11 +363,12 @@ JMVC.extend('core/widgzard', function () {
         // from any callback
         // 
         var mapcnt = {
-            root : target.node,
+            root : target,
             map : {},
             getNode : function (id) {
                 return mapcnt.map[id] || false;
-            }
+            },
+            stop : function () {active = false; return false;}
         };
 
 
@@ -417,7 +422,9 @@ JMVC.extend('core/widgzard', function () {
         // 
         
         (function recur(cnf, trg){
-            
+            if (!active) {
+                return false;
+            }
             // change the class if the element is simply a "clearer" String
             // 
             if (cnf.content) {
