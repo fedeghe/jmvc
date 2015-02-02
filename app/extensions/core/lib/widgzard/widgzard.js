@@ -119,6 +119,9 @@ JMVC.extend('core/widgzard', function () {
         // `nodeIdentifier` with a valid value
         this.getNode = mapcnt.getNode;
 
+        // get all nodes mapped
+        this.getNodes = mapcnt.getNodes;
+
         // how many elements are found in the content field?
         // that counter is fundamental for calling this node
         // callback only when every child callback has done
@@ -146,6 +149,9 @@ JMVC.extend('core/widgzard', function () {
             }
 
         };
+
+
+        this.lateWid = mapcnt.lateWid;
     }
 
     /**
@@ -368,7 +374,16 @@ JMVC.extend('core/widgzard', function () {
             getNode : function (id) {
                 return mapcnt.map[id] || false;
             },
-            stop : function () {active = false; return false;}
+            getNodes : function () {
+                return mapcnt.map;
+            },
+            stop : function () {
+                active = false;
+                return false;
+            },
+            lateWid : function (wid) {
+                mapcnt.map[wid] = this;
+            }
         };
 
 
@@ -413,10 +428,12 @@ JMVC.extend('core/widgzard', function () {
         //
         target.WIDGZARD = true;
 
-        // allow to use getNode from root
+        // allow to use getNode & getNodes from root
         // 
         target.getNode = 
         targetFragment.getNode = mapcnt.getNode;
+        target.getNodes = 
+        targetFragment.getNodes = mapcnt.getNodes;
 
         // start recursion
         // 
