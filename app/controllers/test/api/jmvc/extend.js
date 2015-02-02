@@ -51,7 +51,6 @@ JMVC.controllers.extend = function() {
             
             JMVC.test.finishAll();
             
-            JMVC.test.describe('Avoid using any <i>each</i> function is the best choice you can take!');
 
         });
     }
