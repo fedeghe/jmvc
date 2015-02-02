@@ -115,17 +115,6 @@ JMVC.controllers.api = function () {
 							sample = '<pre class="code round6 roundright">' + section['function'][i].sample['#text'] + '</pre>';
 							if (section['function'][i].code) {
 								sample += JMVC.string.replaceAll(trialButt, {doCode :  section['function'][i].code['#text']});
-							/*
-								sample += JMVC.string.replaceAll(consoleButt, {doConsole :
-									JMVC.string.replaceAll(
-										"window.open('" + JMVC.vars.baseurl + "/" + consoleUrlTpl + "')", {
-											html :' ',
-											css: ' ',
-											js: encodeURIComponent(section['function'][i].code['#text'])
-										}
-									)
-								});
-							*/
 							}
 						}
 						
