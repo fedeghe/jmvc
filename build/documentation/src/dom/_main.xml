@@ -9,6 +9,8 @@
     $$src/dom/create.xml$$
     $$src/dom/createText.xml$$
     $$src/dom/createNS.xml$$
+    $$src/dom/descendant.xml$$
+    $$src/dom/domStats.xml$$
     $$src/dom/empty.xml$$
     $$src/dom/find.xml$$
     $$src/dom/findInnerByClass.xml$$

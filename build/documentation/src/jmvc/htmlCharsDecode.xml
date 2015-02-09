@@ -6,4 +6,14 @@
     </params>
     <returns>the string with substituted char</returns>
     <status>complete</status>
+    <sample>var coded = JMVC.htmlChars(&#10;
+    document.documentElement.innerHTML&#10;
+).substring(0, 506);&#10;
+JMVC.debug('coded: ' + coded);&#10;
+JMVC.debug('decoded: ' + JMVC.htmlCharsDecode(coded));</sample>
+    <code>
+    	var coded = JMVC.htmlChars(document.documentElement.innerHTML).substring(0, 506);
+    	JMVC.debug('coded: ' + coded);
+    	JMVC.debug('decoded: ' + JMVC.htmlCharsDecode(coded));
+    </code>
 </function>
