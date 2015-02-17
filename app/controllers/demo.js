@@ -1702,13 +1702,14 @@ JMVC.controllers.demo = function() {
 				logo = JMVCdomCreate('div', {id:'logo', style:'margin-top:10px'}),
 				img1 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/js.jpg'}, 'js'),
 				img2 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/code.jpg'}, 'code'),
-				img3 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/javascript-save-all.jpg'}, 'will save us all');
+				img3 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/javascript-save-all.jpg'}, 'will save us all'),
+				img4 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/Maurizio.png'}, ', java won`t');
 
 			JMVC.css.style(JMVC.WDB, {padding : '50px'});
 			JMVC.css.mappedStyle('xxx', 'a{margin-left:5px}');
 
 			
-			JMVC.dom.append(cnt, [input, butt, pestCss, size1, size2, size3, size4, img1, img2, img3, logo]);
+			JMVC.dom.append(cnt, [input, butt, pestCss, size1, size2, size3, size4, img1, img2, img3, img4, logo]);
 			JMVC.dom.append(JMVC.WDB, cnt);
 
 			JMVC.events.on(butt, 'click', function (){
@@ -1719,7 +1720,7 @@ JMVC.controllers.demo = function() {
 				}
 
 			});
-			JMVC.events.on([img1, img2, img3], 'click', function (){
+			JMVC.events.on([img1, img2, img3, img4], 'click', function (){
 				go(JMVC.vars.baseurl + JMVC.dom.attr(this, 'alt'));
 			});
 			JMVC.events.on(size1, 'click', function (){
