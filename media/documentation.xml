@@ -580,6 +580,16 @@ console.log(foo());</sample>
     </params>
     <returns>the string with substituted char</returns>
     <status>complete</status>
+    <sample>var coded = JMVC.htmlChars(&#10;
+    document.documentElement.innerHTML&#10;
+).substring(0, 506);&#10;
+JMVC.debug('coded: ' + coded);&#10;
+JMVC.debug('decoded: ' + JMVC.htmlCharsDecode(coded));</sample>
+    <code>
+    	var coded = JMVC.htmlChars(document.documentElement.innerHTML).substring(0, 506);
+    	JMVC.debug('coded: ' + coded);
+    	JMVC.debug('decoded: ' + JMVC.htmlCharsDecode(coded));
+    </code>
 </function>
 <!--
 [MALTA] src/jmvc/implement.xml
@@ -2034,6 +2044,36 @@ console.log(hb, hd);</code>
 -->
 <function>
     <signature name="createNS">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
+    <description>this is a shortcut that merges create+append</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*tag">tag to be created</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/dom/descendant.xml
+-->
+<function>
+    <signature name="descendant">JMVC.dom.descendant(Element where, Integer n1 [, Integer n2, [...]])</signature>
+    <description>retrieves a descendant node starting from a node</description>
+    <params>
+        <param name="*where">dom element target</param>
+        <param name="*n1" type="Integer">sdadsa</param>
+        <param name="attrs">object literal for attributes</param>
+        <param name="inner">html content</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>incomplete</status>
+</function>
+<!--
+[MALTA] src/dom/domStats.xml
+-->
+<function>
+    <signature name="domStats">JMVC.dom.domStats(Element where, String tag, Literal attrs, String inner)</signature>
     <description>this is a shortcut that merges create+append</description>
     <params>
         <param name="*where">dom element target</param>

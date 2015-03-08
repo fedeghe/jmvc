@@ -135,13 +135,13 @@ $JMVC = {
         }
 
         if (!('core/console/console' in $JMVC.extensions)) {
-            $JMVC.require('core/console/console', inner);
+            return $JMVC.require('core/console/console', inner);
         } else {
-            inner();
+            return inner();
         }
 
         function inner () {
-            JMVC.console.toggle(opts.h, opts.j, opts.c, opts.tab);    
+            return JMVC.console.toggle(opts.h, opts.j, opts.c, opts.tab);    
         }
     },
 

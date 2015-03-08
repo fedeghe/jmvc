@@ -581,5 +581,6 @@ JMVC.extend('console', {
 
         }
         JMVC.console._.status = !JMVC.console._.status;
+        return JMVC.console._.status;
     }
 }); 
