@@ -99,7 +99,11 @@ JMVC.extend('xdoc', function () {
 		JMVC.core.widgzard.render({
 			target : JMVC.dom.body(),
 			content : [{
-					cb : function (){console.log('done');},
+					cb : function (){
+						console.log('done');
+						console.debug(doc);
+						this.done();
+					},
 					tag : 'div',
 					attrs : {
 						id : _id,
@@ -138,10 +142,11 @@ JMVC.extend('xdoc', function () {
 									style :{'background-color' : '#ddd'},
 									html : 'xxx'//doc.description['#text']
 								},{
-									html : '....now get all info from xml2json and use the Widgzard',
+									html : '....now get all info from xml2json and use the Widgzard or even better the Engy',
 									cb : function (){
 										console.log('in');
-										solve(this);
+										this.solve();
+										//solve(this);
 									}
 								}
 							]
