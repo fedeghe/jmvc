@@ -19,7 +19,9 @@ _.common = {
                         JMVC.object.jCompare(k2, val);
                 }
             }[what],
+
             res = [],
+
             maybeDoPush = function (path, index, key, obj, level) {
                 var p = [].concat.call(path, [index]),
                     tmp = matches(index, obj[index], key);
@@ -37,6 +39,7 @@ _.common = {
                 }
                 dig(obj[index], key, p, level + 1);
             },
+
             dig = function (o, k, path, level) {
                 var i, l, p, tmp;
                 if (o instanceof Array) {                
@@ -51,7 +54,9 @@ _.common = {
                     return;
                 }
             };
+
         dig(obj, target, [], 0);
+
         return res;
     }
 };

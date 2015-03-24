@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 10) build: 3735
+ * @version :  3.5 (rev. 10) build: 3738
  * @copyright : 2015, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.2.0.6 & a love heap
- *         glued with 40 files on 8/3/2015 at 22:52:11
+ *         glued with 40 files on 24/3/2015 at 22:40:47
  *
  * All rights reserved.
  *
@@ -110,10 +110,10 @@
                 JMVC_REVIEW = '10',
             
                 // review (vars.json)
-                JMVC_DATE = '8/3/2015',
+                JMVC_DATE = '24/3/2015',
             
                 // review (vars.json)
-                JMVC_TIME = '22:52:11',
+                JMVC_TIME = '22:40:47',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -2809,7 +2809,9 @@
                                 JMVC.object.jCompare(k2, val);
                         }
                     }[what],
+        
                     res = [],
+        
                     maybeDoPush = function (path, index, key, obj, level) {
                         var p = [].concat.call(path, [index]),
                             tmp = matches(index, obj[index], key);
@@ -2827,6 +2829,7 @@
                         }
                         dig(obj[index], key, p, level + 1);
                     },
+        
                     dig = function (o, k, path, level) {
                         var i, l, p, tmp;
                         if (o instanceof Array) {                
@@ -2841,7 +2844,9 @@
                             return;
                         }
                     };
+        
                 dig(obj, target, [], 0);
+        
                 return res;
             }
         };

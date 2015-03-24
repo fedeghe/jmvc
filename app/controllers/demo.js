@@ -146,6 +146,7 @@ JMVC.controllers.demo = function() {
 				'ShadowMatrix function experiment' : 'demo/shadow?size=3',
 				'ShadowMatrix function experiment animation' : 'demo/animation?size=5',
 				'ShadowMatrix create matrix from image' : 'demo/shadowJMVC',
+				"Swipe me fx" : "demo/slideText?txt=swipe%20me",
 				'* strict': 'test_strict',
 				'* obj/bucket': 'test_bucket',
 				'* obj/deque': 'test_deque',
@@ -2061,6 +2062,37 @@ JMVC.controllers.demo = function() {
 	};
 
 
+	this.action_slideText = function () {
+		var ctrl = this;
+		JMVC.require('core/fx/txtSlide');
+
+		JMVC.getView('vacuum').set({
+			style: 'padding:50px; background-color: black; color:red; font-size:5em;font-family:Verdana,sans',
+			id: 'container'
+		})
+		.render(function() {
+			var cnt = JMVC.dom.find('#container'),
+				txt = ctrl.get('txt') || 'SWIPE ME',
+				hello = JMVC.dom.create('div', {id:'space', style:'margin:50px'}, txt);			
+
+			JMVC.dom.append(cnt, hello);
+			JMVC.dom.append(JMVC.WDB, cnt);
+
+			JMVC.fx.txtSlide.slide(hello, txt, {versus:'left', repeat : 3000});
+
+			window.setTimeout(function () {
+				console.debug('right');
+				JMVC.fx.txtSlide.shut();
+				JMVC.fx.txtSlide.slide(hello, txt, {versus:'right', repeat : 3000});
+			},10000);
+			window.setTimeout(function () {
+				console.debug('both');
+				JMVC.fx.txtSlide.shut();
+				JMVC.fx.txtSlide.slide(hello, txt, {versus:'both', repeat : 3000});
+			},20000);
+
+		});
+	};
 
 
 	this.action_orientation = function () {
