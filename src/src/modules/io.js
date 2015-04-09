@@ -122,6 +122,7 @@ _.io = {
                     } else if (xhr.readyState === 1) {
                         switch (method) {
                         case 'POST':
+                        case 'PUT':
                             try {
                                 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                                 xhr.send(data || true);
@@ -225,6 +226,27 @@ JMVC.io = {
             data : data,
             cache : cache,
             error : err
+        });
+    },
+
+    /**
+     * [put description]
+     * @param  {[type]} uri   [description]
+     * @param  {[type]} cback [description]
+     * @param  {[type]} sync  [description]
+     * @param  {[type]} data  [description]
+     * @param  {[type]} cache [description]
+     * @param  {[type]} err   [description]
+     * @return {[type]}       [description]
+     */
+    put : function (uri, cback, sync, data, cache, err) {
+        return _.io.ajcall(uri, {
+            cback : cback,
+            method : 'PUT',
+            sync : sync,
+            data : data,
+            cache : cache,
+            error: err
         });
     },
 

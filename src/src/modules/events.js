@@ -509,34 +509,12 @@ JMVC.events = {
         }
     },
 
-    /**
-     * [ description]
-     * @param  {[type]} func [description]
-     * @return {[type]}      [description]
-     */
-    readyold: function(f) {
-        // if called when the dom is already loaded
-        // execute immediately
-        if (JMVC.loaded) {
-            return f.call();
-        }
-        if (WD.addEventListener) {
-            return WD.addEventListener('DOMContentLoaded', f, false);
-        } else if (W.addEventListener) {
-            return W.addEventListener('load', f, false);
-        } else if (WD.attachEvent) {
-            return WD.attachEvent('onreadystatechange', f);
-        } else if (W.attachEvent) {
-            return W.attachEvent('onload', f);
-        }
-        return e;
-    },
 
     /**
      * ready façade
      * @return {[type]} [description]
      */
-    ready: (function() {
+    readyOLD: (function() {
         function may_go(f) {
             return JMVC.loaded ? f.call() : false;
         }
@@ -557,6 +535,26 @@ JMVC.events = {
                 return may_go(f) || W.attachEvent('onload', f);
             };
         }
+    })(),
+
+    ready : (function () {
+        var cb = [],
+            readyStateCheckInterval = setInterval(function() {
+                if (document.readyState === "complete") {
+                    JMVC.loaded = true;
+                    clearInterval(readyStateCheckInterval);
+                    for (var i = 0, l = cb.length; i < l; i++) {
+                        cb[i].call(this);
+                    }
+                }
+            }, 10);
+        return function (c) {
+            if (document.readyState === "complete") {
+                c.call(this);
+            } else {
+                cb.push(c);
+            }
+        };
     })(),
 
     /**

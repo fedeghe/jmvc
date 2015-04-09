@@ -8,7 +8,7 @@ VIEW
  */
 View = function (cnt) {
 
-    //the view container
+    // the view container
     //
     this.container = false;
 
@@ -46,12 +46,14 @@ View.prototype.parse = function (obj) {
             }
         }
         // now jmvc parse vars
+        // 
         for (j in $JMVC.vars) {
             $JMVC.vars.hasOwnProperty(j) &&
             (this.content = this.content.replace(new RegExp('\\$' + j + '\\$', 'gm'), $JMVC.vars[j] || ''));
         }
     }
     // allow chain
+    // 
     return this;
 };
 
@@ -71,6 +73,7 @@ View.prototype.reset = function () {
     this.vars = {};
 
     // chain
+    // 
     return this;
 };
 

@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 10) build: 3738
+ * @version :  3.5 (rev. 10) build: 3747
  * @copyright : 2015, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.2.0.6 & a love heap
- *         glued with 40 files on 24/3/2015 at 22:40:47
+ *         glued with 40 files on 8/4/2015 at 10:33:55
  *
  * All rights reserved.
  *
@@ -110,10 +110,10 @@
                 JMVC_REVIEW = '10',
             
                 // review (vars.json)
-                JMVC_DATE = '24/3/2015',
+                JMVC_DATE = '8/4/2015',
             
                 // review (vars.json)
-                JMVC_TIME = '22:40:47',
+                JMVC_TIME = '10:33:55',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -1323,33 +1323,42 @@
             /*
             [MALTA] src/core/preload.js
             */
-            //
-            // preloading function                                
+            // preloading function
+            // fill cache with a request on a 1X1 iframe that
+            // will be deleted as soon as everything is loaded
+            //                          
             preload = function (url) {
                 W.setTimeout(function () {
-                    //
+            
                     // get a new Promise
+                    // 
                     var p = Promise.create(),
-                        //
+            
                         // the iframe where preloading will take place
+                        // 
                         ifr = null,
-                        //
+            
                         // a function used to remove the imframe once
                         // everything is loaded, hence cached
+                        // 
                         cleanup = function (pro, i) {JMVC.dom.remove(i); };
-                    //
+            
                     // when `done` will be called on the promise
                     // cleanup will be called, params follows the chain
+                    // 
                     p.then(cleanup);
-                    //
+            
                     // now a function is executed dereferencing the promise
+                    // 
                     (function (pr) {
-                        //
+                        
                         // make 1*1 iframe and load url
+                        // 
                         ifr = JMVC.dom.add(JMVC.dom.body(), 'iframe', {src : url, width : 1, height : 1});
-                        //
+                        
                         // as far as the iframe is loaded,
                         // call done on the promise
+                        // 
                         ifr.contentWindow.onload = function () {pr.done(ifr); };
                     })(p);
             
@@ -1704,10 +1713,22 @@
             /*
             [MALTA] src/core/constructors/promise.js
             */
+            // Promise module
+            // 
             Promise = (function() {
             
+                // inner private constructor
+                // 
                 var _Promise = function() {
+            
+                        // a container array for all callbacks
+                        // registered wit te then function 
+                        // 
                         this.cbacks = [];
+            
+                        // a flag that turn true when every
+                        // callback has been executed
+                        // 
                         this.solved = false;
                         this.result = null;
                     },
@@ -1719,8 +1740,14 @@
                             self.solved = false;
                             func.apply(ctx || self, [ctx || self, self.result]);
                         };
+            
+                    // when already solved, just execute it
+                    // 
                     if (this.solved) {
                         f();
+            
+                    // otherwise put it on the callback queue
+                    // 
                     } else {
                         this.cbacks.push(f);
                     }
@@ -1769,19 +1796,15 @@
                         (function(k) {
                             stack[k] = new _Promise();
             
-                            // inside every join function the context is a Promise, and
-                            // is possible to return it or not 
+                            // inside every join function the context is a Promise,
+                            // and is possible to return it or not 
+                            // 
                             var _p = pros[k].apply(stack[k], [stack[k], args]);
                             (_p instanceof _Promise ? _p : stack[k])
                             .then(function(p, r) {
                                 res[k] = r;
                                 solved(--limit);
                             });
-                            // pros[k].apply(stack[k], [stack[k], args]);
-                            // stack[k].then(function(p, r) {
-                            //     res[k] = r;
-                            //     solved(--limit);
-                            // });
             
                         })(i);
                     }
@@ -2026,7 +2049,7 @@
              */
             View = function (cnt) {
             
-                //the view container
+                // the view container
                 //
                 this.container = false;
             
@@ -2064,12 +2087,14 @@
                         }
                     }
                     // now jmvc parse vars
+                    // 
                     for (j in $JMVC.vars) {
                         $JMVC.vars.hasOwnProperty(j) &&
                         (this.content = this.content.replace(new RegExp('\\$' + j + '\\$', 'gm'), $JMVC.vars[j] || ''));
                     }
                 }
                 // allow chain
+                // 
                 return this;
             };
             
@@ -2089,6 +2114,7 @@
                 this.vars = {};
             
                 // chain
+                // 
                 return this;
             };
             
@@ -2789,6 +2815,7 @@
         [MALTA] src/core/private.js
         */
         // private ns for modules
+        // 
         _ = {};
         _.common = {
             digFor : function (what, obj, target) {
@@ -2981,6 +3008,7 @@
                         } else if (xhr.readyState === 1) {
                             switch (method) {
                             case 'POST':
+                            case 'PUT':
                                 try {
                                     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                                     xhr.send(data || true);
@@ -3084,6 +3112,27 @@
                 data : data,
                 cache : cache,
                 error : err
+            });
+        },
+    
+        /**
+         * [put description]
+         * @param  {[type]} uri   [description]
+         * @param  {[type]} cback [description]
+         * @param  {[type]} sync  [description]
+         * @param  {[type]} data  [description]
+         * @param  {[type]} cache [description]
+         * @param  {[type]} err   [description]
+         * @return {[type]}       [description]
+         */
+        put : function (uri, cback, sync, data, cache, err) {
+            return _.io.ajcall(uri, {
+                cback : cback,
+                method : 'PUT',
+                sync : sync,
+                data : data,
+                cache : cache,
+                error: err
             });
         },
     
@@ -4766,34 +4815,12 @@
             }
         },
     
-        /**
-         * [ description]
-         * @param  {[type]} func [description]
-         * @return {[type]}      [description]
-         */
-        readyold: function(f) {
-            // if called when the dom is already loaded
-            // execute immediately
-            if (JMVC.loaded) {
-                return f.call();
-            }
-            if (WD.addEventListener) {
-                return WD.addEventListener('DOMContentLoaded', f, false);
-            } else if (W.addEventListener) {
-                return W.addEventListener('load', f, false);
-            } else if (WD.attachEvent) {
-                return WD.attachEvent('onreadystatechange', f);
-            } else if (W.attachEvent) {
-                return W.attachEvent('onload', f);
-            }
-            return e;
-        },
     
         /**
          * ready façade
          * @return {[type]} [description]
          */
-        ready: (function() {
+        readyOLD: (function() {
             function may_go(f) {
                 return JMVC.loaded ? f.call() : false;
             }
@@ -4814,6 +4841,26 @@
                     return may_go(f) || W.attachEvent('onload', f);
                 };
             }
+        })(),
+    
+        ready : (function () {
+            var cb = [],
+                readyStateCheckInterval = setInterval(function() {
+                    if (document.readyState === "complete") {
+                        JMVC.loaded = true;
+                        clearInterval(readyStateCheckInterval);
+                        for (var i = 0, l = cb.length; i < l; i++) {
+                            cb[i].call(this);
+                        }
+                    }
+                }, 10);
+            return function (c) {
+                if (document.readyState === "complete") {
+                    c.call(this);
+                } else {
+                    cb.push(c);
+                }
+            };
         })(),
     
         /**

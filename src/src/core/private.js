@@ -1,4 +1,5 @@
 // private ns for modules
+// 
 _ = {};
 _.common = {
     digFor : function (what, obj, target) {
