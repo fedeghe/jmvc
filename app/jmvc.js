@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 10) build: 3747
+ * @version :  3.5 (rev. 10) build: 3748
  * @copyright : 2015, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.2.0.6 & a love heap
- *         glued with 40 files on 8/4/2015 at 10:33:55
+ *         glued with 40 files on 10/4/2015 at 22:10:16
  *
  * All rights reserved.
  *
@@ -110,10 +110,10 @@
                 JMVC_REVIEW = '10',
             
                 // review (vars.json)
-                JMVC_DATE = '8/4/2015',
+                JMVC_DATE = '10/4/2015',
             
                 // review (vars.json)
-                JMVC_TIME = '10:33:55',
+                JMVC_TIME = '22:10:16',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -6688,6 +6688,11 @@
             return res;
         },
     
+        /**
+         * [order description]
+         * @param  {[type]} obj [description]
+         * @return {[type]}     [description]
+         */
         order: function(obj) {
             var k = [],
                 i, j, l,
@@ -6700,6 +6705,28 @@
                 out[k[j]] = obj[k[j]];
             }
             return out;
+        },
+        /**
+         * [orderBy description]
+         * @param  {[type]} obj    [description]
+         * @param  {[type]} key    [description]
+         * @param  {[type]} versus [description]
+         * @return {[type]}        [description]
+         */
+        orderBy : function (obj, key , versus) {
+            function f(v) {
+                var tov = typeof v;
+                if (tov == 'number') {
+                    return v;
+                } else if (tov == 'string') {
+                    return v.toLowerCase()
+                }
+                return v;
+            }
+            versus = versus ? function (v) {return !!v;} : function (v) {return !v;}
+            return obj.sort(function (a, b) {
+                return versus(f(a[key]) > f(b[key]));
+            });
         },
         /**
          * [ description]

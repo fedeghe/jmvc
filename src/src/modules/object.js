@@ -229,6 +229,11 @@ JMVC.object = {
         return res;
     },
 
+    /**
+     * [order description]
+     * @param  {[type]} obj [description]
+     * @return {[type]}     [description]
+     */
     order: function(obj) {
         var k = [],
             i, j, l,
@@ -241,6 +246,28 @@ JMVC.object = {
             out[k[j]] = obj[k[j]];
         }
         return out;
+    },
+    /**
+     * [orderBy description]
+     * @param  {[type]} obj    [description]
+     * @param  {[type]} key    [description]
+     * @param  {[type]} versus [description]
+     * @return {[type]}        [description]
+     */
+    orderBy : function (obj, key , versus) {
+        function f(v) {
+            var tov = typeof v;
+            if (tov == 'number') {
+                return v;
+            } else if (tov == 'string') {
+                return v.toLowerCase()
+            }
+            return v;
+        }
+        versus = versus ? function (v) {return !!v;} : function (v) {return !v;}
+        return obj.sort(function (a, b) {
+            return versus(f(a[key]) > f(b[key]));
+        });
     },
     /**
      * [ description]
