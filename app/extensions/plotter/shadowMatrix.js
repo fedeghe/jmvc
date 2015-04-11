@@ -55,7 +55,14 @@
 
     proto.draw = function (opts) {
         this.node || (this.node = opts.node || (function (){alert('target node missing!!!'); })());
+        
         this.node.innerHTML = '';
+        
+        JMVC.css.style(this.node.parentNode, {
+            // border:'1px dotted gray',
+            width: this.scale*this.matrix[0].length + 'px',
+            height : this.scale*2*this.matrix.length + 'px'
+        });
 
         var out = [],
             self = this,
@@ -64,6 +71,7 @@
             j = 0,
             l = 0,
             rows, el, prms;
+
         for (null; i < this.size[0]; i++) { 
             rows = this.matrix[i].split(',');           
             for (l = rows.length, j = 0; j < l; j++) {
@@ -80,6 +88,7 @@
                 }
             }
         }
+        
         this.tpl['box-shadow'] = this.tpl['-webkit-box-shadow'] = this.tpl['-moz-box-shadow'] = out.join(',');
         JMVC.css.style(this.node, this.tpl);
         return this;

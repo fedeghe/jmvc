@@ -1626,7 +1626,7 @@ JMVC.controllers.demo = function() {
 			
 			var size = that.get('size') || 5,
 				cnt = JMVC.dom.find('#container'),
-				gauge = JMVC.dom.create('input', {type:'range', min:1, max:50, step:0.1, value : size, style:'margin:20px 0px'}),
+				gauge = JMVC.dom.create('input', {type:'range', min:1, max:50, step:1, value : size, style:'margin:20px 0px'}),
 				mario = JMVC.dom.create('div', {id:'mario'}),
 				to = window.setInterval(function(){}, 1E6),
 
