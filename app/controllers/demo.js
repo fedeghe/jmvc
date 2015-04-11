@@ -146,6 +146,7 @@ JMVC.controllers.demo = function() {
 				'ShadowMatrix function experiment' : 'demo/shadow?size=3',
 				'ShadowMatrix function experiment animation' : 'demo/animation?size=5',
 				'ShadowMatrix create matrix from image' : 'demo/shadowJMVC',
+				'ShadowMatrix just for Mario, with gauge' : 'demo/Mario',
 				"Swipe me fx" : "demo/slideText?txt=swipe%20me",
 				'* strict': 'test_strict',
 				'* obj/bucket': 'test_bucket',
@@ -1625,50 +1626,62 @@ JMVC.controllers.demo = function() {
 			
 			var size = that.get('size') || 5,
 				cnt = JMVC.dom.find('#container'),
+				gauge = JMVC.dom.create('input', {type:'range', min:1, max:50, step:0.1, value : size, style:'margin:20px 0px'}),
 				mario = JMVC.dom.create('div', {id:'mario'}),
+				to = window.setInterval(function(){}, 1E6),
 
 				ul = JMVC.dom.create('div'),
 				li0 = JMVC.dom.add(ul, 'div', {style:'height:'+(50 * size)+'px'});
 
 			JMVC.css.style(JMVC.WDB, {padding : '50px'});
 
+			
 			JMVC.dom.append(li0, mario);
+			JMVC.dom.append(cnt,gauge);
 			JMVC.dom.append(cnt, ul);
 			JMVC.dom.append(JMVC.WDB, cnt);
 
-			
+			function go () {
+				window.clearInterval(to);
+				var sm0 = JMVC.shadowMatrix({
+					scale : size,
+					matrix : [
+						' , , ,#,#,#,#,#, , , , ',
+						' , ,#,#,#,#,#,#,#,#,#, ',
+						' , ,@,@,@,$,$,@,$, , , ',
+						' ,@,$,@,$,$,$,@,$,$,$, ',
+						' ,@,$,@,@,$,$,$,@,$,$,$',
+						' ,@,@,$,$,$,$,@,@,@,@, ',
+						' , , ,$,$,$,$,$,$,$, , ',
+						' , ,@,@,#,@,@,@, , , , ',
+						' ,@,@,@,#,@,@,#,@,@,@, ',
+						'@,@,@,@,#,#,#,#,@,@,@,@',
+						'$,$,@,#,$,#,#,$,#,@,$,$',
+						'$,$,$,#,#,#,#,#,#,$,$,$',
+						'$,$,#,#,#,#,#,#,#,#,$,$',
+						' , ,#,#,#, , ,#,#,#, , ',
+						' ,@,@,@, , , , ,@,@,@, ',
+						'@,@,@,@, , , , ,@,@,@,@'
+					],
+					colorMap : {
+						'#' : '#db0102',// red
+						'$' : '#f8aa00',// skin
+						'@' : '#706700',// hair
+						' ' : 'transparent'
+					}
+				});
+				sm0.draw({node : mario});
+				to = window.setInterval(function (){
+					sm0.mirror();
+				}, 500);
+			}
 
-			var sm0 = JMVC.shadowMatrix({
-				scale : size,
-				matrix : [
-					' , , ,#,#,#,#,#, , , , ',
-					' , ,#,#,#,#,#,#,#,#,#, ',
-					' , ,@,@,@,$,$,@,$, , , ',
-					' ,@,$,@,$,$,$,@,$,$,$, ',
-					' ,@,$,@,@,$,$,$,@,$,$,$',
-					' ,@,@,$,$,$,$,@,@,@,@, ',
-					' , , ,$,$,$,$,$,$,$, , ',
-					' , ,@,@,#,@,@,@, , , , ',
-					' ,@,@,@,#,@,@,#,@,@,@, ',
-					'@,@,@,@,#,#,#,#,@,@,@,@',
-					'$,$,@,#,$,#,#,$,#,@,$,$',
-					'$,$,$,#,#,#,#,#,#,$,$,$',
-					'$,$,#,#,#,#,#,#,#,#,$,$',
-					' , ,#,#,#, , ,#,#,#, , ',
-					' ,@,@,@, , , , ,@,@,@, ',
-					'@,@,@,@, , , , ,@,@,@,@'
-				],
-				colorMap : {
-					'#' : '#db0102',// red
-					'$' : '#f8aa00',// skin
-					'@' : '#706700',// hair
-					' ' : 'transparent'
-				}
+			go();
+
+			JMVC.events.on(gauge, 'change', function () {
+				size = this.value;
+				go();
 			});
-			sm0.draw({node : mario});
-			window.setInterval(function (){
-				sm0.mirror();
-			}, 500);
 
 		});
 	};
