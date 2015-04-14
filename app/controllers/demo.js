@@ -1579,8 +1579,6 @@ JMVC.controllers.demo = function() {
 	                }
 	            });
 
-
-
 			sm0.draw({node : flag});
 			sm1.draw({node : space1});
 			sm2.draw({node : space2});
@@ -1594,9 +1592,7 @@ JMVC.controllers.demo = function() {
 			window.setInterval(function (){
 				sm6.mirror();
 			}, 500);
-
-
-			
+						
 		});
 	};
 

@@ -122,6 +122,8 @@ JMVC.extend('xmlparser', {
 		};
 		// by default is the root
 		this.pointerNode = this.root();
+
+		return that;
 	},
 	
 	
