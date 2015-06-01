@@ -8,6 +8,9 @@
 (function (previousOnError) {
     // uh!...want to do something with previousOnError?
     // ...really?
+ 
+
+
     function reportError(error, message) {
         //console.debug(arguments);
         message = message || '';
@@ -24,10 +27,15 @@
     }
      
     window.onerror = function (message, filename, lineno, colno, error) {
-        error.message = error.message || message || null;
-        error.fileName = error.fileName || filename || null;
-        error.lineNumber = error.lineNumber || lineno || null;
-        error.columnNumber = error.columnNumber || colno || null;
+        
+        try{
+            error.message = error.message || message || null;
+            error.fileName = error.fileName || filename || null;
+            error.lineNumber = error.lineNumber || lineno || null;
+            error.columnNumber = error.columnNumber || colno || null;
+        }catch (e){
+
+        }
         reportError(error, 'Uncatched Exception');
         JMVC.Errors.notify(error);
     };
@@ -176,7 +184,10 @@ var time_begin = +new Date(),
 
     // in case some modules need to be always
     // loaded here's the place to set them
-    Modules = ['vendors/google/analytics/analytics', 'core/cookie/cookie'],
+    Modules = [
+        'vendors/google/analytics/analytics'
+        //'core/cookie/cookie'
+    ],
 
     // preloader
     preload,
