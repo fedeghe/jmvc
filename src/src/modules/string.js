@@ -51,11 +51,16 @@ JMVC.string = {
         return String.fromCharCode.apply(null, code);
     },
 
+    // https://www.linkedin.com/grp/post/121615-5991286634643992576
+    camelCase2hypenCase : function (str) {
+        return str.replace(/([a-zA-Z])(?=[A-Z])/g, '$1-').toLowerCase();
+    },
+
     /**
      * [EscapeEntities description]
      * @param {[type]} str [description]
      */
-    EscapeEntities : function (str) {
+    escapeEntities : function (str) {
         return str.replace(/[^\x20-\x7E]/g,
             function (str) {
                 return _.string.charToEntity[str] ? '&' + _.string.charToEntity[str] + ';' : str;
@@ -314,7 +319,7 @@ JMVC.string = {
      * [UnescapeEntities description]
      * @param {[type]} str [description]
      */
-    UnescapeEntities : function (str) {
+    unescapeEntities : function (str) {
         return str.replace(/&(.+?);/g,
             function (str, ent) {
                 return String.fromCharCode(ent[0] !== '#' ? _.string.entities[ent] : ent[1] === 'x' ? parseInt(ent.substr(2), 16): parseInt(ent.substr(1), 10));
