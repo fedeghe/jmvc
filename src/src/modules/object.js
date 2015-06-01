@@ -137,41 +137,6 @@ JMVC.object = {
 
     /**
      * [digForKeys description]
-     * @param  {[type]} obj [description]
-     * @param  {[type]} key [description]
-     * @return {[type]}     [description]
-     */
-    /*
-    digForKeys : function (obj, key) {
-        var res = [];
-        function dig(o, k, path) {
-            var i, l, p;
-            if (typeof o === 'object') {
-                for (i in o) {
-                    p = [].concat.call(path, [i]);
-                    if(i == k) {
-                        res.push({value: o[i], path : p.join('/')});
-                    }
-                    dig (o[i], k, p);
-                }
-            } else if (o instanceof Array) {                
-                for (i = 0, l = o.length; i < l; i++) {
-                    p = [].concat.call(path, [i]);
-                    if (i == k) {
-                        res.push({value: o[i], path : p.join('/')});
-                    }
-                    dig(o[i], k, p);
-                }
-            } else {
-                return;
-            }
-        }
-        dig(obj, key, []);
-        return res;
-    },*/
-
-    /**
-     * [digForKeys description]
      * @param  {[type]} o [description]
      * @param  {[type]} k [description]
      * @return {[type]}   [description]
