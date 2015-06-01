@@ -17,11 +17,10 @@ JMVC.extend('widget.divrot', {
                 left : options.left || '',
                 front : options.front || ''
             },
-            tpl = JMVC.string.replaceAll('<div class="flip-card" style="width:%width%px; height:%height%px">'+
+            tpl = JMVC.string.replaceAll('<div class="flip-card" style="width:%width%px !important; height:%height%px !important; margin-bottom:100px">'+
                     '<div class="flip-card-content">' +
                         '<div class="flip-card-side-top" style="background:gainsboro">%cnt_top%</div>' + 
                         '<div class="flip-card-side-bott" style="background:lime">%cnt_bott%</div>' + 
-                        
                         '<div class="flip-card-side-right" style="background:green">%cnt_right%</div>' + 
                         '<div class="flip-card-side-back" style="background:blue">%cnt_back%</div>' + 
                         '<div class="flip-card-side-left" style="background:yellow">%cnt_left%</div>' + 
@@ -42,7 +41,8 @@ JMVC.extend('widget.divrot', {
             currentO = 0,
             currentV = 0,
             clsNode = null,
-            step = 90   ;
+            step = 90,
+            swiping = false;
 
             
         JMVC.dom.html(node, tpl);
@@ -64,13 +64,72 @@ JMVC.extend('widget.divrot', {
             }
             
             if (mode ==='o'){
-
                 setO(currentO);
             } else if (mode ==='v') {
                 setV(currentV);
             }
             
         });
+
+        JMVC.events.drag.on(document, {move : function (e, data) {
+            JMVC.events.preventDefault(e);
+            if (swiping == true) {
+                return;
+            }
+            
+            swiping = true;
+
+            
+
+            switch (data.orientation) {
+                
+                case 'e':
+                    currentO +=1;
+                    setO(currentO);
+                break;
+                case 'se':
+                    currentO +=1;
+                    currentV -= 1;
+                    setO(currentO);
+                    setV(currentV);
+                break;
+                case 's':
+                    currentV -= 1;
+                    setV(currentV);
+                break;
+                case 'so':
+                    currentV -= 1;
+                    currentO -=1;
+                    setV(currentV);
+                    setO(currentO);
+                break;
+                case 'o':
+                    currentO -=1;
+                    setO(currentO);
+                break;
+                case 'no':
+                    currentO -=1;
+                    currentV += 1;
+                    setO(currentO);
+                    setV(currentV);
+                break;
+                case 'n':
+                    currentV += 1;
+                    setV(currentV);
+                break;
+                case 'ne':
+                    currentV += 1;
+                    currentO +=1;
+                    setV(currentV);
+                    setO(currentO);
+                break;
+            }
+
+        }, end : function () {
+            swiping = false;
+        }});
+
+
 
         function setO(o) {
 
