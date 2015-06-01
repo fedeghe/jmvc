@@ -41,6 +41,7 @@ $$src/head.js$$
     /////////////////////
     // MANDATORY MODULES START
     //
+    $$src/modules/cookie.js$$
     $$src/modules/io.js$$
     $$src/modules/util.js$$
     $$src/modules/dom.js$$

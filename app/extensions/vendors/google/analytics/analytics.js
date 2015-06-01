@@ -1,4 +1,4 @@
-JMVC.require('core/cookie/cookie');
+// JMVC.require('core/cookie/cookie');
 //
 JMVC.events.end(function () {
 	//
