@@ -5,10 +5,10 @@ JMVC.extend('carpet',{
 	init : function () {
 		JMVC.head.addStyle(JMVC.vars.extensions + 'core/lib/carpet/css/default.css', true, false);
 	},
-	create : function (container, w, h, s) {
+	create : function (container, options) {
 		var tileSize = {
-				width : 100, //256
-				height : 100 //256
+				width : options.tileWidth || 300, //256
+				height : options.tileHeight || 300 //256
 			},
 			that = this,
 			map = this,
@@ -21,12 +21,15 @@ JMVC.extend('carpet',{
 				oriz : false
 			},
 			enabled = {
-				vert : true,
-				oriz : true
+				vert : (options.enabled && (typeof options.enabled.vert !== 'undefined')) ? !!options.enabled.vert : true,
+				oriz : (options.enabled && (typeof options.enabled.oriz !== 'undefined')) ? !!options.enabled.oriz : true
 			},
 			useSpeed = false,
 			dragSpeed = {},
-			dragDir = false;
+			dragDir = false,
+			w = options.w,
+			h = options.h,
+			s = options.s;
 		
 		//matrix carpet
 		function Carpet(margin) {
@@ -93,20 +96,15 @@ JMVC.extend('carpet',{
 				tmpNode = JMVC.dom.create(
 					'div',
 					{
-						'class':'tile',
-						'id' : props.id,
-						'style' : 'background-color:'
-							+ props.color
-							+ ';left:'//DEV
-							//+ ';left:'//PROD
-							+ props.left
-							+ 'px;top:'
-							+ props.top
-							+ 'px;width:'
-							+ tileSize.width
-							+ 'px;height:'
-							+ tileSize.height
-							+ 'px'
+						'class' : 'tile',
+						id : props.id,
+						style : JMVC.object.toStr({
+							'background-color' : props.color,
+							left : props.left + 'px',
+							top : props.top + 'px',
+							width : tileSize.width + 'px !important',
+							height : tileSize.height + 'px !important'
+						})
 					},
 					props.content
 				);
@@ -164,10 +162,10 @@ JMVC.extend('carpet',{
 					*
 					*/
 					securebox = {
-						'top' : -tileSize.height << 1,
-						'bottom' : -tileSize.height,
-						'left' : -tileSize.width << 1,
-						'right' : -tileSize.width
+						top : -tileSize.height << 1,
+						bottom : -tileSize.height,
+						left : -tileSize.width << 1,
+						right : -tileSize.width
 					},
 					pos = false;
 				
@@ -195,7 +193,6 @@ JMVC.extend('carpet',{
 			
 			/**
 			 * adds a row/colum and removes the opposite
-			 * 
 			 */ 
 			this.add = function (where /* top,right,bottom,left */) {
 				
@@ -226,8 +223,8 @@ JMVC.extend('carpet',{
 						if (afterAdd) {afterAdd(tmpID); }
 						
 						
-						//remove
-						
+						// remove
+						//
 						tmpID = '#__tile__' + (this.actualNodes[delActualNode][2] + (addIon==2 ? i : 0)) +
 								'_' + (this.actualNodes[delActualNode][3] + (addIon==3 ? i : 0));
 						if (beforeRemove) {beforeRemove(tmpID); }
@@ -239,22 +236,26 @@ JMVC.extend('carpet',{
 				
 				switch (where) {
 				
-					case 'top': //add top remove bottom
+					case 'top':
+						// add top remove bottom
 						updateindex.call(this, 'topLeft', 'topRight', 1, 3, -tileSize.height, -1);
 						updateRC.call(this, 'xtiles_num', 'topLeft', 'bottomLeft', 2, 'left', 1);
 						updateindex.call(this, 'bottomLeft', 'bottomRight', 1, 3, -tileSize.height, -1);
 					break;
-					case 'right': //add right remove left
+					case 'right':
+						// add right remove left
 						updateindex.call(this, 'topRight', 'bottomRight', 0, 2, tileSize.width, 1);
 						updateRC.call(this, 'ytiles_num', 'topRight', 'topLeft', 3, 'top', 1);
 						updateindex.call(this, 'topLeft', 'bottomLeft', 0, 2, tileSize.width, 1);
 					break;	
-					case 'bottom': //add bottom remove top
+					case 'bottom':
+						// add bottom remove top
 						updateindex.call(this, 'bottomLeft', 'bottomRight', 1, 3, tileSize.height, 1);
 						updateRC.call(this, 'xtiles_num', 'bottomLeft', 'topLeft', 2, 'left', 1);
 						updateindex.call(this, 'topLeft', 'topRight', 1, 3, tileSize.height, 1);
 					break;
-					case 'left': //add left remove right
+					case 'left':
+						// add left remove right
 						updateindex.call(this, 'topLeft', 'bottomLeft', 0, 2, -tileSize.width, -1);
 						updateRC.call(this, 'ytiles_num', 'topLeft', 'topRight', 3, 'top', 1);
 						updateindex.call(this, 'topRight', 'bottomRight', 0, 2, -tileSize.width, -1);
@@ -263,13 +264,13 @@ JMVC.extend('carpet',{
 				
 			}
 			
-			//add inital tiles
+			// add inital tiles
 			this.init = function (container /*innermap*/) {
 				addTiles.call(this, container);
 			}
 			
 		}
-		//end carpet object
+		// end carpet object
 		
 		
 		// get a brand new Carpet
@@ -305,7 +306,9 @@ JMVC.extend('carpet',{
 			drgStartTop = 0,
 			left = 0,
 			top = 0;
+
 		function startMove(e) {
+			JMVC.events.preventDefault(e);
 			drgStartLeft = e.clientX;
 			drgStartTop = e.clientY;
 			that.innermap.style.cursor = 'move';
@@ -317,10 +320,10 @@ JMVC.extend('carpet',{
 			return false;
 		}
 		
-		//process
+		// process
 		function processMove(e) {
-			//console.debug('>>> process');
-			
+			// console.debug('>>> process');
+			JMVC.events.preventDefault(e);
 			var pos = false,
 				hDiff = false,
 				wDiff = false,
@@ -328,7 +331,7 @@ JMVC.extend('carpet',{
 			if (dragging) {
 				hDiff = e.clientY - drgStartTop;
 				wDiff = e.clientX - drgStartLeft;
-				//move innner map
+				// move innner map
 				if (enabled.vert) {
 					that.innermap.style.top = top + hDiff + 'px';
 					if (useSpeed) {
@@ -361,11 +364,12 @@ JMVC.extend('carpet',{
 			}
 		}
 		
-		//stop
+		// stop
 		function stopMove(e) {
+			JMVC.events.preventDefault(e);
 			var top = parseInt(that.innermap.style.top, 10),
 				left = parseInt(that.innermap.style.left, 10);
-			//console.debug('>>> stop');
+
 			that.innermap.style.cursor = '';
 			
 			if (useSpeed) {
@@ -383,7 +387,7 @@ JMVC.extend('carpet',{
 								
 							}
 							if (enabled.oriz) {
-								left += factor.w/j;
+								left += factor.w / j;
 								that.innermap.style.left = left + 'px';
 								
 							}
@@ -403,9 +407,7 @@ JMVC.extend('carpet',{
 				}
 				t(1);
 				
-				
 				dragSpeed = {};
-				//console.debug('dragSpeed : ' + dragSpeed)
 			}
 			dragging = false;
 		}
@@ -414,10 +416,10 @@ JMVC.extend('carpet',{
 		JMVC.events.on(this.map, 'mousedown', startMove);
 		JMVC.events.on(this.map, 'mousemove', processMove);
 		JMVC.events.on(this.map, 'mouseup', stopMove);
-		
-		
+
 		function startTouch(e){
 			JMVC.events.kill(e);
+			JMVC.events.preventDefault(e);
 			var touches = JMVC.events.touch(e),
 				posX = touches[0].x,
 				posY = touches[0].y;
@@ -434,6 +436,7 @@ JMVC.extend('carpet',{
 		function processTouch(e) {
 			//console.debug('>>> process');
 			JMVC.events.kill(e);
+			JMVC.events.preventDefault(e);
 			var touches = JMVC.events.touch(e),
 				posX = touches[0].x,
 				posY = touches[0].y,
@@ -441,6 +444,7 @@ JMVC.extend('carpet',{
 				hDiff = false,
 				wDiff = false,
 				timeoutme = false;
+				
 			if (dragging) {
 				hDiff = posY - drgStartTop;
 				wDiff = posX - drgStartLeft;
@@ -457,8 +461,7 @@ JMVC.extend('carpet',{
 						dragSpeed.w = wDiff;
 					}
 				}
-				
-				
+
 				if(useSpeed){
 					timeoutme = JMVC.W.setTimeout(
 						function () {
@@ -522,18 +525,21 @@ JMVC.extend('carpet',{
 				xn,
 				yn
 			];
+			
 			that.carpet.actualNodes.topRight = [
 				(xn-1)*tileSize.width + that.carpet.width,
 				yn*tileSize.height,
 				xn + that.carpet.xtiles_num -1,
 				yn
 			];
+
 			that.carpet.actualNodes.bottomLeft = [
 				xn*tileSize.width,
 				(yn-1)*tileSize.height + that.carpet.height,
 				xn,
 				yn + that.carpet.ytiles_num -1
 			];
+			
 			that.carpet.actualNodes.bottomRight = [
 				(xn-1)*tileSize.width + that.carpet.width,
 				(yn-1)*tileSize.height + that.carpet.height,
@@ -542,11 +548,7 @@ JMVC.extend('carpet',{
 			];
 			
 			that.carpet.checkGo(that.carpet.checkBorder());
-		}
-		//cache.left = tileSize.width * (this.xtiles_num - 1);
-		//cache.top = tileSize.height * (this.ytiles_num - 1);
-		
-		
+		}		
 		
 		return this;
 	}
