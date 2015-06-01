@@ -709,7 +709,7 @@ JMVC.dom = {
             return;
         }
         var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-        el.className = el.className.replace(reg, ' ');
+        if (el.className) el.className = el.className.replace(reg, ' ');
         return JMVC.dom;
     },
 
