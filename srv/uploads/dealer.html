@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=9" />
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+		<link rel="stylesheet" href="http://www.smwidgzard.dev/dist/local/css/engy.min.css">
+		<script>
+			(function () {
+				// get urlVars from URL
+				//
+				var urlVars = (function () {
+						var vars = {},
+							parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
+								// try to make some conversions
+								if (value.match(/false|true/)) {
+									value = (value === 'true');
+								}
+								if (parseFloat(value)) {
+									value = parseFloat(value);
+								} 
+								vars[key] = value;
+							});
+						return vars;
+					})(),
+					n;
+				
+				// globalize
+				// 
+				for (n in urlVars) {
+					window[n] = typeof urlVars[n] == 'string' ?
+						decodeURIComponent(decodeURIComponent(urlVars[n]))
+						:
+						urlVars[n];
+				}
+			})();
+		</script>
+		<script src="http://www.smwidgzard.dev/dist/local/js/sm.min.js"></script>
+		<script src="http://www.smwidgzard.dev/dist/local/js/main.min.js"></script>
+	</head>
+	<body></body>
+</html>
