@@ -46,12 +46,12 @@ JMVC.css = {
      */
     autoHeadings : function () {
         JMVC.head.addStyle(
-            'h1{font-size:24px !important; line-height:48px !important; padding:24px 0px 12px !important;}'+
-            'h2{font-size:20px !important; line-height:36px !important; padding:18px 0px 9px !important;}'+
-            'h3{font-size:16px !important; line-height:28px !important; padding:14px 0px 7px !important;}'+
-            'h4{font-size:12px !important; line-height:24px !important; padding:12px 0px 6px !important;}'+
-            'h5{font-size:10px !important; line-height:20px !important; padding:10px 0px 5px !important;}'+
-            'h6{font-size:8px !important; line-height:16px !important; padding:8px 0px 4px !important;}', true, true);
+            'h1{font-size:24px !important; line-height:48px !important; padding:12px 0px 12px !important;}'+
+            'h2{font-size:20px !important; line-height:36px !important; padding:9px 0px 9px !important;}'+
+            'h3{font-size:16px !important; line-height:28px !important; padding:7px 0px 7px !important;}'+
+            'h4{font-size:12px !important; line-height:24px !important; padding:6px 0px 6px !important;}'+
+            'h5{font-size:10px !important; line-height:20px !important; padding:5px 0px 5px !important;}'+
+            'h6{font-size:8px !important; line-height:16px !important; padding:4px 0px 4px !important;}', true, true);
     },
 
     /**
