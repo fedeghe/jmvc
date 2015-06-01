@@ -138,6 +138,7 @@ JMVC.controllers.demo = function() {
 				'cubic': 'cubic',
 				'neverending carpet': 'carpet',
 				'Widgzard' : 'widgzard',
+				'Auto submit file' : 'test/upload',
 				'Trial drawer' : 'demo/drawer.jmvc',
 				'css sprite' : 'console/index?fullscreen=true&h=%3Cdiv%20class%3D%22hi%22%3E%3C%2Fdiv%3E&j=%2F*%20no%20javascript%20content%20*%2F&c=.hi%20%7B%0A%20%20%20%20width%3A%2050px%3B%0A%20%20%20%20height%3A%2072px%3B%0A%20%20%20%20background-image%3A%20url(%22http%3A%2F%2Fs.cdpn.io%2F79%2Fsprite-steps.png%22)%3B%0A%20%20%20%20%0A%20%20%20%20-webkit-animation%3A%20play%20.8s%20steps(10)%20infinite%3B%0A%20%20%20%20%20%20%20-moz-animation%3A%20play%20.8s%20steps(10)%20infinite%3B%0A%20%20%20%20%20%20%20%20-ms-animation%3A%20play%20.8s%20steps(10)%20infinite%3B%0A%20%20%20%20%20%20%20%20%20-o-animation%3A%20play%20.8s%20steps(10)%20infinite%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20animation%3A%20play%20.8s%20steps(10)%20infinite%3B%0A%7D%0A%0A%40-webkit-keyframes%20play%20%7B%0A%20%20%20from%20%7B%20background-position%3A%20%20%20%200px%3B%20%7D%0A%20%20%20%20%20to%20%7B%20background-position%3A%20-500px%3B%20%7D%0A%7D%0A%0A%40-moz-keyframes%20play%20%7B%0A%20%20%20from%20%7B%20background-position%3A%20%20%20%200px%3B%20%7D%0A%20%20%20%20%20to%20%7B%20background-position%3A%20-500px%3B%20%7D%0A%7D%0A%0A%40-ms-keyframes%20play%20%7B%0A%20%20%20from%20%7B%20background-position%3A%20%20%20%200px%3B%20%7D%0A%20%20%20%20%20to%20%7B%20background-position%3A%20-500px%3B%20%7D%0A%7D%0A%0A%40-o-keyframes%20play%20%7B%0A%20%20%20from%20%7B%20background-position%3A%20%20%20%200px%3B%20%7D%0A%20%20%20%20%20to%20%7B%20background-position%3A%20-500px%3B%20%7D%0A%7D%0A%0A%40keyframes%20play%20%7B%0A%20%20%20from%20%7B%20background-position%3A%20%20%20%200px%3B%20%7D%0A%20%20%20%20%20to%20%7B%20background-position%3A%20-500px%3B%20%7D%0A%7D%0A&l=#preview',
 				'Css logo attempt' : 'console/index?fullscreen=true&h=%3Cdiv%20class%3D%22logo%22%3E%0A%09%3Cdiv%20class%3D%22o1%22%3E%0A%09%09%3Cdiv%20class%3D%22ell%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22cil%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22arr%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%09%3Cdiv%20class%3D%22o2%22%3E%0A%09%09%3Cdiv%20class%3D%22ell%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22cil%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22arr%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%09%3Cdiv%20class%3D%22o3%22%3E%0A%09%09%3Cdiv%20class%3D%22ell%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22cil%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22arr%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%09%3Cdiv%20class%3D%22o4%22%3E%0A%09%09%3Cdiv%20class%3D%22ell%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22cil%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22arr%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%09%3Cdiv%20class%3D%22o5%22%3E%0A%09%09%3Cdiv%20class%3D%22ell%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22cil%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22arr%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%09%3Cdiv%20class%3D%22o6%22%3E%0A%09%09%3Cdiv%20class%3D%22ell%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22cil%22%3E%3C%2Fdiv%3E%3Cdiv%20class%3D%22arr%22%3E%3C%2Fdiv%3E%0A%09%3C%2Fdiv%3E%0A%3C%2Fdiv%3E&j=%2F*%20no%20javascript%20content%20*%2F&c=body%7B%0A%09margin-top%3A10px%3B%0A%7D%0A.logo%7B%0A%09position%3Arelative%3B%0A%09width%3A%20500px%3B%0A%09height%3A538px%3B%0A%09text-align%3Acenter%3B%0A%09margin%3A0%20auto%3B%0A%7D%0A.o1%2C%20.o2%2C%20.o3%2C%20.o4%2C%20.o5%2C%20.o6%7B%0A%09position%3Aabsolute%3B%0A%7D%0A.o1%7B%0A%09left%3A200px%3B%0A%7D%0A.o2%7B%0A%09left%3A327px%3B%0A%09top%3A74px%3B%0A%20%09-webkit-transform%3A%20rotate(60deg)%3B%0A%09-moz-transform%3A%20rotate(60deg)%3B%0A%09-ms-transform%3A%20rotate(60deg)%3B%0A%09-o-transform%3A%20rotate(60deg)%3B%0A%7D%0A.o3%7B%0A%09left%3A327px%3B%0A%09top%3A221px%3B%0A%20%09-webkit-transform%3A%20rotate(120deg)%3B%0A%09-moz-transform%3A%20rotate(120deg)%3B%0A%09-ms-transform%3A%20rotate(120deg)%3B%0A%09-o-transform%3A%20rotate(120deg)%3B%0A%7D%0A%0A.o4%7B%0A%09left%3A200px%3B%0A%09top%3A293px%3B%0A%20%09-webkit-transform%3A%20rotate(180deg)%3B%0A%09-moz-transform%3A%20rotate(180deg)%3B%0A%09-ms-transform%3A%20rotate(180deg)%3B%0A%09-o-transform%3A%20rotate(180deg)%3B%0A%7D%0A%0A.o5%7B%0A%09left%3A73px%3B%0A%09top%3A217px%3B%0A%20%09-webkit-transform%3A%20rotate(240deg)%3B%0A%09-moz-transform%3A%20rotate(240deg)%3B%0A%09-ms-transform%3A%20rotate(240deg)%3B%0A%09-o-transform%3A%20rotate(240deg)%3B%0A%7D%0A%0A.o6%7B%0A%09left%3A73px%3B%0A%09top%3A72px%3B%0A%20%09-webkit-transform%3A%20rotate(300deg)%3B%0A%09-moz-transform%3A%20rotate(300deg)%3B%0A%09-ms-transform%3A%20rotate(300deg)%3B%0A%09-o-transform%3A%20rotate(300deg)%3B%0A%7D%0A.ell%20%7B%0A%09width%3A%20100px%3B%0A%20%09height%3A%2060px%3B%0A%09background%3A%20%23e51d8a%3B%0A%09-moz-border-radius%3A%2050px%20%2F%2030px%3B%0A%09-webkit-border-radius%3A%2050px%20%2F%2030px%3B%0A%09border-radius%3A%2050px%20%2F%2030px%3B%20%7D%0A%7D%0A.eli%3Aafter%7B%0A%09content%20%3A%20%22%22%3B%0A%7D%0A.cil%7B%0A%09position%3Arelative%3B%0A%09top%3A%20-30px%3B%0A%09width%3A%20100px%3B%0A%20%09height%3A%20150px%3B%0A%09background-color%3A%23e51d8a%3B%09%0A%7D%0A.arr%20%7B%0A%09position%3Arelative%3B%0A%09width%3A%200%3B%0A%09height%3A%200%3B%0A%09top%3A%20-30px%3B%0A%09border-left%3A%2050px%20solid%20transparent%3B%0A%09border-right%3A%2050px%20solid%20transparent%3B%0A%09border-top%3A%2035px%20solid%20%23e51d8a%3B%0A%7D&l=#preview',
@@ -156,7 +157,8 @@ JMVC.controllers.demo = function() {
 				'* JMVC.util.findRich': 'test_arrayOp',
 				'* lib/crypt': 'test_crypt',
 				'* FizzBuzz perf': 'test_fizzbuzz',
-				'* Leap year': 'test_leap'
+				'* Leap year': 'test_leap',
+				'* loops' : 'test_loops'
 			},
 			tpl = '<li><a href="%base_url%/%path%">$index$ %label%</a></li>',
 			out = '',
@@ -1182,6 +1184,68 @@ JMVC.controllers.demo = function() {
 	};
 
 	this.action_divrot = function() {
+
+		JMVC.require('widget/divrot/divrot');
+
+		JMVC.head.title('Use arrow keys or swipe');
+		
+		JMVC.css.style(JMVC.WD.body, {
+			'font-family': 'Verdana, sans-serif'
+		});
+
+		JMVC.events.loadify(500);
+
+
+		var videoContents = [
+			'<img src="http://cdn.makeagif.com/media/3-21-2015/tKTOVd.gif" style="width:100%">',
+			'<img src="http://cdn.makeagif.com/media/3-21-2015/S_qd1S.gif" style="width:100%">',
+			'<img src="http://cdn.makeagif.com/media/3-21-2015/jBjHUs.gif" style="width:100%">',
+			'<img src="http://cdn.makeagif.com/media/3-21-2015/OY1rRE.gif" style="width:100%">',
+			'<img src="http://cdn.makeagif.com/media/3-21-2015/_QGR8Q.gif" style="width:100%">',
+			'<img src="http://cdn.makeagif.com/media/3-21-2015/5t9uEb.gif" style="width:100%">'
+		];
+
+		JMVC.getView('vacuum')
+			.set({
+				style: 'margin-top:20px',
+				id: 'container',
+				'content': ''
+			})
+			.render(function() {
+
+
+				if (JMVC.p.aberrate) {
+					JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/widget/divrot/divrot_aberrate.css', true);
+				}
+
+
+
+				var dstNode = JMVC.dom.find('#container'),
+					cnt = JMVC.p.video ? videoContents : ['bottom','front','right','left','back','top'];
+				window.divrot = JMVC.widget.divrot.create({
+					node: dstNode,
+					bott: '<div class="inner">' + cnt[0] + '</div>',
+					front: '<div class="inner">' + cnt[1] + '</div>',
+					right: '<div class="inner">' + cnt[2] + '</div>',
+					left: '<div class="inner">' + cnt[3] + '</div>',
+					back: '<div class="inner">' + cnt[4] + '</div>',
+					top: '<div class="inner">' + cnt[5] + '</div>'
+				});
+				JMVC.dom.add(dstNode, 'h2', {}, 'Swipe in the 8 directions or use the arrow keys to flip around');
+				if (JMVC.p.aberrate) {
+					JMVC.dom.add(dstNode, 'a', {
+						href: JMVC.util.getLink('demo', 'divrot')
+					}, 'Default cube');
+				} else {
+					JMVC.dom.add(dstNode, 'a', {
+						href: JMVC.util.getLink('demo', 'divrot', '?aberrate=true')
+					}, 'Inner cube');
+				}
+			});
+	};
+
+
+	this.action_divrotMobile = function() {
 
 		JMVC.require('widget/divrot/divrot');
 
