@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.5 (rev. 10) build: 3749
+ * @version :  3.6 (rev. 1) build: 3917
  * @copyright : 2015, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.2.0.6 & a love heap
- *         glued with 40 files on 14/4/2015 at 10:12:51
+ *         glued with 41 files on 1/6/2015 at 10:46:7
  *
  * All rights reserved.
  *
@@ -66,6 +66,9 @@
             (function (previousOnError) {
                 // uh!...want to do something with previousOnError?
                 // ...really?
+             
+            
+            
                 function reportError(error, message) {
                     //console.debug(arguments);
                     message = message || '';
@@ -82,10 +85,15 @@
                 }
                  
                 window.onerror = function (message, filename, lineno, colno, error) {
-                    error.message = error.message || message || null;
-                    error.fileName = error.fileName || filename || null;
-                    error.lineNumber = error.lineNumber || lineno || null;
-                    error.columnNumber = error.columnNumber || colno || null;
+                    
+                    try{
+                        error.message = error.message || message || null;
+                        error.fileName = error.fileName || filename || null;
+                        error.lineNumber = error.lineNumber || lineno || null;
+                        error.columnNumber = error.columnNumber || colno || null;
+                    }catch (e){
+            
+                    }
                     reportError(error, 'Uncatched Exception');
                     JMVC.Errors.notify(error);
                 };
@@ -104,16 +112,16 @@
                 $JMVC,
             
                 // version (vars.json)
-                JMVC_VERSION = '3.5',
+                JMVC_VERSION = '3.6',
             
                 // review (vars.json)
-                JMVC_REVIEW = '10',
+                JMVC_REVIEW = '1',
             
                 // review (vars.json)
-                JMVC_DATE = '14/4/2015',
+                JMVC_DATE = '1/6/2015',
             
                 // review (vars.json)
-                JMVC_TIME = '10:12:51',
+                JMVC_TIME = '10:46:7',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -234,7 +242,10 @@
             
                 // in case some modules need to be always
                 // loaded here's the place to set them
-                Modules = ['vendors/google/analytics/analytics', 'core/cookie/cookie'],
+                Modules = [
+                    'vendors/google/analytics/analytics'
+                    //'core/cookie/cookie'
+                ],
             
                 // preloader
                 preload,
@@ -2822,6 +2833,7 @@
                 if(!what.match(/key|value/)) {
                     throw new JMVC.Errors.BadParams('Bad param for JMVC._.object.digFor');
                 }
+                
                 var matches = {
                         key : function (k1, k2, key) {
                             return (JMVC.util.isString(k1) && key instanceof RegExp) ?
@@ -2858,7 +2870,9 @@
                     },
         
                     dig = function (o, k, path, level) {
+                        
                         var i, l, p, tmp;
+        
                         if (o instanceof Array) {                
                             for (i = 0, l = o.length; i < l; i++) {
                                 maybeDoPush(path, i, k, o, level);
@@ -2882,6 +2896,131 @@
     // MANDATORY MODULES START
     //
     /*
+    [MALTA] src/modules/cookie.js
+    */
+    // type : LIB
+    // 
+    _.cookie = {};
+    
+    JMVC.cookie =  {
+    	initCheck : function () {
+    		"use strict";
+    		return JMVC.W.navigator.cookieEnabled;
+    	},
+    	cookie_nocookiesaround : false,
+    	
+    	/**
+    	 * [set description]
+    	 * @param {[type]} name    [description]
+    	 * @param {[type]} value   [description]
+    	 * @param {[type]} expires [description]
+    	 * @param {[type]} path    [description]
+    	 * @param {[type]} domain  [description]
+    	 * @param {[type]} secure  [description]
+    	 */
+    	set : function (name, value, expires, path, domain, secure) {
+    		"use strict";
+    		this.cookie_nocookiesaround = false;
+    		var today = new Date(),
+    			expires_date = new Date(today.getTime() + expires);
+    		expires && (expires = expires * 1000 * 60 * 60 * 24);
+    		JMVC.WD.cookie = name +
+    			"=" + JMVC.W.escape(value) +
+    			(expires ? ";expires=" + expires_date.toGMTString() : "") +
+    			(path ? ";path=" + path : "") +
+    			(domain ? ";domain=" + domain : "") +
+    			(secure ? ";secure" : "");
+    		return true;
+    	},
+    
+    	/**
+    	 * [get description]
+    	 * @param  {[type]} check_name [description]
+    	 * @return {[type]}            [description]
+    	 */
+    	get : function (check_name) {
+    		"use strict";
+    		var a_all_cookies = JMVC.WD.cookie.split(';'),
+    			a_temp_cookie = '',
+    			cookie_name = '',
+    			cookie_value = '',
+    			b_cookie_found = false,
+    			i = 0,
+    			l = a_all_cookies.length;
+    		for (null; i < l; i += 1) {
+    			a_temp_cookie = a_all_cookies[i].split('=');
+    			cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, '');
+    			if (cookie_name === check_name) {
+    				b_cookie_found = true;
+    				a_temp_cookie.length > 1 && (cookie_value = JMVC.W.unescape(a_temp_cookie[1].replace(/^\s+|\s+$/g, '')));
+    				return cookie_value;
+    			}
+    			a_temp_cookie = null;
+    			cookie_name = '';
+    		}
+    		return b_cookie_found;
+    	},
+    
+    	/**
+    	 * [del description]
+    	 * @param  {[type]} name   [description]
+    	 * @param  {[type]} path   [description]
+    	 * @param  {[type]} domain [description]
+    	 * @return {[type]}        [description]
+    	 */
+    	del : function (name, path, domain) {
+    		"use strict";
+    		var ret = false;
+    		if (this.get(name)) {
+    			JMVC.WD.cookie = name + "=" + (path ? ";path=" + path : "") + (domain ? ";domain=" + domain : "") + ";expires=Thu, 01-Jan-1970 00:00:01 GMT";
+    			ret = true;
+    		}
+    		return ret;
+    	},
+    
+    	/**
+    	 * [delall description]
+    	 * @return {[type]} [description]
+    	 */
+    	delall : function () {
+    		"use strict";
+    		var thecookie = JMVC.WD.cookie.split(";"),
+    			i = 0,
+    			l = thecookie.length,
+    			nome;
+    		for (null; i < l; i += 1) {
+    			nome = thecookie[i].split('=');
+    			this.del(nome[0], false, false);
+    		}
+    		this.cookie_nocookiesaround = true;
+    		return true;
+    	},
+    
+    	/**
+    	 * [getall description]
+    	 * @return {[type]} [description]
+    	 */
+    	getall : function () {
+    		"use strict";
+    		if (JMVC.WD.cookie === '') {
+    			return [];
+    		}
+    		return this.cookie_nocookiesaround ?
+    			[]
+    			:
+    			JMVC.each(
+    				JMVC.WD.cookie.split(';'),
+    				function (i) {
+    					var t = i.split('=');
+    					return {name : t[0], value : t[1]};
+    				}
+    			);
+    	}
+    };
+    
+    
+    
+    /*
     [MALTA] src/modules/io.js
     */
     // ---------------+
@@ -2891,309 +3030,389 @@
     
     // private section
     _.io = {
-        /**
-         * Façade for getting the xhr object
-         * @return {object} the xhr
-         */
-        getxhr : function (o) {
-            var xhr,
-                IEfuckIds = ['Msxml2.XMLHTTP', 'Msxml3.XMLHTTP', 'Microsoft.XMLHTTP'],
-                xdr = typeof W.XDomainRequest !== 'undefined' && document.all && !(navigator.userAgent.match(/opera/i)),
-                len = IEfuckIds.length,
-                i = 0;
+    	/**
+    	 * Façade for getting the xhr object
+    	 * @return {object} the xhr
+    	 */
+    	getxhr : function (o) {
+    		var xhr,
+    			IEfuckIds = ['Msxml2.XMLHTTP', 'Msxml3.XMLHTTP', 'Microsoft.XMLHTTP'],
+    			xdr = typeof W.XDomainRequest !== 'undefined' && document.all && !(navigator.userAgent.match(/opera/i)),
+    			len = IEfuckIds.length,
+    			i = 0;
     
-            if (xdr && o.cors) {
-                xhr = new W.XDomainRequest();
-            } else {
-                try {
-                    xhr = new W.XMLHttpRequest();
-                } catch (e1) {
-                    for (null; i < len; i += 1) {
-                        try {
-                            xhr = new W.ActiveXObject(IEfuckIds[i]);
-                        } catch (e2) {continue; }
-                    }
-                    !xhr && alert('No way to initialize XHR');
-                }
-            }
-            return xhr;
-        },
-        /**
-         * [ description]
-         * @param  {[type]} uri     [description]
-         * @param  {[type]} options [description]
-         * @return {[type]}         [description]
-         */
-        ajcall : function (uri, options) {
-            var xhr = _.io.getxhr(options),
-                xdr = typeof W.XDomainRequest !== 'undefined' && document.all && !(navigator.userAgent.match(/opera/i)),
-                method = (options && options.method) || 'POST',
-                cback = options && options.cback,
-                cb_opened = (options && options.opened) || function () {},
-                cb_loading = (options && options.loading) || function () {},
-                cb_error = (options && options.error) || function () {},
-                cb_abort = (options && options.abort) || function () {},
-                sync = options && options.sync,
-                data = (options && options.data) || {},
-                type = (options && options.type) || 'text/html',
-                cache = (options && options.cache !== undefined) ? options.cache : true,
-                targetType = type === 'xml' ?  'responseXML' : 'responseText',
-                timeout = options && options.timeout || 10000,
-                complete = false,
-                res = false,
-                ret = false,
-                state = false;
+    		if (xdr && o.cors) {
+    			xhr = new W.XDomainRequest();
+    		} else {
+    			try {
+    				xhr = new W.XMLHttpRequest();
+    			} catch (e1) {
+    				for (null; i < len; i += 1) {
+    					try {
+    						xhr = new W.ActiveXObject(IEfuckIds[i]);
+    					} catch (e2) {continue; }
+    				}
+    				!xhr && alert('No way to initialize XHR');
+    			}
+    		}
+    		return xhr;
+    	},
     
-            //prepare data, taking care of cache
-            //
-            if (!cache) {
-                data.C = JMVC.util.now();
-            }
-            data = JMVC.object.toQs(data).substr(1);
+    	setHeaders : function (xhr, type, limit) {
+    		
+    		var tmp = {
+    			xml : 'text/xml',
+    			html : 'text/html',
+    			json : 'application/json'
+    		}[type] || 'text/html';
     
-            if (xdr && options.cors) {
-                    // xhr is actually a xdr
-                    //alert('only XDR');
-                    xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri);
+    		// maybe limit the size?
+    		// -256 -> the last 256 bytes
+    		// 256  -> the first 256 bytes
+    		// 
+    		limit && xhr.setRequestHeader("Range", "bytes=" + limit);
     
-                    xhr.onerror = cb_error;
-                    xhr.ontimeout = function () {};
-                    xhr.onprogress = function () {};
-                    xhr.onload = function (r) {
-                        // cback((targetType === 'responseXML') ? r.target[targetType].childNodes[0] : r.target[targetType]);
-                        cback(xhr.responseText);
-                    };
-                    xhr.timeout = 3000;
-                    var tmp = {
-                        xml : 'text/xml',
-                        html : 'text/html',
-                        json : 'application/json'
-                    }[type] || 'text/html';
+    		// utf8 default
+    		// 
+    		xhr.setRequestHeader('Accept', tmp + '; charset=utf-8');
+    	},
     
-                    xhr.contentType = tmp;
-                    window.setTimeout(function () {
-                        xhr.send();    
-                    }, 20);
-                    
+    	setMultipartHeader : function (xhr) {
+    		xhr.setRequestHeader("Content-Type","multipart/form-data");
+    	},
+    
+    	setCookiesHeaders : function (xhr) {
+    		var cookies, i, l;
+    		cookies = JMVC.cookie.getall();
+    		i = 0, l = cookies.length;
+    		while (i < l) {
+    			xhr.setRequestHeader("Cookie", cookies[i].name + "=" + cookies[i].value);
+    			i++;
+    		}
+    	},
+    
+    	/**
+    	 * [ description]
+    	 * @param  {[type]} uri     [description]
+    	 * @param  {[type]} options [description]
+    	 * @return {[type]}         [description]
+    	 */
+    	ajcall : function (uri, options) {
+    		var xhr = _.io.getxhr(options),
+    			xdr = typeof W.XDomainRequest !== 'undefined' && document.all && !(navigator.userAgent.match(/opera/i)),
+    			method = (options && options.method) || 'POST',
+    			cback = options && options.cback,
+    			cb_opened = (options && options.opened) || function () {},
+    			cb_loading = (options && options.loading) || function () {},
+    			cb_error = (options && options.error) || function () {},
+    			cb_abort = (options && options.abort) || function () {},
+    			sync = options && options.sync,
+    			data = (options && options.data) || {},
+    			type = (options && options.type) || 'text/html',
+    			cache = (options && options.cache !== undefined) ? options.cache : true,
+    			targetType = type === 'xml' ?  'responseXML' : 'responseText',
+    			timeout = options && options.timeout || 10000,
+    			hasFiles = options && options.hasFiles,
+    			limitSize = options.limitSize || false,
+    			formData,
+    			complete = false,
+    			res = false,
+    			ret = false,
+    			state = false,
+    			cookies,
+    			tmp,
+    			i,l;
+    
+    		// console.log(data);
+    
+    		//prepare data, taking care of cache
+    		//
+    		if (!cache) {
+    
+    			data.C = JMVC.util.now();
+    		}
+    
+    		if (method === 'GET') {
+    
+    			data = JMVC.object.toQs(data).substr(1);
+    			
+    		} else {
+    			// wrap data into a FromData object
+    			// 
+    			formData = new FormData();
+    			for (tmp in data) {
+    				formData.append(tmp , data[tmp]);
+    			}
+    			data = formData;
+    		}
+    
+    		if (xdr && options.cors) {
+    			// xhr is actually a xdr
+    			//alert('only XDR');
+    			xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri);
+    
+    			xhr.onerror = cb_error;
+    			xhr.ontimeout = function () {};
+    			xhr.onprogress = function (e) {
+    				if (e.lengthComputable) {
+    					var percentComplete = (e.loaded / e.total) * 100;
+    					console.log(percentComplete + '% uploaded');
+    				}
+    			};
+    			xhr.onload = function (r) {
+    				// cback((targetType === 'responseXML') ? r.target[targetType].childNodes[0] : r.target[targetType]);
+    				cback(xhr.responseText);
+    			};
+    			xhr.timeout = 3000;
+    
+    			_.io.setHeaders(xhr, type, limitSize);
     
     
-                } else {
-                    xhr.onreadystatechange = function () {
-                        var tmp;
-                        if (state === xhr.readyState) {
-                            
-                            return false;
+    			var tmp = {
+    				xml : 'text/xml',
+    				html : 'text/html',
+    				json : 'application/json'
+    			}[type] || 'text/html';
+    
+    			xhr.contentType = tmp;
+    			window.setTimeout(function () {
+    				xhr.send();    
+    			}, 20);
+    			
+    
+    
+    		} else {
+    			xhr.onreadystatechange = function () {
+    
+    				if (state === xhr.readyState) {
+    					
+    					return false;
+    				}
+    				state = xhr.readyState;
+    				
+    				if (xhr.readyState === 'complete' || (~~xhr.readyState === 4 && ~~xhr.status === 200)) {
+    					complete = true;
+    					if (cback) {
+    						res = xhr[targetType];
+    						(function () {cback(res); })(res);
+    					}
+    					ret = xhr[targetType];
+    
+    					// IE leak ?????
+    					W.setTimeout(function () {
+    						xhr = null;
+    					}, 50);
+    					return ret;
+    				} else if (xhr.readyState === 3) {
+    					// loading data
+    					//
+    					cb_loading(xhr);
+    				} else if (xhr.readyState === 2) {
+    					// headers received
+    					// 
+    					cb_opened(xhr);
+    				} else if (xhr.readyState === 1) {
+    					// headers
+    					// 
+    					if (!hasFiles) {
+    						
+    						_.io.setCookiesHeaders(xhr);
+    						_.io.setHeaders(xhr, type, limitSize);
+    
+    					} else {
+                            // if files are in, no heders must be sent
+    						//_.io.setMultipartHeader(xhr);
+    						_.io.setHeaders(xhr, 'json', limitSize);
                         }
-                        state = xhr.readyState;
-                        
-                        if (xhr.readyState === 'complete' || (~~xhr.readyState === 4 && ~~xhr.status === 200)) {
-                            complete = true;
-                            if (cback) {
-                                res = xhr[targetType];
-                                (function () {cback(res); })(res);
-                            }
-                            ret = xhr[targetType];
-                            //IE leak ?????
-                            
-                            W.setTimeout(function () {
-                                xhr = null;
-                            }, 50);
-                            return ret;
-                        } else if (xhr.readyState === 3) {
-                            //loading data
-                            cb_loading(xhr);
-                        } else if (xhr.readyState === 2) {
-                            //headers received
-                            cb_opened(xhr);
-                        } else if (xhr.readyState === 1) {
-                            switch (method) {
-                            case 'POST':
-                            case 'PUT':
-                                try {
-                                    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                                    xhr.send(data || true);
-                                } catch (e1) {}
-                                break;
-                            case 'GET':
-                                try {
-                                    tmp = {
-                                        xml : 'text/xml',
-                                        html : 'text/html',
-                                        json : 'application/json'
-                                    }[type] || 'text/html';
     
-                                    xhr.setRequestHeader('Accept', tmp + '; charset=utf-8');
-                                    xhr.send(null);
-                                } catch (e2) {}
-                                break;
-                            default :
-                                alert(method);
-                                xhr.send(null);
-                                break;
-                            }
-                        }
-                        return true;
-                    };
-                    xhr.onerror = function () {
-                        
-                        cb_error && cb_error.apply(null, arguments);
-                    };
-                    xhr.onabort = function () {
+    					switch (method) {
+    						case 'POST':
+    						case 'PUT':
+    							try {
+    								xhr.send(data || true);
+    							} catch (e1) {}
+    						break;
+    				
+    						case 'GET':
+    							try {
+    								xhr.send(null);
+    							} catch (e2) {}
+    						break;
+    				
+    						default :
+    							console.log('WARNING jmvc.io : ' + method + ' not managed!');
+    							xhr.send(null);
+    						break;
+    					}
+    				}
+    				return true;
+    			};
+    			xhr.onerror = function () {
+    				
+    				cb_error && cb_error.apply(null, arguments);
+    			};
+    			xhr.onabort = function () {
     
-                        cb_abort && cb_abort.apply(null, arguments);
-                    };
-                    //open request
-                    xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri, sync);
+    				cb_abort && cb_abort.apply(null, arguments);
+    			};
     
-                    //thread abortion
-                    W.setTimeout(function () {
-                        if (!complete) {
-                            complete = true;
-                            xhr.abort();
-                        }
-                    }, timeout);
-                    try {
-                        return (targetType === 'responseXML') ? xhr[targetType].childNodes[0] : xhr[targetType];
-                    } catch (e3) {}
+    			// open request
+    			//
+    			xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri, sync);
+    
+    			// thread abortion
+    			// 
+    			W.setTimeout(function () {
+    				if (!complete) {
+    					complete = true;
+    					xhr.abort();
+    				}
+    			}, timeout);
+    			try {
+    				return (targetType === 'responseXML') ? xhr[targetType].childNodes[0] : xhr[targetType];
+    			} catch (e3) {}
     
     
-                }
-    
-    
-    
-    
-                
-    
-    
-    
-                return true;
-        }
+    		}
+    		return true;
+    	}
     };
     
     // public section
     // 
     JMVC.io = {
-        xhrcount : 0,
-        getxhr : _.io.getxhr,
-        /**
-         * [ description]
-         * @param  {[type]} uri   [description]
-         * @param  {[type]} cback [description]
-         * @param  {[type]} sync  [description]
-         * @param  {[type]} data  [description]
-         * @param  {[type]} cache [description]
-         * @return {[type]}       [description]
-         */
-        post : function (uri, cback, sync, data, cache, err) {
-            return _.io.ajcall(uri, {
-                cback : cback,
-                method : 'POST',
-                sync : sync,
-                data : data,
-                cache : cache,
-                error: err
-            });
-        },
-    
-        /**
-         * [ description]
-         * @param  {[type]} uri   [description]
-         * @param  {[type]} cback [description]
-         * @param  {[type]} sync  [description]
-         * @param  {[type]} data  [description]
-         * @param  {[type]} cache [description]
-         * @return {[type]}       [description]
-         */
-        get : function (uri, cback, sync, data, cache, err) {
-            return _.io.ajcall(uri, {
-                cback : cback || function () {},
-                method : 'GET',
-                sync : sync,
-                data : data,
-                cache : cache,
-                error : err
-            });
-        },
-    
-        /**
-         * [put description]
-         * @param  {[type]} uri   [description]
-         * @param  {[type]} cback [description]
-         * @param  {[type]} sync  [description]
-         * @param  {[type]} data  [description]
-         * @param  {[type]} cache [description]
-         * @param  {[type]} err   [description]
-         * @return {[type]}       [description]
-         */
-        put : function (uri, cback, sync, data, cache, err) {
-            return _.io.ajcall(uri, {
-                cback : cback,
-                method : 'PUT',
-                sync : sync,
-                data : data,
-                cache : cache,
-                error: err
-            });
-        },
-    
-        /**
-         * [delete description]
-         * @param  {[type]} uri   [description]
-         * @param  {[type]} cback [description]
-         * @param  {[type]} sync  [description]
-         * @param  {[type]} data  [description]
-         * @param  {[type]} cache [description]
-         * @param  {[type]} err   [description]
-         * @return {[type]}       [description]
-         */
-        'delete' : function (uri, cback, sync, data, cache, err) {
-            return _.io.ajcall(uri, {
-                cback : cback || function () {},
-                method : 'DELETE',
-                sync : sync,
-                data : data,
-                cache : cache,
-                error : err
-            });
-        },
-    
-        /**
-         * [ description]
-         * @param  {[type]} uri   [description]
-         * @param  {[type]} cback [description]
-         * @param  {[type]} data  [description]
-         * @return {[type]}       [description]
-         */
-        getJson : function (uri, cback, data, err) {
-            return _.io.ajcall(uri, {
-                type : 'json',
-                method: 'GET',
-                sync : false,
-                cback : function (r) {
-                    var j = (W.JSON && W.JSON.parse) ? JSON.parse(r) : JMVC.jeval('(' + r + ')');
-                    cback(j);
+    	xhrcount : 0,
+    	getxhr : _.io.getxhr,
+    	/**
+    	 * [ description]
+    	 * @param  {[type]} uri   [description]
+    	 * @param  {[type]} cback [description]
+    	 * @param  {[type]} sync  [description]
+    	 * @param  {[type]} data  [description]
+    	 * @param  {[type]} cache [description]
+    	 * @return {[type]}       [description]
+    	 */
+    	post : function (uri, cback, sync, data, cache, files, err) {
+    		return _.io.ajcall(uri, {
+    			cback : function (r) {
+                    if (files) {
+                    	// remove inline comments
+                    	// 
+                        r = r.replace(/(?:\/\*(?:[\s\S]*?)\*\/)|(?:([\s;])+\/\/(?:.*)$)/gm, '');
+                        
+                        cback( (W.JSON && W.JSON.parse) ? JSON.parse(r) : eval('(' + r + ')') );
+                    } else {
+                        cback(r);
+                    }
                 },
-                error : err || function () {},
-                data : data
-            });
-        },
-        
-        /**
-         * [ description]
-         * @param  {[type]} uri   [description]
-         * @param  {[type]} cback [description]
-         * @return {[type]}       [description]
-         */
-        getXML : function (uri, cback, err) {
-            return _.io.ajcall(uri, {
-                method : 'GET',
-                sync : false,
-                type : 'xml',
-                cache : false,
-                error : err || function () {},
-                cback : cback || function () {}
-            });
-        }
+    			method : 'POST',
+    			sync : sync,
+    			data : data,
+    			cache : cache,
+    			error: err,
+    			hasFiles : !!files
+    		});
+    	},
+    
+    	/**
+    	 * [ description]
+    	 * @param  {[type]} uri   [description]
+    	 * @param  {[type]} cback [description]
+    	 * @param  {[type]} sync  [description]
+    	 * @param  {[type]} data  [description]
+    	 * @param  {[type]} cache [description]
+    	 * @return {[type]}       [description]
+    	 */
+    	get : function (uri, cback, sync, data, cache, err) {
+    		return _.io.ajcall(uri, {
+    			cback : cback || function () {},
+    			method : 'GET',
+    			sync : sync,
+    			data : data,
+    			cache : cache,
+    			error : err
+    		});
+    	},
+    
+    	/**
+    	 * [put description]
+    	 * @param  {[type]} uri   [description]
+    	 * @param  {[type]} cback [description]
+    	 * @param  {[type]} sync  [description]
+    	 * @param  {[type]} data  [description]
+    	 * @param  {[type]} cache [description]
+    	 * @param  {[type]} err   [description]
+    	 * @return {[type]}       [description]
+    	 */
+    	put : function (uri, cback, sync, data, cache, err) {
+    		return _.io.ajcall(uri, {
+    			cback : cback,
+    			method : 'PUT',
+    			sync : sync,
+    			data : data,
+    			cache : cache,
+    			error: err
+    		});
+    	},
+    
+    	/**
+    	 * [delete description]
+    	 * @param  {[type]} uri   [description]
+    	 * @param  {[type]} cback [description]
+    	 * @param  {[type]} sync  [description]
+    	 * @param  {[type]} data  [description]
+    	 * @param  {[type]} cache [description]
+    	 * @param  {[type]} err   [description]
+    	 * @return {[type]}       [description]
+    	 */
+    	'delete' : function (uri, cback, sync, data, cache, err) {
+    		return _.io.ajcall(uri, {
+    			cback : cback || function () {},
+    			method : 'DELETE',
+    			sync : sync,
+    			data : data,
+    			cache : cache,
+    			error : err
+    		});
+    	},
+    
+    	/**
+    	 * [ description]
+    	 * @param  {[type]} uri   [description]
+    	 * @param  {[type]} cback [description]
+    	 * @param  {[type]} data  [description]
+    	 * @return {[type]}       [description]
+    	 */
+    	getJson : function (uri, cback, data, err) {
+    		return _.io.ajcall(uri, {
+    			type : 'json',
+    			method: 'GET',
+    			sync : false,
+    			cback : function (r) {
+    				var j = (W.JSON && W.JSON.parse) ? JSON.parse(r) : JMVC.jeval('(' + r + ')');
+    				cback(j);
+    			},
+    			error : err || function () {},
+    			data : data
+    		});
+    	},
+    	
+    	/**
+    	 * [ description]
+    	 * @param  {[type]} uri   [description]
+    	 * @param  {[type]} cback [description]
+    	 * @return {[type]}       [description]
+    	 */
+    	getXML : function (uri, cback, err) {
+    		return _.io.ajcall(uri, {
+    			method : 'GET',
+    			sync : false,
+    			type : 'xml',
+    			cache : false,
+    			error : err || function () {},
+    			cback : cback || function () {}
+    		});
+    	}
     };
     //-----------------------------------------------------------------------------
     /*
@@ -4153,7 +4372,7 @@
                 return;
             }
             var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-            el.className = el.className.replace(reg, ' ');
+            if (el.className) el.className = el.className.replace(reg, ' ');
             return JMVC.dom;
         },
     
@@ -4623,9 +4842,14 @@
          * @param  {[type]} e [description]
          * @return {[type]}   [description]
          */
-        coord : function (e) {
+        coord : function (ev) {
             var x,
-                y;
+                y,
+                e;
+    
+            // if is a touch take the first finger
+            e = (ev.touches && ev.touches.length) ? ev.touches[0] : ev;
+    
             if (e.pageX || e.pageY) {
                 x = e.pageX;
                 y = e.pageY;
@@ -4942,7 +5166,15 @@
             return touches;
         },
     
-        
+        trigger : function (elem, ev) {
+            if ("createEvent" in document) {
+                var evt = document.createEvent("HTMLEvents");
+                evt.initEvent(ev, false, true);
+                elem.dispatchEvent(evt);
+            } else {
+                elem.fireEvent("on" + ev);
+            }
+        },
     
         /**
          * [unload description]
@@ -5270,10 +5502,14 @@
                     }
                 });
     
-                // now add bottom navigation
-                // 1) add body margin-bottom
+                // # Now add bottom navigation
+                // 
+                // 
+                // 
+                // add body margin-bottom
                 JMVC.css.style(JMVC.WDB, 'margin-bottom', '15px');
-                // 2) create navigation div
+                //
+                // create navigation
                 var d = document.createElement('div'),
                     secLeft = document.createElement('div'),
                     secCenter = document.createElement('div'),
@@ -5281,28 +5517,23 @@
                     linkBack = document.createElement('div'),
                     linkReload = document.createElement('div'),
                     linkForward = document.createElement('div');
-    
                 JMVC.dom.addClass(d, 'jmvc-spa-bottom-navigation group');
                 JMVC.dom.addClass(secLeft, 'back cnt respfixed');
                 JMVC.dom.addClass(secCenter, 'reload cnt respfixed');
                 JMVC.dom.addClass(secRight, 'forward cnt respfixed');
-    
                 JMVC.dom.append(secLeft, linkBack);
                 JMVC.dom.append(secCenter, linkReload);
                 JMVC.dom.append(secRight, linkForward);
                 JMVC.dom.append(d, secLeft);
                 JMVC.dom.append(d, secCenter);
                 JMVC.dom.append(d, secRight);
-    
-    
-                
-                
-                // 3) bind it
+                //
+                // bind events
                 JMVC.events.on(linkBack, 'click', function(){history.back();});
                 JMVC.events.on(linkReload, 'click', function(){document.location.href = document.location.href;});
                 JMVC.events.on(linkForward, 'click', function(){history.forward();});
-    
-                // 4) append it 
+                //
+                // append it to body
                 JMVC.dom.append(JMVC.WDB, d);
             }
         },
@@ -5315,17 +5546,24 @@
          * @return {[type]}         [description]
          */
         meta : function (name, value, rewrite) {
-            rewrite = !!rewrite;
+    
+            
+    
             var metas = JMVC.head.metas(),
                 maybeExisting = JMVC.dom.findByAttribute('name', name, metas);
+    
+            // ensure bool
+            rewrite = !!rewrite;
+                
             if (!!maybeExisting.length) {
-                //exit if rewrite is not set and the meta name already exists
+                // exit if rewrite is not set and the meta name already exists
                 if (!rewrite) {
                     return false;
                 }
                 JMVC.dom.remove(maybeExisting[0]);
             }
-            //get last meta if exists
+            // get last meta if exists
+            //
             var meta = JMVC.head.element.getElementsByTagName('meta'),
                 newmeta = JMVC.dom.create('meta', {'name' : name, 'content' : value}),
                 len = meta.length;
@@ -5423,12 +5661,12 @@
          */
         autoHeadings : function () {
             JMVC.head.addStyle(
-                'h1{font-size:24px !important; line-height:48px !important; padding:24px 0px 12px !important;}'+
-                'h2{font-size:20px !important; line-height:36px !important; padding:18px 0px 9px !important;}'+
-                'h3{font-size:16px !important; line-height:28px !important; padding:14px 0px 7px !important;}'+
-                'h4{font-size:12px !important; line-height:24px !important; padding:12px 0px 6px !important;}'+
-                'h5{font-size:10px !important; line-height:20px !important; padding:10px 0px 5px !important;}'+
-                'h6{font-size:8px !important; line-height:16px !important; padding:8px 0px 4px !important;}', true, true);
+                'h1{font-size:24px !important; line-height:48px !important; padding:12px 0px 12px !important;}'+
+                'h2{font-size:20px !important; line-height:36px !important; padding:9px 0px 9px !important;}'+
+                'h3{font-size:16px !important; line-height:28px !important; padding:7px 0px 7px !important;}'+
+                'h4{font-size:12px !important; line-height:24px !important; padding:6px 0px 6px !important;}'+
+                'h5{font-size:10px !important; line-height:20px !important; padding:5px 0px 5px !important;}'+
+                'h6{font-size:8px !important; line-height:16px !important; padding:4px 0px 4px !important;}', true, true);
         },
     
         /**
@@ -6178,11 +6416,16 @@
             return String.fromCharCode.apply(null, code);
         },
     
+        // https://www.linkedin.com/grp/post/121615-5991286634643992576
+        camelCase2hypenCase : function (str) {
+            return str.replace(/([a-zA-Z])(?=[A-Z])/g, '$1-').toLowerCase();
+        },
+    
         /**
          * [EscapeEntities description]
          * @param {[type]} str [description]
          */
-        EscapeEntities : function (str) {
+        escapeEntities : function (str) {
             return str.replace(/[^\x20-\x7E]/g,
                 function (str) {
                     return _.string.charToEntity[str] ? '&' + _.string.charToEntity[str] + ';' : str;
@@ -6441,7 +6684,7 @@
          * [UnescapeEntities description]
          * @param {[type]} str [description]
          */
-        UnescapeEntities : function (str) {
+        unescapeEntities : function (str) {
             return str.replace(/&(.+?);/g,
                 function (str, ent) {
                     return String.fromCharCode(ent[0] !== '#' ? _.string.entities[ent] : ent[1] === 'x' ? parseInt(ent.substr(2), 16): parseInt(ent.substr(1), 10));
@@ -6593,41 +6836,6 @@
         contains: function(obj, field) {
             return (typeof obj === 'object' && field in obj);
         },
-    
-        /**
-         * [digForKeys description]
-         * @param  {[type]} obj [description]
-         * @param  {[type]} key [description]
-         * @return {[type]}     [description]
-         */
-        /*
-        digForKeys : function (obj, key) {
-            var res = [];
-            function dig(o, k, path) {
-                var i, l, p;
-                if (typeof o === 'object') {
-                    for (i in o) {
-                        p = [].concat.call(path, [i]);
-                        if(i == k) {
-                            res.push({value: o[i], path : p.join('/')});
-                        }
-                        dig (o[i], k, p);
-                    }
-                } else if (o instanceof Array) {                
-                    for (i = 0, l = o.length; i < l; i++) {
-                        p = [].concat.call(path, [i]);
-                        if (i == k) {
-                            res.push({value: o[i], path : p.join('/')});
-                        }
-                        dig(o[i], k, p);
-                    }
-                } else {
-                    return;
-                }
-            }
-            dig(obj, key, []);
-            return res;
-        },*/
     
         /**
          * [digForKeys description]
@@ -6881,12 +7089,15 @@
                     'o'
                 ];
             
-            d = Math.atan2(gd2[1] - gd1[1], gd2[0] - gd1[0]) * 180 / (Math.PI);
-            JMVC.events.drag.direction = d.toFixed(2);
+            d = parseFloat((Math.atan2(gd2[1] - gd1[1], gd2[0] - gd1[0]) * 180 / (Math.PI)).toFixed(3), 10);
+            
+            if (d < 0) d += 360;
+    
+            JMVC.events.drag.direction = d;
+    
             JMVC.events.drag.orientation = directions[~~(((d + 180) % 360) / 22.5)] ;
             return true;
         }
-    
     };
     
     JMVC.events.drag = {
