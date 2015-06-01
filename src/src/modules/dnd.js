@@ -13,12 +13,15 @@ _.events.drag = {
                 'o'
             ];
         
-        d = Math.atan2(gd2[1] - gd1[1], gd2[0] - gd1[0]) * 180 / (Math.PI);
-        JMVC.events.drag.direction = d.toFixed(2);
+        d = parseFloat((Math.atan2(gd2[1] - gd1[1], gd2[0] - gd1[0]) * 180 / (Math.PI)).toFixed(3), 10);
+        
+        if (d < 0) d += 360;
+
+        JMVC.events.drag.direction = d;
+
         JMVC.events.drag.orientation = directions[~~(((d + 180) % 360) / 22.5)] ;
         return true;
     }
-
 };
 
 JMVC.events.drag = {
