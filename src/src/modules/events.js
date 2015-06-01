@@ -317,9 +317,14 @@ JMVC.events = {
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
-    coord : function (e) {
+    coord : function (ev) {
         var x,
-            y;
+            y,
+            e;
+
+        // if is a touch take the first finger
+        e = (ev.touches && ev.touches.length) ? ev.touches[0] : ev;
+
         if (e.pageX || e.pageY) {
             x = e.pageX;
             y = e.pageY;
@@ -636,7 +641,15 @@ JMVC.events = {
         return touches;
     },
 
-    
+    trigger : function (elem, ev) {
+        if ("createEvent" in document) {
+            var evt = document.createEvent("HTMLEvents");
+            evt.initEvent(ev, false, true);
+            elem.dispatchEvent(evt);
+        } else {
+            elem.fireEvent("on" + ev);
+        }
+    },
 
     /**
      * [unload description]
