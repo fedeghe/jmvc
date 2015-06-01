@@ -6,11 +6,8 @@ JMVC.controllers.canvaseditor = function () {
 
         JMVC.head.title('Canvas editor');
 
-
         var screen_size,
             editorContainerId = 'canvasEditorContainerId';
-
-        
 
         JMVC.require(
             'canvas/editor/editor',

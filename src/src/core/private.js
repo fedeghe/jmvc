@@ -6,6 +6,7 @@ _.common = {
         if(!what.match(/key|value/)) {
             throw new JMVC.Errors.BadParams('Bad param for JMVC._.object.digFor');
         }
+        
         var matches = {
                 key : function (k1, k2, key) {
                     return (JMVC.util.isString(k1) && key instanceof RegExp) ?
@@ -42,7 +43,9 @@ _.common = {
             },
 
             dig = function (o, k, path, level) {
+                
                 var i, l, p, tmp;
+
                 if (o instanceof Array) {                
                     for (i = 0, l = o.length; i < l; i++) {
                         maybeDoPush(path, i, k, o, level);

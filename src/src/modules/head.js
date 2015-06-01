@@ -211,10 +211,14 @@ JMVC.head = {
                 }
             });
 
-            // now add bottom navigation
-            // 1) add body margin-bottom
+            // # Now add bottom navigation
+            // 
+            // 
+            // 
+            // add body margin-bottom
             JMVC.css.style(JMVC.WDB, 'margin-bottom', '15px');
-            // 2) create navigation div
+            //
+            // create navigation
             var d = document.createElement('div'),
                 secLeft = document.createElement('div'),
                 secCenter = document.createElement('div'),
@@ -222,28 +226,23 @@ JMVC.head = {
                 linkBack = document.createElement('div'),
                 linkReload = document.createElement('div'),
                 linkForward = document.createElement('div');
-
             JMVC.dom.addClass(d, 'jmvc-spa-bottom-navigation group');
             JMVC.dom.addClass(secLeft, 'back cnt respfixed');
             JMVC.dom.addClass(secCenter, 'reload cnt respfixed');
             JMVC.dom.addClass(secRight, 'forward cnt respfixed');
-
             JMVC.dom.append(secLeft, linkBack);
             JMVC.dom.append(secCenter, linkReload);
             JMVC.dom.append(secRight, linkForward);
             JMVC.dom.append(d, secLeft);
             JMVC.dom.append(d, secCenter);
             JMVC.dom.append(d, secRight);
-
-
-            
-            
-            // 3) bind it
+            //
+            // bind events
             JMVC.events.on(linkBack, 'click', function(){history.back();});
             JMVC.events.on(linkReload, 'click', function(){document.location.href = document.location.href;});
             JMVC.events.on(linkForward, 'click', function(){history.forward();});
-
-            // 4) append it 
+            //
+            // append it to body
             JMVC.dom.append(JMVC.WDB, d);
         }
     },
@@ -256,17 +255,24 @@ JMVC.head = {
      * @return {[type]}         [description]
      */
     meta : function (name, value, rewrite) {
-        rewrite = !!rewrite;
+
+        
+
         var metas = JMVC.head.metas(),
             maybeExisting = JMVC.dom.findByAttribute('name', name, metas);
+
+        // ensure bool
+        rewrite = !!rewrite;
+            
         if (!!maybeExisting.length) {
-            //exit if rewrite is not set and the meta name already exists
+            // exit if rewrite is not set and the meta name already exists
             if (!rewrite) {
                 return false;
             }
             JMVC.dom.remove(maybeExisting[0]);
         }
-        //get last meta if exists
+        // get last meta if exists
+        //
         var meta = JMVC.head.element.getElementsByTagName('meta'),
             newmeta = JMVC.dom.create('meta', {'name' : name, 'content' : value}),
             len = meta.length;

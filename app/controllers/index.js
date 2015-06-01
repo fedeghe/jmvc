@@ -6,11 +6,11 @@ JMVC.require(
 	'core/mobile/mobile',
 	'core/color/color',
 	'core/screen/screen',
-	'core/cookie/cookie',
 	'vendors/google/analytics/analytics',
 	'core/fx/fx',
 	'widget/lang/lang',
-	'vendors/github/forkme/forkme'
+	'vendors/github/forkme/forkme',
+	'core/lib/widgzard/widgzard'
 );
 
 JMVC.controllers.index = function () {
@@ -212,7 +212,7 @@ JMVC.controllers.index = function () {
 				
 				JMVC.sniffer.browser.name !== 'Opera'
 				&& (
-					JMVC.array.find([10, 11, 12, 1, 2, 3], todayMonth) > -1
+					JMVC.array.find([9, 10, 11, 0, 1, 2, 3, 4], todayMonth) > -1
 					&&
 					JMVC.p.snow && JMVC.p.snow === 'true'
 				)
