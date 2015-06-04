@@ -292,6 +292,12 @@ JMVC.extend('core/widgzard', function () {
         // 
         (!conf.content || conf.content.length == 0) && this.WIDGZARD_cb.call(this);
 
+        // what about a init function ?
+        // 
+        if ('init' in conf && typeof conf.init === 'function') {
+            conf.init.call(this);
+        }
+
         return this;
     };
 
