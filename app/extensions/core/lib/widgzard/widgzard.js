@@ -41,6 +41,14 @@ JMVC.extend('core/widgzard', function () {
      * @param {[type]} mapcnt an object used to allow the access from any node
      *                        to every node that has the gindID attribute
      */
+    /**
+     * Main object constructor represeting any node created
+     * @param {[type]} conf the object that has the information about the node
+     *                      that will be created
+     * @param {[type]} trg  the DomNODE where the element will be appended to
+     * @param {[type]} mapcnt an object used to allow the access from any node
+     *                        to every node that has the gindID attribute
+     */
     function Wnode(conf, trg, mapcnt) {
         
         // save a reference to the instance
@@ -104,20 +112,23 @@ JMVC.extend('core/widgzard', function () {
         //
         this.WIDGZARD_promise.then(self.WIDGZARD_cb, self);
 
-        // as said at the begibbibg every node keeps a reference
+        // as said at the beginning every node keeps a reference
         // to a function that allow to get a reference to any
         // node that in his configuration has a `nodeIdentifier` value
         // specified
         //
         this.map = mapcnt.map;
 
-        //function to stop all
-        this.stop = mapcnt.stop;
+
+
+        //function to abort all
+        this.abort = mapcnt.abort;
 
         // publish in the node the getNode fucntion that allows for
         // getting any node produced from the same json having a 
         // `nodeIdentifier` with a valid value
         this.getNode = mapcnt.getNode;
+
 
         // get all nodes mapped
         this.getNodes = mapcnt.getNodes;
@@ -150,9 +161,9 @@ JMVC.extend('core/widgzard', function () {
 
         };
 
-
         this.lateWid = mapcnt.lateWid;
     }
+
 
     /**
      * save a function to climb up n-parent
@@ -235,6 +246,30 @@ JMVC.extend('core/widgzard', function () {
         el.data = data || {};
         return this;
     };
+
+    /**
+     * [checkInit description]
+     * @param  {[type]} el [description]
+     * @return {[type]}    [description]
+     */
+    Wproto.checkInit = function (el, conf) {
+        if ('init' in conf && typeof conf.init === 'function') {
+            conf.init.call(el);
+        }
+        return this;
+    }
+
+    /**
+     * [checkInit description]
+     * @param  {[type]} el [description]
+     * @return {[type]}    [description]
+     */
+    Wproto.checkEnd = function (el, conf) {
+        if ('end' in conf && typeof conf.end === 'function') {
+            this.root.endFunctions.push(function () {conf.end.call(el);});
+        }
+        return this;
+    }
     
     /**
      * add method for the Wnode
@@ -248,16 +283,14 @@ JMVC.extend('core/widgzard', function () {
         // 
         this.setAttrs(node, conf.attrs)
             .setStyle(node, conf.style)
-            .setData(this, conf.data);
+            .setData(this, conf.data)
+            .checkInit(this, conf)
+            .checkEnd(this, conf);
 
         // if `html` key is found on node conf 
         // inject its value
         //
         typeof conf.html !== 'undefined' && (node.innerHTML = conf.html);
-        
-        // save a reference back to json
-        //
-        //// this.conf.node = this.node;
 
         // if the node configuration has a `nodeIdentifier` key
         // (and a String value), the node can be reached 
@@ -292,17 +325,12 @@ JMVC.extend('core/widgzard', function () {
         // 
         (!conf.content || conf.content.length == 0) && this.WIDGZARD_cb.call(this);
 
-        // what about a init function ?
-        // 
-        if ('init' in conf && typeof conf.init === 'function') {
-            conf.init.call(this);
-        }
-
+        // chain
         return this;
     };
 
 
-    function cleanup(trg) {
+    function cleanupWnode(trg) {
         var node = trg.node,
             removeNode = function (t) {
                 t.parentNode.removeChild(t);
@@ -351,7 +379,8 @@ JMVC.extend('core/widgzard', function () {
     function render (params, clean) {
 
         var target = {
-                node : params.target || document.body
+                node : params.target || document.body,
+                endFunctions : []
             },
             targetFragment = {
                 node : document.createDocumentFragment('div')
@@ -363,7 +392,7 @@ JMVC.extend('core/widgzard', function () {
 
         // maybe cleanup previous
         //
-        autoclean && target.WIDGZARD && cleanup(target)
+        autoclean && target.WIDGZARD && cleanupWnode(target)
 
         if (!params) {
             throw new Exception('ERROR : Check parameters for render function');
@@ -383,7 +412,7 @@ JMVC.extend('core/widgzard', function () {
             getNodes : function () {
                 return mapcnt.map;
             },
-            stop : function () {
+            abort : function () {
                 active = false;
                 return false;
             },
@@ -392,15 +421,16 @@ JMVC.extend('core/widgzard', function () {
             }
         };
 
-
         // rape Node prototype funcs
         // to set attributes & styles
+        // and check init function 
         // 
         Wproto
             .setAttrs(target.node, params.attrs)
             .setStyle(target.node, params.style)
             .setData(target, params.data)
             .setData(targetFragment, params.data);
+
 
         target.descendant = Wproto.descendant;
         targetFragment.descendant = Wproto.descendant;
@@ -424,11 +454,20 @@ JMVC.extend('core/widgzard', function () {
         targetFragment.WIDGZARD_len = params.content ? params.content.length : 0;
 
         targetFragment.WIDGZARD_cb = target.WIDGZARD_cb = function () {
+            active 
+            &&
             target.node.appendChild(targetFragment.node)
             &&
             params.cb && params.cb.call(target);
-        };
 
+            //ending functions
+            //
+            if (target.endFunctions.length) {
+                for (var i = 0, l = target.endFunctions.length; i < l; i++) {
+                    target.endFunctions[i]();
+                }
+            }
+        };
 
         // flag to enable cleaning
         //
@@ -436,14 +475,19 @@ JMVC.extend('core/widgzard', function () {
 
         // allow to use getNode & getNodes from root
         // 
-        target.getNode = 
-        targetFragment.getNode = mapcnt.getNode;
-        target.getNodes = 
-        targetFragment.getNodes = mapcnt.getNodes;
+        target.getNode = targetFragment.getNode = mapcnt.getNode;
+        target.getNodes = targetFragment.getNodes = mapcnt.getNodes;
+        target.abort = targetFragment.abort = function () {
+            target.node.innerHTML = '';
+        };
+
+
+        // what about a init root function?
+        // 
+        Wproto.checkInit(targetFragment, params);
 
         // start recursion
-        // 
-        
+        //
         (function recur(cnf, trg){
             if (!active) {
                 return false;
@@ -464,7 +508,6 @@ JMVC.extend('core/widgzard', function () {
             }
             
         })(params, targetFragment);
-        // /console.dir(mapcnt);
     }
 
     // MY WONDERFUL Promise Implementation
@@ -588,6 +631,11 @@ JMVC.extend('core/widgzard', function () {
         render(params);
         return r;
     }
+
+
+    function cleanup(trg){
+        render({target : trg, content : [{html : "no content"}]}, true);
+    }
     
     // Widgzard.load('js/_index.js');
     function load (src) {
@@ -667,6 +715,7 @@ JMVC.extend('core/widgzard', function () {
     // publish module
     return {
         render : render,
+        cleanup : cleanup,
         get : get,
         load : load,
         htmlspecialchars : htmlspecialchars,
