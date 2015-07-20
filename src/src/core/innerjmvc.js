@@ -446,11 +446,17 @@ jmvc = {
      */
     hook_check: function(hookname, params) {
         var dyn = params instanceof Array ? params : false,
-            i;
+            i, tmp;
         if (dyn && hookname in hooks) {
             for (i in hooks[hookname]) {
-                dyn = hooks[hookname][i].apply(null, dyn);
-                //be sure is an array for next one
+                tmp = hooks[hookname][i].apply(null, dyn);
+                // the hook function receives as parameter the content
+                // can manipulate it and must return it
+                // but if is not returned let's force it
+                // 
+                dyn = tmp || dyn;
+
+                // be sure is an array for next one
                 !(dyn instanceof Array) && (dyn = [dyn]);
             }
         }
