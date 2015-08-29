@@ -178,8 +178,8 @@ JMVC.object = {
      */
     fromQs : function () {
         var els = document.location.search.substr(1).split('&'),
-            i, len, tmp, out = [];
-
+            i, len, tmp, out = {};
+        
         for (i = 0, len = els.length; i < len; i += 1) {
             tmp = els[i].split('=');
 
