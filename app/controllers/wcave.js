@@ -9,8 +9,10 @@ JMVC.controllers.wcave = function () {
 		JMVC.head.title('Wcave game');
 
 		JMVC.events.loadify(500);
+
 		var v = JMVC.getView('vacuum'),
 			containerID = 'container';
+		
 		v.set({'id' : containerID}).render(function () {
 			Wcave.call(JMVC.W, {
 				'id' : containerID,

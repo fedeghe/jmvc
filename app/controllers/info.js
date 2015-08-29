@@ -14,6 +14,7 @@ JMVC.controllers.info = function () {
 			'core/mobile/mobile',
 			'core/screen/screen',
 			'vendors/github/forkme/forkme'
+			// ,'core/lib/cookieMonster/cookieMonster'
 		);
 
 		var main  = JMVC.getView('info/info'),

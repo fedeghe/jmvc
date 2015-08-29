@@ -11,6 +11,7 @@ JMVC.controllers.api = function () {
 			'core/responsive/basic/basic',
 			'widget/countdown/countdown',
 			'vendors/github/forkme/forkme'
+			// ,'core/lib/cookieMonster/cookieMonster'
 		);
 		JMVC.events.loadify(500);
 		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/api.css', true, false);
