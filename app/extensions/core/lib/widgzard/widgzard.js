@@ -253,8 +253,10 @@ JMVC.extend('core/widgzard', function () {
      * @return {[type]}    [description]
      */
     Wproto.checkInit = function (el, conf) {
+        var keepRunning = true;
         if ('init' in conf && typeof conf.init === 'function') {
-            conf.init.call(el);
+            keepRunning = conf.init.call(el);
+            !keepRunning && el.abort();
         }
         return this;
     }
@@ -414,6 +416,7 @@ JMVC.extend('core/widgzard', function () {
             },
             abort : function () {
                 active = false;
+                target.node.innerHTML = '';
                 return false;
             },
             lateWid : function (wid) {
@@ -477,9 +480,7 @@ JMVC.extend('core/widgzard', function () {
         // 
         target.getNode = targetFragment.getNode = mapcnt.getNode;
         target.getNodes = targetFragment.getNodes = mapcnt.getNodes;
-        target.abort = targetFragment.abort = function () {
-            target.node.innerHTML = '';
-        };
+        target.abort = targetFragment.abort = mapcnt.abort;
 
 
         // what about a init root function?
@@ -506,119 +507,16 @@ JMVC.extend('core/widgzard', function () {
                     recur(cnf.content[i], new Wnode(cnf.content[i], trg, mapcnt).add());
                 }
             }
+            // if no content there are no childs
+            // thus, let the cb execute
+            else {
+                trg.WIDGZARD_cb();
+            }
             
         })(params, targetFragment);
     }
 
-    // MY WONDERFUL Promise Implementation
-    // 
-    Promise = (function() {
-        var _Promise = function() {
-                this.cbacks = [];
-                this.solved = false;
-                this.result = null;
-            },
-            proto = _Promise.prototype;
-        /**
-         * [then description]
-         * @param  {[type]} func [description]
-         * @param  {[type]} ctx  [description]
-         * @return {[type]}      [description]
-         */
-        proto.then = function(func, ctx) {
-            var self = this,
-                f = function() {
-                    self.solved = false;
-                    func.apply(ctx || self, [ctx || self, self.result]);
-                };
-            if (this.solved) {
-                f();
-            } else {
-                this.cbacks.push(f);
-            }
-            return this;
-        };
 
-        /**
-         * [done description]
-         * @return {Function} [description]
-         */
-        proto.done = function() {
-            var r = [].slice.call(arguments, 0);
-            this.result = r;
-            this.solved = true;
-            if (!this.cbacks.length) {
-                return this.result;
-            }
-            this.cbacks.shift()(r);
-        };
-
-        /**
-         * [chain description]
-         * @param  {[type]} funcs [description]
-         * @param  {[type]} args  [description]
-         * @return {[type]}       [description]
-         */
-        function chain(funcs, args) {
-
-            var p = new _Promise();
-            var first = (function() {
-
-                    funcs[0].apply(p, [p].concat([args]));
-                    return p;
-                })(),
-                tmp = [first];
-
-            for (var i = 1, l = funcs.length; i < l; i++) {
-                tmp.push(tmp[i - 1].then(funcs[i]));
-            }
-            return p;
-        }
-
-        /**
-         * [join description]
-         * @param  {[type]} pros [description]
-         * @param  {[type]} args [description]
-         * @return {[type]}      [description]
-         */
-        function join(pros, args) {
-            var endP = new _Promise(),
-                res = [],
-                stack = [],
-                i = 0,
-                l = pros.length,
-                limit = l,
-                solved = function (remainder) {
-                    !remainder && endP.done.apply(endP, res);
-                };
-
-            for (null; i < l; i++) {
-                (function (k) {
-                    stack[k] = new _Promise();
-
-                    // inside every join function the context is a Promise, and
-                    // is possible to return it or not 
-                    var _p = pros[k].apply(stack[k], [stack[k], args]);
-                    (_p instanceof _Promise ? _p : stack[k])
-                    .then(function (p, r) {
-                        res[k] = r;
-                        solved(--limit);
-                    });
-                })(i);
-            }
-            return endP;
-        }
-
-        /* returning module
-        */
-        return {
-            create: function() {
-                return new _Promise();
-            },
-            chain: chain,
-            join: join
-        };
-    })();
 
     /**
      * [get description]
@@ -649,68 +547,6 @@ JMVC.extend('core/widgzard', function () {
         }
     };
 
-    /**
-     * [eulerWalk description]
-     * @param  {[type]} root [description]
-     * @param  {[type]} func [description]
-     * @param  {[type]} mode [description]
-     * @return {[type]}      [description]
-     */
-    eulerWalk = function (root, func, mode) {
-        mode = {pre : 'pre', post : 'post'}[mode] || 'post';
-        var nope = function () {},
-            pre = mode === 'pre' ? func : nope,
-            post = mode === 'post' ? func : nope,
-            walk = (function () {
-                return function (n_, _n) {
-                    pre(n_);
-                    _n = n_.firstChild;
-                    while (_n) {
-                        walk(_n);
-                        _n = _n.nextSibling;
-                    }
-                    post(n_);
-                };
-            })();
-        walk(root);
-    };
-
-    /**
-     * Dummy delegation function 
-     * @param  {[type]} func [description]
-     * @param  {[type]} ctx  [description]
-     * @return {[type]}      [description]
-     */
-    delegate = function (func, ctx) {
-    
-        // get relevant arguments
-        // 
-        var args = Array.prototype.slice.call(arguments, 2);
-        
-        // return the function
-        //
-        return function() {
-            return func.apply(
-                ctx || window,
-                [].concat(args, Array.prototype.slice.call(arguments))
-            );
-        };
-    };
-
-    /**
-     * [htmlspecialchars description]
-     * @param  {[type]} c [description]
-     * @return {[type]}   [description]
-     */
-    htmlspecialchars = function (c) {
-        return '<pre>' +
-            c.replace(/&(?![\w\#]+;)/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;'); +
-        '</pre>';
-    };
 
     // publish module
     return {
