@@ -229,6 +229,24 @@ JMVC.array = {
     min : function (a) {return Math.min.apply(null, a); },
     
     /**
+     * [move description]
+     * @param  {[type]} a    [description]
+     * @param  {[type]} from [description]
+     * @param  {[type]} to   [description]
+     * @return {[type]}      [description]
+     */
+    move : function (a, from, to) {
+        if (to >= a.length) {
+            var k = to - a.length;
+            while ((k--) + 1) {
+                a.push(undefined);
+            }
+        }
+        a.splice(to, 0, a.splice(from, 1)[0]);
+        return a;
+    },
+
+    /**
      * [mult description]
      * @param  {[type]} a [description]
      * @return {[type]}   [description]
