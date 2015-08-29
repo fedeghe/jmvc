@@ -1,0 +1,18 @@
+<function>
+    <signature name="fromQs">JMVC.object.fromQs()</signature>
+    <description>Get an object literal representing the url querystring</description>
+    <params>
+        <param name="noparams">this function needs no parameters</param>
+    </params>
+    <returns>the object literal containing the querystring values (Object Literal)</returns>
+    <sample>// open the console to see the result&#10;
+var w = window.open(&#10;
+    JMVC.vars.baseurl + '?a=1&amp;b=2&amp;c=hello%20world',&#10;
+    '',&#10;
+    'width=600,height=600,top=50,left=50'&#10;
+);&#10;
+w.onload = function() {console.debug(w.JMVC.object.fromQs());};</sample>
+    <code>var w = window.open(JMVC.vars.baseurl + '?a=1&amp;b=2&amp;c=hello%20world','','width=600,height=600,top=50,left=50');
+    	w.onload = function() {console.debug(w.JMVC.object.fromQs());};</code>
+    <status>incomplete</status>
+</function>
