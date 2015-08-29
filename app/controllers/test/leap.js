@@ -89,8 +89,17 @@ JMVC.controllers.leap = function() {
             function isLeap4 (y) {
                 return !((y % 4) || (!(y % 100) && y % 400));
             }
+            function isLeap5 (y) {
+                return !!(!(y % 4) && (y%100 || !(y % 400)));
+            }
 
-            
+            // stackoverflow version
+            // http://stackoverflow.com/questions/16353211/check-if-year-is-leap-year-in-javascript
+            function leapYear(year)
+            {
+              return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+            }
+
             function pool(f) {
                 //var start = +new Date(),
                 var res = true,
@@ -107,10 +116,12 @@ JMVC.controllers.leap = function() {
                         l2 = isLeap2(i),
                         l3 = isLeap3(i),
                         l4 = isLeap4(i),
-                        tmp = (l1 == l2) && (l2 == l3) && (l3 == l4);
+                        l5 = isLeap5(i),
+                        l6 = leapYear(i),
+                        tmp = (l1 == l2) && (l2 == l3) && (l3 == l4) && (l4 == l5) && (l5 == l6);
 
                     if (!tmp) {
-                        console.log(i, l1, l2, l3, l4);
+                        console.log(i, l1, l2, l3, l4, l5, l6);
                     }
                     ret &= tmp;
                 }
@@ -121,8 +132,10 @@ JMVC.controllers.leap = function() {
             JMVC.test.code(isLeap2.toString());
             JMVC.test.code(isLeap3.toString());
             JMVC.test.code(isLeap4.toString());
+            JMVC.test.code(isLeap5.toString());
+            JMVC.test.code(leapYear.toString());
 
-            var times = 100;
+            var times = 500;
             
             JMVC.test.describe('Checking same result on [1, 2199] year range');
             JMVC.test.testAssertion('same result', check);
@@ -135,6 +148,8 @@ JMVC.controllers.leap = function() {
             JMVC.test.testTime('isLeap2', pool, times, [isLeap2]);
             JMVC.test.testTime('isLeap3', pool, times, [isLeap3]);
             JMVC.test.testTime('isLeap4', pool, times, [isLeap4]);
+            JMVC.test.testTime('isLeap5', pool, times, [isLeap5]);
+            JMVC.test.testTime('leapYear', pool, times, [leapYear]);
             
 
             JMVC.test.timeSummary();

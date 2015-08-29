@@ -4,7 +4,7 @@ JMVC.controllers.cards = function () {
     
     this.action_index = function () {
 
-        var howmany = JMVC.p.n || 10,
+        var howmany = JMVC.p.n || 3,
             decks = JMVC.p.decks || 1;
 
         JMVC.require('games/deck/deck');

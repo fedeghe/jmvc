@@ -3162,6 +3162,27 @@ console.log(res);</code>
     <status>incomplete</status>
 </function>
 <!--
+[MALTA] src/object/fromQs.xml
+-->
+<function>
+    <signature name="fromQs">JMVC.object.fromQs()</signature>
+    <description>Get an object literal representing the url querystring</description>
+    <params>
+        <param name="noparams">this function needs no parameters</param>
+    </params>
+    <returns>the object literal containing the querystring values (Object Literal)</returns>
+    <sample>// open the console to see the result&#10;
+var w = window.open(&#10;
+    JMVC.vars.baseurl + '?a=1&amp;b=2&amp;c=hello%20world',&#10;
+    '',&#10;
+    'width=600,height=600,top=50,left=50'&#10;
+);&#10;
+w.onload = function() {console.debug(w.JMVC.object.fromQs());};</sample>
+    <code>var w = window.open(JMVC.vars.baseurl + '?a=1&amp;b=2&amp;c=hello%20world','','width=600,height=600,top=50,left=50');
+    	w.onload = function() {console.debug(w.JMVC.object.fromQs());};</code>
+    <status>incomplete</status>
+</function>
+<!--
 [MALTA] src/object/compare.xml
 -->
 <function>
@@ -3296,13 +3317,12 @@ console.log(coll.constructor);&#10;
 console.log(coll instanceof HTMLCollection);&#10;
 console.log(a.constructor);&#10;
 console.log(a instanceof Array);</sample>
-    <code>
-        var coll = document.getElementsByTagName('div'),
-            a = JMVC.array.coll2array(coll);
-        console.log(coll.constructor);
-        console.log(coll instanceof HTMLCollection)
-        console.log(a.constructor);
-        console.log(a instanceof Array);
+    <code>var coll = document.getElementsByTagName('div'),
+    a = JMVC.array.coll2array(coll);
+console.log(coll.constructor);
+console.log(coll instanceof HTMLCollection);
+console.log(a.constructor);
+console.log(a instanceof Array);
     </code>
     <status>testing</status>
 </function>
@@ -3320,12 +3340,10 @@ console.log(a instanceof Array);</sample>
     <testlink>test_api_array_find</testlink>
     <sample>var a = [10, 7, 6, 1, 2, 9, 2, [1,2,3], function(){}, {a:{c:2}, b:3}];&#10;
 console.log(JMVC.array.find(a, 2));&#10;
+console.log(JMVC.array.find(a, [1,2,3]));</sample>
+    <code>var a = [10, 7, 6, 1, 2, 9, 2, [1,2,3], function(){}, {a:{c:2}, b:3}];
+console.log(JMVC.array.find(a, 2));
 console.log(JMVC.array.find(a, [1,2,3]));
-    </sample>
-    <code>
-        var a = [10, 7, 6, 1, 2, 9, 2, [1,2,3], function(){}, {a:{c:2}, b:3}];
-        console.log(JMVC.array.find(a, 2));
-        console.log(JMVC.array.find(a, [1,2,3]));
     </code>
     <status>testing</status>
 </function>

@@ -30,7 +30,8 @@ JMVC.head.addStyle('/media/css/widgzard/sample3.css');
                     var self = this;
                     JMVC.events.on(self.node, 'click', function () {
                         JMVC.head.goto('widgzard', 'sample');
-                    })
+                    });
+                    self.done();
                 }
             }]
         },{
@@ -46,6 +47,7 @@ JMVC.head.addStyle('/media/css/widgzard/sample3.css');
 
 
     function generate() {
+
         var SELF = this, // here not needed but... good habit
             s = 8,
             c = 0;
@@ -65,6 +67,7 @@ JMVC.head.addStyle('/media/css/widgzard/sample3.css');
             c++;
             
         }
+
         SELF.done();
     }
 

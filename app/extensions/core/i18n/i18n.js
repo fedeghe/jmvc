@@ -1,2 +1,2 @@
 // JMVC.require('core/cookie/cookie');
-JMVC.hook({'onBeforeRender' : JMVC.parseLang});
+JMVC.hook({'onBeforeRender' : JMVC.parseLang}, true);

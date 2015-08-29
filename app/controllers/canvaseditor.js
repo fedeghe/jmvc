@@ -44,7 +44,6 @@ JMVC.controllers.canvaseditor = function () {
                     //,width: 300
                     //,height: 400
                 });
-                
             });
         //window.setTimeout(function() {JMVC.screen.launchFullscreen();}, 5000);
     };

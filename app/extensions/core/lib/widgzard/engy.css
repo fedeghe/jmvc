@@ -752,10 +752,12 @@ input[type=text] {
     max-width: 100% !important;
   }
 }
-img {
-  max-width: 100%;
-  max-height: 100%;
+/*
+img{
+    max-width: 100%;
+    max-height: 100%;
 }
+*/
 .carousel.vertical .arrow {
   background-position: -1px -1px;
 }
