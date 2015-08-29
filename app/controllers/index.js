@@ -11,6 +11,7 @@ JMVC.require(
 	'widget/lang/lang',
 	'vendors/github/forkme/forkme',
 	'core/lib/widgzard/widgzard'
+	// ,'core/lib/cookieMonster/cookieMonster'
 );
 
 JMVC.controllers.index = function () {
@@ -63,8 +64,8 @@ JMVC.controllers.index = function () {
 			function () {
 
 				
-				//JMVC.preload(JMVC.vars.baseurl + '/info');
-				//JMVC.preload(JMVC.vars.baseurl + '/api');
+				// JMVC.preload(JMVC.vars.baseurl + '/info');
+				// JMVC.preload(JMVC.vars.baseurl + '/api');
 				
 			
 				JMVC.github.forkme('fedeghe');
@@ -129,80 +130,22 @@ JMVC.controllers.index = function () {
 									tilt : 45,
 									styles : [{featureType : 'water', stylers : [{lightness : 0}, {saturation : 100}, {hue : '#000000'}, {gamma : 0.2}], elementType : 'geometry'}]
 								});
-							/*
-							
-							https://maps.google.com/maps?q=heron+island+resort&hl=en&ll=-23.443045,151.906744&spn=0.001358,0.002519&sll=-23.442794,151.915555&layer=c&cid=17997865933213515154&panoid=CWskcsTEZBNXaD8gG-zATA&cbp=13,332.33,,0,11.68&gl=us&hq=heron+island+resort&t=m&cbll=-23.442896,151.906584&z=19
 
-							 
-							JMVC.gmap.animator(map, [
-								//{zoom:15,duration:3},
-								//{location : 'via battisti 2, albignasego,italia', speed : 20, duration : 3, mapTypeId : google.maps.MapTypeId.ROADMAP}
-								//,{location : [46.545201, 12.135968], speed : 20, duration : 3, mapTypeId : google.maps.MapTypeId.TERRAIN}
-								//{location : [46.545203, 12.135968], speed : 20, duration : 20, streetView : {heading : 275, pitch : 15, zoom:-2}}
-								{location : [46.545150, 12.135968], speed : 20, duration : 20, streetView : {heading : 275, pitch : 15, zoom:-2}}
-								,{location : 'prato della valle, Padova Italia', speed : 20, duration : 20, streetView : {heading : 270, pitch : 0, zoom:-2}}
-								,{location : '767 5th Avenue, New York USA', speed : 20, duration : 10, streetView : {heading : 80, zoom:-2}}
-								,{location : [47.366923, 8.543597], speed : 20, duration : 10, streetView : {heading : 180, zoom:-2}}
-								
-								//,{location : 'via Maggio 18, Lugano, Svizzera', speed : 20, duration : 3}
-								
-								//https://maps.google.com/maps?q=cupertino+apple&hl=it&ll=37.331889,-122.030747&spn=0.004231,0.010568&client=ubuntu&channel=fs&oe=utf-8&hq=apple&hnear=Cupertino,+Contea+di+Santa+Clara,+California&t=h&fll=37.330942,-122.027936&fspn=0.004231,0.010568&z=17&layer=c&cbll=37.331779,-122.03075&panoid=V4c0V3qT_mlMqWLS3YUQCg&cbp=12,112.5,,0,-2.38
-								,{location : [37.331889, -122.030747], speed : 20, duration : 10, streetView : {heading : 180, zoom:-2}}
-							]);*/
 							JMVC.gmap2.animator(map, [
-								//http://maps.google.com/maps?q=cortina+d%27ampezzo&hl=en&ll=46.545509,12.135808&spn=0.001018,0.002519&sll=37.0625,-95.677068&sspn=38.365962,82.529297&hnear=Cortina+d%27Ampezzo,+Province+of+Belluno,+Veneto,+Italy&t=h&z=19&layer=c&cbll=46.545509,12.135808&panoid=AK2j0F5pNJw6qwjw5UuG3w&cbp=12,232.07,,0,0.26
-								
-								// maggiolo
-								//{location : [21.2017064,-86.7274194], speed : 20, duration : 20, streetView : {heading : 90, zoom : -2}},
-								//museo sub
-								//{location : [21.2016294,-86.7269795], speed : 20, duration : 20, streetView : {heading : 0, pitch : 0, zoom : -5}},
 								// NY
 								{location : [40.764087, -73.973104], speed : 20, duration : 20, streetView : {heading : 90, zoom : -2}},
-								
 								//JAPO
 								{location : [34.3828365,133.8191008], speed : 20, duration : 20, streetView : {heading : 270, zoom : -2}},
-
-
 								{location : [46.545509, 12.135808], speed : 20, duration : 20, streetView : {heading : 180, pitch : 15, zoom : 0}},
 								{location : 'prato della valle, Padova Italia', speed : 20, duration : 10, streetView : {heading : 230, pitch : 0, zoom : -2}},
 								//piazza dam
-								//https://maps.google.com/maps?hl=en&ll=52.372652,4.893193&spn=0.002067,0.005037&t=m&z=18&layer=c&cbll=52.372652,4.893193&panoid=mzbA1vt87ilTOJDAl90Eyw&cbp=12,353.64,,0,-4.75
 								{location : [52.372652, 4.893193], speed : 20, duration : 20, streetView : {heading : 270, zoom : -2}},
-								//zurigo ponte
-								//,{location : [47.366923, 8.543597], speed : 20, duration : 20, streetView : {heading : 180, zoom:-2}}
 								//zurigo
-								////https://maps.google.com/maps?q=zurich&hl=en&ll=47.369227,8.543485&spn=0.004556,0.010074&sll=52.372652,4.893193&sspn=0.002067,0.005037&hnear=Zurich,+Canton+of+Zurich,+Switzerland&t=m&z=17&layer=c&cbll=47.369227,8.543485&panoid=VY2rgUeHf9tPBIWMo4-Dmw&cbp=12,231.49,,0,0.26
 								{location : [47.369227, 8.543485], speed : 20, duration : 20, streetView : {heading : 195, zoom : -2}},
-								
-								
-								/*
-								heron island underwater
-								https://maps.google.com/maps?q=heron+island+resort&hl=en&ll=-23.443045,151.906744&spn=0.001358,0.002519&sll=-23.442794,151.915555&layer=c&cid=17997865933213515154&panoid=CWskcsTEZBNXaD8gG-zATA&cbp=13,332.33,,0,11.68&gl=us&hq=heron+island+resort&t=m&cbll=-23.442896,151.906584&z=19
-								*/
+								/* heron island underwater */
 								{location : [-23.443045, 151.906744], speed : 20, duration : 30, streetView : {heading : 270, pitch : 0, zoom : -5}},
-								
-								/* south pole telescope
-								https://maps.google.com/maps?hl=en-US&ll=-84.999999,-44.656316&spn=0.000516,0.010074&sll=-85.000000,-44.656416&layer=c&cid=3987634083228589274&panoid=uZ7YCXJGSbyDxIbY-wPWow&cbp=13,200.62,,0,11.16&gl=US&t=h&cbll=-84.999999,-44.656316&z=17
-								,{location : [-84.999999,-44.656316], speed : 20, duration : 20, streetView : {heading : 270, pitch : 0, zoom:-10}}	
-								*/
-								
-								/*Amazon rain forest
-								https://maps.google.com/?ll=-3.137759,-60.493355&spn=0.047308,0.080595&t=h&layer=c&cbll=-3.137759,-60.493355&panoid=1ci-8iBT_UuG1dlrUy1vzg&cbp=12,154.19,,0,-2.8&z=14
-								,{location : [-3.137759,-60.493355], speed : 20, duration : 20, streetView : {heading : 270, pitch : 0, zoom:-10}}	
-								*/
-							
-								/*Mayan Ruins in Mexico
-								http://maps.google.com/maps?q=20.681145,-88.570944&hl=en&ie=UTF8&ll=20.682504,-88.56879&spn=0.005541,0.010074&sll=20.681145,-88.570944&sspn=0.005541,0.010074&hnear=Chichen+Itza,+Carretera+Merida+-+Puerto+Juarez+Km.120,+Tinum,+97757+Piste,+Yucat%C3%A1n,+Mexico&t=m&layer=c&cbll=20.682504,-88.56879&panoid=LaEFKiRNgawDJ_V5GcEmDw&cbp=12,19.56,,0,-3.53&z=17
-								*/
+								/* Mayan Ruins in Mexico */
 								{location : [20.682504, -88.56879], speed : 20, duration : 20, streetView : {heading : 0, pitch : 0, zoom : -5}}
-
-								/*
-								cortina ,{location : [46.545150, 12.135968], speed : 20, duration : 20, streetView : {heading : 275, pitch : 15, zoom:-2}}
-								,{location : 'prato della valle, Padova Italia', speed : 20, duration : 20, streetView : {heading : 270, pitch : 0, zoom:-2}}
-								,{location : '767 5th Avenue, New York USA', speed : 20, duration : 10, streetView : {heading : 80, zoom:-2}}
-								,{location : [47.366923, 8.543597], speed : 20, duration : 10, streetView : {heading : 180, zoom:-2}}
-								,{location : [37.331889, -122.030747], speed : 20, duration : 10, streetView : {heading : 180, zoom:-2}}
-								*/
 							]);
 						});
 					}, {sensor : 'false'});
@@ -229,8 +172,6 @@ JMVC.controllers.index = function () {
 		);
 	};
 	
-
-	
 	this.action_video = function () {
 		JMVC.require('core/html5/html5');
 		var index = JMVC.getView('home/index'),
@@ -249,8 +190,6 @@ JMVC.controllers.index = function () {
 		});
 	};
 
-
-
 	this.action_audio = function () {
 		JMVC.require('core/html5/html5');
 		var index = JMVC.getView('home/index'),
@@ -261,22 +200,16 @@ JMVC.controllers.index = function () {
 				controls : true
 			});
 		
-
 		index.set('i_say', 'Sample audio');
-
 		index.render({cback : function () {
 			JMVC.dom.append(JMVC.dom.find('#cent'), audio);
 		}});
 	};
 
-
-
 	this.action_index3 = function () {
 		/* directly render something */
 		this.render('<div id="space">Direct render</div>');
 	};
-
-
 
 	this.action_codesNoworkers = function () {
 		var content = '';
@@ -302,8 +235,6 @@ JMVC.controllers.index = function () {
 			);
 		}
 	};
-
-
 
 	this.action_codes = function () {
 
@@ -347,8 +278,6 @@ JMVC.controllers.index = function () {
 		};
 	};
 
-
-
 	this.action_ascii = function () {
 		var content = '', i = 0;
 		for (null; i < 256; i += 1) {
@@ -356,8 +285,6 @@ JMVC.controllers.index = function () {
 		}
 		this.render(content);
 	};
-
-
 
 	this.action_gmaps = function () {
 		JMVC.require('vendors/google/gmap2/gmap2', 'core/screen/screen');
@@ -397,8 +324,6 @@ JMVC.controllers.index = function () {
 			}, {sensor : 'false'});
 		});
 	};
-
-
 
 	this.action_console = function () {
 		JMVC.events.loadify(500);
