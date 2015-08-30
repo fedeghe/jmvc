@@ -178,6 +178,12 @@ JMVC.events = {
             }
             return res;
         }
+        if (tipo instanceof Array) {
+            for (var i = 0, l = tipo.length; i < l; i++) {
+                res = res & _.events.bind(el, tipo[i], fn);
+            }
+            return res;
+        }
         return _.events.bind(el, tipo, fn);
         //return _.events.bind(el, tipo, _.events.fixCurrentTarget(fn, el));
     },
