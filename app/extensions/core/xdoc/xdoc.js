@@ -9,6 +9,7 @@ JMVC.require(
 	'core/screen/screen'
 	,'event_scroll/event_scroll'
 	,'core/lib/widgzard/widgzard'
+	,'core/lib/widgzard/engy'
 	,'core/xmlparser/xmlparser'
 	,'widget/tooltip/tooltip'
 );
@@ -94,11 +95,10 @@ JMVC.extend('xdoc', function () {
 		//
 		var xmlparser = new JMVC.xmlparser.load(JMVC.xdoc.elements[ext], true),
 			doc = xmlparser.toJson(),
-			rootTagName = xmlparser.root().tagName;
-
-		JMVC.core.widgzard.render({
-			target : JMVC.dom.body(),
-			content : [{
+			rootTagName = xmlparser.root().tagName,
+			out = {
+				target : JMVC.dom.body(),
+				content : [{
 					cb : function (){
 						console.log('done');
 						console.debug(doc);
@@ -133,14 +133,42 @@ JMVC.extend('xdoc', function () {
 						},{
 							tag : 'div',
 							content : [{
-									attrs : {'class':'respfixed'},
+									attrs : {
+										'class' : 'respfixed'
+									},
 									tag : 'h1',
-									html : 'Description'
+									html : 'COMPONENT: ' + doc.component.name['#text'] + '<small>(v. ' + doc.component.version['#text'] + ')</small>'
+								},{
+									content : [{
+										tag : 'p',
+										html : 'Dependencies: ',
+										cb : function () {
+											var l = 0,
+												dep, deps = [];
+											if ('dependency' in doc.dependencies) {
+												for (dep in doc.dependencies.dependency) {
+													deps.push(doc.dependencies.dependency[dep]['#text']);
+													l++;
+												}	
+											}
+											
+											if (l) {
+												this.node.innerHTML += deps.join(', ');
+											} else {
+												this.node.innerHTML += 'no dependencies found';
+											}
+											this.done();
+										}
+									}]
 								},{
 									tag : 'p',
-									attrs : {'class':'round8'},
-									style :{'background-color' : '#ddd'},
-									html : 'xxx'//doc.description['#text']
+									attrs : {
+										'class':'round8'
+									},
+									style : {
+										'background-color' : '#ddd'
+									},
+									html : doc.description['#text']
 								},{
 									html : '....now get all info from xml2json and use the Widgzard or even better the Engy',
 									cb : function (){
@@ -152,9 +180,16 @@ JMVC.extend('xdoc', function () {
 							]
 						}
 					]
-				}
-			]
-		}, false);
+				}]
+			};
+		/*
+		JMVC.core.engy.process({a:1}).then(function (a) {
+			alert('sss')
+			console.debug(a);
+		});
+		*/
+
+		JMVC.core.widgzard.render(out, false);
 	}
 
 	function solve(inst) {
