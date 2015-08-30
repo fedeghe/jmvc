@@ -411,6 +411,12 @@ JMVC.dom = {
         return el;
     },
 
+
+
+    gebtn : function (n, name) {
+        return Array.prototype.slice.call(n.getElementsByTagName(name), 0);
+    },
+
     /**
      * [getPosition description]
      * @param  {[type]} node [description]
