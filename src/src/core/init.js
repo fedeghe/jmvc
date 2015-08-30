@@ -8,9 +8,6 @@
 (function (previousOnError) {
     // uh!...want to do something with previousOnError?
     // ...really?
- 
-
-
     function reportError(error, message) {
         //console.debug(arguments);
         message = message || '';
@@ -27,7 +24,6 @@
     }
      
     window.onerror = function (message, filename, lineno, colno, error) {
-        
         try{
             error.message = error.message || message || null;
             error.fileName = error.fileName || filename || null;
@@ -186,6 +182,7 @@ var time_begin = +new Date(),
     // loaded here's the place to set them
     Modules = [
         'vendors/google/analytics/analytics'
+        ,'core/lib/widgzard/widgzard'
         //'core/cookie/cookie'
     ],
 
