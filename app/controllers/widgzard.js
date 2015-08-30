@@ -363,7 +363,9 @@ JMVC.controllers.widgzard = function () {
             ,'core/screen/screen'
         );
 
-        JMVC.head.addStyle(location.protocol + '//fonts.googleapis.com/css?family=Luckiest+Guy');
+        // JMVC.head.addStyle(location.protocol + '//fonts.googleapis.com/css?family=Luckiest+Guy');
+        JMVC.head.addStyle(location.protocol + '//fonts.googleapis.com/css?family=Fontdiner+Swanky');
+        // JMVC.head.addStyle(location.protocol + '//fonts.googleapis.com/css?family=Eater');
         
 
         //JMVC.events.loadify(1000);
@@ -440,10 +442,12 @@ JMVC.controllers.widgzard = function () {
                     margin : margin + ' 0px',
                     fontSize : '56px',
                     lineHeight : '50px',
-                    height:'105px',
+                    height:'135px',
                     fontWeight:'bold',
                     overflow : 'hidden',
-                    fontFamily: "'Luckiest Guy', cursive"
+                    // fontFamily: "'Luckiest Guy', cursive"
+                    fontFamily: "'Fontdiner Swanky', cursive"
+                    // fontFamily: "'Eater', cursive"
                 },
                 content : [{
                     style : {textAlign : 'right', 'float':'left', width: '50%',letterSpacing : '600px', textIndent:'-2000px', fontSize : '80px'},
@@ -469,7 +473,10 @@ JMVC.controllers.widgzard = function () {
                     html : '<span class="resp_mobi">&darr;</span><span class="resp_dskt">&rarr;</span>' 
                 },{
                     attrs : {'class':'round'},
-                    style : {'float':'left', width : '30%',backgroundColor : color2, color : color0, height : '52px', padding:padding + ' 0px', fontFamily: "'Luckiest Guy', cursive", fontSize:'45px'},
+                    style : {'float':'left', width : '30%',backgroundColor : color2, color : color0, height : '70px', padding:padding + ' 0px',
+                        // fontFamily: "'Luckiest Guy', cursive",
+                        fontFamily: "'Fontdiner Swanky', cursive",
+                        fontSize:'45px'},
                     html : 'Widgzard'
                 },{
                     style : {'float':'left', width : '5%', padding:padding + ' 0px'},
@@ -594,7 +601,10 @@ JMVC.controllers.widgzard = function () {
                         style : {width:'4%' ,'float':'left', textAlign:'center',lineHeight:'40px'},
                         content : [{
                             attrs : {'class':'round respfixed'},
-                            style : {margin:spacing,backgroundColor: color1, fontFamily: "'Luckiest Guy', cursive", fontSize:'20px',lineHeight:'55px',height:'50px'},  
+                            style : {margin:spacing,backgroundColor: color1,
+                                // fontFamily: "'Luckiest Guy', cursive",
+                                fontFamily: "'Fontdiner Swanky', cursive",
+                                fontSize:'20px',lineHeight:'55px',height:'50px'},  
                             html : '<span class="resp_dskt">W</span><span class="resp_mobi">WIDGZARD</span>'
                        }]
                     },{
@@ -753,7 +763,7 @@ JMVC.controllers.widgzard = function () {
                         // ,button : {theme : 'darkDefault'}
                         // ,button : {theme : 'whiteRound'}
                         // ,button : {theme : 'darkRound brdWhite'}
-                        // ,orientation : 'vertical'
+                         // ,orientation : 'vertical'
                         // ,ballList : true
                     },
                     
