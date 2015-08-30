@@ -3,11 +3,15 @@
 _.cookie = {};
 
 JMVC.cookie =  {
+
+	enabled : true,
+
+	cookie_nocookiesaround : false,
+
 	initCheck : function () {
 		"use strict";
 		return JMVC.W.navigator.cookieEnabled;
 	},
-	cookie_nocookiesaround : false,
 	
 	/**
 	 * [set description]
@@ -20,10 +24,11 @@ JMVC.cookie =  {
 	 */
 	set : function (name, value, expires, path, domain, secure) {
 		"use strict";
+		if (!JMVC.cookie.enabled) return false;
 		this.cookie_nocookiesaround = false;
 		var today = new Date(),
 			expires_date = new Date(today.getTime() + expires);
-		expires && (expires = expires * 1000 * 60 * 60 * 24);
+		// expires && (expires = expires * 1000 * 60 * 60 * 24);
 		JMVC.WD.cookie = name +
 			"=" + JMVC.W.escape(value) +
 			(expires ? ";expires=" + expires_date.toGMTString() : "") +
@@ -47,6 +52,7 @@ JMVC.cookie =  {
 			b_cookie_found = false,
 			i = 0,
 			l = a_all_cookies.length;
+		if (!JMVC.cookie.enabled) return false;
 		for (null; i < l; i += 1) {
 			a_temp_cookie = a_all_cookies[i].split('=');
 			cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, '');
@@ -70,6 +76,7 @@ JMVC.cookie =  {
 	 */
 	del : function (name, path, domain) {
 		"use strict";
+		if (!JMVC.cookie.enabled) return false;
 		var ret = false;
 		if (this.get(name)) {
 			JMVC.WD.cookie = name + "=" + (path ? ";path=" + path : "") + (domain ? ";domain=" + domain : "") + ";expires=Thu, 01-Jan-1970 00:00:01 GMT";
@@ -84,6 +91,7 @@ JMVC.cookie =  {
 	 */
 	delall : function () {
 		"use strict";
+		if (!JMVC.cookie.enabled) return false;
 		var thecookie = JMVC.WD.cookie.split(";"),
 			i = 0,
 			l = thecookie.length,
@@ -102,6 +110,7 @@ JMVC.cookie =  {
 	 */
 	getall : function () {
 		"use strict";
+		if (!JMVC.cookie.enabled) return false;
 		if (JMVC.WD.cookie === '') {
 			return [];
 		}
@@ -117,5 +126,3 @@ JMVC.cookie =  {
 			);
 	}
 };
-
-
