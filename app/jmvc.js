@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.6 (rev. 1) build: 3917
+ * @version :  3.6 (rev. 1) build: 3945
  * @copyright : 2015, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.2.0.6 & a love heap
- *         glued with 41 files on 1/6/2015 at 10:46:7
+ *         glued with 41 files on 29/8/2015 at 22:32:26
  *
  * All rights reserved.
  *
@@ -66,9 +66,6 @@
             (function (previousOnError) {
                 // uh!...want to do something with previousOnError?
                 // ...really?
-             
-            
-            
                 function reportError(error, message) {
                     //console.debug(arguments);
                     message = message || '';
@@ -85,7 +82,6 @@
                 }
                  
                 window.onerror = function (message, filename, lineno, colno, error) {
-                    
                     try{
                         error.message = error.message || message || null;
                         error.fileName = error.fileName || filename || null;
@@ -118,10 +114,10 @@
                 JMVC_REVIEW = '1',
             
                 // review (vars.json)
-                JMVC_DATE = '1/6/2015',
+                JMVC_DATE = '29/8/2015',
             
                 // review (vars.json)
-                JMVC_TIME = '10:46:7',
+                JMVC_TIME = '22:32:26',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -244,6 +240,7 @@
                 // loaded here's the place to set them
                 Modules = [
                     'vendors/google/analytics/analytics'
+                    ,'core/lib/widgzard/widgzard'
                     //'core/cookie/cookie'
                 ],
             
@@ -726,11 +723,17 @@
                  */
                 hook_check: function(hookname, params) {
                     var dyn = params instanceof Array ? params : false,
-                        i;
+                        i, tmp;
                     if (dyn && hookname in hooks) {
                         for (i in hooks[hookname]) {
-                            dyn = hooks[hookname][i].apply(null, dyn);
-                            //be sure is an array for next one
+                            tmp = hooks[hookname][i].apply(null, dyn);
+                            // the hook function receives as parameter the content
+                            // can manipulate it and must return it
+                            // but if is not returned let's force it
+                            // 
+                            dyn = tmp || dyn;
+            
+                            // be sure is an array for next one
                             !(dyn instanceof Array) && (dyn = [dyn]);
                         }
                     }
@@ -2592,7 +2595,8 @@
             
                         // do not override extra path params
                         // 
-                        !params[lab_val[0]] && (params[lab_val[0]] = lab_val[1]);
+                        !params[lab_val[0]] && (params[lab_val[0]] = W.decodeURIComponent(lab_val[1]));
+                        // !params[lab_val[0]] && (params[lab_val[0]] = lab_val[1]);
                     }
                 }
             
@@ -2903,11 +2907,15 @@
     _.cookie = {};
     
     JMVC.cookie =  {
+    
+    	enabled : true,
+    
+    	cookie_nocookiesaround : false,
+    
     	initCheck : function () {
     		"use strict";
     		return JMVC.W.navigator.cookieEnabled;
     	},
-    	cookie_nocookiesaround : false,
     	
     	/**
     	 * [set description]
@@ -2920,10 +2928,11 @@
     	 */
     	set : function (name, value, expires, path, domain, secure) {
     		"use strict";
+    		if (!JMVC.cookie.enabled) return false;
     		this.cookie_nocookiesaround = false;
     		var today = new Date(),
     			expires_date = new Date(today.getTime() + expires);
-    		expires && (expires = expires * 1000 * 60 * 60 * 24);
+    		// expires && (expires = expires * 1000 * 60 * 60 * 24);
     		JMVC.WD.cookie = name +
     			"=" + JMVC.W.escape(value) +
     			(expires ? ";expires=" + expires_date.toGMTString() : "") +
@@ -2947,6 +2956,7 @@
     			b_cookie_found = false,
     			i = 0,
     			l = a_all_cookies.length;
+    		if (!JMVC.cookie.enabled) return false;
     		for (null; i < l; i += 1) {
     			a_temp_cookie = a_all_cookies[i].split('=');
     			cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, '');
@@ -2970,6 +2980,7 @@
     	 */
     	del : function (name, path, domain) {
     		"use strict";
+    		if (!JMVC.cookie.enabled) return false;
     		var ret = false;
     		if (this.get(name)) {
     			JMVC.WD.cookie = name + "=" + (path ? ";path=" + path : "") + (domain ? ";domain=" + domain : "") + ";expires=Thu, 01-Jan-1970 00:00:01 GMT";
@@ -2984,6 +2995,7 @@
     	 */
     	delall : function () {
     		"use strict";
+    		if (!JMVC.cookie.enabled) return false;
     		var thecookie = JMVC.WD.cookie.split(";"),
     			i = 0,
     			l = thecookie.length,
@@ -3002,6 +3014,7 @@
     	 */
     	getall : function () {
     		"use strict";
+    		if (!JMVC.cookie.enabled) return false;
     		if (JMVC.WD.cookie === '') {
     			return [];
     		}
@@ -3017,8 +3030,6 @@
     			);
     	}
     };
-    
-    
     
     /*
     [MALTA] src/modules/io.js
@@ -4074,6 +4085,12 @@
             return el;
         },
     
+    
+    
+        gebtn : function (n, name) {
+            return Array.prototype.slice.call(n.getElementsByTagName(name), 0);
+        },
+    
         /**
          * [getPosition description]
          * @param  {[type]} node [description]
@@ -4700,6 +4717,12 @@
                 for (var i = 0, l = el.length; i < l; i++) {
                     res = res & _.events.bind(el[i], tipo, fn);
                     //res = res & _.events.bind(el[i], tipo, _.events.fixCurrentTarget(fn, el[i]));
+                }
+                return res;
+            }
+            if (tipo instanceof Array) {
+                for (var i = 0, l = tipo.length; i < l; i++) {
+                    res = res & _.events.bind(el, tipo[i], fn);
                 }
                 return res;
             }
@@ -6275,6 +6298,24 @@
         min : function (a) {return Math.min.apply(null, a); },
         
         /**
+         * [move description]
+         * @param  {[type]} a    [description]
+         * @param  {[type]} from [description]
+         * @param  {[type]} to   [description]
+         * @return {[type]}      [description]
+         */
+        move : function (a, from, to) {
+            if (to >= a.length) {
+                var k = to - a.length;
+                while ((k--) + 1) {
+                    a.push(undefined);
+                }
+            }
+            a.splice(to, 0, a.splice(from, 1)[0]);
+            return a;
+        },
+    
+        /**
          * [mult description]
          * @param  {[type]} a [description]
          * @return {[type]}   [description]
@@ -6873,6 +6914,25 @@
             }
             return obj;
         },
+    
+        /**
+         * [fromQs description]
+         * @return {[type]} [description]
+         */
+        fromQs : function () {
+            var els = document.location.search.substr(1).split('&'),
+                i, len, tmp, out = {};
+            
+            for (i = 0, len = els.length; i < len; i += 1) {
+                tmp = els[i].split('=');
+    
+                // do not override extra path out
+                // 
+                !out[tmp[0]] && (out[tmp[0]] = W.decodeURIComponent(tmp[1]));
+            }
+            return out;
+        },
+    
         /**
          * [ description]
          * @param  {[type]} obj1 [description]
