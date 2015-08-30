@@ -71,7 +71,8 @@ dispatched = (function () {
 
             // do not override extra path params
             // 
-            !params[lab_val[0]] && (params[lab_val[0]] = lab_val[1]);
+            !params[lab_val[0]] && (params[lab_val[0]] = W.decodeURIComponent(lab_val[1]));
+            // !params[lab_val[0]] && (params[lab_val[0]] = lab_val[1]);
         }
     }
 
