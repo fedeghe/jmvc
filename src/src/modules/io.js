@@ -159,13 +159,24 @@ _.io = {
 		} else {
 			xhr.onreadystatechange = function () {
 
+
+
 				if (state === xhr.readyState) {
 					
 					return false;
 				}
 				state = xhr.readyState;
-				
+
+				// 404
+				//
+				if (~~xhr.readyState === 4 && ~~xhr.status === 0) {
+					xhr.onerror({error : 404, xhr : xhr, url : uri});
+					xhr.abort();
+					return false;
+				}
+
 				if (xhr.readyState === 'complete' || (~~xhr.readyState === 4 && ~~xhr.status === 200)) {
+					
 					complete = true;
 					if (cback) {
 						res = xhr[targetType];

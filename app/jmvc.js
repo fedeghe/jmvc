@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.6 (rev. 1) build: 3945
+ * @version :  3.7 (rev. 1) build: 3987
  * @copyright : 2015, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.2.0.6 & a love heap
- *         glued with 41 files on 29/8/2015 at 22:32:26
+ *         glued with 41 files on 31/8/2015 at 0:42:11
  *
  * All rights reserved.
  *
@@ -108,16 +108,16 @@
                 $JMVC,
             
                 // version (vars.json)
-                JMVC_VERSION = '3.6',
+                JMVC_VERSION = '3.7',
             
                 // review (vars.json)
                 JMVC_REVIEW = '1',
             
                 // review (vars.json)
-                JMVC_DATE = '29/8/2015',
+                JMVC_DATE = '31/8/2015',
             
                 // review (vars.json)
-                JMVC_TIME = '22:32:26',
+                JMVC_TIME = '0:42:11',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -3195,13 +3195,24 @@
     		} else {
     			xhr.onreadystatechange = function () {
     
+    
+    
     				if (state === xhr.readyState) {
     					
     					return false;
     				}
     				state = xhr.readyState;
-    				
+    
+    				// 404
+    				//
+    				if (~~xhr.readyState === 4 && ~~xhr.status === 0) {
+    					xhr.onerror({error : 404, xhr : xhr, url : uri});
+    					xhr.abort();
+    					return false;
+    				}
+    
     				if (xhr.readyState === 'complete' || (~~xhr.readyState === 4 && ~~xhr.status === 200)) {
+    					
     					complete = true;
     					if (cback) {
     						res = xhr[targetType];
