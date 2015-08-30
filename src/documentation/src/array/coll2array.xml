@@ -13,13 +13,12 @@ console.log(coll.constructor);&#10;
 console.log(coll instanceof HTMLCollection);&#10;
 console.log(a.constructor);&#10;
 console.log(a instanceof Array);</sample>
-    <code>
-        var coll = document.getElementsByTagName('div'),
-            a = JMVC.array.coll2array(coll);
-        console.log(coll.constructor);
-        console.log(coll instanceof HTMLCollection)
-        console.log(a.constructor);
-        console.log(a instanceof Array);
+    <code>var coll = document.getElementsByTagName('div'),
+    a = JMVC.array.coll2array(coll);
+console.log(coll.constructor);
+console.log(coll instanceof HTMLCollection);
+console.log(a.constructor);
+console.log(a instanceof Array);
     </code>
     <status>testing</status>
 </function>

@@ -3425,6 +3425,22 @@ console.log(JMVC.array.findRich(a, {c:2}));
     </code>
 </function>
 <!--
+[MALTA] src/array/move.xml
+-->
+<function>
+    <signature name="move">JMVC.array.move(Integer from, Integer to)</signature>
+    <description>Gets an array of all the numbers [from, to]</description>
+    <params>
+        <param name="from">The name of the meta You want to add</param>
+        <param name="to">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <testlink>test_api_array_inarrayrich</testlink>
+    <sample>console.log(JMVC.array.range(5,15));</sample>
+    <code>console.log(JMVC.array.range(5,15));</code>
+    <status>incomplete</status>
+</function>
+<!--
 [MALTA] src/array/range.xml
 -->
 <function>

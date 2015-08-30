@@ -1,13 +1,21 @@
 <?xml version="1.0"?>
 <doc>
-    <description>Extension to get some relevant information about sizes of body, viewport, etc.</description>
+    <component>
+        <name>xmlParser</name>
+        <version>1.0</version>
+        <type>Factory</type>
+        <!-- Factory, Constructor, Library-->
+    </component>
+    <description>This extension allow to obtain a object to parse an xml document, get the json version, and much more.</description>
     <dependencies>
-        <dependency>222</dependency>
+        <dependency>JMVC.string</dependency>
+        <dependency>JMVC.svg</dependency>
     </dependencies>
-    <version>eee</version>
+
     <hints>
         <hint>Be wise</hint>
     </hints>
+
     <functions>
         <function>
             <signature name="delegate">JMVC.delegate(Function func, Object obj)</signature>

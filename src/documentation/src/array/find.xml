@@ -9,12 +9,10 @@
     <testlink>test_api_array_find</testlink>
     <sample>var a = [10, 7, 6, 1, 2, 9, 2, [1,2,3], function(){}, {a:{c:2}, b:3}];&#10;
 console.log(JMVC.array.find(a, 2));&#10;
+console.log(JMVC.array.find(a, [1,2,3]));</sample>
+    <code>var a = [10, 7, 6, 1, 2, 9, 2, [1,2,3], function(){}, {a:{c:2}, b:3}];
+console.log(JMVC.array.find(a, 2));
 console.log(JMVC.array.find(a, [1,2,3]));
-    </sample>
-    <code>
-        var a = [10, 7, 6, 1, 2, 9, 2, [1,2,3], function(){}, {a:{c:2}, b:3}];
-        console.log(JMVC.array.find(a, 2));
-        console.log(JMVC.array.find(a, [1,2,3]));
     </code>
     <status>testing</status>
 </function>
