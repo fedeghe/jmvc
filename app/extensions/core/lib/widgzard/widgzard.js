@@ -507,13 +507,15 @@ JMVC.extend('core/widgzard', function () {
                     recur(cnf.content[i], new Wnode(cnf.content[i], trg, mapcnt).add());
                 }
             }
-            // if no content there are no childs
-            // thus, let the cb execute
-            else {
-                trg.WIDGZARD_cb();
-            }
             
         })(params, targetFragment);
+
+        // if no content in the root there are no childs
+        // thus, let the cb execute
+        // 
+        if (!('content' in targetFragment)) {
+            targetFragment.WIDGZARD_cb();
+        }
     }
 
 
