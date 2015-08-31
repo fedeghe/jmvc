@@ -513,7 +513,7 @@ JMVC.extend('core/widgzard', function () {
         // if no content in the root there are no childs
         // thus, let the cb execute
         // 
-        if (!('content' in targetFragment)) {
+        if (!('content' in params)) {
             targetFragment.WIDGZARD_cb();
         }
     }
