@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.7 (rev. 1) build: 3987
+ * @version :  3.7 (rev. 2) build: 4034
  * @copyright : 2015, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.2.0.6 & a love heap
- *         glued with 41 files on 31/8/2015 at 0:42:11
+ *         glued with 41 files on 10/9/2015 at 23:32:43
  *
  * All rights reserved.
  *
@@ -111,13 +111,13 @@
                 JMVC_VERSION = '3.7',
             
                 // review (vars.json)
-                JMVC_REVIEW = '1',
+                JMVC_REVIEW = '2',
             
                 // review (vars.json)
-                JMVC_DATE = '31/8/2015',
+                JMVC_DATE = '10/9/2015',
             
                 // review (vars.json)
-                JMVC_TIME = '0:42:11',
+                JMVC_TIME = '23:32:43',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -1035,7 +1035,7 @@
             
                         // parameters are set as variables of the controller
                         for (i in $JMVC.p) {
-                            $JMVC.p.hasOwnProperty(i) && (ctrl.set(i, decodeURI($JMVC.p[i])));
+                            $JMVC.p.hasOwnProperty(i) && ctrl.set(i, decodeURI($JMVC.p[i]));
                         }
                         /***************************/
                         // BEFORE HOOKS?
@@ -2590,13 +2590,13 @@
                     // 
                     els = mid.search.substr(1).split('&');
             
+            
                     for (i = 0, len = els.length; i < len; i += 1) {
                         lab_val = els[i].split('=');
             
                         // do not override extra path params
                         // 
-                        !params[lab_val[0]] && (params[lab_val[0]] = W.decodeURIComponent(lab_val[1]));
-                        // !params[lab_val[0]] && (params[lab_val[0]] = lab_val[1]);
+                        !params[lab_val[0]] && (params[lab_val[0]] = lab_val[1]);
                     }
                 }
             
