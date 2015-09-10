@@ -758,7 +758,7 @@ jmvc = {
 
             // parameters are set as variables of the controller
             for (i in $JMVC.p) {
-                $JMVC.p.hasOwnProperty(i) && (ctrl.set(i, decodeURI($JMVC.p[i])));
+                $JMVC.p.hasOwnProperty(i) && ctrl.set(i, decodeURI($JMVC.p[i]));
             }
             /***************************/
             // BEFORE HOOKS?
