@@ -124,6 +124,10 @@ JMVC.controllers.demo = function() {
 				'Google': 'google.jmvc',
 				'Google flash': 'google.jmvc?flash',
 				'Google aberration': 'google.jmvc?aberrate',
+
+				'NEWGoogle': 'google/new.jmvc',
+				'NEWGoogle flash': 'google/new.jmvc?flash',
+				'NEWGoogle aberration': 'google/new.jmvc?aberrate',
 				'Observer': 'demo/observer.jmvc',
 				'Sheduler': 'demo/scheduler.jmvc',
 				'Effects': 'demo/fx.jmvc',
