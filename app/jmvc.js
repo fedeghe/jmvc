@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.7 (rev. 2) build: 4034
+ * @version :  3.7 (rev. 3) build: 4040
  * @copyright : 2015, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.2.0.6 & a love heap
- *         glued with 41 files on 10/9/2015 at 23:32:43
+ *         glued with 41 files on 15/9/2015 at 9:25:54
  *
  * All rights reserved.
  *
@@ -111,13 +111,13 @@
                 JMVC_VERSION = '3.7',
             
                 // review (vars.json)
-                JMVC_REVIEW = '2',
+                JMVC_REVIEW = '3',
             
                 // review (vars.json)
-                JMVC_DATE = '10/9/2015',
+                JMVC_DATE = '15/9/2015',
             
                 // review (vars.json)
-                JMVC_TIME = '23:32:43',
+                JMVC_TIME = '9:25:54',
             
                 // experimental (ignore it)
                 JMVC_PACKED = '', //'.min' 
@@ -5654,8 +5654,8 @@
     _.css = {
         opera: navigator.userAgent.match(/opera\/([^\s]*)/i),
         mappedStyles: {},
-        css2js_rule: function (s) {
-            return s[0] === '-' ? s : s.replace(/-(\w)/g, function (str, $1) {
+        css2js_rule: function(s) {
+            return s[0] === '-' ? s : s.replace(/-(\w)/g, function(str, $1) {
                 return $1.toUpperCase();
             });
         },
@@ -5667,8 +5667,10 @@
          * [clearer description]
          * @type {[type]}
          */
-        clearer: function () {
-            return JMVC.dom.create('br', {'class': 'clearer'});
+        clearer: function() {
+            return JMVC.dom.create('br', {
+                'class': 'clearer'
+            });
         },
     
         /**
@@ -5678,7 +5680,7 @@
          * @param {[type]} rules    [description]
          * @param {[type]} index    [description]
          */
-        addRule: function (sheet, selector, rules, index) {
+        addRule: function(sheet, selector, rules, index) {
             if (JMVC.dom.isNode(sheet)) {
                 sheet = sheet.sheet ? sheet.sheet : sheet.styleSheet;
             }
@@ -5693,13 +5695,13 @@
          * [autoHeadings description]
          * @return {[type]} [description]
          */
-        autoHeadings : function () {
+        autoHeadings: function() {
             JMVC.head.addStyle(
-                'h1{font-size:24px !important; line-height:48px !important; padding:12px 0px 12px !important;}'+
-                'h2{font-size:20px !important; line-height:36px !important; padding:9px 0px 9px !important;}'+
-                'h3{font-size:16px !important; line-height:28px !important; padding:7px 0px 7px !important;}'+
-                'h4{font-size:12px !important; line-height:24px !important; padding:6px 0px 6px !important;}'+
-                'h5{font-size:10px !important; line-height:20px !important; padding:5px 0px 5px !important;}'+
+                'h1{font-size:24px !important; line-height:48px !important; padding:12px 0px 12px !important;}' +
+                'h2{font-size:20px !important; line-height:36px !important; padding:9px 0px 9px !important;}' +
+                'h3{font-size:16px !important; line-height:28px !important; padding:7px 0px 7px !important;}' +
+                'h4{font-size:12px !important; line-height:24px !important; padding:6px 0px 6px !important;}' +
+                'h5{font-size:10px !important; line-height:20px !important; padding:5px 0px 5px !important;}' +
                 'h6{font-size:8px !important; line-height:16px !important; padding:4px 0px 4px !important;}', true, true);
         },
     
@@ -5707,7 +5709,7 @@
          * [beResponsive description]
          * @return {[type]} [description]
          */
-        beResponsive : function (on) {
+        beResponsive: function(on) {
             JMVC.dom[typeof on === 'undefined' || !!on ? 'addClass' : 'removeClass'](JMVC.WDB, 'resp');
         },
     
@@ -5717,18 +5719,16 @@
          * @param  {[type]} styleProperty [description]
          * @return {[type]}               [description]
          */
-        getComputedStyle: function (el, styleProperty) {
+        getComputedStyle: function(el, styleProperty) {
             if (_.css.opera) {
                 return JMVC.W.getComputedStyle(el, null).getPropertyValue(styleProperty);
             }
             var computedStyle = typeof el.currentStyle !== 'undefined' ?
-                el.currentStyle
-                :
+                el.currentStyle :
                 JMVC.WD.defaultView.getComputedStyle(el, null);
     
             return styleProperty ?
-                computedStyle[_.css.css2js_rule(styleProperty)]
-                :
+                computedStyle[_.css.css2js_rule(styleProperty)] :
                 computedStyle;
         },
     
@@ -5740,7 +5740,7 @@
          * @param  {[type]} el [description]
          * @return {[type]}    [description]
          */
-        getPosition: function (el, rel) {
+        getPosition: function(el, rel) {
             var curleft = 0,
                 curtop = 0,
                 sT = JMVC.WD.body.scrollTop + JMVC.WD.documentElement.scrollTop,
@@ -5760,7 +5760,7 @@
          * @param  {[type]} el [description]
          * @return {[type]}    [description]
          */
-        height: function (el) {
+        height: function(el) {
             return el.offsetHeight || el.scrollHeight || JMVC.css.getComputedStyle(el, 'height');
         },
     
@@ -5769,7 +5769,7 @@
          * @param  {[type]} el [description]
          * @return {[type]}    [description]
          */
-        hide: function (el) {
+        hide: function(el) {
             if (el instanceof Array) {
                 for (var i = 0, l = el.length; i < l; i += 1) {
                     JMVC.css.hide(el[i]);
@@ -5785,7 +5785,7 @@
          * @param  {[type]} style [description]
          * @return {[type]}       [description]
          */
-        mappedStyle: function (idn, style) {
+        mappedStyle: function(idn, style) {
             var t = JMVC.dom.find('#' + idn);
             if (t) {
                 JMVC.dom.remove(t);
@@ -5797,10 +5797,9 @@
             JMVC.dom.append(JMVC.head.element, _.css.mappedStyles[idn]);
         },
     
-        mappedStyleRemove : function (idn) {
-            idn in _.css.mappedStyles
-            &&
-            JMVC.dom.remove(_.css.mappedStyles[idn]);
+        mappedStyleRemove: function(idn) {
+            idn in _.css.mappedStyles &&
+                JMVC.dom.remove(_.css.mappedStyles[idn]);
         },
     
         /**
@@ -5808,7 +5807,7 @@
          * @param  {[type]} mode [description]
          * @return {[type]}      [description]
          */
-        pest: function () {
+        pest: function() {
             var tmp = JMVC.dom.find('#pest-css'),
                 tmpinfo = JMVC.dom.find('#pest-css-info');
     
@@ -5816,16 +5815,18 @@
                 JMVC.events.off(JMVC.WD, 'mousemove', fnshow);
                 JMVC.dom.remove(tmpinfo);
                 JMVC.css.mappedStyleRemove('pest-css');
-                return ;
+                return;
             }
     
     
-            var info = JMVC.dom.create('div', {id : 'pest-css-info'}),
+            var info = JMVC.dom.create('div', {
+                    id: 'pest-css-info'
+                }),
                 positionCookie = 'pestPanelPosition',
                 initialPosition = ~~JMVC.cookie.get(positionCookie) || 0,
                 positions = ['tr', 'br', 'bl', 'tl'],
     
-                fnshow = function (e) {
+                fnshow = function(e) {
                     var trg = JMVC.events.eventTarget(e),
                         cstyle = JMVC.css.getComputedStyle(trg),
                         filter = {
@@ -5839,7 +5840,7 @@
                         },
                         li,
                         styleList = document.createElement('ul'),
-                        addToList = function (list, lab, val) {
+                        addToList = function(list, lab, val) {
                             li = document.createElement('li');
                             li.innerHTML = (lab ? ('<strong>' + lab + '</strong> : ') : '') + val;
                             list.appendChild(li);
@@ -5852,13 +5853,13 @@
                     info.innerHTML = '';
     
                     for (var s in cstyle) {
-                        s in filter &&  addToList(styleList,s, cstyle[s]);
+                        s in filter && addToList(styleList, s, cstyle[s]);
                     }
                     info.appendChild(styleList);
     
                     info.appendChild(document.createElement('hr'));
     
-                    if (!! trg.id || !! trg.className) {
+                    if (!!trg.id || !!trg.className) {
                         if (trg.id) {
                             addToList(styleList, 'ID', trg.id);
                         }
@@ -5871,13 +5872,15 @@
     
                     tree = document.createElement('ul');
     
-                    while (!! trg.tagName) {
+    
+                    while (!!trg && trg.tagName) {
                         addToList(tree, false, trg.tagName);
                         trg = trg.parentNode;
                     }
+    
                     info.appendChild(tree);
                 },
-                fnhide = function () {
+                fnhide = function() {
                     JMVC.dom.remove(info);
                 };
     
@@ -5887,13 +5890,13 @@
             info.style.position = 'fixed';
             info.style.zIndex = 999;
     
-            JMVC.events.on(info, 'mouseover', function () {
+            JMVC.events.on(info, 'mouseover', function() {
                 var old = initialPosition;
                 initialPosition = (++initialPosition) % positions.length;
                 JMVC.dom.switchClass(info, positions[old], positions[initialPosition]);
                 JMVC.cookie.set(positionCookie, initialPosition);
             });
-            
+    
             JMVC.WD.body.appendChild(info);
             JMVC.css.mappedStyle(
                 'pest-css',
@@ -5914,7 +5917,7 @@
          * [reset description]
          * @return {[type]} [description]
          */
-        reset: function () {
+        reset: function() {
             // http://meyerweb.com/eric/tools/css/reset/
             var style = 'html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,' +
                 'acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,' +
@@ -5937,11 +5940,11 @@
          * @param  {[type]} rot [description]
          * @return {[type]}     [description]
          */
-        rotate : function (el, rot) {
+        rotate: function(el, rot) {
             JMVC.css.style(el, {
                 '-webkit-transform': 'rotate(' + rot + 'deg)',
-                '-moz-transform':'rotate(' + rot + 'deg)',
-                '-o-transform':'rotate(' + rot + 'deg)'
+                '-moz-transform': 'rotate(' + rot + 'deg)',
+                '-o-transform': 'rotate(' + rot + 'deg)'
             });
         },
     
@@ -5950,7 +5953,7 @@
          * @param  {[type]} el [description]
          * @return {[type]}    [description]
          */
-        show: function (el) {
+        show: function(el) {
             if (el instanceof Array) {
                 for (var i = 0, l = el.length; i < l; i += 1) {
                     JMVC.css.show(el[i]);
@@ -5967,7 +5970,7 @@
          * @param  {[type]} val  [description]
          * @return {[type]}      [description]
          */
-        style: function (el /*DOMNode*/, prop/*String|Object*/, val /*String*/) {
+        style: function(el /*DOMNode*/ , prop /*String|Object*/ , val /*String*/ ) {
     
             var prop_is_obj = (typeof prop === 'object' && typeof val === 'undefined'),
                 ret = false,
@@ -6021,20 +6024,20 @@
          * @param  {[type]} n [description]
          * @return {[type]}   [description]
          */
-        unselectable : function (n) {
+        unselectable: function(n) {
             JMVC.css.style(n, {
-              '-moz-user-select': 'none',
-              '-webkit-user-select': 'none',
-              '-ms-user-select':'none',
-              'user-select':'none'  
+                '-moz-user-select': 'none',
+                '-webkit-user-select': 'none',
+                '-ms-user-select': 'none',
+                'user-select': 'none'
             });
             JMVC.dom.attr(n, {
                 'unselectable': 'on',
                 'onselectstart': 'return false;',
-                'onmousedown':'return false;'
+                'onmousedown': 'return false;'
             });
-            
-     
+    
+    
         },
     
         /**
@@ -6042,7 +6045,7 @@
          * @param  {[type]} el [description]
          * @return {[type]}    [description]
          */
-        width: function (el) {
+        width: function(el) {
             return el.offsetWidth || el.scrollWidth || JMVC.css.getComputedStyle(el, 'width');
         }
     };
@@ -6075,6 +6078,7 @@
     target.style.cursor = "default";
     }
     */
+    
     /*
     [MALTA] src/modules/array.js
     */
