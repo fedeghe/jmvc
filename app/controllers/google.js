@@ -84,7 +84,7 @@ JMVC.controllers.google = function () {
 			//l.rotate(M.PI/2);
 			
 			
-			var scale = 1;
+			var scale = parseFloat(JMVC.p.scale, 10) || 1;
 			
 			G.plot(newlogo, scale);
 			o1.plot(newlogo, scale);
@@ -152,6 +152,9 @@ JMVC.controllers.google = function () {
 			}
 		});
 	};
+
+
+
 	this.action_new = function () {
 		JMVC.events.loadify(1000);
 		JMVC.require('plotter/plotter', 'core/obj/bucket/bucket');
@@ -172,7 +175,6 @@ JMVC.controllers.google = function () {
 			'id' : 'extralogo'
 		});
 
-		/* JMVC.p.real && JMVC.head.lib('jsapi'); */
 		
 		v.render(function () {
 
@@ -190,46 +192,49 @@ JMVC.controllers.google = function () {
 			var off = {x:0, y:0};
 
 			G.arc(0, 0, 67, 71, M.PI/25, 0,  44	)
-				.arc(0, 0, 50, 52, M.PI/25, M.PI/12, 42)
-				.line(48, -50, 36 ,-38, 2)
-				.line(65, -5, 2 , -5, 8)
-				.line(2 , -5, 2, 12, 2)
-				.line(2, 12, 42, 12,  6);
+			 .arc(0, 0, 50, 52, M.PI/25, M.PI/12, 42)
+			 .line(48, -50, 36 ,-38, 2)
+			 .line(65, -5, 2 , -5, 8)
+			 .line(2 , -5, 2, 12, 2)
+			 .line(2, 12, 42, 12,  6);
 			
 
 			o1.arc(0,0,44,44, M.PI/20, 0, 40)
-				.arc(0,0,26,26, M.PI/16, 0, 32)
+			 .arc(0,0,26,26, M.PI/16, 0, 32)
 				// .arc(0,0,28,38, M.PI/16, 0, 32);
 
 			o2.clone(o1);
 
 			g.arc(0, 0, 24, 28, M.PI/12, 0, 25)
-			.arc(-5, 0, 40, 44, M.PI/18, M.PI/4, 28)
-			.line(23, -32, 23,-41,1)
-			.line(23,-41,40,-41,2)
-			.line(40,-41, 40, 44, 10)
-			.arc(-2, 40, 42, 44, M.PI/18, M.PI/12, 14)
-			.line(-40,58, -24, 52, 2)
-			.arc(-1, 40, 24, 28, M.PI/13, M.PI/12, 10)
-			.line(23, 36, 23, 42, 0);
+			 .arc(-5, 0, 40, 44, M.PI/18, M.PI/4, 28)
+			 .line(23, -32, 23,-41,1)
+			 .line(23,-41,40,-41,2)
+			 .line(40,-41, 40, 44, 10)
+			 .arc(-2, 40, 42, 44, M.PI/18, M.PI/12, 14)
+			 .line(-40,58, -24, 52, 2)
+			 .arc(-1, 40, 24, 28, M.PI/13, M.PI/12, 10)
+			 .line(23, 36, 23, 42, 0);
 
 			l.line(0, 0, 0, 130, 20)
-				.line(0,130, 18, 130, 2)
-				.line(18, 130, 18, 0, 20)
-				.line(18, 0, 0, 0, 2);
+			 .line(0,130, 18, 130, 2)
+			 .line(18, 130, 18, 0, 20)
+			 .line(18, 0, 0, 0, 2);
 
-			e
-			.arc(0, 0, 42, 46, M.PI / 16, M.PI/4, 29,    -M.PI/12)
-			.arc(0,0,22,28,-M.PI / 10, -M.PI/4, 8)
-			.arc(2,0,24,28,M.PI / 10, M.PI/5, 7)
-			.line(-20,12,33,-9,6)
-			.line(-16,-5,14,-16,4)
-			.line(23,13,33,21,1);
+			e.arc(0, 0, 42, 46, M.PI / 16, M.PI/4, 29, -M.PI/12)
+			 .arc(0,0,22,28,-M.PI / 10, -M.PI/4, 8)
+			 .arc(2,0,24,28,M.PI / 10, M.PI/5, 7)
+			 .line(-20,12,33,-9,6)
+			 .line(-16,-5,14,-16,4)
+			 .line(23,13,33,21,1);
 
 			//l.rotate(M.PI/2);
 			
 			
-			var scale = 1;
+			var scale = parseFloat(JMVC.p.scale, 10) || 1,
+				animate = true,
+				a, i, T1, T2, nums, bucket, t, c, s, dotsize, maxsize,
+				aberrate = that.get('aberrate'),
+				flash = that.get('flash');
 			
 			G.plot(newlogo, scale);
 			o1.plot(newlogo, scale);
@@ -238,10 +243,6 @@ JMVC.controllers.google = function () {
 			l.plot(newlogo, scale);
 			e.plot(newlogo, scale);
 
-			var animate = true,
-				a, i, T1, T2, nums, bucket, t, c, s, dotsize, maxsize,
-				aberrate = that.get('aberrate'),
-				flash = that.get('flash');
 			if (animate) {
 				a = newlogo.childNodes;
 				i = 1;
