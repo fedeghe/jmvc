@@ -16,11 +16,9 @@ JMVC.controllers.test = function() {
 			content : [{
 				style : {margin:'10px'},
 				wid : 'form',
-				
-				
 				content : [{
 					tag : 'input',
-					attrs: {type:'file', name : 'fileToUploadaaa'},
+					attrs: {type:'file', name : 'fileToUpload'},
 					wid : 'myfile'
 				}],
 				cb : function () {
@@ -28,13 +26,23 @@ JMVC.controllers.test = function() {
 						file = self.getNode('myfile').node;
 
 					JMVC.events.on(file, 'change', function (e) {
+
 						JMVC.events.preventDefault(e);
-						
-						
 
 						JMVC.io.post('/srv/form.php',function (res) {
 
-							var f = file.files[0];
+							var f = file.files[0],
+								response = res.isImage ? {
+									tag : 'img',
+									attrs : {
+										src : JMVC.vars.baseurl + JMVC.US + 'srv' + JMVC.US + res.content
+									}
+								} : {
+									tag : 'textarea',
+									style : {width:'100%', height:'300px',margin:'10px'},
+									html : res.content
+								};
+
 							JMVC.core.widgzard.render({
 								style : {
 									fontFamily:'Verdana, sans',
@@ -45,28 +53,18 @@ JMVC.controllers.test = function() {
 									html : 'File ' + f.name + ' uploaded<br>size: ' + f.size + 'b<br>type: ' + f.type
 								},{
 									html : '<br/><strong>Content :</strong>'
-								},{
-									tag : 'textarea',
-									style : {width:'100%', height:'300px',margin:'10px'},
-									html : res.content
-								}]
+								},response]
 							}, true);
 						}, false, {
 							fileToUpload : file.files[0],
 							name : 'xxxxxx'
 						}, false, true);
-
-
-
-
-					})
+					});
 					this.done();
 				}
 			},{
 				wid:'debug'
 			}]
-		});
-		
+		});	
 	};
-
 };
