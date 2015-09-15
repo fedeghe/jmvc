@@ -5,8 +5,8 @@
 _.css = {
     opera: navigator.userAgent.match(/opera\/([^\s]*)/i),
     mappedStyles: {},
-    css2js_rule: function (s) {
-        return s[0] === '-' ? s : s.replace(/-(\w)/g, function (str, $1) {
+    css2js_rule: function(s) {
+        return s[0] === '-' ? s : s.replace(/-(\w)/g, function(str, $1) {
             return $1.toUpperCase();
         });
     },
@@ -18,8 +18,10 @@ JMVC.css = {
      * [clearer description]
      * @type {[type]}
      */
-    clearer: function () {
-        return JMVC.dom.create('br', {'class': 'clearer'});
+    clearer: function() {
+        return JMVC.dom.create('br', {
+            'class': 'clearer'
+        });
     },
 
     /**
@@ -29,7 +31,7 @@ JMVC.css = {
      * @param {[type]} rules    [description]
      * @param {[type]} index    [description]
      */
-    addRule: function (sheet, selector, rules, index) {
+    addRule: function(sheet, selector, rules, index) {
         if (JMVC.dom.isNode(sheet)) {
             sheet = sheet.sheet ? sheet.sheet : sheet.styleSheet;
         }
@@ -44,13 +46,13 @@ JMVC.css = {
      * [autoHeadings description]
      * @return {[type]} [description]
      */
-    autoHeadings : function () {
+    autoHeadings: function() {
         JMVC.head.addStyle(
-            'h1{font-size:24px !important; line-height:48px !important; padding:12px 0px 12px !important;}'+
-            'h2{font-size:20px !important; line-height:36px !important; padding:9px 0px 9px !important;}'+
-            'h3{font-size:16px !important; line-height:28px !important; padding:7px 0px 7px !important;}'+
-            'h4{font-size:12px !important; line-height:24px !important; padding:6px 0px 6px !important;}'+
-            'h5{font-size:10px !important; line-height:20px !important; padding:5px 0px 5px !important;}'+
+            'h1{font-size:24px !important; line-height:48px !important; padding:12px 0px 12px !important;}' +
+            'h2{font-size:20px !important; line-height:36px !important; padding:9px 0px 9px !important;}' +
+            'h3{font-size:16px !important; line-height:28px !important; padding:7px 0px 7px !important;}' +
+            'h4{font-size:12px !important; line-height:24px !important; padding:6px 0px 6px !important;}' +
+            'h5{font-size:10px !important; line-height:20px !important; padding:5px 0px 5px !important;}' +
             'h6{font-size:8px !important; line-height:16px !important; padding:4px 0px 4px !important;}', true, true);
     },
 
@@ -58,7 +60,7 @@ JMVC.css = {
      * [beResponsive description]
      * @return {[type]} [description]
      */
-    beResponsive : function (on) {
+    beResponsive: function(on) {
         JMVC.dom[typeof on === 'undefined' || !!on ? 'addClass' : 'removeClass'](JMVC.WDB, 'resp');
     },
 
@@ -68,18 +70,16 @@ JMVC.css = {
      * @param  {[type]} styleProperty [description]
      * @return {[type]}               [description]
      */
-    getComputedStyle: function (el, styleProperty) {
+    getComputedStyle: function(el, styleProperty) {
         if (_.css.opera) {
             return JMVC.W.getComputedStyle(el, null).getPropertyValue(styleProperty);
         }
         var computedStyle = typeof el.currentStyle !== 'undefined' ?
-            el.currentStyle
-            :
+            el.currentStyle :
             JMVC.WD.defaultView.getComputedStyle(el, null);
 
         return styleProperty ?
-            computedStyle[_.css.css2js_rule(styleProperty)]
-            :
+            computedStyle[_.css.css2js_rule(styleProperty)] :
             computedStyle;
     },
 
@@ -91,7 +91,7 @@ JMVC.css = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    getPosition: function (el, rel) {
+    getPosition: function(el, rel) {
         var curleft = 0,
             curtop = 0,
             sT = JMVC.WD.body.scrollTop + JMVC.WD.documentElement.scrollTop,
@@ -111,7 +111,7 @@ JMVC.css = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    height: function (el) {
+    height: function(el) {
         return el.offsetHeight || el.scrollHeight || JMVC.css.getComputedStyle(el, 'height');
     },
 
@@ -120,7 +120,7 @@ JMVC.css = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    hide: function (el) {
+    hide: function(el) {
         if (el instanceof Array) {
             for (var i = 0, l = el.length; i < l; i += 1) {
                 JMVC.css.hide(el[i]);
@@ -136,7 +136,7 @@ JMVC.css = {
      * @param  {[type]} style [description]
      * @return {[type]}       [description]
      */
-    mappedStyle: function (idn, style) {
+    mappedStyle: function(idn, style) {
         var t = JMVC.dom.find('#' + idn);
         if (t) {
             JMVC.dom.remove(t);
@@ -148,10 +148,9 @@ JMVC.css = {
         JMVC.dom.append(JMVC.head.element, _.css.mappedStyles[idn]);
     },
 
-    mappedStyleRemove : function (idn) {
-        idn in _.css.mappedStyles
-        &&
-        JMVC.dom.remove(_.css.mappedStyles[idn]);
+    mappedStyleRemove: function(idn) {
+        idn in _.css.mappedStyles &&
+            JMVC.dom.remove(_.css.mappedStyles[idn]);
     },
 
     /**
@@ -159,7 +158,7 @@ JMVC.css = {
      * @param  {[type]} mode [description]
      * @return {[type]}      [description]
      */
-    pest: function () {
+    pest: function() {
         var tmp = JMVC.dom.find('#pest-css'),
             tmpinfo = JMVC.dom.find('#pest-css-info');
 
@@ -167,16 +166,18 @@ JMVC.css = {
             JMVC.events.off(JMVC.WD, 'mousemove', fnshow);
             JMVC.dom.remove(tmpinfo);
             JMVC.css.mappedStyleRemove('pest-css');
-            return ;
+            return;
         }
 
 
-        var info = JMVC.dom.create('div', {id : 'pest-css-info'}),
+        var info = JMVC.dom.create('div', {
+                id: 'pest-css-info'
+            }),
             positionCookie = 'pestPanelPosition',
             initialPosition = ~~JMVC.cookie.get(positionCookie) || 0,
             positions = ['tr', 'br', 'bl', 'tl'],
 
-            fnshow = function (e) {
+            fnshow = function(e) {
                 var trg = JMVC.events.eventTarget(e),
                     cstyle = JMVC.css.getComputedStyle(trg),
                     filter = {
@@ -190,7 +191,7 @@ JMVC.css = {
                     },
                     li,
                     styleList = document.createElement('ul'),
-                    addToList = function (list, lab, val) {
+                    addToList = function(list, lab, val) {
                         li = document.createElement('li');
                         li.innerHTML = (lab ? ('<strong>' + lab + '</strong> : ') : '') + val;
                         list.appendChild(li);
@@ -203,13 +204,13 @@ JMVC.css = {
                 info.innerHTML = '';
 
                 for (var s in cstyle) {
-                    s in filter &&  addToList(styleList,s, cstyle[s]);
+                    s in filter && addToList(styleList, s, cstyle[s]);
                 }
                 info.appendChild(styleList);
 
                 info.appendChild(document.createElement('hr'));
 
-                if (!! trg.id || !! trg.className) {
+                if (!!trg.id || !!trg.className) {
                     if (trg.id) {
                         addToList(styleList, 'ID', trg.id);
                     }
@@ -222,13 +223,15 @@ JMVC.css = {
 
                 tree = document.createElement('ul');
 
-                while (!! trg.tagName) {
+
+                while (!!trg && trg.tagName) {
                     addToList(tree, false, trg.tagName);
                     trg = trg.parentNode;
                 }
+
                 info.appendChild(tree);
             },
-            fnhide = function () {
+            fnhide = function() {
                 JMVC.dom.remove(info);
             };
 
@@ -238,13 +241,13 @@ JMVC.css = {
         info.style.position = 'fixed';
         info.style.zIndex = 999;
 
-        JMVC.events.on(info, 'mouseover', function () {
+        JMVC.events.on(info, 'mouseover', function() {
             var old = initialPosition;
             initialPosition = (++initialPosition) % positions.length;
             JMVC.dom.switchClass(info, positions[old], positions[initialPosition]);
             JMVC.cookie.set(positionCookie, initialPosition);
         });
-        
+
         JMVC.WD.body.appendChild(info);
         JMVC.css.mappedStyle(
             'pest-css',
@@ -265,7 +268,7 @@ JMVC.css = {
      * [reset description]
      * @return {[type]} [description]
      */
-    reset: function () {
+    reset: function() {
         // http://meyerweb.com/eric/tools/css/reset/
         var style = 'html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,' +
             'acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,' +
@@ -288,11 +291,11 @@ JMVC.css = {
      * @param  {[type]} rot [description]
      * @return {[type]}     [description]
      */
-    rotate : function (el, rot) {
+    rotate: function(el, rot) {
         JMVC.css.style(el, {
             '-webkit-transform': 'rotate(' + rot + 'deg)',
-            '-moz-transform':'rotate(' + rot + 'deg)',
-            '-o-transform':'rotate(' + rot + 'deg)'
+            '-moz-transform': 'rotate(' + rot + 'deg)',
+            '-o-transform': 'rotate(' + rot + 'deg)'
         });
     },
 
@@ -301,7 +304,7 @@ JMVC.css = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    show: function (el) {
+    show: function(el) {
         if (el instanceof Array) {
             for (var i = 0, l = el.length; i < l; i += 1) {
                 JMVC.css.show(el[i]);
@@ -318,7 +321,7 @@ JMVC.css = {
      * @param  {[type]} val  [description]
      * @return {[type]}      [description]
      */
-    style: function (el /*DOMNode*/, prop/*String|Object*/, val /*String*/) {
+    style: function(el /*DOMNode*/ , prop /*String|Object*/ , val /*String*/ ) {
 
         var prop_is_obj = (typeof prop === 'object' && typeof val === 'undefined'),
             ret = false,
@@ -372,20 +375,20 @@ JMVC.css = {
      * @param  {[type]} n [description]
      * @return {[type]}   [description]
      */
-    unselectable : function (n) {
+    unselectable: function(n) {
         JMVC.css.style(n, {
-          '-moz-user-select': 'none',
-          '-webkit-user-select': 'none',
-          '-ms-user-select':'none',
-          'user-select':'none'  
+            '-moz-user-select': 'none',
+            '-webkit-user-select': 'none',
+            '-ms-user-select': 'none',
+            'user-select': 'none'
         });
         JMVC.dom.attr(n, {
             'unselectable': 'on',
             'onselectstart': 'return false;',
-            'onmousedown':'return false;'
+            'onmousedown': 'return false;'
         });
-        
- 
+
+
     },
 
     /**
@@ -393,7 +396,7 @@ JMVC.css = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    width: function (el) {
+    width: function(el) {
         return el.offsetWidth || el.scrollWidth || JMVC.css.getComputedStyle(el, 'width');
     }
 };
