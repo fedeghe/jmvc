@@ -162,6 +162,24 @@ _.events = {
 //
 // PUBLIC section
 JMVC.events = {
+
+    avoidVerticalScroll : function () {
+        _.events.bind(window, 'touchmove', function (e) {
+            e.preventDefault();
+            _.events.kill(e);
+        });/*
+        _.events.bind(window,'touchstart', function() {
+            var top = el.scrollTop,
+                totalScroll = el.scrollHeight,
+                currentScroll = top + el.offsetHeight
+            if(top === 0) {
+                el.scrollTop = 1
+            } else if(currentScroll === totalScroll) {
+                el.scrollTop = top - 1
+            }
+        })*/
+    },
+
     /**
      * [ description]
      * @param  {[type]}   el   [description]
