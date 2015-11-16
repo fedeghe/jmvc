@@ -208,13 +208,14 @@ JMVC.extend('screen', {
 		}
 	},
 	// http://davidwalsh.name/fullscreen
-	exitFullscreen : function () {
-		if (document.exitFullscreen) {
-			document.exitFullscreen();
-		} else if (document.mozCancelFullScreen) {
-			document.mozCancelFullScreen();
-		} else if (document.webkitExitFullscreen) {
-			document.webkitExitFullscreen();
+	exitFullscreen : function (el) {
+		var trg = el || document;
+		if (el.exitFullscreen) {
+			el.exitFullscreen();
+		} else if (el.mozCancelFullScreen) {
+			el.mozCancelFullScreen();
+		} else if (el.webkitExitFullscreen) {
+			el.webkitExitFullscreen();
 		}
 	},
 
