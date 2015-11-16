@@ -23,11 +23,14 @@ JMVC.controllers.index = function () {
 
 	this.action_index = function () {
 
+
+
 		if (!JMVC.sniffer.features.assets.touchDevice) {
 			JMVC.require('core/fx/3DaniLogo');
 		}
 		
-		var logoimg = 'jmvc_n2.png';
+		var logoimg = 'jmvc_n2.png',
+			ctrl = this;
 
 		JMVC.dom.preloadImage(
 			JMVC.vars.baseurl + '/media/img/' + logoimg
@@ -132,18 +135,50 @@ JMVC.controllers.index = function () {
 								});
 
 							JMVC.gmap2.animator(map, [
-								// NY
+
+
+								/* Greenland */
+								// {location : [24.1829108,-76.4570398], speed : 20, duration : 20, streetView : {heading : 270, zoom : -2}},
+								{location : [64.2005707,-51.6272116], speed : 20, duration : 20, streetView : {heading : 270, zoom : -2}},
+								
+								/* Iceland */
+								{location : [64.8914217,-15.3190167], speed : 20, duration : 20, streetView : {heading : 270, zoom : -2}},
+								
+								/* Nepal */
+								{location : [27.9399118,86.7012209], speed : 20, duration : 20, streetView : {heading : 230, zoom : -2}},
+
+								/* Mauritius */
+								{location : [-20.4441618,57.7045834], speed : 20, duration : 20, streetView : {heading : 230, zoom : -2}},
+
+								/* NYC */
 								{location : [40.764087, -73.973104], speed : 20, duration : 20, streetView : {heading : 90, zoom : -2}},
-								//JAPO
+								
+								/* JAPO */
 								{location : [34.3828365,133.8191008], speed : 20, duration : 20, streetView : {heading : 270, zoom : -2}},
+
+								/* Mauritius 2 */
+								{location : [-20.1595542,57.7559532], speed : 20, duration : 20, streetView : {heading : 230, zoom : -2}},
+
+								/* ELEPHANTS */
+								{location : [0.576755, 37.545038], speed : 20, duration : 20, streetView : {heading : 270, zoom : -2}},
+
+								/* Cortina */
 								{location : [46.545509, 12.135808], speed : 20, duration : 20, streetView : {heading : 180, pitch : 15, zoom : 0}},
+								
+
+
+
 								{location : 'prato della valle, Padova Italia', speed : 20, duration : 10, streetView : {heading : 230, pitch : 0, zoom : -2}},
-								//piazza dam
+
+								/* Amsterdam : piazza dam */
 								{location : [52.372652, 4.893193], speed : 20, duration : 20, streetView : {heading : 270, zoom : -2}},
-								//zurigo
+
+								/* Zürich */
 								{location : [47.369227, 8.543485], speed : 20, duration : 20, streetView : {heading : 195, zoom : -2}},
+
 								/* heron island underwater */
 								{location : [-23.443045, 151.906744], speed : 20, duration : 30, streetView : {heading : 270, pitch : 0, zoom : -5}},
+
 								/* Mayan Ruins in Mexico */
 								{location : [20.682504, -88.56879], speed : 20, duration : 20, streetView : {heading : 0, pitch : 0, zoom : -5}}
 							]);
@@ -157,7 +192,7 @@ JMVC.controllers.index = function () {
 				&& (
 					JMVC.array.find([9, 10, 11, 0, 1, 2, 3, 4], todayMonth) > -1
 					&&
-					JMVC.p.snow && JMVC.p.snow === 'true'
+					(JMVC.p.snow && JMVC.p.snow === 'true' || ctrl.get('snow'))
 				)
 				&& JMVC.require('widget/snow/snow/snow', function () {
 					JMVC.css.style(JMVC.WDB, {'backgroundColor': '#eef'});

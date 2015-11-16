@@ -4,9 +4,10 @@
 JMVC.require(
     'core/lib/border/border',
     'widget/snow/snow',
-    'core/lorem'
+    'core/lorem',
     //,'core/captcha/captcha'
     //,'vendors/dropbox/dropbox'
+    'core/lib/hotBox/hotBox'
 );
 JMVC.controllers.widgzard = function () {
     "use strict";
@@ -646,7 +647,16 @@ JMVC.controllers.widgzard = function () {
                             attrs : {'class':'round respfixed'},
                             style : {fontWeight:'bold',backgroundColor: color1, padding:padding, color : black, lineHeight:'1.6em', textAlign:'center'},
                             html : 'How to trigger some postorder callbacks while creating the tree in preorder?'
-                        }]
+                        }],
+                        cb : function () {
+                            var self = this;
+                            JMVC.core.hotBox(self.node, function(v) {
+                                console.debug(this, v);
+                            }, function(v) {
+                                console.debug(this, v);
+                            });
+                            self.done();
+                        }
                     }]
                 }]  
             },{
@@ -727,6 +737,14 @@ JMVC.controllers.widgzard = function () {
                     backgroundColor : 'white',
                     padding : padding,
                     margin : margin + ' 0px'
+                },
+                cb : function () {
+                    JMVC.core.hotBox(this.node, function(v) {
+                        console.debug(this, v);
+                    }, function(v) {
+                        console.debug(this, v);
+                    });
+                    this.done();
                 }
             }]
         }, true);

@@ -35,7 +35,7 @@ JMVC.canvas.Editor = function (options) {
     screenSize = JMVC.screen.getViewportSize();
 
     /**
-     * Bas path for the editor
+     * Base path for the editor
      * @type {String}
      */
     this.basepath = JMVC.vars.baseurl + '/app/extensions/canvas/editor/';
@@ -70,53 +70,57 @@ JMVC.canvas.Editor = function (options) {
      */
     this.panelManager = null;
 
+    // on window resize tell the layermanager to resize all layers
+    // 
+    JMVC.events.on(JMVC.W, 'resize', function () {  
+        self.panelManager.getLayerManager().resize();
+    });
+
     /**
      * get the configuration
      */
     JMVC.io.getJson(this.basepath + 'config.json', function (json) {
+        
         self.config = json;
-    });
 
-    // on window resize tell the layermanager to resiza all layers
-    // 
-    JMVC.events.on(JMVC.W, 'resize', function () {
-        self.panelManager.getLayerManager().resize();
-    });
-
-    // get all the helpers:
-    // PanelManager
-    // ToolOptionsManager
-    // Panel
-    // Inputs: colorPicker
-    // Inputs: integerInput
-    // Inputs: floatInput
-    //
-    // AND then load styles
-    JMVC.require('canvas/editor/helpers/', function () {
-
-        // disable right click
+        // get all the helpers:
+        // PanelManager
+        // ToolOptionsManager
+        // Panel
+        // Inputs: colorPicker
+        // Inputs: integerInput
+        // Inputs: floatInput
         //
-        JMVC.events.disableRightClick();
-        console.log('loaded')
+        // AND then load styles
+        JMVC.require('canvas/editor/helpers/', function () {
 
-        // Basic editor style
-        // 
-        JMVC.head.addStyle(self.basepath + 'css/editor.css', true);
-        JMVC.head.addStyle(self.basepath + 'css/tooltip.css', true);
-        JMVC.head.addStyle(self.basepath + 'css/' + self.config.sprite, true);  
+            // disable right click
+            //
+            JMVC.events.disableRightClick();
+            // console.log('loaded')
 
-        // create and initialize the panelMAnager
-        // 
-        self.panelManager = JMVC.canvas.Editor.getPanelManager(self);
+            // Basic editor style
+            // 
+            JMVC.head.addStyle(self.basepath + 'css/editor.css', true);
+            JMVC.head.addStyle(self.basepath + 'css/tooltip.css', true);
+            JMVC.head.addStyle(self.basepath + 'css/' + self.config.sprite, true);  
 
-        // initialize, render and bind the panel manager
-        //
-        self.panelManager
-            .init()
-            .render()
-            .bind();
+            // create and initialize the panelMAnager
+            // 
+            self.panelManager = JMVC.canvas.Editor.getPanelManager(self);
 
+            // initialize, render and bind the panel manager
+            //
+            self.panelManager
+                .init()
+                .render()
+                .bind();
+        });
     });
+
+    
+
+    
 };
 //
 // load almost anything else (check canvas/editorNEW/helpers/require.json)
