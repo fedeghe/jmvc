@@ -65,6 +65,14 @@ JMVC.css = {
     },
 
     /**
+     * [fontAwesome description]
+     * @return {[type]} [description]
+     */
+    fontAwesome : function () {
+        JMVC.head.addStyle("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
+    },
+
+    /**
      * [getComputedStyle description]
      * @param  {[type]} el            [description]
      * @param  {[type]} styleProperty [description]
