@@ -15,15 +15,13 @@ JMVC.extend('snow', {
 	},
 	
 	start : function (trg, opts) {
-		
-		
+
 		JMVC.snow.vars.trg = JMVC.dom.find(trg);
 		JMVC.css.style(JMVC.snow.vars.trg, 'position', 'relative');
 		JMVC.snow.vars.l = opts && opts.length || 100;
 		
 		var bodysize = JMVC.screen.bodySize();
-		
-		
+
 		function Flake () {
 			var left = JMVC.util.rand(0, bodysize[0] - 20),
 				top = JMVC.util.rand(0, bodysize[1] - 20);
@@ -56,7 +54,6 @@ JMVC.extend('snow', {
 				if (r) {
 					newr.push(JMVC.snow.vars.flakes[i]);
 				}
-				
 			}
 			JMVC.snow.vars.flakes = newr;
 		}
@@ -65,13 +62,10 @@ JMVC.extend('snow', {
 			var el = e.node,
 				top = JMVC.num.getFloat(JMVC.css.style(el, 'top')),
 				left = JMVC.num.getFloat(JMVC.css.style(el ,'left'));
-			
-			//console.debug(top, left);
 
+			//get back
 			if(top > bodysize[1]-60){
 				top = 0;
-				//JMVC.dom.remove(el);
-				//return false;
 			}
 			
 			left = left + e.amplitude * Math.sin(top / e.length);
@@ -81,22 +75,14 @@ JMVC.extend('snow', {
 			} else {
 				e.node.style.display = 'block';
 			} 
-			
-		   
-		    // JMVC.debug(JMVC.dom.parent(el));
-			//console.debug(top, left);
 			JMVC.css.style(el,{'top': (top + e.speed)+'px', 'left': left+ 'px'});
-			
 			return true;
 		}
-		
-		
 		
 		for(var i = 0; i < JMVC.snow.vars.l; i += 1){
 			getFlake();
 		}
 		window.setInterval(function(){loop();}, 10);
-		
 	}
 });
 
