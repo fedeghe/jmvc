@@ -668,16 +668,17 @@ JMVC.dom = {
         afterFreeMem && JMVC.events.free(el);
 
         var parent;
+        
         typeof el === 'string' && (el = JMVC.dom.find(el));
 
         if (JMVC.util.isArray(el)) {
-            for (var i  = 0, l = el.length; i < l; i++) {
-                JMVC.dom.remove(el[i]);
+            for (var i  = 0, l = el.length, r = true; i < l; i++) {
+                r &= JMVC.dom.remove(el[i]);
             }
-            return true;
+            return r;
         }
         parent = el.parentNode;
-        parent.removeChild(el);
+        parent && parent.removeChild(el);
         return parent;
     },
 
@@ -731,6 +732,25 @@ JMVC.dom = {
         JMVC.dom.insertAfter(coming, going);
         JMVC.dom.remove(going) && (coming.style.display = display);
     },
+
+
+
+    /**
+     * [ description]
+     * @param  {[type]} elem        [description]
+     * @param  {[type]} addingClass [description]
+     * @return {[type]}             [description]
+     */
+    setClass : function (elem, classes) {
+        if (JMVC.util.isArray(elem)) {
+            for (var i = 0, l = elem.length; i < l; i++) {
+                JMVC.dom.setClass(elem[i], classes);
+            }
+            return;
+        }    
+        elem.className = classes;
+    },
+
 
     /**
      * Swap two existing nodes
