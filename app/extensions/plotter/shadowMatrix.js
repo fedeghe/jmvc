@@ -4,6 +4,8 @@
 
 
             this.scale = opts.scale || 1;
+            this.sampling = opts.sampling || 1;
+
             this.className = opts['className'] || 'shadowMatrix';
             this.colorMap = opts.colorMap || {};
             this.matrix = opts.matrix || opts.frames[0];
@@ -15,12 +17,13 @@
                 position : 'relative',
                 width: '0px',
                 height: '0px',
-                margin : (this.size[0] * this.scale) + 'px,' + (this.size[1] * this.scale) + 'px',
+                // margin : (this.size[0] * this.scale) + 'px,' + (this.size[1] * this.scale) + 'px',
                 'box-shadow':null,
                 '-webkit-box-shadow' : null,
                 '-moz-box-shadow' : null
             };
-            this.pointTpl = '%left%px %top%px 0px ' + this.scale + 'px %color%';
+            this.pointTpl = '%left%px %top%px 0px %scale%px %color%';
+            // this.pointTpl = '%left%px %top%px 0px 4px %color%';
         },
         proto = _constructor.prototype;
     
@@ -81,16 +84,22 @@
                 } else {
                     el = this.colorMap[rows[j]] || '#000';
                     out.push(JMVC.string.replaceAll(this.pointTpl,{
-                        left: j * this.scale * 2,
-                        top : i * this.scale * 2 ,
-                        color : this.colorMap[rows[j]] || '#000'
+                        left: j * this.scale * 2 * this.sampling,
+                        top : i * this.scale * 2 * this.sampling,
+                        color : this.colorMap[rows[j]] || '#000',
+                        scale : this.scale
                     }));
                 }
             }
         }
         
+        
         this.tpl['box-shadow'] = this.tpl['-webkit-box-shadow'] = this.tpl['-moz-box-shadow'] = out.join(',');
         JMVC.css.style(this.node, this.tpl);
+
+        //for mobile avoid the mediaquery to 100% for all divs
+        JMVC.dom.addClass(this.node, 'respfixed');
+        
         return this;
     };
 
@@ -105,6 +114,7 @@
     };
 
     proto.mirror = function () {
+        
         var m = [],
             i = 0,
             tmp;
@@ -116,6 +126,7 @@
         }
         this.matrix = m;
         this.redraw();
+        
         return this;
     };
 
@@ -155,10 +166,11 @@
             res = {
                 scale : opts.size || 1,
                 matrix : [],
-                colorMap : {}
+                colorMap : {},
+                sampling : opts.sampling || 1
             },
             tmpMatrix = [],
-            sampling = opts.sampling || 1,
+            // sampling = opts.sampling || 1,
             getPxData = function () {
                 return ctx.getImageData(0, 0, cnv.width, cnv.height);
             },
@@ -172,13 +184,25 @@
                     if (r < 0 || r >= h || c < 0 || c >= w) {
                         return [0, 0, 0, 0];
                     }
-                    var i = 4 * (r * w + c);
-                    return [
-                        px[i],
-                        px[i + 1],
-                        px[i + 2],
-                        px[i + 3]
-                    ];
+                    var i = 4 * (r * w + c) * res.sampling,
+                        r1 = r2 = r3 = r4 = 0;
+                    if (res.sampling == 1) {
+                        r1 = px[i],
+                        r2 = px[i + 1],
+                        r3 = px[i + 2],
+                        r4 = px[i + 3];
+                    } else {
+                        for (var jr = 0; jr < res.sampling; jr++)
+                            for (var jc = 0; jc < res.sampling; jc++) {
+                                var i2 = 4 * ((r+jr) * w + c + jc);
+                                r1 += px[i2],
+                                r2 += px[i2 + 1],
+                                r3 += px[i2 + 2],
+                                r4 += px[i2 + 3];
+                            }
+
+                    }
+                    return [r1/res.sampling, r2/res.sampling, r3/res.sampling, r4/res.sampling];
                 }
             },
             px,
@@ -205,9 +229,9 @@
                 
                 //
                 //  write matrix and collect colorMap
-                for (r = 0, c = 0, tmpColorMap = [], colorIndex = 0; r < h; r++) {
+                for (r = 0, c = 0, tmpColorMap = [], colorIndex = 0; r < h; r+=res.sampling) {
                     row = [];
-                    for (c = 0; c < w; c++) {
+                    for (c = 0; c < w; c+=res.sampling) {
                         compon = pxF(r, c);
                         color = 'rgba(' + compon.join(',') + ')';
                         if (!tmpColorMap[color]){
@@ -223,6 +247,7 @@
                 for (i in tmpColorMap) {
                     res.colorMap[tmpColorMap[i]] = i;
                 }
+
 
                 //
                 // resolve the promise, passing res to all thens
