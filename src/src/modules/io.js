@@ -16,6 +16,8 @@ _.io = {
 			len = IEfuckIds.length,
 			i = 0;
 
+		
+
 		if (xdr && o.cors) {
 			xhr = new W.XDomainRequest();
 		} else {
@@ -30,6 +32,9 @@ _.io = {
 				!xhr && alert('No way to initialize XHR');
 			}
 		}
+		// f i x
+		// xhr && (xhr.withCredentials = true);
+
 		return xhr;
 	},
 
@@ -202,12 +207,11 @@ _.io = {
 					// 
 					if (!hasFiles) {
 						
-						_.io.setCookiesHeaders(xhr);
+						// _.io.setCookiesHeaders(xhr);
 						_.io.setHeaders(xhr, type, limitSize);
 
 					} else {
                         // if files are in, no heders must be sent
-						//_.io.setMultipartHeader(xhr);
 						_.io.setHeaders(xhr, 'json', limitSize);
                     }
 
