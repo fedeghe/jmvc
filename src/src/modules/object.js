@@ -14,6 +14,7 @@ _.object = {
      * @return {[type]}      [description]
      */
     reduce: function(o, fn) {
+        'use strict';
         var ret = '',
             j;
         for (j in o) {
@@ -37,6 +38,7 @@ JMVC.object = {
      * @returns cloned Object
      */
     _clone: function(obj) {
+        'use strict';
         var temp,
             key;
         if (obj === null || typeof obj !== 'object') {
@@ -52,6 +54,7 @@ JMVC.object = {
     },
     // http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
     clone: function(obj) {
+        'use strict';
         var self = JMVC.object,
             copy,
             i, l;
@@ -98,7 +101,7 @@ JMVC.object = {
      * @return {[type]}      [description]
      */
     compare: function(obj1, obj2, ret, i) {
-        
+        'use strict';
         if (typeof ret === 'undefined') {
             ret = true;
         }
@@ -132,6 +135,7 @@ JMVC.object = {
      * @return {[type]}        [description]
      */
     contains: function(obj, field) {
+        'use strict';
         return (typeof obj === 'object' && field in obj);
     },
 
@@ -142,6 +146,7 @@ JMVC.object = {
      * @return {[type]}   [description]
      */
     digForKey : function (o, k) {
+        'use strict';
         return _.common.digFor('key', o, k);
     },
 
@@ -152,6 +157,7 @@ JMVC.object = {
      * @return {[type]}   [description]
      */
     digForValue : function (o, k) {
+        'use strict';
         return _.common.digFor('value', o, k);
     },
 
@@ -162,6 +168,7 @@ JMVC.object = {
      * @return {[type]}     [description]
      */
     extend: function(o, ext, force) {
+        'use strict';
         var obj = JMVC.object.clone(o),
             j;
         for (j in ext) {
@@ -177,6 +184,7 @@ JMVC.object = {
      * @return {[type]} [description]
      */
     fromQs : function () {
+        'use strict';
         var els = document.location.search.substr(1).split('&'),
             i, len, tmp, out = {};
         
@@ -189,7 +197,12 @@ JMVC.object = {
         }
         return out;
     },
-
+    isEmpty : function (o) {
+        'use strict';
+        var i;
+        for (i in o) return false;
+        return true;
+    },
     /**
      * [ description]
      * @param  {[type]} obj1 [description]
@@ -197,6 +210,7 @@ JMVC.object = {
      * @return {[type]}      [description]
      */
     jCompare: function(obj1, obj2) {
+        'use strict';
         return typeof JSON !== 'undefined' ? JSON.stringify(obj1) === JSON.stringify(obj2) : obj1 == obj2;
     },
     /**
@@ -205,6 +219,7 @@ JMVC.object = {
      * @return {[type]}     [description]
      */
     keys: function(obj) {
+        'use strict';
         var res = [],
             i;
         for (i in obj) {
@@ -219,6 +234,7 @@ JMVC.object = {
      * @return {[type]}     [description]
      */
     order: function(obj) {
+        'use strict';
         var k = [],
             i, j, l,
             out = {};
@@ -239,6 +255,7 @@ JMVC.object = {
      * @return {[type]}        [description]
      */
     orderBy : function (obj, key , versus) {
+        'use strict';
         function f(v) {
             var tov = typeof v;
             if (tov == 'number') {
@@ -259,6 +276,7 @@ JMVC.object = {
      * @return {[type]}   [description]
      */
     toAttr: function(obj) {
+        'use strict';
         return _.object.reduce(obj, function(o, i) {
             return ' ' + i + (o[i] ? '="' + o[i] + '"' : '');
         });
@@ -269,6 +287,7 @@ JMVC.object = {
      * @return {[type]}   [description]
      */
     toCss: function(obj, straight) {
+        'use strict';
         return _.object.reduce(obj, function(ob, i) {
             return !!straight ?
                 i + '{' + ob[i] + '} ' :
@@ -285,6 +304,7 @@ JMVC.object = {
      * @return {[type]}   [description]
      */
     toQs: function(obj) {
+        'use strict';
         return _.object.reduce(obj, function(o, i, r) {
             return ((r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i])).replace(/\'/g, '%27');
         });
@@ -295,6 +315,7 @@ JMVC.object = {
      * @return {[type]}     [description]
      */
     toStr: function(obj) {
+        'use strict';
         return _.object.reduce(obj, function(o, i) {
             return i + ':' + o[i] + ';';
         });
@@ -305,6 +326,7 @@ JMVC.object = {
      * @return {[type]}     [description]
      */
     values: function(obj) {
+        'use strict';
         var res = [],
             i;
         for (i in obj) {
