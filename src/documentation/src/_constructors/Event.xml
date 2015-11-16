@@ -6,42 +6,47 @@
     </params>
     <returns>the breand new object</returns>
     <sample>&#10;
-var list = {};
-list = {&#10;
-        els : [],&#10;
-        addedItem : JMVC.Event.create(list),&#10;
-        deletedItem : JMVC.Event.create(list),&#10;
-        add : function (s) {&#10;
-            this.els.push(s) &amp;&amp;&#10;
-            this.addedItem.notify({item : s});&#10;
-        },&#10;
-        del : function (i) {&#10;
-            this.els.splice(i, 1) &amp;&amp;&#10;
-            this.deletedItem.notify({index : i});&#10;
-        }&#10;
-    };&#10;
-list.addedItem.attach(function () {console.log(arguments)});&#10;
-list.deletedItem.attach(function () {console.log(arguments)});&#10;
+var list = {&#10;
+    els : [],&#10;
+    add : function (i) {&#10;
+        this.els.push(i) &amp;&amp;&#10;
+        this.addedItem.notify({item : i});&#10;
+    },&#10;
+    del : function (i) {&#10;
+        this.els.splice(i, 1) &amp;&amp;&#10;
+        this.deletedItem.notify({index : i});&#10;
+    }&#10;
+};&#10;
+&#10;
+// now use Event&#10;
+//&#10;
+list.addedItem = JMVC.Event.create(list)&#10;
+    .attach(function () {&#10;
+        console.log(arguments);&#10;
+    });&#10;
+list.deletedItem = JMVC.Event.create(list)&#10;
+    .attach(function () {&#10;
+        console.log(arguments);&#10;
+    });&#10;
+&#10;
 list.add('a');&#10;
 list.add('b');&#10;
 list.add('c');&#10;
 list.del(1);&#10;
 console.log(list.els);</sample>
     <code>
-var list = {};
-list = {
+var list = {
     els : [],
-    addedItem : JMVC.Event.create(list),
-    deletedItem : JMVC.Event.create(list),
-    add : function (s) {
-        if(this.els.push(s)) this.addedItem.notify({item : s});
+    add : function (i) {
+        if(this.els.push(i)) this.addedItem.notify({item : i});
     },
     del : function (i) {
         if (this.els.splice(i, 1)) this.deletedItem.notify({index : i});
     }
 };
-list.addedItem.attach(function () {console.log(arguments)});
-list.deletedItem.attach(function () {console.log(arguments)});
+list.addedItem = JMVC.Event.create(list).attach(function () {console.log(arguments)});
+list.deletedItem = JMVC.Event.create(list).attach(function () {console.log(arguments)});
+
 list.add('a');
 list.add('b');
 list.add('c');
