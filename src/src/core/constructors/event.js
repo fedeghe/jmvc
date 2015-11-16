@@ -15,6 +15,7 @@ Event = (function (){
          */
         attach : function (listener) {
             this.listeners.push(listener);
+            return this;
         },
         /**
          * [ description]
@@ -27,6 +28,7 @@ Event = (function (){
             while (i < l) {
                 this.listeners[i++](this.sender, args);
             }
+            return this;
         }
     };
     return {
