@@ -303,7 +303,7 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
             
             exportManager.bind();
 
-/*
+
             JMVC.events.on(mainPanel, 'mouseover', function () {
                 JMVC.css.style(mainPanel, 'top', '0px');
             });
@@ -311,7 +311,7 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
             JMVC.events.on(mainPanel, 'mouseout', function () {
                 JMVC.css.style(mainPanel, 'top', '-25px');
             });
-*/
+
             JMVC.events.on(sections, 'click', function (e) {
 
                 var trg = this,
