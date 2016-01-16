@@ -7,4 +7,26 @@
     </params>
     <returns>Array [x, y]</returns>
     <status>incomplete</status>
+	<sample>// get the relative element &#10;
+var el = JMVC.dom.find('#desc');&#10;
+console.debug('Turned on');&#10;
+JMVC.events.on(document, 'mousemove', function (e) {&#10;
+	console.debug(JMVC.events.getCoord(el, e));&#10;
+	console.debug('Turned off');&#10;
+});&#10;
+// after 10 seconds off it&#10;
+window.setTimeout(function () {&#10;
+  	JMVC.events.off(document, 'mousemove');&#10;
+}, 10000);</sample>
+    <code>
+    	var el = JMVC.dom.find('#desc');
+    	console.debug('Turned on');
+        JMVC.events.on(document, 'mousemove', function (e) {
+			console.debug(JMVC.events.getCoord(el, e));
+        });
+        window.setTimeout(function () {
+          	JMVC.events.off(document, 'mousemove');  
+          	console.debug('Turned off');
+        }, 10000);
+    </code>
 </function>

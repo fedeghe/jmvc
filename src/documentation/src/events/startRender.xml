@@ -1,5 +1,5 @@
 <function>
-    <signature name="startRender">JMVC.events.startrender(Javascript function func)</signature>
+    <signature name="startRender">JMVC.events.startrender()</signature>
     <description>binds a callback to document load event</description>
     <params>
         <param name="*func">Javascript function callback</param>

@@ -1,10 +1,27 @@
 <function>
-    <signature name="off">JMVC.events.off(Element el, String type)</signature>
-    <description>unbinds an existing binding</description>
+    <signature name="off">JMVC.events.off(Element el, String type, Javascript function func)</signature>
+    <description>unbinds an existing binding, if the function is not specified all function binded to this element with this event will be unbinded</description>
     <params>
         <param name="*el">dom element target</param>
         <param name="*type">the event string</param>
+        <param name="func">Javascript function callback</param>
     </params>
     <returns>void (undefined)</returns>
     <status>incomplete</status>
+    <sample>JMVC.events.on(document.body,&#10;
+    'click', function() {&#10;
+    	console.debug('clicked');&#10;
+    }&#10;
+);&#10;
+window.setTimeout(function () {&#10;
+	JMVC.events.off(document.body, 'click');
+}, 5000);</sample>
+    <code>
+    JMVC.events.on(document.body, 'click', function() {
+        console.debug('clicked');
+    });
+    window.setTimeout(function () {
+	   JMVC.events.off(document.body, 'click');
+    }, 5000);
+</code>
 </function>

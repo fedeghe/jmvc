@@ -1,11 +1,21 @@
 <function>
-    <signature name="onEventOut">JMVC.events.onEventOut(String type, Element el, Javascript function cb)</signature>
-    <description>Triggers a callback as the specified event is fired outside the specified element</description>
+    <signature name="onEventOut">JMVC.events.onEventOut(Element el, String type, Javascript function cb)</signature>
+    <description>Triggers once a callback as the specified event is fired outside the specified element</description>
     <params>
+        <param name="*el">dom element target</param>
         <param name="*type">the event string</param>
-        <param name="el*">dom element target</param>
         <param name="*func">Javascript function callback</param>
     </params>
     <returns>void (undefined)</returns>
     <status>testing</status>
+    <sample>var el = JMVC.dom.find('#desc');&#10;
+JMVC.events.onEventOut(el, 'mousemove', function(e) {&#10;
+    console.debug(e);&#10;
+});</sample>
+    <code>
+    var el = JMVC.dom.find('#desc');
+    JMVC.events.onEventOut(el, 'mousemove', function(e) {
+    	console.debug(e);
+	});
+	</code>
 </function>

@@ -1,5 +1,4 @@
 <events>
-    
     $$src/events/delay.xml$$
     $$src/events/end.xml$$
     $$src/events/endRender.xml$$

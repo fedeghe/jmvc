@@ -20,22 +20,110 @@
     }&#10;
 };&#10;
 JMVC.prototipize(Complex, {&#10;
-    'mod' : function () {&#10;
+    mod : function () {&#10;
         this._mod = Math.sqrt(&#10;
             this._re * this._re +&#10;
             this._im * this._im&#10;
         );&#10;
         return this._mod;&#10;
     },&#10;
-    'add' : function (cplx) {&#10;
+    add : function (cplx) {&#10;
         return new Complex(&#10;
             this._re + cplx._re,&#10;
             this._im + cplx._im&#10;
         );&#10;
+    },&#10;
+    sub : function (cplx) {&#10;
+        return new Complex(&#10;
+            this._re - cplx._re,&#10;
+            this._im - cplx._im&#10;
+        );&#10;
+    },&#10;
+    mult : function (cplx) {&#10;
+        return new Complex(&#10;
+            this._re * cplx._re -1*(this._im + cplx._im),&#10;
+            this._im * cplx._re + this._re * cplx._im&#10;
+        );&#10;
+    }&#10;,
+    div : function (cplx) {&#10;
+        var conj = new Complex(cplx._re, -cplx._im),&#10;
+            num = this.mult(conj),&#10;
+            den = cplx.mult(conj);&#10;
+        num._re/=den._re;&#10;
+        num._im/=den._re;&#10;
+        return num;&#10;
     }&#10;
 });&#10;
 var c1 = new Complex(3, 4),&#10;
     c2 = new Complex(7, 2);&#10;
 console.log(c1.mod());&#10;
-console.log(c1.add(c2) + '');&#10;</sample>
+console.log(c2.mod());&#10;
+console.log(c1.add(c2)+'');&#10;
+console.log(c1.sub(c2)+'');&#10;
+console.log(c1.mult(c2)+'');&#10;
+console.log(c1.div(c2)+'');&#10;</sample>
+    <code>
+        function Complex(re, im) {
+            this._re = re;
+            this._im = im;
+            this._rho = Math.sqrt(re * re + im * im, 2);
+            this._theta = Math.atan2(im, re);
+            this._mod = null;
+            this.toString = function (){
+                return this._re +
+                    (this._im >= 0 ? ' + ' : ' - ') +
+                    Math.abs(this._im) +'i';
+            }
+        };
+        JMVC.prototipize(Complex, {
+            mod : function () {
+                this._mod = Math.sqrt(
+                    this._re * this._re +
+                    this._im * this._im
+                );
+                return this._mod;
+            },
+            add : function (cplx) {
+                return new Complex(
+                    this._re + cplx._re,
+                    this._im + cplx._im
+                );
+            },
+            sub : function (cplx) {
+                return new Complex(
+                    this._re - cplx._re,
+                    this._im - cplx._im
+                );
+            },
+            mult : function (cplx) {
+                return new Complex(
+                    this._re * cplx._re -1*(this._im + cplx._im),
+                    this._im * cplx._re + this._re * cplx._im
+                );
+            },
+            div : function (cplx) {
+                var conj = new Complex(cplx._re, -cplx._im),
+                    num = this.mult(conj),
+                    den = cplx.mult(conj);
+                num._re/=den._re;
+                num._im/=den._re;
+                return num;
+            }
+        });
+        var c1 = new Complex(3, 4),
+            c2 = new Complex(7, 2);
+
+        console.log(c1.mod());
+        console.log(c2.mod());
+        console.log(c1.add(c2)+'');
+        console.log(c1.sub(c2)+'');
+        console.log(c1.mult(c2)+'');
+        console.log(c1.div(c2)+'');
+    </code>
 </function>
+<!--
+3 + i4 * 7 +i2
+
+21-12 + i(6+28)
+9 + 34i
+-->

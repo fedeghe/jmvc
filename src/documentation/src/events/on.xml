@@ -8,4 +8,19 @@
     </params>
     <returns>void (undefined)</returns>
     <status>incomplete</status>
+    <sample>JMVC.events.on(document.body,&#10;
+    'click', function() {&#10;
+    	console.debug('clicked')&#10;
+    }&#10;
+);&#10;
+window.setTimeout(function () {&#10;
+	JMVC.events.off(document.body, 'click');
+}, 5000);</sample>
+    <code>JMVC.events.on(document.body, 'click', function() {
+    console.debug('clicked');
+});
+window.setTimeout(function () {
+	JMVC.events.off(document.body, 'click');
+}, 5000);
+</code>
 </function>
