@@ -125,7 +125,7 @@ JMVC.controllers.widget = function () {
 			
 			
 			var acc = new JMVC.widget.Accordion(150, true, 'black');
-			acc.addElement('prova1', '<h2>contenuto</h2><p>testo di prova 1</p>');
+			acc.addElement('prova1', '<h2>contenuto</h2><p>testo di prova 1</p><h2>contenuto</h2><p>testo di prova 1</p><h2>contenuto</h2><p>testo di prova 1</p><h2>contenuto</h2><p>testo di prova 1</p>');
 			acc.addElement('prova2', '<h2>contenuto</h2><p>testo di prova 2</p>');
 			acc.addElement('prova3', '<h2>contenuto</h2><p>testo di prova 3</p>');
 			acc.addElement('prova4', '<h2>contenuto</h2><p>testo di prova 4</p><p>testo di prova 4</p><p>testo di prova 4</p>');
