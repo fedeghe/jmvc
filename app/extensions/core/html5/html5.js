@@ -27,8 +27,15 @@ JMVC.extend('html5', {
 
 		attrs.source.src = options.src;
 
-		attrs.video.controls = options.controls ? 'controls' :'';
-		attrs.video.autoplay = options.autoplay ? 'autoplay' :'';
+		if (options.controls) {
+			attrs.video.controls = 'controls';
+		}
+		if (options.autoplay) {
+			attrs.video.autoplay =  'autoplay';
+		}
+		if (options.loop) {
+			attrs.video.loop =  'loop';
+		}
 		attrs.video.width = options.width || 800;
 		attrs.video.height = options.height || 600;
 
