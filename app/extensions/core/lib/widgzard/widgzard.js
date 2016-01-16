@@ -387,7 +387,8 @@ JMVC.extend('core/widgzard', function () {
             targetFragment = {
                 node : document.createDocumentFragment('div')
             },
-            active = true;
+            active = true,
+            mapcnt;
 
         // debug ? 
         debug = !!params.debug;
@@ -405,7 +406,7 @@ JMVC.extend('core/widgzard', function () {
         // reached afterward calling this.getNode(id)
         // from any callback
         // 
-        var mapcnt = {
+        mapcnt = {
             root : target,
             map : {},
             getNode : function (id) {
@@ -516,6 +517,8 @@ JMVC.extend('core/widgzard', function () {
         if (!('content' in params)) {
             targetFragment.WIDGZARD_cb();
         }
+
+        return target;
     }
 
 

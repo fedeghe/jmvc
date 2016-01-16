@@ -1,4 +1,4 @@
-JMVC.i18n.de = {
+JMVC.i18n.langs.de = {
 	'ciao' : 'Hallo',
 	'come stai' : 'Wie geht es dir',
 	"sei in locale" : "sind in lokalen",

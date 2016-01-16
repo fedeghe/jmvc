@@ -10,7 +10,7 @@ JMVC.extend('widget.langs', {
 		
 		var mkp = JMVC.dom.create('ul', {'class' : 'lang'});
 
-		JMVC.each(JMVC.i18n, function (e, i){
+		JMVC.each(JMVC.i18n.langs, function (e, i){
 			var img = JMVC.dom.create('img', {
 					src : JMVC.vars.baseurl + JMVC.US +'media' + JMVC.US + 'img' + JMVC.US + 'flags' + JMVC.US + i + '.gif',
 					width : 16,

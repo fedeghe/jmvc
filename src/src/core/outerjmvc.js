@@ -46,7 +46,13 @@ $JMVC = {
     widget : {},
     extensions : {},
     extensions_params : {},
-    i18n : {},
+    i18n : {
+        langs:{},
+        load : function (o, lang) {
+            lang = lang || JMVC.vars.currentlang;
+            JMVC.i18n.langs[lang] = JMVC.object.extend(JMVC.i18n.langs[lang], o);
+        }
+    },
     //
     modules : Modules,
     nsCheck : jmvc.ns.check,
