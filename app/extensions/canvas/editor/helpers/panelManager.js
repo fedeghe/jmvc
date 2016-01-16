@@ -149,8 +149,8 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
                 // when a panel is opened, close it as a click or a
                 // mousedown event is fired from outside the panel
                 // 
-                JMVC.events.onEventOut('click', cp.node, function () {cp.hide(); });
-                JMVC.events.onEventOut('mousedown', cp.node, function () {cp.hide(); });
+                JMVC.events.onEventOut(cp.node, 'click', function () {cp.hide(); });
+                JMVC.events.onEventOut(cp.node, 'mousedown', function () {cp.hide(); });
             })(currentPanel);
 
         } else if (currentPanel) {
@@ -303,7 +303,7 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
             
             exportManager.bind();
 
-
+/*
             JMVC.events.on(mainPanel, 'mouseover', function () {
                 JMVC.css.style(mainPanel, 'top', '0px');
             });
@@ -311,7 +311,7 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
             JMVC.events.on(mainPanel, 'mouseout', function () {
                 JMVC.css.style(mainPanel, 'top', '-25px');
             });
-
+*/
             JMVC.events.on(sections, 'click', function (e) {
 
                 var trg = this,
