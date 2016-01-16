@@ -82,7 +82,6 @@ dispatched = (function () {
         document.location.href = W.decodeURIComponent(params.jmvcgoto);
         return false;
     }
-    
     // dispatched result
     // 
     return {

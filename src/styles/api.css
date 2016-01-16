@@ -162,13 +162,15 @@ caption.human{background-color: gray; color:yellow;}
 caption.undefined{background-color: gray;}
 caption span.testlink{
 	text-align:right;
+
 }
 caption div.testlink a:hover{
 	color: white;
 }
 caption div.testlink a{
 	color:#ddd;
-	text-decoration:underline;
+	letter-spacing: 1px;
+	/*text-decoration:underline;*/
 }
 caption.testing div.testlink a:hover{
 	color: red;
@@ -183,7 +185,7 @@ button.trynow{
 	background-color: #aaa;
 	width:30px;
 	text-align:center;
-	height:20px;
+	height:28px;
 	line-height:20px;
 	position:relative;
 	color:#fff;
