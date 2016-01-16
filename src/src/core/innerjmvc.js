@@ -560,7 +560,7 @@ jmvc = {
             i = 0,
             l = lng.length;
         while (i < l) {
-            !JMVC.i18n[lng[i]] && (JMVC.i18n[lng[i]] = true);
+            !JMVC.i18n.langs[lng[i]] && (JMVC.i18n.langs[lng[i]] = true);
             i += 1;
         }
     },
@@ -666,7 +666,7 @@ jmvc = {
 
         $JMVC.lang(JMVC.vars.currentlang);
 
-        if (JMVC.i18n[JMVC.vars.currentlang] === true) {
+        if (JMVC.i18n.langs[JMVC.vars.currentlang] === true) {
             $JMVC.io.get(
                 JMVC.vars.baseurl + PATHS.lang + JMVC.vars.currentlang + (JMVC_PACKED || '') + '.js',
                 function (ln) {
@@ -684,7 +684,7 @@ jmvc = {
             if (!lang) {
                 break;
             }
-            tmp = ($JMVC.i18n[JMVC.vars.currentlang] && $JMVC.i18n[JMVC.vars.currentlang][lang[1]]) || lang[1];
+            tmp = ($JMVC.i18n.langs[JMVC.vars.currentlang] && $JMVC.i18n.langs[JMVC.vars.currentlang][lang[1]]) || lang[1];
             cnt = cnt.replace(lang[0], tmp);
             lang = !!lang;
             limit -= 1;
@@ -764,6 +764,7 @@ jmvc = {
             // BEFORE HOOKS?
             // 
             // @global hook
+            // 
             if ('before' in ctrl && typeof ctrl.before === 'function') {
                 ctrl.before($JMVC.p);
             }
@@ -778,15 +779,18 @@ jmvc = {
             // check actual action
             // 
             // the action exists in the controller
+            // 
             if ('action_' + $JMVC.a in ctrl && typeof ctrl['action_' + $JMVC.a] === 'function') {
                 ctrl['action_' + $JMVC.a]($JMVC.p);
 
             // maybe the action do not exists, but the controller contains a fallback
             // method called 'action', use it
+            // 
             } else if ('action' in ctrl && typeof ctrl.action === 'function') {
                 ctrl.action($JMVC.a, $JMVC.p);
 
             // otherwise use the 404 controller
+            // 
             } else if ($JMVC.a.toLowerCase() !== JMVC_DEFAULT.action) {
                 WDL.replace(US + '404' + US + 'msg' + US + 'act' + US + $JMVC.a);
             }
@@ -795,6 +799,7 @@ jmvc = {
             // AFTER HOOKS?
             //
             // @action hook 
+            // 
             if ('after_' + $JMVC.a in ctrl && typeof ctrl['after_' + $JMVC.a] === 'function') {
                 // ensure to happen after rendering
                 $JMVC.hook({onAfterRender : function () {
@@ -803,6 +808,7 @@ jmvc = {
             }
             //
             // @global hook
+            // 
             if ('after' in ctrl && typeof ctrl.after === 'function') {
                 // ensure to happen after rendering
                 $JMVC.hook({onAfterRender : function () {
@@ -855,6 +861,7 @@ jmvc = {
                             jmvc.require(arg[i] + json[j]);
                         }
                     }, false);
+                    // }, false);
 
                 } else if (!$JMVC.extensions[arg[i]]) {
 
@@ -968,7 +975,7 @@ jmvc = {
                             break;
                     }
                 },
-                false // be asynchronous
+                false // be synchronous
             );
         }
         return ret;

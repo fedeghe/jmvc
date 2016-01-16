@@ -9,11 +9,11 @@ if (document.doctype !== null) {
             (node.publicId ? ' PUBLIC"' + node.publicId + '"' : '') +
             (!node.publicId && node.systemId ? ' SYSTEM' : '') +
             (node.systemId ? ' "' + node.systemId + '"' : '') +
-        ">";
+        ">", t, l;
 
     if ('<!DOCTYPE html>' !== doctype_string) {
-        var t = _.shimthags.split(','),
-            l = t.length;
+        t = _.shimthags.split(','),
+        l = t.length;
         while (l--) {
             document.createElement(t[l]);
         }

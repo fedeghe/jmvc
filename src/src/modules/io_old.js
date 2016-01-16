@@ -86,7 +86,7 @@ _.io = {
 			cb_loading = (options && options.loading) || function () {},
 			cb_error = (options && options.error) || function () {},
 			cb_abort = (options && options.abort) || function () {},
-			async = options && options.async,
+			sync = options && options.sync,
 			data = (options && options.data) || {},
 			type = (options && options.type) || 'text/html',
 			cache = (options && options.cache !== undefined) ? options.cache : true,
@@ -248,7 +248,7 @@ _.io = {
 
 			// open request
 			//
-			xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri, async);
+			xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri, sync);
 
 			// thread abortion
 			// 
@@ -277,12 +277,12 @@ JMVC.io = {
 	 * [ description]
 	 * @param  {[type]} uri   [description]
 	 * @param  {[type]} cback [description]
-	 * @param  {[type]} async  [description]
+	 * @param  {[type]} sync  [description]
 	 * @param  {[type]} data  [description]
 	 * @param  {[type]} cache [description]
 	 * @return {[type]}       [description]
 	 */
-	post : function (uri, cback, async, data, cache, files, err) {
+	post : function (uri, cback, sync, data, cache, files, err) {
 		return _.io.ajcall(uri, {
 			cback : function (r) {
                 if (files) {
@@ -296,7 +296,7 @@ JMVC.io = {
                 }
             },
 			method : 'POST',
-			async : async,
+			sync : sync,
 			data : data,
 			cache : cache,
 			error: err,
@@ -308,16 +308,16 @@ JMVC.io = {
 	 * [ description]
 	 * @param  {[type]} uri   [description]
 	 * @param  {[type]} cback [description]
-	 * @param  {[type]} async  [description]
+	 * @param  {[type]} sync  [description]
 	 * @param  {[type]} data  [description]
 	 * @param  {[type]} cache [description]
 	 * @return {[type]}       [description]
 	 */
-	get : function (uri, cback, async, data, cache, err) {
+	get : function (uri, cback, sync, data, cache, err) {
 		return _.io.ajcall(uri, {
 			cback : cback || function () {},
 			method : 'GET',
-			async : async,
+			sync : sync,
 			data : data,
 			cache : cache,
 			error : err
@@ -328,17 +328,17 @@ JMVC.io = {
 	 * [put description]
 	 * @param  {[type]} uri   [description]
 	 * @param  {[type]} cback [description]
-	 * @param  {[type]} async  [description]
+	 * @param  {[type]} sync  [description]
 	 * @param  {[type]} data  [description]
 	 * @param  {[type]} cache [description]
 	 * @param  {[type]} err   [description]
 	 * @return {[type]}       [description]
 	 */
-	put : function (uri, cback, async, data, cache, err) {
+	put : function (uri, cback, sync, data, cache, err) {
 		return _.io.ajcall(uri, {
 			cback : cback,
 			method : 'PUT',
-			async : async,
+			sync : sync,
 			data : data,
 			cache : cache,
 			error: err
@@ -349,17 +349,17 @@ JMVC.io = {
 	 * [delete description]
 	 * @param  {[type]} uri   [description]
 	 * @param  {[type]} cback [description]
-	 * @param  {[type]} async  [description]
+	 * @param  {[type]} sync  [description]
 	 * @param  {[type]} data  [description]
 	 * @param  {[type]} cache [description]
 	 * @param  {[type]} err   [description]
 	 * @return {[type]}       [description]
 	 */
-	'delete' : function (uri, cback, async, data, cache, err) {
+	'delete' : function (uri, cback, sync, data, cache, err) {
 		return _.io.ajcall(uri, {
 			cback : cback || function () {},
 			method : 'DELETE',
-			async : async,
+			sync : sync,
 			data : data,
 			cache : cache,
 			error : err
@@ -377,7 +377,7 @@ JMVC.io = {
 		return _.io.ajcall(uri, {
 			type : 'json',
 			method: 'GET',
-			async : false,
+			sync : false,
 			cback : function (r) {
 				var j = (W.JSON && W.JSON.parse) ? JSON.parse(r) : JMVC.jeval('(' + r + ')');
 				cback(j);
@@ -396,7 +396,7 @@ JMVC.io = {
 	getXML : function (uri, cback, err) {
 		return _.io.ajcall(uri, {
 			method : 'GET',
-			async : false,
+			sync : false,
 			type : 'xml',
 			cache : false,
 			error : err || function () {},
