@@ -11,7 +11,7 @@ JMVC.controllers.api = function () {
 			'core/responsive/basic/basic',
 			'widget/countdown/countdown',
 			'vendors/github/forkme/forkme'
-			// ,'core/lib/cookieMonster/cookieMonster'
+			,'core/lib/cookieMonster/cookieMonster'
 		);
 		JMVC.events.loadify(500);
 		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/api.css', true, false);
@@ -33,7 +33,7 @@ JMVC.controllers.api = function () {
 			
 			consoleUrlTpl = 'console/index?h=%html%&j=%js%&c=%css%&l=#javascript',
 
-			whenReady = new Date(2015, 3, 27);
+			whenReady = new Date(2016, 3, 27);
 			
 			
 		main.set('id', 'desc');
@@ -120,7 +120,7 @@ JMVC.controllers.api = function () {
 						}
 						
 						func_model.set({
-							testlink : testlink ? '<a target="_blank" class="testLink" href="' + JMVC.vars.baseurl + JMVC.US + testlink + '">test</a>' : false,
+							testlink : testlink ? '<a target="_blank" class="testLink" href="' + JMVC.vars.baseurl + JMVC.US + testlink + '">RUN TEST</a>' : false,
 							parameters : params,
 							returns : section['function'][i].returns['#text']
 						});

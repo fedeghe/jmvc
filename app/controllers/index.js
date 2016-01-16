@@ -11,7 +11,7 @@ JMVC.require(
 	'widget/lang/lang',
 	'vendors/github/forkme/forkme',
 	'core/lib/widgzard/widgzard'
-	// ,'core/lib/cookieMonster/cookieMonster'
+	,'core/lib/cookieMonster/cookieMonster'
 );
 
 JMVC.controllers.index = function () {
@@ -28,15 +28,16 @@ JMVC.controllers.index = function () {
 		if (!JMVC.sniffer.features.assets.touchDevice) {
 			JMVC.require('core/fx/3DaniLogo');
 		}
-		
+
 		var logoimg = 'jmvc_n2.png',
-			ctrl = this;
+			ctrl = this,
+			index = JMVC.getView('home/index');
 
 		JMVC.dom.preloadImage(
 			JMVC.vars.baseurl + '/media/img/' + logoimg
 			/*, function (i){console.debug(i, 'loaded')}*/
 		);
-		
+
 		JMVC.events.loadify(500);
 		JMVC.head.title('JMVC');
 		JMVC.lang.apply(null, JMVC.util.getParameters('jmvcscript').langs || ['en', 'de', 'it']);
@@ -54,23 +55,19 @@ JMVC.controllers.index = function () {
 		//JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-night.min.css', true);
 		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-day.min.css', true);
 
-		/*
-		u can namespace views in folders
-		var index = JMVC.getView('xxx/index');
-		*/
-		var index = JMVC.getView('home/index');
+
 		//
 		//index.set('nome', this.get('name') || 'Federico');
 		index.set('i_say', '[L[pure javascript mvc framework]]');
-		
+
 		index.parse().render(
 			function () {
 
-				
+
 				// JMVC.preload(JMVC.vars.baseurl + '/info');
 				// JMVC.preload(JMVC.vars.baseurl + '/api');
-				
-			
+
+
 				JMVC.github.forkme('fedeghe');
 
 				JMVC.mobile.topHide();
@@ -110,19 +107,19 @@ JMVC.controllers.index = function () {
 
 				logo = JMVC.dom.find('#extralogo');
 				newlogo = JMVC.dom.create('img', {src : JMVC.vars.baseurl + '/media/img/' + logoimg});
-			
+
 				JMVC.dom.append(logo, JMVC.dom.create('div', {'class':'resp_mobi', style:'height:20px'}, '&nbsp;'));
 				JMVC.dom.append(logo, newlogo);
-				
-				
+
+
 				if (JMVC.p.map && JMVC.p.map === 'true') {
-				
+
 					JMVC.require('vendors/google/gmap2/gmap2');
 					dims = JMVC.screen.getViewportSize();
 					mapid = 'map';
 					body = JMVC.dom.body();
 					JMVC.dom.append(body, JMVC.dom.create('div', {id : mapid, style : 'opacity:0.8;position:absolute;z-index:1;top:0px;left:0px;width:' + dims.width + 'px;height:' + dims.height + 'px'}));
-					
+
 					JMVC.gmap2.initialize(function () {
 						JMVC.gmap2.mapme('Dällikerstrasse 35, Regensdorf, Svizzera', function (latlng) {
 							var mapDiv = document.getElementById(mapid),
@@ -140,10 +137,10 @@ JMVC.controllers.index = function () {
 								/* Greenland */
 								// {location : [24.1829108,-76.4570398], speed : 20, duration : 20, streetView : {heading : 270, zoom : -2}},
 								{location : [64.2005707,-51.6272116], speed : 20, duration : 20, streetView : {heading : 270, zoom : -2}},
-								
+
 								/* Iceland */
 								{location : [64.8914217,-15.3190167], speed : 20, duration : 20, streetView : {heading : 270, zoom : -2}},
-								
+
 								/* Nepal */
 								{location : [27.9399118,86.7012209], speed : 20, duration : 20, streetView : {heading : 230, zoom : -2}},
 
@@ -152,7 +149,7 @@ JMVC.controllers.index = function () {
 
 								/* NYC */
 								{location : [40.764087, -73.973104], speed : 20, duration : 20, streetView : {heading : 90, zoom : -2}},
-								
+
 								/* JAPO */
 								{location : [34.3828365,133.8191008], speed : 20, duration : 20, streetView : {heading : 270, zoom : -2}},
 
@@ -165,9 +162,7 @@ JMVC.controllers.index = function () {
 								/* Cortina */
 								{location : [46.545509, 12.135808], speed : 20, duration : 20, streetView : {heading : 180, pitch : 15, zoom : 0}},
 								
-
-
-
+								
 								{location : 'prato della valle, Padova Italia', speed : 20, duration : 10, streetView : {heading : 230, pitch : 0, zoom : -2}},
 
 								/* Amsterdam : piazza dam */
@@ -185,28 +180,27 @@ JMVC.controllers.index = function () {
 						});
 					}, {sensor : 'false'});
 				}
-				
+
 				// stil opera unfriendly somehow, must dig it!
-				
+
 				JMVC.sniffer.browser.name !== 'Opera'
 				&& (
 					JMVC.array.find([9, 10, 11, 0, 1, 2, 3, 4], todayMonth) > -1
-					&&
-					(JMVC.p.snow && JMVC.p.snow === 'true' || ctrl.get('snow'))
+					&& (JMVC.p.snow && JMVC.p.snow === 'true' || ctrl.get('snow'))
 				)
 				&& JMVC.require('widget/snow/snow/snow', function () {
 					JMVC.css.style(JMVC.WDB, {'backgroundColor': '#eef'});
 					JMVC.snow.start(JMVC.dom.body());
 				});
-				
-				
+
+
 				if (!JMVC.sniffer.features.assets.touchDevice) {
 					JMVC.fx.threeDaniLogo(newlogo);
 				}
 			}
 		);
 	};
-	
+
 	this.action_video = function () {
 		JMVC.require('core/html5/html5');
 		var index = JMVC.getView('home/index'),
@@ -214,8 +208,9 @@ JMVC.controllers.index = function () {
 				width : 240,
 				height : 180,
 				src : 'http://techslides.com/demos/sample-videos/small.ogv',
-				autoplay : 'autoplay',
-				controls : true
+				autoplay : true,
+				controls : false,
+				loop : true
 			});
 
 		index.set('i_say', 'Sample Video');
@@ -234,7 +229,7 @@ JMVC.controllers.index = function () {
 				autoplay : 'autoplay',
 				controls : true
 			});
-		
+
 		index.set('i_say', 'Sample audio');
 		index.render({cback : function () {
 			JMVC.dom.append(JMVC.dom.find('#cent'), audio);
@@ -273,13 +268,31 @@ JMVC.controllers.index = function () {
 
 	this.action_codes = function () {
 
-		//check webWorkers
+		// check webWorkers
+		//
 		if (!JMVC.sniffer.features.assets.webWorkers) {
 			JMVC.head.goto(JMVC.c, 'codesNoworkers');
 		}
-		
+
 		var content = '',
-			self = this;
+
+			self = this,
+
+			// create a inline worker
+			//
+			blobURL = window.URL.createObjectURL(
+				new Blob([
+					"var i = 0, l = 2<<15,"+
+						"loop = setInterval(function () {"+
+							"self.postMessage(i + ' : ' + String.fromCharCode('0x'  + (i++).toString(16)) + '<br />');	"+
+							"if (i == l) {"+
+								"clearInterval(loop);"+
+							"}"+
+						"}, 5);"
+				])
+			),
+
+			worker = new Worker(blobURL);
 
 		// clean body
 		this.render(content, function () {
@@ -287,26 +300,13 @@ JMVC.controllers.index = function () {
 				i = 0,
 				l = t.length;
 			window.setInterval(
-				//function (){JMVC.head.title(String.fromCharCode(JMVC.util.rand(10240, 10495)))},
+				//
+				// function (){JMVC.head.title(String.fromCharCode(JMVC.util.rand(10240, 10495)))},
+				//
 				function () {JMVC.head.title(String.fromCharCode(t[i])); i = (i + 1) % l; },
 				100
 			);
 		});
-
-		// create a inline worker
-		var blobURL = window.URL.createObjectURL(
-				new Blob([
-					"var i = 0, l = 2<<15,"+
-						"loop = setInterval(function () {"+
-							"self.postMessage(i + ' : ' + String.fromCharCode('0x'  + (i++).toString(16)) + '<br />');	"+
-							
-							"if (i == l) {"+
-								"clearInterval(loop);"+
-							"}"+
-						"}, 5);"
-				])
-			),
-			worker = new Worker(blobURL);
 
 		worker.onmessage = function (e) {
 			JMVC.dom.append(self.view.container, JMVC.dom.create('span', {}, e.data));
@@ -329,7 +329,7 @@ JMVC.controllers.index = function () {
 				b = JMVC.dom.body();
 
 			JMVC.dom.append(b, JMVC.dom.create('div', {id : mapid, style : 'opacity:0.8;position:absolute;z-index:1;top:0px;left:0px;width:' + dims.width + 'px;height:' + dims.height + 'px'}));
-			
+
 			JMVC.gmap2.initialize(function () {
 				JMVC.gmap2.mapme('via Maggio 18, Lugano, Svizzera', function (latlng) {
 					var mapDiv = document.getElementById(mapid),
@@ -355,7 +355,7 @@ JMVC.controllers.index = function () {
 						]);
 					}, 0);
 				});
-				
+
 			}, {sensor : 'false'});
 		});
 	};

@@ -1,3 +1,4 @@
+JMVC.require('core/lib/cookieMonster/cookieMonster');
 JMVC.controllers.demo = function() {
 
 	'use strict';
@@ -155,6 +156,7 @@ JMVC.controllers.demo = function() {
 				"inline Mobile Video" : "demo/inlineVideo",
 				"Mobile inline Video Preview" : "demo/previewVideo",
 				"inline Mobile Video inline Preview" : "demo/previewInlineVideo",
+				"my 2 way data binding" : "demo/wwdb",
 				'* strict': 'test_strict',
 				'* obj/bucket': 'test_bucket',
 				'* obj/deque': 'test_deque',
@@ -1911,7 +1913,8 @@ JMVC.controllers.demo = function() {
 
 				JMVC.shadowMatrix.getMatrixFromImage({
 					size : size,
-					imgUrl : img || (JMVC.vars.baseurl + '/media/img/fgk.jpg')
+					// imgUrl : img || (JMVC.vars.baseurl + '/media/img/fgk.jpg')
+					imgUrl : img || (JMVC.vars.baseurl + '/media/img/fedesmall.jpg')
 				})
 				// promise returned, done when image loaded and
 				// matrix done
@@ -2625,6 +2628,15 @@ JMVC.controllers.demo = function() {
 
 							
 						}, false);
+						/*
+						JMVC.events.one($video,'loadeddata', function () {
+
+							// $elf.load();
+							var c = JMVC.html5.previewInlineVideo($video);
+
+							
+						}, false);
+						*/
 						$video.load();
 						 
 					}
@@ -2633,5 +2645,79 @@ JMVC.controllers.demo = function() {
 				
 			});
 		});
+	};
+
+	this.action_wwdb = function () {
+
+		JMVC.css.fontAwesome();
+		
+		var mobile = JMVC.util.isMobile;
+
+		JMVC.getView('vacuum')
+		.set({
+			style: 'padding:0px 10px 50px;line-height:30px;font-family:Verdana, sans',
+			id: 'container'
+		})
+		.render(function() {
+
+			var t = {value : 'please edit me'};
+			window.t = t;
+
+			JMVC.core.widgzard.render({
+				target : document.getElementById('container'),
+				content : [{
+					tag:'h1',
+					html : 'Two way data binding'
+				},{
+					tag : 'p',
+					html : 'The following fields are all 2wdb with <b>t.value</b> that you can edit/read from the console (after 1 minute will be unbinded)'
+				},{tag : 'span', html : '1:'},{
+					tag : 'input',
+					attrs : {type : 'text'},
+					style : {
+						width:'300px'
+					},
+					wid : 'input1'
+				},{tag:'br'},{tag : 'span', html : '2:'},{
+					tag : 'input',
+					attrs : {type : 'text'},
+					style : {
+						width:'300px'
+					},
+					wid : 'input2'
+				},{tag:'br'},{tag : 'span', html : '3:'},{
+					tag : 'span',
+					wid : 'text'
+				},{tag:'br'},{tag : 'span', html : '4:'},{
+					tag : 'textarea',
+					attrs : {rows:20, cols:"50"},
+					wid : 'ta'
+				},{
+					style:{color:'red', fontWeight:'bold'},
+					wid: 'debug'
+				}],
+				cb : function () {
+					var self = this,
+						text = self.getNode('text').node,
+						ta = self.getNode('ta').node,
+						input1 = self.getNode('input1').node,
+						input2 = self.getNode('input2').node,
+						deb = self.getNode('debug').node;
+
+					JMVC.events.wwon(t, 'value', input1);
+					JMVC.events.wwon(t, 'value', input2);
+					JMVC.events.wwon(t, 'value', text);
+					JMVC.events.wwon(t, 'value', ta);
+					
+					window.setTimeout(function () {
+						JMVC.events.wwoff(input1, input2, text, ta);
+						deb.innerHTML = '2wdb stopped';
+					}, 60000);
+
+				}
+			});
+		});
+
+
 	};
 };
