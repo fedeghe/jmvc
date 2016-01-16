@@ -32,6 +32,15 @@ _.events = {
      */
     //nodeidMap : {},
     disabledRightClick: false,
+
+
+    
+    wwdb_bindings : {},
+
+    wwdb_channel : JMVC.Channel('wwdb'),
+
+
+
     /**
      * bind exactly one domnode event to a function
      * @param  {DOM node}   el the dom node where the event must be attached
@@ -157,8 +166,23 @@ _.events = {
         //remove it from private bindings register
         unstore(evnt, nodeid, index);
         return true;
+    },
+    getElementDeterminant : function (el) {
+        var tname = el.tagName;
+        return (tname.match(/input|textarea/i)) ? 'value' : 'innerHTML';
     }
 };
+
+
+
+
+
+
+
+
+
+
+
 //
 // PUBLIC section
 JMVC.events = {
@@ -180,31 +204,7 @@ JMVC.events = {
         })*/
     },
 
-    /**
-     * [ description]
-     * @param  {[type]}   el   [description]
-     * @param  {[type]}   tipo [description]
-     * @param  {Function} fn   [description]
-     * @return {[type]}        [description]
-     */
-    on: function(el, tipo, fn) {
-        var res = true;
-        if (el instanceof Array) {
-            for (var i = 0, l = el.length; i < l; i++) {
-                res = res & _.events.bind(el[i], tipo, fn);
-                //res = res & _.events.bind(el[i], tipo, _.events.fixCurrentTarget(fn, el[i]));
-            }
-            return res;
-        }
-        if (tipo instanceof Array) {
-            for (var i = 0, l = tipo.length; i < l; i++) {
-                res = res & _.events.bind(el, tipo[i], fn);
-            }
-            return res;
-        }
-        return _.events.bind(el, tipo, fn);
-        //return _.events.bind(el, tipo, _.events.fixCurrentTarget(fn, el));
-    },
+
 
     blurAllAnchorClicks : function () {
         JMVC.events.on(JMVC.W, 'click', function (e) {
@@ -236,6 +236,29 @@ JMVC.events = {
             return e.which;
         }
         return false;
+    },
+
+    /**
+     * [coord description]
+     * @param  {[type]} e [description]
+     * @return {[type]}   [description]
+     */
+    coord : function (ev) {
+        var x,
+            y,
+            e;
+
+        // if is a touch take the first finger
+        e = (ev.touches && ev.touches.length) ? ev.touches[0] : ev;
+
+        if (e.pageX || e.pageY) {
+            x = e.pageX;
+            y = e.pageY;
+        } else {
+            x = e.clientX + JMVC.WD.body.scrollLeft + JMVC.WD.documentElement.scrollLeft;
+            y = e.clientY + JMVC.WD.body.scrollTop + JMVC.WD.documentElement.scrollTop;
+        }
+        return [x, y];
     },
 
     /**
@@ -337,29 +360,6 @@ JMVC.events = {
     },
 
     /**
-     * [coord description]
-     * @param  {[type]} e [description]
-     * @return {[type]}   [description]
-     */
-    coord : function (ev) {
-        var x,
-            y,
-            e;
-
-        // if is a touch take the first finger
-        e = (ev.touches && ev.touches.length) ? ev.touches[0] : ev;
-
-        if (e.pageX || e.pageY) {
-            x = e.pageX;
-            y = e.pageY;
-        } else {
-            x = e.clientX + JMVC.WD.body.scrollLeft + JMVC.WD.documentElement.scrollLeft;
-            y = e.clientY + JMVC.WD.body.scrollTop + JMVC.WD.documentElement.scrollTop;
-        }
-        return [x, y];
-    },
-
-    /**
      * [ description]
      * @param  {[type]} el [description]
      * @param  {[type]} e  [description]
@@ -381,16 +381,30 @@ JMVC.events = {
      */
     loadify: function(ms) {
 
-        var self = JMVC.events;
-        self.loadifyCalled = true;
-        self.start(function() {
+        var self = JMVC.events,
+            p = null;
+        
+        ms = ms || 1000;
+
+        if (self.loadifyCalled) {
+            p = JMVC.Promise.create();
+            start();
+            p.then(end);
+        }
+
+
+        function start() {
             //otherwise some browser hangs (opera)
             self.delay(function() {
                 WD.body.style.opacity = 0;
                 WD.body.style.filter = 'alpha(opacity=0)';
+                // debugger;
+                p && p.done();
             }, 0);
-        });
-        self.end(function() {
+
+        }
+        function end() {
+            
             var i = 0,
                 step = 0.05,
                 top = 1,
@@ -403,6 +417,7 @@ JMVC.events = {
                         if (j >= top || isNaN(j)) {
                             WD.body.style.opacity = 1;
                             WD.body.style.filter = 'alpha(opacity=100)';
+                            
                         }
                     },
                     ms * i,
@@ -410,7 +425,25 @@ JMVC.events = {
                 );
                 i += step;
             }
-        });
+        }
+        self.loadifyCalled = true;
+        self.start(start);
+        self.end(end);
+    },
+
+    /**
+     * [ description]
+     * @param  {[type]} e [description]
+     * @return {[type]}   [description]
+     */
+    kill: function(e) {
+        if (!e) {
+            e = W.event;
+            e.cancelBubble = true;
+            e.returnValue = false;
+        }
+        'stopPropagation' in e && e.stopPropagation() && e.preventDefault();
+        return false;
     },
 
     /**
@@ -430,6 +463,33 @@ JMVC.events = {
         _.events.unbind(el, tipo, fn);
     },
 
+
+    /**
+     * [ description]
+     * @param  {[type]}   el   [description]
+     * @param  {[type]}   tipo [description]
+     * @param  {Function} fn   [description]
+     * @return {[type]}        [description]
+     */
+    on: function(el, tipo, fn) {
+        var res = true;
+        if (el instanceof Array) {
+            for (var i = 0, l = el.length; i < l; i++) {
+                res = res & _.events.bind(el[i], tipo, fn);
+                //res = res & _.events.bind(el[i], tipo, _.events.fixCurrentTarget(fn, el[i]));
+            }
+            return res;
+        }
+        if (tipo instanceof Array) {
+            for (var i = 0, l = tipo.length; i < l; i++) {
+                res = res & _.events.bind(el, tipo[i], fn);
+            }
+            return res;
+        }
+        return _.events.bind(el, tipo, fn);
+        //return _.events.bind(el, tipo, _.events.fixCurrentTarget(fn, el));
+    },
+
     /**
      * [ description]
      * @param  {[type]}   el   [description]
@@ -446,34 +506,8 @@ JMVC.events = {
             return;
         }
         self.on(el, tipo, function f(e) {
-            fn(e); 
+            fn.call(e, e);
             self.off(el, tipo, f);
-        });
-    },
-
-    /**
-     * Very experimental function to bind a function to
-     * a click triggered outside of a node tree
-     * @param  {[type]}   el [description]
-     * @param  {Function} cb [description]
-     * @return {[type]}      [description]
-     * @sample http://www.jmvc.dev
-     * || var tr = JMVC.dom.find('#extralogo');
-     * || JMVC.events.clickout(tr, function (){console.debug('out')});
-     */
-    onEventOut: function(evnt, el, cb) {
-        var self = JMVC.events,
-            root = JMVC.dom.body();
-
-        self.on(root, evnt, function f(e) {
-            var trg = self.eventTarget(e);
-            while (trg !== el) {
-                trg = JMVC.dom.parent(trg);
-                if (trg === root) {
-                    self.off(root, evnt, f);
-                    return cb();
-                }
-            }
         });
     },
 
@@ -488,6 +522,63 @@ JMVC.events = {
         JMVC.events.on(w.document, 'keyup', function (e) {
             if (e.keyCode == 27) {
                 cb.call(w, e);
+            }
+        });
+    },
+
+    /**
+     * Very experimental function to bind a function to
+     * a click triggered outside of a node tree
+     * @param  {[type]}   el [description]
+     * @param  {Function} cb [description]
+     * @return {[type]}      [description]
+     * @sample http://www.jmvc.dev
+     * || var tr = JMVC.dom.find('#extralogo');
+     * || JMVC.events.clickout(tr, function (){console.debug('out')});
+     */
+    onEventOut: function(el, evnt, cb) {
+        
+        var self = JMVC.events,
+            root = window.document; //JMVC.dom.body();
+
+        self.on(root, evnt, function f(e) {
+            var trg = self.eventTarget(e);
+
+            while (trg !== el) {
+                
+                trg = JMVC.dom.parent(trg);
+                if (trg === root) {
+                    self.off(root, evnt, f);
+                    return cb(e);
+                }
+            }
+        });
+    },
+
+    /**
+     * Very experimental function to bind a function to
+     * a click triggered outside of a node tree
+     * @param  {[type]}   el [description]
+     * @param  {Function} cb [description]
+     * @return {[type]}      [description]
+     * @sample http://www.jmvc.dev
+     * || var tr = JMVC.dom.find('#extralogo');
+     * || JMVC.events.clickout(tr, function (){console.debug('out')});
+     */
+    onEventOut_old: function(el, evnt, cb) {
+        
+        var self = JMVC.events,
+            root = JMVC.dom.body();
+
+        self.on(root, evnt, function f(e) {
+            var trg = self.eventTarget(e);
+
+            while (trg !== el) {
+                trg = JMVC.dom.parent(trg);
+                if (trg === root) {
+                    self.off(root, evnt, f);
+                    return cb(e);
+                }
             }
         });
     },
@@ -513,31 +604,14 @@ JMVC.events = {
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
-    kill: function(e) {
-        if (!e) {
-            e = W.event;
-            e.cancelBubble = true;
-            e.returnValue = false;
-        }
-        'stopPropagation' in e && e.stopPropagation() && e.preventDefault();
-        return false;
-    },
-
-    /**
-     * [ description]
-     * @param  {[type]} e [description]
-     * @return {[type]}   [description]
-     */
     preventDefault: function(e) {
         e = e || W.event;
-
         if (e.preventDefault) {
             e.preventDefault();
         } else {
             e.returnValue = false;
         }
     },
-
 
     /**
      * ready façade
@@ -566,6 +640,9 @@ JMVC.events = {
         }
     })(),
 
+    /**
+     * [description]
+     */
     ready : (function () {
         var cb = [],
             readyStateCheckInterval = setInterval(function() {
@@ -665,6 +742,12 @@ JMVC.events = {
         return touches;
     },
 
+    /**
+     * [trigger description]
+     * @param  {[type]} elem [description]
+     * @param  {[type]} ev   [description]
+     * @return {[type]}      [description]
+     */
     trigger : function (elem, ev) {
         if ("createEvent" in document) {
             var evt = document.createEvent("HTMLEvents");
@@ -688,6 +771,74 @@ JMVC.events = {
             
             
         });
+    },
+
+    /**
+     * [wwon description]
+     * @param  {[type]} obj   [description]
+     * @param  {[type]} field [description]
+     * @param  {[type]} el    [description]
+     * @return {[type]}       [description]
+     */
+    wwon : function (obj, field,  el) {
+        var objLock = false,
+            elLock = false,
+            elDet = _.events.getElementDeterminant(el),
+            elOldVal = el[elDet],
+            objOldVal = obj[field],
+            objID = JMVC.util.uniqueId;
+
+        el.wwdbID = JMVC.util.uniqueId + '_' + objID;
+
+        // obj
+        // when object changes -> element changes
+        // 
+        _.events.wwdb_bindings[objID + '_' + el.wwdbID] = {
+            e : (function () {
+                return window.setInterval(function () {
+                    if (objLock) return;
+                    elLock = true;
+                    objLock = true;
+                    if (objOldVal != obj[field]) {
+                        elOldVal = obj[field];
+                        objOldVal = elOldVal;
+                        el[elDet] = elOldVal;
+                    }
+                    objLock = false;
+                    elLock = false;
+                }, 25);
+            })()
+        };
+        
+        JMVC.events.on(el, 'keyup', function () {
+            if (elLock) return;
+            objLock = true;
+            elLock = true;
+
+            if (this[elDet] != obj[field]) {
+                obj[field] = this[elDet];
+                elOldVal = this[elDet];
+                objOldVal = this[elDet];
+            }
+            
+            elLock = false;
+            objLock = false;
+        });
+        el[elDet] = objOldVal;
+
+    },
+
+    /**
+     * [wwoff description]
+     * @return {[type]} [description]
+     */
+    wwoff : function () {
+        var els = [].slice.call(arguments, 0),
+            l = els.length;
+        while (l-- > 0) {
+            JMVC.events.off(els[l], 'keyup');
+            window.clearInterval(_.events.wwdb_bindings[els[l].wwdbID]);    
+        }
     }
 };
 
