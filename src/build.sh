@@ -17,7 +17,7 @@ fi
 echo -e "\nSTARTED @ $now" >> malta.log
 
 # tasks
-malta build.json >> malta.log 2>&1 &
+malta _build.json >> malta.log 2>&1 &
 
 # show live message queue
 echo -e '---------------------------------\nLOG CONTENT:\n.........\n......\n...'
