@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.7 (rev. 3) build: 4234
+ * @version :  3.7 (rev. 3) build: 4235
  * @copyright : 2016, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
  * @file : built with Malta v.2.1.3 & a love heap
- *         glued with 41 files on 15/1/2016 at 23:14:52
+ *         glued with 41 files on 17/1/2016 at 13:51:1
  *
  * All rights reserved.
  *
@@ -115,10 +115,10 @@
 			    JMVC_REVIEW = '3',
 			
 			    // review (vars.json)
-			    JMVC_DATE = '15/1/2016',
+			    JMVC_DATE = '17/1/2016',
 			
 			    // review (vars.json)
-			    JMVC_TIME = '23:14:52',
+			    JMVC_TIME = '13:51:1',
 			
 			    // experimental (ignore it)
 			    JMVC_PACKED = '', //'.min' 
@@ -4605,23 +4605,27 @@
 	     * @type {Object}
 	     */
 	    bindings: {},
+	
 	    /**
 	     * store wrapped callbacks
 	     * @type {Array}
 	     */
 	    cbs: [],
+	
 	    /**
 	     * wired function queue fired
 	     * at the beginning of render function
 	     * @type {Array}
 	     */
 	    Estart: [],
+	
 	    /**
 	     * wired function queue fired
 	     * at the end of render function
 	     * @type {Array}
 	     */
 	    Eend: [],
+	
 	    /**
 	     * map used to get back a node from an id
 	     * @type {Object}
@@ -4629,13 +4633,17 @@
 	    //nodeidMap : {},
 	    disabledRightClick: false,
 	
-	
-	    
+	    /**
+	     * [wwdb_bindings description]
+	     * @type {Object}
+	     */
 	    wwdb_bindings : {},
 	
+	    /**
+	     * [wwdb_channel description]
+	     * @type {[type]}
+	     */
 	    wwdb_channel : JMVC.Channel('wwdb'),
-	
-	
 	
 	    /**
 	     * bind exactly one domnode event to a function
@@ -4988,19 +4996,18 @@
 	            p.then(end);
 	        }
 	
-	
 	        function start() {
-	            //otherwise some browser hangs (opera)
+	            // otherwise some browser hangs (opera)
+	            //
 	            self.delay(function() {
 	                WD.body.style.opacity = 0;
 	                WD.body.style.filter = 'alpha(opacity=0)';
-	                // debugger;
 	                p && p.done();
 	            }, 0);
 	
 	        }
-	        function end() {
-	            
+	
+	        function end() {    
 	            var i = 0,
 	                step = 0.05,
 	                top = 1,
@@ -5013,7 +5020,6 @@
 	                        if (j >= top || isNaN(j)) {
 	                            WD.body.style.opacity = 1;
 	                            WD.body.style.filter = 'alpha(opacity=100)';
-	                            
 	                        }
 	                    },
 	                    ms * i,
@@ -5058,7 +5064,6 @@
 	        }
 	        _.events.unbind(el, tipo, fn);
 	    },
-	
 	
 	    /**
 	     * [ description]
@@ -5168,7 +5173,6 @@
 	
 	        self.on(root, evnt, function f(e) {
 	            var trg = self.eventTarget(e);
-	
 	            while (trg !== el) {
 	                trg = JMVC.dom.parent(trg);
 	                if (trg === root) {
@@ -5188,10 +5192,7 @@
 	    onRight: function(el, f) {
 	        JMVC.events.disableRightClick();
 	        JMVC.events.on(el, 'mousedown', function(e) {
-	
-	            if (~~(e.button) === 2) {
-	                f.call(el, e);
-	            }
+	            ~~(e.button) === 2 && f.call(el, e);
 	        });
 	    },
 	
@@ -5389,23 +5390,22 @@
 	        // obj
 	        // when object changes -> element changes
 	        // 
-	        _.events.wwdb_bindings[objID + '_' + el.wwdbID] = {
-	            e : (function () {
-	                return window.setInterval(function () {
-	                    if (objLock) return;
-	                    elLock = true;
-	                    objLock = true;
-	                    if (objOldVal != obj[field]) {
-	                        elOldVal = obj[field];
-	                        objOldVal = elOldVal;
-	                        el[elDet] = elOldVal;
-	                    }
-	                    objLock = false;
-	                    elLock = false;
-	                }, 25);
-	            })()
-	        };
+	        _.events.wwdb_bindings[objID + '_' + el.wwdbID] = window.setInterval(function () {
+	            if (objLock) return;
+	            elLock = true;
+	            objLock = true;
+	            if (objOldVal != obj[field]) {
+	                elOldVal = obj[field];
+	                objOldVal = elOldVal;
+	                el[elDet] = elOldVal;
+	            }
+	            objLock = false;
+	            elLock = false;
+	        }, 25);
 	        
+	        
+	        // input
+	        //
 	        JMVC.events.on(el, 'keyup', function () {
 	            if (elLock) return;
 	            objLock = true;

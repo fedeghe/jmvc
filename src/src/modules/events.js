@@ -9,23 +9,27 @@ _.events = {
      * @type {Object}
      */
     bindings: {},
+
     /**
      * store wrapped callbacks
      * @type {Array}
      */
     cbs: [],
+
     /**
      * wired function queue fired
      * at the beginning of render function
      * @type {Array}
      */
     Estart: [],
+
     /**
      * wired function queue fired
      * at the end of render function
      * @type {Array}
      */
     Eend: [],
+
     /**
      * map used to get back a node from an id
      * @type {Object}
@@ -33,13 +37,17 @@ _.events = {
     //nodeidMap : {},
     disabledRightClick: false,
 
-
-    
+    /**
+     * [wwdb_bindings description]
+     * @type {Object}
+     */
     wwdb_bindings : {},
 
+    /**
+     * [wwdb_channel description]
+     * @type {[type]}
+     */
     wwdb_channel : JMVC.Channel('wwdb'),
-
-
 
     /**
      * bind exactly one domnode event to a function
@@ -392,19 +400,18 @@ JMVC.events = {
             p.then(end);
         }
 
-
         function start() {
-            //otherwise some browser hangs (opera)
+            // otherwise some browser hangs (opera)
+            //
             self.delay(function() {
                 WD.body.style.opacity = 0;
                 WD.body.style.filter = 'alpha(opacity=0)';
-                // debugger;
                 p && p.done();
             }, 0);
 
         }
-        function end() {
-            
+
+        function end() {    
             var i = 0,
                 step = 0.05,
                 top = 1,
@@ -417,7 +424,6 @@ JMVC.events = {
                         if (j >= top || isNaN(j)) {
                             WD.body.style.opacity = 1;
                             WD.body.style.filter = 'alpha(opacity=100)';
-                            
                         }
                     },
                     ms * i,
@@ -462,7 +468,6 @@ JMVC.events = {
         }
         _.events.unbind(el, tipo, fn);
     },
-
 
     /**
      * [ description]
@@ -572,7 +577,6 @@ JMVC.events = {
 
         self.on(root, evnt, function f(e) {
             var trg = self.eventTarget(e);
-
             while (trg !== el) {
                 trg = JMVC.dom.parent(trg);
                 if (trg === root) {
@@ -592,10 +596,7 @@ JMVC.events = {
     onRight: function(el, f) {
         JMVC.events.disableRightClick();
         JMVC.events.on(el, 'mousedown', function(e) {
-
-            if (~~(e.button) === 2) {
-                f.call(el, e);
-            }
+            ~~(e.button) === 2 && f.call(el, e);
         });
     },
 
@@ -793,23 +794,22 @@ JMVC.events = {
         // obj
         // when object changes -> element changes
         // 
-        _.events.wwdb_bindings[objID + '_' + el.wwdbID] = {
-            e : (function () {
-                return window.setInterval(function () {
-                    if (objLock) return;
-                    elLock = true;
-                    objLock = true;
-                    if (objOldVal != obj[field]) {
-                        elOldVal = obj[field];
-                        objOldVal = elOldVal;
-                        el[elDet] = elOldVal;
-                    }
-                    objLock = false;
-                    elLock = false;
-                }, 25);
-            })()
-        };
+        _.events.wwdb_bindings[objID + '_' + el.wwdbID] = window.setInterval(function () {
+            if (objLock) return;
+            elLock = true;
+            objLock = true;
+            if (objOldVal != obj[field]) {
+                elOldVal = obj[field];
+                objOldVal = elOldVal;
+                el[elDet] = elOldVal;
+            }
+            objLock = false;
+            elLock = false;
+        }, 25);
         
+        
+        // input
+        //
         JMVC.events.on(el, 'keyup', function () {
             if (elLock) return;
             objLock = true;
