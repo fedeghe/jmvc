@@ -37,6 +37,9 @@
             self = this,
 
             backAndForth = opts.backAndForth,
+            endTime = opts.endTime || 0,
+            end = opts.end,
+            loop = !!opts.loop,
             nextIndex = (function () {
                 var versus = 1;
                 if (backAndForth) {
@@ -49,11 +52,30 @@
                 }
             })(),
             i = 0;
-        window.setInterval(function () {
-            self.matrix = self.frames[i]
-            self.draw({node : opts.node});
-            nextIndex();
-        }, ms);
+        (function z() {
+            var interv = window.setInterval(function () {
+                self.matrix = self.frames[i]
+                self.draw({node : opts.node});
+                
+                
+                if (endTime && i == n - 1) {
+                    window.clearInterval(interv);
+                    window.setTimeout(z, endTime);
+                }
+                if (i == n - 1 && !loop) {
+                    
+                    if (!!end) {
+                        end();
+                    }
+                    window.clearInterval(interv);
+                    return;
+                }
+                nextIndex();
+
+            }, ms);    
+        })();
+        
+        
     };
 
     proto.draw = function (opts) {
@@ -145,7 +167,11 @@
     };
 
 
-
+    /**
+     * shadowMatrix factory
+     * @param  {[type]} opts [description]
+     * @return {[type]}      [description]
+     */
     JMVC.shadowMatrix = function (opts) {
         return new _constructor(opts);
     }
