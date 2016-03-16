@@ -18,29 +18,19 @@ JMVC.extend('core/widgzard', function () {
 
     JMVC.head.addStyle(JMVC.vars.extensions + 'core/lib/widgzard/widgzard.min.css');   
 
-    // clearer class that should provide right
+       // clearer class that should provide right
     // css float clearing
     // ex: TB uses `clearfix`, I don`t
     // 
-    var clearerClassName = 'clearer',
+    var clearerClassName = 'clearer', 
         nodeIdentifier = 'wid',
         autoclean = true,
-        debug = true,
+        debug = false,
         Wproto = Wnode.prototype,
-        Promise = JMVC.Promise,
-        htmlspecialchars = JMVC.htmlChars,
-        delegate = JMVC.delegate,
-        eulerWalk = JMVC.dom.walk,
+        Promise,
+        htmlspecialchars, delegate, eulerWalk,
         noop = function () {};
 
-    /**
-     * Main object constructor represeting any node created
-     * @param {[type]} conf the object that has the information about the node
-     *                      that will be created
-     * @param {[type]} trg  the DomNODE where the element will be appended to
-     * @param {[type]} mapcnt an object used to allow the access from any node
-     *                        to every node that has the gindID attribute
-     */
     /**
      * Main object constructor represeting any node created
      * @param {[type]} conf the object that has the information about the node
@@ -69,10 +59,6 @@ JMVC.extend('core/widgzard', function () {
         // create the node
         // 
         this.node = document.createElement(tag);
-
-
-        //this.target.childrens = [];
-
 
         // save a reference to the node configuration
         // will be useful on append to append to conf.target
@@ -279,7 +265,8 @@ JMVC.extend('core/widgzard', function () {
     Wproto.add = function () {
 
         var conf = this.conf,
-            node = this.node;
+            node = this.node,
+            tmp;
 
         // set attributes and styles
         // 
@@ -293,6 +280,15 @@ JMVC.extend('core/widgzard', function () {
         // inject its value
         //
         typeof conf.html !== 'undefined' && (node.innerHTML = conf.html);
+
+
+        // if `text` is found on node conf
+        // it will be appended
+        //  
+        if (typeof conf.text !== 'undefined') {
+            tmp = document.createTextNode("" + conf.text);
+            node.appendChild(tmp);
+        }
 
         // if the node configuration has a `nodeIdentifier` key
         // (and a String value), the node can be reached 
@@ -388,8 +384,8 @@ JMVC.extend('core/widgzard', function () {
                 node : document.createDocumentFragment('div')
             },
             active = true,
-            mapcnt;
-
+            originalHTML = target.node.innerHTML + "";
+        // target.root = target;
         // debug ? 
         debug = !!params.debug;
 
@@ -406,7 +402,7 @@ JMVC.extend('core/widgzard', function () {
         // reached afterward calling this.getNode(id)
         // from any callback
         // 
-        mapcnt = {
+        var mapcnt = {
             root : target,
             map : {},
             getNode : function (id) {
@@ -417,7 +413,12 @@ JMVC.extend('core/widgzard', function () {
             },
             abort : function () {
                 active = false;
-                target.node.innerHTML = '';
+                target.node.innerHTML = originalHTML;
+
+                'onAbort' in params &&
+                (typeof params.onAbort).match(/fucntion/i) &&
+                params.onAbort.call(null, params);
+                
                 return false;
             },
             lateWid : function (wid) {
@@ -438,6 +439,7 @@ JMVC.extend('core/widgzard', function () {
 
         target.descendant = Wproto.descendant;
         targetFragment.descendant = Wproto.descendant;
+        
         // maybe clean
         // 
         if (!!clean) target.node.innerHTML = '';
@@ -487,6 +489,7 @@ JMVC.extend('core/widgzard', function () {
         // what about a init root function?
         // 
         Wproto.checkInit(targetFragment, params);
+        
 
         // start recursion
         //
@@ -521,7 +524,115 @@ JMVC.extend('core/widgzard', function () {
         return target;
     }
 
+    // MY WONDERFUL Promise Implementation
+    // 
+    Promise = (function() {
+        var _Promise = function() {
+                this.cbacks = [];
+                this.solved = false;
+                this.result = null;
+            },
+            proto = _Promise.prototype;
+        /**
+         * [then description]
+         * @param  {[type]} func [description]
+         * @param  {[type]} ctx  [description]
+         * @return {[type]}      [description]
+         */
+        proto.then = function(func, ctx) {
+            var self = this,
+                f = function() {
+                    self.solved = false;
+                    func.apply(ctx || self, [ctx || self, self.result]);
+                };
+            if (this.solved) {
+                f();
+            } else {
+                this.cbacks.push(f);
+            }
+            return this;
+        };
 
+        /**
+         * [done description]
+         * @return {Function} [description]
+         */
+        proto.done = function() {
+            var r = [].slice.call(arguments, 0);
+            this.result = r;
+            this.solved = true;
+            if (!this.cbacks.length) {
+                return this.result;
+            }
+            this.cbacks.shift()(r);
+        };
+
+        /**
+         * [chain description]
+         * @param  {[type]} funcs [description]
+         * @param  {[type]} args  [description]
+         * @return {[type]}       [description]
+         */
+        function chain(funcs, args) {
+
+            var p = new _Promise();
+            var first = (function() {
+
+                    funcs[0].apply(p, [p].concat([args]));
+                    return p;
+                })(),
+                tmp = [first];
+
+            for (var i = 1, l = funcs.length; i < l; i++) {
+                tmp.push(tmp[i - 1].then(funcs[i]));
+            }
+            return p;
+        }
+
+        /**
+         * [join description]
+         * @param  {[type]} pros [description]
+         * @param  {[type]} args [description]
+         * @return {[type]}      [description]
+         */
+        function join(pros, args) {
+            var endP = new _Promise(),
+                res = [],
+                stack = [],
+                i = 0,
+                l = pros.length,
+                limit = l,
+                solved = function (remainder) {
+                    !remainder && endP.done.apply(endP, res);
+                };
+
+            for (null; i < l; i++) {
+                (function (k) {
+                    stack[k] = new _Promise();
+
+                    // inside every join function the context is a Promise, and
+                    // is possible to return it or not 
+                    var _p = pros[k].apply(stack[k], [stack[k], args]);
+                    (_p instanceof _Promise ? _p : stack[k])
+                    .then(function (p, r) {
+                        res[k] = r;
+                        solved(--limit);
+                    });
+                })(i);
+            }
+            return endP;
+        }
+
+        /* returning module
+        */
+        return {
+            create: function() {
+                return new _Promise();
+            },
+            chain: chain,
+            join: join
+        };
+    })();
 
     /**
      * [get description]
@@ -536,8 +647,8 @@ JMVC.extend('core/widgzard', function () {
     }
 
 
-    function cleanup(trg){
-        render({target : trg, content : [{html : "no content"}]}, true);
+    function cleanup(trg, msg){
+        render({target : trg, content : [{html : msg || ""}]}, true);
     }
     
     // Widgzard.load('js/_index.js');
@@ -552,6 +663,68 @@ JMVC.extend('core/widgzard', function () {
         }
     };
 
+    /**
+     * [eulerWalk description]
+     * @param  {[type]} root [description]
+     * @param  {[type]} func [description]
+     * @param  {[type]} mode [description]
+     * @return {[type]}      [description]
+     */
+    eulerWalk = function (root, func, mode) {
+        mode = {pre : 'pre', post : 'post'}[mode] || 'post';
+        var nope = function () {},
+            pre = mode === 'pre' ? func : nope,
+            post = mode === 'post' ? func : nope,
+            walk = (function () {
+                return function (n_, _n) {
+                    pre(n_);
+                    _n = n_.firstChild;
+                    while (_n) {
+                        walk(_n);
+                        _n = _n.nextSibling;
+                    }
+                    post(n_);
+                };
+            })();
+        walk(root);
+    };
+
+    /**
+     * Dummy delegation function 
+     * @param  {[type]} func [description]
+     * @param  {[type]} ctx  [description]
+     * @return {[type]}      [description]
+     */
+    delegate = function (func, ctx) {
+    
+        // get relevant arguments
+        // 
+        var args = Array.prototype.slice.call(arguments, 2);
+        
+        // return the function
+        //
+        return function() {
+            return func.apply(
+                ctx || window,
+                [].concat(args, Array.prototype.slice.call(arguments))
+            );
+        };
+    };
+
+    /**
+     * [htmlspecialchars description]
+     * @param  {[type]} c [description]
+     * @return {[type]}   [description]
+     */
+    htmlspecialchars = function (c) {
+        return '<pre>' +
+            c.replace(/&(?![\w\#]+;)/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;') +
+        '</pre>';
+    };
 
     // publish module
     return {
