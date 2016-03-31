@@ -514,8 +514,9 @@ JMVC.dom = {
      * @return {[type]}               [description]
      */
     insertAfter : function (node, referenceNode) {
-        var p = referenceNode.parentNode;
-        p.insertBefore(node, referenceNode.nextSibling);
+        var p = referenceNode.parentNode,
+            ns = referenceNode.nextSibling;
+        !!ns ? p.insertBefore(node, ns) : p.appendChild(node);
         return node;
     },
 
