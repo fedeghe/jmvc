@@ -25,8 +25,10 @@ JMVC.controllers.pixelparty = function() {
             JMVC.css.style(JMVC.WDB, { padding: '50px', backgroundColor: '#000', textAlign: 'center' });
             JMVC.dom.append(cnt, space);
             JMVC.dom.append(JMVC.WDB, cnt);
-            
-            var b = JMVC.shadowMatrix({ scale: a, frames: [
+
+            var b = JMVC.shadowMatrix({
+            	scale: a,
+            	frames: [
                     [' , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ',
                     ' , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ',
                     ' , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , ',
