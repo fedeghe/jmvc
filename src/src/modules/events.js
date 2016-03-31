@@ -516,6 +516,8 @@ JMVC.events = {
         });
     },
 
+
+
     /**
      * [onEsc description]
      * @param  {Function} cb [description]
@@ -531,15 +533,43 @@ JMVC.events = {
         });
     },
 
+    onElementSizeChange : function(elm, callback, dim, to) {
+        to = to || 200;
+
+        var lastHeight = elm.clientHeight,
+            newHeight,
+            lastWidth = elm.clientWidth,
+            newWidth,
+            reactToHeight = typeof dim === 'undefined' || dim.match(/height/),
+            reactToWidth = typeof dim === 'undefined' || dim.match(/width/);
+
+        (function run() {
+
+            newHeight = elm.clientHeight;
+            newWidth = elm.clientWidth;
+
+            if (
+                (reactToHeight && lastHeight != newHeight) ||
+                (reactToWidth && lastWidth != newWidth)
+            ) callback();
+
+            lastHeight = newHeight;
+            lastWidth = newWidth;
+
+            elm.onElementHeightChangeTimer && clearTimeout(elm.onElementHeightChangeTimer);
+            elm.onElementHeightChangeTimer = setTimeout(run, to);
+        })();
+    },
+
     /**
      * Very experimental function to bind a function to
-     * a click triggered outside of a node tree
+     * a click is triggered outside of a node tree
      * @param  {[type]}   el [description]
      * @param  {Function} cb [description]
      * @return {[type]}      [description]
      * @sample http://www.jmvc.dev
      * || var tr = JMVC.dom.find('#extralogo');
-     * || JMVC.events.clickout(tr, function (){console.debug('out')});
+     * || JMVC.events.onEventOut(tr, 'click', function (){console.debug('out')});
      */
     onEventOut: function(el, evnt, cb) {
         
@@ -562,13 +592,13 @@ JMVC.events = {
 
     /**
      * Very experimental function to bind a function to
-     * a click triggered outside of a node tree
+     * a event is triggered outside of a node tree
      * @param  {[type]}   el [description]
      * @param  {Function} cb [description]
      * @return {[type]}      [description]
      * @sample http://www.jmvc.dev
      * || var tr = JMVC.dom.find('#extralogo');
-     * || JMVC.events.clickout(tr, function (){console.debug('out')});
+     * || JMVC.events.clickout(tr, 'click', function (){console.debug('out')});
      */
     onEventOut_old: function(el, evnt, cb) {
         
