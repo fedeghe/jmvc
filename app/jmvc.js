@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.7 (rev. 3) build: 4235
+ * @version :  3.7 (rev. 3) build: 17
  * @copyright : 2016, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
- * @file : built with Malta v.2.1.3 & a love heap
- *         glued with 41 files on 17/1/2016 at 13:51:1
+ * @file : built with Malta v.2.2.2 & a love heap
+ *         glued with 41 files on 31/3/2016 at 23:58:52
  *
  * All rights reserved.
  *
@@ -115,10 +115,10 @@
 			    JMVC_REVIEW = '3',
 			
 			    // review (vars.json)
-			    JMVC_DATE = '17/1/2016',
+			    JMVC_DATE = '31/3/2016',
 			
 			    // review (vars.json)
-			    JMVC_TIME = '13:51:1',
+			    JMVC_TIME = '23:58:52',
 			
 			    // experimental (ignore it)
 			    JMVC_PACKED = '', //'.min' 
@@ -1736,47 +1736,37 @@
 			/*
 			[MALTA] src/core/constructors/promise.js
 			*/
-			// Promise module
-			// 
 			Promise = (function() {
-			
-			    // inner private constructor
-			    // 
 			    var _Promise = function() {
-			
-			            // a container array for all callbacks
-			            // registered wit te then function 
-			            // 
 			            this.cbacks = [];
-			
-			            // a flag that turn true when every
-			            // callback has been executed
-			            // 
 			            this.solved = false;
 			            this.result = null;
 			        },
 			        proto = _Promise.prototype;
-			
+			    /**
+			     * [then description]
+			     * @param  {[type]} func [description]
+			     * @param  {[type]} ctx  [description]
+			     * @return {[type]}      [description]
+			     */
 			    proto.then = function(func, ctx) {
 			        var self = this,
 			            f = function() {
 			                self.solved = false;
 			                func.apply(ctx || self, [ctx || self, self.result]);
 			            };
-			
-			        // when already solved, just execute it
-			        // 
 			        if (this.solved) {
 			            f();
-			
-			        // otherwise put it on the callback queue
-			        // 
 			        } else {
 			            this.cbacks.push(f);
 			        }
 			        return this;
-			
 			    };
+			
+			    /**
+			     * [done description]
+			     * @return {Function} [description]
+			     */
 			    proto.done = function() {
 			        var r = [].slice.call(arguments, 0);
 			        this.result = r;
@@ -1785,9 +1775,14 @@
 			            return this.result;
 			        }
 			        this.cbacks.shift()(r);
-			        
 			    };
 			
+			    /**
+			     * [chain description]
+			     * @param  {[type]} funcs [description]
+			     * @param  {[type]} args  [description]
+			     * @return {[type]}       [description]
+			     */
 			    function chain(funcs, args) {
 			
 			        var p = new _Promise();
@@ -1804,6 +1799,12 @@
 			        return p;
 			    }
 			
+			    /**
+			     * [join description]
+			     * @param  {[type]} pros [description]
+			     * @param  {[type]} args [description]
+			     * @return {[type]}      [description]
+			     */
 			    function join(pros, args) {
 			        var endP = new _Promise(),
 			            res = [],
@@ -1811,29 +1812,29 @@
 			            i = 0,
 			            l = pros.length,
 			            limit = l,
-			            solved = function(remainder) {
+			            solved = function (remainder) {
 			                !remainder && endP.done.apply(endP, res);
 			            };
 			
 			        for (null; i < l; i++) {
-			            (function(k) {
+			            (function (k) {
 			                stack[k] = new _Promise();
 			
-			                // inside every join function the context is a Promise,
-			                // and is possible to return it or not 
-			                // 
+			                // inside every join function the context is a Promise, and
+			                // is possible to return it or not 
 			                var _p = pros[k].apply(stack[k], [stack[k], args]);
 			                (_p instanceof _Promise ? _p : stack[k])
-			                .then(function(p, r) {
+			                .then(function (p, r) {
 			                    res[k] = r;
 			                    solved(--limit);
 			                });
-			
 			            })(i);
 			        }
 			        return endP;
 			    }
 			
+			    /* returning module
+			    */
 			    return {
 			        create: function() {
 			            return new _Promise();
@@ -1841,7 +1842,6 @@
 			        chain: chain,
 			        join: join
 			    };
-			
 			})();
 			/*
 			[MALTA] src/core/constructors/interface.js
@@ -4222,8 +4222,9 @@
 	     * @return {[type]}               [description]
 	     */
 	    insertAfter : function (node, referenceNode) {
-	        var p = referenceNode.parentNode;
-	        p.insertBefore(node, referenceNode.nextSibling);
+	        var p = referenceNode.parentNode,
+	            ns = referenceNode.nextSibling;
+	        !!ns ? p.insertBefore(node, ns) : p.appendChild(node);
 	        return node;
 	    },
 	
@@ -5112,6 +5113,8 @@
 	        });
 	    },
 	
+	
+	
 	    /**
 	     * [onEsc description]
 	     * @param  {Function} cb [description]
@@ -5127,15 +5130,43 @@
 	        });
 	    },
 	
+	    onElementSizeChange : function(elm, callback, dim, to) {
+	        to = to || 200;
+	
+	        var lastHeight = elm.clientHeight,
+	            newHeight,
+	            lastWidth = elm.clientWidth,
+	            newWidth,
+	            reactToHeight = typeof dim === 'undefined' || dim.match(/height/),
+	            reactToWidth = typeof dim === 'undefined' || dim.match(/width/);
+	
+	        (function run() {
+	
+	            newHeight = elm.clientHeight;
+	            newWidth = elm.clientWidth;
+	
+	            if (
+	                (reactToHeight && lastHeight != newHeight) ||
+	                (reactToWidth && lastWidth != newWidth)
+	            ) callback();
+	
+	            lastHeight = newHeight;
+	            lastWidth = newWidth;
+	
+	            elm.onElementHeightChangeTimer && clearTimeout(elm.onElementHeightChangeTimer);
+	            elm.onElementHeightChangeTimer = setTimeout(run, to);
+	        })();
+	    },
+	
 	    /**
 	     * Very experimental function to bind a function to
-	     * a click triggered outside of a node tree
+	     * a click is triggered outside of a node tree
 	     * @param  {[type]}   el [description]
 	     * @param  {Function} cb [description]
 	     * @return {[type]}      [description]
 	     * @sample http://www.jmvc.dev
 	     * || var tr = JMVC.dom.find('#extralogo');
-	     * || JMVC.events.clickout(tr, function (){console.debug('out')});
+	     * || JMVC.events.onEventOut(tr, 'click', function (){console.debug('out')});
 	     */
 	    onEventOut: function(el, evnt, cb) {
 	        
@@ -5158,13 +5189,13 @@
 	
 	    /**
 	     * Very experimental function to bind a function to
-	     * a click triggered outside of a node tree
+	     * a event is triggered outside of a node tree
 	     * @param  {[type]}   el [description]
 	     * @param  {Function} cb [description]
 	     * @return {[type]}      [description]
 	     * @sample http://www.jmvc.dev
 	     * || var tr = JMVC.dom.find('#extralogo');
-	     * || JMVC.events.clickout(tr, function (){console.debug('out')});
+	     * || JMVC.events.clickout(tr, 'click', function (){console.debug('out')});
 	     */
 	    onEventOut_old: function(el, evnt, cb) {
 	        
