@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.7 (rev. 3) build: 17
+ * @version :  3.7 (rev. 3) build: 51
  * @copyright : 2016, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
- * @file : built with Malta v.2.2.2 & a love heap
- *         glued with 41 files on 31/3/2016 at 23:58:52
+ * @file : built with Malta v.2.3.2 & a love heap
+ *         glued with 41 files on 9/6/2016 at 17:21:9
  *
  * All rights reserved.
  *
@@ -115,10 +115,10 @@
 			    JMVC_REVIEW = '3',
 			
 			    // review (vars.json)
-			    JMVC_DATE = '31/3/2016',
+			    JMVC_DATE = '9/6/2016',
 			
 			    // review (vars.json)
-			    JMVC_TIME = '23:58:52',
+			    JMVC_TIME = '17:21:9',
 			
 			    // experimental (ignore it)
 			    JMVC_PACKED = '', //'.min' 
@@ -834,7 +834,7 @@
 			     * @return {[type]} [description]
 			     */
 			    lang: function() {
-			        var lng = Array.prototype.slice.call(arguments, 0),
+			        var lng = [].slice.call(arguments, 0),
 			            i = 0,
 			            l = lng.length;
 			        while (i < l) {
@@ -881,6 +881,7 @@
 			         * @param  {[type]} ctx [description]
 			         * @return {[type]}     [description]
 			         */
+			        /*
 			        make: function (str, obj, ctx) {
 			            var chr = '.',
 			                els = str.split(/\.|\//),
@@ -898,7 +899,7 @@
 			                jmvc.ns.make(els.slice(1).join(chr), obj, ctx[els[0]])
 			                :
 			                ret;
-			        },
+			        },*/
 			
 			        /**
 			         * check if a namespace already exists
@@ -906,6 +907,7 @@
 			         * @param  {[type]} ctx [description]
 			         * @return {[type]}     [description]
 			         */
+			        /*
 			        check : function (ns, ctx) {
 			            var els = ns.split(/\.|\//),
 			                i = 0,
@@ -925,6 +927,57 @@
 			            }
 			            return ctx;
 			        }
+			        */
+			        make : function (str, obj, ctx) {
+			            var els = str.split(/\.|\//),
+			                l = els.length,
+			                _u_ = 'undefined',
+			                ret;
+			
+			            // default context window
+			            // 
+			            (typeof ctx === _u_) && (ctx = window);
+			
+			            // default object empty
+			            // 
+			            (typeof obj === _u_) && (obj = {});
+			
+			            // if function
+			            // 
+			            (typeof obj === 'function') && (obj = obj());        
+			
+			            //
+			            if (!ctx[els[0]]) {
+			                ctx[els[0]] = (l === 1) ? obj : {};
+			            }
+			            ret = ctx[els[0]];
+			            return (l > 1) ? jmvc.ns.make(els.slice(1).join('.'), obj, ctx[els[0]]) : ret;
+			        },
+			
+			
+			        check : function (ns, ctx) {
+			
+			            ns = ns.replace(/^\//, '');
+			            var els = ns.split(/\.|\//),
+			                i = 0,
+			                l = els.length;
+			            ctx = (ctx !== undefined) ? ctx : W;
+			
+			            if (!ns) return ctx;
+			
+			            for (null; i < l; i += 1) {
+			
+			                if (typeof ctx[els[i]] !== 'undefined') {
+			                    ctx = ctx[els[i]];
+			                } else {
+			                    // break it
+			                    return undefined;
+			                }
+			            }
+			            return ctx;
+			        }
+			
+			
 			    },
 			
 			    /**
@@ -1395,6 +1448,11 @@
 			------ 
 			specific classes that will extend the built-in Error Onject
 			*/
+			
+			var p_error = function () {
+			    this.message = this.msg ||  (this.name + ' error');
+			};
+			
 			Errors = {
 			    Network : function (msg) {
 			        this.name = 'Network';
@@ -1641,10 +1699,13 @@
 			     * returning function
 			     */
 			    return function (name) {
+			        /*
 			        if (!(name in channels)) {
 			            channels[name] = new _Channel();
 			        }
 			        return channels[name];
+			        */
+			        return name in channels ? channels[name] : (channels[name] = new _Channel());
 			    };
 			})();
 			
@@ -2846,12 +2907,14 @@
 		// 
 		_ = {};
 		_.common = {
-		    digFor : function (what, obj, target) {
+		    digFor : function (what, obj, target, limit) {
 		        if(!what.match(/key|value/)) {
 		            throw new JMVC.Errors.BadParams('Bad param for JMVC._.object.digFor');
 		        }
-		        
-		        var matches = {
+		        limit = ~~limit;
+		
+		        var found = 0,
+		            matches = {
 		                key : function (k1, k2, key) {
 		                    return (JMVC.util.isString(k1) && key instanceof RegExp) ?
 		                        k1.match(key)
@@ -2882,21 +2945,25 @@
 		                        regexp : tmp,
 		                        level : level
 		                    });
+		                    found++;
 		                }
 		                dig(obj[index], key, p, level + 1);
 		            },
 		
 		            dig = function (o, k, path, level) {
-		                
+		                // if is a domnode must be avoided
+		                // if (isNode(o) || isElement(o)) return;                
 		                var i, l, p, tmp;
 		
 		                if (o instanceof Array) {                
 		                    for (i = 0, l = o.length; i < l; i++) {
 		                        maybeDoPush(path, i, k, o, level);
+		                        if (limit && limit == found) break;
 		                    }
 		                } else if (typeof o === 'object') {
 		                    for (i in o) {
 		                        maybeDoPush(path, i, k, o, level);
+		                        if (limit && limit == found) break;
 		                    }
 		                } else {
 		                    return;
@@ -4778,16 +4845,6 @@
 	    }
 	};
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	//
 	// PUBLIC section
 	JMVC.events = {
@@ -4975,6 +5032,19 @@
 	        coord[0] -= el.offsetLeft;
 	        coord[1] -= el.offsetTop;
 	        return coord;
+	    },
+	
+	    getOffset: function (e, trg) {
+	        e = e || window.event;
+	
+	        var target = trg || e.target || e.srcElement,
+	            coord = JMVC.events.coord(e),
+	            rect = target.getBoundingClientRect(),
+	            // offsetX = e.clientX - rect.left,
+	            // offsetY = e.clientY - rect.top,
+	            offsetX = coord[0] - rect.left,
+	            offsetY = coord[1] - rect.top;
+	        return [offsetX, offsetY];
 	    },
 	
 	    loadifyCalled : false,
@@ -5408,30 +5478,32 @@
 	     * @param  {[type]} el    [description]
 	     * @return {[type]}       [description]
 	     */
-	    wwon : function (obj, field,  el) {
+	    wwon : function (obj, field,  el, debugobj) {
 	        var objLock = false,
 	            elLock = false,
 	            elDet = _.events.getElementDeterminant(el),
 	            elOldVal = el[elDet],
 	            objOldVal = obj[field],
-	            objID = JMVC.util.uniqueId;
+	            lock = function(m) {
+	                objLock = elLock = !!m;
+	            };
 	
-	        el.wwdbID = JMVC.util.uniqueId + '_' + objID;
+	        el.wwdbID = "_" + JMVC.util.uniqueid;
+	
 	
 	        // obj
 	        // when object changes -> element changes
 	        // 
-	        _.events.wwdb_bindings[objID + '_' + el.wwdbID] = window.setInterval(function () {
+	        _.events.wwdb_bindings[el.wwdbID] = window.setInterval(function () {
 	            if (objLock) return;
-	            elLock = true;
-	            objLock = true;
+	            lock(true);
 	            if (objOldVal != obj[field]) {
 	                elOldVal = obj[field];
 	                objOldVal = elOldVal;
 	                el[elDet] = elOldVal;
+	                debugobj && console.log(obj);
 	            }
-	            objLock = false;
-	            elLock = false;
+	            lock(false);
 	        }, 25);
 	        
 	        
@@ -5439,20 +5511,16 @@
 	        //
 	        JMVC.events.on(el, 'keyup', function () {
 	            if (elLock) return;
-	            objLock = true;
-	            elLock = true;
-	
+	            lock(true);
 	            if (this[elDet] != obj[field]) {
 	                obj[field] = this[elDet];
 	                elOldVal = this[elDet];
 	                objOldVal = this[elDet];
+	                debugobj && console.log(obj);
 	            }
-	            
-	            elLock = false;
-	            objLock = false;
+	            lock(false);
 	        });
 	        el[elDet] = objOldVal;
-	
 	    },
 	
 	    /**
@@ -7154,9 +7222,9 @@
 	     * @param  {[type]} k [description]
 	     * @return {[type]}   [description]
 	     */
-	    digForKey : function (o, k) {
+	    digForKey : function (o, k, lim) {
 	        'use strict';
-	        return _.common.digFor('key', o, k);
+	        return _.common.digFor('key', o, k, lim);
 	    },
 	
 	    /**
@@ -7165,9 +7233,9 @@
 	     * @param  {[type]} k [description]
 	     * @return {[type]}   [description]
 	     */
-	    digForValue : function (o, k) {
+	    digForValue : function (o, k, lim) {
 	        'use strict';
-	        return _.common.digFor('value', o, k);
+	        return _.common.digFor('value', o, k, lim);
 	    },
 	
 	    /**
