@@ -109,9 +109,7 @@ $JMVC = {
         var i = 0,
             a = arguments,
             l = a.length;
-        for (null; i < l; i += 1) {
-            a[i] = null;
-        }
+        for (null; i < l; i += 1) a[i] = null;
     },
     getView : function (n) {
         return jmvc.factory_method('view', n);
@@ -139,13 +137,11 @@ $JMVC = {
         if (opts.clear) {
             opts.h = opts.j = opts.c = '';
         }
-
         if (!('core/console/console' in $JMVC.extensions)) {
             return $JMVC.require('core/console/console', inner);
         } else {
             return inner();
         }
-
         function inner () {
             return JMVC.console.toggle(opts.h, opts.j, opts.c, opts.tab);    
         }
