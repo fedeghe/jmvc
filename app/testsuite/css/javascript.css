@@ -16,7 +16,7 @@ code.debug ul{
 	padding:10px;
 }
 code.debug ul li{
-	line-height:16px;
+	line-height:1em;
 	white-space:pre-wrap;
 	border:1px solid #222;
 }
@@ -33,7 +33,12 @@ code.debug ul li:hover{
 	color:#0f0;
 	border:1px dotted #555;
 }
-
+/*
+code.debug:hover{
+	font-size:2em;
+	line-height:3em;
+}
+*/
 
 
 
