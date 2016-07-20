@@ -10,8 +10,14 @@ JMVC.extend('bucket', {
 			this.r = false,
 			this.l = a.length,
 			this.fix = JMVC.array.clone(this.arr);
+			this._current = null;
+			
 		}
 		bucket.prototype = {
+
+			current : function () {
+				return this._current;
+			},
 			empty : function () {
 				this.arr = [];
 				this.r = false;
@@ -29,10 +35,13 @@ JMVC.extend('bucket', {
 				this.l = this.arr.length;
 			},
 			next : function () {
+
 				if (this.l == 0) {return null; } 
 				this.r = this.arr.splice(JMVC.util.rand(0, this.l - 1), 1);
 				this.l -= 1;
-				return this.r.pop();
+
+				this._current = this.r.pop();
+				return this._current;
 			},
 			recover : function () {
 				this.l = this.fix.length;
