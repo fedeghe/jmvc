@@ -2,12 +2,14 @@
 // 
 _ = {};
 _.common = {
-    digFor : function (what, obj, target) {
+    digFor : function (what, obj, target, limit) {
         if(!what.match(/key|value/)) {
             throw new JMVC.Errors.BadParams('Bad param for JMVC._.object.digFor');
         }
-        
-        var matches = {
+        limit = ~~limit;
+
+        var found = 0,
+            matches = {
                 key : function (k1, k2, key) {
                     return (JMVC.util.isString(k1) && key instanceof RegExp) ?
                         k1.match(key)
@@ -38,21 +40,25 @@ _.common = {
                         regexp : tmp,
                         level : level
                     });
+                    found++;
                 }
                 dig(obj[index], key, p, level + 1);
             },
 
             dig = function (o, k, path, level) {
-                
+                // if is a domnode must be avoided
+                // if (isNode(o) || isElement(o)) return;                
                 var i, l, p, tmp;
 
                 if (o instanceof Array) {                
                     for (i = 0, l = o.length; i < l; i++) {
                         maybeDoPush(path, i, k, o, level);
+                        if (limit && limit == found) break;
                     }
                 } else if (typeof o === 'object') {
                     for (i in o) {
                         maybeDoPush(path, i, k, o, level);
+                        if (limit && limit == found) break;
                     }
                 } else {
                     return;

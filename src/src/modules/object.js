@@ -145,9 +145,9 @@ JMVC.object = {
      * @param  {[type]} k [description]
      * @return {[type]}   [description]
      */
-    digForKey : function (o, k) {
+    digForKey : function (o, k, lim) {
         'use strict';
-        return _.common.digFor('key', o, k);
+        return _.common.digFor('key', o, k, lim);
     },
 
     /**
@@ -156,9 +156,9 @@ JMVC.object = {
      * @param  {[type]} k [description]
      * @return {[type]}   [description]
      */
-    digForValue : function (o, k) {
+    digForValue : function (o, k, lim) {
         'use strict';
-        return _.common.digFor('value', o, k);
+        return _.common.digFor('value', o, k, lim);
     },
 
     /**
