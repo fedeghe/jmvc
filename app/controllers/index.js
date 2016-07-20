@@ -55,7 +55,6 @@ JMVC.controllers.index = function () {
 		//JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-night.min.css', true);
 		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-day.min.css', true);
 
-
 		//
 		//index.set('nome', this.get('name') || 'Federico');
 		index.set('i_say', '[L[pure javascript mvc framework]]');
@@ -275,20 +274,18 @@ JMVC.controllers.index = function () {
 		}
 
 		var content = '',
-
+			
 			self = this,
 
 			// create a inline worker
 			//
 			blobURL = window.URL.createObjectURL(
 				new Blob([
-					"var i = 0, l = 2<<15,"+
-						"loop = setInterval(function () {"+
-							"self.postMessage(i + ' : ' + String.fromCharCode('0x'  + (i++).toString(16)) + '<br />');	"+
-							"if (i == l) {"+
-								"clearInterval(loop);"+
-							"}"+
-						"}, 5);"
+					"var i = 0, l = 2<<16,"+
+						"loop = setInterval(function(){"+
+							"self.postMessage(i + ' : ' + String.fromCharCode('0x' + (i++).toString(16)) + '<br />');"+
+							"i >= l && clearInterval(loop);"+
+						"}, 1);"
 				])
 			),
 
