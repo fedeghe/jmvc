@@ -9,6 +9,8 @@ JMVC.controllers.cards = function () {
 
         JMVC.require('games/deck/deck');
 
+        JMVC.head.title('decks');
+
         JMVC.getView('vacuum')
             .set({
                 'style' : 'margin:20px;width:442px;',
