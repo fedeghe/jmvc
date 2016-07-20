@@ -58,7 +58,7 @@ JMVC.extend('core/widgzard', function () {
 
         // create the node
         // 
-        this.node = document.createElement(tag);
+        this.node = conf.ns ? document.createElementNS(conf.ns, tag) : document.createElement(tag);
 
         // save a reference to the node configuration
         // will be useful on append to append to conf.target
@@ -484,6 +484,7 @@ JMVC.extend('core/widgzard', function () {
         target.getNode = targetFragment.getNode = mapcnt.getNode;
         target.getNodes = targetFragment.getNodes = mapcnt.getNodes;
         target.abort = targetFragment.abort = mapcnt.abort;
+        target.map = targetFragment.map = mapcnt.map;
 
 
         // what about a init root function?
@@ -564,7 +565,7 @@ JMVC.extend('core/widgzard', function () {
      * @param  {[type]} mode [description]
      * @return {[type]}      [description]
      */
-    eulerWalk = function (root, func, mode) {
+    var eulerWalkOLD = function (root, func, mode) {
         mode = {pre : 'pre', post : 'post'}[mode] || 'post';
         var nope = function () {},
             pre = mode === 'pre' ? func : nope,
@@ -581,6 +582,23 @@ JMVC.extend('core/widgzard', function () {
                 };
             })();
         walk(root);
+    };
+
+    eulerWalk = function (root, func, mode) {
+        mode = {pre : 'pre', post : 'post'}[mode] || 'post';
+        var nope = function () {},
+            pre = mode === 'pre' ? func : nope,
+            post = mode === 'post' ? func : nope;
+            
+        (function walk(n_, _n) {
+            pre(n_);
+            _n = n_.firstChild;
+            while (_n) {
+                walk(_n);
+                _n = _n.nextSibling;
+            }
+            post(n_);
+        })(root);
     };
 
     /**
