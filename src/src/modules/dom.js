@@ -455,7 +455,7 @@ JMVC.dom = {
      * @return {[type]}           [description]
      */
     hasClass : function (el, classname) {
-        return el.className.match(new RegExp('(\\s|^)' + classname + '(\\s|$)'));
+        return !!(el.className.match(new RegExp('(\\s|^)' + classname + '(\\s|$)')));
     },
 
     /**
