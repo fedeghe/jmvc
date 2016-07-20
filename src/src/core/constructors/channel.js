@@ -159,10 +159,13 @@ Channel = (function () {
      * returning function
      */
     return function (name) {
+        /*
         if (!(name in channels)) {
             channels[name] = new _Channel();
         }
         return channels[name];
+        */
+        return name in channels ? channels[name] : (channels[name] = new _Channel());
     };
 })();
 
