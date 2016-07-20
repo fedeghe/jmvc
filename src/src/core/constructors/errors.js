@@ -3,6 +3,7 @@ ERRORS
 ------ 
 specific classes that will extend the built-in Error Onject
 */
+
 Errors = {
     Network : function (msg) {
         this.name = 'Network';

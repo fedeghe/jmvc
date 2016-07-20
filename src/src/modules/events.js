@@ -181,16 +181,6 @@ _.events = {
     }
 };
 
-
-
-
-
-
-
-
-
-
-
 //
 // PUBLIC section
 JMVC.events = {
@@ -378,6 +368,19 @@ JMVC.events = {
         coord[0] -= el.offsetLeft;
         coord[1] -= el.offsetTop;
         return coord;
+    },
+
+    getOffset: function (e, trg) {
+        e = e || window.event;
+
+        var target = trg || e.target || e.srcElement,
+            coord = JMVC.events.coord(e),
+            rect = target.getBoundingClientRect(),
+            // offsetX = e.clientX - rect.left,
+            // offsetY = e.clientY - rect.top,
+            offsetX = coord[0] - rect.left,
+            offsetY = coord[1] - rect.top;
+        return [offsetX, offsetY];
     },
 
     loadifyCalled : false,
@@ -811,30 +814,32 @@ JMVC.events = {
      * @param  {[type]} el    [description]
      * @return {[type]}       [description]
      */
-    wwon : function (obj, field,  el) {
+    wwon : function (obj, field,  el, debugobj) {
         var objLock = false,
             elLock = false,
             elDet = _.events.getElementDeterminant(el),
             elOldVal = el[elDet],
             objOldVal = obj[field],
-            objID = JMVC.util.uniqueId;
+            lock = function(m) {
+                objLock = elLock = !!m;
+            };
 
-        el.wwdbID = JMVC.util.uniqueId + '_' + objID;
+        el.wwdbID = "_" + JMVC.util.uniqueid;
+
 
         // obj
         // when object changes -> element changes
         // 
-        _.events.wwdb_bindings[objID + '_' + el.wwdbID] = window.setInterval(function () {
+        _.events.wwdb_bindings[el.wwdbID] = window.setInterval(function () {
             if (objLock) return;
-            elLock = true;
-            objLock = true;
+            lock(true);
             if (objOldVal != obj[field]) {
                 elOldVal = obj[field];
                 objOldVal = elOldVal;
                 el[elDet] = elOldVal;
+                debugobj && console.log(obj);
             }
-            objLock = false;
-            elLock = false;
+            lock(false);
         }, 25);
         
         
@@ -842,20 +847,16 @@ JMVC.events = {
         //
         JMVC.events.on(el, 'keyup', function () {
             if (elLock) return;
-            objLock = true;
-            elLock = true;
-
+            lock(true);
             if (this[elDet] != obj[field]) {
                 obj[field] = this[elDet];
                 elOldVal = this[elDet];
                 objOldVal = this[elDet];
+                debugobj && console.log(obj);
             }
-            
-            elLock = false;
-            objLock = false;
+            lock(false);
         });
         el[elDet] = objOldVal;
-
     },
 
     /**
