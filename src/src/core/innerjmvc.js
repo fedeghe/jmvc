@@ -556,7 +556,7 @@ jmvc = {
      * @return {[type]} [description]
      */
     lang: function() {
-        var lng = Array.prototype.slice.call(arguments, 0),
+        var lng = [].slice.call(arguments, 0),
             i = 0,
             l = lng.length;
         while (i < l) {
@@ -603,6 +603,7 @@ jmvc = {
          * @param  {[type]} ctx [description]
          * @return {[type]}     [description]
          */
+        /*
         make: function (str, obj, ctx) {
             var chr = '.',
                 els = str.split(/\.|\//),
@@ -620,7 +621,7 @@ jmvc = {
                 jmvc.ns.make(els.slice(1).join(chr), obj, ctx[els[0]])
                 :
                 ret;
-        },
+        },*/
 
         /**
          * check if a namespace already exists
@@ -628,6 +629,7 @@ jmvc = {
          * @param  {[type]} ctx [description]
          * @return {[type]}     [description]
          */
+        /*
         check : function (ns, ctx) {
             var els = ns.split(/\.|\//),
                 i = 0,
@@ -647,6 +649,57 @@ jmvc = {
             }
             return ctx;
         }
+        */
+        make : function (str, obj, ctx) {
+            var els = str.split(/\.|\//),
+                l = els.length,
+                _u_ = 'undefined',
+                ret;
+
+            // default context window
+            // 
+            (typeof ctx === _u_) && (ctx = window);
+
+            // default object empty
+            // 
+            (typeof obj === _u_) && (obj = {});
+
+            // if function
+            // 
+            (typeof obj === 'function') && (obj = obj());        
+
+            //
+            if (!ctx[els[0]]) {
+                ctx[els[0]] = (l === 1) ? obj : {};
+            }
+            ret = ctx[els[0]];
+            return (l > 1) ? jmvc.ns.make(els.slice(1).join('.'), obj, ctx[els[0]]) : ret;
+        },
+
+
+        check : function (ns, ctx) {
+
+            ns = ns.replace(/^\//, '');
+            var els = ns.split(/\.|\//),
+                i = 0,
+                l = els.length;
+            ctx = (ctx !== undefined) ? ctx : W;
+
+            if (!ns) return ctx;
+
+            for (null; i < l; i += 1) {
+
+                if (typeof ctx[els[i]] !== 'undefined') {
+                    ctx = ctx[els[i]];
+                } else {
+                    // break it
+                    return undefined;
+                }
+            }
+            return ctx;
+        }
+
+
     },
 
     /**
