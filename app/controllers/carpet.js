@@ -11,7 +11,7 @@ JMVC.controllers.carpet = function () {
 			'core/screen/screen'
 		);
 
-		JMVC.head.title('Carpet');
+		JMVC.head.title('Infinite Carpet');
 
 
 		var index = JMVC.getView('zero'),

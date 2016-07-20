@@ -7,7 +7,7 @@ JMVC.controllers.cubic = function () {
 	'use strict';
 	this.action_index = function () {
 		JMVC.events.loadify(500);
-		
+		JMVC.head.title('cubic');
 		JMVC.head.addStyle(
 			JMVC.object.toCss({
 				body : {
