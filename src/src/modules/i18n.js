@@ -14,6 +14,7 @@ JMVC.i18n = (function () {
 				replacing = JMVC.object.digForValue(obj, /i18n\(([^}|]*)?\|?([^}]*)\)/);
 			
 			for (i = 0, l = replacing.length; i < l; i++) {
+				if ((typeof replacing[i].regexp).match(/boolean/i)) continue;
 				mayP = JMVC.i18n.check(replacing[i].regexp[0]);
 				if (mayP) {
 					ref = JMVC.checkNS(replacing[i].container, obj);	
