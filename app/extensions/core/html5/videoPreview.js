@@ -59,8 +59,6 @@ JMVC.extend('html5', function () {
 		cnv.setAttribute('height', size.height);
 		cnv.style.webkitFilter = 'brightness(0.5)';
 
-
-
 		ctx = cnv.getContext('2d');
 		
 
@@ -140,13 +138,23 @@ JMVC.extend('html5', function () {
 
 
 
-	    (video2.readyState == 4 && _checkLoad())
+
+		(video.readyState == 4 && _checkLoad())
+        ||
+        video.addEventListener(evLoaded, function () {
+        	videoLoaded = true;
+        	_checkLoad();
+        }, false);
+
+        (video2.readyState == 4 && _checkLoad())
         ||
         video2.addEventListener(evLoaded, function () {
         	video2Loaded = true;
         	_checkLoad();
         	playing = true;
         }, false);
+
+
 
 
 
@@ -162,12 +170,7 @@ JMVC.extend('html5', function () {
         }, false);
 	    
 
-	    (video.readyState == 4 && _checkLoad())
-        ||
-        video.addEventListener(evLoaded, function () {
-        	videoLoaded = true;
-        	_checkLoad();
-        }, false);
+	    
 
 
         video.load();
@@ -195,7 +198,9 @@ JMVC.extend('html5', function () {
 
 	        	
 	        });
+	        //start the preview
 	        _startPreview();
+
 	        return true;
         }
 
@@ -262,7 +267,10 @@ JMVC.extend('html5', function () {
 	            }
 	            animationFrame = requestAnimationFrame(r);
 	        }();
-        }   
+        } 
+
+        // container.removeChild(video2);
+
 	}
 
 	return {
