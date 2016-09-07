@@ -6,12 +6,12 @@
  * JMVC : A pure Javascript MVC framework
  * ======================================
  *
- * @version :  3.7 (rev. 3) build: 51
+ * @version :  3.7 (rev. 3) build: 56
  * @copyright : 2016, Federico Ghedina <fedeghe@gmail.com>
  * @author : Federico Ghedina <fedeghe@gmail.com>
  * @url : http://www.jmvc.org
- * @file : built with Malta v.2.3.2 & a love heap
- *         glued with 41 files on 9/6/2016 at 17:21:9
+ * @file : built with Malta v.2.3.7 & a love heap
+ *         glued with 41 files on 7/9/2016 at 9:37:12
  *
  * All rights reserved.
  *
@@ -115,10 +115,10 @@
 			    JMVC_REVIEW = '3',
 			
 			    // review (vars.json)
-			    JMVC_DATE = '9/6/2016',
+			    JMVC_DATE = '7/9/2016',
 			
 			    // review (vars.json)
-			    JMVC_TIME = '17:21:9',
+			    JMVC_TIME = '9:37:12',
 			
 			    // experimental (ignore it)
 			    JMVC_PACKED = '', //'.min' 
@@ -1448,10 +1448,6 @@
 			------ 
 			specific classes that will extend the built-in Error Onject
 			*/
-			
-			var p_error = function () {
-			    this.message = this.msg ||  (this.name + ' error');
-			};
 			
 			Errors = {
 			    Network : function (msg) {
@@ -2803,9 +2799,7 @@
 			        var i = 0,
 			            a = arguments,
 			            l = a.length;
-			        for (null; i < l; i += 1) {
-			            a[i] = null;
-			        }
+			        for (null; i < l; i += 1) a[i] = null;
 			    },
 			    getView : function (n) {
 			        return jmvc.factory_method('view', n);
@@ -2833,13 +2827,11 @@
 			        if (opts.clear) {
 			            opts.h = opts.j = opts.c = '';
 			        }
-			
 			        if (!('core/console/console' in $JMVC.extensions)) {
 			            return $JMVC.require('core/console/console', inner);
 			        } else {
 			            return inner();
 			        }
-			
 			        function inner () {
 			            return JMVC.console.toggle(opts.h, opts.j, opts.c, opts.tab);    
 			        }
@@ -4230,7 +4222,7 @@
 	     * @return {[type]}           [description]
 	     */
 	    hasClass : function (el, classname) {
-	        return el.className.match(new RegExp('(\\s|^)' + classname + '(\\s|$)'));
+	        return !!(el.className.match(new RegExp('(\\s|^)' + classname + '(\\s|$)')));
 	    },
 	
 	    /**
@@ -4565,7 +4557,9 @@
 	     * @return {[type]}     [description]
 	     */
 	    toggleClass : function (el, cls) {
-	        JMVC.dom[JMVC.dom.hasClass(el, cls) ? 'removeClass' : 'addClass'](el, cls);
+	        var ret = JMVC.dom.hasClass(el, cls); 
+	        JMVC.dom[ret ? 'removeClass' : 'addClass'](el, cls);
+	        return ret;
 	    },
 	
 	    /**
@@ -5255,6 +5249,26 @@
 	                }
 	            }
 	        });
+	    },
+	
+	    /**
+	     * [onUnevent description]
+	     * @param  {[type]} el [description]
+	     * @param  {[type]} f  [description]
+	     * @param  {[type]} t  [description]
+	     * @return {[type]}    [description]
+	     */
+	    onNoEvent : function (el, f, t) {
+	        t = t || 3000;
+	        var to,
+	            self = JMVC.events;
+	        function inner(e) {
+	            to && window.clearTimeout(to);
+	            to = window.setTimeout(function () { f(e); }, t);
+	        }
+	        self.on(el, 'mousemove', inner);
+	        self.on(el, 'click', inner);
+	        self.on(el, 'touchstart', inner);
 	    },
 	
 	    /**
