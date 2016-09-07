@@ -1,0 +1,21 @@
+<function>
+    <signature name="onUnevent">JMVC.events.onUnevent(Element el, Javascript function cb[, Number ms])</signature>
+    <description>Triggers callback as relevant events are not triggered inside the element since ms milliseconds</description>
+    <params>
+        <param name="*el">dom element target</param>
+        <param name="*func">Javascript function callback</param>
+        <param name="ms" default="3000">the waiting time without events to trigger the callback</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <status>testing</status>
+    <sample>var el = JMVC.dom.find('#desc');&#10;
+JMVC.events.onUnevent(el, function(e) {&#10;
+    console.debug(e);&#10;
+});</sample>
+    <code>
+    var el = JMVC.dom.find('#desc');
+    JMVC.events.onUnevent(el, function(e) {
+    	console.debug(e);
+	});
+	</code>
+</function>
