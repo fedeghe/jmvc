@@ -60,6 +60,21 @@ JMVC.extend('screen', {
 			)
 		};
 	},
+
+	getNodePosition : function (elem) {
+
+    	var box = elem.getBoundingClientRect(),
+    		body = document.body,
+    		docElem = document.documentElement,
+    		scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop,
+    		scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft,
+    		clientTop = docElem.clientTop || body.clientTop || 0,
+    		clientLeft = docElem.clientLeft || body.clientLeft || 0;
+		return {
+			top  : box.top +  scrollTop - clientTop,
+			left : box.left + scrollLeft - clientLeft
+		};
+    },
 	
 	f_filterResults : function (n_win, n_docel, n_body) {
 		var n_result = n_win ? n_win : 0;
