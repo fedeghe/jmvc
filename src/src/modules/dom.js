@@ -790,7 +790,9 @@ JMVC.dom = {
      * @return {[type]}     [description]
      */
     toggleClass : function (el, cls) {
-        JMVC.dom[JMVC.dom.hasClass(el, cls) ? 'removeClass' : 'addClass'](el, cls);
+        var ret = JMVC.dom.hasClass(el, cls); 
+        JMVC.dom[ret ? 'removeClass' : 'addClass'](el, cls);
+        return ret;
     },
 
     /**
