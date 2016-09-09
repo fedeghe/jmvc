@@ -594,6 +594,26 @@ JMVC.events = {
     },
 
     /**
+     * [onUnevent description]
+     * @param  {[type]} el [description]
+     * @param  {[type]} f  [description]
+     * @param  {[type]} t  [description]
+     * @return {[type]}    [description]
+     */
+    onNoEvent : function (el, f, t) {
+        t = t || 3000;
+        var to,
+            self = JMVC.events;
+        function inner(e) {
+            to && window.clearTimeout(to);
+            to = window.setTimeout(function () { f(e); }, t);
+        }
+        self.on(el, 'mousemove', inner);
+        self.on(el, 'click', inner);
+        self.on(el, 'touchstart', inner);
+    },
+
+    /**
      * Very experimental function to bind a function to
      * a event is triggered outside of a node tree
      * @param  {[type]}   el [description]
