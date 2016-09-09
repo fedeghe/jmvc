@@ -33,7 +33,7 @@ JMVC.controllers.api = function () {
 			
 			consoleUrlTpl = 'console/index?h=%html%&j=%js%&c=%css%&l=#javascript',
 
-			whenReady = new Date(2016, 3, 27);
+			whenReady = new Date(2017, 3, 27);
 			
 			
 		main.set('id', 'desc');
