@@ -98,7 +98,8 @@ JMVC.extend('core/engy', function () {
             countPromise = JMVC.Promise.create(),
             solveTime = JMVC.Promise.create(),
             start = +new Date(), end,
-            xhrTot = 0;
+            xhrTot = 0,
+            cback;
 
 
         (function solve() {
@@ -121,7 +122,11 @@ JMVC.extend('core/engy', function () {
                 componentName = self.getFileName(component.value);
                 cached = componentName in components;
 
-                function cback(xhrResponseText) {
+                // if written as named function, safari will complain:
+                // (to see write it back to the named version and evaluate it in the console with safari)
+                // SyntaxError: Strict mode does not allow function declarations in a lexically nested statement.
+                //
+                cback = function (xhrResponseText) {
                     xhrEnd = +new Date;
                     xhrTot += xhrEnd-xhrStart;
                     var params = JMVC.nsCheck(component.container + '/params', self.config),
@@ -182,7 +187,7 @@ JMVC.extend('core/engy', function () {
                     }
 
                     innerPromise.done();
-                }
+                };
 
                 // maybe is cached
                 //
