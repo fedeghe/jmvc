@@ -34,17 +34,18 @@ JMVC.controllers.canvaseditor = function () {
             })
 
             // render
-            // 
+            //
             .render(function () {
 
                 // create initialize and start the editor
-                // 
+                //
                 new JMVC.canvas.Editor({
                     node : JMVC.dom.find('#' + editorContainerId)
                     //,width: 300
                     //,height: 400
                 });
             });
+            
         //window.setTimeout(function() {JMVC.screen.launchFullscreen();}, 5000);
     };
 };

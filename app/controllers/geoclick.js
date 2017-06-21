@@ -43,7 +43,7 @@ JMVC.controllers.geoclick = function () {
 		JMVC.head.meta('generator', 'jmvc resident in your machine');
 
 		//JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-night.min.css', true);
-		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-day.min.css', true);
+		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-day.css', true);
 		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/geoclick.css', true);
 
 		/*

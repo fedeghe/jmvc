@@ -19,8 +19,6 @@ JMVC.controllers.demo = function() {
 		//JMVC.events.loadify(1000);
 		self.startController = JMVC.util.now();
 		JMVC.debug(-2)
-		
-		
 	};
 
 	this.before_index = this.before_flag = function() {
@@ -40,7 +38,7 @@ JMVC.controllers.demo = function() {
 		JMVC.debug('Controller Time: ' + ((self.endController - self.startController) || 0));
 		JMVC.debug('Action Time: ' + ((self.endAction - self.startAction) || 0));
 
-		JMVC.events.disableRightClick();
+		// JMVC.events.disableRightClick();
 
 		JMVC.events.onRight(JMVC.WD, function() {
 			JMVC.debug('right click locked');
@@ -67,8 +65,11 @@ JMVC.controllers.demo = function() {
 
 		
 
-		// JMVC.require('widget/screensaver/screensaver');
-		// JMVC.screensaver.on(5000);
+		JMVC.require('widget/screensaver/screensaver', function () {
+			// JMVC.screensaver.on(5000, {pwd : "xxx", msg : "Please enter security password to unlock (xxx)... how could You workaround it?"});	
+			JMVC.screensaver.on(5000);	
+		});
+		
 	};
 
 
@@ -1880,13 +1881,14 @@ JMVC.controllers.demo = function() {
 				img1 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/js.jpg'}, 'js'),
 				img2 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/code.jpg'}, 'code'),
 				img3 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/javascript-save-all.jpg'}, 'will save us all'),
-				img4 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/Maurizio.png'}, ', java won`t');
+				img4 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/Maurizio.png'}, ', java won`t'),
+				img5 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/raja.jpg'}, ', what about Raja?');
 
 			JMVC.css.style(JMVC.WDB, {padding : '50px'});
 			JMVC.css.mappedStyle('xxx', 'a{margin-left:5px}');
 
 			
-			JMVC.dom.append(cnt, [input, butt, pestCss, size1, size2, size3, size4, img1, img2, img3, img4, logo]);
+			JMVC.dom.append(cnt, [input, butt, pestCss, size1, size2, size3, size4, img1, img2, img3, img4, img5, logo]);
 			JMVC.dom.append(JMVC.WDB, cnt);
 
 			JMVC.events.on(butt, 'click', function (){
@@ -1897,7 +1899,7 @@ JMVC.controllers.demo = function() {
 				}
 
 			});
-			JMVC.events.on([img1, img2, img3, img4], 'click', function (){
+			JMVC.events.on([img1, img2, img3, img4, img5], 'click', function (){
 				go(JMVC.vars.baseurl + JMVC.dom.attr(this, 'alt'));
 			});
 			JMVC.events.on(size1, 'click', function (){
@@ -1949,6 +1951,7 @@ JMVC.controllers.demo = function() {
 
 		});
 	};
+
 
 
 	this.action_animation = function (){
@@ -2459,8 +2462,7 @@ JMVC.controllers.demo = function() {
 						$('#rotation-rate-alpha').innerHTML = Mr(je.accAlpha);
 						$('#interval').innerHTML = je.interval;
      				});
-        		 }
- 
+        		}
 				if (!('oncompassneedscalibration' in window)) {
 					$('#cnc-unsupported').classList.remove('hidden');
 				} else {
@@ -2478,59 +2480,50 @@ JMVC.controllers.demo = function() {
 		
 
 		JMVC.head.title('JMVC inline mobile video');
-
 		var mobile = JMVC.util.isMobile;
-
 		JMVC.getView('vacuum')
-		.set({
-			style: 'padding:0px 10px 50px;',
-			id: 'container'
-		})
-		.render(function() {
+			.set({
+				style: 'padding:0px 10px 50px;',
+				id: 'container'
+			})
+			.render(function() {
 
-			JMVC.core.widgzard.render({
-				target : document.getElementById('container'),
-				content : [{
-					tag : 'video',
-					wid : 'wideo',
-					attrs : {preload : 'preload'},
-					style : {
-						width:'300px',
-						visibility:'hidden'
-					},
+				JMVC.core.widgzard.render({
+					target : document.getElementById('container'),
 					content : [{
-						tag : 'source',
-						attrs : {
-							type : 'video/webm',
-							src : 'http://easyhtml5video.com/assets/video/new/Penguins_of_Madagascar.webm'
-						}
-					},{
-						tag : 'source',
-						attrs : {
-							type : 'video/mp4',
-							src : 'http://easyhtml5video.com/assets/video/new/Penguins_of_Madagascar.mp4'
-						}
-					}]
-				}],
-				cb : function () {
-					var $video = this.getNode('wideo').node,
-						ev = mobile ? 'canplaythrough' : 'loadeddata';
-						
-					// $video.addEventListener(ev, function () {
-						
-					JMVC.events.on($video, mobile ? 'canplaythrough' : 'loadeddata', function () {
-
-						// $elf.load();
-						var c = JMVC.html5.inlineVideo($video);
-						c.canvas.style.border = '5px solid red';
-						c.canvas.parentNode.style.margin = '20px';
-
-					}, false);
-					$video.load();
-				}
-				
+						tag : 'video',
+						wid : 'wideo',
+						attrs : {preload : 'preload'},
+						style : {
+							width:'300px',
+							visibility:'hidden'
+						},
+						content : [{
+							tag : 'source',
+							attrs : {
+								type : 'video/webm',
+								src : 'http://easyhtml5video.com/assets/video/new/Penguins_of_Madagascar.webm'
+							}
+						},{
+							tag : 'source',
+							attrs : {
+								type : 'video/mp4',
+								src : 'http://easyhtml5video.com/assets/video/new/Penguins_of_Madagascar.mp4'
+							}
+						}]
+					}],
+					cb : function () {
+						var $video = this.getNode('wideo').node,
+							ev = mobile ? 'canplaythrough' : 'loadeddata';
+						JMVC.events.on($video, mobile ? 'canplaythrough' : 'loadeddata', function () {
+							var c = JMVC.html5.inlineVideo($video);
+							c.canvas.style.border = '5px solid red';
+							c.canvas.parentNode.style.margin = '20px';
+						}, false);
+						$video.load();
+					}
+				});
 			});
-		});
 	};
 	this.action_previewVideo = function () {
 		
@@ -2545,7 +2538,6 @@ JMVC.controllers.demo = function() {
 			id: 'container'
 		})
 		.render(function() {
-
 			JMVC.core.widgzard.render({
 				target : document.getElementById('container'),
 				content : [{
@@ -2569,25 +2561,15 @@ JMVC.controllers.demo = function() {
 						}
 					}],
 					end : function () {
-
 						var $video = this.node,
 							ev = mobile ? 'canplaythrough' : 'loadeddata';
-							
-						// $video.addEventListener(ev, function () {
-							
 						JMVC.events.one($video, mobile ? 'canplaythrough' : 'loadeddata', function () {
-
 							// $elf.load();
 							var c = JMVC.html5.videoPreview($video);
-
-							
 						}, false);
 						$video.load();
-						 
 					}
-				}],
-				
-				
+				}]
 			});
 		});
 	};
@@ -2652,11 +2634,8 @@ JMVC.controllers.demo = function() {
 						}, false);
 						*/
 						$video.load();
-						 
 					}
-				}],
-				
-				
+				}]
 			});
 		});
 	};
@@ -2674,7 +2653,8 @@ JMVC.controllers.demo = function() {
 		})
 		.render(function() {
 
-			var t = {value : 'please edit me'};
+			var t = {value : 'please edit me'},
+				secToGo = 60;
 			window.t = t;
 
 			JMVC.core.widgzard.render({
@@ -2684,15 +2664,18 @@ JMVC.controllers.demo = function() {
 					html : 'Two way data binding'
 				},{
 					tag : 'p',
-					html : 'The following fields are all 2wdb with <b>t.value</b> that you can edit/read from the console (after 1 minute will be unbinded)'
-				},{tag : 'span', html : '1:'},{
+					html : 'The following fields are all 2wdb with <b>t.value</b> that you can edit/read from the console (after ' + secToGo + ' seconds will be unbinded)'
+				},{
+					tag : 'span',
+					html : '1:'
+				},{
 					tag : 'input',
 					attrs : {type : 'text'},
-					style : {
-						width:'300px'
-					},
+					style : {width : '300px'},
 					wid : 'input1'
-				},{tag:'br'},{tag : 'span', html : '2:'},{
+				},
+				{tag:'br'},{tag : 'span', html : '2:'},
+				{
 					tag : 'input',
 					attrs : {type : 'text'},
 					style : {
@@ -2716,22 +2699,20 @@ JMVC.controllers.demo = function() {
 						ta = self.getNode('ta').node,
 						input1 = self.getNode('input1').node,
 						input2 = self.getNode('input2').node,
-						deb = self.getNode('debug').node;
+						deb = self.getNode('debug').node,
+						debFun = function (o) {console.log(o);};
 
-					JMVC.events.wwon(t, 'value', input1, true);
-					JMVC.events.wwon(t, 'value', input2, true);
-					JMVC.events.wwon(t, 'value', text, true);
-					JMVC.events.wwon(t, 'value', ta, true);
+					JMVC.events.wwon(t, 'value', input1, debFun);
+					JMVC.events.wwon(t, 'value', input2, debFun);
+					JMVC.events.wwon(t, 'value', text, debFun);
+					JMVC.events.wwon(t, 'value', ta, debFun);
 					
 					window.setTimeout(function () {
 						JMVC.events.wwoff(input1, input2, text, ta);
 						deb.innerHTML = '2wdb stopped';
-					}, 60E3);
-
+					}, secToGo * 1E3);
 				}
 			});
 		});
-
-
 	};
 };

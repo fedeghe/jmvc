@@ -26,7 +26,7 @@ JMVC.controllers.geoclickNew = function () {
 		JMVC.events.loadify(500);
 
 		JMVC.head.title('GeoClick');
-		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-day.min.css', true);
+		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-day.css', true);
 		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/geoclick.css', true);
 
 		/*

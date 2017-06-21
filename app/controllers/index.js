@@ -10,8 +10,8 @@ JMVC.require(
 	'core/fx/fx',
 	'widget/lang/lang',
 	'vendors/github/forkme/forkme',
-	'core/lib/widgzard/widgzard'
-	,'core/lib/cookieMonster/cookieMonster'
+	'core/lib/widgzard/widgzard',
+	'core/lib/cookieMonster/cookieMonster'
 );
 
 JMVC.controllers.index = function () {
@@ -38,7 +38,7 @@ JMVC.controllers.index = function () {
 			/*, function (i){console.debug(i, 'loaded')}*/
 		);
 
-		JMVC.events.loadify(500);
+		// JMVC.events.loadify(500);
 		JMVC.head.title('JMVC');
 		JMVC.lang.apply(null, JMVC.util.getParameters('jmvcscript').langs || ['en', 'de', 'it']);
 
@@ -53,7 +53,7 @@ JMVC.controllers.index = function () {
 		JMVC.head.meta('generator', 'jmvc resident in your machine');
 
 		//JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-night.min.css', true);
-		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-day.min.css', true);
+		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-day.css', true);
 
 		//
 		//index.set('nome', this.get('name') || 'Federico');
@@ -196,6 +196,7 @@ JMVC.controllers.index = function () {
 				if (!JMVC.sniffer.features.assets.touchDevice) {
 					JMVC.fx.threeDaniLogo(newlogo);
 				}
+
 			}
 		);
 	};
@@ -244,7 +245,7 @@ JMVC.controllers.index = function () {
 		var content = '';
 		if (confirm('That may hang your browser! ...continue?')) {
 			var i = 10;
-			for (null; i < 2<<15; i += 1) {
+			for (null; i < 2<<10; i += 1) {
 				content += i + ' : &#' + i + ';<br />';
 			}
 			this.render(content, function () {
