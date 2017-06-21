@@ -1,6 +1,6 @@
 <function>
-    <signature name="inherit">JMVC.inherit(Object child, Object parent)</signature>
-    <description>Implements a true inheritance (D.C. way if you prefer)</description>
+    <signature name="inherit">JMVC.inherit(Object child, Object parent [, Object Grandpa [, ...]])</signature>
+    <description>Implements a true inheritance (D.C. way if you prefer). This function has to be used just after the definition of the constructors and before adding methods to the prototype of the involved objects.</description>
     <params>
         <param name="*child">the child object that must inherit</param>
         <param name="*parent">the parent object that will share his prototype with the `foo middle object`</param>
@@ -8,34 +8,49 @@
     <returns>void (undefined)</returns>
     <status>complete</status>
     <sample>var Person = function (name, age) {&#10;
-        this.name = name;&#10;
-        this.age = age;&#10;
-    },&#10;
-    Parent = function (){},&#10;
-    Child = function (name) {&#10;
-        this.name = name;&#10;
-    };&#10;
-Person.prototype.getName = function () {&#10;
-    console.log('my name is '+ this.name);&#10;
-};&#10;
+    this.name = name;&#10;
+    this.age = age;&#10;
+  },&#10;
+  Parent = function (){},&#10;
+  Child = function (name, surname) {&#10;
+    this.name = name;&#10;
+    this.surname = surname;&#10;
+  };&#10;
+&#10;
 JMVC.inherit(Child, Parent, Person);&#10;
 &#10;
-var c = new Child('Gabriele');&#10;
-c.getName();</sample>
+Person.prototype.getName = function () {&#10;
+  console.log('my name is '+ this.name);&#10;
+};&#10;
+&#10;
+Parent.prototype.getSurname = function (){&#10;
+  console.log('my surname is '+ this.surname);&#10;
+};&#10;
+&#10;
+var c = new Child('Gabriele', 'Ghedina');&#10;
+c.getName();&#10;
+c.getSurname();</sample>
     <code>var Person = function (name, age) {
     this.name = name;
     this.age = age;
   },
   Parent = function (){},
-  Child = function (name) {
+  Child = function (name, surname) {
     this.name = name;
+    this.surname = surname;
   };
+
+JMVC.inherit(Child, Parent, Person);
+
 Person.prototype.getName = function () {
   console.log('my name is '+ this.name);
 };
-JMVC.inherit(Child, Parent, Person);
+Parent.prototype.getSurname = function (){
+  console.log('my surname is '+ this.surname);
+};
 
-var c = new Child('Gabriele');
-c.getName();</code>
+var c = new Child('Gabriele', 'Ghedina');
+c.getName();
+c.getSurname();</code>
     <testlink>test_api_jmvc_inherit</testlink>
 </function>
