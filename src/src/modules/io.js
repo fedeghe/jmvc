@@ -127,6 +127,7 @@ _.io = {
 		}
 
 		if (xdr && options.cors) {
+			debugger;
 			// xhr is actually a xdr
 			//alert('only XDR');
 			xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri);
@@ -398,6 +399,7 @@ JMVC.io = {
 			method : 'GET',
 			async : false,
 			type : 'xml',
+			cors : true,
 			cache : false,
 			error : err || function () {},
 			cback : cback || function () {}

@@ -103,11 +103,11 @@ jmvc = {
      */
     delegate: function (func, ctx) {
         // get relevant arguments
-        var args = Array.prototype.slice.call(arguments, 2);
+        var args = [].slice.call(arguments, 2);
         return function () {
             return func.apply(
                 ctx || $JMVC,
-                [].concat(args, Array.prototype.slice.call(arguments, 0))
+                [].concat(args, [].slice.call(arguments, 0))
             );
         };
     },
@@ -353,9 +353,11 @@ jmvc = {
             
             switch (t) {
                 case TYPE.special:
+                    console.log(t.match(RX.special))
                     out += nTab() + tag;
                     break;
                 case TYPE.open:
+                    console.log(t.match(RX.open))
                     out += nTab() + tag;
                     if (tag === '<script>') {
                         while (tag !== '</script>') {
@@ -367,13 +369,16 @@ jmvc = {
                     }
                     break;
                 case TYPE.close:
+                    console.log(t.match(RX.close))
                     tb--;
                     out += nTab() + tag;
                     break;
                 case TYPE.autoclose:
+                    console.log(t.match(RX.autoclose))
                     out += nTab() + tag;
                     break;
-                case TYPE.text: 
+                case TYPE.text:
+                    console.log(t.match(RX.text))
                     out += tag;
                     if ((i + 1) < l && checktype(els[i+1]) === TYPE.close) {
                         out += els[i + 1];
@@ -533,7 +538,13 @@ jmvc = {
                 Child.prototype = new T();
                 Child.prototype.constructor = Child;
                 Child.superClass = Parent.prototype;
-                Child.baseConstructor = Parent;    
+                Child.baseConstructor = Parent;  
+
+                // but ...
+                Child.super = function (inst){
+                  var args = [].slice.call(arguments, 1);
+                  Parent.apply(inst, args);
+                }  
             })(a[cur-1], a[cur]); 
             cur--;  
         }
@@ -979,6 +990,17 @@ jmvc = {
         }
 
         return $JMVC;
+    },
+
+
+    shutConsole : function () {
+        W.console.log = function () {};
+        W.console.dir = function () {};
+        W.console.debug = function () {};
+        W.console.clear = function () {};
+        W.console.warn = function () {};
+        W.console.info = function () {};
+        W.console.error = function () {};
     },
 
     /**

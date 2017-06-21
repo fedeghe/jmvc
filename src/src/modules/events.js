@@ -185,11 +185,50 @@ _.events = {
 // PUBLIC section
 JMVC.events = {
 
-    avoidVerticalScroll : function () {
-        _.events.bind(window, 'touchmove', function (e) {
-            e.preventDefault();
-            _.events.kill(e);
-        });/*
+    innerKill : function (e) {
+        e.preventDefault();
+        _.events.kill(e);
+    },
+
+    enableScroll : function () {
+        if (window.removeEventListener)
+            window.removeEventListener('DOMMouseScroll', JMVC.events.preventDefault, false);
+        window.onmousewheel = document.onmousewheel = null; 
+        window.onwheel = null; 
+        window.ontouchmove = null;  
+        document.onkeydown = null;
+
+        _.events.unbind(window, 'touchmove', JMVC.events.innerKill);
+    },
+    
+    disableScroll : function () {
+        //
+        // http://stackoverflow.com/questions/4770025/how-to-disable-scrolling-temporarily
+        //
+
+        // left: 37, up: 38, right: 39, down: 40,
+        // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+        var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+
+
+        function preventDefaultForScrollKeys(e) {
+            if (keys[e.keyCode]) {
+                JMVC.events.preventDefault(e);
+                return false;
+            }
+        }
+
+        window.addEventListener // older FF
+        && window.addEventListener('DOMMouseScroll', JMVC.events.preventDefault, false);
+        window.onwheel = JMVC.events.preventDefault; // modern standard
+        window.onmousewheel = document.onmousewheel = JMVC.events.preventDefault; // older browsers, IE
+        window.ontouchmove  = JMVC.events.preventDefault; // mobile
+        document.onkeydown  = preventDefaultForScrollKeys;
+
+        _.events.bind(window, 'touchmove', JMVC.events.innerKill);
+
+
+        /*
         _.events.bind(window,'touchstart', function() {
             var top = el.scrollTop,
                 totalScroll = el.scrollHeight,
@@ -808,7 +847,9 @@ JMVC.events = {
             evt.initEvent(ev, false, true);
             elem.dispatchEvent(evt);
         } else {
-            elem.fireEvent("on" + ev);
+            var e = document.createEventObject();
+            e.eventType = ev;
+            elem.fireEvent('on' + e.eventType, e);
         }
     },
 
@@ -843,6 +884,7 @@ JMVC.events = {
             lock = function(m) {
                 objLock = elLock = !!m;
             };
+        // debugobj = !!debugobj;
 
         el.wwdbID = "_" + JMVC.util.uniqueid;
 
@@ -857,7 +899,7 @@ JMVC.events = {
                 elOldVal = obj[field];
                 objOldVal = elOldVal;
                 el[elDet] = elOldVal;
-                debugobj && console.log(obj);
+                debugobj && debugobj(obj);
             }
             lock(false);
         }, 25);
@@ -872,7 +914,7 @@ JMVC.events = {
                 obj[field] = this[elDet];
                 elOldVal = this[elDet];
                 objOldVal = this[elDet];
-                debugobj && console.log(obj);
+                debugobj && debugobj(obj);
             }
             lock(false);
         });

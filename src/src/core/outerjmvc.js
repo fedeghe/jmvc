@@ -92,6 +92,8 @@ $JMVC = {
     render: jmvc.render, // !api
     require : jmvc.require,
     lang : jmvc.lang,
+
+    shutConsole : jmvc.shutConsole,
     //
     set : jmvc.set,
     get : jmvc.get,

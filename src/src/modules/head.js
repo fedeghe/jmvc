@@ -27,11 +27,13 @@ JMVC.head = {
             //postmode = true,
             sync = true,
             script_content;
+        
         if (parse) {
             if (explicit) {
                 //script_content = JMVC.parse(src/* in this case is mean to be the content */);
                 script_content = JMVC.parse(src, true);
-                script = JMVC.dom.create('script', {type: 'text/javascript'}, script_content);
+                script = JMVC.dom.create('script', {type : 'text/javascript'}, script_content);
+                script.onload = function () {head.removeChild(script);};
                 head = that.element;
                 head.appendChild(script);
             } else {
@@ -40,6 +42,7 @@ JMVC.head = {
                     script_content = JMVC.parse(script_content, true);
                     script = JMVC.dom.create('script', {type: 'text/javascript'}, script_content);
                     head = that.element;
+                    script.onload = function () {head.removeChild(script);};
                     head.appendChild(script);
                 }, /*postmode,*/ sync);
             }
@@ -49,6 +52,7 @@ JMVC.head = {
                 :
                 JMVC.dom.create('script', {type: 'text/javascript', src: src}, ' ');
             head = JMVC.head.element;
+            script.onload = function () {head.removeChild(script);};
             head.appendChild(script);
         }
         return script;
@@ -174,7 +178,8 @@ JMVC.head = {
      */
     lib : function (l) {
         var libs = {
-            jQuery : '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js',
+            // jQuery : '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js',
+            jQuery : 'https://code.jquery.com/jquery-3.1.1.min.js',
             jsapi : 'https://www.google.com/jsapi',
             underscore : 'http://underscorejs.org/underscore-min.js',
             'prototype' : 'https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js',

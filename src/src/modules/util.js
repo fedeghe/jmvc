@@ -111,7 +111,7 @@ JMVC.util = {
             return true;
         }
         var t1 = String(o) !== o,
-            t2 = {}.toString.call(o).match(/\[object\sArray\]/);
+            t2 = ({}).toString.call(o).match(/\[object\sArray\]/);
 
         return t1 && !!(t2 && t2.length);
     },
@@ -131,7 +131,7 @@ JMVC.util = {
      * @return {Boolean}   [description]
      */
     isFunction : function (f) {
-        return typeof f === 'function';
+        return typeof f === 'function' || o instanceof Function;
     },
 
 
