@@ -1,0 +1,9 @@
+______________  _____    __________
+______  /__   |/  /_ |  / /_  ____/
+___ _  /__  /|_/ /__ | / /_  /     
+/ /_/ / _  /  / / __ |/ / / /___
+\____/  /_/  /_/  _____/  \____/  v.$version$
+
+author: $author$
+build : #__BUILDNUMBER__ on __DATE__
+Distributed under MIT license

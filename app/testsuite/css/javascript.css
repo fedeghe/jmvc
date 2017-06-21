@@ -16,7 +16,7 @@ code.debug ul{
 	padding:10px;
 }
 code.debug ul li{
-	line-height:1em;
+	line-height:1.4em;
 	white-space:pre-wrap;
 	border:1px solid #222;
 }
@@ -28,6 +28,11 @@ code.debug ul li span.nline{
 	margin-right:10px;
 	
 }
+code.debug ul li span.function{color:orange;}
+code.debug ul li span.new{color:#afa;}
+code.debug ul li span.jmvc{color:#fff;}
+code.debug ul li span.parenthesis{color:#fff;}
+code.debug ul li span.string{color:#f00;}
 code.debug ul li:hover{
 	background-color:#000;
 	color:#0f0;

@@ -1,0 +1,226 @@
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/">
+    <channel>
+        <title>freakstyle</title>
+        <link>http://www.freakstyle.it</link>
+        <description>another damn WP</description>
+        <lastBuildDate>Sun, 13 Mar 2016 15:33:12 +0000</lastBuildDate>
+        <language>en-US</language>
+        <sy:updatePeriod>hourly</sy:updatePeriod>
+        <sy:updateFrequency>1</sy:updateFrequency>
+        <generator>https://wordpress.org/?v=4.5.4</generator>
+        <site xmlns="com-wordpress:feed-additions:1">85250819</site>
+        <item>
+            <title>Inline mobile video</title>
+            <link>http://www.freakstyle.it/2016/01/23/javascript/inline-mobile-video/</link>
+            <comments>http://www.freakstyle.it/2016/01/23/javascript/inline-mobile-video/#respond</comments>
+            <pubDate>Fri, 22 Jan 2016 23:02:18 +0000</pubDate>
+            <dc:creator>
+                <![CDATA[Federico]]>
+            </dc:creator>
+            <category>
+                <![CDATA[javascript]]>
+            </category>
+            <category>
+                <![CDATA[mobile]]>
+            </category>
+            <category>
+                <![CDATA[html5]]>
+            </category>
+            <guid isPermaLink="false">http://www.freakstyle.it/?p=533</guid>
+            <description>
+                <![CDATA[At least IOS devices due to a policy adopted by Apple does not allow to play a html5 video in inline mode, restricting to play em only in fullscreen mode, but restrictions involve even events, autoplay. Find a solution to<span class="ellipsis">&#8230;</span><div class="read-more"><a href="http://www.freakstyle.it/2016/01/23/javascript/inline-mobile-video/">Read more &#8250;</a></div><!-- end of .read-more -->]]></description>
+            <wfw:commentRss>http://www.freakstyle.it/2016/01/23/javascript/inline-mobile-video/feed/</wfw:commentRss>
+            <slash:comments>0</slash:comments>
+            <post-id xmlns="com-wordpress:feed-additions:1">533</post-id>
+        </item>
+        <item>
+            <title>Malta</title>
+            <link>http://www.freakstyle.it/2013/09/07/javascript/malta/</link>
+            <comments>http://www.freakstyle.it/2013/09/07/javascript/malta/#respond</comments>
+            <pubDate>Sat, 07 Sep 2013 08:42:16 +0000</pubDate>
+            <dc:creator>
+                <![CDATA[Federico]]>
+            </dc:creator>
+            <category>
+                <![CDATA[javascript]]>
+            </category>
+            <category>
+                <![CDATA[nodejs]]>
+            </category>
+            <category>
+                <![CDATA[script builder]]>
+            </category>
+            <guid isPermaLink="false">http://www.freakstyle.it/?p=451</guid>
+            <description>
+                <![CDATA[How&#8230; &#8230;do you build big code files, where great part of components are independent and You would like to keep em separate? I roamed a bit around and I have found no solution fitting my needs: I had to build<span class="ellipsis">&#8230;</span><div class="read-more"><a href="http://www.freakstyle.it/2013/09/07/javascript/malta/">Read more &#8250;</a></div><!-- end of .read-more -->]]></description>
+            <wfw:commentRss>http://www.freakstyle.it/2013/09/07/javascript/malta/feed/</wfw:commentRss>
+            <slash:comments>0</slash:comments>
+            <post-id xmlns="com-wordpress:feed-additions:1">451</post-id>
+        </item>
+        <item>
+            <title>Wcave</title>
+            <link>http://www.freakstyle.it/2013/02/16/javascript/wcave/</link>
+            <comments>http://www.freakstyle.it/2013/02/16/javascript/wcave/#respond</comments>
+            <pubDate>Sat, 16 Feb 2013 00:04:25 +0000</pubDate>
+            <dc:creator>
+                <![CDATA[Federico]]>
+            </dc:creator>
+            <category>
+                <![CDATA[javascript]]>
+            </category>
+            <category>
+                <![CDATA[canvas]]>
+            </category>
+            <category>
+                <![CDATA[html5]]>
+            </category>
+            <guid isPermaLink="false">http://www.freakstyle.it/?p=417</guid>
+            <description>
+                <![CDATA[Here it is an experimental game using canvas and pure javascript, called Wcave control with mouse or keyboard, hold to move up, release to move down avoid white blocks catch pills to get extra bonus score enter fever mode doubling<span class="ellipsis">&#8230;</span><div class="read-more"><a href="http://www.freakstyle.it/2013/02/16/javascript/wcave/">Read more &#8250;</a></div><!-- end of .read-more -->]]></description>
+            <wfw:commentRss>http://www.freakstyle.it/2013/02/16/javascript/wcave/feed/</wfw:commentRss>
+            <slash:comments>0</slash:comments>
+            <post-id xmlns="com-wordpress:feed-additions:1">417</post-id>
+        </item>
+        <item>
+            <title>ucaptcha</title>
+            <link>http://www.freakstyle.it/2011/12/09/php/ucaptcha/</link>
+            <comments>http://www.freakstyle.it/2011/12/09/php/ucaptcha/#respond</comments>
+            <pubDate>Fri, 09 Dec 2011 11:03:33 +0000</pubDate>
+            <dc:creator>
+                <![CDATA[Federico]]>
+            </dc:creator>
+            <category>
+                <![CDATA[gd]]>
+            </category>
+            <category>
+                <![CDATA[php]]>
+            </category>
+            <category>
+                <![CDATA[captcha]]>
+            </category>
+            <category>
+                <![CDATA[cognitive captcha]]>
+            </category>
+            <guid isPermaLink="false">http://www.freakstyle.it/2011/12/09/php/ucaptcha/</guid>
+            <description>
+                <![CDATA[Almost everyone has seen many captcha images on quite all web forms. The security would have to be granted by the fact that, while for a human it pretty easy to recognoise a sequence of symbols drawn, that task could<span class="ellipsis">&#8230;</span><div class="read-more"><a href="http://www.freakstyle.it/2011/12/09/php/ucaptcha/">Read more &#8250;</a></div><!-- end of .read-more -->]]></description>
+            <wfw:commentRss>http://www.freakstyle.it/2011/12/09/php/ucaptcha/feed/</wfw:commentRss>
+            <slash:comments>0</slash:comments>
+            <post-id xmlns="com-wordpress:feed-additions:1">394</post-id>
+        </item>
+        <item>
+            <title>php google maps v3</title>
+            <link>http://www.freakstyle.it/2011/09/17/php/php-google-maps-v3/</link>
+            <comments>http://www.freakstyle.it/2011/09/17/php/php-google-maps-v3/#comments</comments>
+            <pubDate>Sat, 17 Sep 2011 21:55:21 +0000</pubDate>
+            <dc:creator>
+                <![CDATA[Federico]]>
+            </dc:creator>
+            <category>
+                <![CDATA[javascript]]>
+            </category>
+            <category>
+                <![CDATA[php]]>
+            </category>
+            <category>
+                <![CDATA[google maps]]>
+            </category>
+            <category>
+                <![CDATA[google maps v3]]>
+            </category>
+            <guid isPermaLink="false">http://www.freakstyle.it/?p=346</guid>
+            <description>
+                <![CDATA[The third version of googlemaps api let You do many useful things You should need to do with a map, thoose api is medium huge, and some things are not so often used, on the other hand some stuff are<span class="ellipsis">&#8230;</span><div class="read-more"><a href="http://www.freakstyle.it/2011/09/17/php/php-google-maps-v3/">Read more &#8250;</a></div><!-- end of .read-more -->]]></description>
+            <wfw:commentRss>http://www.freakstyle.it/2011/09/17/php/php-google-maps-v3/feed/</wfw:commentRss>
+            <slash:comments>31</slash:comments>
+            <post-id xmlns="com-wordpress:feed-additions:1">346</post-id>
+        </item>
+        <item>
+            <title>ASCII Css3 Editor</title>
+            <link>http://www.freakstyle.it/2011/02/11/php/ascii-css3-editor/</link>
+            <comments>http://www.freakstyle.it/2011/02/11/php/ascii-css3-editor/#respond</comments>
+            <pubDate>Thu, 10 Feb 2011 23:51:02 +0000</pubDate>
+            <dc:creator>
+                <![CDATA[Federico]]>
+            </dc:creator>
+            <category>
+                <![CDATA[javascript]]>
+            </category>
+            <category>
+                <![CDATA[php]]>
+            </category>
+            <category>
+                <![CDATA[ascii]]>
+            </category>
+            <category>
+                <![CDATA[css3]]>
+            </category>
+            <category>
+                <![CDATA[editor]]>
+            </category>
+            <guid isPermaLink="false">http://www.freakstyle.it/?p=324</guid>
+            <description>
+                <![CDATA[Viste le possibilità offerte da css3 ho deciso di creare un piccolo editor che permettesse la composizione di caratteri e simboli, posizionabili, ridimensionabili e ruotabili. Il link è qui.]]>
+            </description>
+            <wfw:commentRss>http://www.freakstyle.it/2011/02/11/php/ascii-css3-editor/feed/</wfw:commentRss>
+            <slash:comments>0</slash:comments>
+            <post-id xmlns="com-wordpress:feed-additions:1">324</post-id>
+        </item>
+        <item>
+            <title>Effetto riflesso alle immagini con php gd</title>
+            <link>http://www.freakstyle.it/2010/06/05/php/effetto-riflessione-immagini-con-php-gd/</link>
+            <comments>http://www.freakstyle.it/2010/06/05/php/effetto-riflessione-immagini-con-php-gd/#respond</comments>
+            <pubDate>Sat, 05 Jun 2010 18:09:42 +0000</pubDate>
+            <dc:creator>
+                <![CDATA[Federico]]>
+            </dc:creator>
+            <category>
+                <![CDATA[php]]>
+            </category>
+            <category>
+                <![CDATA[gd2]]>
+            </category>
+            <guid isPermaLink="false">http://www.freakstyle.it/?p=237</guid>
+            <description>
+                <![CDATA[Come ottenere immagini riflesse in php con o senza GD<div class="read-more"><a href="http://www.freakstyle.it/2010/06/05/php/effetto-riflessione-immagini-con-php-gd/">Read more &#8250;</a></div><!-- end of .read-more -->]]>
+            </description>
+            <wfw:commentRss>http://www.freakstyle.it/2010/06/05/php/effetto-riflessione-immagini-con-php-gd/feed/</wfw:commentRss>
+            <slash:comments>0</slash:comments>
+            <post-id xmlns="com-wordpress:feed-additions:1">237</post-id>
+        </item>
+        <item>
+            <title>updater</title>
+            <link>http://www.freakstyle.it/2010/01/17/php/uploader/</link>
+            <comments>http://www.freakstyle.it/2010/01/17/php/uploader/#respond</comments>
+            <pubDate>Sun, 17 Jan 2010 19:07:53 +0000</pubDate>
+            <dc:creator>
+                <![CDATA[Federico]]>
+            </dc:creator>
+            <category>
+                <![CDATA[php]]>
+            </category>
+            <category>
+                <![CDATA[php ftp]]>
+            </category>
+            <category>
+                <![CDATA[php multiple upload]]>
+            </category>
+            <category>
+                <![CDATA[php updater]]>
+            </category>
+            <category>
+                <![CDATA[php uploader]]>
+            </category>
+            <category>
+                <![CDATA[updater]]>
+            </category>
+            <guid isPermaLink="false">http://www.freakstyle.it/?p=13</guid>
+            <description>
+                <![CDATA[Una semplice classe per aggiornare il contenuto su vari server ftp, con la possibilità di escludere o considerare estensioni, file e directory.<div class="read-more"><a href="http://www.freakstyle.it/2010/01/17/php/uploader/">Read more &#8250;</a></div><!-- end of .read-more -->]]>
+            </description>
+            <wfw:commentRss>http://www.freakstyle.it/2010/01/17/php/uploader/feed/</wfw:commentRss>
+            <slash:comments>0</slash:comments>
+            <post-id xmlns="com-wordpress:feed-additions:1">13</post-id>
+        </item>
+    </channel>
+</rss>

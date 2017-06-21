@@ -30,6 +30,7 @@ JMVC.extend('test', function () {
             debug_id : 0,
             all_times : []
         },
+        /*
         listCode = function (code, noNumberLines) {
             'use strict';
             var lines = code.split(/\n/),
@@ -68,6 +69,59 @@ JMVC.extend('test', function () {
                 i += 1;
             }
             return '<ul>' + out + '</ul>';
+        },
+        */
+        listCode = function (code, noNumberLines) {
+            'use strict';
+            var lines = code.split(/\n/).filter(function (line) {
+                    return line.replace(/\s|\t*/g, '').length;
+                }),
+                outline = '<li><span class="nline">%nline%</span>%line%</li>',
+                out = [],
+                l = lines.length,
+                j = 0,
+                i = 1,
+                min = Infinity,
+                tmp;
+
+            // get the minimum spaces at the beginning of lines, but 0
+            // used to remove these spaces from code
+            //
+            for (j = 0; j < l; j++) {
+                // first replace tabs with 4 spaces and count spaces
+                //
+                lines[j] = lines[j].replace(/\t/g, "    ");
+                tmp = lines[j].match(/^(\s*)/)[0].length;
+
+                // get the minimum
+                // 
+                if (tmp && tmp < min) {
+                    min = tmp;
+                }
+            }
+            
+            // loop lines to create 
+            // 
+            for (j = 0; j < l; j++, i++) {
+                // remove the right number of spaces at line begin
+                // 
+                lines[j] = lines[j].replace(new RegExp("^\\\s{" + min + "}"), '');
+
+                out.push(JMVC.string.replaceAll(outline, {
+                    nline : noNumberLines ? '' : i,
+                    line : '<span>' + hightlight(JMVC.htmlChars(lines[j] || ' ')) + '</span>'
+                }));
+            }
+            return '<ul>' + out.join('') + '</ul>';
+        },
+        hightlight = function (code) {
+            return code
+                .replace(/function/g, '<span class="function">function</span>')
+                .replace(/JMVC/g, '<span class="jmvc">JMVC</span>')
+                .replace(/new/g, '<span class="new">new</span>')
+                .replace(/([\}\{\[\]\(\)}])/g, function (str, $1) {
+                    return '<span class="parenthesis">' + $1 + '</span>';
+                });
         };
 
     
@@ -112,6 +166,9 @@ JMVC.extend('test', function () {
                 );
             }
         },
+
+
+        listCode : listCode,
 
         /**
          * [code description]
