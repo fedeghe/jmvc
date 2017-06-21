@@ -83,5 +83,60 @@ JMVC.controllers.obj = function() {
 			JMVC.test.finishAll();			
 			
 		});
-	}
+	};
+
+	this.action_key = function (){
+		var baseObj = {
+			a : "a", b : "b", c : "c", d : "d",
+			e : "e", f : "f", g : "g", h : "h",
+			i : "i", l : "l", m : "m", n : "n",
+			o : "o", p : "p", q : "q", r : "r",
+			s : "s", t : "t", u : "u", v : "v",
+			z : "z"
+		};
+
+function kdirect (k) {
+	return k in baseObj
+}
+function direct (k) {
+	return baseObj.k !== 'undefined'
+}
+function hyperdirect (k) {
+	return baseObj.k !== 'undefined'
+}
+
+
+
+		this.render(function () {
+			"use strict";
+			var JT = JMVC.test;
+			JT.initialize(true);
+            JT.startAll();
+            JMVC.events.loadify(1000);
+
+            JT.describe('Element in obj existance test');
+
+            JT.message('Kdirect version');
+            JT.code(kdirect.toString());
+
+            JT.message('Direct version');
+            JT.code(direct.toString());
+
+            JT.message('Hyperdirect version');
+            JT.code(hyperdirect.toString());
+
+            var times = 10000,
+                top = ['a', 'b', 'c', 'd', 'f', 'g', 'ww', 'ee', 'rr', 'tt', 'yy', 'uu'];
+            JT.describe('<h2>Times comparison</h2>here the 2 functions are executed ' + times + ' times with the same input : '+ top);
+
+            JT.testTime('kdirect', kdirect, times, top);
+            JT.testTime('direct', direct, times, top);
+            JT.testTime('hyperdirect', hyperdirect, times, top);
+
+            JT.timeSummary();
+            
+            JT.finishAll();
+
+		});
+	};
 };

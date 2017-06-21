@@ -3,7 +3,8 @@ JMVC.controllers.each = function() {
 		
 		JMVC.events.loadify(500);
 
-		//JMVC.head.lib('jquery');
+
+		JMVC.head.lib('jQuery');
 		
 		this.render(function test(){
 			"use strict";
@@ -31,8 +32,8 @@ JMVC.controllers.each = function() {
 						return i + ':' + e;
 					})
 				},
-				times = 100,
-				size = 5000,
+				times = 750,
+				size = 3000,
 				jmvceach  = function (arr) {
 					var res = 0;
 					JMVC.each(arr, function (e, i) {
@@ -85,7 +86,7 @@ JMVC.controllers.each = function() {
 			JMVC.test.testValue("loop(o);", function(){return loop(o); }, '(name:federico)(surname:ghedina)');
 			JMVC.test.testValue("destroy(a);", function(){return destroy(a).toString(); }, '0:zero,1:one,2:two,3:three,4:four,5:five');
 			JMVC.test.testValue("JMVC.each == nativeforarray;", function(){return jmvceach(big) == nativeforarray(big); }, true);
-			 //JMVC.test.testValue("JMVC.each == jQuery.each;", function(){return jmvceach(big) == jqueryeach(big); }, true);
+			JMVC.test.testValue("JMVC.each == jQuery.each;", function(){return jmvceach(big) == jqueryeach(big); }, true);
 			JMVC.test.testValue("JMVC.each == nativeforobj;", function(){return jmvceach(obig) == nativeforobj(obig); }, true);
 			
 
@@ -100,16 +101,17 @@ JMVC.controllers.each = function() {
 			
 			JMVC.test.testTime('native for (array)', nativeforarray, times, [big]);
 			JMVC.test.testTime('native forEach (array)', nativeforeach, times, [big]);
-			  //JMVC.test.testTime('jQuery.each (array)', jqueryeach, times, [big]);
+			JMVC.test.testTime('jQuery.each (array)', jqueryeach, times, [big]);
 			JMVC.test.testTime('JMVC.each (array)', jmvceach, times, [big]);
 
-			// JMVC.test.describe('With Object literal');
-			// JMVC.test.testTime('native for (obj literal)', nativeforobj, times, [obig]);
-			//  //JMVC.test.testTime('jQuery.each (obj literal)', jqueryeach, times, [obig]);
-			// JMVC.test.testTime('JMVC.each (obj literal)', jmvceach, times, [obig]);
+			
+			JMVC.test.describe('With Object literal');
+			JMVC.test.testTime('native for (obj literal)', nativeforobj, times, [obig]);
+			JMVC.test.testTime('jQuery.each (obj literal)', jqueryeach, times, [obig]);
+			JMVC.test.testTime('JMVC.each (obj literal)', jmvceach, times, [obig]);
 			
 			
-			// JMVC.test.describe('Avoid using any <i>each</i> function is the best choice you can take!');
+			JMVC.test.describe('Avoid using any <i>each</i> function is the best choice you can take!');
 
 		});
 	}

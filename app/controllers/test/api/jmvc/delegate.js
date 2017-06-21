@@ -21,9 +21,15 @@ JMVC.controllers.delegate = function() {
 				f1 = function () {return 'is making ' + this.makes; },
 				of1 = JMVC.delegate(f1, o);
 
-			JMVC.test.code('var o = {name : "objectFoo", makes : "noise"},\n'+
-				'    f = function f(){return "making " + this.makes; },\n'+
-				'    of1 = JMVC.delegate(f, o);');
+			JMVC.test.code(`
+				var o = {
+					name : "objectFoo",
+					makes : "noise"
+				},
+				f = function f(){return "making " + this.makes; },
+				of1 = JMVC.delegate(f, o);
+			`);
+
 			JMVC.test.testValue("of();", function(){return of1();}, 'is making noise');
 
 
@@ -38,23 +44,25 @@ JMVC.controllers.delegate = function() {
 				of2 = JMVC.delegate(f2, Cnt),
 				changedName = of2('jmvc');
 
-			JMVC.test.code('var Cnt = new function () {\n' +
-				'        this.name = "content";\n' +
-				'        this.say = function () {return "hello " + this.name + " here"; };\n' +
-				'    },\n'+
-				'    f = function (n) {this.name = n;}\n' +
-				'    of2 = JMVC.delegate(f, Cnt),\n' + 
-				'    of2("jmvc");');
+			JMVC.test.code(`var Cnt = new function () {
+					this.name = "content";
+					this.say = function () {return "hello " + this.name + " here"; };
+				},
+				f = function (n) {this.name = n;},
+				of2 = JMVC.delegate(f, Cnt), 
+				of2("jmvc");`);
+
 			JMVC.test.testValue("Cnt.name;", function(){return Cnt.name; }, 'jmvc');
-			
-
-
 			
 			JMVC.test.message('Now try to delegate a function to an array');
 			var a = [0, 1, 2, 3, 4, 5, 6, 7],
 				oa = JMVC.delegate(function () {return this.length; }, a);
-			JMVC.test.code('var a = [0, 1, 2, 3, 4, 5, 6, 7],\n' +
-				'    oa = JMVC.delegate(function (){return this.length; }, a);' );
+
+			JMVC.test.code(`
+				var a = [0, 1, 2, 3, 4, 5, 6, 7],
+					oa = JMVC.delegate(function (){return this.length; }, a);
+			`);
+
 			JMVC.test.testValue("oa();", function(){return oa(); }, 8);
 			
 
@@ -63,9 +71,14 @@ JMVC.controllers.delegate = function() {
 			var f = function foofunction () {return 10; },
 				ofunc = JMVC.delegate(function () {return this.name; }, f),
 				name = ofunc();
-			JMVC.test.code('var f = function foofunction () {return 10; },\n' +
-				'    ofunc = JMVC.delegate(function (){return this.name; }, f),\n'+
-				'    name = ofunc();' );
+
+
+			JMVC.test.code(`
+				var f = function foofunction () {return 10; },
+					ofunc = JMVC.delegate(function (){return this.name; }, f),
+					name = ofunc();
+			`);
+
 			JMVC.test.testValue("ofunc();", function(){return name; }, 'foofunction');
 
 
@@ -75,13 +88,13 @@ JMVC.controllers.delegate = function() {
 				oc = JMVC.delegate(function () {return new this(); }, fc),
 				factoryObject = oc();
 
-			JMVC.test.code('var fc = function Foofunction () {this.x = 10; },\n' +
-				'    oc = JMVC.delegate(function () {return new this(); }, fc),\n'+
-				'    factoryObject = oc();');
+			JMVC.test.code(`
+				var fc = function Foofunction () {this.x = 10; },
+					oc = JMVC.delegate(function () {return new this(); }, fc),
+					factoryObject = oc();
+			`);
+
 			JMVC.test.testValue("factoryObject.x;", function(){return factoryObject.x; }, 10);
-			
-
-
 
 			JMVC.test.finishAll();			
 			
