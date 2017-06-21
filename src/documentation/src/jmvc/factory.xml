@@ -7,11 +7,12 @@
         <param name="params">all parameters for the object constructor call</param>
     </params>
     <returns>the requested instance, or false</returns>
-    <status>testing</status>
+    <status>complete</status>
     <sample>var me = JMVC.factory('model', 'Persona', ['Fred', 35]),&#10;
     you = JMVC.factory('model', 'Persona', ['Jenny', 23]);&#10;
 console.log(me.hello());&#10;
 console.log(you.hello());</sample>
+    <testlink>test_api_jmvc_factory</testlink>
     <code>
         var me = JMVC.factory('model', 'Persona', ['Fred', 35]),
             you = JMVC.factory('model', 'Persona', ['Jenny', 23]);

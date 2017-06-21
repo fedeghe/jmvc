@@ -21,7 +21,7 @@ console.log(JMVC.get('a', sessionStorage));&#10;
 JMVC.del('a', sessionStorage);&#10;
 console.log(JMVC.get('a', sessionStorage));&#10;
 </sample>
-    <status>testing</status>
+    <status>complete</status>
     <testlink>test_api_jmvc_delgetset</testlink>
     <code>
         JMVC.set('a', 10);

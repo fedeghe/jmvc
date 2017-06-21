@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <api>
 <!--
-[MALTA] src/jmvc/_main.xml
+[Malta] src/jmvc/_main.xml
 -->
 <jmvc>
 <!--
-[MALTA] src/jmvc/code.xml
+[Malta] src/jmvc/code.xml
 -->
 <function>
     <signature name="code">JMVC.code()</signature>
@@ -19,7 +19,7 @@
     <code>JMVC.code();</code>
 </function>
 <!--
-[MALTA] src/jmvc/console.xml
+[Malta] src/jmvc/console.xml
 -->
 <function>
     <signature name="console">JMVC.console()</signature>
@@ -43,7 +43,7 @@ window.setTimeout(function () {&#10;
     </code>
 </function>
 <!--
-[MALTA] src/jmvc/debug.xml
+[Malta] src/jmvc/debug.xml
 -->
 <function>
     <signature name="debug">JMVC.debug([el1 [,el2 ...]])</signature>
@@ -76,7 +76,7 @@ JMVC.debug(arr), JMVC.debug(obj), JMVC.debug(foo);
     </code>
 </function>
 <!--
-[MALTA] src/jmvc/define.xml
+[Malta] src/jmvc/define.xml
 -->
 <function>
     <signature name="define">JMVC.define(ns, dep, cb)</signature>
@@ -104,9 +104,9 @@ var t = JMVC.define(&#10;
 );&#10;
 t.one();&#10;
 console.log(t);&#10;
-console.log(JMVC.xxx.sss);
-</sample>
+console.log(JMVC.xxx.sss);</sample>
     <status>complete</status>
+    <testlink>test_api_jmvc_define</testlink>
     <code>
         var t = JMVC.define('xxx.sss', ['def.xxx', 'def.yyy'], function (x, y) {
             return {
@@ -121,7 +121,7 @@ console.log(JMVC.xxx.sss);
     </code>
 </function>
 <!--
-[MALTA] src/jmvc/del.xml
+[Malta] src/jmvc/del.xml
 -->
 <function>
     <signature name="del">JMVC.del(String name, Obj storage)</signature>
@@ -164,7 +164,7 @@ console.log(JMVC.get('a', sessionStorage));&#10;
     </code>
 </function>
 <!--
-[MALTA] src/jmvc/delegate.xml
+[Malta] src/jmvc/delegate.xml
 -->
 <function>
     <signature name="delegate">JMVC.delegate(Function func, Object obj)</signature>
@@ -185,7 +185,7 @@ t(); // literal&#10;</sample>
         t();</code>
 </function>
 <!--
-[MALTA] src/jmvc/each.xml
+[Malta] src/jmvc/each.xml
 -->
 <function>
     <signature name="each">JMVC.each(obj, fn)</signature>
@@ -244,7 +244,7 @@ console.log(arr, arrAfter);&#10;</sample>
     </code>
 </function>
 <!--
-[MALTA] src/jmvc/extend.xml
+[Malta] src/jmvc/extend.xml
 -->
 <function>
     <signature name="extend">JMVC.extend(String section, Literal extension)</signature>
@@ -337,7 +337,7 @@ JMVC.fooWidget2.start();    // that will throw a TypeError&#10;
     </code>
 </function>
 <!--
-[MALTA] src/jmvc/factory.xml
+[Malta] src/jmvc/factory.xml
 -->
 <function>
     <signature name="factory">JMVC.factory(String type, String name[, Array params])</signature>
@@ -348,11 +348,12 @@ JMVC.fooWidget2.start();    // that will throw a TypeError&#10;
         <param name="params">all parameters for the object constructor call</param>
     </params>
     <returns>the requested instance, or false</returns>
-    <status>testing</status>
+    <status>complete</status>
     <sample>var me = JMVC.factory('model', 'Persona', ['Fred', 35]),&#10;
     you = JMVC.factory('model', 'Persona', ['Jenny', 23]);&#10;
 console.log(me.hello());&#10;
 console.log(you.hello());</sample>
+    <testlink>test_api_jmvc_factory</testlink>
     <code>
         var me = JMVC.factory('model', 'Persona', ['Fred', 35]),
             you = JMVC.factory('model', 'Persona', ['Jenny', 23]);
@@ -361,7 +362,7 @@ console.log(you.hello());</sample>
     </code>
 </function>
 <!--
-[MALTA] src/jmvc/get.xml
+[Malta] src/jmvc/get.xml
 -->
 <function>
     <signature name="get">JMVC.get(String name, Obj storage)</signature>
@@ -386,7 +387,7 @@ console.log(JMVC.get('a', sessionStorage));&#10;
 JMVC.del('a', sessionStorage);&#10;
 console.log(JMVC.get('a', sessionStorage));&#10;
 </sample>
-    <status>testing</status>
+    <status>complete</status>
     <testlink>test_api_jmvc_delgetset</testlink>
     <code>
         JMVC.set('a', 10);
@@ -404,7 +405,7 @@ console.log(JMVC.get('a', sessionStorage));&#10;
     </code>
 </function>
 <!--
-[MALTA] src/jmvc/getModel.xml
+[Malta] src/jmvc/getModel.xml
 -->
 <function>
     <signature name="getModel">JMVC.getModel(String name [, Array params])</signature>
@@ -419,6 +420,7 @@ console.log(JMVC.get('a', sessionStorage));&#10;
     you = JMVC.getModel('Persona', ['Frances', 4]);&#10;
 console.log(me.hello());&#10;
 console.log(you.hello());</sample>
+    <testlink>test_api_jmvc_getModel</testlink>
     <code>
         var me = JMVC.getModel('Persona', ['Federico', 35]),
             you = JMVC.getModel('Persona', ['Frances', 4]);
@@ -427,7 +429,7 @@ console.log(you.hello());</sample>
     </code>
 </function>
 <!--
-[MALTA] src/jmvc/getView.xml
+[Malta] src/jmvc/getView.xml
 -->
 <function>
     <signature name="getView">JMVC.getView(String name)</signature>
@@ -447,7 +449,7 @@ console.log(you.hello());</sample>
     </code>
 </function>
 <!--
-[MALTA] src/jmvc/hook.xml
+[Malta] src/jmvc/hook.xml
 -->
 <function>
     <signature name="hook">JMVC.hook(ObjLit hooks [, boolean force])</signature>
@@ -508,7 +510,7 @@ foo();</sample>
         foo();</code>
 </function>
 <!--
-[MALTA] src/jmvc/hookCheck.xml
+[Malta] src/jmvc/hookCheck.xml
 -->
 <function>
     <signature name="hookCheck">JMVC.hookCheck(String hookname [, Array params])</signature>
@@ -553,7 +555,7 @@ console.log(foo());</sample>
     </code>
 </function>
 <!--
-[MALTA] src/jmvc/htmlChars.xml
+[Malta] src/jmvc/htmlChars.xml
 -->
 <function>
     <signature name="htmlChars">JMVC.htmlChars(String str)</signature>
@@ -570,7 +572,7 @@ console.log(foo());</sample>
     <code>console.log(JMVC.htmlChars(document.documentElement.innerHTML).substring(0,500));</code>
 </function>
 <!--
-[MALTA] src/jmvc/htmlCharsDecode.xml
+[Malta] src/jmvc/htmlCharsDecode.xml
 -->
 <function>
     <signature name="htmlCharsDecode">JMVC.htmlCharsDecode(String str)</signature>
@@ -592,7 +594,7 @@ JMVC.debug('decoded: ' + JMVC.htmlCharsDecode(coded));</sample>
     </code>
 </function>
 <!--
-[MALTA] src/jmvc/implement.xml
+[Malta] src/jmvc/implement.xml
 -->
 <function>
     <signature name="implement">JMVC.implement(Object o, Array interf)</signature>
@@ -606,11 +608,11 @@ JMVC.debug('decoded: ' + JMVC.htmlCharsDecode(coded));</sample>
     <testlink>test_api_jmvc_implement</testlink>
 </function>
 <!--
-[MALTA] src/jmvc/inherit.xml
+[Malta] src/jmvc/inherit.xml
 -->
 <function>
-    <signature name="inherit">JMVC.inherit(Object child, Object parent)</signature>
-    <description>Implements a true inheritance (D.C. way if you prefer)</description>
+    <signature name="inherit">JMVC.inherit(Object child, Object parent [, Object Grandpa [, ...]])</signature>
+    <description>Implements a true inheritance (D.C. way if you prefer). This function has to be used just after the definition of the constructors and before adding methods to the prototype of the involved objects.</description>
     <params>
         <param name="*child">the child object that must inherit</param>
         <param name="*parent">the parent object that will share his prototype with the `foo middle object`</param>
@@ -618,39 +620,54 @@ JMVC.debug('decoded: ' + JMVC.htmlCharsDecode(coded));</sample>
     <returns>void (undefined)</returns>
     <status>complete</status>
     <sample>var Person = function (name, age) {&#10;
-        this.name = name;&#10;
-        this.age = age;&#10;
-    },&#10;
-    Parent = function (){},&#10;
-    Child = function (name) {&#10;
-        this.name = name;&#10;
-    };&#10;
-Person.prototype.getName = function () {&#10;
-    console.log('my name is '+ this.name);&#10;
-};&#10;
+    this.name = name;&#10;
+    this.age = age;&#10;
+  },&#10;
+  Parent = function (){},&#10;
+  Child = function (name, surname) {&#10;
+    this.name = name;&#10;
+    this.surname = surname;&#10;
+  };&#10;
+&#10;
 JMVC.inherit(Child, Parent, Person);&#10;
 &#10;
-var c = new Child('Gabriele');&#10;
-c.getName();</sample>
+Person.prototype.getName = function () {&#10;
+  console.log('my name is '+ this.name);&#10;
+};&#10;
+&#10;
+Parent.prototype.getSurname = function (){&#10;
+  console.log('my surname is '+ this.surname);&#10;
+};&#10;
+&#10;
+var c = new Child('Gabriele', 'Ghedina');&#10;
+c.getName();&#10;
+c.getSurname();</sample>
     <code>var Person = function (name, age) {
     this.name = name;
     this.age = age;
   },
   Parent = function (){},
-  Child = function (name) {
+  Child = function (name, surname) {
     this.name = name;
+    this.surname = surname;
   };
+
+JMVC.inherit(Child, Parent, Person);
+
 Person.prototype.getName = function () {
   console.log('my name is '+ this.name);
 };
-JMVC.inherit(Child, Parent, Person);
+Parent.prototype.getSurname = function (){
+  console.log('my surname is '+ this.surname);
+};
 
-var c = new Child('Gabriele');
-c.getName();</code>
+var c = new Child('Gabriele', 'Ghedina');
+c.getName();
+c.getSurname();</code>
     <testlink>test_api_jmvc_inherit</testlink>
 </function>
 <!--
-[MALTA] src/jmvc/jeval.xml
+[Malta] src/jmvc/jeval.xml
 -->
 <function>
     <signature name="jeval">JMVC.jeval(String code)</signature>
@@ -669,7 +686,7 @@ c.getName();</code>
     </code>
 </function>
 <!--
-[MALTA] src/jmvc/lang.xml
+[Malta] src/jmvc/lang.xml
 -->
 <function>
     <signature name="lang">JMVC.lang(String name, ...)</signature>
@@ -685,7 +702,7 @@ var t  = JMVC.lang('it', 'en');&#10;
 // be replaced with the active language (cookie or get)&#10;</sample>
 </function>
 <!--
-[MALTA] src/jmvc/loadInterfaces.xml
+[Malta] src/jmvc/loadInterfaces.xml
 -->
 <function>
     <signature name="loadInterfaces">JMVC.loadInterfaces(String name)</signature>
@@ -698,7 +715,7 @@ var t  = JMVC.lang('it', 'en');&#10;
     <sample>var me = JMVC.loadInterfaces('loader')</sample>
 </function>
 <!--
-[MALTA] src/jmvc/nsCheck.xml
+[Malta] src/jmvc/nsCheck.xml
 -->
 <function>
     <signature name="nsCheck">JMVC.nsCheck(String ns [,Object ctx])</signature>
@@ -717,7 +734,7 @@ var loaded_extensions = JMVC.nsCheck('extensions', JMVC),&#10;
     <testlink>test_api_jmvc_checkns</testlink>
 </function>
 <!--
-[MALTA] src/jmvc/nsMake.xml
+[Malta] src/jmvc/nsMake.xml
 -->
 <function>
     <signature name="nsMake">JMVC.nsMake(String str, Literal obj, var ctx)</signature>
@@ -741,7 +758,7 @@ console.log(y.d);</sample>
     </code>
 </function>
 <!--
-[MALTA] src/jmvc/parseLang.xml
+[Malta] src/jmvc/parseLang.xml
 -->
 <function>
     <signature name="parseLang">JMVC.parseLang(String cnt)</signature>
@@ -783,7 +800,7 @@ console.log(JMVC.parseLang(txt));&#10;</sample>
     </code>
 </function>
 <!--
-[MALTA] src/jmvc/preload.xml
+[Malta] src/jmvc/preload.xml
 -->
 <function>
     <signature name="preload">JMVC.preload(String url)</signature>
@@ -798,7 +815,7 @@ console.clear();&#10;
 JMVC.preload(JMVC.vars.baseurl + '/demo');</sample>
 </function>
 <!--
-[MALTA] src/jmvc/prototipize.xml
+[Malta] src/jmvc/prototipize.xml
 -->
 <function>
     <signature name="prototipize">JMVC.prototipize(Constructor func, Enanching Literal)</signature>
@@ -930,7 +947,7 @@ console.log(c1.div(c2)+'');&#10;</sample>
 9 + 34i
 -->
 <!--
-[MALTA] src/jmvc/purge.xml
+[Malta] src/jmvc/purge.xml
 -->
 <function>
     <signature name="purge">JMVC.purge(obj Literal)</signature>
@@ -952,7 +969,7 @@ console.log(t);</sample>
     </code>
 </function>
 <!--
-[MALTA] src/jmvc/require.xml
+[Malta] src/jmvc/require.xml
 -->
 <function>
     <signature name="require">JMVC.require(String extension1, String extension2, ...)</signature>
@@ -962,12 +979,17 @@ console.log(t);</sample>
     </params>
     <returns>void (undefined)</returns>
     <status>incomplete</status>
-    <sample>JMVC.require('animator','tricks');&#10;
+    <sample>JMVC.require('animator/animator','tricks/tricks');&#10;
 JMVC.tricks.makeEditable();&#10;
 console.debug('Now try to edit the document');</sample>
+	<code>
+		JMVC.require('animator/animator','tricks/tricks');
+		JMVC.tricks.makeEditable();
+		console.log('Now try to edit the document');
+	</code>
 </function>
 <!--
-[MALTA] src/jmvc/set.xml
+[Malta] src/jmvc/set.xml
 -->
 <function>
     <signature name="set">JMVC.set(String name, String value, Obj storage)</signature>
@@ -993,7 +1015,7 @@ console.log(JMVC.get('a', sessionStorage));&#10;
 JMVC.del('a', sessionStorage);&#10;
 console.log(JMVC.get('a', sessionStorage));&#10;
 </sample>
-    <status>testing</status>
+    <status>complete</status>
     <testlink>test_api_jmvc_delgetset</testlink>
     <code>
         JMVC.set('a', 10);
@@ -1017,11 +1039,11 @@ console.log(JMVC.get('a', sessionStorage));&#10;
     </param>
 </jmvc>
 <!--
-[MALTA] src/_constructors/_main.xml
+[Malta] src/_constructors/_main.xml
 -->
 <constructors>
 <!--
-[MALTA] src/_constructors/Channel.xml
+[Malta] src/_constructors/Channel.xml
 -->
 <function>
     <signature name="Channel">JMVC.Channel(String name)</signature>
@@ -1078,7 +1100,7 @@ c.sub('notice', function (a, b, c) {
 c.pub('notice', ['hello','world'])</code>
 </function>
 <!--
-[MALTA] src/_constructors/Event.xml
+[Malta] src/_constructors/Event.xml
 -->
 <function>
     <signature name="Event">JMVC.Event.create(sender)</signature>
@@ -1138,7 +1160,7 @@ console.log(list.els);
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/_constructors/Interface.xml
+[Malta] src/_constructors/Interface.xml
 -->
 <function>
     <signature name="Interface">JMVC.Interface.create(String name, [Strings] methods)</signature>
@@ -1151,7 +1173,7 @@ console.log(list.els);
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/_constructors/Promise.xml
+[Malta] src/_constructors/Promise.xml
 -->
 <function>
     <signature name="Promise">JMVC.Promise.create()</signature>
@@ -1335,11 +1357,11 @@ function startChain(pr) {
 </function>
 </constructors>    
 <!--
-[MALTA] src/errors/_main.xml
+[Malta] src/errors/_main.xml
 -->
 <errors>
 <!--
-[MALTA] src/errors/ActionNotFound.xml
+[Malta] src/errors/ActionNotFound.xml
 -->
 <function>
     <signature name="ActionNotFound">JMVC.Promise(String name)</signature>
@@ -1362,7 +1384,7 @@ t()&#10;
 .then(function(){console.log('tree');});</sample>
 </function>
 <!--
-[MALTA] src/errors/BadImplement.xml
+[Malta] src/errors/BadImplement.xml
 -->
 <function>
     <signature name="BadImplement">JMVC.Promise(String name)</signature>
@@ -1385,7 +1407,7 @@ t()&#10;
 .then(function(){console.log('tree');});</sample>
 </function>
 <!--
-[MALTA] src/errors/BadName.xml
+[Malta] src/errors/BadName.xml
 -->
 <function>
     <signature name="BadName">JMVC.Promise(String name)</signature>
@@ -1408,7 +1430,7 @@ t()&#10;
 .then(function(){console.log('tree');});</sample>
 </function>
 <!--
-[MALTA] src/errors/BadParams.xml
+[Malta] src/errors/BadParams.xml
 -->
 <function>
     <signature name="BadParams">JMVC.Promise(String name)</signature>
@@ -1431,7 +1453,7 @@ t()&#10;
 .then(function(){console.log('tree');});</sample>
 </function> 
 <!--
-[MALTA] src/errors/ControllerNotFound.xml
+[Malta] src/errors/ControllerNotFound.xml
 -->
 <function>
     <signature name="ControllerNotFound">JMVC.Promise(String name)</signature>
@@ -1454,7 +1476,7 @@ t()&#10;
 .then(function(){console.log('tree');});</sample>
 </function>
 <!--
-[MALTA] src/errors/Network.xml
+[Malta] src/errors/Network.xml
 -->
    <function>
         <signature name="Network">JMVC.Promise(String name)</signature>
@@ -1478,11 +1500,11 @@ t()&#10;
     </function>
 </errors>
 <!--
-[MALTA] src/model/_main.xml
+[Malta] src/model/_main.xml
 -->
 <model>
 <!--
-[MALTA] src/model/del.xml
+[Malta] src/model/del.xml
 -->
 <function>
     <signature name="del">del(String varname)</signature>
@@ -1494,7 +1516,7 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/model/get.xml
+[Malta] src/model/get.xml
 -->
 <function>
     <signature name="get">get(String varname)</signature>
@@ -1506,7 +1528,7 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/model/reset.xml
+[Malta] src/model/reset.xml
 -->
 <function>
     <signature name="reset">reset()</signature>
@@ -1518,7 +1540,7 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/model/set.xml
+[Malta] src/model/set.xml
 -->
 <function>
     <signature name="set">set(String varname, Mixed value)</signature>
@@ -1532,11 +1554,11 @@ t()&#10;
 </function>
 </model>
 <!--
-[MALTA] src/view/_main.xml
+[Malta] src/view/_main.xml
 -->
 <view>
 <!--
-[MALTA] src/view/clone.xml
+[Malta] src/view/clone.xml
 -->
 <function>
     <signature name="clone">clone(String varname)</signature>
@@ -1548,7 +1570,7 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/view/del.xml
+[Malta] src/view/del.xml
 -->
 <function>
     <signature name="del">del(String varname)</signature>
@@ -1560,7 +1582,7 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/view/get.xml
+[Malta] src/view/get.xml
 -->
 <function>
     <signature name="get">get(String varname)</signature>
@@ -1572,7 +1594,7 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/view/getFromUrl.xml
+[Malta] src/view/getFromUrl.xml
 -->
 <function>
     <signature name="getFromUrl">parse(Model object)</signature>
@@ -1584,7 +1606,7 @@ t()&#10;
     <status>incomplete</status>
 </function> 
 <!--
-[MALTA] src/view/parse.xml
+[Malta] src/view/parse.xml
 -->
 <function>
     <signature name="parse">parse(Model object)</signature>
@@ -1596,7 +1618,7 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/view/render.xml
+[Malta] src/view/render.xml
 -->
 <function>
     <signature name="render">render(Literal pars{Javascript function cback, Array argz, String target})</signature>
@@ -1610,7 +1632,7 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/view/set.xml
+[Malta] src/view/set.xml
 -->
 <function>
     <signature name="set">set(String varname, Mixed value);</signature>
@@ -1623,7 +1645,7 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/view/setFromUrl.xml
+[Malta] src/view/setFromUrl.xml
 -->
 <function>
     <signature name="setFromUrl">parse(Model object)</signature>
@@ -1636,11 +1658,11 @@ t()&#10;
 </function>
 </view>
 <!--
-[MALTA] src/controller/_main.xml
+[Malta] src/controller/_main.xml
 -->
 <controller>
 <!--
-[MALTA] src/controller/addRoutes.xml
+[Malta] src/controller/addRoutes.xml
 -->
 <function>
     <signature name="addRoutes">addRoutes(Mixed var, String val)</signature>
@@ -1653,7 +1675,7 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/controller/del.xml
+[Malta] src/controller/del.xml
 -->
 <function>
     <signature name="del">del(String varname)</signature>
@@ -1665,7 +1687,7 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/controller/get.xml
+[Malta] src/controller/get.xml
 -->
 <function>
     <signature name="get">get(String varname)</signature>
@@ -1677,7 +1699,7 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/controller/relocate.xml
+[Malta] src/controller/relocate.xml
 -->
 <function>
     <signature name="relocate">relocate(String url, int ms)</signature>
@@ -1690,7 +1712,7 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/controller/render.xml
+[Malta] src/controller/render.xml
 -->
 <function>
     <signature name="render">render(String content, Javascript function callback)</signature>
@@ -1703,7 +1725,7 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/controller/reset.xml
+[Malta] src/controller/reset.xml
 -->
 <function>
     <signature name="reset">reset()</signature>
@@ -1715,7 +1737,7 @@ t()&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/controller/set.xml
+[Malta] src/controller/set.xml
 -->
 <function>
     <signature name="set">set(String varname, Mixed value)</signature>
@@ -1729,11 +1751,11 @@ t()&#10;
 </function>
 </controller>
 <!--
-[MALTA] src/css/_main.xml
+[Malta] src/css/_main.xml
 -->
 <css>
 <!--
-[MALTA] src/css/clearer.xml
+[Malta] src/css/clearer.xml
 -->
 <function>
     <signature name="clearer">JMVC.css.clearer()</signature>
@@ -1748,7 +1770,7 @@ t()&#10;
 </function>
 
 <!--
-[MALTA] src/css/addRule.xml
+[Malta] src/css/addRule.xml
 -->
 <function>
     <signature name="addRule">JMVC.css.addRule(DOMNode sheet, String selector, String rules, Integer index)</signature>
@@ -1773,7 +1795,7 @@ JMVC.dom.find('style')[0],
     <status>complete</status>
 </function>
 <!--
-[MALTA] src/css/autoHeadings.xml
+[Malta] src/css/autoHeadings.xml
 -->
 <function>
     <signature name="autoHeadings">JMVC.css.autoHeadings()</signature>
@@ -1787,7 +1809,7 @@ JMVC.dom.find('style')[0],
     <status>complete</status>
 </function>
 <!--
-[MALTA] src/css/beResponsive.xml
+[Malta] src/css/beResponsive.xml
 -->
 <function>
     <signature name="beResponsive">JMVC.css.beResponsive(Boolean yn)</signature>
@@ -1808,7 +1830,7 @@ window.setTimeout(function () {
     <status>complete</status>
 </function>
 <!--
-[MALTA] src/css/getComputedStyle.xml
+[Malta] src/css/getComputedStyle.xml
 -->
 <function>
     <signature name="getComputedStyle">JMVC.css.getComputedStyle(Element el, String property)</signature>
@@ -1825,7 +1847,7 @@ console.log(h);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/css/getPosition.xml
+[Malta] src/css/getPosition.xml
 -->
 <function>
     <signature name="getPosition">JMVC.css.getPosition(DOMNode node, Boolean scrollRelative)</signature>
@@ -1848,7 +1870,7 @@ console.log('viewport rel: ', JMVC.css.getPosition(trg, true));</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/css/height.xml
+[Malta] src/css/height.xml
 -->
 <function>
     <signature name="height">JMVC.css.height(DOMNode target)</signature>
@@ -1864,7 +1886,7 @@ console.log(h);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/css/hide.xml
+[Malta] src/css/hide.xml
 -->
 <function>
     <signature name="hide">JMVC.css.hide(DOMNode trg)</signature>
@@ -1888,7 +1910,7 @@ window.setTimeout(function () { // show it back&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/css/pest.xml
+[Malta] src/css/pest.xml
 -->
 <function>
     <signature name="pest">JMVC.css.pest()</signature>
@@ -1902,7 +1924,7 @@ window.setTimeout(function () { // show it back&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/css/reset.xml
+[Malta] src/css/reset.xml
 -->
 <function>
     <signature name="reset">JMVC.css.reset()</signature>
@@ -1918,7 +1940,7 @@ window.setTimeout(function () { // show it back&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/css/show.xml
+[Malta] src/css/show.xml
 -->
 <function>
     <signature name="show">JMVC.css.show(DOMNode trg)</signature>
@@ -1942,7 +1964,7 @@ window.setTimeout(function () { // show it back&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/css/style.xml
+[Malta] src/css/style.xml
 -->
 <function>
     <signature name="style">JMVC.css.style(DOMNode trg, Mixed prop, String val)</signature>
@@ -1977,7 +1999,7 @@ window.setTimeout(function () {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/css/width.xml
+[Malta] src/css/width.xml
 -->
 <function>
     <signature name="width">JMVC.css.width(DOMNode target)</signature>
@@ -1996,11 +2018,11 @@ console.log(hb, hd);</code>
 </function>
 </css>
 <!--
-[MALTA] src/dom/_main.xml
+[Malta] src/dom/_main.xml
 -->
 <dom>
 <!--
-[MALTA] src/dom/add.xml
+[Malta] src/dom/add.xml
 -->
 <function>
     <signature name="add">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
@@ -2015,7 +2037,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/addClass.xml
+[Malta] src/dom/addClass.xml
 -->
 <function>
     <signature name="addClass">JMVC.dom.addClass(Element where, String tag, Literal attrs, String inner)</signature>
@@ -2030,7 +2052,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/append.xml
+[Malta] src/dom/append.xml
 -->
 <function>
     <signature name="append">JMVC.dom.append(Element where, Element what)</signature>
@@ -2043,7 +2065,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/attr.xml
+[Malta] src/dom/attr.xml
 -->
 <function>
     <signature name="attr">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
@@ -2058,7 +2080,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/body.xml
+[Malta] src/dom/body.xml
 -->
 <function>
     <signature name="body">JMVC.dom.body()</signature>
@@ -2073,7 +2095,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/childs.xml
+[Malta] src/dom/childs.xml
 -->
 <function>
     <signature name="childs">JMVC.dom.childs(Element where, String tag, Literal attrs, String inner)</signature>
@@ -2088,7 +2110,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/clone.xml
+[Malta] src/dom/clone.xml
 -->
 <function>
     <signature name="clone">JMVC.dom.clone(Element where, String tag, Literal attrs, String inner)</signature>
@@ -2103,7 +2125,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/create.xml
+[Malta] src/dom/create.xml
 -->
 <function>
     <signature name="create">JMVC.dom.create(Element where, String tag, Literal attrs, String inner)</signature>
@@ -2118,7 +2140,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/createText.xml
+[Malta] src/dom/createText.xml
 -->
 <function>
     <signature name="createText">JMVC.dom.cretaText(Element where, String tag, Literal attrs, String inner)</signature>
@@ -2133,7 +2155,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/createNS.xml
+[Malta] src/dom/createNS.xml
 -->
 <function>
     <signature name="createNS">JMVC.dom.add(Element where, String tag, Literal attrs, String inner)</signature>
@@ -2148,7 +2170,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/descendant.xml
+[Malta] src/dom/descendant.xml
 -->
 <function>
     <signature name="descendant">JMVC.dom.descendant(Element where, Integer n1 [, Integer n2, [...]])</signature>
@@ -2163,7 +2185,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/domStats.xml
+[Malta] src/dom/domStats.xml
 -->
 <function>
     <signature name="domStats">JMVC.dom.domStats(Element where, String tag, Literal attrs, String inner)</signature>
@@ -2178,7 +2200,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/empty.xml
+[Malta] src/dom/empty.xml
 -->
 <function>
     <signature name="empty">JMVC.dom.empty(Element where, String tag, Literal attrs, String inner)</signature>
@@ -2193,7 +2215,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/find.xml
+[Malta] src/dom/find.xml
 -->
 <function>
     <signature name="find">JMVC.dom.find(Element where, String tag, Literal attrs, String inner)</signature>
@@ -2208,7 +2230,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/findInnerByClass.xml
+[Malta] src/dom/findInnerByClass.xml
 -->
 <function>
     <signature name="findInnerByClass">JMVC.dom.findInnerByClass(String tag, Literal attrs,String inner)</signature>
@@ -2222,7 +2244,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/findByAttribute.xml
+[Malta] src/dom/findByAttribute.xml
 -->
 <function>
     <signature name="findByAttribute">JMVC.dom.findByAttribute(String selector)</signature>
@@ -2234,7 +2256,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/findAncestor.xml
+[Malta] src/dom/findAncestor.xml
 -->
 <function>
     <signature name="firstAncestor">JMVC.dom.firstAncestor(String selector)</signature>
@@ -2246,7 +2268,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/hasAttribute.xml
+[Malta] src/dom/hasAttribute.xml
 -->
 <function>
     <signature name="hasAttribute">JMVC.dom.hasAttribute(String selector)</signature>
@@ -2258,7 +2280,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/hasClass.xml
+[Malta] src/dom/hasClass.xml
 -->
 <function>
     <signature name="hasClass">JMVC.dom.hasClass(String selector)</signature>
@@ -2270,7 +2292,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/html.xml
+[Malta] src/dom/html.xml
 -->
 <function>
     <signature name="html">JMVC.dom.html(Element el, String html)</signature>
@@ -2283,7 +2305,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/insertAfter.xml
+[Malta] src/dom/insertAfter.xml
 -->
 <function>
     <signature name="insertAfter">JMVC.dom.insertAfter(Element newNode, Element referenceNode)</signature>
@@ -2296,7 +2318,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/insertBefore.xml
+[Malta] src/dom/insertBefore.xml
 -->
 <function>
     <signature name="insertBefore">JMVC.dom.insertBefore(Element newNode, Element referenceNode)</signature>
@@ -2309,7 +2331,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/isElement.xml
+[Malta] src/dom/isElement.xml
 -->
 <function>
     <signature name="isElement">JMVC.dom.isElement(Element newNode, Element referenceNode)</signature>
@@ -2322,7 +2344,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/isNode.xml
+[Malta] src/dom/isNode.xml
 -->
 <function>
     <signature name="isNode">JMVC.dom.isNode(Element newNode, Element referenceNode)</signature>
@@ -2335,7 +2357,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/nodeTypeString.xml
+[Malta] src/dom/nodeTypeString.xml
 -->
 <function>
     <signature name="nodeTypeString">JMVC.dom.nodeTypeString(Element newNode, Element referenceNode)</signature>
@@ -2348,7 +2370,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/nthchild.xml
+[Malta] src/dom/nthchild.xml
 -->
 <function>
     <signature name="nthchild">JMVC.dom.nthchild(Element node, int  num [, Array types ])</signature>
@@ -2362,7 +2384,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/preloadImage.xml
+[Malta] src/dom/preloadImage.xml
 -->
 <function>
     <signature name="preloadImage">JMVC.dom.preloadImage(Element node, int  num [, Array types ])</signature>
@@ -2376,7 +2398,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/parent.xml
+[Malta] src/dom/parent.xml
 -->
 <function>
     <signature name="parent">JMVC.dom.parent(Element node, int  num [, Array types ])</signature>
@@ -2390,7 +2412,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/prepend.xml
+[Malta] src/dom/prepend.xml
 -->
 <function>
     <signature name="prepend">JMVC.dom.prepend(Element node, int  num [, Array types ])</signature>
@@ -2404,7 +2426,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/remove.xml
+[Malta] src/dom/remove.xml
 -->
 <function>
     <signature name="remove">JMVC.dom.remove(Element node, int  num [, Array types ])</signature>
@@ -2418,7 +2440,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/removeAttribute.xml
+[Malta] src/dom/removeAttribute.xml
 -->
 <function>
     <signature name="removeAttribute">JMVC.dom.removeAttribute(Element node, int  num [, Array types ])</signature>
@@ -2432,7 +2454,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/removeClass.xml
+[Malta] src/dom/removeClass.xml
 -->
 <function>
     <signature name="removeClass">JMVC.dom.removeClass(Element node, int  num [, Array types ])</signature>
@@ -2446,7 +2468,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/replace.xml
+[Malta] src/dom/replace.xml
 -->
 <function>
     <signature name="replace">JMVC.dom.replace(Element outNode, Element inNode)</signature>
@@ -2459,7 +2481,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/swap.xml
+[Malta] src/dom/swap.xml
 -->
 <function>
     <signature name="swap">JMVC.dom.swap(Element Node1, Element Node2)</signature>
@@ -2472,7 +2494,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/switchClass.xml
+[Malta] src/dom/switchClass.xml
 -->
 <function>
     <signature name="switchClass">JMVC.dom.switchClass(Element node, int  num [, Array types ])</signature>
@@ -2486,7 +2508,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/val.xml
+[Malta] src/dom/val.xml
 -->
 <function>
     <signature name="val">JMVC.dom.val(Element node, int  num [, Array types ])</signature>
@@ -2500,7 +2522,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/dom/wrap.xml
+[Malta] src/dom/wrap.xml
 -->
 <function>
     <signature name="wrap">JMVC.dom.wrap(Element Node1, Element Node2)</signature>
@@ -2514,11 +2536,11 @@ console.log(hb, hd);</code>
 </function>
 </dom>
 <!--
-[MALTA] src/events/_main.xml
+[Malta] src/events/_main.xml
 -->
 <events>
 <!--
-[MALTA] src/events/delay.xml
+[Malta] src/events/delay.xml
 -->
 <function>
     <signature name="delay">JMVC.events.delay(Javascript function func, Integer ms)</signature>
@@ -2531,7 +2553,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/events/end.xml
+[Malta] src/events/end.xml
 -->
 <function>
     <signature name="end">JMVC.events.end(Javascript function func)</signature>
@@ -2543,7 +2565,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/events/endRender.xml
+[Malta] src/events/endRender.xml
 -->
 <function>
     <signature name="endRender">JMVC.events.endrender()</signature>
@@ -2555,7 +2577,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/events/eventTarget.xml
+[Malta] src/events/eventTarget.xml
 -->
 <function>
     <signature name="eventTarget">JMVC.events.eventTarget(Event e)</signature>
@@ -2567,7 +2589,7 @@ console.log(hb, hd);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/events/getCoord.xml
+[Malta] src/events/getCoord.xml
 -->
 <function>
     <signature name="getCoord">JMVC.events.getCoord(Element el, Event e)</signature>
@@ -2602,7 +2624,7 @@ window.setTimeout(function () {&#10;
     </code>
 </function>
 <!--
-[MALTA] src/events/kill.xml
+[Malta] src/events/kill.xml
 -->
 <function>
     <signature name="kill">JMVC.events.kill(Event e)</signature>
@@ -2625,7 +2647,7 @@ JMVC.events.on(document.body, 'click', function (e){&#10;
     </code>
 </function>
 <!--
-[MALTA] src/events/loadify.xml
+[Malta] src/events/loadify.xml
 -->
 <function>
     <signature name="loadify">JMVC.events.loadify(Integer ms)</signature>
@@ -2639,7 +2661,7 @@ JMVC.events.on(document.body, 'click', function (e){&#10;
     <code>JMVC.events.loadify(2000)</code>
 </function>
 <!--
-[MALTA] src/events/off.xml
+[Malta] src/events/off.xml
 -->
 <function>
     <signature name="off">JMVC.events.off(Element el, String type, Javascript function func)</signature>
@@ -2669,7 +2691,7 @@ window.setTimeout(function () {&#10;
 </code>
 </function>
 <!--
-[MALTA] src/events/on.xml
+[Malta] src/events/on.xml
 -->
 <function>
     <signature name="on">JMVC.events.on(Element el, String type, Javascript function func)</signature>
@@ -2698,7 +2720,7 @@ window.setTimeout(function () {
 </code>
 </function>
 <!--
-[MALTA] src/events/one.xml
+[Malta] src/events/one.xml
 -->
 <function>
     <signature name="one">JMVC.events.one(Element el, String type, Javascript function fun)</signature>
@@ -2729,7 +2751,7 @@ the click on the play button will bind and the event will bubble to the body wch
 </code>
 </function>
 <!--
-[MALTA] src/events/onEventOut.xml
+[Malta] src/events/onEventOut.xml
 -->
 <function>
     <signature name="onEventOut">JMVC.events.onEventOut(Element el, String type, Javascript function cb)</signature>
@@ -2753,7 +2775,7 @@ JMVC.events.onEventOut(el, 'mousemove', function(e) {&#10;
 	</code>
 </function>
 <!--
-[MALTA] src/events/onNoEvent.xml
+[Malta] src/events/onNoEvent.xml
 -->
 <function>
     <signature name="onUnevent">JMVC.events.onUnevent(Element el, Javascript function cb[, Number ms])</signature>
@@ -2777,7 +2799,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
 	</code>
 </function>
 <!--
-[MALTA] src/events/preventDefault.xml
+[Malta] src/events/preventDefault.xml
 -->
 <function>
     <signature name="preventDefault">JMVC.events.preventDefault(Event e)</signature>
@@ -2789,7 +2811,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/events/ready.xml
+[Malta] src/events/ready.xml
 -->
 <function>
     <signature name="ready">JMVC.events.ready(Javascript function func)</signature>
@@ -2801,7 +2823,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/events/start.xml
+[Malta] src/events/start.xml
 -->
 <function>
     <signature name="start">JMVC.events.start(Javascript function func)</signature>
@@ -2814,7 +2836,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
 </function>
 
 <!--
-[MALTA] src/events/scrollBy.xml
+[Malta] src/events/scrollBy.xml
 -->
 <function>
     <signature name="scrollBy">JMVC.events.scrollBy(Javascript function func)</signature>
@@ -2826,7 +2848,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/events/scrollTo.xml
+[Malta] src/events/scrollTo.xml
 -->
 <function>
     <signature name="scrollTo">JMVC.events.scrollTo(Javascript function func)</signature>
@@ -2838,7 +2860,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/events/startRender.xml
+[Malta] src/events/startRender.xml
 -->
 <function>
     <signature name="startRender">JMVC.events.startrender()</signature>
@@ -2850,7 +2872,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/events/touch.xml
+[Malta] src/events/touch.xml
 -->
 <function>
     <signature name="touch">JMVC.events.touch(Javascript function func)</signature>
@@ -2863,11 +2885,11 @@ JMVC.events.onUnevent(el, function(e) {&#10;
 </function>
 </events>
 <!--
-[MALTA] src/head/_main.xml
+[Malta] src/head/_main.xml
 -->
 <head>
 <!--
-[MALTA] src/head/addScript.xml
+[Malta] src/head/addScript.xml
 -->
 <function>
     <signature name="addScript">JMVC.head.addScript(String src, Boolean parse, Boolean explicit)</signature>
@@ -2881,7 +2903,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/head/addStyle.xml
+[Malta] src/head/addStyle.xml
 -->
 <function>
     <signature name="addStyle">JMVC.head.addStyle(String src, Boolean parse, Boolean explicit)</signature>
@@ -2895,7 +2917,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/head/denyiXrame.xml
+[Malta] src/head/denyiXrame.xml
 -->
 <function>
     <signature name="denyiXrame">JMVC.head.denyiXrame(String src, Boolean parse, Boolean explicit)</signature>
@@ -2909,7 +2931,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/head/goto.xml
+[Malta] src/head/goto.xml
 -->
 <function>
     <signature name="goto">JMVC.head.goto(String cnt, String act, String prms)</signature>
@@ -2923,7 +2945,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/head/lastModified.xml
+[Malta] src/head/lastModified.xml
 -->
 <function>
     <signature name="lastModified">JMVC.head.lastModified(String src, Boolean parse, Boolean explicit)</signature>
@@ -2937,7 +2959,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/head/lib.xml
+[Malta] src/head/lib.xml
 -->
 <function>
     <signature name="lib">JMVC.head.lib(String lib)</signature>
@@ -2950,7 +2972,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <sample>JMVC.head.lib('jquery');</sample>
 </function>
 <!--
-[MALTA] src/head/link.xml
+[Malta] src/head/link.xml
 -->
 <function>
     <signature name="link">JMVC.head.link(String src, Boolean parse, Boolean explicit)</signature>
@@ -2964,7 +2986,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/head/meta.xml
+[Malta] src/head/meta.xml
 -->
 <function>
     <signature name="meta">JMVC.head.meta(String name, String value, String mode)</signature>
@@ -2977,7 +2999,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/head/metas.xml
+[Malta] src/head/metas.xml
 -->
 <function>
     <signature name="metas">JMVC.head.metas()</signature>
@@ -2989,7 +3011,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/head/reload.xml
+[Malta] src/head/reload.xml
 -->
 <function>
     <signature name="reload">JMVC.head.reload(String name, String value)</signature>
@@ -3002,7 +3024,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/head/removeMeta.xml
+[Malta] src/head/removeMeta.xml
 -->
 <function>
     <signature name="removeMeta">JMVC.head.removeMeta(String name, String value, String mode)</signature>
@@ -3015,7 +3037,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/head/title.xml
+[Malta] src/head/title.xml
 -->
 <function>
     <signature name="title">JMVC.head.title(String title)</signature>
@@ -3028,11 +3050,11 @@ JMVC.events.onUnevent(el, function(e) {&#10;
 </function>
 </head>
 <!--
-[MALTA] src/io/_main.xml
+[Malta] src/io/_main.xml
 -->
 <io>
 <!--
-[MALTA] src/io/post.xml
+[Malta] src/io/post.xml
 -->
 <function>
     <signature name="post">JMVC.io.post(String uri, function cback, boolean sync, Object data, boolean cache)</signature>
@@ -3047,7 +3069,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/io/get.xml
+[Malta] src/io/get.xml
 -->
 <function>
     <signature name="get">JMVC.io.get(String uri, function cback, boolean p, boolean sync)</signature>
@@ -3062,7 +3084,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <returns hint="the response">String</returns>
 </function>
 <!--
-[MALTA] src/io/getJson.xml
+[Malta] src/io/getJson.xml
 -->
 <function>
     <signature name="getJson">JMVC.io.getJson(String uri)</signature>
@@ -3074,7 +3096,7 @@ JMVC.events.onUnevent(el, function(e) {&#10;
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/io/getXML.xml
+[Malta] src/io/getXML.xml
 -->
 <function>
     <signature name="getXML">JMVC.io.getXML(String uri)</signature>
@@ -3087,11 +3109,11 @@ JMVC.events.onUnevent(el, function(e) {&#10;
 </function>
 </io>
 <!--
-[MALTA] src/string/_main.xml
+[Malta] src/string/_main.xml
 -->
 <string>
 <!--
-[MALTA] src/string/code2str.xml
+[Malta] src/string/code2str.xml
 -->
 <function>
     <signature name="code2str">JMVC.string.code2str(Array str)</signature>
@@ -3111,7 +3133,7 @@ console.log(t);</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/string/multireplace.xml
+[Malta] src/string/multireplace.xml
 -->
 <function>
     <signature name="multireplace">JMVC.string.multireplace(String name, String value)</signature>
@@ -3124,7 +3146,7 @@ console.log(t);</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/string/padme.xml
+[Malta] src/string/padme.xml
 -->
 <function>
     <signature name="padme">JMVC.string.padme(String name, String value)</signature>
@@ -3137,7 +3159,7 @@ console.log(t);</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/string/replaceAll.xml
+[Malta] src/string/replaceAll.xml
 -->
 <function>
     <signature name="replaceAll">JMVC.string.replaceAll(String tpl, Object rep, [Literal opt])</signature>
@@ -3211,7 +3233,7 @@ console.log(t);
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/string/str2code.xml
+[Malta] src/string/str2code.xml
 -->
 <function>
     <signature name="str2code">JMVC.string.str2code(String str)</signature>
@@ -3225,7 +3247,7 @@ console.log(t);
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/string/repeat.xml
+[Malta] src/string/repeat.xml
 -->
 <function>
     <signature name="repeat">JMVC.string.repeat(String name, String value)</signature>
@@ -3238,7 +3260,7 @@ console.log(t);
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/string/trim.xml
+[Malta] src/string/trim.xml
 -->
 <function>
     <signature name="trim">JMVC.string.trim(String name, String value)</signature>
@@ -3251,7 +3273,7 @@ console.log(t);
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/string/triml.xml
+[Malta] src/string/triml.xml
 -->
 <function>
     <signature name="triml">JMVC.string.triml(String name, String value)</signature>
@@ -3264,7 +3286,7 @@ console.log(t);
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/string/trimr.xml
+[Malta] src/string/trimr.xml
 -->
 <function>
     <signature name="trimr">JMVC.string.trimr(String name, String value)</signature>
@@ -3278,11 +3300,11 @@ console.log(t);
 </function>
 </string>
 <!--
-[MALTA] src/object/_main.xml
+[Malta] src/object/_main.xml
 -->
 <object>
 <!--
-[MALTA] src/object/clone.xml
+[Malta] src/object/clone.xml
 -->
 <function>
     <signature name="clone">JMVC.object.clone(String name, String value)</signature>
@@ -3295,7 +3317,7 @@ console.log(t);
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/object/digForKey.xml
+[Malta] src/object/digForKey.xml
 -->
 <function>
     <signature name="digForKey">JMVC.object.digForKey(Object obj, Mixed elem)</signature>
@@ -3323,7 +3345,7 @@ console.log(res);</sample>
 console.log(res);</code>
 </function>
 <!--
-[MALTA] src/object/digForValue.xml
+[Malta] src/object/digForValue.xml
 -->
 <function>
     <signature name="digForValue">JMVC.object.digForValue(Object obj, Mixed elem)</signature>
@@ -3350,7 +3372,7 @@ console.log(res);</sample>
 console.log(res);</code>
 </function>
 <!--
-[MALTA] src/object/extend.xml
+[Malta] src/object/extend.xml
 -->
 <function>
     <signature name="extend">JMVC.object.extend(obj, extension)</signature>
@@ -3364,7 +3386,7 @@ console.log(res);</code>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/object/fromQs.xml
+[Malta] src/object/fromQs.xml
 -->
 <function>
     <signature name="fromQs">JMVC.object.fromQs()</signature>
@@ -3385,7 +3407,7 @@ w.onload = function() {console.debug(w.JMVC.object.fromQs());};</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/object/compare.xml
+[Malta] src/object/compare.xml
 -->
 <function>
     <signature name="compare">JMVC.object.compare(String name, String value)</signature>
@@ -3398,7 +3420,7 @@ w.onload = function() {console.debug(w.JMVC.object.fromQs());};</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/object/contains.xml
+[Malta] src/object/contains.xml
 -->
 <function>
     <signature name="contains">JMVC.object.contains(String name, String value)</signature>
@@ -3411,7 +3433,7 @@ w.onload = function() {console.debug(w.JMVC.object.fromQs());};</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/object/jCompare.xml
+[Malta] src/object/jCompare.xml
 -->
 <function>
     <signature name="jCompare">JMVC.object.jCompare(String name, String value)</signature>
@@ -3424,7 +3446,7 @@ w.onload = function() {console.debug(w.JMVC.object.fromQs());};</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/object/toAttr.xml
+[Malta] src/object/toAttr.xml
 -->
 <function>
     <signature name="toAttr">JMVC.object.toAttr(String name, String value)</signature>
@@ -3437,7 +3459,7 @@ w.onload = function() {console.debug(w.JMVC.object.fromQs());};</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/object/toCss.xml
+[Malta] src/object/toCss.xml
 -->
 <function>
     <signature name="toCss">JMVC.object.toCss(String name, String value)</signature>
@@ -3450,7 +3472,7 @@ w.onload = function() {console.debug(w.JMVC.object.fromQs());};</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/object/toQs.xml
+[Malta] src/object/toQs.xml
 -->
 <function>
     <signature name="toQs">JMVC.object.toQs(String name, String value)</signature>
@@ -3464,11 +3486,11 @@ w.onload = function() {console.debug(w.JMVC.object.fromQs());};</sample>
 </function>
 </object>
 <!--
-[MALTA] src/array/_main.xml
+[Malta] src/array/_main.xml
 -->
 <array>
 <!--
-[MALTA] src/array/clone.xml
+[Malta] src/array/clone.xml
 -->
 <function>
     <signature name="clone">JMVC.array.clone(Array arr)</signature>
@@ -3502,7 +3524,7 @@ console.log(a2[5]());
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/array/coll2array.xml
+[Malta] src/array/coll2array.xml
 -->
 <function>
     <signature name="coll2array">JMVC.array.coll2array(HTMLCollection coll)</signature>
@@ -3529,7 +3551,7 @@ console.log(a instanceof Array);
     <status>testing</status>
 </function>
 <!--
-[MALTA] src/array/find.xml
+[Malta] src/array/find.xml
 -->
 <function>
     <signature name="find">JMVC.array.find(Array arr, Mixed el)</signature>
@@ -3550,7 +3572,7 @@ console.log(JMVC.array.find(a, [1,2,3]));
     <status>testing</status>
 </function>
 <!--
-[MALTA] src/array/findAll.xml
+[Malta] src/array/findAll.xml
 -->
 <function>
     <signature name="findAll">JMVC.array.findAll(Array arr, Mixed el)</signature>
@@ -3573,7 +3595,7 @@ console.log(JMVC.array.findAll(a, [1,2,3]));
     <status>testing</status>
 </function>
 <!--
-[MALTA] src/array/findRich.xml
+[Malta] src/array/findRich.xml
 -->
 <function>
     <signature name="findRich">JMVC.array.findRich(String name, String value)</signature>
@@ -3600,7 +3622,7 @@ console.log(JMVC.array.findRich(a, {c:2}));
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/array/fromArguments.xml
+[Malta] src/array/fromArguments.xml
 -->
 <function>
     <signature name="fromArguments">JMVC.array.fromArguments(PseudoArray args)</signature>
@@ -3627,7 +3649,7 @@ console.log(JMVC.array.findRich(a, {c:2}));
     </code>
 </function>
 <!--
-[MALTA] src/array/move.xml
+[Malta] src/array/move.xml
 -->
 <function>
     <signature name="move">JMVC.array.move(Integer from, Integer to)</signature>
@@ -3643,7 +3665,7 @@ console.log(JMVC.array.findRich(a, {c:2}));
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/array/range.xml
+[Malta] src/array/range.xml
 -->
 <function>
     <signature name="range">JMVC.array.range(Integer from, Integer to)</signature>
@@ -3659,7 +3681,7 @@ console.log(JMVC.array.findRich(a, {c:2}));
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/array/unique.xml
+[Malta] src/array/unique.xml
 -->
 <function>
     <signature name="unique">JMVC.array.unique(Array a)</signature>
@@ -3691,11 +3713,11 @@ console.log(JMVC.array.unique(a));</sample>
 </function>
 </array>
 <!--
-[MALTA] src/util/_main.xml
+[Malta] src/util/_main.xml
 -->
 <util>
 <!--
-[MALTA] src/util/deg2rad.xml
+[Malta] src/util/deg2rad.xml
 -->
 <function>
     <signature name="deg2rad">JMVC.util.deg2rad(str, obj, ctx)</signature>
@@ -3709,7 +3731,7 @@ console.log(JMVC.array.unique(a));</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/util/getParameters.xml
+[Malta] src/util/getParameters.xml
 -->
 <function>
     <signature name="getParameters">JMVC.util.getParameters(str, obj, ctx)</signature>
@@ -3723,7 +3745,7 @@ console.log(JMVC.array.unique(a));</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/util/getType.xml
+[Malta] src/util/getType.xml
 -->
 <function>
     <signature name="getType">JMVC.util.getType(str, obj, ctx)</signature>
@@ -3737,7 +3759,7 @@ console.log(JMVC.array.unique(a));</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/util/hex2int.xml
+[Malta] src/util/hex2int.xml
 -->
 <function>
     <signature name="hex2int">JMVC.util.hex2int(str, obj, ctx)</signature>
@@ -3751,7 +3773,7 @@ console.log(JMVC.array.unique(a));</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/util/int2hex.xml
+[Malta] src/util/int2hex.xml
 -->
 <function>
     <signature name="int2hex">JMVC.util.int2hex(str, obj, ctx)</signature>
@@ -3765,7 +3787,7 @@ console.log(JMVC.array.unique(a));</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/util/isArray.xml
+[Malta] src/util/isArray.xml
 -->
 <function>
     <signature name="isArray">JMVC.util.isArray(str, obj, ctx)</signature>
@@ -3779,7 +3801,7 @@ console.log(JMVC.array.unique(a));</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/util/isObject.xml
+[Malta] src/util/isObject.xml
 -->
 <function>
     <signature name="isObject">JMVC.util.isObject(str, obj, ctx)</signature>
@@ -3793,7 +3815,7 @@ console.log(JMVC.array.unique(a));</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/util/isSet.xml
+[Malta] src/util/isSet.xml
 -->
 <function>
     <signature name="isSet">JMVC.util.isSet(str, obj, ctx)</signature>
@@ -3807,7 +3829,7 @@ console.log(JMVC.array.unique(a));</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/util/isTypeOf.xml
+[Malta] src/util/isTypeOf.xml
 -->
 <function>
     <signature name="isTypeOf">JMVC.util.isTypeOf(str, obj, ctx)</signature>
@@ -3821,7 +3843,7 @@ console.log(JMVC.array.unique(a));</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/util/now.xml
+[Malta] src/util/now.xml
 -->
 <function>
     <signature name="now">JMVC.util.now(str, obj, ctx)</signature>
@@ -3835,7 +3857,7 @@ console.log(JMVC.array.unique(a));</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/util/rad2deg.xml
+[Malta] src/util/rad2deg.xml
 -->
 <function>
     <signature name="rad2deg">JMVC.util.rad2deg(str, obj, ctx)</signature>
@@ -3849,7 +3871,7 @@ console.log(JMVC.array.unique(a));</sample>
     <status>incomplete</status>
 </function>
 <!--
-[MALTA] src/util/range.xml
+[Malta] src/util/range.xml
 -->
 <function>
     <signature name="range">JMVC.util.range(str, obj, ctx)</signature>
@@ -3864,11 +3886,11 @@ console.log(JMVC.array.unique(a));</sample>
 </function>
 </util>
 <!--
-[MALTA] src/match/_main.xml
+[Malta] src/match/_main.xml
 -->
 <match>
 <!--
-[MALTA] src/match/email.xml
+[Malta] src/match/email.xml
 -->
 <function>
     <signature name="email">JMVC.match.email(String email)</signature>
@@ -3882,7 +3904,7 @@ console.log(JMVC.array.unique(a));</sample>
     <testlink></testlink>           
 </function>
 <!--
-[MALTA] src/match/url.xml
+[Malta] src/match/url.xml
 -->
 <function>
     <signature name="url">JMVC.match.url(String url)</signature>

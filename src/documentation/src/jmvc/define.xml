@@ -24,9 +24,9 @@ var t = JMVC.define(&#10;
 );&#10;
 t.one();&#10;
 console.log(t);&#10;
-console.log(JMVC.xxx.sss);
-</sample>
+console.log(JMVC.xxx.sss);</sample>
     <status>complete</status>
+    <testlink>test_api_jmvc_define</testlink>
     <code>
         var t = JMVC.define('xxx.sss', ['def.xxx', 'def.yyy'], function (x, y) {
             return {

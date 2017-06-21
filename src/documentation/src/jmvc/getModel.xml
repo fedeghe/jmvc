@@ -11,6 +11,7 @@
     you = JMVC.getModel('Persona', ['Frances', 4]);&#10;
 console.log(me.hello());&#10;
 console.log(you.hello());</sample>
+    <testlink>test_api_jmvc_getModel</testlink>
     <code>
         var me = JMVC.getModel('Persona', ['Federico', 35]),
             you = JMVC.getModel('Persona', ['Frances', 4]);
