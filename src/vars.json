@@ -1,9 +1,11 @@
 {
-	"version" : "3.7",
+	"name" : "JMVC",
+	"version" : "3.8",
 	"review" : 3,
-	"author" : "Federico Ghedina",
+	"author" : "Federico Ghedina - $email$",
 	"email" : "fedeghe@gmail.com",
 	"build_system" : "Malta",
     "build_system_link" : "http://www.github.com/fedeghe/malta",
-	"packed" : ""
+	"packed" : "",
+	"what" : true
 }
