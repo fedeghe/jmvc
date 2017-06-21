@@ -64,12 +64,12 @@ JMVC.controllers.demo = function() {
 		
 
 		
-
+/*
 		JMVC.require('widget/screensaver/screensaver', function () {
 			// JMVC.screensaver.on(5000, {pwd : "xxx", msg : "Please enter security password to unlock (xxx)... how could You workaround it?"});	
 			JMVC.screensaver.on(5000);	
 		});
-		
+*/		
 	};
 
 
