@@ -188,6 +188,8 @@ JMVC.extend('tabs', {
 						'border-top-left-radius:' + sizes.oriz.round + 'px;border-top-right-radius:' + sizes.oriz.round + 'px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;',
 					'ul.tablabels_o li:hover':'color:' + colors.oriz.texthover + ';background-color:' + colors.oriz.hover + ';',
 					'ul.tablabels_o li.sel':'color:' + colors.oriz.textselected + ';border:' + sizes.oriz.border + 'px solid ' + colors.oriz.border + ';border-bottom:none; background-color:' + colors.oriz.selected + '; z-index:10;position:relative;bottom:-1px; ',
+					'ul.tablabels_o li.unsel':'opacity:0.5',
+					'ul.tablabels_o li.unsel:hover':'opacity:0.8',
 					'div.tabcontainer_o' : 'color:' + colors.oriz.textcontent +';background-color:' + colors.oriz.containerbg +';' + border3 + 'line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;border:' + sizes.oriz.border + 'px solid ' + colors.oriz.border + ';position:relative;top:-3px;z-index:5;padding:5px;',
 					///////////////////////////////////////////////////////////////////////
 					'ul.tablabels_v':'color:' + colors.vert.text + ';float:left;list-style:none;margin:0px;padding:0px;',
@@ -197,6 +199,8 @@ JMVC.extend('tabs', {
 							'border-top-left-radius:' + sizes.vert.round + 'px;border-top-right-radius:0px;border-bottom-left-radius:' + sizes.vert.round + 'px;border-bottom-right-radius:0px;  border-right:none; left:1px',
 					'ul.tablabels_v li:hover':'color:' + colors.vert.texthover + ';background-color:' + colors.vert.hover + ';',
 					'ul.tablabels_v li.sel':'color:' + colors.vert.textselected + ';border:' + sizes.vert.border + 'px solid ' + colors.vert.border + ';border-right:none; background-color:' + colors.vert.selected + '; z-index:10;position:relative;left:1px',
+					'ul.tablabels_v li.unsel':'opacity:0.5',
+					'ul.tablabels_v li.unsel:hover':'opacity:0.8',
 					'div.tabcontainer_v' : 'color:' + colors.vert.textcontent +';background-color:' + colors.vert.containerbg +';' + border3 + 'min-height:250px;overflow:hidden; position:relative;line-height:1;font-size:100%;padding:0px;margin:0px;border:0px;border:' + sizes.vert.border + 'px solid ' + colors.vert.border + ';left:-1px;z-index:5; padding:5px;'
 				};
 			

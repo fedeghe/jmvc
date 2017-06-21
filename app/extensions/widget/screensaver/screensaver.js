@@ -22,7 +22,7 @@ JMVC.extend('screensaver', {
     },
 
     _shut : function () {
-        
+
         JMVC.events.disable_scroll();
         
         JMVC.screensaver.scrolltop = JMVC.screen.getScreenData().scrollTop;
@@ -33,7 +33,7 @@ JMVC.extend('screensaver', {
             targetH = self.height / 2,
             i = 0,
             to; 
-
+        self.active = true;
         JMVC.css.show(self.outer);
         //adjust for scrolling
         JMVC.css.style(self.top, {top : self.scrolltop + 'px', 'border-color' : 'white'});
@@ -61,21 +61,32 @@ JMVC.extend('screensaver', {
         JMVC.events.enable_scroll();
         self._modH(0);
         JMVC.css.hide(self.outer);
+        self.active = false;
     },
     off : function () {
         this._up();
     },
-    on : function (timeout) {
+    on : function (timeout, pwd) {
 
         timeout = ~~timeout || 5000;
         var self = this,
             to,
+            pwd = pwd || false,
+            
             setT = function () {
                 to = JMVC.W.setTimeout(function () {
-                    self._shut();    
+                    self._shut();   
                 }, timeout);
             },
             backT = function (){
+                var p;
+                if (pwd) {
+                    if (self.active){
+                        do {
+                            p = prompt(pwd.msg || "Enter security password");
+                        } while (p !== pwd.pwd)
+                    }
+                }
                 self._up();
                 JMVC.W.clearTimeout(to);
                 setT();

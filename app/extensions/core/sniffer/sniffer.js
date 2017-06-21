@@ -14,6 +14,7 @@ JMVC.extend('util', {
 JMVC.extend('sniffer', {
 	init : function () {
 		var bcheck = {
+				Vivaldi : function () {return navigator.userAgent.match(/vivaldi\/([^\s]*)/i); },
 				Firefox : function () {return navigator.userAgent.match(/firefox\/([^\s]*)/i); },
 				Opera : function () {return navigator.userAgent.match(/opera\/([^\s]*)/i); },
 				IE : function () {return document.all && !(navigator.userAgent.match(/opera/i)); },

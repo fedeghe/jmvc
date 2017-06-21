@@ -16,7 +16,7 @@
 JMVC.extend('core/widgzard', function () {
     "use strict";
 
-    JMVC.head.addStyle(JMVC.vars.extensions + 'core/lib/widgzard/widgzard.min.css');   
+    JMVC.head.addStyle(JMVC.vars.extensions + 'core/lib/widgzard/widgzard.css');   
 
        // clearer class that should provide right
     // css float clearing

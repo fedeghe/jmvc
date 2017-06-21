@@ -1,11 +1,11 @@
 /*
-[MALTA] src/head.js
+[Malta] src/head.js
 */
 JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/wcave.css');
 JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css', true);
 /**
  * 
- * wcave build n.209
+ * wcave build n.1
  * 
  * @version: 1.4.13
  * @date : 25-04-2013
@@ -19,11 +19,11 @@ JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
     'use strict';
     //ooooooooooo
     /*
-    [MALTA] src/wcave.js
+    [Malta] src/wcave.js
     */
     
     /*
-    [MALTA] src/init/init.js
+    [Malta] src/init/init.js
     */
     //the main Wcave object, private
     var Wcave = function () {},
@@ -332,7 +332,7 @@ JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/games/wcave/freckle.css'
     };
     
     /*
-    [MALTA] src/proto/proto.js
+    [Malta] src/proto/proto.js
     */
     Wcave.prototype.restart = function () {
         

@@ -49,7 +49,7 @@ JMVC.extend('console', {
 
         } else {
 
-            var jmvc_iframe_file = 'jmvc.min.js',
+            var jmvc_iframe_file = 'jmvc.js',
                 dims = JMVC.screen.getViewportSize(),
                 border_size = 0,
                 margin = -1,
@@ -571,7 +571,7 @@ JMVC.extend('console', {
             JMVC.events.disable_scroll();
 
             JMVC.set('height', dims.height - 60);
-            JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/core/console/console.css', true);
+            JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/core/console/console.css', false);
             JMVC.dom.append(JMVC.dom.body(), container);
 
             // -------------------------------------
