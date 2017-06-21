@@ -66,6 +66,14 @@ FileETag MTime Size
 	# comment RewriteBase for go in localhost
 	RewriteBase /
 
+	# PREVENT HOTLINKING
+	# RewriteCond %{HTTP_REFERER} !^$
+	# RewriteCond %{HTTP_REFERER} !^http://www.jmvc.dev/.*$ [NC]
+	# RewriteRule .*.(png|gif|jpe?g)$ [F,NC]
+	# RewriteCond %{HTTP_REFERER} !^$
+	# RewriteCond %{HTTP_REFERER} !^http://www.jmvc.dev/.*$ [NC]
+	# RewriteRule \.(js)$ http://www.jmvc.dev/hotlink.js [R,L]
+
 	# models, views, controllers, extensions and media
 	RewriteRule ^(app|media)(.*)?$ - [L]
 
