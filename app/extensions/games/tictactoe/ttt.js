@@ -128,54 +128,56 @@
 				return i !== false ? !!(self.boxes[i].className.match(new RegExp("p" + player))) : false;
 			},
 			score = {
-				d1 : [],
-				d2 : [],
+				"\\" : [],
+				"/" : [],
 				o : [],
 				v : []
 			},
-			check = function (dir){
+			check = function (dir, prevFn, nextFn){
 				var current_prev = i2c(ind),
 					current_next = i2c(ind);
 				score[dir].push(current_prev);
 
-				current_prev = prev(current_prev);
+				current_prev = prevFn(current_prev);
 				while(checkBox(current_prev)) {
 					score[dir].push(current_prev);
-					current_prev = prev(current_prev);
+					current_prev = prevFn(current_prev);
 				}
-				current_next = next(current_next);
+				current_next = nextFn(current_next);
 				while(checkBox(current_next)) {
 					score[dir].push(current_next);
-					current_next = next(current_next);
+					current_next = nextFn(current_next);
 				}
 			},
-			prev,
-			next,
 			i;
 
 		// diag \
 		// 
-		prev = function(coord){return [coord[0]-1, coord[1]-1];};
-		next = function(coord){return [coord[0]+1, coord[1]+1];};
-		check('d1');
+		check('\\',
+			function(coord){return [coord[0]-1, coord[1]-1];},
+			function(coord){return [coord[0]+1, coord[1]+1];}
+		);
 		
 		// diag /
 		// 
-		prev = function(coord){return [coord[0]+1, coord[1]-1];};
-		next = function(coord){return [coord[0]-1, coord[1]+1];};
-		check('d2');
+		check('/',
+			function(coord){return [coord[0]+1, coord[1]-1];},
+			function(coord){return [coord[0]-1, coord[1]+1];}
+		);
 
 		// vert
 		//
-		prev = function(coord){return [coord[0]-1, coord[1]]};
-		next = function(coord){return [coord[0]+1, coord[1]]};
-		check('v');
+		check('v',
+			function(coord){return [coord[0]-1, coord[1]]},
+			function(coord){return [coord[0]+1, coord[1]]}
+		);
 
 		// oriz
 		// 
-		prev = function(coord){return [coord[0], coord[1]-1]};
-		next = function(coord){return [coord[0], coord[1]+1]};
-		check('o');
+		check('o',
+			function(coord){return [coord[0], coord[1]-1]},
+			function(coord){return [coord[0], coord[1]+1]}
+		);
 
 		var max = 0;
 		for (i in score) {
@@ -245,7 +247,7 @@
 		s.type = 'text/css';
 		s.innerHTML =  id + '{font-family:Verdana,sans;width:' + ~~this.size + 'px !important;height:' + ~~this.size + 'px !important;outline:2px solid white}' + 
 			id + ' .box{width:' + bsize + 'px !important;height:' + bsize + 'px !important;outline:2px solid black; float:left}' +
-			id + ' .win{outline:5px solid #0a0}' +
+			id + ' .win{background-color: #0a0}' +
 			id + '+.panel{height:' + h + '; line-height:' + h + '; font-family:Verdana, sans; font-size:1em;}'+
 			id + ' .p0{font-size: ' + bsize/2 + 'px;line-height:' + bsize + 'px;width:' + bsize + 'px;height:' + bsize + 'px;line-height:' + bsize + 'px;color:red;text-align:center}'+
 			id + ' .p1{font-size: ' + bsize/2 + 'px;line-height:' + bsize + 'px;color:blue;text-align:center}' +

@@ -304,7 +304,8 @@ JMVC.controllers.demo = function() {
 							'modal' : 'test_modal'
 						}),
 						makeList('Games', {
-							'Wcave game' : '/wcave.jmvc'
+							'Wcave game' : '/wcave.jmvc',
+							'Tic Tac Toe' : '/ttt.jmvc'
 						}),
 						makeList('Test', {
 							'strict' : '/test_strict',

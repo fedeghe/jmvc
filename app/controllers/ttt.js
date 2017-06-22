@@ -13,10 +13,9 @@ JMVC.controllers.ttt = function () {
 		var opts = {
 			cplx : JMVC.p.cplx || 3,
             size : JMVC.p.size || 720,
-			toWin : JMVC.p.toWin || 3
+			toWin : JMVC.p.toWin || 3,
+            panel : 'panel' in JMVC.p ? JMVC.p.panel : true
 		};
-
-        JMVC.require('games/deck/deck');
 
         JMVC.head.title('Tic Tac Toe');
 
