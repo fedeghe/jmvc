@@ -7,7 +7,7 @@ JMVC.controllers.rolex = function () {
 
 	this.action_index = function () {
 
-		var isMobile = JMVc.util.isMobile();
+		var isMobile = JMVC.util.isMobile();
 
 		JMVC.require('core/lib/widgzard/widgzard', render);
 		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/rolex.css', true);
