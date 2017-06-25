@@ -195,7 +195,6 @@ JMVC.controllers.rolex = function () {
 				return ret;
 			}
 
-
 			JMVC.core.widgzard.render({
 				content : [{
 					tag : 'table',
@@ -213,7 +212,11 @@ JMVC.controllers.rolex = function () {
 				},{
 					style : {
 						'margin' : '1em',
-						'margin-bottom' : '1em'
+						'margin-bottom' : '1em',
+						'-webkit-user-select' : 'none',
+						'-moz-user-select' : 'none',
+						'-khtml-user-select' : 'none',
+						'-ms-user-select' : 'none'
 					},
 					content : [{
 						tag : 'label', text : 'price'
@@ -275,7 +278,11 @@ JMVC.controllers.rolex = function () {
 				},{
 					style : {
 						'margin' : '1em',
-						'margin-bottom' : '1em'
+						'margin-bottom' : '1em',
+						'-webkit-user-select' : 'none',
+						'-moz-user-select' : 'none',
+						'-khtml-user-select' : 'none',
+						'-ms-user-select' : 'none'
 					},
 					content : [{
 						tag : 'label', text : 'discount'
@@ -334,10 +341,7 @@ JMVC.controllers.rolex = function () {
 						JMVC.events.on($elf, 'change', _ref)
 						self.done();
 					}
-				}],
-				cb : function () {
-
-				}
+				}]
 			});
 			function refresh (n) {
 				JMVC.core.widgzard.render({
