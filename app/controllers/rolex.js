@@ -7,6 +7,8 @@ JMVC.controllers.rolex = function () {
 
 	this.action_index = function () {
 
+		var isMobile = JMVc.util.isMobile();
+
 		JMVC.require('core/lib/widgzard/widgzard', render);
 		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/rolex.css', true);
 		function render(){
@@ -220,8 +222,9 @@ JMVC.controllers.rolex = function () {
 						attrs : {"class" : "minus"},
 						cb : function () {
 							var self = this,
-								$elf = self.node;
-							JMVC.events.on($elf, 'click', function () {
+								$elf = self.node,
+								ev = isMobile ? 'touchstart' : 'click';
+							JMVC.events.on($elf, ev, function () {
 								var pI = self.getNode('priceInput').node;
 								pI.value = ~~(pI.value) - 10;
 								JMVC.events.trigger(pI, 'change');
@@ -233,8 +236,9 @@ JMVC.controllers.rolex = function () {
 						attrs : {"class" : "plus"},
 						cb : function () {
 							var self = this,
-								$elf = self.node;
-							JMVC.events.on($elf, 'click', function () {
+								$elf = self.node,
+								ev = isMobile ? 'touchstart' : 'click';
+							JMVC.events.on($elf, ev, function () {
 								var pI = self.getNode('priceInput').node;
 								pI.value = ~~(pI.value) + 10;
 								JMVC.events.trigger(pI, 'change');
@@ -280,8 +284,9 @@ JMVC.controllers.rolex = function () {
 						attrs : {"class" : "minus"},
 						cb : function () {
 							var self = this,
-								$elf = self.node;
-							JMVC.events.on($elf, 'click', function () {
+								$elf = self.node,
+								ev = isMobile ? 'touchstart' : 'click';
+							JMVC.events.on($elf, ev, function () {
 								var pI = self.getNode('discountInput').node;
 								pI.value = parseFloat(pI.value, 10) - 0.01;
 								JMVC.events.trigger(pI, 'change');
@@ -293,8 +298,9 @@ JMVC.controllers.rolex = function () {
 						attrs : {"class" : "plus"},
 						cb : function () {
 							var self = this,
-								$elf = self.node;
-							JMVC.events.on($elf, 'click', function () {
+								$elf = self.node,
+								ev = isMobile ? 'touchstart' : 'click';
+							JMVC.events.on($elf, ev, function () {
 								var pI = self.getNode('discountInput').node;
 								pI.value = parseFloat(pI.value, 10) + 0.01;
 								JMVC.events.trigger(pI, 'change');
