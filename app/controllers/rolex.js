@@ -38,7 +38,8 @@ JMVC.controllers.rolex = function () {
 						'margin-left' : '5px',
 						'-moz-border-radius':'3px',
 						'-webkit-border-radius':'3px',
-						'border-radius':'3px'
+						'border-radius':'3px',
+						'height' : '2.5em'
 					},
 					'button.plus' : {
 						'background-color':'green'
@@ -208,33 +209,39 @@ JMVC.controllers.rolex = function () {
 					}
 					
 				},{
-					tag : 'label', text : 'price'
-				},{
-					tag : 'button', html : "-",
-					attrs : {"class" : "minus"},
-					cb : function () {
-						var self = this,
-							$elf = self.node;
-						JMVC.events.on($elf, 'click', function () {
-							var pI = self.getNode('priceInput').node;
-							pI.value = ~~(pI.value) - 10;
-							JMVC.events.trigger(pI, 'change');
-						});
-						self.done();
-					}
-				},{
-					tag : 'button', html : "+",
-					attrs : {"class" : "plus"},
-					cb : function () {
-						var self = this,
-							$elf = self.node;
-						JMVC.events.on($elf, 'click', function () {
-							var pI = self.getNode('priceInput').node;
-							pI.value = ~~(pI.value) + 10;
-							JMVC.events.trigger(pI, 'change');
-						});
-						self.done();
-					}
+					style : {
+						'margin' : '1em',
+						'margin-bottom' : '1em'
+					},
+					content : [{
+						tag : 'label', text : 'price'
+					},{
+						tag : 'button', html : "-",
+						attrs : {"class" : "minus"},
+						cb : function () {
+							var self = this,
+								$elf = self.node;
+							JMVC.events.on($elf, 'click', function () {
+								var pI = self.getNode('priceInput').node;
+								pI.value = ~~(pI.value) - 10;
+								JMVC.events.trigger(pI, 'change');
+							});
+							self.done();
+						}
+					},{
+						tag : 'button', html : "+",
+						attrs : {"class" : "plus"},
+						cb : function () {
+							var self = this,
+								$elf = self.node;
+							JMVC.events.on($elf, 'click', function () {
+								var pI = self.getNode('priceInput').node;
+								pI.value = ~~(pI.value) + 10;
+								JMVC.events.trigger(pI, 'change');
+							});
+							self.done();
+						}
+					}]
 				},{
 					tag : 'input',
 					wid : "priceInput",
@@ -245,7 +252,7 @@ JMVC.controllers.rolex = function () {
 					attrs : {
 						type : 'range',
 						min : 1000,
-						max : 50000,
+						max : 35000,
 						step : 10,
 						value : fullPrice
 					},
@@ -262,33 +269,39 @@ JMVC.controllers.rolex = function () {
 						self.done();
 					}
 				},{
-					tag : 'label', text : 'discount'
-				},{
-					tag : 'button', html : "-",
-					attrs : {"class" : "minus"},
-					cb : function () {
-						var self = this,
-							$elf = self.node;
-						JMVC.events.on($elf, 'click', function () {
-							var pI = self.getNode('discountInput').node;
-							pI.value = parseFloat(pI.value, 10) - 0.01;
-							JMVC.events.trigger(pI, 'change');
-						});
-						self.done();
-					}
-				},{
-					tag : 'button', html : "+",
-					attrs : {"class" : "plus"},
-					cb : function () {
-						var self = this,
-							$elf = self.node;
-						JMVC.events.on($elf, 'click', function () {
-							var pI = self.getNode('discountInput').node;
-							pI.value = parseFloat(pI.value, 10) + 0.01;
-							JMVC.events.trigger(pI, 'change');
-						});
-						self.done();
-					}
+					style : {
+						'margin' : '1em',
+						'margin-bottom' : '1em'
+					},
+					content : [{
+						tag : 'label', text : 'discount'
+					},{
+						tag : 'button', html : "-",
+						attrs : {"class" : "minus"},
+						cb : function () {
+							var self = this,
+								$elf = self.node;
+							JMVC.events.on($elf, 'click', function () {
+								var pI = self.getNode('discountInput').node;
+								pI.value = parseFloat(pI.value, 10) - 0.01;
+								JMVC.events.trigger(pI, 'change');
+							});
+							self.done();
+						}
+					},{
+						tag : 'button', html : "+",
+						attrs : {"class" : "plus"},
+						cb : function () {
+							var self = this,
+								$elf = self.node;
+							JMVC.events.on($elf, 'click', function () {
+								var pI = self.getNode('discountInput').node;
+								pI.value = parseFloat(pI.value, 10) + 0.01;
+								JMVC.events.trigger(pI, 'change');
+							});
+							self.done();
+						}
+					}]
 				},{
 					tag : 'input',
 					wid : "discountInput",
