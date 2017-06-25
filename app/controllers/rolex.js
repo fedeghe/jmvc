@@ -8,16 +8,16 @@ JMVC.controllers.rolex = function () {
 	this.action_index = function () {
 
 		JMVC.require('core/lib/widgzard/widgzard', render);
-		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/core/jmvc-day.css', true);
 		JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/rolex.css', true);
 		function render(){
 			JMVC.head.addStyle(
 				JMVC.object.toCss({
 					body : {
-						'font-family' : 'verdana'
+						'font-family' : 'verdana',
+						'font-size':'0.6em'
 					},
 					'caption' : {
-						'font-size' : '2em',
+						'font-size' : '1.6em',
 						'text-align' : 'left'
 					},
 					'tr>th' : {
@@ -32,6 +32,19 @@ JMVC.controllers.rolex = function () {
 					},
 					'sub' : {
 						display : 'block'
+					},
+					button : {
+						border:'none',
+						'margin-left' : '5px',
+						'-moz-border-radius':'3px',
+						'-webkit-border-radius':'3px',
+						'border-radius':'3px'
+					},
+					'button.plus' : {
+						'background-color':'green'
+					},
+					'button.minus' : {
+						'background-color':'red'
 					}
 				}),
 				true,
@@ -112,10 +125,10 @@ JMVC.controllers.rolex = function () {
 					headers = [
 						'&bull;',
 						'disc.', 
-						'0% vat',
-						'disc. p.',
-						'ch vat',
-						'back vat',
+						'0%&nbsp;vat',
+						'disc.&nbsp;p.',
+						'ch&nbsp;vat',
+						'back&nbsp;vat',
 						'tot'
 					],i,l;
 				for(i = 0, l = headers.length; i < l; i++) {
@@ -197,36 +210,92 @@ JMVC.controllers.rolex = function () {
 				},{
 					tag : 'label', text : 'price'
 				},{
+					tag : 'button', html : "-",
+					attrs : {"class" : "minus"},
+					cb : function () {
+						var self = this,
+							$elf = self.node;
+						JMVC.events.on($elf, 'click', function () {
+							var pI = self.getNode('priceInput').node;
+							pI.value = ~~(pI.value) - 10;
+							JMVC.events.trigger(pI, 'change');
+						});
+						self.done();
+					}
+				},{
+					tag : 'button', html : "+",
+					attrs : {"class" : "plus"},
+					cb : function () {
+						var self = this,
+							$elf = self.node;
+						JMVC.events.on($elf, 'click', function () {
+							var pI = self.getNode('priceInput').node;
+							pI.value = ~~(pI.value) + 10;
+							JMVC.events.trigger(pI, 'change');
+						});
+						self.done();
+					}
+				},{
 					tag : 'input',
+					wid : "priceInput",
 					style : {
 						width : '98vw',
 						margin : '1vw'
 					},
 					attrs : {
 						type : 'range',
-						min : 5000,
-						max : 35000,
-						step : 50,
+						min : 1000,
+						max : 50000,
+						step : 10,
 						value : fullPrice
 					},
 					cb : function () {
 						var self = this,
 							$elf = self.node;
-						JMVC.events.on($elf, 'input', function () {
+						function _ref() {
 							var table = self.getNode('table').node;
 							fullPrice = ~~($elf.value);
 							refresh(table);
-						})
+						}
+						JMVC.events.on($elf, 'input', _ref)
+						JMVC.events.on($elf, 'change', _ref)
 						self.done();
 					}
 				},{
 					tag : 'label', text : 'discount'
 				},{
+					tag : 'button', html : "-",
+					attrs : {"class" : "minus"},
+					cb : function () {
+						var self = this,
+							$elf = self.node;
+						JMVC.events.on($elf, 'click', function () {
+							var pI = self.getNode('discountInput').node;
+							pI.value = parseFloat(pI.value, 10) - 0.01;
+							JMVC.events.trigger(pI, 'change');
+						});
+						self.done();
+					}
+				},{
+					tag : 'button', html : "+",
+					attrs : {"class" : "plus"},
+					cb : function () {
+						var self = this,
+							$elf = self.node;
+						JMVC.events.on($elf, 'click', function () {
+							var pI = self.getNode('discountInput').node;
+							pI.value = parseFloat(pI.value, 10) + 0.01;
+							JMVC.events.trigger(pI, 'change');
+						});
+						self.done();
+					}
+				},{
 					tag : 'input',
+					wid : "discountInput",
 					attrs : {
 						type : 'range',
 						min : 0,
-						max : 0.25,
+						max : 0.50,
 						step : 0.001,
 						value : discount
 					},
@@ -237,11 +306,13 @@ JMVC.controllers.rolex = function () {
 					cb : function () {
 						var self = this,
 							$elf = self.node;
-						JMVC.events.on($elf, 'input', function () {
+						function _ref() {
 							var table = self.getNode('table').node;
 							discount = $elf.value;
 							refresh(table);
-						})
+						}
+						JMVC.events.on($elf, 'input', _ref)
+						JMVC.events.on($elf, 'change', _ref)
 						self.done();
 					}
 				}],
