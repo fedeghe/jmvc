@@ -5,5 +5,4 @@ ___ _  /__  /|_/ /__ | / /_  /
 \____/  /_/  /_/  _____/  \____/  v.$version$
 
 author: $author$
-build : #__BUILDNUMBER__ on __DATE__
 Distributed under MIT license

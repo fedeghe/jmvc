@@ -1,5 +1,5 @@
 <function>
-    <signature name="digForValue">JMVC.object.digForValue(Object obj, Mixed elem)</signature>
+    <signature name="digForKeyValue">JMVC.object.digForKeyValue(Object obj, Mixed elem)</signature>
     <description>Gets/sets document title</description>
     <params>
         <param name="name">The name of the meta You want to add</param>
@@ -8,18 +8,18 @@
     <returns>void (undefined)</returns>
     <testlink>test_api_object_digfor</testlink>
     <status>complete</status>
-    <sample>var res = JMVC.object.digForValue({&#10;
+    <sample>var res = JMVC.object.digForKeyValue({&#10;
     a : [1,2,3,4],&#10;
     b : "ciao",&#10;
     c : function () {},&#10;
     d : [{b : 1}, {b : 2}, {jo : {yu :{a:1234}}}]&#10;
-}, 1);&#10;
+}, {key:'b',value:2});&#10;
 console.log(res);</sample>
-    <code>var res = JMVC.object.digForValue({
+    <code>var res = JMVC.object.digForKeyValue({
   a : [1,2,3,4],
   b : 'ciao',
   c : function () {},
   d : [{b : 1}, {b : 2}, {jo : {yu :{a:1234}}}]
-}, 1);
-console.log(res);</code>
+}, {key:'b', value:2});
+console.dir(res[0]);</code>
 </function>

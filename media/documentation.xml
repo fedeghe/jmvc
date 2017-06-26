@@ -3307,14 +3307,30 @@ console.log(t);
 [Malta] src/object/clone.xml
 -->
 <function>
-    <signature name="clone">JMVC.object.clone(String name, String value)</signature>
-    <description>Gets/sets document title</description>
+    <signature name="clone">JMVC.object.clone(Object obj)</signature>
+    <description>Deep clones the passed object</description>
     <params>
-        <param name="name">The name of the meta You want to add</param>
-        <param name="value">The value of the meta You want to add</param>
+        <param name="obj">The object to be cloned</param>
     </params>
-    <returns>void (undefined)</returns>
-    <status>incomplete</status>
+    <returns>Object</returns>
+    <testlink>test_api_object_clone</testlink>
+    <status>complete</status>
+    <sample>var obj = {&#10;
+    a : [1,2,3,4],&#10;
+    b : "ciao",&#10;
+    c : function () {},&#10;
+    d : [{b : 1}, {b : 2}, {jo : {yu :{a:1234}}}]&#10;
+},&#10;
+res = JMVC.object.clone(obj, {key:'b',value:2});&#10;
+obj.b = "hi Jeff";
+console.log(res);</sample>
+    <code>var res = JMVC.object.digForKeyValue({
+  a : [1,2,3,4],
+  b : 'ciao',
+  c : function () {},
+  d : [{b : 1}, {b : 2}, {jo : {yu :{a:1234}}}]
+}, {key:'b', value:2});
+console.dir(res[0]);</code>
 </function>
 <!--
 [Malta] src/object/digForKey.xml
@@ -3327,8 +3343,8 @@ console.log(t);
         <param name="value">The value of the meta You want to add</param>
     </params>
     <returns>void (undefined)</returns>
-    <testlink>test_api_digfor</testlink>
-    <status>incomplete</status>
+    <testlink>test_api_object_digfor</testlink>
+    <status>complete</status>
     <sample>var res = JMVC.object.digForKey({&#10;
     a : [1,2,3,4],&#10;
     b : "ciao",&#10;
@@ -3355,7 +3371,8 @@ console.log(res);</code>
         <param name="value">The value of the meta You want to add</param>
     </params>
     <returns>void (undefined)</returns>
-    <status>incomplete</status>
+    <testlink>test_api_object_digfor</testlink>
+    <status>complete</status>
     <sample>var res = JMVC.object.digForValue({&#10;
     a : [1,2,3,4],&#10;
     b : "ciao",&#10;
@@ -3370,6 +3387,34 @@ console.log(res);</sample>
   d : [{b : 1}, {b : 2}, {jo : {yu :{a:1234}}}]
 }, 1);
 console.log(res);</code>
+</function>
+<!--
+[Malta] src/object/digForKeyValue.xml
+-->
+<function>
+    <signature name="digForKeyValue">JMVC.object.digForKeyValue(Object obj, Mixed elem)</signature>
+    <description>Gets/sets document title</description>
+    <params>
+        <param name="name">The name of the meta You want to add</param>
+        <param name="value">The value of the meta You want to add</param>
+    </params>
+    <returns>void (undefined)</returns>
+    <testlink>test_api_object_digfor</testlink>
+    <status>complete</status>
+    <sample>var res = JMVC.object.digForKeyValue({&#10;
+    a : [1,2,3,4],&#10;
+    b : "ciao",&#10;
+    c : function () {},&#10;
+    d : [{b : 1}, {b : 2}, {jo : {yu :{a:1234}}}]&#10;
+}, {key:'b',value:2});&#10;
+console.log(res);</sample>
+    <code>var res = JMVC.object.digForKeyValue({
+  a : [1,2,3,4],
+  b : 'ciao',
+  c : function () {},
+  d : [{b : 1}, {b : 2}, {jo : {yu :{a:1234}}}]
+}, {key:'b', value:2});
+console.dir(res[0]);</code>
 </function>
 <!--
 [Malta] src/object/extend.xml

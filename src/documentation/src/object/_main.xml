@@ -2,6 +2,7 @@
     $$src/object/clone.xml$$
     $$src/object/digForKey.xml$$
     $$src/object/digForValue.xml$$
+    $$src/object/digForKeyValue.xml$$
     $$src/object/extend.xml$$
     $$src/object/fromQs.xml$$
     $$src/object/compare.xml$$

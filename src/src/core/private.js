@@ -3,7 +3,7 @@
 _ = {};
 _.common = {
     digFor : function (what, obj, target, limit) {
-        if(!what.match(/key|value/)) {
+        if(!what.match(/key|value|keyvalue/)) {
             throw new JMVC.Errors.BadParams('Bad param for JMVC._.object.digFor');
         }
         limit = ~~limit;
@@ -21,6 +21,20 @@ _.common = {
                         k2.match(val)
                         :
                         JMVC.object.jCompare(k2, val);
+                },
+                keyvalue : function (k1, k2, keyval) {
+                    return (
+                        (JMVC.util.isString(k1) && keyval.key instanceof RegExp) ?
+                        k1.match(keyval.key)
+                        :
+                        JMVC.object.jCompare(k1, keyval.key)
+                    ) && (
+
+                        (JMVC.util.isString(k2) && keyval.value instanceof RegExp) ?
+                        k2.match(keyval.value)
+                        :
+                        JMVC.object.jCompare(k2, keyval.value)
+                    );
                 }
             }[what],
 
@@ -31,6 +45,7 @@ _.common = {
                     tmp = matches(index, obj[index], key);
                 if (tmp) {
                     res.push({
+                        obj : obj,
                         value: obj[index],
                         key : p[p.length - 1],
                         parentKey : p[p.length - 2],
