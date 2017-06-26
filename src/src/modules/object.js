@@ -161,6 +161,20 @@ JMVC.object = {
         return _.common.digFor('value', o, k, lim);
     },
 
+
+    /**
+     * { function_description }
+     *
+     * @param      {<type>}  o       { parameter_description }
+     * @param      {<type>}  k       { parameter_description }
+     * @param      {<type>}  lim     The limit
+     * @return     {<type>}  { description_of_the_return_value }
+     */
+    digForKeyValue : function (o, kv, lim) {
+        'use strict';
+        return _.common.digFor('keyvalue', o, kv, lim);
+    },
+
     /**
      * [ description]
      * @param  {[type]} obj [description]
