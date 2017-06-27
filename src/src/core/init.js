@@ -116,7 +116,10 @@ var time_begin = +new Date(),
          */
         engyComponents : US + 'app' + US + 'eComp' + US
     },
-    //
+    
+    /**
+     * extensions for relevant mvc files
+     */
     JMVC_EXT = {
         'controller' : '.js',
         'model' : '.js',
@@ -131,10 +134,9 @@ var time_begin = +new Date(),
      * @type {Array}
      */
     URL_ALLOWED_EXTENSIONS = [
-        'asp', 'do', 'exe', 'html', 'htm', 'jmvc',  'jsp', 'js', 'jeti', 'j', 'ninja',  'mvc', 'ohmygod', 'omg', 'php', 'wtf', 'whathafuck', 'trojan'
-        //
-        // ... seriously I should find someone able to help me!!!
-        //  
+        'asp', 'do','exe', 'html', 'htm', 'jsp', 'js', 'php',
+
+        'deinemutter', 'ohmygod', 'omg', 'j', 'jeti', 'jmvc', 'mvc', 'ninja',  'wat','wtf', 'trojan'
     ],
     //
     /**
@@ -148,7 +150,7 @@ var time_begin = +new Date(),
 
     /**
      * dispather function result
-     * here will be stored relevant results returned from the dispather function
+     * here will be stored relevant results returned from the dispatcher function
      * used to parse the current url for getting all is needed to now how to get
      * the right response
      */

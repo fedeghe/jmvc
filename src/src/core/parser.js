@@ -1,6 +1,3 @@
-/*----
-PARSER
-----*/
 Parser = {
     /**
      * microtemplating function

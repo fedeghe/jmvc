@@ -1,6 +1,3 @@
-/*--------
-JMVC inner
---------*/
 jmvc = {
     check : function (f, p) {
         try {

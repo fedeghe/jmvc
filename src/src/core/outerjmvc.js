@@ -1,6 +1,3 @@
-/*--------
-JMVC outer
---------*/
 $JMVC = {
     loaded : false,
     W: W,
