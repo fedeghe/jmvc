@@ -5,7 +5,5 @@
 	"author" : "Federico Ghedina - $email$",
 	"email" : "fedeghe@gmail.com",
 	"build_system" : "Malta",
-    "build_system_link" : "http://www.github.com/fedeghe/malta",
-	"packed" : "",
-	"what" : true
+    "build_system_link" : "http://www.github.com/fedeghe/malta"
 }

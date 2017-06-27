@@ -61,9 +61,6 @@ var time_begin = +new Date(),
     // review (vars.json)
     JMVC_TIME = '__TIME__',
 
-    // experimental (ignore it)
-    JMVC_PACKED = '$packed$', //'.min' 
-
     // inner jmvc literal, will contain almost all the functions used to 
     // compose the $JMVC object and thus the returning JMVC
     jmvc = {},
@@ -121,10 +118,10 @@ var time_begin = +new Date(),
     },
     //
     JMVC_EXT = {
-        'controller' : (JMVC_PACKED || '') + '.js',
-        'model' : (JMVC_PACKED || '') + '.js',
+        'controller' : '.js',
+        'model' : '.js',
         'view' : '.html',
-        'interface' : '.interface' + (JMVC_PACKED || '') + '.js'
+        'interface' : '.interface.js'
     },
 
     /*
