@@ -729,7 +729,7 @@ jmvc = {
 
         if (JMVC.i18n.langs[JMVC.vars.currentlang] === true) {
             $JMVC.io.get(
-                JMVC.vars.baseurl + PATHS.lang + JMVC.vars.currentlang + (JMVC_PACKED || '') + '.js',
+                JMVC.vars.baseurl + PATHS.lang + JMVC.vars.currentlang + '.js',
                 function (ln) {
                     jmvc.jeval(ln);
                 },
@@ -933,7 +933,7 @@ jmvc = {
 
                     path = JMVC.vars.baseurl +
                         PATHS[(arg[i] === 'testsuite' ? 'test' : 'ext')] +
-                        arg[i].replace(/\./, '/') + (JMVC_PACKED || '') + '.js';
+                        arg[i].replace(/\./, '/')  + '.js';
 
 
                     // mode ? 

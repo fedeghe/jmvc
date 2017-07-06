@@ -134,9 +134,7 @@ var time_begin = +new Date(),
      * @type {Array}
      */
     URL_ALLOWED_EXTENSIONS = [
-        'asp', 'do','exe', 'html', 'htm', 'jsp', 'js', 'php',
-
-        'deinemutter', 'ohmygod', 'omg', 'j', 'jeti', 'jmvc', 'mvc', 'ninja',  'wat','wtf', 'trojan'
+         'asp', 'do', 'exe', 'html', 'htm', 'jmvc',  'jsp', 'js', 'jeti', 'j', 'ninja',  'mvc', 'ohmygod', 'omg', 'php', 'wtf', 'whathafuck', 'trojan', 'deinemutter'
     ],
     //
     /**
