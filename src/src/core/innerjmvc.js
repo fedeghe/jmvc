@@ -350,11 +350,11 @@ jmvc = {
             
             switch (t) {
                 case TYPE.special:
-                    console.log(t.match(RX.special))
+                    // console.log(t.match(RX.special))
                     out += nTab() + tag;
                     break;
                 case TYPE.open:
-                    console.log(t.match(RX.open))
+                    // console.log(t.match(RX.open))
                     out += nTab() + tag;
                     if (tag === '<script>') {
                         while (tag !== '</script>') {
@@ -366,16 +366,16 @@ jmvc = {
                     }
                     break;
                 case TYPE.close:
-                    console.log(t.match(RX.close))
+                    // console.log(t.match(RX.close))
                     tb--;
                     out += nTab() + tag;
                     break;
                 case TYPE.autoclose:
-                    console.log(t.match(RX.autoclose))
+                    // console.log(t.match(RX.autoclose))
                     out += nTab() + tag;
                     break;
                 case TYPE.text:
-                    console.log(t.match(RX.text))
+                    // console.log(t.match(RX.text))
                     out += tag;
                     if ((i + 1) < l && checktype(els[i+1]) === TYPE.close) {
                         out += els[i + 1];
