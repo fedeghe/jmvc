@@ -705,6 +705,18 @@ jmvc = {
                 }
             }
             return ctx;
+        },
+
+
+        extend : function (ns, objfn) {
+            var i,
+                obj = typeof objfn === 'function' ? objfn() : objfn;
+            for (i in obj) {
+                if (typeof ns[i] == 'undefined') {
+                    ns[i] = obj[i];
+                }
+            }
+            return ns;
         }
 
 

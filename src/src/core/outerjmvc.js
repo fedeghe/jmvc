@@ -53,6 +53,7 @@ $JMVC = {
     //
     modules : Modules,
     nsCheck : jmvc.ns.check,
+    nsExtend : jmvc.ns.extend,
     nsMake : jmvc.ns.make,
     //
     // Constructors
