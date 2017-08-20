@@ -71,8 +71,16 @@ JMVC.extend('test', function () {
             return '<ul>' + out + '</ul>';
         },
         */
+        highlight = function (code) {
+            return code
+                .replace(/function/g, '<span class="function">function</span>')
+                .replace(/JMVC/g, '<span class="jmvc">JMVC</span>')
+                .replace(/new/g, '<span class="new">new</span>')
+                .replace(/([\}\{\[\]\(\)}])/g, function (str, $1) {
+                    return '<span class="parenthesis">' + $1 + '</span>';
+                });
+        },
         listCode = function (code, noNumberLines) {
-            'use strict';
             var lines = code.split(/\n/).filter(function (line) {
                     return line.replace(/\s|\t*/g, '').length;
                 }),
@@ -109,19 +117,10 @@ JMVC.extend('test', function () {
 
                 out.push(JMVC.string.replaceAll(outline, {
                     nline : noNumberLines ? '' : i,
-                    line : '<span>' + hightlight(JMVC.htmlChars(lines[j] || ' ')) + '</span>'
+                    line : '<span>' + highlight(JMVC.htmlChars(lines[j] || ' ')) + '</span>'
                 }));
             }
             return '<ul>' + out.join('') + '</ul>';
-        },
-        hightlight = function (code) {
-            return code
-                .replace(/function/g, '<span class="function">function</span>')
-                .replace(/JMVC/g, '<span class="jmvc">JMVC</span>')
-                .replace(/new/g, '<span class="new">new</span>')
-                .replace(/([\}\{\[\]\(\)}])/g, function (str, $1) {
-                    return '<span class="parenthesis">' + $1 + '</span>';
-                });
         };
 
     
@@ -140,8 +139,6 @@ JMVC.extend('test', function () {
          * @return {[type]}         [description]
          */
         initialize : function (outcode) {
-
-            'use strict';
             if (outcode !== undefined && outcode) {
                 vars.outCode = outcode;
             }
@@ -156,7 +153,6 @@ JMVC.extend('test', function () {
          * @return {[type]}      [description]
          */
         describe : function (html) {
-            'use strict';
             if (vars.mode == vars.HTML_MODE) {
                 JMVC.dom.add(
                     vars.banner,
@@ -192,7 +188,6 @@ JMVC.extend('test', function () {
          * @return {[type]}     [description]
          */
         message : function (msg) {
-            'use strict';
             if (vars.mode == vars.CONSOLE_MODE) {
                 JMVC.debug("MSG: " + msg);
             } else {
@@ -212,7 +207,6 @@ JMVC.extend('test', function () {
          * @return {[type]}      [description]
          */
         outDebug : function (kind, opts) {
-            'use strict';
             vars.debug_id += 1;
             var tpl  = '<span class="more" id="toggle_%id%">more</span><div class="hideSpec" id="spec_%id%"><h4>%tit%</h4><h4>%real%</h4><pre class="fiveround">%code%</pre></div>',
                 pars = {
@@ -267,7 +261,6 @@ JMVC.extend('test', function () {
             //
             URIError        An error when encoding or decoding the URI has occurred (ie: when calling encodeURI()).
             */
-            'use strict';
             JMVC.test.startTest(testName);
             var res = true,
                 debuginfo = false,
@@ -300,7 +293,6 @@ JMVC.extend('test', function () {
          * @return {[type]}          [description]
          */
         testAssertion : function (testName, valueFn) {
-            'use strict';
             var res = false,
                 debuginfo = false;
 
@@ -328,7 +320,6 @@ JMVC.extend('test', function () {
          * @return {[type]}                 [description]
          */
         testValue : function (testName, fn, expectedValue, options) {
-            'use strict';
             var res = true,
                 debuginfo = false,
                 i = 0,
@@ -370,11 +361,8 @@ JMVC.extend('test', function () {
          * @return {[type]}            [description]
          */
         testTime2 : function (testName, fn, times, options) {
-            'use strict';
-
             // clone agruments as many times as needed
             //
-            
             var argClones = [],
                 n = times;
             while (n--) argClones.push(JMVC.object.clone(options));
@@ -391,8 +379,6 @@ JMVC.extend('test', function () {
             this.testimes.push([testName, JMVC.test.finishTest(true)]);
         },
         testTime : function (testName, fn, times, options) {
-            'use strict';
-
             // if options is not an array but a function 
             // then is intended to produce the arguments in lieu of options
             //
@@ -421,20 +407,12 @@ JMVC.extend('test', function () {
             this.testimes.push([testName, JMVC.test.finishTest(true)]);
         },
 
-
-
-
-
-
-
-
         /**
          * [startTest description]
          * @param  {[type]} testName [description]
          * @return {[type]}          [description]
          */
         startTest : function (testName) {
-            'use strict';
             if (vars.mode == vars.CONSOLE_MODE) {
                 JMVC.debug("testing..." + testName);
             } else {
@@ -455,7 +433,6 @@ JMVC.extend('test', function () {
          * @return {[type]}           [description]
          */
         finishTest : function (passed, debuginfo) {
-            'use strict';
             var time = 0,
                 result = false;
 
@@ -510,7 +487,6 @@ JMVC.extend('test', function () {
          * @return {[type]} [description]
          */
         startAll : function () {
-            'use strict';
             var togglespec_visibility = false,
                 panel,
                 togglebutton;
@@ -549,7 +525,6 @@ JMVC.extend('test', function () {
          * @return {[type]}      [description]
          */
         finishAll : function (code) {
-            'use strict';
             var result = ["","(", vars.testsPassed, "out of", vars.totalTests, "tests passed", ")"].join(' '),
                 res = vars.testsPassed === vars.totalTests,
                 wholeResClass = res ? 'passed' : 'failed' ,
@@ -607,7 +582,6 @@ JMVC.extend('test', function () {
          * @return {[type]} [description]
          */
         pause : function () {
-            'use strict';
             JMVC.dom.add(
                 vars.banner,
                 'hr',
@@ -616,7 +590,6 @@ JMVC.extend('test', function () {
         },
 
         timeSummary : function (title) {
-            
             var l = this.testimes.length,
                 colors = JMVC.core.color.getGradientArray('#00ff00', '#ff0000', l - 2),
                 list = JMVC.dom.create('ul'),
