@@ -18,7 +18,7 @@ JMVC.extend('console', {
             tpl : '<!DOCTYPE html>'+
                 '<html>'+
                     '<head>'+
-                        '<link rel="stylesheet" type="text/css" href="/media/css/core/jmvc.min.css">'+
+                        '<link rel="stylesheet" type="text/css" href="/media/css/core/jmvc.css">'+
                         '<style type="text/css">%style%</style>'+
                     '</head>'+
                     '<body class="console">%body%</body>'+
@@ -344,10 +344,7 @@ JMVC.extend('console', {
                             }
                         ]
                     }],
-                    cb : function () {
-                        start();
-                    }
-
+                    cb : start
                 },
                 hash = false;
 
