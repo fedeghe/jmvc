@@ -132,6 +132,9 @@ JMVC.controllers.index = function () {
 
 							JMVC.gmap2.animator(map, [
 
+								/* Berlin Brandergurg platz */
+								{location : [52.516245,13.3769667], speed : 20, duration : 20, streetView : {heading : 111.57, zoom : -2}},
+								// 52.516245,13.3769667,3a,75y,111.57h,85.74
 
 								/* Greenland */
 								// {location : [24.1829108,-76.4570398], speed : 20, duration : 20, streetView : {heading : 270, zoom : -2}},
