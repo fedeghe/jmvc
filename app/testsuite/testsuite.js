@@ -344,8 +344,8 @@ JMVC.extend('test', function () {
             JMVC.test.finishTest(res, debuginfo);
         },
         
-
         testimes : [],
+
         /**
          * [testTime description]
          * in the case the testing function is desctructive, (for example a function that use splice function
