@@ -589,6 +589,13 @@ JMVC.extend('test', function () {
             );
         },
 
+        hr : function () {
+            JMVC.dom.add(
+                vars.banner,
+                'hr'
+            );
+        },
+
         timeSummary : function (title) {
             var l = this.testimes.length,
                 colors = JMVC.core.color.getGradientArray('#00ff00', '#ff0000', l - 2),
