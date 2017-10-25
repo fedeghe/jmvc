@@ -23,7 +23,7 @@ JMVC.controllers.info = function () {
 			features = JMVC.getView('info/features'),
 			info_intro = JMVC.getView('info/info_intro'),
 			infoutro = JMVC.getView('info/info_outro'),
-			backtotop = '<a href="#top">go to top</a>',
+			backtotop = '<a href="#top" class="goToTop">go to top</a>',
 			toplinks = [],
 			toplinksdata = {
 				intro : 'Introduction',
@@ -80,7 +80,6 @@ JMVC.controllers.info = function () {
 		});
 
 		main.parse().render(function () {
-
 			JMVC.head.lastModified();
 			JMVC.github.forkme('fedeghe');
 			JMVC.mobile.topHide();
