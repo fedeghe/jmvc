@@ -600,17 +600,21 @@ JMVC.extend('test', function () {
             var l = this.testimes.length,
                 colors = JMVC.core.color.getGradientArray('#00ff00', '#ff0000', l - 2),
                 list = JMVC.dom.create('ul'),
+                anchor = JMVC.dom.create('a', {name: 'ts'}),
                 cnt = JMVC.dom.create(
                     'div',
                     {'class':'timesummary fiveround'},
                     list
                 );
+            JMVC.dom.append(cnt, anchor);
+                
             title = title || 'Times summary';
 
             //order
             this.testimes = this.testimes.sort(function (a, b) {
                 return a[1] > b[1] ? 1 : a[1] < b[1] ? -1 : 0;
             });
+            
             JMVC.dom.add(
                 list,
                 'li',
