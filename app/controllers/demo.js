@@ -170,7 +170,8 @@ JMVC.controllers.demo = function() {
 				'* lib/crypt': 'test_crypt',
 				'* FizzBuzz perf': 'test_fizzbuzz',
 				'* Leap year': 'test_leap',
-				'* loops' : 'test_loops'
+				'* loops' : 'test_loops',
+				'* array loops' : 'test_arrayLoop'
 			},
 			tpl = '<li><a href="%base_url%/%path%">$index$ %label%</a></li>',
 			out = '',
