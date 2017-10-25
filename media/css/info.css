@@ -105,3 +105,8 @@ div.toplinks a{
 div.toplinks a:hover{
 	background-color:#eee;
 }
+
+a.goToTop {
+	display:inline-block;
+	margin-top: 3em;
+}
