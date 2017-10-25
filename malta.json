@@ -1,5 +1,5 @@
 {
-    "!src/index.html" :  ". -plugins=malta-header-comment[name:\"license.txt\"]...malta-browser-refresh[files:'*']",
+    "!src/index.html" :  ". -plugins=malta-header-comment[name:\"license.txt\"]",
     "src/index.html" :  ". -plugins=malta-header-comment[name:\"license.txt\"]",
     "src/jmvc.js" :  "app -plugins=malta-js-uglify...malta-header-comment[name:\"license.txt\"]",
     
