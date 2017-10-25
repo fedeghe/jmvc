@@ -8,6 +8,17 @@
 #
 #################################################
 
+
+# some security
+## https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+Header always set X-Frame-Options SAMEORIGIN
+
+## https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
+
+
+
+
+
 # pass the default character set
 AddDefaultCharset utf-8
 
@@ -34,6 +45,10 @@ FileETag MTime Size
 </ifmodule>
 	
 <ifModule mod_headers.c>
+	# XSS protection
+	Header set X-XSS-Protection "1; mode=block"
+	
+
 	#CORS, {*, null, or exact domain(http://ws.jmvc.org)}
 	Header set Access-Control-Allow-Origin "*"
 
