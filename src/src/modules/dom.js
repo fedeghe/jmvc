@@ -333,7 +333,8 @@ JMVC.dom = {
         }
         ret = toArr ? JMVC.array.coll2array(ret) : ret;
         isArr = ret instanceof Array;
-        return (isArr && ret.length === 1) ? ret[0] : ret;
+        // return (isArr && ret.length === 1) ? ret : ret;
+        return ret;
     },
     find2 : function (a, b) {
         if (a.nodeType === 1) {return a; }
