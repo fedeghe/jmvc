@@ -119,6 +119,7 @@ jmvc = {
     each: function (o, func) {
         //var type = ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase(),
         // speed up
+        if (!o) return;
         var type = 'length' in o ? 'array' : 'object',
             i, l, ret;
 
