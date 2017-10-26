@@ -20,7 +20,7 @@ JMVC.controllers.arrayLoop = function() {
 				res = [],
 				utility = {};
 			
-			JMVC.test.initialize(true);
+			JMVC.test.initialize();
 			JMVC.test.startAll();
 			JMVC.test.describe(`
 Test array loops:<br/>
