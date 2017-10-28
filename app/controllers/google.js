@@ -51,7 +51,7 @@ JMVC.controllers.google = function () {
 				l = new JMVC.plotter.symbol('l', 437, 64);
 				e = new JMVC.plotter.symbol('e', 460, 48);
 
-				G.arc(3, 0, 76, 68, M.PI / 27, M.PI/2, 34)
+				G.arc(3, 0, 76, 68, M.PI / 27, 14*M.PI/30, 35)
 					.line(12, 67, 53, 58, 3)
 					.line(53, 58, 53, 23,  3)
 					.line(53, 23, 59, 16, 0)
@@ -104,7 +104,7 @@ JMVC.controllers.google = function () {
 				l = new JMVC.plotter.symbol('l', 430, 4);
 				e = new JMVC.plotter.symbol('e', 498, 93);
 
-				G.arc(0, 0, 67, 71, M.PI/25, 0,  44	)
+				G.arc(0, 0, 67, 71, M.PI/25, -M.PI/50,  45	)
 				 .arc(0, 0, 50, 52, M.PI/25, M.PI/12, 42)
 				 .line(48, -50, 36 ,-38, 2)
 				 .line(65, -5, 2 , -5, 8)
