@@ -202,11 +202,12 @@ var time_begin = +new Date(),
 
     //
     // getmode used in the require function
-    // ajax         : use xhr to get the source and evals
+    // ajaxsync         : use xhr to get the source and evals
+    // ajaxasync         : no...it does not work for the moment
     // script       : creates a script tag with the right url to the source, unsafe sync
     // scriptghost  : same as script but removes all injected script from the DOM after load, same problem
     // NOTE > it seems like script mode load faster but ...
-    getmode = 'ajax', // {ajax, script, scriptghost}
+    getmode = 'ajaxsync', // {ajax, script, scriptghost}
     //
     // ===========================================
     //
