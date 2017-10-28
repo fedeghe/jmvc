@@ -449,25 +449,28 @@ Wcave.prototype.initTunnel = function () {
  * @return {[type]} [description]
  */
 Wcave.prototype.initAudio = function () {
+    var i;
     //var self = this;
     //
     //audio
     if (conf.audiointro) {
 
         vars.audio = WD.createElement('audio');
-
+        vars.audio.addEventListener('canplaythrough', function () {
+            this.play();
+        });
         self.utils.attr(vars.audio, {'id' : conf.audioid, 'loop' : ''});
 
-        // append the source tag
-        vars.audio.appendChild(
-            self.utils.attr(
-                WD.createElement('source'),
-                {'type' : 'audio/ogg', 'src' : conf.audiointro}
-            )
-        );
-
+        // append source tags
+        for (i in conf.audiointro.formats) {
+            vars.audio.appendChild(
+                self.utils.attr(
+                    WD.createElement('source'),
+                    {'type' : conf.audiointro.formats[i], 'src' : conf.audiointro.file + '.' + i}
+                )
+            );
+        }
         self.container.appendChild(vars.audio);
-        vars.audio.play();
     }
 };
 
