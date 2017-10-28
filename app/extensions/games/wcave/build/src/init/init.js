@@ -18,7 +18,6 @@ var Wcave = function () {},
      * vars are modified during the game
      */
     vars = {
-
         urlE : encodeURIComponent(document.location.href), 
 
         // score for the game
@@ -176,7 +175,13 @@ var Wcave = function () {},
         maxSteepVariation : 0.5,
 
         // audio file
-        audiointro : JMVC.vars.baseurl + '/media/audio/revolve.ogg',
+        audiointro : {
+            file: JMVC.vars.baseurl + '/app/extensions/games/wcave/audio/revolve',
+            formats: {
+                mp3: 'audio/mpeg',
+                ogg: 'audio/ogg'
+            }
+        },
 
         // id attribute for the audio tag
         audioid : 'au',
