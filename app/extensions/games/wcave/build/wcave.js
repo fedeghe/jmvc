@@ -15,8 +15,6 @@ $$src/head.js$$
     'use strict';
     //ooooooooooo
     $$src/wcave.js$$
-    
-
 }(window);
 
 

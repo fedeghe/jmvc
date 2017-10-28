@@ -3,7 +3,7 @@ JMVC.require('core/color/color', 'core/screen/screen');
 JMVC.controllers['404'] = function () {
 	'use strict';
 	this.action_msg = function () {
-		var seconds2redirection = 5,
+		var seconds2redirection = 8,
 			logo = JMVC.vars.baseurl + "/media/img/jmvc_n2.png",
 			V404 = JMVC.getView('core/404'),
 			d = new Date(),
@@ -33,16 +33,16 @@ JMVC.controllers['404'] = function () {
 		JMVC.head.title('404 PAGE NOT FOUND');
 		JMVC.events.delay(function () {JMVC.head.goto(); }, seconds2redirection * 1000);
 		
-		// meant to be passed at the view render
-		//
+		/**
+		 * meant to be passed at the view render
+		 */
 		function bubble(){
-
-			//<canvas id="cnv" width="" height="" style=""></canvas>
 			var cnv = JMVC.dom.create('canvas'),
 				dim = JMVC.screen.getViewportSize(),
 				mainContext = cnv.getContext('2d'),
 				canvasWidth = dim.width,
 				canvasHeight = dim.height,
+				canvasMax = canvasWidth > canvasHeight ? canvasWidth : canvasHeight,
 				angle = 0,
 				requestAnimationFrame = window.requestAnimationFrame ||
 					window.mozRequestAnimationFrame ||
@@ -87,14 +87,14 @@ JMVC.controllers['404'] = function () {
 			    mainContext.fillStyle = JMVC.core.color.getRandomColor();
 			    mainContext.strokeStyle = 'black';
 			    mainContext.font = "bold " + point.radius + "px sans-serif";
-			    mainContext.fillText("404",point.x, point.y);
-			    mainContext.strokeText("404",point.x, point.y);
+			    mainContext.fillText("404", point.x, point.y);
+			    mainContext.strokeText("404", point.x, point.y);
 			    mainContext.fill();
 			    mainContext.stroke();
 			    requestAnimationFrame(draw404);
 			}
 			draw404();
-			//drawCircle();
+			// drawCircle();
 		}
 
 
