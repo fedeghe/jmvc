@@ -41,9 +41,21 @@ different core loops and compare execution times
 				return res;
 			}
 
+			function _for_invert(a) {
+				var res = 0, l = a.length;
+				for (null; l--; null) res += a[l]; 
+				return res;
+			}
+
 			function _while(a) {
 				var res = 0, l = a.length, i = 0;
 				while (i < l) res += a[i++]; 
+				return res;
+			}
+
+			function _while_invert(a) {
+				var res = 0, l = a.length;
+				while (l--) res += a[l]; 
 				return res;
 			}
 
@@ -77,16 +89,17 @@ different core loops and compare execution times
 			}
 
 			function _eval(a) {
-				return eval(a.join('+'))
+				var res =  eval(a.join('+'))
+				return res;
 			}
 
 			function _red(a) {
-				return a.reduce(function (r, item) {
+				var res =  a.reduce(function (r, item) {
 					return r + item;
 				}, 0);
+				return res;
 			}
 
-	
 			/**
 			 * utility functions for storing and then being able to check results
 			 */
@@ -115,15 +128,16 @@ different core loops and compare execution times
 
 			utility.doTest('forEach',_forEach, 0);
 			utility.doTest('for',_for, 1);
-			utility.doTest('while',_while, 2);
-			utility.doTest('for in',_forIn, 3);
-			utility.doTest('for of',_forOf, 4);
-			utility.doTest('iterator', _iter, 5);
-			utility.doTest('reduce', _red, 6);
-
+			utility.doTest('for inverted',_for_invert, 2);
+			utility.doTest('while',_while, 3);
+			utility.doTest('while inverted',_while_invert, 4);
+			utility.doTest('for in',_forIn, 5);
+			utility.doTest('for of',_forOf, 6);
+			utility.doTest('iterator', _iter, 7);
+			utility.doTest('reduce', _red, 8);
 			JT.describe('What about abusing....')
-			utility.doTest('map abuse', _map, 7);
-			utility.doTest('crazy eval', _eval, 8);
+			utility.doTest('map abuse', _map, 9);
+			utility.doTest('crazy eval', _eval, 10);
 
 			JT.testValue("check results matches", utility.check, true);
 
