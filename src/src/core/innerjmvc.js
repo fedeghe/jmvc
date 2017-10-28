@@ -401,6 +401,11 @@ jmvc = {
             ($JMVC.vars[name] || undefined);
     },
 
+    getmodeAjax : getmode.match(/ajax/),
+    getmodeAjaxAsync : getmode.match(/ajaxasync/),
+    getmodeScript : getmode.match(/script/),
+    getmodeScriptGhost : getmode.match(/scriptghost/),
+
     /**
      * [globalize description]
      * @param  {[type]} obj  [description]
@@ -948,21 +953,18 @@ jmvc = {
                         PATHS[(arg[i] === 'testsuite' ? 'test' : 'ext')] +
                         arg[i].replace(/\./, '/')  + '.js';
 
-
                     // mode ? 
-                    if (getmode.match(/ajax/)) {
-
+                    if (jmvc.getmodeAjax) {
                         $JMVC.io.get(path, function(jres) {
                             jmvc.jeval(jres);
-                        }, false);
-
-                    } else if (getmode.match(/script/)) {
+                        }, jmvc.getmodeAjaxAsync);
+                    } else if (jmvc.getmodeScript) {
 
                         s = JMVC.WD.createElement('script');
                         s.type = 'text/javascript';
                         s.src = path;
                         head.appendChild(s);
-                        getmode === 'scriptghost' && head.removeChild(s);
+                        getmode === jmvc.getmodeScriptGhost && head.removeChild(s);
 
                     // damnme!!!
                     } else {
