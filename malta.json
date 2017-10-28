@@ -15,5 +15,5 @@
     "src/styles/ext/grind.less" : "app/extensions/core/lib/grind -plugins=malta-less...malta-css-uglify...malta-header-comment[name:\"license.txt\"] -vars=src/vars.json",
     "src/styles/ext/console.less" : "app/extensions/core/console -plugins=malta-less...malta-css-uglify...malta-header-comment[name:\"license.txt\"] -vars=src/vars.json",
 
-    "!app/extensions/games/wcave/build/wcave.js" : "app/extensions/games/wcave/"
+    "app/extensions/games/wcave/build/wcave.js" : "app/extensions/games/wcave/ -plugins=malta-js-uglify"
 }
