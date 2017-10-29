@@ -23,5 +23,5 @@ http.createServer(function (request, response) {
 
 }).listen(port);
 
-console.log('JMVC development server listening on port ' + port);
+console.log('JMVC development server listening on port ' + port + ' (http://localhost:' + port + ')');
 console.log('press CTRL + c to shut it down');
