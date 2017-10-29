@@ -50,7 +50,6 @@ JMVC.extend('widget.divrot', {
         clsNode = JMVC.dom.find('.flip-card-content');
 
         JMVC.events.on(document, 'keyup', function (e){
-
             var code = parseInt(JMVC.events.code(e), 10),
                 mode = 'o';
 
@@ -72,6 +71,7 @@ JMVC.extend('widget.divrot', {
         });
 
         JMVC.events.drag.on(document, {move : function (e, data) {
+            
             JMVC.events.preventDefault(e);
             if (swiping == true) {
                 return;
@@ -136,7 +136,6 @@ JMVC.extend('widget.divrot', {
             currentO = o;
             
             var tmp = currentO * step;
-            
             return JMVC.css.style(clsNode, {
                 'transform' : 'rotateY(' + tmp + 'deg)',
                 '-o-transform' : 'rotatey(' + tmp + 'deg)',
@@ -150,7 +149,6 @@ JMVC.extend('widget.divrot', {
             currentV = v;
 
             var tmp = currentV * step;
-            
             return JMVC.css.style(clsNode, {
                 'transform' : 'rotateX(' + tmp + 'deg)',
                 '-o-transform' : 'rotatex(' + tmp + 'deg)',
