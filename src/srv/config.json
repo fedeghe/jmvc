@@ -1,0 +1,6 @@
+{
+	"webroot" : "/Users/federicoghedina/htdocs/project_jmvc",
+	"accesspoint" : "index.html",	
+	"free" : ["app", "media"],
+	"port" : 8080
+}

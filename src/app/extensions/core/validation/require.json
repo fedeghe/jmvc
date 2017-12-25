@@ -1,0 +1,5 @@
+{
+    "src/app/extensions/core/validation/*.css": "app/extensions/core/validation",
+    "src/app/extensions/core/validation/*.js": "app/extensions/core/validation",
+    "src/app/extensions/core/validation/messages/*.js": "app/extensions/core/validation/messages"
+}

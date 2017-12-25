@@ -1,0 +1,35 @@
+{
+    "src/app/extensions/widget/accordion/*.js": "app/extensions/widget/accordion",
+    "src/app/extensions/widget/accordion/*.css": "app/extensions/widget/accordion",
+
+    "src/app/extensions/widget/countdown/*.js": "app/extensions/widget/countdown",
+
+    "src/app/extensions/widget/divrot/*.js": "app/extensions/widget/divrot",
+    "src/app/extensions/widget/divrot/*.css": "app/extensions/widget/divrot",
+
+    "src/app/extensions/widget/gauge/*.js": "app/extensions/widget/gauge",
+    "src/app/extensions/widget/gauge/*.css": "app/extensions/widget/gauge",
+
+    "src/app/extensions/widget/lang/*.js": "app/extensions/widget/lang",
+    "src/app/extensions/widget/lang/*.css": "app/extensions/widget/lang",
+
+    "src/app/extensions/widget/modal/*.js": "app/extensions/widget/modal",
+    "src/app/extensions/widget/modal/*.css": "app/extensions/widget/modal",
+
+    "src/app/extensions/widget/screensaver/*.js": "app/extensions/widget/screensaver",
+
+    "src/app/extensions/widget/slider/*.js": "app/extensions/widget/slider",
+    "src/app/extensions/widget/slider/*.css": "app/extensions/widget/slider",
+
+    "src/app/extensions/widget/snow/*.js": "app/extensions/widget/snow",
+    "src/app/extensions/widget/snow/*.css": "app/extensions/widget/snow",
+    "src/app/extensions/widget/snow/snow/*.js": "app/extensions/widget/snow/snow",
+
+    "src/app/extensions/widget/table/*.js": "app/extensions/widget/table",
+    "src/app/extensions/widget/table/*.css": "app/extensions/widget/table",
+
+    "src/app/extensions/widget/tabs/*.js": "app/extensions/widget/tabs",
+
+    "src/app/extensions/widget/tooltip/*.js": "app/extensions/widget/tooltip",
+    "src/app/extensions/widget/tooltip/*.css": "app/extensions/widget/tooltip"
+}

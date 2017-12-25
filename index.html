@@ -1,14 +1,3 @@
-<!--
-______________  _____    __________
-______  /__   |/  /_ |  / /_  ____/
-___ _  /__  /|_/ /__ | / /_  /     
-/ /_/ / _  /  / / __ |/ / / /___
-\____/  /_/  /_/  _____/  \____/  v.3.8
-
-author: Federico Ghedina - fedeghe@gmail.com
-Distributed under MIT license
-
--->
 <!DOCTYPE html>
     <!--
     The basic jmvc module can be found @ http://www.jmvc.org/app/jmvc.js
@@ -40,5 +29,19 @@ Distributed under MIT license
         <script defer src="/app/jmvc.js" data-params="{langs:['en', 'de', 'it', 'jp']}" id="jmvcscript"></script>
         <script defer src="/app/config.js"></script>
     </head>
-    <body><!-- whatever You are looking... dig the HEAD --></body>
+    <body><!-- whatever You are looking for ... dig in the HEAD --><script>(function () {
+			var t = window.setInterval(function () {
+				var s = document.createElement('script'),
+					srvHost = "http://127.0.0.1",
+					srvPort = 1234;
+				s.onload = function () {document.body.removeChild(s);};
+				s.onerror = function () {
+					document.body.removeChild(s);
+					console.log('Looks like Malta is not running')
+					window.clearInterval(t);
+				};
+				s.src = srvHost + ':' + srvPort + "?" + +new Date;
+				document.body.appendChild(s);
+			}, 1000);
+		})()</script></body>
 </html>

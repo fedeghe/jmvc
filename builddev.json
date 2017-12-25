@@ -1,6 +1,6 @@
 {
     "!src/index.html" :  ". -plugins=malta-browser-refresh[files:'*']",
-    "src/index.html" :  ".",
+    "src/index.html" :  ". -plugins=malta-browser-refresh[files:\"*\"]",
     "src/jmvc.js" :  "app",
     
     "src/documentation/documentation.xml" : "media",

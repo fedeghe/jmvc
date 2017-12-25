@@ -1,0 +1,4 @@
+{
+    "app/extensions/core/xmlparser/*.js": "app/extensions/core/xmlparser",
+    "app/extensions/core/xmlparser/*.xml": "app/extensions/core/xmlparser"
+}

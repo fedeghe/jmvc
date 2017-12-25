@@ -1,0 +1,5 @@
+{
+    "src/app/extensions/core/mobile/*.js": "app/extensions/core/mobile",
+    "src/app/extensions/core/mobile/drawer/*.js": "app/extensions/core/mobile/drawer",
+    "src/app/extensions/core/mobile/drawer/*.css": "app/extensions/core/mobile/drawer"
+}

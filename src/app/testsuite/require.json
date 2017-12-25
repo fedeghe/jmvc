@@ -1,0 +1,4 @@
+{
+    "src/app/testsuite/*.js": "app/testsuite",
+    "src/app/testsuite/css/*.css": "app/testsuite/css"
+}

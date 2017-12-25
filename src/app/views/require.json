@@ -1,0 +1,8 @@
+{
+    "EXE": [
+        "mkdir -p app/views/core"
+    ],
+    "src/app/views/*.less": "app/views -plugins=malta-less",
+    "src/app/views/*.html": "app/views",
+    "src/app/views/core/*.html": "app/views/core"
+}

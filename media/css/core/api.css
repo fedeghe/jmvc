@@ -1,16 +1,244 @@
+body {
+  /*font-family: Verdana, "MS Trebuchet", sans-serif;*/
+  font-family: "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+  font-size: 14px;
+  width: 900px;
+  margin: 0 auto;
+  margin-top: 1em;
+  /*background-image: url($baseurl$/media/img/oy.png);*/
+}
+p {
+  padding-bottom: 10px;
+  padding-top: 0px;
+  margin: 0px;
+  text-align: left;
+}
+label {
+  font-weight: bold;
+}
+label.lab {
+  font-weight: normal;
+}
+.cl1_Controller {
+  background-color: #CCF;
+}
+.cl2_Controller {
+  background-color: #FFF;
+}
+.cl1_View {
+  background-color: #CFC;
+}
+.cl2_View {
+  background-color: #FFF;
+}
+.cl1_Model {
+  background-color: #FCC;
+}
+.cl2_Model {
+  background-color: #FFF;
+}
+.cl1_Dom {
+  background-color: #9CF;
+}
+.cl2_Dom {
+  background-color: #FFF;
+}
+.cl1_Events {
+  background-color: #FCF;
+}
+.cl2_Events {
+  background-color: #FFF;
+}
+.cl1_Head {
+  background-color: #FC9;
+}
+.cl2_Head {
+  background-color: #FFF;
+}
+.cl1_JMVC {
+  background-color: #FFC;
+}
+.cl2_JMVC {
+  background-color: #FFF;
+}
+h3 {
+  padding-top: 1em;
+  padding-bottom: 0.5em;
+  margin: 0px;
+}
+h3.apisection {
+  padding-top: 1em;
+  padding-bottom: 0.5em;
+  margin: 0px;
+  text-decoration: underline;
+  /*color:red;*/
+}
+div#guest {
+  padding-top: 2em;
+  padding-bottom: 2em;
+  /*font-size:20px;*/
+}
+tr > td {
+  padding-bottom: 0.8em;
+  height: 0px;
+  line-height: 2em;
+  /*font-size:16px;*/
+}
+tr > td.first {
+  text-align: right;
+  padding-right: 0.5em;
+  /*color:#222;*/
+  font-weight: bold;
+}
+tr.dline td {
+  /*font-size:16px;*/
+}
+hr {
+  height: 0.5em;
+  border: 1px solid #ccc;
+  background-color: white;
+}
+a {
+  /*color:#888;*/
+  text-decoration: none;
+}
+a:hover {
+  /*color:#a00;*/
+}
 /*
-______________  _____    __________
-______  /__   |/  /_ |  / /_  ____/
-___ _  /__  /|_/ /__ | / /_  /     
-/ /_/ / _  /  / / __ |/ / / /___
-\____/  /_/  /_/  _____/  \____/  v.3.8
-
-author: Federico Ghedina - fedeghe@gmail.com
-Distributed under MIT license
-
-*/
-body{font-family:"Lucida Grande","Lucida Sans Unicode",sans-serif;font-size:14px;width:900px;margin:0 auto;margin-top:1em}p{padding-bottom:10px;padding-top:0;margin:0;text-align:left}label{font-weight:bold}label.lab{font-weight:normal}.cl1_Controller{background-color:#CCF}.cl2_Controller{background-color:#FFF}.cl1_View{background-color:#CFC}.cl2_View{background-color:#FFF}.cl1_Model{background-color:#FCC}.cl2_Model{background-color:#FFF}.cl1_Dom{background-color:#9CF}.cl2_Dom{background-color:#FFF}
-.cl1_Events{background-color:#FCF}.cl2_Events{background-color:#FFF}.cl1_Head{background-color:#FC9}.cl2_Head{background-color:#FFF}.cl1_JMVC{background-color:#FFC}.cl2_JMVC{background-color:#FFF}h3{padding-top:1em;padding-bottom:.5em;margin:0}h3.apisection{padding-top:1em;padding-bottom:.5em;margin:0;text-decoration:underline}div#guest{padding-top:2em;padding-bottom:2em}tr>td{padding-bottom:.8em;height:0;line-height:2em}tr>td.first{text-align:right;padding-right:.5em;font-weight:bold}hr{height:.5em;border:1px solid #ccc;background-color:white}
-a{text-decoration:none}div#centerinfo{background-color:white;padding:2.5em}.tablecontainer{padding:.5em;margin-bottom:2em}span.signature{color:#0f0;font-size:1em;background-color:#333;letter-spacing:.1em;padding:5px;font-family:monospace;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px}div#footer{height:40px}p.footer{text-align:center}.bg1{background-color:red}.bg2{background-color:blue}pre.code{border-left:3px solid #0f0;border-right:3px solid #0a0;background-color:#555;color:#0f0;padding:.5em;line-height:1.5em;font-family:monospace;font-size:14px;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;z-index:100}
-h1.intro{font-size:40px;line-height:45px;padding:10px 0;color:green}p.intro{line-height:25px;border-bottom:1px dotted #aa0;margin-bottom:10px}p.rendertime{color:blue}caption{color:white;padding:10px;text-align:left}caption.complete{background-color:green}caption.incomplete{background-color:red}caption.testing{background-color:yellow;color:gray}caption.human{background-color:gray;color:yellow}caption.undefined{background-color:gray}caption span.testlink{text-align:right}caption div.testlink a:hover{color:white}
-caption div.testlink a{color:#ddd;letter-spacing:1px}caption.testing div.testlink a:hover{color:red}caption.testing div.testlink a{font-weight:bold;color:#900}button.trynow{border:0;cursor:pointer;background-color:#aaa;width:30px;text-align:center;height:28px;line-height:20px;position:relative;color:#fff;font-size:30px}button.trynow:hover{background-color:#0f0}
+ul{
+	margin:0px;
+	padding:0px;
+	list-style-type:circle;
+}
+ul li{
+	margin:0px;
+	padding:0px;
+	padding-left:5px;
+	margin-left:15px;
+}*/
+div#centerinfo {
+  background-color: white;
+  padding: 2.5em;
+}
+.tablecontainer {
+  padding: 0.5em;
+  margin-bottom: 2em;
+}
+.apitable {
+  /* $my_table_style$ */
+}
+span.signature {
+  color: #0f0;
+  font-size: 1em;
+  background-color: #333;
+  letter-spacing: 0.1em;
+  padding: 5px;
+  font-family: monospace;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+div#footer {
+  height: 40px;
+}
+p.footer {
+  text-align: center;
+}
+.bg1 {
+  background-color: red;
+}
+.bg2 {
+  background-color: blue;
+}
+pre.code {
+  border-left: 3px solid #0f0;
+  border-right: 3px solid #0a0;
+  background-color: #555;
+  color: #0f0;
+  padding: 0.5em;
+  line-height: 1.5em;
+  font-family: monospace;
+  font-size: 14px;
+  /*thx http://stackoverflow.com/questions/248011/how-do-i-wrap-text-in-a-pre-tag */
+  white-space: pre-wrap;
+  /* css-3 */
+  white-space: -moz-pre-wrap;
+  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;
+  /* Opera 4-6 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* Internet Explorer 5.5+ */
+  z-index: 100;
+}
+h1.intro {
+  font-size: 40px;
+  line-height: 45px;
+  padding: 10px 0px;
+  color: green;
+}
+p.intro {
+  line-height: 25px;
+  border-bottom: 1px dotted #aa0;
+  margin-bottom: 10px;
+}
+p.rendertime {
+  color: blue;
+}
+caption {
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+caption.complete {
+  background-color: green;
+}
+caption.incomplete {
+  background-color: red;
+}
+caption.testing {
+  background-color: yellow;
+  color: gray;
+}
+caption.human {
+  background-color: gray;
+  color: yellow;
+}
+caption.undefined {
+  background-color: gray;
+}
+caption span.testlink {
+  text-align: right;
+}
+caption div.testlink a:hover {
+  color: white;
+}
+caption div.testlink a {
+  color: #ddd;
+  letter-spacing: 1px;
+  /*text-decoration:underline;*/
+}
+caption.testing div.testlink a:hover {
+  color: red;
+}
+caption.testing div.testlink a {
+  font-weight: bold;
+  color: #900;
+}
+button.trynow {
+  border: none;
+  cursor: pointer;
+  background-color: #aaa;
+  width: 30px;
+  text-align: center;
+  height: 28px;
+  line-height: 20px;
+  position: relative;
+  color: #fff;
+  font-size: 30px;
+}
+button.trynow:hover {
+  background-color: #0f0;
+}

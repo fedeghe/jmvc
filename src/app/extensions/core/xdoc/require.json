@@ -1,0 +1,5 @@
+{
+    "src/app/extensions/core/xdoc/*.css": "app/extensions/core/xdoc",
+    "src/app/extensions/core/xdoc/*.js": "app/extensions/core/xdoc",
+    "src/app/extensions/core/xdoc/tpls/*.xml": "app/extensions/core/xdoc/tpls"
+}

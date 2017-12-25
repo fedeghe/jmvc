@@ -1,0 +1,19 @@
+{
+    "src/app/extensions/vendors/dropbox/*.js": "app/extensions/vendors/dropbox",
+    
+    "src/app/extensions/vendors/fb/*.js": "app/extensions/vendors/fb",
+    
+    "src/app/extensions/vendors/github/forkme/*.js": "app/extensions/vendors/github/forkme",
+    
+    "src/app/extensions/vendors/google/analytics/*.js": "app/extensions/vendors/google/analytics",
+    "src/app/extensions/vendors/google/gmap/*.js": "app/extensions/vendors/google/gmap",
+    "src/app/extensions/vendors/google/gmap/*.css": "app/extensions/vendors/google/gmap",
+    "src/app/extensions/vendors/google/gmap2/*.js": "app/extensions/vendors/google/gmap2",
+    "src/app/extensions/vendors/google/gmap2/*.css": "app/extensions/vendors/google/gmap2",
+    "src/app/extensions/vendors/google/gmap-v.3.14/*.js": "app/extensions/vendors/google/gmap-v.3.14",
+    "src/app/extensions/vendors/google/gmap-v.3.14/*.css": "app/extensions/vendors/google/gmap-v.3.14",
+
+    "src/app/extensions/vendors/gravatar/*.js": "app/extensions/vendors/gravatar",
+    "src/app/extensions/vendors/twitter/*.js": "app/extensions/vendors/twitter"
+
+}
