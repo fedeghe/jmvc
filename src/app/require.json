@@ -1,6 +1,0 @@
-{
-    "src/app/config.js": "app",
-    "src/app/components/require.json": true,
-    "src/app/controllers/require.json": true,
-    "src/app/views/require.json": true
-}

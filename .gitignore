@@ -1,5 +1,6 @@
 *.buildNum
 *.printVersion
-jmvc.sublime-project
-jmvc.sublime-workspace
+/app
+/srv
+/media
 npm-debug.log
