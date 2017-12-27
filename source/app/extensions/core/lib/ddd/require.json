@@ -1,0 +1,12 @@
+{
+    "EXE": [
+        "mkdir -p app/extensions/core/lib/ddd/camera",
+        "mkdir -p app/extensions/core/lib/ddd/engine3d",
+        "mkdir -p app/extensions/core/lib/ddd/object3d",
+        "mkdir -p app/extensions/core/lib/ddd/scene"
+    ],
+    "source/app/extensions/core/lib/ddd/camera/camera.js": "app/extensions/core/lib/ddd/camera",
+    "source/app/extensions/core/lib/ddd/engine3d/engine3d.js": "app/extensions/core/lib/ddd/engine3d",
+    "source/app/extensions/core/lib/ddd/object3d/object3d.js": "app/extensions/core/lib/ddd/object3d",
+    "source/app/extensions/core/lib/ddd/scene/scene.js": "app/extensions/core/lib/ddd/scene"
+}

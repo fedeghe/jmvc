@@ -3,7 +3,6 @@
         "mkdir -p app/extensions/core/lib/widgzard",
         "mkdir -p app/extensions/core/lib/grind",
         "mkdir -p app/extensions/core/console",
-        "mkdir -p app/extensions/core/captcha",
         "mkdir -p app/extensions/core/codeview/code",
         "mkdir -p app/extensions/core/codeview/codehl",
         "mkdir -p app/extensions/core/codeview/script",
@@ -59,10 +58,7 @@
         "mkdir -p app/extensions/core/sniffer",
         "mkdir -p app/extensions/core/validation/messages",
         "mkdir -p app/extensions/core/xdoc/tpls",
-        "mkdir -p app/extensions/core/xmlparser",
-        "cp source/app/extensions/core/captcha/img/*.png app/extensions/core/captcha/img",
-        "cp source/app/extensions/core/console/*.png app/extensions/core/console",
-        "cp source/app/extensions/core/mobile/drawer/*.png app/extensions/core/mobile/drawer"
+        "mkdir -p app/extensions/core/xmlparser"
     ],
     "source/app/extensions/core/*.js": "app/extensions/core",
     "source/app/extensions/core/color/*.js": "app/extensions/core/color",
@@ -71,6 +67,7 @@
     "source/app/extensions/core/fx/*.js": "app/extensions/core/fx",
     "source/app/extensions/core/html5/*.js": "app/extensions/core/html5",
     "source/app/extensions/core/i18n/*.js": "app/extensions/core/i18n",
+
     "source/app/extensions/core/sniffer/*.js": "app/extensions/core/sniffer",
     "source/styles/ext/engy.less": "app/extensions/core/lib/widgzard -plugins=malta-less -vars=source/vars.json",
     "source/styles/ext/grind.less": "app/extensions/core/lib/grind -plugins=malta-less -vars=source/vars.json",
@@ -81,6 +78,7 @@
     "source/app/extensions/core/codeview/require.json": true,
     "source/app/extensions/core/console/require.json": true,
     "source/app/extensions/core/fvalidation/require.json": true,
+
     "source/app/extensions/core/lib/require.json": true,
     "source/app/extensions/core/mobile/require.json": true,
     "source/app/extensions/core/obj/require.json": true,

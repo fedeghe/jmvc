@@ -1,7 +1,7 @@
 {
     "EXE": [
         "mkdir -p app/extensions/canvas/editor/css",
-        "mkdir -p app/extensions/canvas/editor/helpers/input",
+        "mkdir -p app/extensions/canvas/editor/helpers/inputs",
         "mkdir -p app/extensions/canvas/editor/panels",
         "mkdir -p app/extensions/canvas/editor/tools/originals",
 
@@ -15,5 +15,5 @@
     "source/app/extensions/canvas/editor/helpers/*.js": "app/extensions/canvas/editor/helpers",
     "source/app/extensions/canvas/editor/helpers/inputs/*.js": "app/extensions/canvas/editor/helpers/inputs",
     "source/app/extensions/canvas/editor/panels/*.js": "app/extensions/canvas/editor/panels",
-    "source/app/extensions/canvas/editor/tools/*.js": "app/extensions/canvas/editor/tools",
+    "source/app/extensions/canvas/editor/tools/*.js": "app/extensions/canvas/editor/tools"
 }

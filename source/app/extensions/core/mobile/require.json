@@ -1,5 +1,9 @@
 {
-    "src/app/extensions/core/mobile/*.js": "app/extensions/core/mobile",
-    "src/app/extensions/core/mobile/drawer/*.js": "app/extensions/core/mobile/drawer",
-    "src/app/extensions/core/mobile/drawer/*.css": "app/extensions/core/mobile/drawer"
+    "EXE": [
+        "mkdir -p app/extensions/core/mobile/drawer",
+        "cp source/app/extensions/core/mobile/drawer/*.png app/extensions/core/mobile/drawer/"
+    ],
+    "source/app/extensions/core/mobile/*.js": "app/extensions/core/mobile",
+    "source/app/extensions/core/mobile/drawer/*.js": "app/extensions/core/mobile/drawer",
+    "source/app/extensions/core/mobile/drawer/*.css": "app/extensions/core/mobile/drawer"
 }

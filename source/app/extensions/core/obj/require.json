@@ -1,9 +1,17 @@
 {
-    "src/app/extensions/core/obj/bucket/*.js": "app/extensions/core/obj/bucket",
-    "src/app/extensions/core/obj/calendar/*.js": "app/extensions/core/obj/calendar",
-    "src/app/extensions/core/obj/calendar/*.css": "app/extensions/core/obj/calendar",
-    "src/app/extensions/core/obj/date/*.js": "app/extensions/core/obj/date",
-    "src/app/extensions/core/obj/deque/*.js": "app/extensions/core/obj/deque",
-    "src/app/extensions/core/obj/skip_list/*.js": "app/extensions/core/obj/skip_list",
-    "src/app/extensions/core/obj/styles/*.css": "app/extensions/core/obj/styles"
+    "EXE": [
+        "mkdir -p app/extensions/core/obj/bucket",
+        "mkdir -p app/extensions/core/obj/calendar",
+        "mkdir -p app/extensions/core/obj/date",
+        "mkdir -p app/extensions/core/obj/deque",
+        "mkdir -p app/extensions/core/obj/skip_list",
+        "mkdir -p app/extensions/core/obj/styles"
+    ],
+    "source/app/extensions/core/obj/bucket/*.js": "app/extensions/core/obj/bucket",
+    "source/app/extensions/core/obj/calendar/*.js": "app/extensions/core/obj/calendar",
+    "source/app/extensions/core/obj/calendar/*.css": "app/extensions/core/obj/calendar",
+    "source/app/extensions/core/obj/date/*.js": "app/extensions/core/obj/date",
+    "source/app/extensions/core/obj/deque/*.js": "app/extensions/core/obj/deque",
+    "source/app/extensions/core/obj/skip_list/*.js": "app/extensions/core/obj/skip_list",
+    "source/app/extensions/core/obj/styles/*.css": "app/extensions/core/obj/styles"
 }

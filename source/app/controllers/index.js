@@ -10,7 +10,7 @@ JMVC.require(
 	'core/fx/fx',
 	'widget/lang/lang',
 	'vendors/github/forkme/forkme',
-	'core/lib/widgzard/widgzard',
+	// 'core/lib/widgzard/widgzard',
 	'core/lib/cookieMonster/cookieMonster'
 );
 

@@ -1,6 +1,12 @@
 {
-    "src/app/extensions/core/pub/hyperpub/*.js": "app/extensions/core/pub/hyperpub",
-    "src/app/extensions/core/pub/xpub/*.js": "app/extensions/core/pub/xpub",
-    "src/app/extensions/core/pub/xevents/*.js": "app/extensions/core/pub/xevents",
-    "src/app/extensions/core/pub/zpub/*.js": "app/extensions/core/pub/zpub"
+    "EXE": [
+        "mkdir -p app/extensions/core/pub/hyperpub",
+        "mkdir -p app/extensions/core/pub/xpub",
+        "mkdir -p app/extensions/core/pub/xvents",
+        "mkdir -p app/extensions/core/pub/zpub"
+    ],
+    "source/app/extensions/core/pub/hyperpub/*.js": "app/extensions/core/pub/hyperpub",
+    "source/app/extensions/core/pub/xpub/*.js": "app/extensions/core/pub/xpub",
+    "source/app/extensions/core/pub/xevents/*.js": "app/extensions/core/pub/xevents",
+    "source/app/extensions/core/pub/zpub/*.js": "app/extensions/core/pub/zpub"
 }

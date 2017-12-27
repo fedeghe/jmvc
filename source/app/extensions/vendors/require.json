@@ -1,19 +1,26 @@
 {
-    "src/app/extensions/vendors/dropbox/*.js": "app/extensions/vendors/dropbox",
-    
-    "src/app/extensions/vendors/fb/*.js": "app/extensions/vendors/fb",
-    
-    "src/app/extensions/vendors/github/forkme/*.js": "app/extensions/vendors/github/forkme",
-    
-    "src/app/extensions/vendors/google/analytics/*.js": "app/extensions/vendors/google/analytics",
-    "src/app/extensions/vendors/google/gmap/*.js": "app/extensions/vendors/google/gmap",
-    "src/app/extensions/vendors/google/gmap/*.css": "app/extensions/vendors/google/gmap",
-    "src/app/extensions/vendors/google/gmap2/*.js": "app/extensions/vendors/google/gmap2",
-    "src/app/extensions/vendors/google/gmap2/*.css": "app/extensions/vendors/google/gmap2",
-    "src/app/extensions/vendors/google/gmap-v.3.14/*.js": "app/extensions/vendors/google/gmap-v.3.14",
-    "src/app/extensions/vendors/google/gmap-v.3.14/*.css": "app/extensions/vendors/google/gmap-v.3.14",
-
-    "src/app/extensions/vendors/gravatar/*.js": "app/extensions/vendors/gravatar",
-    "src/app/extensions/vendors/twitter/*.js": "app/extensions/vendors/twitter"
+    "EXE": [
+        "mkdir -p app/extensions/vendors/dropbox",
+        "mkdir -p app/extensions/vendors/fb",
+        "mkdir -p app/extensions/vendors/github/forkme",
+        "mkdir -p app/extensions/vendors/google/analytics",
+        "mkdir -p app/extensions/vendors/google/gmap",
+        "mkdir -p app/extensions/vendors/google/gmap2",
+        "mkdir -p app/extensions/vendors/google/gmap-v.3.14",
+        "mkdir -p app/extensions/vendors/gravatar",
+        "mkdir -p app/extensions/vendors/twitter"
+    ],
+    "source/app/extensions/vendors/dropbox/*.js": "app/extensions/vendors/dropbox",
+    "source/app/extensions/vendors/fb/*.js": "app/extensions/vendors/fb",
+    "source/app/extensions/vendors/github/forkme/*.js": "app/extensions/vendors/github/forkme",
+    "source/app/extensions/vendors/google/analytics/*.js": "app/extensions/vendors/google/analytics",
+    "source/app/extensions/vendors/google/gmap/*.js": "app/extensions/vendors/google/gmap",
+    "source/app/extensions/vendors/google/gmap/*.css": "app/extensions/vendors/google/gmap",
+    "source/app/extensions/vendors/google/gmap2/*.js": "app/extensions/vendors/google/gmap2",
+    "source/app/extensions/vendors/google/gmap2/*.css": "app/extensions/vendors/google/gmap2",
+    "source/app/extensions/vendors/google/gmap-v.3.14/*.js": "app/extensions/vendors/google/gmap-v.3.14",
+    "source/app/extensions/vendors/google/gmap-v.3.14/*.css": "app/extensions/vendors/google/gmap-v.3.14",
+    "source/app/extensions/vendors/gravatar/*.js": "app/extensions/vendors/gravatar",
+    "source/app/extensions/vendors/twitter/*.js": "app/extensions/vendors/twitter"
 
 }

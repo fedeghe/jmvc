@@ -35,6 +35,7 @@ JMVC.extend('deck', function () {
     }
 
     function shuffle(n) {
+        n = n || 1;
         while (n--) {
             bucket.shuffle();
         }

@@ -4,5 +4,8 @@
         "mkdir -p app/extensions/core/codeview/codehl",
         "mkdir -p app/extensions/core/codeview/script"
     ],
-    "source/app/extensions/core/codeview/*.css": "app/extensions/core/codeview"
+    "source/app/extensions/core/codeview/*.css": "app/extensions/core/codeview",
+    "source/app/extensions/core/codeview/code/*.js": "app/extensions/core/codeview/code",
+    "source/app/extensions/core/codeview/codehl/*.js": "app/extensions/core/codeview/codehl",
+    "source/app/extensions/core/codeview/script/*.js": "app/extensions/core/codeview/script"
 }

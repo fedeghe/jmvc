@@ -3,5 +3,5 @@
         "mkdir -p app/extensions/core/captcha/img",
         "cp -R source/app/extensions/core/captcha/img/* app/extensions/core/captcha/img/"
     ],
-    "source/app/extensions/core/captcha/.js": "app/extensions/core/captcha/"
+    "source/app/extensions/core/captcha/*.js": "app/extensions/core/captcha/"
 }

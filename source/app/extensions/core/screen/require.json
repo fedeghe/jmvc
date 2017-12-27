@@ -1,4 +1,7 @@
 {
-    "src/app/extensions/core/screen/*.js": "app/extensions/core/screen",
-    "src/app/extensions/core/screen/*.xml": "app/extensions/core/screen"
+    "EXE": [
+        "mkdir -p app/extensions/core/screen"
+    ],
+    "source/app/extensions/core/screen/*.js": "app/extensions/core/screen",
+    "source/app/extensions/core/screen/*.xml": "app/extensions/core/screen"
 }

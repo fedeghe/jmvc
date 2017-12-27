@@ -1,5 +1,9 @@
 {
-    "app/extensions/core/responsive/basic/*.js": "app/extensions/core/responsive/basic",
-    "app/extensions/core/responsive/menu/*.js": "app/extensions/core/responsive/menu",
-    "app/extensions/core/responsive/menu/*.css": "app/extensions/core/responsive/menu"
+    "EXE": [
+        "mkdir -p app/extensions/core/responsive/basic",
+        "mkdir -p app/extensions/core/responsive/menu"
+    ],
+    "source/app/extensions/core/responsive/basic/*.js": "app/extensions/core/responsive/basic",
+    "source/app/extensions/core/responsive/menu/*.js": "app/extensions/core/responsive/menu",
+    "source/app/extensions/core/responsive/menu/*.css": "app/extensions/core/responsive/menu"
 }

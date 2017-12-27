@@ -3,7 +3,7 @@
 
 JMVC.extend('carpet',{
 	init : function () {
-		JMVC.head.addStyle(JMVC.vars.extensions + 'core/lib/carpet/css/default.css', true, false);
+		JMVC.head.addStyle(JMVC.vars.extensions + 'core/lib/carpet/default.css', true, false);
 	},
 	create : function (container, options) {
 		var tileSize = {

@@ -5,16 +5,16 @@
         "mkdir -p app/extensions/games/topoker",
         "mkdir -p app/extensions/games/typeman/build",
         "mkdir -p app/extensions/games/wcave/audio",
-        "cp src/app/extensions/games/wcave/audio/*.mp3 app/extensions/games/wcave/audio",
-        "cp src/app/extensions/games/wcave/audio/*.ogg  app/extensions/games/wcave/audio",
-        "cp src/app/extensions/games/wcave/*.woff app/extensions/games/wcave"
+        "cp source/app/extensions/games/wcave/audio/*.mp3 app/extensions/games/wcave/audio",
+        "cp source/app/extensions/games/wcave/audio/*.ogg  app/extensions/games/wcave/audio",
+        "cp source/app/extensions/games/wcave/*.woff app/extensions/games/wcave"
     ],
-    "src/app/extensions/games/deck/*.js": "app/extensions/games/deck",
-    "src/app/extensions/games/deck/*.css": "app/extensions/games/deck",
-    "src/app/extensions/games/tictactoe/*.js": "app/extensions/games/tictactoe",
-    "src/app/extensions/games/topoker/*.js": "app/extensions/games/topoker",
-    "src/app/extensions/games/topoker/*.css": "app/extensions/games/topoker",
-    "src/app/extensions/games/typeman/*.js": "app/extensions/games/typeman",
-    "src/app/extensions/games/wcave/wcave.js": "app/extensions/games/wcave",
-    "src/app/extensions/games/wcave/*.css": "app/extensions/games/wcave"
+    "source/app/extensions/games/deck/*.js": "app/extensions/games/deck",
+    "source/app/extensions/games/deck/*.css": "app/extensions/games/deck",
+    "source/app/extensions/games/tictactoe/*.js": "app/extensions/games/tictactoe",
+    "source/app/extensions/games/topoker/*.js": "app/extensions/games/topoker",
+    "source/app/extensions/games/topoker/*.css": "app/extensions/games/topoker",
+    "source/app/extensions/games/typeman/*.js": "app/extensions/games/typeman",
+    "source/app/extensions/games/wcave/wcave.js": "app/extensions/games/wcave",
+    "source/app/extensions/games/wcave/*.css": "app/extensions/games/wcave"
 }
