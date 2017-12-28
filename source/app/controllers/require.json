@@ -10,6 +10,7 @@
     ],
     "source/app/controllers/index.html": "app/controllers",
     "source/app/controllers/*.js": "app/controllers",
+    "source/app/controllers/test/*.js": "app/controllers/test",
     "source/app/controllers/jmvcdoc/*.js": "app/controllers/jmvcdoc",
     "source/app/controllers/test/api/array/*.js": "app/controllers/test/api/array",
     "source/app/controllers/test/api/jmvc/*.js": "app/controllers/test/api/jmvc",

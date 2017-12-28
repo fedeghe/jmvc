@@ -18,10 +18,6 @@ JMVC.extend('canvas', {
 		ctx.fillStyle = bgcolor;
 		ctx.fillRect(0, 0, w, h);
 		
-		
-		
-		
-		
 		/**
 		 * Canvas extension augment prototipes from dd
 		 * 

@@ -1,11 +1,8 @@
 JMVC.controllers.arrayLoop = function() {
-
-	this.action_index = function(){
-		
-		
+	this.action_index = function(){	
 		JMVC.events.loadify(1000);
-		
 		this.render(function test(){
+			
 			"use strict";
 			
 			var JT = JMVC.test,
@@ -20,9 +17,9 @@ JMVC.controllers.arrayLoop = function() {
 				res = [],
 				utility = {};
 			
-			JMVC.test.initialize();
-			JMVC.test.startAll();
-			JMVC.test.describe(`
+			JT.initialize();
+			JT.startAll();
+			JT.describe(`
 Test array loops:<br/>
 
 Simply loop over a pseudorandom array of integer of ${size} elements to sum up (${times} times for precision purposes),<br/>check result matching among 
@@ -119,8 +116,9 @@ different core loops and compare execution times
 					var r = true,
 						i = 0,
 						len = res.length - 1;
+					console.log(res)
 					for (null; i < len; i++) {
-						r = r && res[i] === res[i + 1];
+						r = r && res[i].toFixed(3) === res[i + 1].toFixed(3);
 					}
 					return r;
 				}
@@ -138,9 +136,7 @@ different core loops and compare execution times
 			JT.describe('What about abusing....')
 			utility.doTest('map abuse', _map, 9);
 			utility.doTest('crazy eval', _eval, 10);
-
 			JT.testValue("check results matches", utility.check, true);
-
 			JT.timeSummary();
 			JT.finishAll();
 		});

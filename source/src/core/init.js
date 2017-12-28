@@ -38,9 +38,6 @@
 
 })(W.onerror);
 
-
-
-
 // store starting time, that's not truly the starting time but 
 // it's really next to the real value
 var time_begin = +new Date(),
@@ -181,7 +178,7 @@ var time_begin = +new Date(),
     // loaded here's the place to set them
     Modules = [
         'vendors/google/analytics/analytics'
-        //,'core/lib/widgzard/widgzard'
+        ,'core/lib/widgzard/widgzard'
         //'core/cookie/cookie'
     ],
 

@@ -1,6 +1,6 @@
 {
     "EXE" : [
         "mkdir -p srv/uploads",
-        "cp src/srv/* srv"
+        "cp source/srv/* srv"
     ]
 }

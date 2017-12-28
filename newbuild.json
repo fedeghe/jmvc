@@ -9,5 +9,6 @@
     "source/index.html" :  ".",
     "source/jmvc.js": "app",
     "source/documentation/documentation.xml": "media",
+    "source/srv/require.json" : true,
     "source/app/require.json" : true
 }

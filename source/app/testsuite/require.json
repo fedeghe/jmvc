@@ -4,5 +4,6 @@
         "cp -R source/app/testsuite/images app/testsuite/"
     ],
     "source/app/testsuite/index.html": "app/testsuite",
-    "source/app/testsuite/testsuite.js": "app/testsuite"
+    "source/app/testsuite/testsuite.js": "app/testsuite",
+    "source/app/testsuite/css/*.css": "app/testsuite/css"
 }

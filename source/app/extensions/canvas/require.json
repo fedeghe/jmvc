@@ -14,6 +14,10 @@
     "source/app/extensions/canvas/editor/css/*.css": "app/extensions/canvas/editor/css",
     "source/app/extensions/canvas/editor/helpers/*.js": "app/extensions/canvas/editor/helpers",
     "source/app/extensions/canvas/editor/helpers/inputs/*.js": "app/extensions/canvas/editor/helpers/inputs",
+    "source/app/extensions/canvas/editor/helpers/inputs/require.json": "app/extensions/canvas/editor/helpers/inputs",
+    "source/app/extensions/canvas/editor/helpers/require.json": "app/extensions/canvas/editor/helpers",
     "source/app/extensions/canvas/editor/panels/*.js": "app/extensions/canvas/editor/panels",
-    "source/app/extensions/canvas/editor/tools/*.js": "app/extensions/canvas/editor/tools"
+    "source/app/extensions/canvas/editor/panels/require.json": "app/extensions/canvas/editor/panels",
+    "source/app/extensions/canvas/editor/tools/*.js": "app/extensions/canvas/editor/tools",
+    "source/app/extensions/canvas/editor/tools/require.json": "app/extensions/canvas/editor/tools"
 }

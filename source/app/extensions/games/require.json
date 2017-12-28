@@ -5,8 +5,7 @@
         "mkdir -p app/extensions/games/topoker",
         "mkdir -p app/extensions/games/typeman/build",
         "mkdir -p app/extensions/games/wcave/audio",
-        "cp source/app/extensions/games/wcave/audio/*.mp3 app/extensions/games/wcave/audio",
-        "cp source/app/extensions/games/wcave/audio/*.ogg  app/extensions/games/wcave/audio",
+        "cp source/app/extensions/games/wcave/audio/revolve.* app/extensions/games/wcave/audio",
         "cp source/app/extensions/games/wcave/*.woff app/extensions/games/wcave"
     ],
     "source/app/extensions/games/deck/*.js": "app/extensions/games/deck",

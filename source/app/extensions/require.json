@@ -17,7 +17,6 @@
         "mkdir -p app/extensions/timer",
         "mkdir -p app/extensions/trial",
         "mkdir -p app/extensions/tricks",
-        
         "cp source/silence/index.html app/extensions/"
     ],
     "source/app/extensions/affix/*.js": "app/extensions/affix",
