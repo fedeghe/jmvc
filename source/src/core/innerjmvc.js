@@ -944,7 +944,6 @@ jmvc = {
 
                 } else if (!$JMVC.extensions[arg[i]]) {
 
-
                     extNS = arg[i].split(US);
                     extNSlength = extNS.length;
                     extname = extNS[extNSlength - 1];
@@ -1132,10 +1131,6 @@ jmvc = {
             JMVC.xdoc.toggle(ext);
         }
     },
-
-
-
-
 
     // ignore these 3 functions
     get2: function(ns) {
