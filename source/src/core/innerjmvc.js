@@ -477,7 +477,6 @@ jmvc = {
      * @return {[type]}      [description]
      */ 
     htmlChars: function(text, pre) {
-
         return (pre ? '<pre>' : '') +
             (text
                 .replace(/&(?![\w\#]+;)/g, '&amp;')
