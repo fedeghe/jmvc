@@ -285,11 +285,11 @@ JMVC.controllers.index = function () {
 			//
 			blobURL = window.URL.createObjectURL(
 				new Blob([
-					"var i = 0, l = 2<<16,"+
-						"loop = setInterval(function(){"+
-							"self.postMessage(i + ' : ' + String.fromCharCode('0x' + (i++).toString(16)) + '<br />');"+
-							"i >= l && clearInterval(loop);"+
-						"}, 1);"
+					`var i = 0, l = 2<<16,
+						loop = setInterval(function(){
+							self.postMessage(JSON.stringify({index : i, char : String.fromCharCode('0x' + (i++).toString(16))}));
+							i >= l && clearInterval(loop);
+						}, 1);`
 				])
 			),
 
@@ -305,12 +305,14 @@ JMVC.controllers.index = function () {
 				// function (){JMVC.head.title(String.fromCharCode(JMVC.util.rand(10240, 10495)))},
 				//
 				function () {JMVC.head.title(String.fromCharCode(t[i])); i = (i + 1) % l; },
-				100
+				10
 			);
 		});
 
 		worker.onmessage = function (e) {
-			JMVC.dom.append(self.view.container, JMVC.dom.create('span', {}, e.data));
+			var data = JSON.parse(e.data);
+			
+			JMVC.dom.append(self.view.container, JMVC.dom.create('span', {}, data.index + ': ' + data.char + '<br/>'));
 		};
 	};
 
