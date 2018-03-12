@@ -67,6 +67,18 @@ JMVC.string = {
             }
         );
     },
+    //https://gist.github.com/jonlabelle/5375315
+    escapeUnicode : function(str, shouldEscapePrintable){
+        return str.replace(/[\s\S]/g, function (ch) {
+            // skip printable ASCII chars if we should not escape them
+            if (!shouldEscapePrintable && (/[\x20-\x7E]/).test(ch)) {
+                return ch;
+            }
+            // we use "000" and slice(-4) for brevity, need to pad zeros,
+            // unicode escape always have 4 chars after "\u"
+            return '\\u' + ('000' + ch.charCodeAt(0).toString(16)).slice(-4);
+        });
+    },
 
     
     /**
@@ -120,6 +132,13 @@ JMVC.string = {
     regEscape : function (str) {
         return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
     },
+
+    removeNonASCII : function (str){
+        // Matches non-printable ASCII chars -
+        // http://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters
+        return str.replace(/[^\x20-\x7E]/g, '');
+    },
+
     /**
      * [ description]
      * @param  {[type]} str [description]
