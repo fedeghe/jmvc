@@ -290,7 +290,10 @@ JMVC.extend('console', {
                                         border : "none"
                                     },
                                     html : content.h
-                                }]
+                                }],
+                                style: {
+                                    height: (dims.height - 61) + "px"
+                                }
                             },{
                                 attrs : {
                                     id : "in-javascript",
@@ -306,7 +309,10 @@ JMVC.extend('console', {
                                         border : "none"
                                     },
                                     html : content.j
-                                }]
+                                }],
+                                style: {
+                                    height: (dims.height - 61) + "px"
+                                }
                             },{
                                 attrs : {
                                     id : "in-css",
@@ -320,7 +326,10 @@ JMVC.extend('console', {
                                         border : "none"
                                     },
                                     html : content.c
-                                }]
+                                }],
+                                style: {
+                                    height: (dims.height - 61) + "px"
+                                }
                             },{
                                 attrs : {
                                     id : "in-preview",
@@ -334,13 +343,19 @@ JMVC.extend('console', {
                                         height : (dims.height - 61) + "px"
                                     },
                                     style : {backgroundColor : 'white'}
-                                }]
+                                }],
+                                style: {
+                                    height: (dims.height - 61) + "px"
+                                }
                             },{
                                 attrs : {
                                     id : "in-options",
                                     "class" : "in-options inputdiv respfixed"
                                 },
-                                html : JMVC.console._.options
+                                html : JMVC.console._.options,
+                                style: {
+                                    height: (dims.height - 61) + "px"
+                                }
                             }
                         ]
                     }],
@@ -567,10 +582,10 @@ JMVC.extend('console', {
             //disable scroll
             JMVC.events.disable_scroll();
 
-            JMVC.set('height', dims.height - 60);
+            // JMVC.set('height', dims.height - 60);
             JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/core/console/console.css', false);
             JMVC.dom.append(JMVC.dom.body(), container);
-
+            
             // -------------------------------------
             JMVC.core.widgzard.render(config, true);
             // -------------------------------------

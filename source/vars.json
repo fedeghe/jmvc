@@ -5,5 +5,6 @@
 	"author" : "Federico Ghedina - $email$",
 	"email" : "fedeghe@gmail.com",
 	"build_system" : "Malta",
+	"gmaps_key": "AIzaSyCbG5ULXNEjcVHZ6yWyK2V9HBjHtLtNp6A",
     "build_system_link" : "http://www.github.com/fedeghe/malta"
 }

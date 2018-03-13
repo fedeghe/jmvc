@@ -12,7 +12,7 @@ JMVC.extend('gmaps', {
                 // append main gmaps script,
                 // make public the callback
                 JMVC.W.cb = cback;
-                var params = {callback : 'cb', v : '3.exp'};//, key : 'AIzaSyCGPE1UyhBMvPx9RcrgwjmoYmNJDHYdP30'};
+                var params = {callback : 'cb', v : '3.exp', key : '$gmaps_key$'};
     
                 // extend options with those passed
                 params = JMVC.object.extend(params, options);

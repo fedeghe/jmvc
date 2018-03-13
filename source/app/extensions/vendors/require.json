@@ -10,17 +10,17 @@
         "mkdir -p app/extensions/vendors/gravatar",
         "mkdir -p app/extensions/vendors/twitter"
     ],
-    "source/app/extensions/vendors/dropbox/*.js": "app/extensions/vendors/dropbox",
-    "source/app/extensions/vendors/fb/*.js": "app/extensions/vendors/fb",
-    "source/app/extensions/vendors/github/forkme/*.js": "app/extensions/vendors/github/forkme",
-    "source/app/extensions/vendors/google/analytics/*.js": "app/extensions/vendors/google/analytics",
-    "source/app/extensions/vendors/google/gmap/*.js": "app/extensions/vendors/google/gmap",
-    "source/app/extensions/vendors/google/gmap/*.css": "app/extensions/vendors/google/gmap",
-    "source/app/extensions/vendors/google/gmap2/*.js": "app/extensions/vendors/google/gmap2",
-    "source/app/extensions/vendors/google/gmap2/*.css": "app/extensions/vendors/google/gmap2",
-    "source/app/extensions/vendors/google/gmap-v.3.14/*.js": "app/extensions/vendors/google/gmap-v.3.14",
-    "source/app/extensions/vendors/google/gmap-v.3.14/*.css": "app/extensions/vendors/google/gmap-v.3.14",
-    "source/app/extensions/vendors/gravatar/*.js": "app/extensions/vendors/gravatar",
-    "source/app/extensions/vendors/twitter/*.js": "app/extensions/vendors/twitter"
+    "source/app/extensions/vendors/dropbox/*.js": "app/extensions/vendors/dropbox -vars=source/vars.json",
+    "source/app/extensions/vendors/fb/*.js": "app/extensions/vendors/fb -vars=source/vars.json",
+    "source/app/extensions/vendors/github/forkme/*.js": "app/extensions/vendors/github/forkme -vars=source/vars.json",
+    "source/app/extensions/vendors/google/analytics/*.js": "app/extensions/vendors/google/analytics -vars=source/vars.json",
+    "source/app/extensions/vendors/google/gmap/*.js": "app/extensions/vendors/google/gmap -vars=source/vars.json",
+    "source/app/extensions/vendors/google/gmap/*.css": "app/extensions/vendors/google/gmap -vars=source/vars.json",
+    "source/app/extensions/vendors/google/gmap2/*.js": "app/extensions/vendors/google/gmap2 -vars=source/vars.json",
+    "source/app/extensions/vendors/google/gmap2/*.css": "app/extensions/vendors/google/gmap2 -vars=source/vars.json",
+    "source/app/extensions/vendors/google/gmap-v.3.14/*.js": "app/extensions/vendors/google/gmap-v.3.14 -vars=source/vars.json",
+    "source/app/extensions/vendors/google/gmap-v.3.14/*.css": "app/extensions/vendors/google/gmap-v.3.14 -vars=source/vars.json",
+    "source/app/extensions/vendors/gravatar/*.js": "app/extensions/vendors/gravatar -vars=source/vars.json",
+    "source/app/extensions/vendors/twitter/*.js": "app/extensions/vendors/twitter -vars=source/vars.json"
 
 }

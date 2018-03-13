@@ -113,7 +113,7 @@ JMVC.head.addStyle('/media/css/widgzard/sample2.css');
 
 
 
-    var params = {callback : 'cb', v : '3.exp'};//, key : 'AIzaSyCGPE1UyhBMvPx9RcrgwjmoYmNJDHYdP30'};
+    var params = { callback: 'cb', v: '3.exp', key: 'AIzaSyCbG5ULXNEjcVHZ6yWyK2V9HBjHtLtNp6A'};
 
     //FFfix
     JMVC.head.addStyle(JMVC.vars.extensions + 'vendors/google/gmap/gmap.css');

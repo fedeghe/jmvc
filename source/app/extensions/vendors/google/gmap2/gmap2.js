@@ -3,7 +3,7 @@ JMVC.extend('gmap2', {
 		// append main gmaps script,
 		// make public the callback
 		JMVC.W.cb = cback;
-		var params = {callback : 'cb', v : '3.exp'};//, key : 'AIzaSyCGPE1UyhBMvPx9RcrgwjmoYmNJDHYdP30'};
+		var params = {callback : 'cb', v : '3.exp', key : '$gmaps_key$'};
 
 		//FFfix
 		JMVC.head.addStyle(JMVC.vars.extensions + 'vendors/google/gmap2/gmap.css');

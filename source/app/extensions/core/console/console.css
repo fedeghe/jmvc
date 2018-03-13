@@ -64,7 +64,6 @@ div.input-divs > div {
   color: white;
   font-size: 30px;
   margin: 10px;
-  height: $height$px;
 }
 div.input-divs div textarea {
   color: white;
