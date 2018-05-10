@@ -1,19 +1,14 @@
 {
-    "!src/index.html" :  ". -plugins=malta-header-comment[name:\"license.txt\"]",
-    "src/index.html" :  ". -plugins=malta-header-comment[name:\"license.txt\"]",
-    "src/jmvc.js" :  "app -plugins=malta-js-uglify...malta-header-comment[name:\"license.txt\"]",
-    
-    "src/documentation/documentation.xml" : "media",
-    
-    "src/styles/core/api.less" :  "media/css/core -plugins=malta-less...malta-css-uglify...malta-header-comment[name:\"license.txt\"] -vars=src/vars.json",
-    "src/styles/core/jmvc.less" : "media/css/core -plugins=malta-less...malta-css-uglify...malta-header-comment[name:\"license.txt\"] -vars=src/vars.json",
-    "src/styles/core/jmvc-day.less" : "media/css/core -plugins=malta-less...malta-css-uglify...malta-header-comment[name:\"license.txt\"] -vars=src/vars.json",
-    "src/styles/core/jmvc-night.less" : "media/css/core -plugins=malta-less...malta-css-uglify...malta-header-comment[name:\"license.txt\"] -vars=src/vars.json",
-
-    "src/styles/ext/widgzard.less" : "app/extensions/core/lib/widgzard -plugins=malta-less...malta-css-uglify...malta-header-comment[name:\"license.txt\"] -vars=src/vars.json",
-    "src/styles/ext/engy.less" : "app/extensions/core/lib/widgzard -plugins=malta-less...malta-css-uglify...malta-header-comment[name:\"license.txt\"] -vars=src/vars.json",
-    "src/styles/ext/grind.less" : "app/extensions/core/lib/grind -plugins=malta-less...malta-css-uglify...malta-header-comment[name:\"license.txt\"] -vars=src/vars.json",
-    "src/styles/ext/console.less" : "app/extensions/core/console -plugins=malta-less...malta-css-uglify...malta-header-comment[name:\"license.txt\"] -vars=src/vars.json",
-
-    "app/extensions/games/wcave/build/wcave.js" : "app/extensions/games/wcave/ -plugins=malta-js-uglify"
+    "EXE" : [
+        "rm -rf app",
+        "rm -rf srv",
+        "rm -rf media",
+        "mkdir app srv media",
+        "cp -R source/media ."
+    ],
+    "source/index.html" :  ".",
+    "source/jmvc.js": "app",
+    "source/documentation/documentation.xml": "media",
+    "source/srv/require.json" : true,
+    "source/app/require.json" : true
 }

@@ -1876,6 +1876,7 @@ JMVC.controllers.demo = function() {
 				cnt = JMVC.dom.find('#container'),
 				input = JMVCdomCreate('input', {type:'text', id:'imgurl'}),
 				butt = JMVCdomCreate('input', {type:'button', value:'get it'}),
+				exportHtml = JMVCdomCreate('input', {type:'button', value:'get html'}),
 				pestCss = JMVCdomCreate('input', {type:'button', value:'pest css'}),
 				size1 = JMVCdomCreate('input', {type:'button', value:'size 1'}),
 				size2 = JMVCdomCreate('input', {type:'button', value:'size 2'}),
@@ -1886,13 +1887,14 @@ JMVC.controllers.demo = function() {
 				img2 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/code.jpg'}, 'code'),
 				img3 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/javascript-save-all.jpg'}, 'will save us all'),
 				img4 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/Maurizio.png'}, ', java won`t'),
-				img5 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/raja.jpg'}, ', what about Raja?');
+				img5 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/raja.jpg'}, ', what about Raja?'),
+				img6 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/mememe.jpg'}, ', & Lucas ?');
 
 			JMVC.css.style(JMVC.WDB, {padding : '50px'});
 			JMVC.css.mappedStyle('xxx', 'a{margin-left:5px}');
 
 			
-			JMVC.dom.append(cnt, [input, butt, pestCss, size1, size2, size3, size4, img1, img2, img3, img4, img5, logo]);
+			JMVC.dom.append(cnt, [input, butt, pestCss, exportHtml, size1, size2, size3, size4, img1, img2, img3, img4, img5, img6, logo]);
 			JMVC.dom.append(JMVC.WDB, cnt);
 
 			JMVC.events.on(butt, 'click', function (){
@@ -1903,7 +1905,11 @@ JMVC.controllers.demo = function() {
 				}
 
 			});
-			JMVC.events.on([img1, img2, img3, img4, img5], 'click', function (){
+			JMVC.events.on(exportHtml, 'click', function () {
+				alert('check out the console to get the full html')
+				console.log(logo.outerHTML.replace(/rgb\(/g, "\nrgb("));
+			});
+			JMVC.events.on([img1, img2, img3, img4, img5, img6], 'click', function (){
 				go(JMVC.vars.baseurl + JMVC.dom.attr(this, 'alt'));
 			});
 			JMVC.events.on(size1, 'click', function (){
