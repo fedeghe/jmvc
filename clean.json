@@ -1,0 +1,5 @@
+{
+    "EXE" : [
+        "rm -rf app srv media"
+    ]
+}

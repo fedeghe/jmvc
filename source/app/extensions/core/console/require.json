@@ -1,0 +1,7 @@
+{
+    "EXE": [
+        "cp source/app/extensions/core/console/*.png app/extensions/core/console/"
+    ],
+    "source/app/extensions/core/console/console.css": "app/extensions/core/console",
+    "source/app/extensions/core/console/console.js": "app/extensions/core/console"
+}

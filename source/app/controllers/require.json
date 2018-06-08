@@ -1,0 +1,19 @@
+{
+    "EXE": [
+        "mkdir app/controllers",
+        "mkdir app/controllers/jmvcdoc",
+        "mkdir -p app/controllers/test/api",
+        "mkdir app/controllers/test/api/array",
+        "mkdir app/controllers/test/api/jmvc",
+        "mkdir app/controllers/test/api/object",
+        "mkdir app/controllers/test/api/string"
+    ],
+    "source/app/controllers/index.html": "app/controllers",
+    "source/app/controllers/*.js": "app/controllers",
+    "source/app/controllers/test/*.js": "app/controllers/test",
+    "source/app/controllers/jmvcdoc/*.js": "app/controllers/jmvcdoc",
+    "source/app/controllers/test/api/array/*.js": "app/controllers/test/api/array",
+    "source/app/controllers/test/api/jmvc/*.js": "app/controllers/test/api/jmvc",
+    "source/app/controllers/test/api/object/*.js": "app/controllers/test/api/object",
+    "source/app/controllers/test/api/string/*.js": "app/controllers/test/api/string"
+}
