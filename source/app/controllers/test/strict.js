@@ -78,11 +78,11 @@ JMVC.controllers.strict = function() {
 
 			//Arguments objects for strict mode functions define non-configurable accessor properties
 			//named "caller" and "callee" which throw a TypeError exception on access (10.6).
-			JMVC.test.testException(
-				"can't use arguments.caller",
-				function () {'use strict'; arguments.caller;},
-				TypeError
-			);
+			// JMVC.test.testException(
+			// 	"can't use arguments.caller",
+			// 	function () {'use strict'; arguments.caller;},
+			// 	TypeError
+			// );
 
 			JMVC.test.testException(
 				"can't use arguments.callee",
