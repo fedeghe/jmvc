@@ -65,6 +65,9 @@ div.input-divs > div {
   font-size: 30px;
   margin: 10px;
 }
+button, .ablock {
+  outline:none
+}
 div.input-divs div textarea {
   color: white;
   background-color: black;

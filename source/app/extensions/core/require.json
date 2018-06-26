@@ -71,7 +71,6 @@
     "source/app/extensions/core/sniffer/*.js": "app/extensions/core/sniffer",
     "source/styles/ext/engy.less": "app/extensions/core/lib/widgzard -plugins=malta-less -vars=source/vars.json",
     "source/styles/ext/grind.less": "app/extensions/core/lib/grind -plugins=malta-less -vars=source/vars.json",
-    "source/styles/ext/console.less": "app/extensions/core/console -plugins=malta-less -vars=source/vars.json",
     "source/styles/ext/widgzard.less": "app/extensions/core/lib/widgzard -plugins=malta-less -vars=source/vars.json",
     "source/app/extensions/core/captcha/require.json": true,
     
