@@ -16,8 +16,10 @@ from the `srv/` folder, then add
 > `foo.dev    127.0.0.1`  
 
 to your *hosts* file
-edit the *srv/config.json* file to fill out the true path for the webroot  
-visit *http://www.foo.dev:8080*  
+and edit the *srv/config.json* file to fill out the true path for the webroot  
+
+Navigate now to *http://www.foo.dev:8080*  
+
 If you feel more comfortable with port 80, amend it in the *srv/config.json* file, but remember that if port is under 1024, only root will start the server successfully)
 
 Start looking at the *app/controllers/index.js* controller.
