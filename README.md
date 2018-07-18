@@ -1,5 +1,3 @@
-[![bitHound Overall Score](https://www.bithound.io/github/fedeghe/jmvc/badges/score.svg)](https://www.bithound.io/github/fedeghe/jmvc)  
-
 JMVC
 ====
 
@@ -9,11 +7,14 @@ JMVC is a javascript module that implement the MVC architecture and is enhanced 
 
 Getting started
 ---------------
-Copy the content of the repository in the root of an Apache virtual host,  
- otherwise **absolutely only for development** fire up the inner node minimal dummy server executing  
-`node server.js`  
+Copy the content of the repository in the root of an Apache virtual host, otherwise **absolutely only for development** fire up the inner node minimal dummy server executing  
+
+> node server.js
+
 from the `srv/` folder, then add  
-/*`foo.dev    127.0.0.1`  *
+
+> `foo.dev    127.0.0.1`  
+
 to your *hosts* file
 edit the *srv/config.json* file to fill out the true path for the webroot  
 visit *http://www.foo.dev:8080*  
