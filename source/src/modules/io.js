@@ -127,7 +127,6 @@ _.io = {
 		}
 
 		if (xdr && options.cors) {
-			debugger;
 			// xhr is actually a xdr
 			//alert('only XDR');
 			xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri);
