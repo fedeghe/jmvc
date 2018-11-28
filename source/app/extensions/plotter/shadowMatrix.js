@@ -1,8 +1,6 @@
 (function (){
 
     var _constructor = function (opts) {
-
-
             this.scale = opts.scale || 1;
             this.sampling = opts.sampling || 1;
 
@@ -116,7 +114,8 @@
         }
         
         
-        this.tpl['box-shadow'] = this.tpl['-webkit-box-shadow'] = this.tpl['-moz-box-shadow'] = out.join(',');
+        this.tpl['box-shadow'] = this.tpl['-webkit-box-shadow'] = this.tpl['-moz-box-shadow'] = out.join(",\n");
+        
         JMVC.css.style(this.node, this.tpl);
 
         //for mobile avoid the mediaquery to 100% for all divs

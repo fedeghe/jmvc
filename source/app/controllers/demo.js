@@ -1882,19 +1882,23 @@ JMVC.controllers.demo = function() {
 				size2 = JMVCdomCreate('input', {type:'button', value:'size 2'}),
 				size3 = JMVCdomCreate('input', {type:'button', value:'size 3'}),
 				size4 = JMVCdomCreate('input', {type:'button', value:'size 4'}),
+				download = JMVCdomCreate('input', {type:'button', value:'download'}),
 				logo = JMVCdomCreate('div', {id:'logo', style:'margin-top:10px'}),
-				img1 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/js.jpg'}, 'js'),
-				img2 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/code.jpg'}, 'code'),
-				img3 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/javascript-save-all.jpg'}, 'will save us all'),
-				img4 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/Maurizio.png'}, ', java won`t'),
-				img5 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/raja.jpg'}, ', what about Raja?'),
-				img6 = JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/mememe.jpg'}, ', & Lucas ?');
+				images = [
+					JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/js.jpg'}, 'js'),
+					JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/code.jpg'}, 'code'),
+					JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/javascript-save-all.jpg'}, 'will save us all'),
+					JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/Maurizio.png'}, 'java won`t'),
+					JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/raja.jpg'}, 'what about Raja?'),
+					JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/mememe.jpg'}, '&Lucas?'),
+					JMVCdomCreate('a', {href:'javascript:;', alt:'/media/img/shad/verkstedt.png'}, 'verkstedt')
+				];
 
 			JMVC.css.style(JMVC.WDB, {padding : '50px'});
 			JMVC.css.mappedStyle('xxx', 'a{margin-left:5px}');
 
 			
-			JMVC.dom.append(cnt, [input, butt, pestCss, exportHtml, size1, size2, size3, size4, img1, img2, img3, img4, img5, img6, logo]);
+			JMVC.dom.append(cnt, [input, butt, pestCss, exportHtml, size1, size2, size3, size4, download].concat(images, logo));
 			JMVC.dom.append(JMVC.WDB, cnt);
 
 			JMVC.events.on(butt, 'click', function (){
@@ -1909,7 +1913,7 @@ JMVC.controllers.demo = function() {
 				alert('check out the console to get the full html')
 				console.log(logo.outerHTML.replace(/rgb\(/g, "\nrgb("));
 			});
-			JMVC.events.on([img1, img2, img3, img4, img5, img6], 'click', function (){
+			JMVC.events.on(images, 'click', function (){
 				go(JMVC.vars.baseurl + JMVC.dom.attr(this, 'alt'));
 			});
 			JMVC.events.on(size1, 'click', function (){
@@ -1927,6 +1931,9 @@ JMVC.controllers.demo = function() {
 			JMVC.events.on(pestCss, 'click', function (){
 				JMVC.css.pest();
 			});
+			JMVC.events.on(download, 'click', function () {
+				console.log(logo.outerHTML)
+			});
 
 
 			function go (img) {
@@ -1939,21 +1946,7 @@ JMVC.controllers.demo = function() {
 				// promise returned, done when image loaded and
 				// matrix done
 				.then(function(pro, result) {
-					
-					
-					// pro is the promise
-					// res is the result that can be even found as pro.result
-					
 					var sm = JMVC.shadowMatrix(pro.result[0]).draw({node : logo});
-					
-					/*
-					window.setTimeout(function () {
-						sm.fromImage({
-							size : size,
-							imgUrl : JMVC.vars.baseurl + '/media/img/jmvc_n3.png'
-						});
-					}, 5000);
-					*/
 				});
 			}
 			
