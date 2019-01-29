@@ -171,7 +171,8 @@ JMVC.controllers.demo = function() {
 				'* FizzBuzz perf': 'test_fizzbuzz',
 				'* Leap year': 'test_leap',
 				'* loops' : 'test_loops',
-				'* array loops' : 'test_arrayLoop'
+				'* array loops' : 'test_arrayLoop',
+				'* arguments 2 array' : 'test_arguments2array'
 			},
 			tpl = '<li><a href="%base_url%/%path%">$index$ %label%</a></li>',
 			out = '',
