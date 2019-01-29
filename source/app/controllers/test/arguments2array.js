@@ -7,9 +7,9 @@ JMVC.controllers.arguments2array = function() {
 			
 			var JT = JMVC.test,
 				size = 1E4,
-				s = function (i) {return [i, i * 2, i - 1, i * i]},
+				s = (function (i) {return [i, i * 2, i - 1, i * i]})(Math.random()),
 				i = 0,
-				times = 1E5,
+				times = 1,
 				res = [],
 				utility = {};
 			
@@ -22,7 +22,7 @@ Simply pass a pseudorandom small array of numbers to a function (${times} times 
 `);
 			
 			function _1() {
-				return [].slice.call(arguments);
+				return [].slice.call(arguments, 0);
 			}
 			function _2() {
 				var args = [];
@@ -56,7 +56,16 @@ Simply pass a pseudorandom small array of numbers to a function (${times} times 
 					JT.hr();
 					JT.message(label);
 					JT.code(fun.toString());
-					JT.testTime(label, this.run(fun, n), times, s(Math.random()));
+					JT.testTime(label, this.run(fun, n), times, s);
+				},
+				check: function () {
+					var r = true,
+						i = 0,
+						len = res.length - 1;
+					for (null; i < len; i++) {
+						r = r && JSON.stringify(res[i]) === JSON.stringify(res[i + 1]);
+					}
+					return r;
 				}
 			};
 
@@ -64,10 +73,9 @@ Simply pass a pseudorandom small array of numbers to a function (${times} times 
 			utility.doTest('two',_2, 1);
 			utility.doTest('three',_3, 2);
 			utility.doTest('four',_4, 3);
+
 			
-			JT.describe('What about abusing....')
-			
-			// JT.testValue("check results matches", utility.check, true);
+			JT.testValue("check results matches", utility.check, true);
 			JT.timeSummary();
 			JT.finishAll();
 		});
