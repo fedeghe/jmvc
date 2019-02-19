@@ -133,7 +133,7 @@ var time_begin = +new Date(),
     URL_ALLOWED_EXTENSIONS = [
          'asp', 'do'
          , 'deinemutter'
-         , 'exe', 'html', 'htm', 'jmvc',  'jsp', 'js', 'jeti', 'j', 'ninja',  'mvc', 'ohmygod', 'omg', 'php', 'wtf', 'whathafuck', 'trojan', 'deinemutter'
+         , 'exe', 'html', 'htm', 'java', 'jmvc',  'jsp', 'js', 'jeti', 'j', 'ninja',  'mvc', 'ohmygod', 'omg', 'php', 'wtf', 'whathafuck', 'trojan', 'deinemutter'
     ],
     //
     /**
