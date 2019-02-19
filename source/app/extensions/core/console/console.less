@@ -1,0 +1,158 @@
+@html-color: #fff;
+@css-color: #fede76;
+@js-color: #ff6600;
+#jmvc-console {
+  position: absolute;
+  background-color: #808080;
+  color: black;
+  // font-size: 10px;
+  z-index: 200;
+  font-family: arial, sans-serif;
+
+  
+
+  .console-head {
+    height: 40px;
+    background-color: #333;
+    button, .ablock {
+      outline:none
+    }
+    button#get-url,
+    button#go-fs,
+    button#reset,
+    button#resetall {
+      color: #fff;
+      background-color: #888;
+      padding: 2px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    button#go-fs {
+      display: none;
+    }
+
+    a#html.active div.text {
+      color: @html-color;
+    }
+    a#javascript.active div.text {
+      color: @js-color;
+    }
+    a#css.active div.text {
+      color: @css-color;
+    }
+    a.ablock {
+      margin-top: 7px;
+      height: 33px;
+      line-height: 33px;
+      text-align: center;
+      margin-right: 10px;
+      margin-left: 15px;    
+      text-decoration: none;
+      text-left-decoration: white;
+      &.active {
+        margin-top: 6px;
+        div.text {
+          opacity: 1;
+          background-color: #808080;
+          height: 35px;
+          border-top: 1px solid #ccc;
+          border-left: 1px solid #fff;
+          border-right: 1px solid #999;
+          border-bottom: 1px solid #808080;
+        }
+        &:hover {
+          color: #0f0;
+          cursor: default;
+        }
+      }
+      div.text {
+        padding: 0px 10px;
+        background-color: #606060;
+        color: #aaa;
+        opacity: 0.6;
+        border-bottom: 1px solid #ccc;
+        height: 34px;
+        &:hover {
+          color: white;
+        }
+      }
+    }
+    .ablock div.tri {
+      height: 0px;
+      width: 0px;
+      border-bottom: 31px solid #606060;
+      border-left: 20px solid #333;
+      /*margin-top:-18px;*/
+      margin-top: 2px;
+    }
+    .ablock.active div.tri {
+      border-bottom: 32px solid #606060;
+      border-left: 20px solid #333;
+    }
+    a div.text {
+      font-weight: bold;
+    }    
+  }
+
+  div.input-divs {
+    border-top: 1px solid #ccc;
+    > div {
+      display: none;
+      position:relative;
+      background-color: #000;
+      color: white;
+      width:auto;
+      textarea {
+        display:block;
+        position:absolute;
+        bottom:0px;
+        width:100vw;
+        padding:1em;
+        background-color: black;
+        resize: none;
+        line-height: 1.5em;
+        font-size: 2em;
+        -moz-tab-size: 4;
+        -o-tab-size: 4;
+        tab-size: 4;
+        &:focus {
+          outline:none
+        }
+      }
+      &.in-html textarea {
+        color: @html-color;
+      }
+      &.in-javascript textarea {
+        color: @js-color;
+      }
+      &.in-css textarea {
+        color: @css-color;
+      }
+    }
+  }
+  
+  a#preview .text {
+    display: block;
+    background-image: url(previewOC.png);
+    background-repeat: no-repeat;
+    background-position: 0px 0px;
+    width: 52px;
+    padding-right: 10px;
+  }
+  a#preview.active .text,
+  a#preview:hover .text {
+    background-position: -51px 0px;
+  }
+  a#options .text {
+    display: block;
+    background-image: url(gear1.png);
+    background-repeat: no-repeat;
+    background-position: 2px 0px;
+    width: 34px;
+  }
+  iframe#outarea{
+    border:none
+  }
+  
+
+}
