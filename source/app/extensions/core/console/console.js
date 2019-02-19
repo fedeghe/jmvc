@@ -383,7 +383,6 @@ JMVC.extend('console', {
                     outarea = JMVC.dom.find('#outarea'),
                     inPreview = JMVC.dom.find('#in-preview');
 
-
                 function getUrl() {
                     var vals = getValues(),
                         url = [JMVC.vars.baseurl, JMVC.c, JMVC.a].join(JMVC.US) +
