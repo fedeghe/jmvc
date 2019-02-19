@@ -3,4 +3,5 @@
 /app
 /srv
 /media
+/node_modules
 npm-debug.log
