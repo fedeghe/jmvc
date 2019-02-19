@@ -1,0 +1,26 @@
+{
+  "name": "project_jmvc",
+  "version": "1.0.0",
+  "description": "JMVC ====",
+  "main": "hotlink.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "malta build.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fedeghe/jmvc.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/fedeghe/jmvc/issues"
+  },
+  "homepage": "https://github.com/fedeghe/jmvc#readme",
+  "devDependencies": {
+    "malta": "^3.9.3",
+    "malta-less": "^1.0.6"
+  }
+}
