@@ -1,6 +1,6 @@
 // private ns for modules
 // 
-_ = {};
+var _ = {};
 _.common = {
     digFor : function (what, obj, target, limit) {
         if(!what.match(/key|value|keyvalue/)) {
