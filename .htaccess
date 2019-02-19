@@ -48,9 +48,22 @@ FileETag MTime Size
 	# XSS protection
 	Header set X-XSS-Protection "1; mode=block"
 	
-
 	#CORS, {*, null, or exact domain(http://ws.jmvc.org)}
 	Header set Access-Control-Allow-Origin "*"
+
+	# content security policy
+	# Header add Content-Security-Policy-Report-Only "default-src 'self'; form-action 'none'; frame-ancestors 'none'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self'"
+	# Header add Content-Security-Policy "default-src *"
+
+	# X-Content-Type-Options
+	Header always set X-Content-Type-Options "nosniff"
+
+	# The Referrer Policy header
+	Header always set Referrer-Policy "same-origin"
+
+	# Feature-Policy header
+	Header always set Feature-Policy "camera 'none'"
+
 
 	# 0
 	<FilesMatch "jmvc(\.min)?\.js$">
