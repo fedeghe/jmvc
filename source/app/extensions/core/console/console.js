@@ -23,7 +23,7 @@ JMVC.extend('console', {
                     '</head>'+
                     '<body class="console">%body%</body>'+
                 '</html>',
-            options : '<div class="pad20">'+
+            options : '<div>'+
                     '<legend>Load external<legend>'+
                     '<select id ="content-options">'+
                         '<option value="" selected="selected">No libraries</options>'+
@@ -39,7 +39,8 @@ JMVC.extend('console', {
     toggle : function (h, j, c, tab) {
         var fsmode = false,
             visibleTab,
-            title = JMVC.head.title();
+            title = JMVC.head.title(),
+            headerHeight = 39;
 
         if (JMVC.console._.status) {
 
@@ -53,8 +54,6 @@ JMVC.extend('console', {
                 dims = JMVC.screen.getViewportSize(),
                 border_size = 0,
                 margin = -1,
-                top_height = 10,
-                foot_height = 100,
                 screendata = JMVC.screen.getScreenData(),
                 scrollTop = screendata.scrollTop,
                 defaultContent = {
@@ -274,6 +273,7 @@ JMVC.extend('console', {
                         ]
                     },{
                         attrs : {"class" : "input-divs respfixed"},
+                        
                         content : [
                             {
                                 attrs : {
@@ -286,13 +286,13 @@ JMVC.extend('console', {
                                         id : "content-html"
                                     },
                                     style : {
-                                        height : (dims.height - 61) + "px",
+                                        height : (dims.height - headerHeight) + "px",
                                         border : "none"
                                     },
                                     html : content.h
                                 }],
                                 style: {
-                                    height: (dims.height - 61) + "px"
+                                    height: (dims.height - headerHeight) + "px"
                                 }
                             },{
                                 attrs : {
@@ -305,13 +305,13 @@ JMVC.extend('console', {
                                         id : "content-javascript"
                                     },
                                     style : {
-                                        height : (dims.height - 61) + "px",
+                                        height : (dims.height - headerHeight) + "px",
                                         border : "none"
                                     },
                                     html : content.j
                                 }],
                                 style: {
-                                    height: (dims.height - 61) + "px"
+                                    height: (dims.height - headerHeight) + "px"
                                 }
                             },{
                                 attrs : {
@@ -322,13 +322,13 @@ JMVC.extend('console', {
                                     tag : "textarea",
                                     attrs : {"id":"content-css"},
                                     style : {
-                                        height : (dims.height - 61) + "px",
+                                        height : (dims.height - headerHeight) + "px",
                                         border : "none"
                                     },
                                     html : content.c
                                 }],
                                 style: {
-                                    height: (dims.height - 61) + "px"
+                                    height: (dims.height - headerHeight) + "px"
                                 }
                             },{
                                 attrs : {
@@ -340,12 +340,12 @@ JMVC.extend('console', {
                                     attrs : {
                                         id : "outarea",
                                         width : "100%",
-                                        height : (dims.height - 61) + "px"
+                                        height : (dims.height - headerHeight) + "px"
                                     },
                                     style : {backgroundColor : 'white'}
                                 }],
                                 style: {
-                                    height: (dims.height - 61) + "px"
+                                    height: (dims.height - headerHeight) + "px"
                                 }
                             },{
                                 attrs : {
@@ -354,7 +354,7 @@ JMVC.extend('console', {
                                 },
                                 html : JMVC.console._.options,
                                 style: {
-                                    height: (dims.height - 61) + "px"
+                                    height: (dims.height - headerHeight) + "px"
                                 }
                             }
                         ]
