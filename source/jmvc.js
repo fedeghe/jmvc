@@ -34,13 +34,14 @@ $$src/head.js$$
 			$$src/core/outerjmvc.js$$
 			$$src/core/cleanup.js$$
 			$$src/core/end.js$$
-		})(),
-		$$src/core/private.js$$
+		})();
+	
 
 	//***********************//
 	//
 	// MANDATORY MODULES START
 	//
+	$$src/core/private.js$$
 	$$src/modules/cookie.js$$
 	$$src/modules/io.js$$
 	$$src/modules/util.js$$
