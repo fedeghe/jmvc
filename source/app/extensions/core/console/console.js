@@ -380,7 +380,8 @@ JMVC.extend('console', {
                     buttRESET = JMVC.dom.find('#reset'),
                     buttRESETALL = JMVC.dom.find('#resetall'),
                     buttGETURL = JMVC.dom.find('#get-url'),
-                    outarea = JMVC.dom.find('#outarea');
+                    outarea = JMVC.dom.find('#outarea'),
+                    inPreview = JMVC.dom.find('#in-preview');
 
 
                 function getUrl() {
@@ -450,7 +451,7 @@ JMVC.extend('console', {
                     outarea.contentWindow.document.onkeyup =  function (e) {
                         if (fsmode && e.keyCode == 27) {
                             JMVC.head.title(title);
-                            JMVC.css.style(outarea,{'position':'relative'});
+                            JMVC.css.style(inPreview,{'position':'relative'});
                             fsmode = false;
                             //update();
                         };
@@ -477,13 +478,14 @@ JMVC.extend('console', {
                 }
 
                 function gofs(){
+                    
                     JMVC.head.title('Press esc to exit preview');   
-                    JMVC.css.style(outarea, {
+                    JMVC.css.style(inPreview, {
                         position : 'absolute',
                         top :'0px',
                         left :'0px',
-                        width :'100%',
-                        height :'100%'
+                        bottom: '0px',
+                        right :'0px'
                     });
                     outarea.contentDocument.documentElement.focus();
                 
