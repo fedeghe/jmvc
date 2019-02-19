@@ -33,8 +33,8 @@ JMVC.head = {
                 //script_content = JMVC.parse(src/* in this case is mean to be the content */);
                 script_content = JMVC.parse(src, true);
                 script = JMVC.dom.create('script', {type : 'text/javascript'}, script_content);
-                script.onload = function () {head.removeChild(script);};
                 head = that.element;
+                script.onload = function () {head.removeChild(script);};
                 head.appendChild(script);
             } else {
                 /* get css content, async */
