@@ -5,6 +5,7 @@
 // private section
 _.string = {
     charToEntity : {},
+    done: false,
     entities : { __proto__: null,
         apos: 0x0027, quot: 0x0022, amp: 0x0026, lt: 0x003C, gt: 0x003E, nbsp: 0x00A0, iexcl: 0x00A1, cent: 0x00A2, pound: 0x00A3,
         curren: 0x00A4, yen: 0x00A5, brvbar: 0x00A6, sect: 0x00A7, uml: 0x00A8, copy: 0x00A9, ordf: 0x00AA, laquo: 0x00AB,
@@ -40,6 +41,12 @@ _.string = {
         spades: 0x2660, clubs: 0x2663, hearts: 0x2665, diams: 0x2666
     }
 };
+
+function doStrings(){
+    for (var entityName in _.string.entities) {
+        _.string.charToEntity[String.fromCharCode(_.string.entities[entityName])] = entityName;
+    }
+}
 // public section
 JMVC.string = {
     /**
@@ -61,6 +68,7 @@ JMVC.string = {
      * @param {[type]} str [description]
      */
     escapeEntities : function (str) {
+        !_.string.done && doStrings()
         return str.replace(/[^\x20-\x7E]/g,
             function (str) {
                 return _.string.charToEntity[str] ? '&' + _.string.charToEntity[str] + ';' : str;
@@ -347,7 +355,5 @@ JMVC.string = {
     }
     
 };
-for (var entityName in _.string.entities ) {
-    _.string.charToEntity[String.fromCharCode(_.string.entities[entityName])] = entityName;
-}
+
 //-----------------------------------------------------------------------------
