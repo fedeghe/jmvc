@@ -180,7 +180,8 @@ JMVC.extend('console', {
                                     {
                                         attrs : {"class":"round4 roundtop text"},
                                         style : {"float":"right"}
-                                    },{
+                                    }
+                                    ,{
                                         style : {"float":"right"},
                                         attrs : {"class":"tri resp_dskt"}
                                     }
@@ -196,8 +197,9 @@ JMVC.extend('console', {
                                 content : [
                                     {
                                         attrs : {"class":"round4 roundtop text"},
-                                        style : {"float":"right"},
-                                    },{
+                                        style : {"float":"right"}
+                                    }
+                                    ,{
                                         style : {"float":"right"},
                                         attrs : {"class":"tri resp_dskt"}
                                     }
@@ -219,7 +221,8 @@ JMVC.extend('console', {
                                         attrs : {"class":"round4 roundtop text resp_mobi"},
                                         style : {"float":"right"},
                                         html : "{}"
-                                    },{
+                                    }
+                                    ,{
                                         style : {"float" : "right"},
                                         attrs : {"class" : "tri resp_dskt"}
                                     }
@@ -241,7 +244,8 @@ JMVC.extend('console', {
                                         attrs : {"class" : "round4 roundtop text resp_mobi"},
                                         style : {"float" : "right"},
                                         html : "{;}"
-                                    },{
+                                    }
+                                    ,{
                                         style : {"float" : "right"},
                                         attrs : {"class" : "tri resp_dskt"}
                                     }
@@ -263,7 +267,8 @@ JMVC.extend('console', {
                                         attrs : {"class":"round4 roundtop text resp_mobi"},
                                         style : {"float":"right"},
                                         html : "&lt;&gt;"
-                                    },{
+                                    }
+                                    ,{
                                         style : {"float":"right"},
                                         attrs : {"class":"tri resp_dskt"}
                                     }
@@ -333,16 +338,20 @@ JMVC.extend('console', {
                             },{
                                 attrs : {
                                     id : "in-preview",
-                                    "class" : "in-preview inputdiv respfixed"
+                                    "class": "in-preview inputdiv respfixed"
                                 },
                                 content: [{
-                                    tag : "iframe",
-                                    attrs : {
-                                        id : "outarea",
-                                        width : "100%",
-                                        height : (dims.height - headerHeight) + "px"
+                                    tag: "iframe",
+                                    attrs: {
+                                        id: "outarea",
+                                        width: "100%",
+                                        frameborder: "0",
+                                        height: (dims.height - headerHeight) + "px"
                                     },
-                                    style : {backgroundColor : 'white'}
+                                    style: {
+                                        backgroundColor : 'white',
+                                        height: (dims.height - headerHeight) + "px"
+                                    }
                                 }],
                                 style: {
                                     height: (dims.height - headerHeight) + "px"
@@ -437,7 +446,7 @@ JMVC.extend('console', {
                     if ('_af' in outarea.contentWindow) {
                         outarea.contentWindow.cancelAnimationFrame(outarea.contentWindow._af);
                     }
-
+                    
                     outarea.contentDocument.documentElement.innerHTML = JMVC.string.replaceAll(
                         JMVC.console._.tpl, {
                             'style' : c,
@@ -461,7 +470,8 @@ JMVC.extend('console', {
                             loaded = false,
                             innerload = function () {
                                 appendScript('/app/' + jmvc_iframe_file, iframe.contentWindow, function () {
-                                    iframe.contentWindow.document.getElementsByTagName('head').item(0).appendChild(scriptTag);    
+                                    // iframe.contentWindow.document.getElementsByTagName('head').item(0).appendChild(scriptTag);    
+                                    iframe.contentWindow.document.body.appendChild(scriptTag);    
                                 });
                             }
                         
