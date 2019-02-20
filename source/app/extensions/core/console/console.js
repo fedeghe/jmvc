@@ -340,17 +340,20 @@ JMVC.extend('console', {
                                     id : "in-preview",
                                     "class": "in-preview inputdiv respfixed"
                                 },
+                                style: {
+                                    overflow: 'hidden'
+                                },
                                 content: [{
                                     tag: "iframe",
                                     attrs: {
                                         id: "outarea",
                                         width: "100%",
-                                        frameborder: "0",
-                                        height: (dims.height - headerHeight) + "px"
+                                        frameborder: "0"
+                                        // ,height: (dims.height - headerHeight) + "px"
                                     },
                                     style: {
-                                        backgroundColor : 'white',
-                                        height: (dims.height - headerHeight) + "px"
+                                        backgroundColor : 'white'
+                                        // ,height:  (dims.height - headerHeight) + "px"
                                     }
                                 }],
                                 style: {
@@ -497,7 +500,6 @@ JMVC.extend('console', {
                         right :'0px'
                     });
                     outarea.contentDocument.documentElement.focus();
-                
                     fsmode = true;
                 }
 
