@@ -349,11 +349,11 @@ JMVC.extend('console', {
                                         id: "outarea",
                                         width: "100%",
                                         frameborder: "0"
-                                        // ,height: (dims.height - headerHeight) + "px"
+                                        ,height: (dims.height - headerHeight) + "px"
                                     },
                                     style: {
                                         backgroundColor : 'white'
-                                        // ,height:  (dims.height - headerHeight) + "px"
+                                        ,height:  (dims.height - headerHeight) + "px"
                                     }
                                 }],
                                 style: {
@@ -462,9 +462,14 @@ JMVC.extend('console', {
                     outarea.contentWindow.document.onkeyup =  function (e) {
                         if (fsmode && e.keyCode == 27) {
                             JMVC.head.title(title);
-                            JMVC.css.style(inPreview,{'position':'relative'});
+                            var h = dims.height - headerHeight + 'px'
+                            JMVC.css.style(outarea, { height: h });
+                            JMVC.css.style(inPreview,{
+                                'position':'relative',
+                                'height': h
+                            });
                             fsmode = false;
-                            //update();
+                            update();
                         };
                     }
                     
@@ -492,15 +497,19 @@ JMVC.extend('console', {
                 function gofs(){
                     
                     JMVC.head.title('Press esc to exit preview');   
+                    var h = dims.height + 'px'; //- headerHeight
                     JMVC.css.style(inPreview, {
                         position : 'absolute',
+                        height: h,
                         top :'0px',
                         left :'0px',
                         bottom: '0px',
                         right :'0px'
                     });
+                    JMVC.css.style(outarea, {height: h});
                     outarea.contentDocument.documentElement.focus();
                     fsmode = true;
+                    update();
                 }
 
                 function reset(current) {
