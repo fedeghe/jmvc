@@ -183,7 +183,9 @@ JMVC.head = {
             jsapi : 'https://www.google.com/jsapi',
             underscore : 'http://underscorejs.org/underscore-min.js',
             'prototype' : 'https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js',
-            dropbox : 'https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js'
+            // dropbox : 'https://www.dropbox.com/static/api/dropbox-datastores-1.0-latest.js'
+            // TODO
+            dropbox : 'https://cdnjs.cloudflare.com/ajax/libs/dropbox.js/4.0.17/Dropbox-sdk.min.js'
         };
         l in libs && JMVC.head.addScript(libs[l]);
     },
