@@ -24,7 +24,7 @@ JMVC.controllers.orient = function() {
 
 
 
-	this.action_orientation = function () {
+	this.action_index= function () {
 
 		//JMVC.require('vendors/twitter/twitter');
 
@@ -35,8 +35,8 @@ JMVC.controllers.orient = function() {
 				'content': ''
 			})
 			.render(function() {
-
-				// experimental
+                console.log('rendered')
+				// experimental 
                 let laSensor = new LinearAccelerationSensor({frequency: 60});
                 laSensor.addEventListener('reading', e => {
                     console.log("Linear acceleration along the X-axis " + laSensor.x);
