@@ -33,7 +33,7 @@ ServerSignature Off
 Options -Indexes
 
 <ifmodule mod_deflate.c>
-   AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css text/javascript application/x-javascript application/javascript application/json application/xml
+#   AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css text/javascript application/x-javascript application/javascript application/json application/xml
 </ifmodule>
 
 
@@ -67,9 +67,17 @@ Options -Indexes
 
 
 	# 0
-	<FilesMatch "jmvc(\.min)?\.js$">
-		Header unset Cache-Control
-	</FilesMatch>
+	# <FilesMatch "jmvc(\.min)?\.js$">
+    #	Header unset Cache-Control
+	# </FilesMatch>
+
+
+
+	Header set Cache-Control "no-cache, no-store, must-revalidate"
+	Header set Pragma "no-cache"
+	Header set Expires 0
+
+
 
 	# year
 #	<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|svg|swf|mp3|mp4)$">
