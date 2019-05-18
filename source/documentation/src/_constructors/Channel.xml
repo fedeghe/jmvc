@@ -44,7 +44,7 @@ c.sub('notice', function (a, b, c) {&#10;
     console.log(a, b, c);&#10;
 });&#10;
 c.pub('notice', ['hello','world']);</sample>
-    <status>incomplete</status>
+    <status>complete</status>
     <code>var c = JMVC.Channel('trial');
 c.sub('notice', function (a, b, c) {
     console.log('first notice');

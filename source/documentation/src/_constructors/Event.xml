@@ -53,5 +53,5 @@ list.add('c');
 list.del(1);
 console.log(list.els);
     </code>
-    <status>incomplete</status>
+    <status>complete</status>
 </function>
