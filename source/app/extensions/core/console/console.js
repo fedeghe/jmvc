@@ -9,47 +9,43 @@ JMVC.require(
 );
 
 JMVC.extend('console', {
-
-    init : function () {
+    init: function () {
         JMVC.head.meta("generator", "jmvc resident in your machine");
         JMVC.console._ = {
-            status : false,
-            scroll : 0,
-            tpl : '<!DOCTYPE html>'+
-                '<html>'+
-                    '<head>'+
-                        '<link rel="stylesheet" type="text/css" href="/media/css/core/jmvc.css">'+
-                        '<style type="text/css">%style%</style>'+
-                    '</head>'+
-                    '<body class="console">%body%</body>'+
+            status: false,
+            scroll: 0,
+            tpl: '<!DOCTYPE html>' +
+                '<html>' +
+                '<head>' +
+                '<link rel="stylesheet" type="text/css" href="/media/css/core/jmvc.css">' +
+                '<style type="text/css">%style%</style>' +
+                '</head>' +
+                '<body class="console">%body%</body>' +
                 '</html>',
-            options : '<div>'+
-                    '<legend>Load external<legend>'+
-                    '<select id ="content-options">'+
-                        '<option value="" selected="selected">No libraries</options>'+
-                        '<optgroup label="jQuery">'+
-                            '<option value="http://codeorigin.jquery.com/jquery-1.10.2.min.js">jQuery 1.10.2</option>'+
-                            '<option value="http://codeorigin.jquery.com/jquery-1.9.1.min.js">jQuery 1.9.1</option>'+
-                        '</optgroup>'+
-                    '</select>'+
+            options: '<div>' +
+                '<legend>Load external<legend>' +
+                '<select id ="content-options">' +
+                '<option value="" selected="selected">No libraries</options>' +
+                '<optgroup label="jQuery">' +
+                '<option value="http://codeorigin.jquery.com/jquery-1.10.2.min.js">jQuery 1.10.2</option>' +
+                '<option value="http://codeorigin.jquery.com/jquery-1.9.1.min.js">jQuery 1.9.1</option>' +
+                '</optgroup>' +
+                '</select>' +
                 '</div>'
         }
     },
-    
-    toggle : function (h, j, c, tab) {
+
+    toggle: function (h, j, c, tab) {
         var fsmode = false,
             visibleTab,
             title = JMVC.head.title(),
             headerHeight = 39;
 
         if (JMVC.console._.status) {
-
             JMVC.dom.remove(JMVC.dom.find('#jmvc-console'));
             JMVC.events.enable_scroll();
             JMVC.W.scrollTo(0, JMVC.console._.scroll);
-
         } else {
-
             var jmvc_iframe_file = 'jmvc.js',
                 dims = JMVC.screen.getViewportSize(),
                 border_size = 0,
@@ -57,331 +53,302 @@ JMVC.extend('console', {
                 screendata = JMVC.screen.getScreenData(),
                 scrollTop = screendata.scrollTop,
                 defaultContent = {
-                    h : "<p><span id='hw'>hello world</span></p>",
-                    j : "var t = document.getElementById('hw');\nt.onclick = function () {t.innerHTML='clicked'; };",
-                    c : "p {\n\tmargin:20px\n}\nspan{\n\tcolor:red;\n\tfont-family:arial, sans-serif;\n\tfont-size:20px;\n\tcursor:pointer;\n}"
+                    h: "<p><span id='hw'>hello world</span></p>",
+                    j: "var t = document.getElementById('hw');\nt.onclick = function () {t.innerHTML='clicked'; };",
+                    c: "p {\n\tmargin:20px\n}\nspan{\n\tcolor:red;\n\tfont-family:arial, sans-serif;\n\tfont-size:20px;\n\tcursor:pointer;\n}"
                 },
-
                 // main container
                 container = JMVC.dom.create(
-                    'div',{
-                        'id' : 'jmvc-console',
-                        'class' : 'jmvc-console',
-                        'style' : 'left:' + margin + 'px;right:' + margin + 'px;top:' + margin + 'px;bottom:' + margin + 'px;border:' + border_size + 'px solid black'
+                    'div', {
+                        'id': 'jmvc-console',
+                        'class': 'jmvc-console',
+                        'style': 'left:' + margin + 'px;right:' + margin + 'px;top:' + margin + 'px;bottom:' + margin + 'px;border:' + border_size + 'px solid black'
                     }
                 ),
-
                 content = {
-                    h : h != undefined ? h : (JMVC.p.h ? decodeURIComponent(JMVC.p.h) : defaultContent.h),
-                    j : j != undefined ? j : (JMVC.p.j ? decodeURIComponent(JMVC.p.j) : defaultContent.j),
-                    c : c != undefined ? c : (JMVC.p.c ? decodeURIComponent(JMVC.p.c) : defaultContent.c)
+                    h: h != undefined ? h : (JMVC.p.h ? decodeURIComponent(JMVC.p.h) : defaultContent.h),
+                    j: j != undefined ? j : (JMVC.p.j ? decodeURIComponent(JMVC.p.j) : defaultContent.j),
+                    c: c != undefined ? c : (JMVC.p.c ? decodeURIComponent(JMVC.p.c) : defaultContent.c)
                 },
-                
                 version = 0.4,
-                
                 defaults = {
-                    h : '<!-- no html content -->',
-                    j : '/* no javascript content */',
-                    c : '/* no css content */'
+                    h: '<!-- no html content -->',
+                    j: '/* no javascript content */',
+                    c: '/* no css content */'
                 },
-
-                config  = {
-                    target : container,
-                    content : [{
-                        attrs : {"class" : "console-head"},
-                        content : [
-                            {
-                                tag : "a",
-                                attrs : {
-                                    href : JMVC.vars.baseurl,
-                                    title : "web console v." + version
-                                },
-                                content : [{
-                                    tag : "img",
-                                    attrs : {
-                                        src : "/media/img/jmvc_n3.png",
-                                        width : "60"
-                                    }
-                                }],
-                                style : {
-                                    "float" : "left",
-                                    marginTop : "12px",
-                                    marginLeft : "10px"
-                                }
-                            },{
-                                tag : "button",
-                                html : "get url",
-                                attrs : {
-                                    id : "get-url",
-                                    "class" : "round4",
-                                    title : 'get url'
-                                },
-                                style : {
-                                    "float" : "left",
-                                    height : "20px",
-                                    lineHeight : "16px",
-                                    padding : "0px 5px"
-                                }
-                            },{
-                                tag : "button",
-                                html : "FScreen",
-                                attrs : {
-                                    id : "go-fs",
-                                    "class" : "round4",
-                                    title : 'go fullscreen'
-                                },
-                                style : {
-                                    "float" : "left",
-                                    height : "20px",
-                                    lineHeight : "16px",
-                                    padding : "0px 5px"
-                                }
-                            },{
-                                tag : "button",
-                                html : "reset",
-                                attrs : {
-                                    id : "reset",
-                                    "class" : "round4",
-                                    title : 'reset'
-                                },
-                                style : {
-                                    "float" : "left",
-                                    height : "20px",
-                                    lineHeight : "16px",
-                                    padding : "0px 5px"
-                                }
-                            },{
-                                tag : "button",
-                                html : "reset all",
-                                attrs : {
-                                    id : "resetall",
-                                    "class" : "round4",
-                                    title : 'reset all'
-                                },
-                                style : {
-                                    "float" : "left",
-                                    height : "20px",
-                                    lineHeight : "16px",
-                                    padding : "0px 5px"
-                                }
+                config = {
+                    target: container,
+                    content: [{
+                        attrs: { "class": "console-head" },
+                        content: [{
+                            tag: "a",
+                            attrs: {
+                                href: JMVC.vars.baseurl,
+                                title: "web console v." + version
                             },
-
-                            ////////////////////////////////////////
-
-                            {
-                                tag : "a",
-                                attrs : {
-                                    id : "options",
-                                    href : "#options",
-                                    "class" : "ablock"
-                                },
-                                style : {"float" : "right"},
-                                content : [
-                                    {
-                                        attrs : {"class":"round4 roundtop text"},
-                                        style : {"float":"right"}
-                                    }
-                                    ,{
-                                        style : {"float":"right"},
-                                        attrs : {"class":"tri resp_dskt"}
-                                    }
-                                ]
-                            },{
-                                tag : "a",
-                                attrs : {
-                                    id : "preview",
-                                    href : "#preview",
-                                    "class" : "ablock"
-                                },
-                                style : {"float":"right"},
-                                content : [
-                                    {
-                                        attrs : {"class":"round4 roundtop text"},
-                                        style : {"float":"right"}
-                                    }
-                                    ,{
-                                        style : {"float":"right"},
-                                        attrs : {"class":"tri resp_dskt"}
-                                    }
-                                ]
-                            },{
-                                tag : "a",
-                                attrs : {
-                                    id : "css",
-                                    href : "#css",
-                                    "class" : "ablock"
-                                },
-                                style : {"float":"right"},
-                                content : [
-                                    {
-                                        attrs : {"class":"round4 roundtop text resp_dskt"},
-                                        style : {"float":"right"},
-                                        html : "CSS"
-                                    },{
-                                        attrs : {"class":"round4 roundtop text resp_mobi"},
-                                        style : {"float":"right"},
-                                        html : "{}"
-                                    }
-                                    ,{
-                                        style : {"float" : "right"},
-                                        attrs : {"class" : "tri resp_dskt"}
-                                    }
-                                ]
-                            },{
-                                tag : "a",
-                                attrs : {
-                                    id : "javascript",
-                                    href : "#javascript",
-                                    "class" : "ablock"
-                                },
-                                style : {"float" : "right"},
-                                content : [
-                                    {
-                                        attrs : {"class" : "round4 roundtop text resp_dskt"},
-                                        style : {"float" : "right"},
-                                        html : "JS"
-                                    },{
-                                        attrs : {"class" : "round4 roundtop text resp_mobi"},
-                                        style : {"float" : "right"},
-                                        html : "{;}"
-                                    }
-                                    ,{
-                                        style : {"float" : "right"},
-                                        attrs : {"class" : "tri resp_dskt"}
-                                    }
-                                ]
-                            },{
-                                tag : "a",
-                                attrs : {
-                                    id : "html",
-                                    href : "#html",
-                                    "class" : "ablock"
-                                },
-                                style : {"float":"right"},
-                                content : [
-                                    {
-                                        attrs : {"class":"round4 roundtop text resp_dskt"},
-                                        style : {"float":"right"},
-                                        html : "HTML"
-                                    },{
-                                        attrs : {"class":"round4 roundtop text resp_mobi"},
-                                        style : {"float":"right"},
-                                        html : "&lt;&gt;"
-                                    }
-                                    ,{
-                                        style : {"float":"right"},
-                                        attrs : {"class":"tri resp_dskt"}
-                                    }
-                                ]
+                            content: [{
+                                tag: "img",
+                                attrs: {
+                                    src: "/media/img/jmvc_n3.png",
+                                    width: "60"
+                                }
+                            }],
+                            style: {
+                                "float": "left",
+                                marginTop: "12px",
+                                marginLeft: "10px"
+                            }
+                        }, {
+                            tag: "button",
+                            html: "get url",
+                            attrs: {
+                                id: "get-url",
+                                "class": "round4",
+                                title: 'get url'
                             },
+                            style: {
+                                "float": "left",
+                                height: "20px",
+                                lineHeight: "16px",
+                                padding: "0px 5px"
+                            }
+                        }, {
+                            tag: "button",
+                            html: "FScreen",
+                            attrs: {
+                                id: "go-fs",
+                                "class": "round4",
+                                title: 'go fullscreen'
+                            },
+                            style: {
+                                "float": "left",
+                                height: "20px",
+                                lineHeight: "16px",
+                                padding: "0px 5px"
+                            }
+                        }, {
+                            tag: "button",
+                            html: "reset",
+                            attrs: {
+                                id: "reset",
+                                "class": "round4",
+                                title: 'reset'
+                            },
+                            style: {
+                                "float": "left",
+                                height: "20px",
+                                lineHeight: "16px",
+                                padding: "0px 5px"
+                            }
+                        }, {
+                            tag: "button",
+                            html: "reset all",
+                            attrs: {
+                                id: "resetall",
+                                "class": "round4",
+                                title: 'reset all'
+                            },
+                            style: {
+                                "float": "left",
+                                height: "20px",
+                                lineHeight: "16px",
+                                padding: "0px 5px"
+                            }
+                        },
+                        ////////////////////////////////////////
+                        {
+                            tag: "a",
+                            attrs: {
+                                id: "options",
+                                href: "#options",
+                                "class": "ablock"
+                            },
+                            style: { "float": "right" },
+                            content: [{
+                                attrs: { "class": "round4 roundtop text" },
+                                style: { "float": "right" }
+                            }, {
+                                style: { "float": "right" },
+                                attrs: { "class": "tri resp_dskt" }
+                            }]
+                        }, {
+                            tag: "a",
+                            attrs: {
+                                id: "preview",
+                                href: "#preview",
+                                "class": "ablock"
+                            },
+                            style: { "float": "right" },
+                            content: [{
+                                attrs: { "class": "round4 roundtop text" },
+                                style: { "float": "right" }
+                            }, {
+                                style: { "float": "right" },
+                                attrs: { "class": "tri resp_dskt" }
+                            }]
+                        }, {
+                            tag: "a",
+                            attrs: {
+                                id: "css",
+                                href: "#css",
+                                "class": "ablock"
+                            },
+                            style: { "float": "right" },
+                            content: [{
+                                attrs: { "class": "round4 roundtop text resp_dskt" },
+                                style: { "float": "right" },
+                                html: "CSS"
+                            }, {
+                                attrs: { "class": "round4 roundtop text resp_mobi" },
+                                style: { "float": "right" },
+                                html: "{}"
+                            }, {
+                                style: { "float": "right" },
+                                attrs: { "class": "tri resp_dskt" }
+                            }]
+                        }, {
+                            tag: "a",
+                            attrs: {
+                                id: "javascript",
+                                href: "#javascript",
+                                "class": "ablock"
+                            },
+                            style: { "float": "right" },
+                            content: [{
+                                attrs: { "class": "round4 roundtop text resp_dskt" },
+                                style: { "float": "right" },
+                                html: "JS"
+                            }, {
+                                attrs: { "class": "round4 roundtop text resp_mobi" },
+                                style: { "float": "right" },
+                                html: "{;}"
+                            }, {
+                                style: { "float": "right" },
+                                attrs: { "class": "tri resp_dskt" }
+                            }]
+                        }, {
+                            tag: "a",
+                            attrs: {
+                                id: "html",
+                                href: "#html",
+                                "class": "ablock"
+                            },
+                            style: { "float": "right" },
+                            content: [{
+                                attrs: { "class": "round4 roundtop text resp_dskt" },
+                                style: { "float": "right" },
+                                html: "HTML"
+                            }, {
+                                attrs: { "class": "round4 roundtop text resp_mobi" },
+                                style: { "float": "right" },
+                                html: "&lt;&gt;"
+                            }, {
+                                style: { "float": "right" },
+                                attrs: { "class": "tri resp_dskt" }
+                            }]
+                        },
                             "clearer"
                         ]
-                    },{
-                        attrs : {"class" : "input-divs respfixed"},
-                        
-                        content : [
-                            {
-                                attrs : {
-                                    id : "in-html",
-                                    "class" : "in-html inputdiv respfixed"
-                                },
-                                content : [{
-                                    tag : "textarea",
-                                    attrs : {
-                                        id : "content-html"
-                                    },
-                                    style : {
-                                        height : (dims.height - headerHeight) + "px",
-                                        border : "none"
-                                    },
-                                    html : content.h
-                                }],
-                                style: {
-                                    height: (dims.height - headerHeight) + "px"
-                                }
-                            },{
-                                attrs : {
-                                    id : "in-javascript",
-                                    "class" : "in-javascript inputdiv respfixed"
-                                },
-                                content: [{
-                                    tag : "textarea",
-                                    attrs : {
-                                        id : "content-javascript"
-                                    },
-                                    style : {
-                                        height : (dims.height - headerHeight) + "px",
-                                        border : "none"
-                                    },
-                                    html : content.j
-                                }],
-                                style: {
-                                    height: (dims.height - headerHeight) + "px"
-                                }
-                            },{
-                                attrs : {
-                                    id : "in-css",
-                                    "class" : "in-css inputdiv respfixed"
-                                },
-                                content: [{
-                                    tag : "textarea",
-                                    attrs : {"id":"content-css"},
-                                    style : {
-                                        height : (dims.height - headerHeight) + "px",
-                                        border : "none"
-                                    },
-                                    html : content.c
-                                }],
-                                style: {
-                                    height: (dims.height - headerHeight) + "px"
-                                }
-                            },{
-                                attrs : {
-                                    id : "in-preview",
-                                    "class": "in-preview inputdiv respfixed"
+                    }, {
+                        attrs: { "class": "input-divs respfixed" },
+                        content: [{
+                            attrs: {
+                                id: "in-html",
+                                "class": "in-html inputdiv respfixed"
+                            },
+                            content: [{
+                                tag: "textarea",
+                                attrs: {
+                                    id: "content-html"
                                 },
                                 style: {
-                                    overflow: 'hidden'
+                                    height: (dims.height - headerHeight) + "px",
+                                    border: "none"
                                 },
-                                content: [{
-                                    tag: "iframe",
-                                    attrs: {
-                                        id: "outarea",
-                                        width: "100%",
-                                        frameborder: "0"
-                                        ,height: (dims.height - headerHeight) + "px"
-                                    },
-                                    style: {
-                                        backgroundColor : 'white'
-                                        ,height:  (dims.height - headerHeight) + "px"
-                                    }
-                                }],
-                                style: {
-                                    height: (dims.height - headerHeight) + "px"
-                                }
-                            },{
-                                attrs : {
-                                    id : "in-options",
-                                    "class" : "in-options inputdiv respfixed"
-                                },
-                                html : JMVC.console._.options,
-                                style: {
-                                    height: (dims.height - headerHeight) + "px"
-                                }
+                                html: content.h
+                            }],
+                            style: {
+                                height: (dims.height - headerHeight) + "px"
                             }
-                        ]
+                        }, {
+                            attrs: {
+                                id: "in-javascript",
+                                "class": "in-javascript inputdiv respfixed"
+                            },
+                            content: [{
+                                tag: "textarea",
+                                attrs: {
+                                    id: "content-javascript"
+                                },
+                                style: {
+                                    height: (dims.height - headerHeight) + "px",
+                                    border: "none"
+                                },
+                                html: content.j
+                            }],
+                            style: {
+                                height: (dims.height - headerHeight) + "px"
+                            }
+                        }, {
+                            attrs: {
+                                id: "in-css",
+                                "class": "in-css inputdiv respfixed"
+                            },
+                            content: [{
+                                tag: "textarea",
+                                attrs: { "id": "content-css" },
+                                style: {
+                                    height: (dims.height - headerHeight) + "px",
+                                    border: "none"
+                                },
+                                html: content.c
+                            }],
+                            style: {
+                                height: (dims.height - headerHeight) + "px"
+                            }
+                        }, {
+                            attrs: {
+                                id: "in-preview",
+                                "class": "in-preview inputdiv respfixed"
+                            },
+                            style: {
+                                overflow: 'hidden'
+                            },
+                            content: [{
+                                tag: "iframe",
+                                attrs: {
+                                    id: "outarea",
+                                    width: "100%",
+                                    frameborder: "0"
+                                    , height: (dims.height - headerHeight) + "px"
+                                },
+                                style: {
+                                    backgroundColor: 'white'
+                                    , height: (dims.height - headerHeight) + "px"
+                                }
+                            }],
+                            style: {
+                                height: (dims.height - headerHeight) + "px"
+                            }
+                        }, {
+                            attrs: {
+                                id: "in-options",
+                                "class": "in-options inputdiv respfixed"
+                            },
+                            html: JMVC.console._.options,
+                            style: {
+                                height: (dims.height - headerHeight) + "px"
+                            }
+                        }]
                     }],
-                    cb : start
+                    cb: start
                 },
                 hash = false;
-
-
 
             //
             // ending Widgzard cb
             // 
             function start() {
-
                 var contentHTML = JMVC.dom.find('#content-html'),
                     contentJAVASCRIPT = JMVC.dom.find('#content-javascript'),
                     contentCSS = JMVC.dom.find('#content-css'),
@@ -399,17 +366,18 @@ JMVC.extend('console', {
                     var vals = getValues(),
                         url = [JMVC.vars.baseurl, JMVC.c, JMVC.a].join(JMVC.US) +
                             JMVC.object.toQs({
-                                h : vals[0] || defaults.h,
-                                j : vals[1] || defaults.j,
-                                c : vals[2] || defaults.c,
-                                l : tongueOPTIONS.value || ''
+                                h: vals[0] || defaults.h,
+                                j: vals[1] || defaults.j,
+                                c: vals[2] || defaults.c,
+                                l: tongueOPTIONS.value || ''
                             }) +
                             (hash ? "#" + hash : ''),
                         l = url.length,
                         limit = 2047;
 
                     // just let the user know about url 2k limit
-                    l > limit && alert('Url length : ' + l + "\n"  + "It seems like all content cannot be safely put in a url,\nit WON`T WORK in some browsers.");
+                    l > limit
+                    && alert('Url length : ' + l + "\n" + "It seems like all content cannot be safely put in a url,\nit WON`T WORK in some browsers.");
                     prompt("Copy the following url", url);
                 }
 
@@ -420,20 +388,20 @@ JMVC.extend('console', {
                         contentCSS.value
                     ];
                 }
-                
-                function appendScript (src, w, cb) {
+
+                function appendScript(src, w, cb) {
                     w = w || JMVC.W;
-                    var l = w.document.createElement("script");
+                    var l = w.document.createElement("script"),
+                        s = w.document.getElementsByTagName("head")[0];
                     l.type = "text/javascript";
                     if (cb) {
                         l.onload = cb;
                     }
                     l.src = src;
-                    var s = w.document.getElementsByTagName("head")[0];
                     s.appendChild(l);
                 }
-                
-                function update(){
+
+                function update() {
                     var vals = getValues(),
                         h = vals[0] || defaults.h,
                         j = vals[1] || defaults.j,
@@ -449,64 +417,63 @@ JMVC.extend('console', {
                     if ('_af' in outarea.contentWindow) {
                         outarea.contentWindow.cancelAnimationFrame(outarea.contentWindow._af);
                     }
-                    
+
                     outarea.contentDocument.documentElement.innerHTML = JMVC.string.replaceAll(
                         JMVC.console._.tpl, {
-                            'style' : c,
-                            'body' : h,
-                            'options' : JMVC.console._.options
+                            'style': c,
+                            'body': h,
+                            'options': JMVC.console._.options
                         }
                     );
 
                     //exit fullscreen
-                    outarea.contentWindow.document.onkeyup =  function (e) {
+                    outarea.contentWindow.document.onkeyup = function (e) {
                         if (fsmode && e.keyCode == 27) {
                             JMVC.head.title(title);
                             var h = dims.height - headerHeight + 'px'
                             JMVC.css.style(outarea, { height: h });
-                            JMVC.css.style(inPreview,{
-                                'position':'relative',
+                            JMVC.css.style(inPreview, {
+                                'position': 'relative',
                                 'height': h
                             });
                             fsmode = false;
                             update();
                         };
                     }
-                    
+
                     try {
                         var dl = JMVC.WD.location,
                             loaded = false,
                             innerload = function () {
                                 appendScript('/app/' + jmvc_iframe_file, iframe.contentWindow, function () {
-                                    // iframe.contentWindow.document.getElementsByTagName('head').item(0).appendChild(scriptTag);    
-                                    iframe.contentWindow.document.body.appendChild(scriptTag);    
+                                    iframe.contentWindow.document.body.appendChild(scriptTag);
                                 });
                             }
-                        
+
                         iframe.contentWindow.eval('var JMVCshut = true; ');
 
                         (lib && appendScript(lib, iframe.contentWindow, innerload))
-                        ||
-                        innerload();
+                            ||
+                            innerload();
 
-                    }catch(e){
+                    } catch (e) {
                         console.error(e);
                     }
                 }
 
-                function gofs(){
-                    
-                    JMVC.head.title('Press esc to exit preview');   
+                function gofs() {
+
+                    JMVC.head.title('Press esc to exit preview');
                     var h = dims.height + 'px'; //- headerHeight
                     JMVC.css.style(inPreview, {
-                        position : 'absolute',
+                        position: 'absolute',
                         height: h,
-                        top :'0px',
-                        left :'0px',
+                        top: '0px',
+                        left: '0px',
                         bottom: '0px',
-                        right :'0px'
+                        right: '0px'
                     });
-                    JMVC.css.style(outarea, {height: h});
+                    JMVC.css.style(outarea, { height: h });
                     outarea.contentDocument.documentElement.focus();
                     fsmode = true;
                     update();
@@ -516,10 +483,10 @@ JMVC.extend('console', {
                     if (!!current) {
                         JMVC.dom.find('#content-' + visibleTab).value = '';
                     } else {
-                        contentHTML.value = 
-                        contentJAVASCRIPT.value = 
-                        contentCSS.value = 
-                        contentOPTIONS.value = '';
+                        contentHTML.value =
+                            contentJAVASCRIPT.value =
+                            contentCSS.value =
+                            contentOPTIONS.value = '';
                     }
                 }
 
@@ -533,7 +500,7 @@ JMVC.extend('console', {
                 }
 
                 //lib
-                if(JMVC.p.l) {
+                if (JMVC.p.l) {
                     tongueOPTIONS.value = decodeURIComponent(JMVC.p.l);
                 }
 
@@ -552,23 +519,23 @@ JMVC.extend('console', {
                     }
                 }
                 visibleTab = hash;
-                
+
                 previewMode(hash == 'preview');
-                
+
                 JMVC.events.on(JMVC.dom.find('.ablock'), 'click', function (e) {
                     var butt = JMVC.dom.find(this),
-                        id =  JMVC.dom.attr(butt, 'id') || 'xxx';
+                        id = JMVC.dom.attr(butt, 'id') || 'xxx';
 
                     visibleTab = id;
                     butt.blur();
 
-                    JMVC.each(JMVC.dom.find('.ablock'), function (elbutt){
+                    JMVC.each(JMVC.dom.find('.ablock'), function (elbutt) {
                         JMVC.dom.removeClass(elbutt, 'active');
                     });
                     JMVC.dom.addClass(butt, 'active');
                     hash = id;
 
-                    JMVC.each(JMVC.dom.find('.inputdiv'), function (el){
+                    JMVC.each(JMVC.dom.find('.inputdiv'), function (el) {
                         JMVC.css.style(el, 'display', 'none');
                     });
                     JMVC.css.style(JMVC.dom.find('#in-' + id), 'display', 'block');
@@ -584,11 +551,11 @@ JMVC.extend('console', {
                 JMVC.events.on(buttGETURL, 'click', getUrl);
                 JMVC.events.on(buttGOFS, 'click', gofs);
                 JMVC.events.on(tonguePREVIEW, 'click', update);
-                JMVC.events.on(buttRESETALL, 'click', function () {reset(); });
-                JMVC.events.on(buttRESET, 'click', function () {reset(true); });
+                JMVC.events.on(buttRESETALL, 'click', function () { reset(); });
+                JMVC.events.on(buttRESET, 'click', function () { reset(true); });
 
 
-                JMVC.events.delay(function () {update(); }, 0);
+                JMVC.events.delay(function () { update(); }, 0);
 
                 //fullscreen ?
                 !!JMVC.p.fullscreen && gofs();
@@ -607,7 +574,7 @@ JMVC.extend('console', {
             // JMVC.set('height', dims.height - 60);
             JMVC.head.addStyle(JMVC.vars.baseurl + '/app/extensions/core/console/console.css', false);
             JMVC.dom.append(JMVC.dom.body(), container);
-            
+
             // -------------------------------------
             JMVC.core.widgzard.render(config, true);
             // -------------------------------------
