@@ -1,14 +1,11 @@
 //
 JMVC.canvas.Editor.Panel = function () {
-    
     this.node = JMVC.dom.create('div', {'class' : 'panel'});
-    
     JMVC.dom.add(this.node, 'div', {'class' : 'arrow'});
-
     this.inner = JMVC.dom.add(this.node, 'div', {"class" : "inner"});
-
     this.rendered = false;
 };
+
 JMVC.canvas.Editor.Panel.prototype = {
 
     /**
