@@ -51,7 +51,6 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
 
         selectionManager = null,
 
-
         commands = [
             {
                 'class' : 'tools active',
