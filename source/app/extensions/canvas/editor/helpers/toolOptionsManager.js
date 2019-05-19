@@ -28,23 +28,16 @@ JMVC.canvas.Editor.getToolOptionsManager = function (instance) {
             JMVC.dom.html(optionsNode, '');
             JMVC.dom.append(optionsNode, optionsList);
 
-
             // get options and  show  all
             if ('options' in tool) {
 
                 for (i in tool.options) {
-
-
                     node = JMVC.dom.create('li', {});   
-
                     JMVC.dom.add(node, 'span', {}, i);
-
                     JMVC.dom.append(optionsList, node);
 
                     var type = tool.options[i].type
-
                     if (type === 'color') {
-
                         (function (j, lay){
                             var name = tool.options[j].name;
                             options[name] = JMVC.canvas.Editor.fields.colorpicker.create({
@@ -88,8 +81,6 @@ JMVC.canvas.Editor.getToolOptionsManager = function (instance) {
                         options[name].onChange(function (c){ tool.options[i].value = c; });   
                     }*/
                     if (type === 'int') {
-
-
                         (function (j, lay){
                             var name = tool.options[j].name;
                             options[name] = JMVC.canvas.Editor.fields.integerinput.create({
@@ -106,15 +97,8 @@ JMVC.canvas.Editor.getToolOptionsManager = function (instance) {
                             }); 
                         })(i, layer); 
                     }
-                    // ....
-                    // 
-                    // 
-                    // 
-                    // 
-                    // 
                 }
             }
-
         }
     };
 };
