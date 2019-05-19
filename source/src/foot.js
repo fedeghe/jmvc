@@ -1,5 +1,5 @@
 // =======================================
-// that would lock from now extending JMVC
+// that would prevent extending JMVC
 //
 // ('preventExtensions' in Object) &&
 // Object.preventExtensions(JMVC);
