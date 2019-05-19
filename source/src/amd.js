@@ -2,10 +2,8 @@
 // 
 if (typeof JMVCshut !== 'undefined') {
     (function (m) {
-        if (typeof define === "function" && define.amd) {
-            define(function () {
-                return JMVC;
-            });
-        }
+        typeof define === "function"
+        && define.amd
+        && define(function () {return JMVC; });
     })(JMVC);
 }
