@@ -462,7 +462,6 @@ JMVC.extend('console', {
                 }
 
                 function gofs() {
-
                     JMVC.head.title('Press esc to exit preview');
                     var h = dims.height + 'px'; //- headerHeight
                     JMVC.css.style(inPreview, {
