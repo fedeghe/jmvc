@@ -68,14 +68,14 @@ Options -Indexes
 
 	# 0
 	# <FilesMatch "jmvc(\.min)?\.js$">
-    #	Header unset Cache-Control
+    	Header unset Cache-Control
 	# </FilesMatch>
 
 
 
-	Header set Cache-Control "no-cache, no-store, must-revalidate"
-	Header set Pragma "no-cache"
-	Header set Expires 0
+	# Header set Cache-Control "no-cache, no-store, must-revalidate"
+	# Header set Pragma "no-cache"
+	# Header set Expires 0
 
 
 
