@@ -1,0 +1,189 @@
+
+.border3() {
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
+}
+
+@colors_oriz_base: #aaa;
+@colors_oriz_selected: #fff;
+@colors_oriz_hover: #ddd;
+@colors_oriz_border: #888;
+@colors_oriz_text: #000;
+@colors_oriz_textselected: #000;
+@colors_oriz_texthover: #000;
+@colors_oriz_containerbg: #fff;
+@colors_oriz_textcontent: #000;
+
+@colors_vert_base: #aaa;
+@colors_vert_selected: #fff;
+@colors_vert_hover: #ddd;
+@colors_vert_border: #888;
+@colors_vert_text: #000;
+@colors_vert_textselected: #000;
+@colors_vert_texthover: #000;
+@colors_vert_containerbg: #fff;
+@colors_vert_textcontent: #000;
+
+
+@sizes_oriz_border: 2px;
+@sizes_oriz_round: 5px;
+@sizes_vert_border: 2px;
+@sizes_vert_round: 5px;
+
+
+ul.tablabels_o {
+    overflow:hidden;
+    list-style:none;
+    margin:0px;
+    padding:0px;
+}
+
+ul.tablabels_o li {
+    color: @colors_oriz_text;
+    float: left;
+    line-height: 1;
+    font-size: 100%;
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    background-color: @colors_oriz_base;
+    padding: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+    border:solid @sizes_oriz_border @colors_oriz_border;
+    -moz-border-radius-topleft: @sizes_oriz_round;
+    -moz-border-radius-topright: @sizes_oriz_round;
+    -moz-border-radius-bottomleft: 0px;
+    -moz-border-radius-bottomright: 0px;
+    -webkit-border-top-left-radius: @sizes_oriz_round;
+    -webkit-border-top-right-radius: @sizes_oriz_round;
+    -webkit-border-bottom-left-radius: 0px;
+    -webkit-border-bottom-right-radius: 0px;
+    border-top-left-radius: @sizes_oriz_round;
+    border-top-right-radius: @sizes_oriz_round;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+ul.tablabels_o li:hover {
+    color: @colors_oriz_texthover;
+    background-color: @colors_oriz_hover;
+}
+                    
+ul.tablabels_o li.sel {
+    color: @colors_oriz_textselected;
+    border: @sizes_oriz_border solid @colors_oriz_border;
+    border-bottom: none;
+    background-color: @colors_oriz_selected;
+    z-index: 10;
+    position: relative;
+    bottom: -1px;
+}
+
+ul.tablabels_o li.unsel {
+    opacity: 0.5
+}
+
+ul.tablabels_o li.unsel:hover {
+    opacity: 0.8
+}
+
+div.tabcontainer_o {
+    color: @colors_oriz_textcontent;
+    background-color: @colors_oriz_containerbg;
+    .border3();
+    line-height: 1;
+    font-size: 100%;
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    border: @sizes_oriz_border solid @colors_oriz_border;
+    position: relative;
+    top: -3px;
+    z-index: 5;
+    padding: 5px;
+}
+
+ul.tablabels_v {
+    color: @colors_vert_text;
+    float: left;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+ul.tablabels_v li{
+    display: block;
+    text-align: right;
+    line-height: 1;
+    font-size: 100%;
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    background-color: @colors_vert_base;
+    padding: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+    left: @sizes_vert_round;
+    padding-right: calc(2 * @sizes_vert_round);
+    position: relative;
+    border: solid @sizes_vert_border @colors_vert_border;
+    -moz-border-radius-topleft: @sizes_vert_round;
+    -moz-border-radius-topright: 0px;
+    -moz-border-radius-bottomleft: @sizes_vert_round;
+    -moz-border-radius-bottomright: 0px;
+    -webkit-border-top-left-radius: @sizes_vert_round;
+    -webkit-border-top-right-radius: 0px;
+    -webkit-border-bottom-left-radius: @sizes_vert_round;
+    -webkit-border-bottom-right-radius: 0px;
+    border-top-left-radius: @sizes_vert_round;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: @sizes_vert_round;
+    border-bottom-right-radius: 0px;
+    border-right: none;
+    left:1px
+}
+
+ul.tablabels_v li:hover {
+    color: @colors_vert_texthover;
+    background-color: @colors_vert_hover;
+}
+
+ul.tablabels_v li.sel{
+    color: @colors_vert_textselected;
+    border: @sizes_vert_border solid @colors_vert_border;
+    border-right: none;
+    background-color: @colors_vert_selected;
+    z-index: 10;
+    position: relative;
+    left: 1px
+}
+
+ul.tablabels_v li.unsel{
+    opacity: 0.5
+}
+
+ul.tablabels_v li.unsel:hover{
+    opacity: 0.8
+}
+
+div.tabcontainer_v{
+    color: @colors_vert_textcontent;
+    background-color: @colors_vert_containerbg;
+    .border3();
+    min-height: 250px;
+    overflow: hidden;
+    position: relative;
+    line-height: 1;
+    font-size: 100%;
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    border: @sizes_vert_border solid @colors_vert_border;
+    left: -1px;
+    z-index: 5;
+    padding: 5px
+}
+
+
