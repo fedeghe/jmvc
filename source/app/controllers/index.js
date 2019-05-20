@@ -38,7 +38,7 @@ JMVC.controllers.index = function () {
 			/*, function (i){console.debug(i, 'loaded')}*/
 		);
 
-		// JMVC.events.loadify(500);
+		JMVC.events.loadify(500);
 		JMVC.head.title('JMVC');
 		JMVC.lang.apply(null, JMVC.util.getParameters('jmvcscript').langs || ['en', 'de', 'it']);
 
