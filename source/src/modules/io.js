@@ -16,8 +16,6 @@ _.io = {
 			len = IEfuckIds.length,
 			i = 0;
 
-		
-
 		if (xdr && o.cors) {
 			xhr = new W.XDomainRequest();
 		} else {
@@ -108,14 +106,11 @@ _.io = {
 		//prepare data, taking care of cache
 		//
 		if (!cache) {
-
 			data.C = JMVC.util.now();
 		}
 
 		if (method === 'GET') {
-
 			data = JMVC.object.toQs(data).substr(1);
-			
 		} else {
 			// wrap data into a FromData object
 			// 
@@ -130,7 +125,6 @@ _.io = {
 			// xhr is actually a xdr
 			//alert('only XDR');
 			xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri);
-
 			xhr.onerror = cb_error;
 			xhr.ontimeout = function () {};
 			xhr.onprogress = function (e) {
@@ -144,9 +138,7 @@ _.io = {
 				cback(xhr.responseText);
 			};
 			xhr.timeout = 3000;
-
 			_.io.setHeaders(xhr, type, limitSize);
-
 
 			var tmp = {
 				xml : 'text/xml',
@@ -158,9 +150,6 @@ _.io = {
 			window.setTimeout(function () {
 				xhr.send();    
 			}, 20);
-			
-
-
 		} else {
 			xhr.onreadystatechange = function () {
 
@@ -238,20 +227,16 @@ _.io = {
 				return true;
 			};
 			xhr.onerror = function () {
-				
 				cb_error && cb_error.apply(null, arguments);
 			};
 			xhr.onabort = function () {
-
 				cb_abort && cb_abort.apply(null, arguments);
 			};
 
 			// open request
-			//
 			xhr.open(method, (method === 'GET') ? (uri + ((data) ? '?' + data: '')) : uri, async);
 
 			// thread abortion
-			// 
 			W.setTimeout(function () {
 				if (!complete) {
 					complete = true;
@@ -261,8 +246,6 @@ _.io = {
 			try {
 				return (targetType === 'responseXML') ? xhr[targetType].childNodes[0] : xhr[targetType];
 			} catch (e3) {}
-
-
 		}
 		return true;
 	}
