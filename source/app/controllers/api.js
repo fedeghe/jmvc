@@ -156,7 +156,7 @@ JMVC.controllers.api = function () {
                 }
             }, 0);
 
-            JMVC.tabs.render();
+            // JMVC.tabs.render();
 
             // http://www.jmvc.dev/api/index/o/1_1/v/3_3 -> promise
             // http://www.jmvc.dev/api/index/o/4_1/v/3_6 -> promise
