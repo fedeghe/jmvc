@@ -10,7 +10,7 @@ JMVC.controllers.api = function () {
             'core/xmlparser/xmlparser',
             'core/mobile/mobile',
             'core/responsive/basic/basic',
-            'widget/countdown/countdown',
+            // 'widget/countdown/countdown',
             'vendors/github/forkme/forkme'
             ,'core/lib/cookieMonster/cookieMonster'
         );
@@ -148,7 +148,7 @@ JMVC.controllers.api = function () {
             JMVC.head.title('JMVC API');
             JMVC.mobile.topHide();
             JMVC.github.forkme('fedeghe');
-            JMVC.widget.countdown.start('#countdown', whenReady);
+            // JMVC.widget.countdown.start('#countdown', whenReady);
 
             JMVC.events.delay(function () {
                 for (var j = 0, l = sections.length;  j < l; j++) {
