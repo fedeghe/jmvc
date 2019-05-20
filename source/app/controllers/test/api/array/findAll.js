@@ -58,8 +58,6 @@ JMVC.controllers.findAll = function () {
                 return JMVC.array.compare(found, [1]);
             }, 1);
 
-            
-
             JMVC.test.finishAll();
         });
     }

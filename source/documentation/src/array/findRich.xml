@@ -6,7 +6,7 @@
         <param name="value">The value of the meta You want to add</param>
     </params>
     <returns>void (undefined)</returns>
-    <testlink>test_api_array_inarraydeep</testlink>
+    <testlink>test_api_array_findRich</testlink>
     <sample>var a = [10, 7, 6, 1, 2, 9, 2, [1,2,3], function(){}, {a:{c:2}, b:3}];&#10;
 console.log(JMVC.array.findRich(a, 2),&#10;
 console.log(JMVC.array.findRich(a, [1,2,3]));&#10;
