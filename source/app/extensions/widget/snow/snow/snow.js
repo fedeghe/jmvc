@@ -8,11 +8,6 @@ JMVC.extend('snow', {
 		l : 0,
 		trg : null
 	},
-	init : function () {
-		
-		
-		
-	},
 	
 	start : function (trg, opts) {
 
