@@ -2,7 +2,7 @@ JMVC.controllers.arrayclone = function () {
 
 	this.action_index = function(){
         JMVC.events.loadify(1000);
-        this.render(function test(){
+        this.render(function (){
             "use strict";
             var s = [
                 [1,2,3,4],
