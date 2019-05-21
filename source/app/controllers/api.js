@@ -3,7 +3,6 @@ JMVC.controllers.api = function () {
     'use strict';
 
     this.action_index = function () {
-
         JMVC.require(
             'widget/tabs/tabs',
             'core/codeview/script/script',
@@ -32,8 +31,6 @@ JMVC.controllers.api = function () {
                 'events', 'head', 'io', 'match',
                 'object', 'string', 'util'
             ],
-            consoleUrlTpl = 'console/index?h=%html%&j=%js%&c=%css%&l=#javascript',
-            whenReady = new Date(2018, 10, 27);
 
         main.set('id', 'desc');
 
@@ -54,17 +51,9 @@ JMVC.controllers.api = function () {
                         consoleLabel = 'edit',
                         len0 = 0,
                         i = 0, t = 0, len = 0,
-                        els = section['function'] instanceof Array ?
-                            section['function']
-                            :
-                            [section['function']],
-                        props = section['properties'] instanceof Array ?
-                            section['properties']
-                            :
-                            [section['properties']],
+
                         trialButt,
-                        consoleButt,
-                        consoleOutput;
+                        consoleButt;
 
                     for (i = 0, len0 = section['function'].length; i < len0; i++) {
                         // prepare content
@@ -82,7 +71,6 @@ JMVC.controllers.api = function () {
                         sample = 'no sample code given yet';
                         trialButt = '<button class="trynow round8 roundbottom" onclick="%doCode%">' + runLabel + '</button>';
                         consoleButt = '<button class="consolenow round8 roundbottom" onclick="%doConsole%">' + consoleLabel + '</button>';
-                        
 
                         if (section['function'][i].params.param instanceof Array) {
                             for (t = 0, len = section['function'][i].params.param.length; t < len; t += 1) {
@@ -148,15 +136,12 @@ JMVC.controllers.api = function () {
             JMVC.head.title('JMVC API');
             JMVC.mobile.topHide();
             JMVC.github.forkme('fedeghe');
-            // JMVC.widget.countdown.start('#countdown', whenReady);
 
             JMVC.events.delay(function () {
                 for (var j = 0, l = sections.length;  j < l; j++) {
                     tabs_inner[sections[j]].render(i[j], JMVC.util.uniqueid);
                 }
             }, 0);
-
-            // JMVC.tabs.render();
 
             // http://www.jmvc.dev/api/index/o/1_1/v/3_3 -> promise
             // http://www.jmvc.dev/api/index/o/4_1/v/3_6 -> promise
