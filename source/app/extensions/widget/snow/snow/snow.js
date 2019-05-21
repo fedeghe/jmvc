@@ -24,13 +24,14 @@ JMVC.extend('snow', {
 
 		function Flake () {
 			var left = JMVC.util.rand(0, bodysize[0] - 20),
-				top = JMVC.util.rand(0, bodysize[1] - 20);
+                top = JMVC.util.rand(0, bodysize[1] - 20),
+                opa = JMVC.util.rand(3, 8) / 10;
 			this.s = JMVC.util.rand(5,40);
 			this.node = JMVC.dom.create(
 				'span',
 				{
 					'class':'flake',
-					'style':'line-height:' + this.s + 'px;height:' + this.s + 'px;font-size:' + this.s + 'px;top:' + top + 'px;left:' + left + 'px;'
+					'style':'line-height:' + this.s + 'px;height:' + this.s + 'px;font-size:' + this.s + 'px;top:' + top + 'px;left:' + left + 'px;opacity:' + opa
 				},
 				'&bull;'
 			);
