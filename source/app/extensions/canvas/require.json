@@ -6,7 +6,8 @@
         "mkdir -p app/extensions/canvas/editor/tools/originals",
 
         "cp source/app/extensions/canvas/editor/css/*.gif app/extensions/canvas/editor/css",
-        "cp source/app/extensions/canvas/editor/css/*.jpg app/extensions/canvas/editor/css"
+        "cp source/app/extensions/canvas/editor/css/*.jpg app/extensions/canvas/editor/css",
+        "cp source/app/extensions/canvas/editor/css/*.png app/extensions/canvas/editor/css"
     ],
     "source/app/extensions/canvas/canvas.js": "app/extensions/canvas",
     "source/app/extensions/canvas/editor/editor.js": "app/extensions/canvas/editor",
