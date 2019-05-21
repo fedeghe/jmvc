@@ -5,10 +5,11 @@ JMVC.controllers['404'] = function () {
 	this.action_msg = function () {
 		var seconds2redirection = 8,
 			logo = JMVC.vars.baseurl + "/media/img/jmvc_n2.png",
-			V404 = JMVC.getView('core/404'),
+			
 			d = new Date(),
 			format = '%Y%/%m%/%d% %H%:%i%:%s%',
 			data = {
+                logo: logo,
 				date : JMVC.string.replaceAll(format, {
 					Y : d.getFullYear(),
 					m : 1 + d.getMonth(),
@@ -22,8 +23,7 @@ JMVC.controllers['404'] = function () {
 				secToRedir : seconds2redirection
 			},
 			cnt = this.get('cnt'),
-			act = this.get('act');
-		V404.set('logo', logo);
+            act = this.get('act');
 
 		JMVC.dom.preloadImage(logo);
 
@@ -42,8 +42,6 @@ JMVC.controllers['404'] = function () {
 				mainContext = cnv.getContext('2d'),
 				canvasWidth = dim.width,
 				canvasHeight = dim.height,
-				canvasMax = canvasWidth > canvasHeight ? canvasWidth : canvasHeight,
-				angle = 0,
 				requestAnimationFrame = window.requestAnimationFrame ||
 					window.mozRequestAnimationFrame ||
 					window.webkitRequestAnimationFrame ||
@@ -94,11 +92,8 @@ JMVC.controllers['404'] = function () {
 			    requestAnimationFrame(draw404);
 			}
 			draw404();
-			// drawCircle();
+			drawCircle();
 		}
-
-
-		V404.set(data).render(bubble);
+		JMVC.getView('core/404').set(data).render(bubble);
 	};
-	
 };
