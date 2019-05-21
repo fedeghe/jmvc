@@ -3,8 +3,6 @@ JMVC.controllers.console = function () {
 	this.action_index = function () {
 		JMVC.events.loadify(500);
         JMVC.head.title('JMVC console');
-		this.render(function () {
-			JMVC.console();
-		});
+		this.render(JMVC.console);
 	};
 };

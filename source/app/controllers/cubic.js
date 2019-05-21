@@ -46,7 +46,7 @@ JMVC.controllers.cubic = function () {
 			JMVC.dom.append(E, [JMVC.border.xtop(40, 200, 100, 40, '#a0a'), JMVC.border.xright(200, 40, -40, -100, '#606')]);
 			JMVC.dom.append(F, [JMVC.border.xtop(40, 200, -40, -100, '#0aa'), JMVC.border.xleft(200, 40, -40, -100, '#066')]);
 			
-			//JMVC.snow.start(JMVC.dom.body());
+			JMVC.snow.start(JMVC.dom.body());
 		});
 	};
 };
