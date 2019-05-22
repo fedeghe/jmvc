@@ -6,11 +6,21 @@
     "extends": "standard",
     "globals": {
         "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
+        "SharedArrayBuffer": "readonly",
+        "W": true,
+        "WD": true,
+        "WDL": true,
+        "JMVC": true,
+        "$JMVC": true,
+        "jmvc": true
     },
     "parserOptions": {
         "ecmaVersion": 2018
     },
     "rules": {
+        "indent": ["error", 4],
+        "no-extra-semi": "error",
+        "semi": ["error", "always"],
+        "one-var": ["error", "always"]
     }
 }
