@@ -733,7 +733,6 @@ jmvc = {
      * @return {[type]}     [description]
      */
     parseLang: function (cnt) {
-
         var RXlng = '\\[L\\[([\\S\\s]*?)\\]\\]',
             lang = true,
             tmp,
@@ -978,9 +977,6 @@ jmvc = {
 
     /* 
      * setter, getter, unsetter for $JMVC vars
-     */
-    /**
-     * [set description]
      * @param {[type]} name    [description]
      * @param {[type]} content [description]
      */
@@ -1001,7 +997,6 @@ jmvc = {
 
         return $JMVC;
     },
-
 
     shutConsole : function () {
         W.console.log = function () {};
