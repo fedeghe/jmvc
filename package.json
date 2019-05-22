@@ -21,6 +21,12 @@
   },
   "homepage": "https://github.com/fedeghe/jmvc#readme",
   "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-node": "^9.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
     "malta": "^3.9.3",
     "malta-header-comment": "^1.0.5",
     "malta-less": "^1.0.6"
