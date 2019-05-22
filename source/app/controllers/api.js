@@ -30,7 +30,7 @@ JMVC.controllers.api = function () {
                 'controller', 'array', 'css', 'dom',
                 'events', 'head', 'io', 'match',
                 'object', 'string', 'util'
-            ],
+            ];
 
         main.set('id', 'desc');
 

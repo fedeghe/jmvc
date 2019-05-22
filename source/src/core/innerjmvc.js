@@ -401,10 +401,10 @@ jmvc = {
             ($JMVC.vars[name] || undefined);
     },
 
-    getmodeAjax : getmode.match(/ajax/),
-    getmodeAjaxAsync : getmode.match(/ajaxasync/),
-    getmodeScript : getmode.match(/script/),
-    getmodeScriptGhost : getmode.match(/scriptghost/),
+    getmodeAjax: getmode.match(/ajax/),
+    getmodeAjaxAsync: getmode.match(/ajaxasync/),
+    getmodeScript: getmode.match(/script/),
+    getmodeScriptGhost: getmode.match(/scriptghost/),
 
     /**
      * [globalize description]
@@ -412,7 +412,7 @@ jmvc = {
      * @param  {[type]} name [description]
      * @return {[type]}      [description]
      */
-    globalize: function(obj, name) {
+    globalize: function (obj, name) {
         JMVC.W[name] = obj;
     },
 
@@ -422,7 +422,7 @@ jmvc = {
      * @param  {[type]} force [description]
      * @return {[type]}       [description]
      */
-    hook: function(obj, force) {
+    hook: function (obj, force) {
         var allowed = ['onBeforeRender', 'onAfterRender', 'onBeforeParse', 'onAfterParse'],
             f = 0;
 
@@ -452,7 +452,7 @@ jmvc = {
      * @param  {[type]} param    [description]
      * @return {[type]}          [description]
      */
-    hook_check: function(hookname, params) {
+    hook_check: function (hookname, params) {
         var dyn = params instanceof Array ? params : false,
             i, tmp;
         if (dyn && hookname in hooks) {
@@ -476,7 +476,7 @@ jmvc = {
      * @param  {[type]} text [description]
      * @return {[type]}      [description]
      */ 
-    htmlChars: function(text, pre) {
+    htmlChars: function (text, pre) {
         return (pre ? '<pre>' : '') +
             (text
                 .replace(/&(?![\w\#]+;)/g, '&amp;')
@@ -492,7 +492,7 @@ jmvc = {
      * @param  {[type]} html [description]
      * @return {[type]}      [description]
      */
-    htmlCharsDecode: function(html) {
+    htmlCharsDecode: function (html) {
         return html
             .replace(/&amp;/g, '&')
             .replace(/&lt;/g, '<')
@@ -508,7 +508,7 @@ jmvc = {
      * @param  {[type]} s      [description]
      * @return {[type]}        [description]
      */
-    implement: function(o, interf) {
+    implement: function (o, interf) {
         var i = 0,
             l = interf.length;
 
@@ -529,13 +529,13 @@ jmvc = {
      * @param  {[type]} Parent [description]
      * @return {[type]}        [description]
      */
-    // child, parent ,grandpa, ultrapa .... 
-    inherit: function() {
+    // child, parent ,grandpa, ultrapa ...
+    inherit: function () {
         var a = [].slice.call(arguments, 0),
             cur = a.length - 1;
         while (cur > 0) {
-            (function (Child, Parent){
-                function T() {}
+            (function (Child, Parent) {
+                function T () {}
                 T.prototype = Parent.prototype;
                 Child.prototype = new T();
                 Child.prototype.constructor = Child;
@@ -543,12 +543,12 @@ jmvc = {
                 Child.baseConstructor = Parent;  
 
                 // but ...
-                Child.super = function (inst){
-                  var args = [].slice.call(arguments, 1);
-                  Parent.apply(inst, args);
-                }  
-            })(a[cur-1], a[cur]); 
-            cur--;  
+                Child.super = function (inst) {
+                    var args = [].slice.call(arguments, 1);
+                    Parent.apply(inst, args);
+                };
+            })(a[cur - 1], a[cur]);
+            cur--;
         }
     },
 
@@ -557,7 +557,7 @@ jmvc = {
      * @param  string   code to be evalued
      * @return void
      */
-    jeval: function(r) {
+    jeval: function (r) {
         try {
             return JMVC.W.eval(r);
         } catch (e) {}
@@ -568,7 +568,7 @@ jmvc = {
      * lang loader
      * @return {[type]} [description]
      */
-    lang: function() {
+    lang: function () {
         var lng = [].slice.call(arguments, 0),
             i = 0,
             l = lng.length;
@@ -583,7 +583,7 @@ jmvc = {
      * @param  {[type]} m [description]
      * @return {[type]}   [description]
      */
-    model_inherit: function(m) {
+    model_inherit: function (m) {
         m.prototype.get = Model.prototype.get;
         m.prototype.set = Model.prototype.set;
         m.prototype.del = Model.prototype.del;
@@ -598,7 +598,7 @@ jmvc = {
      * @param  {[type]} Parent [description]
      * @return {[type]}        [description]
      */
-    multi_inherit: function(Childs, Parent) {
+    multi_inherit: function (Childs, Parent) {
         jmvc.each(Childs, function (ch) {
             jmvc.inherit(ch, Parent);
         });
@@ -980,7 +980,7 @@ jmvc = {
      * @param {[type]} name    [description]
      * @param {[type]} content [description]
      */
-    set: function(name, content, storage) {
+    set: function (name, content, storage) {
         
         if (JMVC.util.isObject(name)) {
             for (var i in name) {
@@ -998,7 +998,7 @@ jmvc = {
         return $JMVC;
     },
 
-    shutConsole : function () {
+    shutConsole: function () {
         W.console.log = function () {};
         W.console.dir = function () {};
         W.console.debug = function () {};
@@ -1016,7 +1016,7 @@ jmvc = {
      * @param  {[type]} params [description]
      * @return {[type]}        [description]
      */
-    xhrget: function(path, type, name, params) {
+    xhrget: function (path, type, name, params) {
         var ret = false,
             o;
             
@@ -1069,7 +1069,7 @@ jmvc = {
      *
      * look at core/screen/screen.xml
      */
-    xdoc : function (ext) {
+    xdoc: function (ext) {
 
         // maybe the register must be created
         !('elements' in JMVC.xdoc) && (JMVC.xdoc.elements = {});
@@ -1127,16 +1127,16 @@ jmvc = {
     },
 
     // ignore these 3 functions
-    get2: function(ns) {
+    get2: function (ns) {
         return jmvc.ns.check(ns, JMVC.vars);
     },
 
-    set2: function(ns, val) {
+    set2: function (ns, val) {
         jmvc.ns.make(ns, val, JMVC.vars);
     },
 
-    del2: function(ns) {
+    del2: function (ns) {
         jmvc.purge(jmvc.get2(ns));
     }
 };
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------

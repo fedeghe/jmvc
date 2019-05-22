@@ -1,0 +1,14 @@
+{
+    "EXE" : [
+        "rm -rf app",
+        "rm -rf srv",
+        "rm -rf media",
+        "mkdir app srv media",
+        "cp -R source/media ."
+    ],
+    "source/index.html" :  ". -plugins=malta-dev-srv[staticEp:'index.html',staticFree:'app|media']",
+    "source/jmvc.js": "app -plugins=malta-header-comment[name:'source/src/head.txt']",
+    "source/documentation/documentation.xml": "media",
+    "source/srv/require.json" : true,
+    "source/app/require.json" : true
+}
