@@ -1,15 +1,18 @@
-/*- INIT -*/
+/* eslint-disable no-unused-vars */
+/*
+ INIT
+ */
 /**
  * Override window.onerror enhancement
- * 
+ *
  * thx to Venerons
  * https://gist.github.com/Venerons/f54b7fbc17f9df4302cf
  */
 (function (previousOnError) {
     // uh!...want to do something with previousOnError?
     // ...really?
-    function reportError(error, message) {
-        //console.debug(arguments);
+    function reportError (error, message) {
+        // console.debug(arguments);
         message = message || '';
         JMVC.debug(
             'ERROR: ' + message + ' [' + error.toString() + ']\n' +
@@ -22,23 +25,20 @@
             '\n\nStack:\n\n' + (error.stack || '-')
         );
     }
-     
+
     window.onerror = function (message, filename, lineno, colno, error) {
-        try{
+        try {
             error.message = error.message || message || null;
             error.fileName = error.fileName || filename || null;
             error.lineNumber = error.lineNumber || lineno || null;
             error.columnNumber = error.columnNumber || colno || null;
-        }catch (e){
-
-        }
+        } catch (e) {}
         reportError(error, 'Uncatched Exception');
         JMVC.Errors.notify(error);
     };
-
 })(W.onerror);
 
-// store starting time, that's not truly the starting time but 
+// store starting time, that's not truly the starting time but
 // it's really next to the real value
 var time_begin = +new Date(),
 
@@ -55,7 +55,7 @@ var time_begin = +new Date(),
     // review (vars.json)
     JMVC_TIME = '__TIME__',
 
-    // inner jmvc literal, will contain almost all the functions used to 
+    // inner jmvc literal, will contain almost all the functions used to
     // compose the $JMVC object and thus the returning JMVC
     jmvc = {},
 
@@ -86,39 +86,39 @@ var time_begin = +new Date(),
          * extensions path, used as base path in the JMVC.require function
          * @type {[type]}
          */
-        ext  : US + 'app' + US + 'extensions' + US,
+        ext: US + 'app' + US + 'extensions' + US,
 
         /**
          * test suite path, every controller matching "test_foocontroller"
          * will automatically load the test suite and
          *
-         * foocontroller.js will be 
+         * foocontroller.js will be
          * searched into the /app/controller/test directory
          * @type {[type]}
          */
-        test : US + 'app' + US + 'testsuite' + US,
+        test: US + 'app' + US + 'testsuite' + US,
 
         /**
          * path for lang files, loaded with the JMVC.lang function
          * @type {[type]}
          */
-        lang : US + 'app' + US + 'i18n' + US,
+        lang: US + 'app' + US + 'i18n' + US,
 
         /**
          * path for engy component files, engy requires widgzard v.2
          * @type {[type]}
          */
-        engyComponents : US + 'app' + US + 'eComp' + US
+        engyComponents: US + 'app' + US + 'eComp' + US
     },
-    
+
     /**
      * extensions for relevant mvc files
      */
     JMVC_EXT = {
-        'controller' : '.js',
-        'model' : '.js',
-        'view' : '.html',
-        'interface' : '.interface.js'
+        controller: '.js',
+        model: '.js',
+        view: '.html',
+        interface: '.interface.js'
     },
 
     /*
@@ -128,9 +128,10 @@ var time_begin = +new Date(),
      * @type {Array}
      */
     URL_ALLOWED_EXTENSIONS = [
-         'asp', 'do'
-         , 'deinemutter'
-         , 'exe', 'html', 'htm', 'java', 'jmvc',  'jsp', 'js', 'jeti', 'j', 'ninja',  'mvc', 'ohmygod', 'omg', 'php', 'wtf', 'whathafuck', 'trojan', 'deinemutter'
+        'asp', 'do', 'deinemutter', 'exe', 'html', 'htm',
+        'java', 'jmvc', 'jsp', 'js', 'jeti', 'j', 'ninja',
+        'milfhunter', 'mvc', 'ohmygod', 'omg', 'php', 'wtf',
+        'whathafuck', 'trojan'
     ],
     //
     /**
@@ -138,8 +139,8 @@ var time_begin = +new Date(),
      * @type {Object}
      */
     JMVC_DEFAULT = {
-        controller : 'index',
-        action : 'index'
+        controller: 'index',
+        action: 'index'
     },
 
     /**
@@ -174,9 +175,9 @@ var time_begin = +new Date(),
     // in case some modules need to be always
     // loaded here's the place to set them
     Modules = [
-        'vendors/google/analytics/analytics'
-        ,'core/lib/widgzard/widgzard'
-        //'core/cookie/cookie'
+        'vendors/google/analytics/analytics',
+        'core/lib/widgzard/widgzard'
+        // 'core/cookie/cookie'
     ],
 
     // preloader
@@ -191,7 +192,7 @@ var time_begin = +new Date(),
 
     currentlang = defaultlang,
 
-    //undefined string for typeof
+    // undefined string for typeof
     undef = 'undefined',
 
     //
@@ -205,6 +206,6 @@ var time_begin = +new Date(),
     //
     // ===========================================
     //
-    returnTrue = function () {return true; },
-    returnFalse = function () {return false; };
-    //-----------------------------------------------------------------------------
+    returnTrue = function () { return true; },
+    returnFalse = function () { return false; };
+    // -----------------------------------------------------------------------------
