@@ -1,7 +1,7 @@
 {
 	"name" : "JMVC",
-	"version" : "3.8",
-	"review" : 3,
+	"version" : "3.9.1",
+	"review" : "x",
 	"author" : "Federico Ghedina - $email$",
 	"email" : "fedeghe@gmail.com",
 	"build_system" : "Malta",

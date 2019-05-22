@@ -50,9 +50,6 @@ var time_begin = +new Date(),
     JMVC_VERSION = '$version$',
 
     // review (vars.json)
-    JMVC_REVIEW = '$review$',
-
-    // review (vars.json)
     JMVC_DATE = '__DATE__',
 
     // review (vars.json)
