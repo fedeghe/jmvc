@@ -7,7 +7,7 @@
         "cp -R source/media ."
     ],
     "source/index.html" :  ".",
-    "source/jmvc.js": "app",
+    "source/jmvc.js": "app -plugins=malta-header-comment[name:'source/src/head.txt']",
     "source/documentation/documentation.xml": "media",
     "source/srv/require.json" : true,
     "source/app/require.json" : true

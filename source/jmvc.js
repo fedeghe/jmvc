@@ -1,4 +1,3 @@
-$$src/head.js$$
 
 !function (W, undefined) {
 

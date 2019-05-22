@@ -1,6 +1,7 @@
 {
   "name": "project_jmvc",
   "version": "1.0.0",
+  "review": "4",
   "description": "JMVC ====",
   "main": "hotlink.js",
   "scripts": {
@@ -12,8 +13,8 @@
     "url": "git+https://github.com/fedeghe/jmvc.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Federico Ghedina <fedeghe@gmail.com>",
+  "license": "MIT",
   "private": true,
   "bugs": {
     "url": "https://github.com/fedeghe/jmvc/issues"
@@ -21,6 +22,7 @@
   "homepage": "https://github.com/fedeghe/jmvc#readme",
   "devDependencies": {
     "malta": "^3.9.3",
+    "malta-header-comment": "^1.0.5",
     "malta-less": "^1.0.6"
   }
 }
