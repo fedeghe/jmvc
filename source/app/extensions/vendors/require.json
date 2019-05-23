@@ -6,7 +6,7 @@
         "mkdir -p app/extensions/vendors/google/analytics",
         "mkdir -p app/extensions/vendors/google/gmap",
         "mkdir -p app/extensions/vendors/google/gmap2",
-        "mkdir -p app/extensions/vendors/google/gmap-v.3.14",
+        "mkdir -p app/extensions/vendors/google/gmaps-v.3.14",
         "mkdir -p app/extensions/vendors/gravatar",
         "mkdir -p app/extensions/vendors/twitter"
     ],
@@ -18,8 +18,8 @@
     "source/app/extensions/vendors/google/gmap/*.css": "app/extensions/vendors/google/gmap -vars=source/vars.json",
     "source/app/extensions/vendors/google/gmap2/*.js": "app/extensions/vendors/google/gmap2 -vars=source/vars.json",
     "source/app/extensions/vendors/google/gmap2/*.css": "app/extensions/vendors/google/gmap2 -vars=source/vars.json",
-    "source/app/extensions/vendors/google/gmap-v.3.14/*.js": "app/extensions/vendors/google/gmap-v.3.14 -vars=source/vars.json",
-    "source/app/extensions/vendors/google/gmap-v.3.14/*.css": "app/extensions/vendors/google/gmap-v.3.14 -vars=source/vars.json",
+    "source/app/extensions/vendors/google/gmaps-v.3.14/*.js": "app/extensions/vendors/google/gmaps-v.3.14 -vars=source/vars.json",
+    "source/app/extensions/vendors/google/gmaps-v.3.14/*.css": "app/extensions/vendors/google/gmaps-v.3.14 -vars=source/vars.json",
     "source/app/extensions/vendors/gravatar/*.js": "app/extensions/vendors/gravatar -vars=source/vars.json",
     "source/app/extensions/vendors/twitter/*.js": "app/extensions/vendors/twitter -vars=source/vars.json"
 
