@@ -42,7 +42,7 @@ JMVC.controllers.tabs = function () {
 			ids = tab.render('cent', 'ciccio');
 			JMVC.dom.add(JMVC.dom.find('#cent'), 'br', {'style' : 'line-height:30px'});
 			tab2.render(ids[2], 'ciccio2');
-			JMVC.tabs.render();
+			// JMVC.tabs.render();
 		}});
 	};
 };
