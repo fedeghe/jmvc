@@ -7,10 +7,12 @@
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly",
+        "US": true,
         "W": true,
         "WD": true,
         "WDL": true,
         "JMVC": true,
+        "JMVC_DEFAULT": true,
         "$JMVC": true,
         "jmvc": true
     },
