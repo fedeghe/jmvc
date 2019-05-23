@@ -1,6 +1,6 @@
 // preloading function
 // fill cache with a request on a 1X1 iframe that
-// will be deleted as soon as everything is loaded                          
+// will be deleted as soon as everything is loaded
 preload = function (url) {
     W.setTimeout(function () {
         // get a new Promise
@@ -16,11 +16,11 @@ preload = function (url) {
         // now a function is executed dereferencing the promise
         (function (pr) {
             // make 1*1 iframe and load url
-            ifr = JMVC.dom.add(JMVC.dom.body(), 'iframe', {src : url, width : 1, height : 1});
+            ifr = JMVC.dom.add(JMVC.dom.body(), 'iframe', { src: url, width: 1, height: 1 });
             // as far as the iframe is loaded,
             // call done on the promise
-            ifr.contentWindow.onload = function () {pr.done(ifr); };
+            ifr.contentWindow.onload = function () { pr.done(ifr); };
         })(p);
     }, 0);
 };
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------

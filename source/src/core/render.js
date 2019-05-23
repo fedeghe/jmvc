@@ -6,9 +6,7 @@
         while (i < l) {
             JMVC.require(JMVC.modules[i++]);
         }
-        if (JMVC.p.lang) {
-            JMVC.cookie.set('lang', JMVC.p.lang);
-        }
+        JMVC.p.lang && JMVC.cookie.set('lang', JMVC.p.lang);
     }
     try {
         if (W.JMVCshut) {
@@ -18,6 +16,6 @@
         }
     } catch (e) {
         return JMVC.Errors.notify(e);
-    } 
+    }
 })();
-//==========================================
+// ==========================================

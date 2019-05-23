@@ -1,38 +1,38 @@
 Parser = {
     /**
      * microtemplating function
-     * Based on the work of a self-professed javascript ninja 
+     * Based on the work of a self-professed javascript ninja
      * http://ejohn.org/blog/javascript-micro-templating/
-     * 
-     * Parses a string looking for  
+     *
+     * Parses a string looking for
      * @param  {string} content the content that must be parsed
      * @return {string}         parsed content
      */
-    tpl : function (content) {
-        return (content.match(/\<%/)) ?
-        (function (str) {
-            var fn = new Function('obj',
-                "var p=[]; p.push('" +
-                str.replace(/[\r\t\n]/g, " ")
-                .split("<%").join("\t")
-                .replace(/((^|%>)[^\t]*)'/g, "$1\r")
-                .replace(/\t=(.*?)%>/g, "',$1,'")
-                .split("\t").join("');")
-                .split("%>").join("p.push('")
-                .split("\r").join("\\'") + "');  return p.join('');"
-                );
-            return fn(str);
-        })(content) : content;
+    tpl: function (content) {
+        return (content.match(/<%/))
+            ? (function (str) {
+                var fn = new Function('obj',
+                    "var p=[]; p.push('" +
+                    str.replace(/[\r\t\n]/g, " ")
+                    .split("<%").join("\t")
+                    .replace(/((^|%>)[^\t]*)'/g, "$1\r")
+                    .replace(/\t=(.*?)%>/g, "',$1,'")
+                    .split("\t").join("');")
+                    .split("%>").join("p.push('")
+                    .split("\r").join("\\'") + "');  return p.join('');"
+                    );
+                return fn(str);
+            })(content) : content;
     },
     /**
      * This function get a content and substitute jmvc.vars
      * and direct view placeholders like {{viewname .... }}
      * returns parsed content
-     * 
+     *
      * @param  {[type]} content [description]
      * @return {[type]}         [description]
      */
-    parse : function (content) {
+    parse: function (content) {
         if (typeof content === undef) {
             return '';
         }
@@ -41,20 +41,20 @@ Parser = {
         var cont = content,
             RX = {
                 // for hunting view placeholders
-                patt : '{{(.[^\\}]*)}}',
+                patt: '{{(.[^\\}]*)}}',
                 // for getting explicit params passed within view placeholders
-                pattpar : '\\s(.[A-z]*)=`(.[^/`]*)`',
+                pattpar: '\\s(.[A-z]*)=`(.[^/`]*)`',
                 // for variables
-                pattvar : '\\$(.[^\\$\\s}]*)\\$',
+                pattvar: '\\$(.[^\\$\\s}]*)\\$',
                 // for getting only the viewname
-                viewname : '^(.[A-z_\/]*)\\s'
+                viewname: '^(.[A-z_\/]*)\\s'
             },
             // some loop counters
             i = 0, j, k,
             // recursion limit for replacement
             limit = 100,
             // flag to stop parsing
-            go_ahead = true,
+            goAhead = true,
             // only the view name
             viewname,
             // original content of {{}} stored for final replacement
@@ -74,7 +74,6 @@ Parser = {
         while (i < limit) {
             i += 1;
             res = new RegExp(RX.patt, 'gm').exec(cont);
-            //   
             if (res) {
                 viewname = orig = res[1];
                 register = false;
@@ -83,10 +82,10 @@ Parser = {
                     // register becomes an object and flags result for later check
                     register = {};
                     // get only the view name, ingoring parameters
-                    tmp2  = (new RegExp(RX.viewname)).exec(res[1]);
+                    tmp2 = (new RegExp(RX.viewname)).exec(res[1]);
                     viewname = tmp2[1];
                     tmp2 = res[1];
-                    while (go_ahead) {
+                    while (goAhead) {
                         // this is exactly pattpar but if I use it does not work
                         tmp1 = (new RegExp(RX.pattpar, 'gm')).exec(tmp2);
                         if (tmp1) {
@@ -94,18 +93,18 @@ Parser = {
                             register[tmp1[1]] = tmp1[2];
                             tmp2 = tmp2.replace(' ' + tmp1[1] + '=`' + tmp1[2] + '`', '');
                         } else {
-                            go_ahead = false;
+                            goAhead = false;
                         }
                     }
                 }
 
                 myview = $JMVC.views[viewname]
-                ? $JMVC.views[viewname]
-                // here the view is requested but not explicitly loaded with the $JMVC.getView method.
-                // You should use that method, and you'll do for sure if You mean to use View's variable
-                // but if You just load a view as a simple chunk with {{myview}} placeholder inside another one
-                // then $JMVC will load it automatically (take care to not loop, parsing stops after 100 replacements)
-                : $JMVC.factory('view', viewname); 
+                    ? $JMVC.views[viewname]
+                    // here the view is requested but not explicitly loaded with the $JMVC.getView method.
+                    // You should use that method, and you'll do for sure if You mean to use View's variable
+                    // but if You just load a view as a simple chunk with {{myview}} placeholder inside another one
+                    // then $JMVC will load it automatically (take care to not loop, parsing stops after 100 replacements)
+                    : $JMVC.factory('view', viewname); 
 
                 // in case there are some vars in placeholder
                 // register will hold values obtained above
