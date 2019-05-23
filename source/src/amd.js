@@ -8,3 +8,4 @@ if (typeof JMVCshut !== 'undefined') {
             define(function () { return JMVC; });
     })(JMVC);
 }
+/* eslint-enable no-undef */

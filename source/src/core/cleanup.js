@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // $JMVC is DONE, clean up a bit
 $JMVC.gc(
     DEV_URL,
@@ -10,4 +11,5 @@ $JMVC.gc(
     JMVC_DEFAULT,
     time_begin
 );
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+/* eslint-enable no-undef */

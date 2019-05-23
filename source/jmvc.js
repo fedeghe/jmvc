@@ -8,7 +8,11 @@
 	// local reference for current window.document.location
 	var WD = W.document,
 		WDL = WD.location,
-		WDB = WD.body,
+        WDB = WD.body,
+
+        // the returning object created in that function,
+        // global JMVC will take the $JMVC ref
+        $JMVC,
 
 		// this function returns the JMVC object, globalized, after doing some stuff
 		// @return {object literal} $JMVC inner object
@@ -32,7 +36,8 @@
 			$$src/core/dispatched.js$$
 			$$src/core/outerjmvc.js$$
 			$$src/core/cleanup.js$$
-			$$src/core/end.js$$
+			// what should be ever returned?
+            return $JMVC;
 		})();
 	
 

@@ -6,7 +6,7 @@ $JMVC = {
     WDB : WDB,
     US : US,
     M : Math,
-    c_prepath : dispatched.controller_prepath,
+    c_prepath : dispatched.controllerPrepath,
     c : dispatched.controller || JMVC_DEFAULT.controller,
     a : dispatched.action || JMVC_DEFAULT.action,
     p : dispatched.params || {},
