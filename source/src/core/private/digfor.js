@@ -1,5 +1,5 @@
 function (what, obj, target, limit) {
-    if(!what.match(/key|value|keyvalue/)) {
+    if (!what.match(/key|value|keyvalue/)) {
         throw new JMVC.Errors.BadParams('Bad param for JMVC._.object.digFor');
     }
     limit = ~~limit;

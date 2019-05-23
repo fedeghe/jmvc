@@ -137,7 +137,6 @@ View.prototype.render = function (pars) {
     this.container = target;
 
     if (!$JMVC.loaded) {
-
         // books rendering in body or elsewhere, on load
         // @ @ //
         $JMVC.events.on(W, 'load', function () {
@@ -165,30 +164,28 @@ View.prototype.render = function (pars) {
             // $JMVC.dom.html(trg, that.content);
             $JMVC.dom.html(target, that.content);
 
-            // may be a callback? 
+            // may be a callback?
             cback && cback.apply(this, argz || []);
 
             // after render
             //
-         
             that.content = jmvc.hook_check('onAfterRender', [that.content]) || that.content;
 
             // trigger end of render queue
             $JMVC.events.endRender();
-        
         // @ @ //
         });
 
-    // happend after load... so can render a view from a render cback 
+    // happend after load... so can render a view from a render cback
     // of a main view
     } else {
         /*
         may_trg = target ? $JMVC.dom.find(target) : false;
         trg = may_trg || WD.body;
         */
-        //$JMVC.dom.html(trg, that.content);
+        // $JMVC.dom.html(trg, that.content);
         $JMVC.dom.html(target, that.content);
-        cback && cback.apply(this, !!argz ? argz : []);
+        cback && cback.apply(this, argz || []);
     }
     // chain
     return this;
@@ -199,7 +196,7 @@ View.prototype.render = function (pars) {
  * @param  {[type]} name [description]
  * @return {[type]}      [description]
  */
-View.prototype.clone  = function (name) {
+View.prototype.clone = function (name) {
     var ret = false;
     if (typeof name !== 'undefined') {
         $JMVC.views[name] = new View(this.ocontent);
@@ -209,4 +206,4 @@ View.prototype.clone  = function (name) {
     }
     return ret;
 };
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------

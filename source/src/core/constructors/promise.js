@@ -1,5 +1,5 @@
-Promise = (function() {
-    var _Promise = function() {
+Promise = (function () {
+    var _Promise = function () {
             this.cbacks = [];
             this.solved = false;
             this.result = null;
@@ -11,9 +11,9 @@ Promise = (function() {
      * @param  {[type]} ctx  [description]
      * @return {[type]}      [description]
      */
-    proto.then = function(func, ctx) {
+    proto.then = function (func, ctx) {
         var self = this,
-            f = function() {
+            f = function () {
                 self.solved = false;
                 func.apply(ctx || self, [ctx || self, self.result]);
             };
@@ -29,7 +29,7 @@ Promise = (function() {
      * [done description]
      * @return {Function} [description]
      */
-    proto.done = function() {
+    proto.done = function () {
         var r = [].slice.call(arguments, 0);
         this.result = r;
         this.solved = true;
@@ -45,17 +45,17 @@ Promise = (function() {
      * @param  {[type]} args  [description]
      * @return {[type]}       [description]
      */
-    function chain(funcs, args) {
-
-        var p = new _Promise();
-        var first = (function() {
-
+    function chain (funcs, args) {
+        var p = new _Promise(),
+            first = (function () {
                 funcs[0].apply(p, [p].concat([args]));
                 return p;
             })(),
-            tmp = [first];
+            tmp = [first],
+            i = 1,
+            l = funcs.length;
 
-        for (var i = 1, l = funcs.length; i < l; i++) {
+        for (null; i < l; i++) {
             tmp.push(tmp[i - 1].then(funcs[i]));
         }
         return p;
@@ -67,7 +67,7 @@ Promise = (function() {
      * @param  {[type]} args [description]
      * @return {[type]}      [description]
      */
-    function join(pros, args) {
+    function join (pros, args) {
         var endP = new _Promise(),
             res = [],
             stack = [],
@@ -81,15 +81,14 @@ Promise = (function() {
         for (null; i < l; i++) {
             (function (k) {
                 stack[k] = new _Promise();
-
                 // inside every join function the context is a Promise, and
-                // is possible to return it or not 
+                // is possible to return it or not
                 var _p = pros[k].apply(stack[k], [stack[k], args]);
                 (_p instanceof _Promise ? _p : stack[k])
-                .then(function (p, r) {
-                    res[k] = r;
-                    solved(--limit);
-                });
+                    .then(function (p, r) {
+                        res[k] = r;
+                        solved(--limit);
+                    });
             })(i);
         }
         return endP;
@@ -98,7 +97,7 @@ Promise = (function() {
     /* returning module
     */
     return {
-        create: function() {
+        create: function () {
             return new _Promise();
         },
         chain: chain,

@@ -10,7 +10,7 @@
 View.prototype.get =
 Model.prototype.get =
 Controller.prototype.get = function (n) {
-    return (!!this.vars[n]) ? this.vars[n] : false;
+    return this.vars[n] ? this.vars[n] : false;
 };
 
 /**
