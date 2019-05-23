@@ -9,7 +9,7 @@ $JMVC.gc(
     Controller, Model, View,
     Event, Modules,
     JMVC_DEFAULT,
-    time_begin
+    timeBegin
 );
 // -----------------------------------------------------------------------------
 /* eslint-enable no-undef */

@@ -6,7 +6,7 @@ $$src/core/onError.js$$
 
 // store starting time, that's not truly the starting time but
 // it's really next to the real value
-var time_begin = +new Date(),
+var timeBegin = +new Date(),
 
     // version (vars.json)
     JMVC_VERSION = '$version$',

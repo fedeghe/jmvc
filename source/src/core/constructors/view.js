@@ -1,29 +1,23 @@
-/*--
-VIEW
---*/
+/* VIEW */
+
 // directly instantiated assinging content
 /**
  * [View description]
  * @param {String} cnt beginning content for the view
  */
 View = function (cnt) {
-
     // the view container
-    //
     this.container = false;
 
     // original content, not intended to be modified
-    // 
     this.ocontent = cnt || '';
 
     // the content passed or empty
-    // 
     this.content = cnt || '';
 
     // every view has a registry for the variables that will be used at reder time
-    // 
     this.vars = {
-        baseurl : $JMVC.vars.baseurl
+        baseurl: $JMVC.vars.baseurl
     };
 };
 //
@@ -38,7 +32,7 @@ View = function (cnt) {
  */
 View.prototype.parse = function (obj) {
     var j;
-    if (!!this.content) {
+    if (this.content) {
         if (obj) {
             for (j in obj.vars) {
                 obj.vars.hasOwnProperty(j) &&
@@ -46,17 +40,14 @@ View.prototype.parse = function (obj) {
             }
         }
         // now jmvc parse vars
-        // 
         for (j in $JMVC.vars) {
             $JMVC.vars.hasOwnProperty(j) &&
             (this.content = this.content.replace(new RegExp('\\$' + j + '\\$', 'gm'), $JMVC.vars[j] || ''));
         }
     }
     // allow chain
-    // 
     return this;
 };
-
 
 /**
  * reset content to orginal (unparsed) value
@@ -65,15 +56,10 @@ View.prototype.parse = function (obj) {
  */
 View.prototype.reset = function () {
     // get back the original content
-    //
     this.content = this.ocontent;
-
     // reset vars
-    //
     this.vars = {};
-
     // chain
-    // 
     return this;
 };
 
@@ -104,10 +90,10 @@ View.prototype.getFromUrl = function (vname) {
  */
 View.prototype.render = function (pars) {
     var arg = pars || {},
-        
-        // maybe a callback is passed   
+
+        // maybe a callback is passed
         cback = arg.cback || false,
-        
+
         // and maybe some args must be passed
         // to the callback
         argz = arg.argz || null,
@@ -117,26 +103,23 @@ View.prototype.render = function (pars) {
         // note that here dom is not loaded so you
         // cannot pass an element
         target = arg.target || WD.body,
-        
+
         // for binding this context in the callback
         that = this,
-        
+
         // the view content
         cont = this.content,
-        
+
         // regexp for variables, do NOT use here new RegExp
         pattvar = '\\$(.[^\\$\\s}]*)\\$',
-        
+
         // variables found
         resvar,
-        
+
         // a loop temporary variable
         t;
-        /*,
-        trg,
-        may_trg;*/
 
-    //let pars be the callback function
+    // let pars be the callback function
     typeof pars === 'function' && (cback = pars);
 
     // look for / substitute  vars
@@ -158,7 +141,6 @@ View.prototype.render = function (pars) {
         // books rendering in body or elsewhere, on load
         // @ @ //
         $JMVC.events.on(W, 'load', function () {
-        
             // call before render
             $JMVC.events.startRender();
             //
@@ -171,9 +153,8 @@ View.prototype.render = function (pars) {
             console.debug(this.container)
             */
             // time
-            $JMVC.vars.starttime = time_begin;
-            $JMVC.vars.endtime = +new Date;
-
+            $JMVC.vars.starttime = timeBegin;
+            $JMVC.vars.endtime = +new Date();
 
             $JMVC.vars.rendertime = $JMVC.vars.endtime - $JMVC.vars.starttime;
 
@@ -181,7 +162,7 @@ View.prototype.render = function (pars) {
             that.content = jmvc.hook_check('onBeforeRender', [that.content]) || that.content;
 
             // render
-            //$JMVC.dom.html(trg, that.content);
+            // $JMVC.dom.html(trg, that.content);
             $JMVC.dom.html(target, that.content);
 
             // may be a callback? 
