@@ -13,7 +13,7 @@ _.object = {
      * @param  {Function} fn [description]
      * @return {[type]}      [description]
      */
-    reduce: function(o, fn) {
+    reduce: function (o, fn) {
         'use strict';
         var ret = '',
             j;
@@ -37,7 +37,7 @@ JMVC.object = {
      * @param Literal obj
      * @returns cloned Object
      */
-    _clone: function(obj) {
+    _clone: function (obj) {
         'use strict';
         var temp,
             key;
@@ -53,13 +53,13 @@ JMVC.object = {
         return temp;
     },
     // http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
-    clone: function(obj) {
+    clone: function (obj) {
         'use strict';
         var self = JMVC.object,
             copy,
             i, l;
         // Handle the 3 simple types, and null or undefined
-        if (null === obj || "object" !== typeof obj) {
+        if (obj === null || typeof obj !== 'object') {
             return obj;
         }
 
@@ -100,7 +100,7 @@ JMVC.object = {
      * @param  {[type]} i    [description]
      * @return {[type]}      [description]
      */
-    compare: function(obj1, obj2, ret, i) {
+    compare: function (obj1, obj2, ret, i) {
         'use strict';
         if (typeof ret === 'undefined') {
             ret = true;
@@ -134,7 +134,7 @@ JMVC.object = {
      * @param  {[type]} field) {return      (typeof obj === 'object' && obj[field] [description]
      * @return {[type]}        [description]
      */
-    contains: function(obj, field) {
+    contains: function (obj, field) {
         'use strict';
         return (typeof obj === 'object' && field in obj);
     },
@@ -145,7 +145,7 @@ JMVC.object = {
      * @param  {[type]} k [description]
      * @return {[type]}   [description]
      */
-    digForKey : function (o, k, lim) {
+    digForKey: function (o, k, lim) {
         'use strict';
         return _.common.digFor('key', o, k, lim);
     },
@@ -156,7 +156,7 @@ JMVC.object = {
      * @param  {[type]} k [description]
      * @return {[type]}   [description]
      */
-    digForValue : function (o, k, lim) {
+    digForValue: function (o, k, lim) {
         'use strict';
         return _.common.digFor('value', o, k, lim);
     },
@@ -170,7 +170,7 @@ JMVC.object = {
      * @param      {<type>}  lim     The limit
      * @return     {<type>}  { description_of_the_return_value }
      */
-    digForKeyValue : function (o, kv, lim) {
+    digForKeyValue: function (o, kv, lim) {
         'use strict';
         return _.common.digFor('keyvalue', o, kv, lim);
     },
@@ -181,7 +181,7 @@ JMVC.object = {
      * @param  {[type]} ext [description]
      * @return {[type]}     [description]
      */
-    extend: function(o, ext, force) {
+    extend: function (o, ext, force) {
         'use strict';
         var obj = JMVC.object.clone(o),
             j;
@@ -197,7 +197,7 @@ JMVC.object = {
      * [fromQs description]
      * @return {[type]} [description]
      */
-    fromQs : function () {
+    fromQs: function () {
         'use strict';
         var els = document.location.search.substr(1).split('&'),
             i, len, tmp, out = {};
@@ -211,7 +211,7 @@ JMVC.object = {
         }
         return out;
     },
-    isEmpty : function (o) {
+    isEmpty: function (o) {
         'use strict';
         var i;
         for (i in o) return false;
@@ -223,7 +223,7 @@ JMVC.object = {
      * @param  {[type]} obj2 [description]
      * @return {[type]}      [description]
      */
-    jCompare: function(obj1, obj2) {
+    jCompare: function (obj1, obj2) {
         'use strict';
         return typeof JSON !== 'undefined' ? JSON.stringify(obj1) === JSON.stringify(obj2) : obj1 == obj2;
     },
@@ -232,7 +232,7 @@ JMVC.object = {
      * @param  {[type]} obj [description]
      * @return {[type]}     [description]
      */
-    keys: function(obj) {
+    keys: function (obj) {
         'use strict';
         var res = [],
             i;
@@ -247,7 +247,7 @@ JMVC.object = {
      * @param  {[type]} obj [description]
      * @return {[type]}     [description]
      */
-    order: function(obj) {
+    order: function (obj) {
         'use strict';
         var k = [],
             i, j, l,
@@ -268,7 +268,7 @@ JMVC.object = {
      * @param  {[type]} versus [description]
      * @return {[type]}        [description]
      */
-    orderBy : function (obj, key , versus) {
+    orderBy: function (obj, key, versus) {
         'use strict';
         function f(v) {
             var tov = typeof v;
@@ -289,9 +289,9 @@ JMVC.object = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    toAttr: function(obj) {
+    toAttr: function (obj) {
         'use strict';
-        return _.object.reduce(obj, function(o, i) {
+        return _.object.reduce(obj, function (o, i) {
             return ' ' + i + (o[i] ? '="' + o[i] + '"' : '');
         });
     },
@@ -300,16 +300,16 @@ JMVC.object = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    toCss: function(obj, straight) {
+    toCss: function (obj, straight) {
         'use strict';
-        return _.object.reduce(obj, function(ob, i) {
-            return !!straight ?
-                i + '{' + ob[i] + '} ' :
-                i + ' {' + _.object.reduce(ob[i],
-                    function(o, j) {
+        return _.object.reduce(obj, function (ob, i) {
+            return straight
+                ? i + '{' + ob[i] + '} '
+                : i + ' {' + _.object.reduce(ob[i],
+                    function (o, j) {
                         return j + ':' + o[j] + ';';
                     }
-            ) + '} ';
+                ) + '} ';
         });
     },
     /**
@@ -317,9 +317,9 @@ JMVC.object = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    toQs: function(obj) {
+    toQs: function (obj) {
         'use strict';
-        return _.object.reduce(obj, function(o, i, r) {
+        return _.object.reduce(obj, function (o, i, r) {
             return ((r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i])).replace(/\'/g, '%27');
         });
     },
@@ -328,9 +328,9 @@ JMVC.object = {
      * @param  {[type]} obj [description]
      * @return {[type]}     [description]
      */
-    toStr: function(obj) {
+    toStr: function (obj) {
         'use strict';
-        return _.object.reduce(obj, function(o, i) {
+        return _.object.reduce(obj, function (o, i) {
             return i + ':' + o[i] + ';';
         });
     },
@@ -339,7 +339,7 @@ JMVC.object = {
      * @param  {[type]} obj [description]
      * @return {[type]}     [description]
      */
-    values: function(obj) {
+    values: function (obj) {
         'use strict';
         var res = [],
             i;
