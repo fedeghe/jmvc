@@ -3,6 +3,7 @@
 // ---------------+
 
 // private section
+// eslint-disable-next-line no-undef
 _.head = {};
 // public section
 JMVC.head = {
@@ -29,7 +30,7 @@ JMVC.head = {
                 scriptContent = JMVC.parse(src, true);
                 script = JMVC.dom.create('script', { type: 'text/javascript' }, scriptContent);
                 head = that.element;
-                script.onload = function () {head.removeChild(script);};
+                script.onload = function () { head.removeChild(script); };
                 head.appendChild(script);
             } else {
                 /* get css content, async */
@@ -37,7 +38,7 @@ JMVC.head = {
                     scriptContent = JMVC.parse(scriptContent, true);
                     script = JMVC.dom.create('script', { type: 'text/javascript' }, scriptContent);
                     head = that.element;
-                    script.onload = function () { ead.removeChild(script); };
+                    script.onload = function () { head.removeChild(script); };
                     head.appendChild(script);
                 }, /* postmode, */ sync);
             }
