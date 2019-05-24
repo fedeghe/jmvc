@@ -4,16 +4,16 @@
 
 // private section
 _.dom = {
-    qsall : function (a) {
+    qsall: function (a) {
         return ('querySelectorAll' in JMVC.WD) ? JMVC.WD.querySelectorAll(a) : false;
     },
-    nodeidMap : {},
-    nodeAttrForIndex : '__ownid__'
+    nodeidMap: {},
+    nodeAttrForIndex: '__ownid__'
 };
 
 // public section
 JMVC.dom = {
-    /** 
+    /**
      * [ description]
      * @param  {[type]} where [description]
      * @param  {[type]} tag   [description]
@@ -21,7 +21,7 @@ JMVC.dom = {
      * @param  {[type]} inner [description]
      * @return {[type]}       [description]
      */
-    add : function (where, tag, attrs, inner) {
+    add: function (where, tag, attrs, inner) {
         var n = JMVC.dom.create(tag, attrs, inner);
         JMVC.dom.append(where, n);
         return n;
@@ -33,7 +33,7 @@ JMVC.dom = {
      * @param  {[type]} addingClass [description]
      * @return {[type]}             [description]
      */
-    addClass : function (elem, addingClass) {
+    addClass: function (elem, addingClass) {
         if (JMVC.util.isArray(elem)) {
             for (var i = 0, l = elem.length; i < l; i++) {
                 JMVC.dom.addClass(elem[i], addingClass);
@@ -53,7 +53,7 @@ JMVC.dom = {
      * @param  {[type]} what  [description]
      * @return {[type]}       [description]
      */
-    append : function (where, what) {
+    append: function (where, what) {
         if (JMVC.util.isArray(what)) {
             for (var i = 0, l = what.length; i < l; i++) {
                 where.appendChild(what[i]);
@@ -71,7 +71,7 @@ JMVC.dom = {
      * @param  {[type]} value [description]
      * @return {[type]}       [description]
      */
-    attr : function (elem, name, value) {
+    attr: function (elem, name, value) {
         if (!elem) {
             return '';
         }
@@ -86,33 +86,29 @@ JMVC.dom = {
             l = false,
             i = 0,
             result,
-            is_obj = false;
- 
-        is_obj = JMVC.util.isObject(name);
-        
-        if (is_obj && elem.setAttribute) {
+            isObj = false;
+        isObj = JMVC.util.isObject(name);
+        if (isObj && elem.setAttribute) {
             for (i in name) {
                 elem.setAttribute(i, name[i]);
             }
             return true;
         }
-        
+
         // Make sure that avalid name was provided, here cannot be an object
-        // 
+        //
         if (!name || name.constructor !== String) {
             return '';
         }
-        
         // If the user is setting a value
-        // 
+        //
         if (typeof value !== 'undefined') {
-            
-            // Set the quick way first 
-            // 
+            // Set the quick way first
+            //
             elem[{'for': 'htmlFor', 'class': 'className'}[name] || name] = value;
-            
+
             // If we can, use setAttribute
-            // 
+            //
             if (elem.setAttribute) {
                 elem.setAttribute(name, value);
             }
@@ -136,7 +132,7 @@ JMVC.dom = {
      * [ description]
      * @return {[type]} [description]
      */
-    body : function () {
+    body: function () {
         return WD.body;
     },
 
@@ -145,15 +141,15 @@ JMVC.dom = {
      * @param  {[type]} node [description]
      * @return {[type]}      [description]
      */
-    childs : function (node, only_elements) {
-        return only_elements? node.children : node.childNodes;
+    childs: function (node, onlyElements) {
+        return onlyElements? node.children : node.childNodes;
     },
 
     /**
      * returns a crearer node
      * @return {[type]} [description]
      */
-    clearer : function () {
+    clearer: function () {
         return JMVC.dom.create('br', {'class': 'clearer'});
     },
 
@@ -163,7 +159,7 @@ JMVC.dom = {
      * @param  {[type]} deep [description]
      * @return {[type]}      [description]
      */
-    clone : function (n, deep) {
+    clone: function (n, deep) {
         return n.cloneNode(!!deep);
     },
 
@@ -174,7 +170,7 @@ JMVC.dom = {
      * @param  {[type]} inner [description]
      * @return {[type]}       [description]
      */
-    create : function (tag, attrs, inner) {
+    create: function (tag, attrs, inner) {
         if (!tag) {W.alert('no tag'); return false; }
         var node = JMVC.WD.createElement(tag),
             att;
@@ -184,7 +180,7 @@ JMVC.dom = {
         }
         if (typeof inner !== 'undefined') {
             if (inner.nodeType && inner.nodeType === 1) {
-            //if (Object.prototype.hasOwnProperty.call(inner, 'nodeType') && inner.nodeType === 1) {
+            // if (Object.prototype.hasOwnProperty.call(inner, 'nodeType') && inner.nodeType === 1) {
                 JMVC.dom.append(node, inner);
             } else {
                 JMVC.dom.html(node, inner);
@@ -198,7 +194,7 @@ JMVC.dom = {
      * @param  {[type]} text [description]
      * @return {[type]}      [description]
      */
-    createText : function (text) {
+    createText: function (text) {
         return JMVC.WD.createTextNode(text);
     },
 
@@ -208,17 +204,16 @@ JMVC.dom = {
      * @param  {[type]} name [description]
      * @return {[type]}      [description]
      */
-    createNS : function (ns, name) {
+    createNS: function (ns, name) {
         return JMVC.WD.createElementNS(ns, name);
     },
 
-    
     /**
      * consider only elements (in fact uses children)
-     * 
+     *
      * @return {[type]}
      */
-    descendant : function () {
+    descendant: function () {
         var args = Array.prototype.slice.call(arguments, 0),
             i = 0,
             res = args.shift(),
@@ -230,17 +225,16 @@ JMVC.dom = {
         return res;
     },
 
-
     /**
      * [domStats description]
      * @return {[type]} [description]
      */
-    domStats : function () {
+    domStats: function () {
         var allnodes = JMVC.array.coll2array(document.getElementsByTagName('*')),
             anLength = allnodes.length;
         return {
-            numberOfNodes : anLength,
-            KBytes : parseFloat((document.documentElement.outerHTML.split('').length / (2<<9)).toFixed(2), 10)
+            numberOfNodes: anLength,
+            KBytes: parseFloat((document.documentElement.outerHTML.split('').length / (2<<9)).toFixed(2), 10)
         };
     },
 
@@ -249,8 +243,8 @@ JMVC.dom = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    empty : function (el) {
-        //el.innerHTML = '';
+    empty: function (el) {
+        // el.innerHTML = '';
         while (el.firstChild) {
             el.removeChild(el.firstChild);
         }
@@ -261,7 +255,7 @@ JMVC.dom = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    empty2 : function (el) {
+    empty2: function (el) {
         el.innerHTML = '';
     },
 
@@ -272,7 +266,7 @@ JMVC.dom = {
      * @param  {[type]} mode [description]
      * @return {[type]}      [description]
      */
-    /*
+    /**
     eulerWalk : function (root, func, mode) {
         mode = {pre : 'pre', post : 'post'}[mode] || 'post';
         var nope = function () {},
@@ -290,7 +284,8 @@ JMVC.dom = {
                 };
             })();
         walk(root);
-    },*/
+    },
+    */
 
     /**
      * [ description]
@@ -298,7 +293,7 @@ JMVC.dom = {
      * @param  {[type]} b [description]
      * @return {[type]}   [description]
      */
-    find : function (a, b) {
+    find: function (a, b) {
         var sel = 'getElement',
             toArr = true,
             ret = false,
@@ -310,7 +305,7 @@ JMVC.dom = {
             return a;
         }
         if (!ret) {
-            //look for no word before something consistent
+            // look for no word before something consistent
             a = a.match(/^(\W)?([A-z0-9-_]*)/);
             switch (a[1] || '=') {
             case '#':
@@ -335,20 +330,20 @@ JMVC.dom = {
         isArr = ret instanceof Array;
         return (isArr && ret.length === 1) ? ret[0] : ret;
     },
-    find2 : function (a, b) {
+    find2: function (a, b) {
         if (a.nodeType === 1) {return a; }
         var sel = 'getElement',
             toArr = 0,
             ret = 0;
-        //look for no word before something
+        // look for no word before something
         a = a.match(/^(\W)?([A-z0-9-_]*)/);
         a[1] = a[1] || '=';
         toArr = a[1] !== '#';
         ret = (b || JMVC.WD)[sel + ({
-            '#' : 'ById',
-            '.' : 'ByClassName',
-            '@' : 'sByName',
-            '=' : 'sByTagName'
+            '#': 'ById',
+            '.': 'ByClassName',
+            '@': 'sByName',
+            '=': 'sByTagName'
         }[a[1]])](a[2]);
         ret = toArr ? JMVC.array.coll2array(ret) : ret;
         return ret instanceof Array ?  (ret.length === 1 ? ret[0] :  ret) : ret;
@@ -360,7 +355,7 @@ JMVC.dom = {
      * @param  {[type]} cname [description]
      * @return {[type]}       [description]
      */
-    findInnerByClass : function (ctx, cname) {
+    findInnerByClass: function (ctx, cname) {
         var a = [],
             re = new RegExp('\\b' + cname + '\\b'),
             els = ctx.getElementsByTagName('*'),
@@ -379,7 +374,7 @@ JMVC.dom = {
      * @param  {[type]} root  [description]
      * @return {[type]}       [description]
      */
-    findByAttribute : function (attr, value, root) {
+    findByAttribute: function (attr, value, root) {
         var ret = [],
             whole = [],
             val,
@@ -403,7 +398,7 @@ JMVC.dom = {
      * @param  {[type]} tagName [description]
      * @return {[type]}         [description]
      */
-    firstAncestor : function (el, tagName) {
+    firstAncestor: function (el, tagName) {
         do {
             el = el.parentNode;
         }
@@ -413,7 +408,7 @@ JMVC.dom = {
 
 
 
-    gebtn : function (n, name) {
+    gebtn: function (n, name) {
         return Array.prototype.slice.call(n.getElementsByTagName(name), 0);
     },
 
@@ -422,13 +417,13 @@ JMVC.dom = {
      * @param  {[type]} node [description]
      * @return {[type]}      [description]
      */
-    getPosition : function (node) {
-        var res = {x : 0, y : 0};
+    getPosition: function (node) {
+        var res = { x: 0, y: 0 };
         if (node.offsetParent) {
             while (1) {
                 res.x += node.offsetLeft;
                 res.y += node.offsetTop;
-                if (!node.offsetParent) {break; }
+                if (!node.offsetParent) { break; }
                 node = node.offsetParent;
             }
         } else {
@@ -444,7 +439,7 @@ JMVC.dom = {
      * @param  {[type]} name [description]
      * @return {[type]}      [description]
      */
-    hasAttribute : function (el, name) {
+    hasAttribute: function (el, name) {
         return el.getAttribute(name) !== null;
     },
 
@@ -454,7 +449,7 @@ JMVC.dom = {
      * @param  {[type]} classname [description]
      * @return {[type]}           [description]
      */
-    hasClass : function (el, classname) {
+    hasClass: function (el, classname) {
         return !!(el.className.match(new RegExp('(\\s|^)' + classname + '(\\s|$)')));
     },
 
@@ -464,7 +459,7 @@ JMVC.dom = {
      * @param  {[type]} html [description]
      * @return {[type]}      [description]
      */
-    html : function (el, html) {
+    html: function (el, html) {
         if (!el) {
             return JMVC.dom;
         }
@@ -495,13 +490,13 @@ JMVC.dom = {
      * @param  {[type]} prop [description]
      * @return {[type]}      [description]
      */
-    idize : function (el, prop) {
+    idize: function (el, prop) {
         prop = prop || _.dom.nodeAttrForIndex;
-        //if (!el.hasOwnProperty(prop)) {
+        // if (!el.hasOwnProperty(prop)) {
         if (!(prop in el)) {
             var nid = JMVC.util.uniqueid + '';
             el[prop] = nid;
-            //save inverse
+            // save inverse
             _.dom.nodeidMap[nid] = el;
         }
         return el[prop];
@@ -513,7 +508,7 @@ JMVC.dom = {
      * @param  {[type]} referenceNode [description]
      * @return {[type]}               [description]
      */
-    insertAfter : function (node, referenceNode) {
+    insertAfter: function (node, referenceNode) {
         var p = referenceNode.parentNode,
             ns = referenceNode.nextSibling;
         !!ns ? p.insertBefore(node, ns) : p.appendChild(node);
@@ -526,26 +521,25 @@ JMVC.dom = {
      * @param  {[type]} referenceNode [description]
      * @return {[type]}               [description]
      */
-    insertBefore : function (node, referenceNode) {
+    insertBefore: function (node, referenceNode) {
         var p = referenceNode.parentNode;
         p.insertBefore(node, referenceNode);
         return node;
     },
 
-    //Returns true if it is a DOM element    
+    // Returns true if it is a DOM element    
     /**
      * [ description]
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    isElement : function (o) {
+    isElement: function (o) {
         return (
-            typeof HTMLElement === 'object' ?
-                o instanceof HTMLElement
-            : //DOM2
-                o && typeof o === 'object' &&
-                typeof o.nodeType !== undefined && o.nodeType === 1 &&
-                typeof o.nodeName === 'string'
+            typeof HTMLElement === 'object'
+                ? o instanceof HTMLElement
+                : o && typeof o === 'object' && // DOM2
+                    typeof o.nodeType !== 'undefined' && o.nodeType === 1 &&
+                    typeof o.nodeName === 'string'
         );
     },
 
@@ -554,29 +548,31 @@ JMVC.dom = {
      * @param  {[type]}  el [description]
      * @return {Boolean}    [description]
      */
-    isNodeList : function (el) {
-        return !('value' in el)
-        && (typeof el.length == 'number')
-        && (typeof el.item == 'function');
+    isNodeList: function (el) {
+        return !('value' in el) &&
+            typeof el.length === 'number' &&
+            typeof el.item === 'function';
     },
 
-    //thx to http://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
-    //for the following 2 mthds
-    //Returns true if it is a DOM node
+    // thx to http://stackoverflow.com/questions/384286/javascript-isdom-how-do-you-check-if-a-javascript-object-is-a-dom-object
+    // for the following 2 mthds
+    // Returns true if it is a DOM node
     /**
      * [ description]
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    isNode : function (o) {
+    isNode: function (o) {
         return (
-            typeof Node === 'object' ? o instanceof Node
-            :
-            o && typeof o === 'object' && typeof o.nodeType === 'number' && typeof o.nodeName === 'string'
+            typeof Node === 'object'
+                ? o instanceof Node
+                : o && typeof o === 'object' &&
+                    typeof o.nodeType === 'number' &&
+                    typeof o.nodeName === 'string'
         );
     },
 
-    nodeFromId : function (id) {
+    nodeFromId: function (id) {
         return _.dom.nodeidMap[id];
     },
 
@@ -585,7 +581,7 @@ JMVC.dom = {
      * @param  {[type]} node [description]
      * @return {[type]}      [description]
      */
-    nodeTypeString : function (node) {
+    nodeTypeString: function (node) {
         return ['ELEMENT_NODE', 'ATTRIBUTE_NODE', 'TEXT_NODE', 'CDATA_SECTION_NODE',
             'ENTITY_REFERENCE_NODE', 'ENTITY_NODE', 'PROCESSING_INSTRUCTION_NODE', 'COMMENT_NODE',
             'DOCUMENT_NODE', 'DOCUMENT_TYPE_NODE', 'DOCUMENT_FRAGMENT_NODE', 'NOTATION_NODE'
@@ -599,9 +595,9 @@ JMVC.dom = {
      * @param  {[type]} types [description]
      * @return {[type]}       [description]
      */
-    nthchild : function (node, num, types) {
+    nthchild: function (node, num, types) {
         var childs = node.childNodes,
-            // filtered 
+            // filtered
             tagChilds = [],
             // original length
             len = childs.length,
@@ -627,7 +623,7 @@ JMVC.dom = {
      * @param  {[type]} src [description]
      * @return {[type]}     [description]
      */
-    preloadImage : function (src, fn) {
+    preloadImage: function (src, fn) {
         var i = new W.Image();
         typeof fn === 'function' && (i.onload = fn(i));
         i.src = src;
@@ -639,9 +635,10 @@ JMVC.dom = {
      * @param  {[type]} node [description]
      * @return {[type]}      [description]
      */
-    parent : function (node) {
-        return (node.parentNode && node.parentNode.nodeType !== 11) ?
-            node.parentNode : false;
+    parent: function (node) {
+        return (node.parentNode && node.parentNode.nodeType !== 11)
+            ? node.parentNode
+            : false;
     },
 
     /**
@@ -650,7 +647,7 @@ JMVC.dom = {
      * @param  {[type]} what  [description]
      * @return {[type]}       [description]
      */
-    prepend : function (where, what) {
+    prepend: function (where, what) {
         var c = where.childNodes[0];
         where.insertBefore(what, c);
         return what;
@@ -661,19 +658,20 @@ JMVC.dom = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    remove : function (el, afterFreeMem) {
+    remove: function (el, afterFreeMem) {
         if (!el) {
             return false;
         }
 
         afterFreeMem && JMVC.events.free(el);
 
-        var parent;
-        
+        var parent,
+            i, l, r;
+
         typeof el === 'string' && (el = JMVC.dom.find(el));
 
         if (JMVC.util.isArray(el)) {
-            for (var i  = 0, l = el.length, r = true; i < l; i++) {
+            for (i  = 0, l = el.length, r = true; i < l; i++) {
                 r &= JMVC.dom.remove(el[i]);
             }
             return r;
@@ -690,7 +688,7 @@ JMVC.dom = {
      * @param  {[type]} mode   [description]
      * @return {[type]}        [description]
      */
-    removeAttribute : function (el, valore) {
+    removeAttribute: function (el, valore) {
         el.removeAttribute(valore);
         return el;
     },
@@ -701,9 +699,10 @@ JMVC.dom = {
      * @param  {[type]} cls [description]
      * @return {[type]}     [description]
      */
-    removeClass : function (el, cls) {
+    removeClass: function (el, cls) {
         var i,
-            l;
+            l,
+            reg;
         if (JMVC.util.isArray(el)) {
             for (i = 0, l = el.length; i < l; i++) {
                 JMVC.dom.removeClass(el[i], cls);
@@ -716,7 +715,7 @@ JMVC.dom = {
             }
             return;
         }
-        var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+        reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
         if (el.className) el.className = el.className.replace(reg, '');
         return JMVC.dom;
     },
@@ -727,14 +726,12 @@ JMVC.dom = {
      * @param  {[type]} coming [description]
      * @return {[type]}        [description]
      */
-    replace : function (going, coming) {
+    replace: function (going, coming) {
         var display = coming.style.display;
         coming.style.display = 'none';
         JMVC.dom.insertAfter(coming, going);
         JMVC.dom.remove(going) && (coming.style.display = display);
     },
-
-
 
     /**
      * [ description]
@@ -742,7 +739,7 @@ JMVC.dom = {
      * @param  {[type]} addingClass [description]
      * @return {[type]}             [description]
      */
-    setClass : function (elem, classes) {
+    setClass: function (elem, classes) {
         if (JMVC.util.isArray(elem)) {
             for (var i = 0, l = elem.length; i < l; i++) {
                 JMVC.dom.setClass(elem[i], classes);
@@ -759,7 +756,7 @@ JMVC.dom = {
      * @param  {[type]} elm2 [description]
      * @return {[type]}      [description]
      */
-    swap : function (elm1, elm2) {
+    swap: function (elm1, elm2) {
         var parent1 = elm1.parentNode,
             next1 = elm1.nextSibling,
             parent2 = elm2.parentNode,
@@ -775,7 +772,7 @@ JMVC.dom = {
      * @param  {[type]} newclass [description]
      * @return {[type]}          [description]
      */
-    switchClass : function (el, oldclass, newclass) {
+    switchClass: function (el, oldclass, newclass) {
         if (JMVC.dom.hasClass(el, oldclass)) {
             JMVC.dom.removeClass(el, oldclass);
             !JMVC.dom.hasClass(el, newclass) && JMVC.dom.addClass(el, newclass);
@@ -789,7 +786,7 @@ JMVC.dom = {
      * @param  {[type]} cls [description]
      * @return {[type]}     [description]
      */
-    toggleClass : function (el, cls) {
+    toggleClass: function (el, cls) {
         var ret = JMVC.dom.hasClass(el, cls); 
         JMVC.dom[ret ? 'removeClass' : 'addClass'](el, cls);
         return ret;
@@ -800,18 +797,19 @@ JMVC.dom = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    val : function (el) {
+    val: function (el) {
         return el.value;
     },
-    
+
     /**
-     * :D :D :D 
+     * :D :D :D
      * from http://stackoverflow.com/questions/6969604/recursion-down-dom-tree
      * @param  {[type]} node [description]
      * @param  {[type]} func [description]
      * @return {[type]}      [description]
      */
-    /*
+
+    /**
     walk : function (node, func) {
         func(node);                 // What does this do?, it's a fucking preorder
                                     // must test, cause eulerWalk do even postorder
@@ -820,10 +818,11 @@ JMVC.dom = {
             JMVC.dom.walk(node, func);
             node = node.nextSibling;
         }
-    },*/
+    },
+    */
 
-    walk : function (root, func, mode) {
-        mode = {pre : 'pre', post : 'post'}[mode] || 'post';
+    walk: function (root, func, mode) {
+        mode = { pre: 'pre', post: 'post' }[mode] || 'post';
         var nope = function () {},
             pre = mode === 'pre' ? func : nope,
             post = mode === 'post' ? func : nope,
@@ -841,14 +840,13 @@ JMVC.dom = {
         walk(root);
     },
 
-
     /**
      * [wrapIn description]
      * @param  {[type]} node  [description]
      * @param  {[type]} attrs [description]
      * @return {[type]}       [description]
      */
-    wrap : function (node, tag, attrs) {
+    wrap: function (node, tag, attrs) {
         var wrap = JMVC.dom.create(tag || 'div', attrs || {});
         JMVC.dom.insertAfter(wrap, node);
         wrap.appendChild(node);     
@@ -861,7 +859,7 @@ JMVC.dom = {
      * @param  {[type]} attrs [description]
      * @return {[type]}       [description]
      */
-    wrapIn : function (node, attrs) {
+    wrapIn: function (node, attrs) {
         var n = JMVC.dom.create('div', attrs || {});
         n.innerHTML = node.innerHTML;
         node.innerHTML = '';
@@ -869,4 +867,4 @@ JMVC.dom = {
         return n;
     }
 };
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
