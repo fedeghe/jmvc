@@ -10,7 +10,7 @@ _.array = {
      * @param  {[type]} op [description]
      * @return {[type]}    [description]
      */
-    op : function (a, op) {
+    op: function (a, op) {
         var ret = NaN;
         try {
             ret = (new Function('return ' + a.join(op) + ';'))();
@@ -26,16 +26,14 @@ JMVC.array = {
      * [clean description]
      * @return {[type]} [description]
      */
-    clean : function (arr) {
+    clean: function (arr) {
         var i = -1,
-            l = arr.length; 
+            l = arr.length;
 
         while (++i < l) {
-            
             if (
-                undefined == arr[i]
-                ||
-                (typeof arr[i] == 'number' && isNaN(arr[i]))
+                typeof arr[i] === 'undefined' ||
+                (typeof arr[i] === 'number' && isNaN(arr[i]))
             ) {
                 arr.splice(i--, 1);
                 l--;
@@ -49,7 +47,7 @@ JMVC.array = {
      * @param {Array} arr the array that should be cloned
      * @return {Array} the cloned array
      */
-    clone : function (arr) {
+    clone: function (arr) {
         return Array.prototype.slice.call(arr, 0);
     },
 
@@ -58,7 +56,7 @@ JMVC.array = {
      * @param  {[type]} coll [description]
      * @return {[type]}      [description]
      */
-    coll2array : function (coll) {
+    coll2array: function (coll) {
         var ret = [],
             i = 0;
         try {
@@ -81,7 +79,7 @@ JMVC.array = {
      *
      * @source http://stackoverflow.com/questions/3115982/how-to-check-javascript-array-equals
      */
-    compare : function (a, b, onlyPresence) {
+    compare: function (a, b, onlyPresence) {
         if (a === b) {
             return true;
         }
@@ -91,7 +89,7 @@ JMVC.array = {
 
         // If you don't care about the order of the elements inside
         // the array, you should sort both arrays here.
-        // 
+        //
         if (typeof onlyPresence !== 'undefined') {
             a = a.sort();
             b = b.sort();
@@ -111,7 +109,7 @@ JMVC.array = {
      * @param  {[type]} k [description]
      * @return {[type]}   [description]
      */
-    digForKey : function (o, k) {
+    digForKey: function (o, k) {
         return _.common.digFor('key', o, k);
     },
 
@@ -121,7 +119,7 @@ JMVC.array = {
      * @param  {[type]} k [description]
      * @return {[type]}   [description]
      */
-    digForValue : function (o, k) {
+    digForValue: function (o, k) {
         return _.common.digFor('value', o, k);
     },
 
@@ -132,7 +130,7 @@ JMVC.array = {
      * @param      {<type>}  kv      { parameter_description }
      * @return     {<type>}  { description_of_the_return_value }
      */
-    digForKeyValue : function (o, kv) {
+    digForKeyValue: function (o, kv) {
         return _.common.digFor('keyvalue', o, kv);
     },
 
@@ -141,7 +139,7 @@ JMVC.array = {
      * @param  {Array} arr the array to be emptied
      * @return {undefined}
      */
-    empty : function (arr) {
+    empty: function (arr) {
         // second param (deleteCount) would not be necessary
         // but in the buggIE
         [].splice.call(arr, 0, arr.length);
@@ -149,34 +147,34 @@ JMVC.array = {
 
     /**
      * Cross-Façade function to check if an array contains or not a value
-     * @param  {Array}  arr    the array to search in 
+     * @param  {Array}  arr    the array to search in
      * @param  {Mixed}  myvar  the element searched
      * @return {Integer}       the index of the first occurrence or -1
      */
-    find : function (arr, mvar) {
-        //IE6,7,8 fail here
+    find: function (arr, mvar) {
+        // IE6,7,8 fail here
         if (arr instanceof Array && 'indexOf' in arr) {
             return arr.indexOf(mvar);
         }
         var l = arr.length - 1;
-        while (l >= 0 && arr[l] !== mvar) {l--; }
+        while (l >= 0 && arr[l] !== mvar) { l--; }
         return l;
     },
 
     /**
      * Find all the occourcences indexes of an element in a array
-     * @param  {Array} arr   the array to search in 
+     * @param  {Array} arr   the array to search in
      * @param  {Mixed} mvar  the element searched
      * @return {Mixed}       the Array of occourrencies or -1
      */
-    findAll : function (arr, mvar) {
+    findAll: function (arr, mvar) {
         var res = [],
             sum = 0,
             tmp;
         while (true) {
             tmp = JMVC.array.find(arr, mvar);
             // not found exit
-            if (tmp < 0) {break; }
+            if (tmp < 0) { break; }
             // track position, cause of slicing
             sum += tmp + 1;
             res.push(sum - 1);
@@ -191,28 +189,28 @@ JMVC.array = {
      * @param  {[type]} v   [description]
      * @return {[type]}     [description]
      */
-    findRich : function (arr, v) {
+    findRich: function (arr, v) {
         var i = 0,
-            is_obj_or_array = false,
+            isObjOrArray = false,
             len = arr.length;
         for (null; i < len; i += 1) {
-            is_obj_or_array = {}.toString.call(arr[i]).match(/\[object\s(Array|Object)\]/);
+            isObjOrArray = {}.toString.call(arr[i]).match(/\[object\s(Array|Object)\]/);
             if (
-                (is_obj_or_array && JSON.stringify(arr[i]) === JSON.stringify(v)) ||
-                (!is_obj_or_array && arr[i].toString() === v.toString())
+                (isObjOrArray && JSON.stringify(arr[i]) === JSON.stringify(v)) ||
+                (!isObjOrArray && arr[i].toString() === v.toString())
             ) {
                 return i;
             }
         }
         return -1;
     },
-    
+
     /**
      * [fromArguments description]
      * @param  {[type]} a [description]
      * @return {[type]}   [description]
      */
-    fromArguments : function (a) {
+    fromArguments: function (a) {
         return Array.prototype.slice.call(a, 0);
     },
 
@@ -221,7 +219,7 @@ JMVC.array = {
      * @param  {[type]} a) {return      Math.max.apply(null, a [description]
      * @return {[type]}    [description]
      */
-    max : function (a) {
+    max: function (a) {
         return Math.max.apply(null, a);
     },
 
@@ -230,15 +228,15 @@ JMVC.array = {
      * @param  {[type]} a [description]
      * @return {[type]}   [description]
      */
-    mean : function (a) {return JMVC.array.sum(a) / a.length; },
+    mean: function (a) { return JMVC.array.sum(a) / a.length; },
 
     /**
      * [min description]
      * @param  {[type]} a) {return      Math.min.apply(null, a [description]
      * @return {[type]}    [description]
      */
-    min : function (a) {return Math.min.apply(null, a); },
-    
+    min: function (a) { return Math.min.apply(null, a); },
+
     /**
      * [move description]
      * @param  {[type]} a    [description]
@@ -246,7 +244,7 @@ JMVC.array = {
      * @param  {[type]} to   [description]
      * @return {[type]}      [description]
      */
-    move : function (a, from, to) {
+    move: function (a, from, to) {
         if (to >= a.length) {
             var k = to - a.length;
             while ((k--) + 1) {
@@ -262,14 +260,14 @@ JMVC.array = {
      * @param  {[type]} a [description]
      * @return {[type]}   [description]
      */
-    mult : function (a) {return _.array.op(a, '*'); },
+    mult: function (a) { return _.array.op(a, '*'); },
 
     /**
      * [rand description]
      * @param  {[type]} a [description]
      * @return {[type]}   [description]
      */
-    rand : function (a) {return a[Math.floor(Math.random() * a.length)]; },
+    rand: function (a) { return a[Math.floor(Math.random() * a.length)]; },
 
     /**
      * [range description]
@@ -277,10 +275,10 @@ JMVC.array = {
      * @param  {[type]} max [description]
      * @return {[type]}     [description]
      */
-    range : function (min, max) {
+    range: function (min, max) {
         var out = [];
         while (min <= max) out.push(min++);
-        return out; 
+        return out;
     },
 
     /**
@@ -290,7 +288,7 @@ JMVC.array = {
      * @param  {[type]} item [description]
      * @return {[type]}      [description]
      */
-    remove : function (arr, item) {
+    remove: function (arr, item) {
         var i = arr.length;
         while (i--) {
             arr[i] === item && arr.splice(i, 1);
@@ -303,8 +301,8 @@ JMVC.array = {
      * @param  {[type]} arr [description]
      * @return {[type]}     [description]
      */
-    shuffle : function (arr) {
-        var l = arr.length,   
+    shuffle: function (arr) {
+        var l = arr.length,
             i = 0,
             rnd, tmp;
         while (i < l) {
@@ -321,7 +319,7 @@ JMVC.array = {
      * @param  {[type]} a [description]
      * @return {[type]}   [description]
      */
-    sum : function (a) {
+    sum: function (a) {
         return _.array.op(a, '+');
     },
 
@@ -330,16 +328,17 @@ JMVC.array = {
      * @param  {[type]} a [description]
      * @return {[type]}   [description]
      */
-    unique : function (a) {    
+    unique: function (a) {
         var r = [],
             l = a.length,
             i = 0, j;
         for (i = 0; i < l; i++) {
-            for (j = i + 1; j < l; j++) 
+            for (j = i + 1; j < l; j++) {
                 if (a[i] === a[j]) j = ++i;
+            }
             r.push(a[i]);
         }
         return r;
     }
 };
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------

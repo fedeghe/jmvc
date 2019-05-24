@@ -1,4 +1,4 @@
-Interface = (function (){
+Interface = (function () {
     var _interface = function (name, a) {
         var i = 0,
             l;
@@ -10,7 +10,7 @@ Interface = (function (){
         l = a.length;
         for (null; i < l; i += 1) {
             typeof a[i] === 'string' && (this.mthds.push(a[i]));
-            //console.debug(checkInterface(a[i]));
+            // console.debug(checkInterface(a[i]));
         }
     };
 
@@ -52,14 +52,14 @@ Interface.checkImplements = function (obj) {
         ret = true,
         msg = '';
 
-    //skip 0 being it obj
+    // skip 0 being it obj
     while (++i < l) {
         for (m in arg[i].mthds) {
             if (typeof obj[arg[i].mthds[m]] !== 'function') {
                 ret = false;
                 msg += 'Function Interface.checkImplements: object ' +
                 'does not implement the `' + arg[i].name +
-                '` interface : method ' + arg[i].mthds[m] + ' was not found.' + "\n";
+                '` interface : method ' + arg[i].mthds[m] + ' was not found.' + '\n';
             }
         }
     }
@@ -83,4 +83,4 @@ function checkInterface(f) {
 
 console.dir(checkInterface(tee));
  */
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------

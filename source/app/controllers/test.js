@@ -10,7 +10,6 @@ JMVC.controllers.test = function() {
 	};
 	this.action_index = function () {
 
-		
 
 		JMVC.core.widgzard.render({
 			content : [{

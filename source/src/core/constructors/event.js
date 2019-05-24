@@ -1,4 +1,4 @@
-Event = (function (){
+Event = (function () {
     /*
     Event JMVC object
     use mainly for observers
@@ -13,7 +13,7 @@ Event = (function (){
          * @param  {[type]} listener [description]
          * @return {[type]}          [description]
          */
-        attach : function (listener) {
+        attach: function (listener) {
             this.listeners.push(listener);
             return this;
         },
@@ -22,7 +22,7 @@ Event = (function (){
          * @param  {[type]} args [description]
          * @return {[type]}      [description]
          */
-        notify : function (args) {
+        notify: function (args) {
             var i = 0,
                 l = this.listeners.length;
             while (i < l) {
@@ -32,9 +32,9 @@ Event = (function (){
         }
     };
     return {
-        create : function(s) {
+        create: function (s) {
             return new _event(s);
         }
     };
 })();
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------

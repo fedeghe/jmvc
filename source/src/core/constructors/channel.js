@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /**
  * [Channel description]
  * @param {[type]} n [description]
@@ -7,9 +8,8 @@ Channel = (function () {
 
         // function added to free completely
         // that object from dependencies
-        // 
         findInArray = function (arr, mvar) {
-            //IE6,7,8 would fail here
+            // IE6,7,8 would fail here
             if ('indexOf' in arr) {
                 return arr.indexOf(mvar);
             }
@@ -19,7 +19,6 @@ Channel = (function () {
             }
             return l;
         },
-
         _Channel = function () {
             this.topic2cbs = {};
             this.enabled = true;
@@ -34,7 +33,7 @@ Channel = (function () {
          * enable cb execution on publish
          * @return {undefined}
          */
-        enable : function () {
+        enable: function () {
             this.enabled = true;
         },
 
@@ -42,7 +41,7 @@ Channel = (function () {
          * disable cb execution on publish
          * @return {undefined}
          */
-        disable : function () {
+        disable: function () {
             this.enabled = false;
         },
 
@@ -55,7 +54,7 @@ Channel = (function () {
          *                 to every callback
          * @return {undefined}
          */
-        pub : function (topic, args) {
+        pub: function (topic, args) {
             var i = 0,
                 l;
             if (!(topic in this.topic2cbs) || !this.enabled) {
@@ -76,7 +75,7 @@ Channel = (function () {
          *                   argument the topic, the others follow
          * @return {undefined}
          */
-        sub : function (topic, cb, force) {
+        sub: function (topic, cb, force) {
             var i = 0,
                 l;
             if (topic instanceof Array) {
@@ -102,7 +101,7 @@ Channel = (function () {
          * @param  {Function} cb    [description]
          * @return {[type]}         [description]
          */
-        unsub : function (topic, cb) {
+        unsub: function (topic, cb) {
             var i = 0,
                 l;
             if (topic instanceof Array) {
@@ -118,14 +117,14 @@ Channel = (function () {
             }
             return this;
         },
-        
+
         /**
          * one shot sub with auto unsub after first shot
          * @param  {[type]}   topic [description]
          * @param  {Function} cb    [description]
          * @return {[type]}         [description]
          */
-        once : function (topic, cb){
+        once: function (topic, cb) {
             var self = this,
                 cb2 = function () {
                     cb.apply(null, Array.prototype.slice.call(arguments, 0));
@@ -140,7 +139,7 @@ Channel = (function () {
          *                 the topic queues that must  be emptied
          * @return [Channel] the instance
          */
-        reset : function () {
+        reset: function () {
             var ts = Array.prototype.slice.call(arguments, 0),
                 l = ts.length,
                 i = 0;
@@ -169,8 +168,6 @@ Channel = (function () {
     };
 })();
 
-
-
 /*
 var colorsPalette = JMVC.Channel('colorsPalette'),
     optionsPalette = JMVC.Channel('optionsPalette');
@@ -179,7 +176,7 @@ colorsPalette.sub('getNewColor', function (topic, c){
     console.debug('got color :' + c);
 });
 colorsPalette.sub('invert', function (topic, c){
-   console.debug('trying to invert color ' + c + ' ... '); 
+   console.debug('trying to invert color ' + c + ' ... ');
 });
 optionsPalette.sub(['opened', 'closed'], function (topic){
     console.debug('The option palette has been ' + topic);
@@ -193,12 +190,11 @@ optionsPalette.pub('closed');
 
 //////// THE GOOD THING IS THAT IT WORKS EVEN IN DIRECT MODE
 
-
 JMVC.Channel('colorsPalette').sub('getNewColor', function (topic, c){
     console.debug('got color :' + c);
 });
 JMVC.Channel('colorsPalette').sub('invert', function (topic, c){
-   console.debug('trying to invert color ' + c + ' ... '); 
+   console.debug('trying to invert color ' + c + ' ... ');
 });
 JMVC.Channel('optionsPalette').sub(['opened', 'closed'], function (topic){
     console.debug('The option palette has been ' + topic);
@@ -209,8 +205,6 @@ JMVC.Channel('colorsPalette').pub('getNewColor', ['#fede76']);
 JMVC.Channel('colorsPalette').pub('invert', ['#232323']);
 JMVC.Channel('optionsPalette').pub('opened');
 JMVC.Channel('optionsPalette').pub('closed');
-
-
 
 */
 //
@@ -240,4 +234,5 @@ JMVC.Pipe.pub('news', ['World is sold out!']);
 
 JMVC.Pipe.pub('alarm', ['Bomb in the hole,','runaway!!!']);
  */
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+/* eslint-enable no-undef */

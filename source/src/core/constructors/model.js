@@ -1,6 +1,5 @@
-/*---
-MODEL
----*/
+/* MODEL */
+
 Model = function () {};
 Model.prototype.vars = {};
 /**
@@ -16,4 +15,4 @@ Model.prototype.reset = function () {
  * @type {String}
  */
 Model.prototype.constructor = 'model';
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------

@@ -6,10 +6,7 @@ JMVC.require(
 
 JMVC.controllers.ttt = function () {
 	'use strict';
-
 	this.action_index = function () {
-
-
 		var opts = {
 			cplx : JMVC.p.cplx || 3,
             size : JMVC.p.size || 720,
@@ -31,5 +28,4 @@ JMVC.controllers.ttt = function () {
                 JMVC.TTT.start(opts);
             });
 	};
-	//
 };

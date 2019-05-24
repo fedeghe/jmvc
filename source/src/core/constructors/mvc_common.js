@@ -1,4 +1,3 @@
-///////////////////////
 // COMMON
 // getter, setter and "deleter" for mvc classes
 

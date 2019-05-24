@@ -1,12 +1,10 @@
-/*--------
-CONTROLLER          
---------*/
+/* CONTROLLER */
 // parent controller
 Controller = function () {
 };
 // autoview
 Controller.prototype.view = false;
-// for storing vars 
+// for storing vars
 Controller.prototype.vars = {};
 // this has no sense and must be removed
 Controller.prototype.jmvc_routes = {};
@@ -24,9 +22,7 @@ Controller.prototype.index = function () {
  */
 Controller.prototype.addRoutes = function (name, val) {
     var j;
-    
     typeof name === 'string' && (this.jmvc_routes[name] = val);
-
     if (typeof name === 'object') {
         for (j in name) {
             name.hasOwnProperty(j) && this.addRoutes(j, name[j]);
@@ -41,7 +37,7 @@ Controller.prototype.addRoutes = function (name, val) {
  */
 Controller.prototype.relocate = function (uri, ms) {
     W.setTimeout(
-        function () {WDL.href = String(uri); },
+        function () { WDL.href = String(uri); },
         ~~ms || 0
     );
 };
@@ -52,14 +48,14 @@ Controller.prototype.relocate = function (uri, ms) {
  * @return {[type]}         [description]
  */
 Controller.prototype.render = function (content, cback) {
-    // allow only cback 
+    // allow only cback
     if (typeof content === 'function') {
         cback = content;
         content = false;
     }
 
     this.view = new View(content);
-    this.view.render(cback && typeof cback === 'function' ? {cback : cback} : null);
+    this.view.render(cback && typeof cback === 'function' ? { cback: cback } : null);
 
     return this;
 };
@@ -71,4 +67,4 @@ Controller.prototype.reset = function () {
     this.vars = {};
     return this;
 };
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------

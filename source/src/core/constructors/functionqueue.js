@@ -1,6 +1,5 @@
-/*------------
-Function queue
-------------*/
+/* Function queue */
+
 FunctionQueue = function () {
     this.queue = [];
 };
@@ -22,4 +21,4 @@ FunctionQueue.prototype.run = function () {
 FunctionQueue.prototype.reset = function () {
     this.queue.length = 0;
 };
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
