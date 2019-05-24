@@ -34,20 +34,20 @@ _.events = {
      * map used to get back a node from an id
      * @type {Object}
      */
-    //nodeidMap : {},
+    // nodeidMap : {},
     disabledRightClick: false,
 
     /**
      * [wwdb_bindings description]
      * @type {Object}
      */
-    wwdb_bindings : {},
+    wwdb_bindings: {},
 
     /**
      * [wwdb_channel description]
      * @type {[type]}
      */
-    wwdb_channel : JMVC.Channel('wwdb'),
+    wwdb_channel: JMVC.Channel('wwdb'),
 
     /**
      * bind exactly one domnode event to a function
@@ -56,7 +56,7 @@ _.events = {
      * @param  {Function} cb   the callback executed when event is fired on node
      * @return {undefined}
      */
-    bind: (function() {
+    bind: (function () {
         var fn;
 
         function store(el, evnt, cb) {
@@ -65,24 +65,24 @@ _.events = {
             !(evnt in _.events.bindings) && (_.events.bindings[evnt] = {});
 
             !(nid in _.events.bindings[evnt]) && (_.events.bindings[evnt][nid] = []);
-            //store for unbinding
+            // store for unbinding
             _.events.bindings[evnt][nid].push(cb);
             return true;
         }
         if ('addEventListener' in W) {
-            fn = function(el, evnt, cb) {
+            fn = function (el, evnt, cb) {
                 // cb = _.events.fixCurrentTarget(cb, el);
                 el.addEventListener.apply(el, [evnt, cb, false]);
                 store(el, evnt, cb);
             };
         } else if ('attachEvent' in W) {
-            fn = function(el, evnt, cb) {
+            fn = function (el, evnt, cb) {
                 // cb = _.events.fixCurrentTarget(cb, el);
                 el.attachEvent.apply(el, ['on' + evnt, cb]);
                 store(el, evnt, cb);
             };
         } else {
-            fn = function() {
+            fn = function () {
                 throw new Error('No straight way to bind an event');
             };
         }
@@ -93,20 +93,20 @@ _.events = {
      * [fixCurrentTarget description]
      * @return {[type]} [description]
      */
-    fixCurrentTarget: function(f, el) {
-        var wrapf = function(e) {
-            // currentTarget (the node where binding has been done) is the core of
-            // event delegation
-            // it would be nice to fix currentTarget
-            // leak in (fuckin)IE7 and (fuckin)IE8
-            // with something like
-            // e.currentTarget || (e.currentTarget = el);
-            //
-            // a bad WORKING workaround is to pass the current target
-            // to the
-            // callback as second parameter and let it to be the context 
-            return f.call(el, e, el);
-        },
+    fixCurrentTarget: function (f, el) {
+        var wrapf = function (e) {
+                // currentTarget (the node where binding has been done) is the core of
+                // event delegation
+                // it would be nice to fix currentTarget
+                // leak in (fuckin)IE7 and (fuckin)IE8
+                // with something like
+                // e.currentTarget || (e.currentTarget = el);
+                //
+                // a bad WORKING workaround is to pass the current target
+                // to the
+                // callback as second parameter and let it to be the context
+                return f.call(el, e, el);
+            },
             i = JMVC.array.find(_.events.cbs, wrapf);
         if (i > -1) {
             return _.events.cbs[i];
@@ -127,19 +127,18 @@ _.events = {
      *                                 will be unattached
      * @return {boolean}    whether the unbinding succeded
      */
-    unbind: function(el, evnt, cb) {
-        function unstore(evnt, nodeid, index) {
+    unbind: function (el, evnt, cb) {
+        function unstore (evnt, nodeid, index) {
             Array.prototype.splice.call(_.events.bindings[evnt][nodeid], index, 1);
         }
 
-        //cb && (cb = this.fixCurrentTarget(cb, el));
-
-        var nodeid = JMVC.dom.idize(el), //_.events.nodeid(el),
+        // cb && (cb = this.fixCurrentTarget(cb, el));
+        var nodeid = JMVC.dom.idize(el), // _.events.nodeid(el),
             index, tmp, l;
         try {
             tmp = _.events.bindings[evnt][nodeid];
         } catch (e) {
-            //JMVC.debug(evnt + ': binding not found');
+            // JMVC.debug(evnt + ': binding not found');
             return false;
         }
 
@@ -151,14 +150,14 @@ _.events = {
                 return false;
             }
             l = tmp.length;
-            /*the element will be removed at the end of the real unbind*/
+            /* the element will be removed at the end of the real unbind */
             while (l--) {
                 _.events.unbind(el, evnt, tmp[l]);
             }
             return true;
         }
 
-        //JMVC.W.exp = _.events.bindings;
+        // JMVC.W.exp = _.events.bindings;
         index = JMVC.array.find(_.events.bindings[evnt][nodeid], cb);
 
         if (index === -1) {
@@ -171,11 +170,11 @@ _.events = {
             el.detachEvent('on' + evnt, cb);
         }
 
-        //remove it from private bindings register
+        // remove it from private bindings register
         unstore(evnt, nodeid, index);
         return true;
     },
-    getElementDeterminant : function (el) {
+    getElementDeterminant: function (el) {
         var tname = el.tagName;
         return (tname.match(/input|textarea/i)) ? 'value' : 'innerHTML';
     }
@@ -184,49 +183,45 @@ _.events = {
 //
 // PUBLIC section
 JMVC.events = {
-
-    innerKill : function (e) {
+    innerKill: function (e) {
         e.preventDefault();
         _.events.kill(e);
     },
-
-    enableScroll : function () {
+    enableScroll: function () {
         if (window.removeEventListener)
             window.removeEventListener('DOMMouseScroll', JMVC.events.preventDefault, false);
-        window.onmousewheel = document.onmousewheel = null; 
-        window.onwheel = null; 
-        window.ontouchmove = null;  
+        window.onmousewheel = document.onmousewheel = null;
+        window.onwheel = null;
+        window.ontouchmove = null;
         document.onkeydown = null;
 
         _.events.unbind(window, 'touchmove', JMVC.events.innerKill);
     },
-    
-    disableScroll : function () {
+
+    disableScroll: function () {
         //
         // http://stackoverflow.com/questions/4770025/how-to-disable-scrolling-temporarily
         //
 
         // left: 37, up: 38, right: 39, down: 40,
         // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
-        var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+        var keys = { 37: 1, 38: 1, 39: 1, 40: 1 };
 
-
-        function preventDefaultForScrollKeys(e) {
+        function preventDefaultForScrollKeys (e) {
             if (keys[e.keyCode]) {
                 JMVC.events.preventDefault(e);
                 return false;
             }
         }
 
-        window.addEventListener // older FF
-        && window.addEventListener('DOMMouseScroll', JMVC.events.preventDefault, false);
+        window.addEventListener && // older FF
+        window.addEventListener('DOMMouseScroll', JMVC.events.preventDefault, false);
         window.onwheel = JMVC.events.preventDefault; // modern standard
         window.onmousewheel = document.onmousewheel = JMVC.events.preventDefault; // older browsers, IE
-        window.ontouchmove  = JMVC.events.preventDefault; // mobile
-        document.onkeydown  = preventDefaultForScrollKeys;
+        window.ontouchmove = JMVC.events.preventDefault; // mobile
+        document.onkeydown = preventDefaultForScrollKeys;
 
         _.events.bind(window, 'touchmove', JMVC.events.innerKill);
-
 
         /*
         _.events.bind(window,'touchstart', function() {
@@ -238,15 +233,14 @@ JMVC.events = {
             } else if(currentScroll === totalScroll) {
                 el.scrollTop = top - 1
             }
-        })*/
+        })
+        */
     },
 
-
-
-    blurAllAnchorClicks : function () {
+    blurAllAnchorClicks: function () {
         JMVC.events.on(JMVC.W, 'click', function (e) {
             var target = JMVC.events.eventTarget(e); 
-            target.tagName && target.tagName.toLowerCase() == 'a' && target.blur();
+            target.tagName && target.tagName.toLowerCase() === 'a' && target.blur();
         });
     },
 
@@ -255,7 +249,7 @@ JMVC.events = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    click : function (el) {
+    click: function (el) {
         JMVC.events.fire(el, 'click');
     },
 
@@ -264,7 +258,7 @@ JMVC.events = {
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
-    code: function(e) {
+    code: function (e) {
         if (e.keyCode) {
             return e.keyCode;
         } else if (e.charCode) {
@@ -280,7 +274,7 @@ JMVC.events = {
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
-    coord : function (ev) {
+    coord: function (ev) {
         var x,
             y,
             e;
@@ -304,7 +298,7 @@ JMVC.events = {
      * @param  {[type]} t [description]
      * @return {[type]}   [description]
      */
-    delay: function(f, t) {
+    delay: function (f, t) {
         W.setTimeout(f, t);
     },
 
@@ -312,14 +306,14 @@ JMVC.events = {
      * [disableRightClick description]
      * @return {[type]} [description]
      */
-    disableRightClick: function() {
+    disableRightClick: function () {
         if (_.events.disabledRightClick) {
             return false;
         }
         _.events.disabledRightClick = true;
         var self = JMVC.events;
         JMVC.dom.attr(JMVC.WD.body, 'oncontextmenu', 'return false');
-        self.on(JMVC.WD, 'mousedown', function(e) {
+        self.on(JMVC.WD, 'mousedown', function (e) {
             if (~~(e.button) === 2) {
                 self.preventDefault(e);
                 return false;
@@ -332,7 +326,7 @@ JMVC.events = {
      * @param  {[type]} f [description]
      * @return {[type]}   [description]
      */
-    end: function(f) {
+    end: function (f) {
         _.events.Eend.push(f);
     },
 
@@ -340,7 +334,7 @@ JMVC.events = {
      * [ description]
      * @return {[type]} [description]
      */
-    endRender: function() {
+    endRender: function () {
         var i = 0,
             l = _.events.Eend.length;
         for (null; i < l; i += 1) {
@@ -353,7 +347,7 @@ JMVC.events = {
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
-    eventTarget: function(e) {
+    eventTarget: function (e) {
         e = e ? e : JMVC.W.event;
         var targetElement = e.currentTarget || (typeof e.target !== 'undefined') ? e.target : e.srcElement;
         if (!targetElement) {
@@ -373,7 +367,7 @@ JMVC.events = {
      * @param  {[type]} evnt [description]
      * @return {[type]}      [description]
      */
-    fire: function(el, evnt) {
+    fire: function (el, evnt) {
         var evt = el[evnt];
         typeof evt === 'function' && (el[evnt]());
     },
@@ -383,7 +377,7 @@ JMVC.events = {
      * @param  {[type]} node [description]
      * @return {[type]}      [description]
      */
-    free: function(node, evnt) {
+    free: function (node, evnt) {
         node = node || JMVC.WD;
         if (typeof evnt === 'undefined') {
             for (var j in _.events.bindings) {
@@ -391,7 +385,7 @@ JMVC.events = {
             }
             return true;
         }
-        JMVC.dom.walk(node, function(n) {
+        JMVC.dom.walk(node, function (n) {
             JMVC.events.off(n, evnt);
         }, 'pre');
     },
@@ -402,8 +396,8 @@ JMVC.events = {
      * @param  {[type]} e  [description]
      * @return {[type]}    [description]
      */
-    getCoord: function(el, e) {
-        var coord = JMVC.events.coord(e)
+    getCoord: function (el, e) {
+        var coord = JMVC.events.coord(e);
         coord[0] -= el.offsetLeft;
         coord[1] -= el.offsetTop;
         return coord;
@@ -422,18 +416,17 @@ JMVC.events = {
         return [offsetX, offsetY];
     },
 
-    loadifyCalled : false,
+    loadifyCalled: false,
 
     /**
      * [ description]
      * @param  {[type]} ms [description]
      * @return {[type]}    [description]
      */
-    loadify: function(ms) {
-
+    loadify: function (ms) {
         var self = JMVC.events,
             p = null;
-        
+
         ms = ms || 1000;
 
         if (self.loadifyCalled) {
@@ -442,25 +435,23 @@ JMVC.events = {
             p.then(end);
         }
 
-        function start() {
+        function start () {
             // otherwise some browser hangs (opera)
             //
-            self.delay(function() {
+            self.delay(function () {
                 WD.body.style.opacity = 0;
                 WD.body.style.filter = 'alpha(opacity=0)';
                 p && p.done();
             }, 0);
-
         }
 
-        function end() {    
+        function end () {
             var i = 0,
                 step = 0.05,
-                top = 1,
-                to;
+                top = 1;
             while (i <= top) {
-                to = W.setTimeout(
-                    function(j) {
+                W.setTimeout(
+                    function (j) {
                         WD.body.style.opacity = j;
                         WD.body.style.filter = 'alpha(opacity=' + (j * 100) + ')';
                         if (j >= top || isNaN(j)) {
@@ -484,7 +475,7 @@ JMVC.events = {
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
-    kill: function(e) {
+    kill: function (e) {
         if (!e) {
             e = W.event;
             e.cancelBubble = true;
@@ -500,8 +491,8 @@ JMVC.events = {
      * @param  {[type]} tipo [description]
      * @return {[type]}      [description]
      */
-    off: function(el, tipo, fn) {
-        //as for binding
+    off: function (el, tipo, fn) {
+        // as for binding
         if (el instanceof Array) {
             for (var i = 0, l = el.length; i < l; i++) {
                 _.events.unbind(el[i], tipo, fn);
@@ -518,23 +509,24 @@ JMVC.events = {
      * @param  {Function} fn   [description]
      * @return {[type]}        [description]
      */
-    on: function(el, tipo, fn) {
-        var res = true;
+    on: function (el, tipo, fn) {
+        var res = true,
+            i, l;
         if (el instanceof Array) {
-            for (var i = 0, l = el.length; i < l; i++) {
+            for (i = 0, l = el.length; i < l; i++) {
                 res = res & _.events.bind(el[i], tipo, fn);
-                //res = res & _.events.bind(el[i], tipo, _.events.fixCurrentTarget(fn, el[i]));
+                // res = res & _.events.bind(el[i], tipo, _.events.fixCurrentTarget(fn, el[i]));
             }
             return res;
         }
         if (tipo instanceof Array) {
-            for (var i = 0, l = tipo.length; i < l; i++) {
+            for (i = 0, l = tipo.length; i < l; i++) {
                 res = res & _.events.bind(el, tipo[i], fn);
             }
             return res;
         }
         return _.events.bind(el, tipo, fn);
-        //return _.events.bind(el, tipo, _.events.fixCurrentTarget(fn, el));
+        // return _.events.bind(el, tipo, _.events.fixCurrentTarget(fn, el));
     },
 
     /**
@@ -544,21 +536,20 @@ JMVC.events = {
      * @param  {Function} fn   [description]
      * @return {[type]}        [description]
      */
-    one: function(el, tipo, fn) {
-        var self = JMVC.events;
+    one: function (el, tipo, fn) {
+        var self = JMVC.events,
+            i, l;
         if (el instanceof Array) {
-            for (var i = 0, l = el.length; i < l; i++) {
+            for (i = 0, l = el.length; i < l; i++) {
                 self.one(el[i], tipo, fn);
             }
             return;
         }
-        self.on(el, tipo, function f(e) {
+        self.on(el, tipo, function f (e) {
             fn.call(e, e);
             self.off(el, tipo, f);
         });
     },
-
-
 
     /**
      * [onEsc description]
@@ -575,7 +566,7 @@ JMVC.events = {
         });
     },
 
-    onElementSizeChange : function(elm, callback, dim, to) {
+    onElementSizeChange: function (elm, callback, dim, to) {
         to = to || 200;
 
         var lastHeight = elm.clientHeight,
@@ -585,8 +576,7 @@ JMVC.events = {
             reactToHeight = typeof dim === 'undefined' || dim.match(/height/),
             reactToWidth = typeof dim === 'undefined' || dim.match(/width/);
 
-        (function run() {
-
+        (function run () {
             newHeight = elm.clientHeight;
             newWidth = elm.clientWidth;
 
@@ -613,16 +603,14 @@ JMVC.events = {
      * || var tr = JMVC.dom.find('#extralogo');
      * || JMVC.events.onEventOut(tr, 'click', function (){console.debug('out')});
      */
-    onEventOut: function(el, evnt, cb) {
-        
+    onEventOut: function (el, evnt, cb) {
         var self = JMVC.events,
-            root = window.document; //JMVC.dom.body();
+            root = window.document; // JMVC.dom.body();
 
-        self.on(root, evnt, function f(e) {
+        self.on(root, evnt, function f (e) {
             var trg = self.eventTarget(e);
 
             while (trg !== el) {
-                
                 trg = JMVC.dom.parent(trg);
                 if (trg === root) {
                     self.off(root, evnt, f);
@@ -639,11 +627,11 @@ JMVC.events = {
      * @param  {[type]} t  [description]
      * @return {[type]}    [description]
      */
-    onNoEvent : function (el, f, t) {
+    onNoEvent: function (el, f, t) {
         t = t || 3000;
         var to,
             self = JMVC.events;
-        function inner(e) {
+        function inner (e) {
             to && window.clearTimeout(to);
             to = window.setTimeout(function () { f(e); }, t);
         }
@@ -662,12 +650,11 @@ JMVC.events = {
      * || var tr = JMVC.dom.find('#extralogo');
      * || JMVC.events.clickout(tr, 'click', function (){console.debug('out')});
      */
-    onEventOut_old: function(el, evnt, cb) {
-        
+    onEventOut_old: function (el, evnt, cb) {
         var self = JMVC.events,
             root = JMVC.dom.body();
 
-        self.on(root, evnt, function f(e) {
+        self.on(root, evnt, function f (e) {
             var trg = self.eventTarget(e);
             while (trg !== el) {
                 trg = JMVC.dom.parent(trg);
@@ -685,9 +672,9 @@ JMVC.events = {
      * @param  {[type]} f  [description]
      * @return {[type]}    [description]
      */
-    onRight: function(el, f) {
+    onRight: function (el, f) {
         JMVC.events.disableRightClick();
-        JMVC.events.on(el, 'mousedown', function(e) {
+        JMVC.events.on(el, 'mousedown', function (e) {
             ~~(e.button) === 2 && f.call(el, e);
         });
     },
@@ -697,7 +684,7 @@ JMVC.events = {
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
-    preventDefault: function(e) {
+    preventDefault: function (e) {
         e = e || W.event;
         if (e.preventDefault) {
             e.preventDefault();
@@ -710,25 +697,25 @@ JMVC.events = {
      * ready façade
      * @return {[type]} [description]
      */
-    readyOLD: (function() {
-        function may_go(f) {
+    readyOLD: (function () {
+        function mayGo (f) {
             return JMVC.loaded ? f.call() : false;
         }
         if (WD.addEventListener) {
-            return function(f) {
-                return may_go(f) || WD.addEventListener('DOMContentLoaded', f, false);
+            return function (f) {
+                return mayGo(f) || WD.addEventListener('DOMContentLoaded', f, false);
             };
         } else if (W.addEventListener) {
-            return function(f) {
-                return may_go(f) || W.addEventListener('load', f, false);
+            return function (f) {
+                return mayGo(f) || W.addEventListener('load', f, false);
             };
         } else if (WD.attachEvent) {
-            return function(f) {
-                return may_go(f) || WD.attachEvent('onreadystatechange', f);
+            return function (f) {
+                return mayGo(f) || WD.attachEvent('onreadystatechange', f);
             };
         } else if (W.attachEvent) {
-            return function(f) {
-                return may_go(f) || W.attachEvent('onload', f);
+            return function (f) {
+                return mayGo(f) || W.attachEvent('onload', f);
             };
         }
     })(),
@@ -736,10 +723,10 @@ JMVC.events = {
     /**
      * [description]
      */
-    ready : (function () {
+    ready: (function () {
         var cb = [],
-            readyStateCheckInterval = setInterval(function() {
-                if (document.readyState === "complete") {
+            readyStateCheckInterval = setInterval(function () {
+                if (document.readyState === 'complete') {
                     JMVC.loaded = true;
                     clearInterval(readyStateCheckInterval);
                     for (var i = 0, l = cb.length; i < l; i++) {
@@ -748,7 +735,7 @@ JMVC.events = {
                 }
             }, 10);
         return function (c) {
-            if (document.readyState === "complete") {
+            if (document.readyState === 'complete') {
                 c.call(this);
             } else {
                 cb.push(c);
@@ -761,7 +748,7 @@ JMVC.events = {
      * @param  {[type]} f [description]
      * @return {[type]}   [description]
      */
-    start: function(f) {
+    start: function (f) {
         _.events.Estart.push(f);
     },
 
@@ -769,7 +756,7 @@ JMVC.events = {
      * [ description]
      * @return {[type]} [description]
      */
-    startRender: function() {
+    startRender: function () {
         var i = 0,
             l = _.events.Estart.length;
         for (null; i < l; i += 1) {
@@ -782,7 +769,7 @@ JMVC.events = {
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
-    stopBubble: function(e) {
+    stopBubble: function (e) {
         if (e.stopPropagation) {
             e.stopPropagation();
         }
@@ -797,8 +784,8 @@ JMVC.events = {
      * @param  {[type]} top  [description]
      * @return {[type]}      [description]
      */
-    scrollBy: function(left, top) {
-        JMVC.events.delay(function() {
+    scrollBy: function (left, top) {
+        JMVC.events.delay(function () {
             W.scrollBy(left, top);
         }, 1);
     },
@@ -809,8 +796,8 @@ JMVC.events = {
      * @param  {[type]} top  [description]
      * @return {[type]}      [description]
      */
-    scrollTo: function(left, top) {
-        JMVC.events.delay(function() {
+    scrollTo: function (left, top) {
+        JMVC.events.delay(function () {
             W.scrollTo(left, top);
         }, 1);
     },
@@ -820,7 +807,7 @@ JMVC.events = {
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
-    touch: function(e) {
+    touch: function (e) {
         var touches = [],
             i = 0,
             ect = e.touches,
@@ -841,9 +828,9 @@ JMVC.events = {
      * @param  {[type]} ev   [description]
      * @return {[type]}      [description]
      */
-    trigger : function (elem, ev) {
-        if ("createEvent" in document) {
-            var evt = document.createEvent("HTMLEvents");
+    trigger: function (elem, ev) {
+        if ('createEvent' in document) {
+            var evt = document.createEvent('HTMLEvents');
             evt.initEvent(ev, false, true);
             elem.dispatchEvent(evt);
         } else {
@@ -857,14 +844,11 @@ JMVC.events = {
      * [unload description]
      * @return {[type]} [description]
      */
-    unload: function (){
+    unload: function () {
         JMVC.events.on(W, 'beforeunload', function (e) {
-            
-            var confirmationMessage = /\//;//'Are you sure to leave or reload this page?';//"\o/";
-            (e || window.event).returnValue = confirmationMessage;     //Gecko + IE
-            return confirmationMessage; 
-            
-            
+            var confirmationMessage = /\//;// 'Are you sure to leave or reload this page?';//"\o/";
+            (e || window.event).returnValue = confirmationMessage;// Gecko + IE
+            return confirmationMessage;
         });
     },
 
@@ -875,23 +859,22 @@ JMVC.events = {
      * @param  {[type]} el    [description]
      * @return {[type]}       [description]
      */
-    wwon : function (obj, field,  el, debugobj) {
+    wwon: function (obj, field, el, debugobj) {
         var objLock = false,
             elLock = false,
             elDet = _.events.getElementDeterminant(el),
             elOldVal = el[elDet],
             objOldVal = obj[field],
-            lock = function(m) {
+            lock = function (m) {
                 objLock = elLock = !!m;
             };
         // debugobj = !!debugobj;
 
-        el.wwdbID = "_" + JMVC.util.uniqueid;
-
+        el.wwdbID = '_' + JMVC.util.uniqueid;
 
         // obj
         // when object changes -> element changes
-        // 
+        //
         _.events.wwdb_bindings[el.wwdbID] = window.setInterval(function () {
             if (objLock) return;
             lock(true);
@@ -903,8 +886,7 @@ JMVC.events = {
             }
             lock(false);
         }, 25);
-        
-        
+
         // input
         //
         JMVC.events.on(el, 'keyup', function () {
@@ -925,7 +907,7 @@ JMVC.events = {
      * [wwoff description]
      * @return {[type]} [description]
      */
-    wwoff : function () {
+    wwoff: function () {
         var els = [].slice.call(arguments, 0),
             l = els.length;
         while (l-- > 0) {
@@ -971,14 +953,14 @@ JMVC.events.doTab = function (el) {
                     selection = selection.split('\n\t').join('\n');
                 } else {
                     selection = selection.split('\n');
-                    if (compensateForNewline){
-                        selection.pop();    
+                    if (compensateForNewline) {
+                        selection.pop();
                     } 
-                    selection = '\t'+selection.join('\n\t');
+                    selection = '\t' + selection.join('\n\t');
                 }
 
                 // put it all back in...
-                textarea.value = before+selection+after;
+                textarea.value = before + selection + after;
                 // reselect area
                 textarea.selectionStart = posstart;
                 textarea.selectionEnd = posstart + selection.length;
@@ -995,18 +977,17 @@ JMVC.events.doTab = function (el) {
 // blur all clicks
 JMVC.events.blurAllAnchorClicks();
 
-
 if (!Event.prototype.preventDefault) {
-    Event.prototype.preventDefault = function() {
+    Event.prototype.preventDefault = function () {
         this.returnValue = false;
     };
 }
 if (!Event.prototype.stopPropagation) {
-    Event.prototype.stopPropagation = function() {
+    Event.prototype.stopPropagation = function () {
         this.cancelBubble = true;
     };
 }
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // in home
 /*
 var el = JMVC.dom.find('#extralogo'),
