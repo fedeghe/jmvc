@@ -1,43 +1,39 @@
-{
-    tag : "div",
-    wid : "#PARAM{id}",   
-    data : {
-        cards:"#PARAM{cards}",
-        index : 0,
-        next : null, // cb creates it
-        prev : null, // cb creates it
-        id : JMVC.util.uniqueid + '',
-        carouselID : JMVC.util.uniqueid,
-        h : "#PARAM{layout.size.height}",
-        w : "#PARAM{layout.size.width}",
-        speed : "#PARAM{speed}",
-        bgImage : "#PARAM{layout.bgImage}",
-        bgLink : "#PARAM{link}",
-        bgLinkOut : "#PARAM{linkOut}",
-        orientation : "#PARAM{layout.orientation|orizontal}",
-        ballList : "#PARAM{layout.ballList}"
+var ___ = {
+    tag: 'div',
+    wid: '#PARAM{id}',
+    data: {
+        cards: '#PARAM{cards}',
+        index: 0,
+        next: null, // cb creates it
+        prev: null, // cb creates it
+        id: JMVC.util.uniqueid + '',
+        carouselID: JMVC.util.uniqueid,
+        h: '#PARAM{layout.size.height}',
+        w: '#PARAM{layout.size.width}',
+        speed: '#PARAM{speed}',
+        bgImage: '#PARAM{layout.bgImage}',
+        bgLink: '#PARAM{link}',
+        bgLinkOut: '#PARAM{linkOut}',
+        orientation: '#PARAM{layout.orientation|orizontal}',
+        ballList: '#PARAM{layout.ballList}'
     },
-    style : {
-        border : "#PARAM{layout.brd}",
-        backgroundColor : "#PARAM{bgcolor|white}",
-        padding : '#PARAM{layout.padding|0px}'
+    style: {
+        border: '#PARAM{layout.brd}',
+        backgroundColor: '#PARAM{bgcolor|white}',
+        padding: '#PARAM{layout.padding|0px}'
     },
-    content : [{
-        attrs : {"class": " carousel"},
-        content : [{
-            attrs : {"class" : "arrow arrowLeft round20 roundright respfixed"},
-            html : "&nbsp;",
-            data : {
-                layout : "#PARAM{layout.button.theme|default}"
+    content: [{
+        attrs: { 'class': ' carousel' },
+        content: [{
+            attrs: { 'class': 'arrow arrowLeft round20 roundright respfixed' },
+            html: '&nbsp;',
+            data: {
+                layout: '#PARAM{layout.button.theme|default}'
             },
-            cb : function () {
-                
+            cb: function () {
                 var self = this,
-                    parent = self.climb(2),
-                    len = parent.data.cards.length,
-                    list;
-
-                 // if vertical round on the correct side
+                    parent = self.climb(2);
+                // if vertical round on the correct side
                 if (parent.data.orientation == 'vertical') {
                     JMVC.dom.removeClass(self.node, 'roundright');
                     JMVC.dom.addClass(self.node, 'roundtop');
@@ -51,7 +47,7 @@
                     if (parent.data.index > 0) {
                         JMVC.dom.removeClass(self.node, 'disabled');
                     } else {
-                        JMVC.dom.addClass(self.node, 'disabled');       
+                        JMVC.dom.addClass(self.node, 'disabled');
                     }
                 });
                 self.node.addEventListener('click', function () {
@@ -59,60 +55,62 @@
                 }, false);
                 this.done();
             }
-        },{
-            attrs : {"class" : "carouselListWrap round10 respfixed"},
-            wid : 'carouselListWrap',
-            content : [{
-                tag : "ul",
-                wid : 'carouselList',
-                content : "#PARAM{cards}",
-                style: {display:"none"},
-                data  : {
-                    w : "#PARAM{layout.size.width}",
-                    h : "#PARAM{layout.size.height}"
+        }, {
+            attrs: { 'class': 'carouselListWrap round10 respfixed' },
+            wid: 'carouselListWrap',
+            content: [{
+                tag: 'ul',
+                wid: 'carouselList',
+                content: '#PARAM{cards}',
+                style: { display: 'none' },
+                data: {
+                    w: '#PARAM{layout.size.width}',
+                    h: '#PARAM{layout.size.height}'
                 },
-                cb : function () {
+                cb: function () {
                     var self = this,
                         childs = self.childrens,
-                        len =  childs.length,
-                        orientation = self.climb(3).data.orientation;
+                        len = childs.length,
+                        orientation = self.climb(3).data.orientation,
+                        i = 0;
                     if (orientation == 'orizontal') {
                         self.node.style.width = (len * 100) + '%';
-                    } else if (orientation == 'vertical') {
+                    } else if (orientation === 'vertical') {
                         self.node.style.width = '100%';
-                        //self.node.style.height = self.data.h;
+                        // self.node.style.height = self.data.h;
                     }
-                    
+
                     self.climb(2).node.style.height = self.data.h;
 
-                    //adjust parent dimensions
+                    // adjust parent dimensions
                     self.parent.node.style.width = self.data.w;
                     self.parent.node.style.height = self.data.h;
 
-                    for (var i = 0; i < len; i++){
+                    for (null; i < len; i++) {
                         JMVC.dom.addClass(childs[i].node, orientation);
                         childs[i].node.setAttribute('data-num', i);
-                        childs[i].node.style.width =  (orientation == 'vertical')? '100%' : ((100 / len) + '%');//self.data.w;
-                        childs[i].node.style.height =  self.data.h;
+                        childs[i].node.style.width = orientation === 'vertical'
+                            ? '100%'
+                            : ((100 / len) + '%'); // self.data.w;
+                        childs[i].node.style.height = self.data.h;
                     }
                     this.done();
                 }
             }]
-        },{
-            attrs : {"class" : "arrow arrowRight round20 roundright respfixed"},
-            html : "&nbsp;",
-            data : {
-                layout : "#PARAM{layout.button.theme|default}"
+        }, {
+            attrs: { 'class': 'arrow arrowRight round20 roundright respfixed' },
+            html: '&nbsp;',
+            data: {
+                layout: '#PARAM{layout.button.theme|default}'
             },
-            cb : function () {
+            cb: function () {
                 this.done();
                 var self = this,
                     parent = self.climb(2),
-                    len = parent.data.cards.length,
-                    list;
+                    len = parent.data.cards.length;
 
                 // if vertical round on the correct side
-                if (parent.data.orientation == 'vertical') {
+                if (parent.data.orientation === 'vertical') {
                     JMVC.dom.removeClass(self.node, 'roundright');
                     JMVC.dom.addClass(self.node, 'roundtop');
                 }
@@ -131,25 +129,24 @@
                     parent.data.next();
                 }, false);
             }
-        },{
-            tag : "br",
-            attrs : {"class" : "clearer"}
+        }, {
+            tag: 'br',
+            attrs: { 'class': 'clearer' }
         }],
-        cb : function () {
+        cb: function () {
             var self = this;
             JMVC.dom.addClass(self.node, self.parent.data.orientation);
             self.done();
         }
     }],
-    cb : function (){
-        
+    cb: function () {
         var self = this,
             data = self.data,
             previous = data.index,
             len = data.cards.length,
-            speed = data.speed || .5,
+            speed = data.speed || 0.5,
             ul = self.getNode('carouselList').node,
-            width = data.w,
+            // width = data.w,
             height = data.h,
             orientation = data.orientation;
 
@@ -160,24 +157,21 @@
             JMVC.Channel(data.id).pub('move', -1);
         };
 
-
         JMVC.Channel(data.id).sub('moved', function (topic, from, to) {
             previous = to;
         });
 
         // set background image
         self.node.style.backgroundImage = 'url(' + data.bgImage + ')';
-        
-        JMVC.dom.addClass(self.node ,'coverBgHigh');
+        JMVC.dom.addClass(self.node, 'coverBgHigh');
 
         self.node.addEventListener('click', function (e) {
-            if (JMVC.events.eventTarget(e).parentNode == self.node) {
-
+            if (JMVC.events.eventTarget(e).parentNode === self.node) {
                 // link needs _blank target ?
                 //
                 data.bgLinkOut ?
                     window.open(data.bgLink, '_blank').focus()
-                    :
+                :
                     (document.location.href = data.bgLink);
             }
         }, false);
@@ -223,24 +217,24 @@
                 childs = self.getNode('carouselList').childrens,
                 l = childs.length;
             JMVC.core.widgzard.render({
-                target : carouselListWrap,
-                content : [{
-                    style : {
+                target: carouselListWrap,
+                content: [{
+                    style: {
                         position:'absolute',
                         bottom:'10px',
                         width:'100%',
                         textAlign:'center',
                         zIndex:900,
                         color:'red',
-                        margin : '0 auto'
+                        margin: '0 auto'
                     },
-                    content : [{
-                        tag : 'ul',
-                        cb : function () {
+                    content: [{
+                        tag: 'ul',
+                        cb: function () {
                             var self = this;
                             for (var i = 0, tmp; i < l; i++) {
                                 tmp = document.createElement('li');
-                                tmp.className = 'inline pointer ball ' + (!!i ? '' : 'active');
+                                tmp.className = 'inline pointer ball ' + (!!i ? '': 'active');
                                 tmp.innerHTML = '&bull;';
                                 tmp.setAttribute('data-num', i);
                                 self.node.appendChild(tmp);
@@ -253,7 +247,7 @@
                                 JMVC.dom.removeClass(self.node.children.item(data.index), 'active');
                                 if (trg.tagName.match(/^li$/i)) {
                                     n = parseInt(trg.getAttribute('data-num'), 10);
-                                    move = data.index < n ? data.next : data.prev; 
+                                    move = data.index < n ? data.next: data.prev; 
                                 }
                                 
                                 while (data.index != n) {
@@ -270,7 +264,7 @@
 
                             self.done();
                         }
-                        //html : '<ul><li class="inline">a</li><li class="inline">b</li></ul>'
+                        //html: '<ul><li class="inline">a</li><li class="inline">b</li></ul>'
                     }]
                 }]
             })
@@ -281,4 +275,4 @@
         
         
     }
-}
+};

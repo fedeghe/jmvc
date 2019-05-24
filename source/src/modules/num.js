@@ -3,6 +3,7 @@
 // ---------------+
 
 // private section
+// eslint-disable-next-line no-undef
 _.num = {};
 
 // public section
@@ -27,7 +28,7 @@ JMVC.num = {
         var res = dec ^ parseInt((new Array(dec.toString(2).length + 1)).join('1'), 2);
         return (res + 1).toString(2) >>> 0;
     },
-    bin2Dec: function (b) { return parseInt(b>>>0, 2); },
+    bin2Dec: function (b) { return parseInt(b >>> 0, 2); },
     sgn: function (s) { return (s >= 0) ? 1 : -1; }
 };
 // -----------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-{
+var ___ = {
     tag : "li",
     style : {
         height : "#PARAM{height|99%}",

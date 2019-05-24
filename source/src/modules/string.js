@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // -----------------+
 // STRING sub-module |
 // -----------------+
@@ -263,7 +264,7 @@ _.string = {
     }
 };
 
-function doStrings(){
+function doStrings () {
     for (var entityName in _.string.entities) {
         _.string.charToEntity[String.fromCharCode(_.string.entities[entityName])] = entityName;
     }
@@ -289,7 +290,7 @@ JMVC.string = {
      * @param {[type]} str [description]
      */
     escapeEntities: function (str) {
-        !_.string.done && doStrings()
+        !_.string.done && doStrings();
         return str.replace(/[^\x20-\x7E]/g,
             function (str) {
                 return _.string.charToEntity[str] ? '&' + _.string.charToEntity[str] + ';' : str;
@@ -346,8 +347,8 @@ JMVC.string = {
         }
         el = new Array(len + 1 - l).join(el) + '';
         return String({
-            pre     : el + val,
-            post    : val + el
+            pre: el + val,
+            post: val + el
         }[pos]) || val;
     },
     /**
@@ -358,6 +359,7 @@ JMVC.string = {
      * http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
      */
     regEscape: function (str) {
+        // eslint-disable-next-line no-useless-escape
         return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
     },
 
@@ -376,7 +378,7 @@ JMVC.string = {
     repeat: function (str, n) {
         return new Array(n + 1).join(str);
     },
-    /** 
+    /**
      * [ description]
      * @param  {string} tpl      the template
      * @param  {literal or function} a literal for substitution or a function that will
@@ -415,6 +417,7 @@ JMVC.string = {
             clean = !!options.clean;
         }
 
+        // eslint-disable-next-line no-useless-escape
         reg = new RegExp(start + '(\\\+)?([A-z0-9-_\.]*)' + end, 'g');
 
         while (straight) {
@@ -448,7 +451,7 @@ JMVC.string = {
                     /* @ least check for ns, in case of dots
                     */
                     if ($1.match(/\./)) {
-                        last = JMVC.nsCheck($1 ,obj);
+                        last = JMVC.nsCheck($1, obj);
                         if (last) {
                             _t = enc ? encodeURIComponent(last) : last;
                             return typeof last === 'function' ? last($1) : last;
@@ -490,10 +493,7 @@ JMVC.string = {
         });
     },
     */
-    //
-    //
-    //
-    
+
     /**
      * [ description]
      * @param  {[type]} str [description]
@@ -557,7 +557,7 @@ JMVC.string = {
      * @return {[type]}     [description]
      */
     ucFirst: function (str) {
-        return str.replace(/^\w/, function (chr) {return chr.toUpperCase(); });
+        return str.replace(/^\w/, function (chr) { return chr.toUpperCase(); });
     },
     /**
      * [UnescapeEntities description]
@@ -573,7 +573,7 @@ JMVC.string = {
                         : parseInt(ent.substr(1), 10));
             }
         );
-    } 
+    }
 };
 
 // -----------------------------------------------------------------------------

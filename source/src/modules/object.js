@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // -----------------+
 // OBJECT sub-module |
 // -----------------+
@@ -161,7 +162,6 @@ JMVC.object = {
         return _.common.digFor('value', o, k, lim);
     },
 
-
     /**
      * { function_description }
      *
@@ -201,12 +201,12 @@ JMVC.object = {
         'use strict';
         var els = document.location.search.substr(1).split('&'),
             i, len, tmp, out = {};
-        
+
         for (i = 0, len = els.length; i < len; i += 1) {
             tmp = els[i].split('=');
 
             // do not override extra path out
-            // 
+            //
             !out[tmp[0]] && (out[tmp[0]] = W.decodeURIComponent(tmp[1]));
         }
         return out;
@@ -225,7 +225,9 @@ JMVC.object = {
      */
     jCompare: function (obj1, obj2) {
         'use strict';
-        return typeof JSON !== 'undefined' ? JSON.stringify(obj1) === JSON.stringify(obj2) : obj1 == obj2;
+        return typeof JSON !== 'undefined'
+            ? JSON.stringify(obj1) === JSON.stringify(obj2)
+            : obj1 === obj2;
     },
     /**
      * [keys description]
@@ -270,16 +272,19 @@ JMVC.object = {
      */
     orderBy: function (obj, key, versus) {
         'use strict';
-        function f(v) {
+        function f (v) {
             var tov = typeof v;
-            if (tov == 'number') {
+            if (tov === 'number') {
                 return v;
-            } else if (tov == 'string') {
-                return v.toLowerCase()
+            } else if (tov === 'string') {
+                return v.toLowerCase();
             }
             return v;
         }
-        versus = versus ? function (v) {return !!v;} : function (v) {return !v;}
+        versus = versus
+            ? function (v) { return !!v; }
+            : function (v) { return !v; };
+
         return obj.sort(function (a, b) {
             return versus(f(a[key]) > f(b[key]));
         });
@@ -320,7 +325,7 @@ JMVC.object = {
     toQs: function (obj) {
         'use strict';
         return _.object.reduce(obj, function (o, i, r) {
-            return ((r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i])).replace(/\'/g, '%27');
+            return ((r ? '&' : '?') + encodeURIComponent(i) + '=' + encodeURIComponent(o[i])).replace(/'/g, '%27');
         });
     },
     /**
@@ -349,4 +354,4 @@ JMVC.object = {
         return res;
     }
 };
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
