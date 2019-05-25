@@ -8,12 +8,10 @@ JMVC.extend('affix', {
                 var j, style,
                     c = JMVC.screen.getScreenData(),
                     t = c.scrollTop;
-
                 for (j in JMVC.affix.vars.pool) {
                     style = (t > JMVC.affix.vars.pool[j].top - JMVC.affix.vars.pool[j].mintop)
                         ? { position: 'fixed', top: JMVC.affix.vars.pool[j].mintop + 'px' }
                         : { position: 'absolute', top: JMVC.affix.vars.pool[j].top + 'px' };
-
                     JMVC.css.style(JMVC.affix.vars.pool[j].node, style);
                 }
             }
