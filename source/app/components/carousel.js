@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 var ___ = {
     tag: 'div',
     wid: '#PARAM{id}',
@@ -148,7 +149,10 @@ var ___ = {
             ul = self.getNode('carouselList').node,
             // width = data.w,
             height = data.h,
-            orientation = data.orientation;
+            orientation = data.orientation,
+            carouselListWrap = self.getNode('carouselListWrap').node,
+            childs = self.getNode('carouselList').childrens,
+            l = childs.length;
 
         data.next = function () {
             JMVC.Channel(data.id).pub('move', 1);
@@ -205,10 +209,6 @@ var ___ = {
         JMVC.Channel(data.id).pub('moved', [previous, self.data.index]);
 
         if (data.ballList) {
-            var carouselListWrap = self.getNode('carouselListWrap').node,
-                childs = self.getNode('carouselList').childrens,
-                l = childs.length;
-
             JMVC.core.widgzard.render({
                 target: carouselListWrap,
                 content: [{
@@ -224,14 +224,17 @@ var ___ = {
                     content: [{
                         tag: 'ul',
                         cb: function () {
-                            var self = this;
-                            for (var i = 0, tmp; i < l; i++) {
+                            var self = this,
+                                i = 0,
+                                tmp;
+                            for (null; i < l; i++) {
                                 tmp = document.createElement('li');
-                                tmp.className = 'inline pointer ball ' + (!!i ? '': 'active');
+                                tmp.className = 'inline pointer ball ' + (i ? '' : 'active');
                                 tmp.innerHTML = '&bull;';
                                 tmp.setAttribute('data-num', i);
                                 self.node.appendChild(tmp);
                             }
+
                             JMVC.events.on(self.node, 'click', function (e) {
                                 var trg = JMVC.events.eventTarget(e),
                                     n,
@@ -257,7 +260,6 @@ var ___ = {
 
                             self.done();
                         }
-                        // html: '<ul><li class="inline">a</li><li class="inline">b</li></ul>'
                     }]
                 }]
             });
