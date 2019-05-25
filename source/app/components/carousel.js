@@ -34,14 +34,14 @@ var ___ = {
                 var self = this,
                     parent = self.climb(2);
                 // if vertical round on the correct side
-                if (parent.data.orientation == 'vertical') {
+                if (parent.data.orientation === 'vertical') {
                     JMVC.dom.removeClass(self.node, 'roundright');
                     JMVC.dom.addClass(self.node, 'roundtop');
                 }
 
                 if (self.data.layout) {
                     JMVC.dom.addClass(self.node, self.data.layout);
-                } 
+                }
 
                 JMVC.Channel(parent.data.id).sub('moved', function () {
                     if (parent.data.index > 0) {
@@ -73,7 +73,7 @@ var ___ = {
                         len = childs.length,
                         orientation = self.climb(3).data.orientation,
                         i = 0;
-                    if (orientation == 'orizontal') {
+                    if (orientation === 'orizontal') {
                         self.node.style.width = (len * 100) + '%';
                     } else if (orientation === 'vertical') {
                         self.node.style.width = '100%';
@@ -117,12 +117,12 @@ var ___ = {
 
                 if (self.data.layout) {
                     JMVC.dom.addClass(self.node, self.data.layout);
-                } 
+                }
                 JMVC.Channel(parent.data.id).sub('moved', function () {
                     if (parent.data.index < len - 1) {
                         JMVC.dom.removeClass(self.node, 'disabled');
                     } else {
-                        JMVC.dom.addClass(self.node, 'disabled');       
+                        JMVC.dom.addClass(self.node, 'disabled');
                     }
                 });
                 self.node.addEventListener('click', function () {
@@ -168,35 +168,30 @@ var ___ = {
         self.node.addEventListener('click', function (e) {
             if (JMVC.events.eventTarget(e).parentNode === self.node) {
                 // link needs _blank target ?
-                //
-                data.bgLinkOut ?
-                    window.open(data.bgLink, '_blank').focus()
-                :
-                    (document.location.href = data.bgLink);
+                data.bgLinkOut
+                    ? window.open(data.bgLink, '_blank').focus()
+                    : (document.location.href = data.bgLink);
             }
         }, false);
 
         // show it
         ul.style.display = '';
-        ul.style['transition']=
-        ul.style['-webwit-transition']=
-        ul.style['-moz-transition']=
-        ul.style['-o-transition']= 'All ' + speed + 's ease 0s';
+        ul.style['transition'] =
+        ul.style['-webwit-transition'] =
+        ul.style['-moz-transition'] =
+        ul.style['-o-transition'] = 'All ' + speed + 's ease 0s';
 
         JMVC.Channel(data.id).sub('move', function (topic, dir) {
-
             var transX, transY;
-            
             if (data.index + dir >= 0 && data.index + dir < len) {
-
                 data.index += dir;
 
-                if (orientation == 'orizontal') {
-                    transX = - ((100/len) * data.index) +'%'; //(-parseInt(width,10) * data.index) + 'px';
+                if (orientation === 'orizontal') {
+                    transX = -((100 / len) * data.index) + '%'; // (-parseInt(width,10) * data.index) + 'px';
                     transY = '0px';
-                } else if (orientation == 'vertical') {
+                } else if (orientation === 'vertical') {
                     transX = '0px';
-                    transY = (-parseInt(height,10) * data.index) + 'px';
+                    transY = (-parseInt(height, 10) * data.index) + 'px';
                 }
 
                 ul.style['transform'] =
@@ -204,11 +199,8 @@ var ___ = {
                 ul.style['-moz-transform'] =
                 ul.style['-o-transform'] =
                 ul.style['-ms-transform'] = 'translate(' + transX + ', ' + transY + ')';
-             
             }
-
             JMVC.Channel(data.id).pub('moved', [previous, self.data.index]);
-
         });
         JMVC.Channel(data.id).pub('moved', [previous, self.data.index]);
 
@@ -216,16 +208,17 @@ var ___ = {
             var carouselListWrap = self.getNode('carouselListWrap').node,
                 childs = self.getNode('carouselList').childrens,
                 l = childs.length;
+
             JMVC.core.widgzard.render({
                 target: carouselListWrap,
                 content: [{
                     style: {
-                        position:'absolute',
-                        bottom:'10px',
-                        width:'100%',
-                        textAlign:'center',
-                        zIndex:900,
-                        color:'red',
+                        position: 'absolute',
+                        bottom: '10px',
+                        width: '100%',
+                        textAlign: 'center',
+                        zIndex: 900,
+                        color: 'red',
                         margin: '0 auto'
                     },
                     content: [{
@@ -247,13 +240,13 @@ var ___ = {
                                 JMVC.dom.removeClass(self.node.children.item(data.index), 'active');
                                 if (trg.tagName.match(/^li$/i)) {
                                     n = parseInt(trg.getAttribute('data-num'), 10);
-                                    move = data.index < n ? data.next: data.prev; 
+                                    move = data.index < n
+                                        ? data.next
+                                        : data.prev;
                                 }
-                                
-                                while (data.index != n) {
+                                while (data.index !== n) {
                                     move();
                                 }
-                            
                                 JMVC.dom.addClass(self.node.children.item(n), 'active');
                             });
 
@@ -264,15 +257,11 @@ var ___ = {
 
                             self.done();
                         }
-                        //html: '<ul><li class="inline">a</li><li class="inline">b</li></ul>'
+                        // html: '<ul><li class="inline">a</li><li class="inline">b</li></ul>'
                     }]
                 }]
-            })
+            });
         }
-        
         console.log('WIDGZARD END ');
-
-        
-        
     }
 };
