@@ -5,56 +5,54 @@ JMVC.require(
 );
 
 JMVC.controllers.carpet = function () {
-	'use strict';
+    'use strict';
 
-	/* default action */
-	this.action_index = function (f) {
+    /* default action */
+    this.action_index = function (f) {
+        JMVC.head.title('Infinite Carpet');
+        var index = JMVC.getView('zero'),
+            size = null,
+            jmap = false,
+            viewportSize = JMVC.screen.getViewportSize(),
+            Ww = size || viewportSize.width,
+            Wh = size || viewportSize.height,
+            that = this;
 
-		JMVC.head.title('Infinite Carpet');
+        index.render(function () {
+            jmap = JMVC.carpet.create(JMVC.dom.body(), {
+                w: Ww - 11,
+                h: Wh - 11,
+                s: 3,
+                tileWidth: 300,
+                tileHeight: 300
+                // ,enabled : {
+                //  oriz : false
+                // }
+            });
 
-		var index = JMVC.getView('zero'),
-			size = null,
-			jmap = false,
-			viewportSize = JMVC.screen.getViewportSize(),
-			Ww = size || viewportSize.width,
-			Wh = size || viewportSize.height,
-			that = this;
+            that.set('jmap', jmap);
 
-		index.render(function () {
-			jmap = JMVC.carpet.create(JMVC.dom.body(), {
-				w : Ww - 11,
-				h : Wh - 11,
-				s : 3,
-				tileWidth : 300,
-				tileHeight: 300
-				// ,enabled : {
-				// 	oriz : false
-				// }
-			});
+            f && typeof f === 'function' && f();
 
-			that.set('jmap', jmap);
+            if (JMVC.p.debug === 'true') {
+                jmap.beforeAdd(function (i) { console.debug('adding ID: ' + i); });
+                jmap.afterAdd(function (i) { console.debug('added ID: ' + i); });
+                jmap.beforeRemove(function (i) { console.debug('removing ID: ' + i); });
+                jmap.afterRemove(function (i) { console.debug('removed ID: ' + i); });
+            }
+            // jmap.enableSpeed(4.2);
+        });
+    };
 
-			f && typeof f === 'function' && f();
-
-			if (JMVC.p.debug === 'true') {
-				jmap.beforeAdd(function (i) {console.debug('adding ID: ' + i); });
-				jmap.afterAdd(function (i) {console.debug('added ID: ' + i); });
-				jmap.beforeRemove(function (i) {console.debug('removing ID: ' + i); });
-				jmap.afterRemove(function (i) {console.debug('removed ID: ' + i); });
-			}
-			// jmap.enableSpeed(4.2);
-		});
-	};
-
-	this.action_logo = function () {
-		var that = this;
-		this.action_index(function () {
-			var jmap = that.get('jmap');
-			jmap.beforeAdd(function (i) {console.debug('adding ID: ' + i); });
-			jmap.afterAdd(function (i) {console.debug('added ID: ' + i); });
-			jmap.beforeRemove(function (i) {console.debug('removing ID: ' + i); });
-			jmap.afterRemove(function (i) {console.debug('removed ID: ' + i); });
-			JMVC.debug(jmap);
-		});
-	};
+    this.action_logo = function () {
+        var that = this;
+        this.action_index(function () {
+            var jmap = that.get('jmap');
+            jmap.beforeAdd(function (i) { console.debug('adding ID: ' + i); });
+            jmap.afterAdd(function (i) { console.debug('added ID: ' + i); });
+            jmap.beforeRemove(function (i) { console.debug('removing ID: ' + i); });
+            jmap.afterRemove(function (i) { console.debug('removed ID: ' + i); });
+            JMVC.debug(jmap);
+        });
+    };
 };

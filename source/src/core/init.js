@@ -70,7 +70,7 @@ var timeBegin = +new Date(),
          * path for engy component files, engy requires widgzard v.2
          * @type {[type]}
          */
-        engyComponents: US + 'app' + US + 'eComp' + US
+        engyComponents: US + 'app' + US + 'components' + US
     },
 
     /**
