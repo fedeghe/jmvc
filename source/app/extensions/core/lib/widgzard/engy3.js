@@ -127,8 +127,8 @@ JMVC.extend('core/engy', function () {
                 // SyntaxError: Strict mode does not allow function declarations in a lexically nested statement.
                 //
                 cback = function (xhrResponseText) {
-                    xhrEnd = +new Date;
-                    xhrTot += xhrEnd-xhrStart;
+                    xhrEnd = +new Date();
+                    xhrTot += xhrEnd - xhrStart;
                     var params = JMVC.nsCheck(component.container + '/params', self.config),
                         obj,
                         usedParams, foundParam, foundParamValue, foundParamValueReplaced, i, l;
@@ -138,9 +138,10 @@ JMVC.extend('core/engy', function () {
                     if (!cached) {
                         components[componentName] = xhrResponseText;
                     }
-                    
+
                     xhrResponseText = xhrResponseText.replace(/^[^{]*/, '')
-                                    .replace(/;?$/, '');
+                        .replace(/\/n|\/r/mg, '')
+                        .replace(/(;?\n?)$/, '');
 
                     obj = eval('(' + xhrResponseText + ')');
 

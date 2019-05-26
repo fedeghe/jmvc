@@ -76,8 +76,12 @@ JMVC.extend('core/engy', function () {
                                     JMVC.io.get(
                                         file,
                                         function (r) {
-                                            self.components[j1][j2].json = eval('(' + r.replace(/\/n|\/r/g, '') + ')');
-                                            //self.components[j1][j2].json = eval('(' + r + ')');
+                                            r = r.replace(/^[^{]*/, '')
+                                                .replace(/\/n|\/r/mg, '')
+                                                .replace(/(;?\n?)$/, '');
+
+                                            self.components[j1][j2].json = eval('(' + r + ')');
+                                            // self.components[j1][j2].json = eval('(' + r + ')');
                                             pr.done();
                                         }
                                     );
