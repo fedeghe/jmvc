@@ -67,9 +67,9 @@ Options -Indexes
 
 
 	# 0
-	 <FilesMatch "jmvc(\.min)?\.js$">
-    	Header unset Cache-Control
-	 </FilesMatch>
+	#<FilesMatch "jmvc(\.min)?\.js$">
+    #	Header unset Cache-Control
+	#</FilesMatch>
 
 
 
@@ -80,21 +80,21 @@ Options -Indexes
 
 
 	# year
-	<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|svg|swf|mp3|mp4)$">
-		Header set Cache-Control "max-age=31104000, must-revalidate"
-		Header unset Last-Modified
-	</FilesMatch>
+	#<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|svg|swf|mp3|mp4)$">
+	#	Header set Cache-Control "max-age=31104000, must-revalidate"
+	#	Header unset Last-Modified
+	#</FilesMatch>
 	
 	#1 month
-	<FilesMatch "\.(js|css|json)$">
-		Header append Vary: Accept-Encoding
-		Header set Cache-Control "max-age=2592000, must-revalidate"
-	</FilesMatch>
+	#<FilesMatch "\.(js|css|json)$">
+	#	Header append Vary: Accept-Encoding
+	#	Header set Cache-Control "max-age=2592000, must-revalidate"
+	#</FilesMatch>
 	
 	#2 hours
-	<FilesMatch "\.(html|htm|xml|txt|xsl|xml)$">
-		Header set Cache-Control "max-age=7200, must-revalidate"
-	</FilesMatch>
+	#<FilesMatch "\.(html|htm|xml|txt|xsl|xml)$">
+	#	Header set Cache-Control "max-age=7200, must-revalidate"
+	#</FilesMatch>
 </ifModule>    
 
 <IfModule mod_rewrite.c>
