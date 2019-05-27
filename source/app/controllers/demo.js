@@ -1299,6 +1299,9 @@ JMVC.controllers.demo = function () {
                     // dbox.truncate('tasklists');
                     dbox.getFileContent('hw.html', function (err, cnt) {
                         console.debug(cnt);
+                        if (err) {
+                            console.debug(err);
+                        }
                     });
                 });
                 // db.logout();
@@ -1356,7 +1359,6 @@ JMVC.controllers.demo = function () {
                 id: 'container'
             })
             .render(function () {
-
                 var size = that.get('size') || 5,
                     cnt = JMVC.dom.find('#container'),
                     flag = JMVC.dom.create('div', { id: 'flag' }),
@@ -1378,7 +1380,8 @@ JMVC.controllers.demo = function () {
                     li5 = JMVC.dom.add(ul, 'div', { style: 'margin:20px' }),
                     li6 = JMVC.dom.add(ul, 'div', { style: 'margin:20px' }),
                     li7 = JMVC.dom.add(ul, 'div', { style: 'margin:20px' }),
-                    li8 = JMVC.dom.add(ul, 'div', { style: 'margin:20px' });
+                    li8 = JMVC.dom.add(ul, 'div', { style: 'margin:20px' }),
+                    sm0, sm1, sm2, sm3, sm4, sm5, sm6, sm7, sm8;
 
                 JMVC.css.style(JMVC.WDB, { padding: '50px' });
 
@@ -1394,7 +1397,7 @@ JMVC.controllers.demo = function () {
                 JMVC.dom.append(cnt, ul);
                 JMVC.dom.append(JMVC.WDB, cnt);
 
-                var sm0 = JMVC.shadowMatrix({
+                sm0 = JMVC.shadowMatrix({
                     scale: size,
                     matrix: [
                         '.,.,.,.,.,.,.,.,.,.,.,.,.,.',
@@ -1406,195 +1409,195 @@ JMVC.controllers.demo = function () {
                         '.,.,.,.,.,.,O,O,.,.,.,.,.,.',
                         '.,.,.,.,.,.,O,O,.,.,.,.,.,.',
                         '.,.,.,.,.,.,.,.,.,.,.,.,.,.',
-                        '.,.,.,.,.,.,.,.,.,.,.,.,.,.',
+                        '.,.,.,.,.,.,.,.,.,.,.,.,.,.'
                     ],
                     colorMap: {
                         'O': 'transparent',
                         '.': 'red'
                     }
-                }),
-                    sm1 = JMVC.shadowMatrix({
-                        scale: size,
-                        matrix: [
-                            ' , ,L,#,#,R, , ',
-                            ' ,L,#,#,#,#,R, ',
-                            'L,#,#,#,#,#,#,R',
-                            '#,#, ,#,#, ,#,#',
-                            '#,#,#,#,#,#,#,#',
-                            ' ,#, ,#,#, ,#, ',
-                            '#, , , , , , ,#',
-                            ' ,#, , , , ,#, '
-                        ],
-                        colorMap: {
-                            'L': [JMVC.shadowMatrix.triUL, { color: '#' }],
-                            'R': [JMVC.shadowMatrix.triUR, { color: '#' }],
-                            '#': '#0a0',
-                            ' ': 'transparent'
-                        }
-                    }),
-                    sm2 = JMVC.shadowMatrix({
-                        scale: size,
-                        matrix: [
-                            ' , ,#, , , , , ,#, , ',
-                            ' , , ,#, , , ,#, , , ',
-                            ' , ,#,#,#,#,#,#,#, , ',
-                            ' ,#,#, ,#,#,#, ,#,#, ',
-                            '#,#,#,#,#,#,#,#,#,#,#',
-                            '#, ,#,#,#,#,#,#,#, ,#',
-                            '#, ,#, , , , , ,#, ,#',
-                            ' , , ,#,#, ,#,#, , , '
-                        ],
-                        colorMap: {
-                            '#': '#008',
-                            ' ': 'transparent'
-                        }
-                    }),
-                    sm3 = JMVC.shadowMatrix({
-                        scale: size,
-                        matrix: [
-                            ' , , , ,#,#,#,#, , , , ',
-                            ' ,#,#,#,#,#,#,#,#,#,#, ',
-                            '#,#,#,#,#,#,#,#,#,#,#,#',
-                            '#,#,#, , ,#,#, , ,#,#,#',
-                            '#,#,#,#,#,#,#,#,#,#,#,#',
-                            ' , ,#,#,#, , ,#,#,#, , ',
-                            ' ,#,#, , ,#,#, , ,#,#, ',
-                            ' , ,#,#, , , , ,#,#, , '
-                        ],
-                        colorMap: {
-                            '#': '#DD127D',
-                            ' ': 'transparent'
-                        }
-                    }),
-                    sm4 = JMVC.shadowMatrix({
-                        scale: size,
-                        matrix: [
-                            ' , , , , ,#,#,#,#,#,#, , , , , ',
-                            ' , , ,#,#,#,#,#,#,#,#,#,#, , , ',
-                            ' , ,#,#,#,#,#,#,#,#,#,#,#,#, , ',
-                            ' ,#,#, ,#,#, ,#,#, ,#,#, ,#,#, ',
-                            '#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#',
-                            ' , ,#,#,#, , ,#,#, , ,#,#,#, , ',
-                            ' , , ,#, , , , , , , , ,#, , , '
-                        ],
-                        colorMap: {
-                            '#': '#ffdd00',
-                            ' ': 'transparent'
-                        }
-                    }),
-                    sm5 = JMVC.shadowMatrix({
-                        scale: size,
-                        matrix: [
-                            ' , , , , , , ,#, , , , , , , ',
-                            ' , , , , , ,#,#,#, , , , , , ',
-                            ' , , , , , ,#,#,#, , , , , , ',
-                            ' ,#,#,#,#,#,#,#,#,#,#,#,#,#, ',
-                            '#,#,#,#,#,#,#,#,#,#,#,#,#,#,#',
-                            '#,#,#,#,#,#,#,#,#,#,#,#,#,#,#',
-                            '#,#,#,#,#,#,#,#,#,#,#,#,#,#,#',
-                            '#,#,#,#,#,#,#,#,#,#,#,#,#,#,#'
-                        ],
-                        colorMap: {
-                            '#': '#0f0',
-                            ' ': 'transparent'
-                        }
-                    }),
-                    sm6 = JMVC.shadowMatrix({
-                        scale: size,
-                        matrix: [
-                            ' , , ,#,#,#,#,#, , , , ',
-                            ' , ,#,#,#,#,#,#,#,#,#, ',
-                            ' , ,@,@,@,$,$,@,$, , , ',
-                            ' ,@,$,@,$,$,$,@,$,$,$, ',
-                            ' ,@,$,@,@,$,$,$,@,$,$,$',
-                            ' ,@,@,$,$,$,$,@,@,@,@, ',
-                            ' , , ,$,$,$,$,$,$,$, , ',
-                            ' , ,@,@,#,@,@,@, , , , ',
-                            ' ,@,@,@,#,@,@,#,@,@,@, ',
-                            '@,@,@,@,#,#,#,#,@,@,@,@',
-                            '$,$,@,#,$,#,#,$,#,@,$,$',
-                            '$,$,$,#,#,#,#,#,#,$,$,$',
-                            '$,$,#,#,#,#,#,#,#,#,$,$',
-                            ' , ,#,#,#, , ,#,#,#, , ',
-                            ' ,@,@,@, , , , ,@,@,@, ',
-                            '@,@,@,@, , , , ,@,@,@,@'
-                        ],
-                        colorMap: {
-                            '#': '#db0102',// red
-                            '$': '#f8aa00',// skin
-                            '@': '#706700',// hair
-                            ' ': 'transparent'
-                        }
-                    }),
-                    sm7 = JMVC.shadowMatrix({
-                        scale: size,
-                        matrix: [
-                            ' , , ,y,y,y,y,y, , , , , , , , , , , , , , , , ,p,p,p,p, , , , , , , , , , , , , , , , , ,c,c,c,c, , , , , ',
-                            ' ,y,y,y,y,y,y,y,y,y, , , , , , , , , , , , ,p,p,p,p,p,p,p,p, , , , , , , , , , , , , ,c,c,c,c,c,c,c,c, , , ',
-                            'y,y,y,y,y,y,y,y,y,y,y, , , , , , , , , , ,p,p,p,p,p,p,p,p,p,p, , , , , , , , , , , ,c,c,c,c,c,c,c,c,c,c, , ',
-                            'y,y,y,y,y,y,y,y,y,y,y, , , , , , , , , ,p,p,p, , ,p,p,p,p, , ,p, , , , , , , , , ,c,c, , ,c,c,c,c, , ,c,c, ',
-                            ' , ,y,y,y,y,y,y,y,y,y,y, , , , , , , , ,p,p, , , , ,p,p, , , , , , , , , , , , , ,c, , , , ,c,c, , , , ,c, ',
-                            ' , , , , , ,y,y,y,y,y,y, , , , , , , , ,p,p, , ,E,E,p,p, , ,E,E, , , , , , , , , ,c, ,E,E, ,c,c, ,E,E, ,c, ',
-                            ' , , , , , , , ,y,y,y,y, , , , , , , ,p,p,p, , ,E,E,p,p, , ,E,E,p, , , , , , , ,c,c, ,E,E, ,c,c, ,E,E, ,c,c',
-                            ' , , , , , ,y,y,y,y,y,y, , , , , , , ,p,p,p,p, , ,p,p,p,p, , ,p,p, , , , , , , ,c,c,c, , ,c,c,c,c, , ,c,c,c',
-                            ' , ,y,y,y,y,y,y,y,y,y,y, , , , , , , ,p,p,p,p,p,p,p,p,p,p,p,p,p,p, , , , , , , ,c,c,c,c,c,c,c,c,c,c,c,c,c,c',
-                            'y,y,y,y,y,y,y,y,y,y,y, , , , , , , , ,p,p,p,p,p,p,p,p,p,p,p,p,p,p, , , , , , , ,c,c,c,c,c,c,c,c,c,c,c,c,c,c',
-                            'y,y,y,y,y,y,y,y,y,y,y, , , , , , , , ,p,p,p,p,p,p,p,p,p,p,p,p,p,p, , , , , , , ,c,c,c,c,c,c,c,c,c,c,c,c,c,c',
-                            ' ,y,y,y,y,y,y,y,y,y, , , , , , , , , ,p,p, ,p,p,p, , ,p,p,p, ,p,p, , , , , , , ,c,c, ,c,c,c, , ,c,c,c, ,c,c',
-                            ' , , ,y,y,y,y,y, , , , , , , , , , , ,p, , , ,p,p, , ,p,p, , , ,p, , , , , , , ,c, , , ,c,c, , ,c,c, , , ,c'
-                        ],
-                        colorMap: {
-                            ' ': 'transparent',
-                            'y': '#ff0',// red
-                            'r': '#f00', // skin
-                            'p': '#faa', //hair
-                            'a': '#aaf', //hair
-                            'c': 'coral', //hair
-                            'o': '#f83',
-                            'E': '#005'
-                        }
-                    }),
-                    sm8 = JMVC.shadowMatrix({
-                        scale: size,
-                        matrix: [
-                            ' , , , , , , , , , , , , , , , , , , , , , , , ',
-                            ' , , , , , , , , , , , , , , , , , , , , , , , ',
-                            ' , , , , , ,O,-,O,-,O,-,O,-,O,-,b, , , , , , , ',
-                            ' , , , , ,B,-,-,-,-,-,-,-,-,-,-,B, , , , , , , ',
-                            ' , , , , ,B,-,-,-,-,-,-,-,-,O,-,O, , , , , , , ',
-                            ' , , , ,B,-,-,-,-,-,-,-,-,-,-,-,-,B, , , , , , ',
-                            ' , , , ,B,-,-,-,-,-,-,-,-,-,-,-,O,B,B, , , , , ',
-                            ' , , , ,B,-,-,-,-,-,-,-,-,-,-,-,-,-,B, , , , , ',
-                            ' , , , ,B,-,-,-,-,-,-,-,-,-,-,-,-,-,B, , , , , ',
-                            ' , , , ,B,B,-,-,-,-,B,B,-,-,-,-,-,-,B, , , , , ',
-                            ' , , , ,O,B, ,O,O,O,O,B, , ,O,-,-,-,-,B, , , , ',
-                            ' , , , ,O, , ,O,O, ,O, , , ,O,-,-,-,-,B, , , , ',
-                            ' , , , ,B,O,O,-,-,-,-,O,O,O,-,-,-,-,-,B, , , , ',
-                            ' , , , ,B,-,-,B,B,-,-,-,-,-,-,-,-,-,-,B, , , , ',
-                            ' , , , , ,B,-,-,-,-,-,-,-,-,-,-,-,B,B, , , , , ',
-                            ' , , , , ,B,-,-,-,-,-,B,-,-,-,-,-,B, , , , , , ',
-                            ' , , , , ,B,-,-,B,B,B,-,-,-,-,-,B,B, , , , , , ',
-                            ' , , , ,B,+,B,-,-,-,-,-,-,-,B,B,+,+,B,B,B, , , ',
-                            ' , , , ,B,+,+,B,B,-,-,B,B,B,B,+,+,+,B,-,B, , , ',
-                            ' , ,B,B,-,+,+,+,+,B,B,+,+,+,+,+,B,B,B,-,-,B, , ',
-                            'B,B,-,-,-,+,+,+,+,+,+,+,+,+,+,+,B,-,-,-,-,B,B, ',
-                            'B,-,-,-,-,B,B,+,+,+,+,+,+,+,+,+,B,B,B,-,-,-,B, ',
-                            'B,-,-,-,B, ,B,+,+,+,c,c,+,+,+,B, , ,B,-,-,B,B, ',
-                            ' ,B,B,B, , ,B,+,+,c,+,+,x,+,+,B, , , ,B,-,B, , ',
-                            ' , , , , , ,B,+,+,c,+,+,y,+,+,B,B, , ,B,B,B, , ',
-                            ' , , , , , ,B,+,+,+,c,c,+,+,+,+,B,B, , , , , , '
-                        ],
-                        colorMap: {
-                            ' ': 'transparent',
-                            'B': '#000',
-                            '-': '#f0d6b5', //pink
-                            'O': '#5f3006', //marrone
-                            '+': '#a8e00d', //green
-                            'c': '#7b78e3', //celeste c
-                            'x': '#928398', //riga1
-                            'y': '#845500' //riga1
-                        }
-                    });
+                });
+                sm1 = JMVC.shadowMatrix({
+                    scale: size,
+                    matrix: [
+                        ' , ,L,#,#,R, , ',
+                        ' ,L,#,#,#,#,R, ',
+                        'L,#,#,#,#,#,#,R',
+                        '#,#, ,#,#, ,#,#',
+                        '#,#,#,#,#,#,#,#',
+                        ' ,#, ,#,#, ,#, ',
+                        '#, , , , , , ,#',
+                        ' ,#, , , , ,#, '
+                    ],
+                    colorMap: {
+                        'L': [JMVC.shadowMatrix.triUL, { color: '#' }],
+                        'R': [JMVC.shadowMatrix.triUR, { color: '#' }],
+                        '#': '#0a0',
+                        ' ': 'transparent'
+                    }
+                });
+                sm2 = JMVC.shadowMatrix({
+                    scale: size,
+                    matrix: [
+                        ' , ,#, , , , , ,#, , ',
+                        ' , , ,#, , , ,#, , , ',
+                        ' , ,#,#,#,#,#,#,#, , ',
+                        ' ,#,#, ,#,#,#, ,#,#, ',
+                        '#,#,#,#,#,#,#,#,#,#,#',
+                        '#, ,#,#,#,#,#,#,#, ,#',
+                        '#, ,#, , , , , ,#, ,#',
+                        ' , , ,#,#, ,#,#, , , '
+                    ],
+                    colorMap: {
+                        '#': '#008',
+                        ' ': 'transparent'
+                    }
+                });
+                sm3 = JMVC.shadowMatrix({
+                    scale: size,
+                    matrix: [
+                        ' , , , ,#,#,#,#, , , , ',
+                        ' ,#,#,#,#,#,#,#,#,#,#, ',
+                        '#,#,#,#,#,#,#,#,#,#,#,#',
+                        '#,#,#, , ,#,#, , ,#,#,#',
+                        '#,#,#,#,#,#,#,#,#,#,#,#',
+                        ' , ,#,#,#, , ,#,#,#, , ',
+                        ' ,#,#, , ,#,#, , ,#,#, ',
+                        ' , ,#,#, , , , ,#,#, , '
+                    ],
+                    colorMap: {
+                        '#': '#DD127D',
+                        ' ': 'transparent'
+                    }
+                });
+                sm4 = JMVC.shadowMatrix({
+                    scale: size,
+                    matrix: [
+                        ' , , , , ,#,#,#,#,#,#, , , , , ',
+                        ' , , ,#,#,#,#,#,#,#,#,#,#, , , ',
+                        ' , ,#,#,#,#,#,#,#,#,#,#,#,#, , ',
+                        ' ,#,#, ,#,#, ,#,#, ,#,#, ,#,#, ',
+                        '#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#',
+                        ' , ,#,#,#, , ,#,#, , ,#,#,#, , ',
+                        ' , , ,#, , , , , , , , ,#, , , '
+                    ],
+                    colorMap: {
+                        '#': '#ffdd00',
+                        ' ': 'transparent'
+                    }
+                });
+                sm5 = JMVC.shadowMatrix({
+                    scale: size,
+                    matrix: [
+                        ' , , , , , , ,#, , , , , , , ',
+                        ' , , , , , ,#,#,#, , , , , , ',
+                        ' , , , , , ,#,#,#, , , , , , ',
+                        ' ,#,#,#,#,#,#,#,#,#,#,#,#,#, ',
+                        '#,#,#,#,#,#,#,#,#,#,#,#,#,#,#',
+                        '#,#,#,#,#,#,#,#,#,#,#,#,#,#,#',
+                        '#,#,#,#,#,#,#,#,#,#,#,#,#,#,#',
+                        '#,#,#,#,#,#,#,#,#,#,#,#,#,#,#'
+                    ],
+                    colorMap: {
+                        '#': '#0f0',
+                        ' ': 'transparent'
+                    }
+                });
+                sm6 = JMVC.shadowMatrix({
+                    scale: size,
+                    matrix: [
+                        ' , , ,#,#,#,#,#, , , , ',
+                        ' , ,#,#,#,#,#,#,#,#,#, ',
+                        ' , ,@,@,@,$,$,@,$, , , ',
+                        ' ,@,$,@,$,$,$,@,$,$,$, ',
+                        ' ,@,$,@,@,$,$,$,@,$,$,$',
+                        ' ,@,@,$,$,$,$,@,@,@,@, ',
+                        ' , , ,$,$,$,$,$,$,$, , ',
+                        ' , ,@,@,#,@,@,@, , , , ',
+                        ' ,@,@,@,#,@,@,#,@,@,@, ',
+                        '@,@,@,@,#,#,#,#,@,@,@,@',
+                        '$,$,@,#,$,#,#,$,#,@,$,$',
+                        '$,$,$,#,#,#,#,#,#,$,$,$',
+                        '$,$,#,#,#,#,#,#,#,#,$,$',
+                        ' , ,#,#,#, , ,#,#,#, , ',
+                        ' ,@,@,@, , , , ,@,@,@, ',
+                        '@,@,@,@, , , , ,@,@,@,@'
+                    ],
+                    colorMap: {
+                        '#': '#db0102', // red
+                        '$': '#f8aa00', // skin
+                        '@': '#706700', // hair
+                        ' ': 'transparent'
+                    }
+                });
+                sm7 = JMVC.shadowMatrix({
+                    scale: size,
+                    matrix: [
+                        ' , , ,y,y,y,y,y, , , , , , , , , , , , , , , , ,p,p,p,p, , , , , , , , , , , , , , , , , ,c,c,c,c, , , , , ',
+                        ' ,y,y,y,y,y,y,y,y,y, , , , , , , , , , , , ,p,p,p,p,p,p,p,p, , , , , , , , , , , , , ,c,c,c,c,c,c,c,c, , , ',
+                        'y,y,y,y,y,y,y,y,y,y,y, , , , , , , , , , ,p,p,p,p,p,p,p,p,p,p, , , , , , , , , , , ,c,c,c,c,c,c,c,c,c,c, , ',
+                        'y,y,y,y,y,y,y,y,y,y,y, , , , , , , , , ,p,p,p, , ,p,p,p,p, , ,p, , , , , , , , , ,c,c, , ,c,c,c,c, , ,c,c, ',
+                        ' , ,y,y,y,y,y,y,y,y,y,y, , , , , , , , ,p,p, , , , ,p,p, , , , , , , , , , , , , ,c, , , , ,c,c, , , , ,c, ',
+                        ' , , , , , ,y,y,y,y,y,y, , , , , , , , ,p,p, , ,E,E,p,p, , ,E,E, , , , , , , , , ,c, ,E,E, ,c,c, ,E,E, ,c, ',
+                        ' , , , , , , , ,y,y,y,y, , , , , , , ,p,p,p, , ,E,E,p,p, , ,E,E,p, , , , , , , ,c,c, ,E,E, ,c,c, ,E,E, ,c,c',
+                        ' , , , , , ,y,y,y,y,y,y, , , , , , , ,p,p,p,p, , ,p,p,p,p, , ,p,p, , , , , , , ,c,c,c, , ,c,c,c,c, , ,c,c,c',
+                        ' , ,y,y,y,y,y,y,y,y,y,y, , , , , , , ,p,p,p,p,p,p,p,p,p,p,p,p,p,p, , , , , , , ,c,c,c,c,c,c,c,c,c,c,c,c,c,c',
+                        'y,y,y,y,y,y,y,y,y,y,y, , , , , , , , ,p,p,p,p,p,p,p,p,p,p,p,p,p,p, , , , , , , ,c,c,c,c,c,c,c,c,c,c,c,c,c,c',
+                        'y,y,y,y,y,y,y,y,y,y,y, , , , , , , , ,p,p,p,p,p,p,p,p,p,p,p,p,p,p, , , , , , , ,c,c,c,c,c,c,c,c,c,c,c,c,c,c',
+                        ' ,y,y,y,y,y,y,y,y,y, , , , , , , , , ,p,p, ,p,p,p, , ,p,p,p, ,p,p, , , , , , , ,c,c, ,c,c,c, , ,c,c,c, ,c,c',
+                        ' , , ,y,y,y,y,y, , , , , , , , , , , ,p, , , ,p,p, , ,p,p, , , ,p, , , , , , , ,c, , , ,c,c, , ,c,c, , , ,c'
+                    ],
+                    colorMap: {
+                        ' ': 'transparent',
+                        'y': '#ff0', // red
+                        'r': '#f00', // skin
+                        'p': '#faa', // hair
+                        'a': '#aaf', // hair
+                        'c': 'coral', // hair
+                        'o': '#f83',
+                        'E': '#005'
+                    }
+                });
+                sm8 = JMVC.shadowMatrix({
+                    scale: size,
+                    matrix: [
+                        ' , , , , , , , , , , , , , , , , , , , , , , , ',
+                        ' , , , , , , , , , , , , , , , , , , , , , , , ',
+                        ' , , , , , ,O,-,O,-,O,-,O,-,O,-,b, , , , , , , ',
+                        ' , , , , ,B,-,-,-,-,-,-,-,-,-,-,B, , , , , , , ',
+                        ' , , , , ,B,-,-,-,-,-,-,-,-,O,-,O, , , , , , , ',
+                        ' , , , ,B,-,-,-,-,-,-,-,-,-,-,-,-,B, , , , , , ',
+                        ' , , , ,B,-,-,-,-,-,-,-,-,-,-,-,O,B,B, , , , , ',
+                        ' , , , ,B,-,-,-,-,-,-,-,-,-,-,-,-,-,B, , , , , ',
+                        ' , , , ,B,-,-,-,-,-,-,-,-,-,-,-,-,-,B, , , , , ',
+                        ' , , , ,B,B,-,-,-,-,B,B,-,-,-,-,-,-,B, , , , , ',
+                        ' , , , ,O,B, ,O,O,O,O,B, , ,O,-,-,-,-,B, , , , ',
+                        ' , , , ,O, , ,O,O, ,O, , , ,O,-,-,-,-,B, , , , ',
+                        ' , , , ,B,O,O,-,-,-,-,O,O,O,-,-,-,-,-,B, , , , ',
+                        ' , , , ,B,-,-,B,B,-,-,-,-,-,-,-,-,-,-,B, , , , ',
+                        ' , , , , ,B,-,-,-,-,-,-,-,-,-,-,-,B,B, , , , , ',
+                        ' , , , , ,B,-,-,-,-,-,B,-,-,-,-,-,B, , , , , , ',
+                        ' , , , , ,B,-,-,B,B,B,-,-,-,-,-,B,B, , , , , , ',
+                        ' , , , ,B,+,B,-,-,-,-,-,-,-,B,B,+,+,B,B,B, , , ',
+                        ' , , , ,B,+,+,B,B,-,-,B,B,B,B,+,+,+,B,-,B, , , ',
+                        ' , ,B,B,-,+,+,+,+,B,B,+,+,+,+,+,B,B,B,-,-,B, , ',
+                        'B,B,-,-,-,+,+,+,+,+,+,+,+,+,+,+,B,-,-,-,-,B,B, ',
+                        'B,-,-,-,-,B,B,+,+,+,+,+,+,+,+,+,B,B,B,-,-,-,B, ',
+                        'B,-,-,-,B, ,B,+,+,+,c,c,+,+,+,B, , ,B,-,-,B,B, ',
+                        ' ,B,B,B, , ,B,+,+,c,+,+,x,+,+,B, , , ,B,-,B, , ',
+                        ' , , , , , ,B,+,+,c,+,+,y,+,+,B,B, , ,B,B,B, , ',
+                        ' , , , , , ,B,+,+,+,c,c,+,+,+,+,B,B, , , , , , '
+                    ],
+                    colorMap: {
+                        ' ': 'transparent',
+                        'B': '#000',
+                        '-': '#f0d6b5', // pink
+                        'O': '#5f3006', // marrone
+                        '+': '#a8e00d', // green
+                        'c': '#7b78e3', // celeste c
+                        'x': '#928398', // riga1
+                        'y': '#845500' // riga1
+                    }
+                });
 
                 sm0.draw({ node: flag });
                 sm1.draw({ node: space1 });
@@ -1609,7 +1612,6 @@ JMVC.controllers.demo = function () {
                 window.setInterval(function () {
                     sm6.mirror();
                 }, 500);
-
             });
     };
 
@@ -1627,8 +1629,6 @@ JMVC.controllers.demo = function () {
                 id: 'container'
             })
             .render(function () {
-
-
                 var size = that.get('size') || 5,
                     cnt = JMVC.dom.find('#container'),
                     to = window.setInterval(function () { }, 1E6),
@@ -1737,7 +1737,7 @@ JMVC.controllers.demo = function () {
                             self.done();
                         }
                     },
-                        'clearer',
+                    'clearer',
                     {
                         content: [{
                             style: {
@@ -1770,8 +1770,6 @@ JMVC.controllers.demo = function () {
             });
     };
 
-
-
     this.action_shadowJMVC = function () {
         var that = this;
         JMVC.require(
@@ -1788,8 +1786,6 @@ JMVC.controllers.demo = function () {
                 id: 'container'
             })
             .render(function () {
-
-
                 var size = that.get('size') || 1,
                     JMVCdomCreate = JMVC.dom.create,
                     cnt = JMVC.dom.find('#container'),
@@ -1816,7 +1812,6 @@ JMVC.controllers.demo = function () {
                 JMVC.css.style(JMVC.WDB, { padding: '50px' });
                 JMVC.css.mappedStyle('xxx', 'a{margin-left:5px}');
 
-
                 JMVC.dom.append(cnt, [input, butt, pestCss, exportHtml, size1, size2, size3, size4, download].concat(images, logo));
                 JMVC.dom.append(JMVC.WDB, cnt);
 
@@ -1826,17 +1821,17 @@ JMVC.controllers.demo = function () {
                     } else {
                         go(input.value || 1);
                     }
-
                 });
+
                 JMVC.events.on(exportHtml, 'click', function () {
-                    alert('check out the console to get the full html')
-                    console.log(logo.outerHTML.replace(/rgb\(/g, "\nrgb("));
+                    alert('check out the console to get the full html');
+                    console.log(logo.outerHTML.replace(/rgb\(/g, '\nrgb('));
                 });
                 JMVC.events.on(images, 'click', function () {
                     go(JMVC.vars.baseurl + JMVC.dom.attr(this, 'alt'));
                 });
                 JMVC.events.on(size1, 'click', function () {
-                    JMVC.bom.qs({ size: .5 });
+                    JMVC.bom.qs({ size: 0.5 });
                 });
                 JMVC.events.on(size2, 'click', function () {
                     JMVC.bom.qs({ size: 1 });
@@ -1851,12 +1846,10 @@ JMVC.controllers.demo = function () {
                     JMVC.css.pest();
                 });
                 JMVC.events.on(download, 'click', function () {
-                    console.log(logo.outerHTML)
+                    console.log(logo.outerHTML);
                 });
 
-
-                function go(img) {
-
+                function go (img) {
                     JMVC.shadowMatrix.getMatrixFromImage({
                         size: size,
                         // imgUrl : img || (JMVC.vars.baseurl + '/media/img/fgk.jpg')
@@ -1865,16 +1858,12 @@ JMVC.controllers.demo = function () {
                         // promise returned, done when image loaded and
                         // matrix done
                         .then(function (pro, result) {
-                            var sm = JMVC.shadowMatrix(pro.result[0]).draw({ node: logo });
+                            JMVC.shadowMatrix(pro.result[0]).draw({ node: logo });
                         });
                 }
-
                 go();
-
             });
     };
-
-
 
     this.action_animation = function () {
         var that = this;
@@ -1894,16 +1883,15 @@ JMVC.controllers.demo = function () {
             .render(function () {
                 var size = that.get('size') || 10,
                     cnt = JMVC.dom.find('#container'),
-                    space = JMVC.dom.create('div', { id: 'space', style: 'margin:50px' });
+                    space = JMVC.dom.create('div', { id: 'space', style: 'margin:50px' }),
+                    sm;
 
                 JMVC.css.style(JMVC.WDB, { padding: '50px' });
 
                 JMVC.dom.append(cnt, space);
                 JMVC.dom.append(JMVC.WDB, cnt);
 
-
-
-                var sm = JMVC.shadowMatrix({
+                sm = JMVC.shadowMatrix({
                     scale: size,
                     frames: [
                         [
@@ -2151,7 +2139,6 @@ JMVC.controllers.demo = function () {
                     backAndForth: true
                 }, 50);
 
-
                 window.setTimeout(function () {
                     sm.replaceMap({
                         o: 'red',
@@ -2160,11 +2147,8 @@ JMVC.controllers.demo = function () {
                         'x': 'white'
                     });
                 }, 3000);
-
-
             });
     };
-
 
     this.action_slideText = function () {
         var ctrl = this;
@@ -2174,36 +2158,31 @@ JMVC.controllers.demo = function () {
         JMVC.getView('vacuum').set({
             style: 'padding:50px; background-color: black; color:red; font-size:5em;font-family:Verdana,sans',
             id: 'container'
-        })
-            .render(function () {
-                var cnt = JMVC.dom.find('#container'),
-                    txt = ctrl.get('txt') || 'SWIPE ME',
-                    hello = JMVC.dom.create('div', { id: 'space', style: 'margin:50px' }, txt);
+        }).render(function () {
+            var cnt = JMVC.dom.find('#container'),
+                txt = ctrl.get('txt') || 'SWIPE ME',
+                hello = JMVC.dom.create('div', { id: 'space', style: 'margin:50px' }, txt);
 
-                JMVC.dom.append(cnt, hello);
-                JMVC.dom.append(JMVC.WDB, cnt);
+            JMVC.dom.append(cnt, hello);
+            JMVC.dom.append(JMVC.WDB, cnt);
 
-                JMVC.fx.txtSlide.slide(hello, txt, { versus: 'left', repeat: 3000 });
+            JMVC.fx.txtSlide.slide(hello, txt, { versus: 'left', repeat: 3000 });
 
-                window.setTimeout(function () {
-                    console.debug('right');
-                    JMVC.fx.txtSlide.shut();
-                    JMVC.fx.txtSlide.slide(hello, txt, { versus: 'right', repeat: 3000 });
-                }, 10000);
-                window.setTimeout(function () {
-                    console.debug('both');
-                    JMVC.fx.txtSlide.shut();
-                    JMVC.fx.txtSlide.slide(hello, txt, { versus: 'both', repeat: 3000 });
-                }, 20000);
-
-            });
+            window.setTimeout(function () {
+                console.debug('right');
+                JMVC.fx.txtSlide.shut();
+                JMVC.fx.txtSlide.slide(hello, txt, { versus: 'right', repeat: 3000 });
+            }, 10000);
+            window.setTimeout(function () {
+                console.debug('both');
+                JMVC.fx.txtSlide.shut();
+                JMVC.fx.txtSlide.slide(hello, txt, { versus: 'both', repeat: 3000 });
+            }, 20000);
+        });
     };
 
-
     this.action_orientation = function () {
-
-        //JMVC.require('vendors/twitter/twitter');
-
+        // JMVC.require('vendors/twitter/twitter');
         JMVC.getView('demo/orientation')
             .set({
                 style: '',
@@ -2211,41 +2190,39 @@ JMVC.controllers.demo = function () {
                 'content': ''
             })
             .render(function () {
-
                 // experimental
 
                 // JMVC.vendors.twitter.linkShare(document.body, {
-                // 	//url : 'http://www.jmvc.org'
-                // 	title : 'mytitle'
-                // 	,text : 'testo del tweet'
-                // 	//,via : 'via me'
-                // 	//,size : 'large'
-                // 	,related : '#javascript'
-                // 	,hashtags : 'javascript, pure javascript'
+                // // url : 'http://www.jmvc.org'
+                // title : 'mytitle'
+                // ,text : 'testo del tweet'
+                // //,via : 'via me'
+                // //,size : 'large'
+                // ,related : '#javascript'
+                // ,hashtags : 'javascript, pure javascript'
                 // });
 
                 // JMVC.vendors.twitter.follow(document.body, {
-                // 	'show-count' : false
-                // 	,'size' : 'large'
-                // 	,'show-screen-name' : true
+                // 'show-count' : false
+                // ,'size' : 'large'
+                // ,'show-screen-name' : true
                 // });
 
                 // JMVC.vendors.twitter.hashTag(document.body, {
-                // 	size : 'large'
-                // 	,related : 'purejmvc'
-                // 	//,url : 'http://www.jmvc.dev'
-                // 	//,button_hashtag : '#javascript'
-                // 	,text : 'my text'
+                //  size : 'large'
+                //  ,related : 'purejmvc'
+                //  //,url : 'http://www.jmvc.dev'
+                //  //,button_hashtag : '#javascript'
+                //  ,text : 'my text'
                 // });
 
                 // JMVC.vendors.twitter.mention(document.body, {
-                // 	size : 'large'
-                // 	,related : 'purejmvc'
-                // 	,url : 'http://www.jmvc.dev'
-                // 	,screen_name : 'purejmvc'
-                // 	,text : 'my text'
+                //  size : 'large'
+                //  ,related : 'purejmvc'
+                //  ,url : 'http://www.jmvc.dev'
+                //  ,screen_name : 'purejmvc'
+                //  ,text : 'my text'
                 // });
-
 
                 JMVC.head.addStyle(JMVC.vars.baseurl + '/app/views/demo/orientation.css', true);
 
@@ -2263,7 +2240,7 @@ JMVC.controllers.demo = function () {
                         $('#beta').innerHTML = Mr(e.beta);
                         $('#gamma').innerHTML = Mr(e.gamma);
                         $('#alpha').innerHTML = Mr(e.alpha);
-                        $('#is-absolute').innerHTML = e.absolute ? "true" : "false";
+                        $('#is-absolute').innerHTML = e.absolute ? 'true' : 'false';
                     });
                 }
                 if (!window.DeviceMotionEvent) {
@@ -2292,14 +2269,11 @@ JMVC.controllers.demo = function () {
                         alert('Compass needs calibrating! Wave your device in a figure-eight motion');
                     });
                 }
-
             });
     };
 
-
     this.action_orientation2 = function () {
-
-        //JMVC.require('vendors/twitter/twitter');
+        // JMVC.require('vendors/twitter/twitter');
         JMVC.require('core/mobile/devicemotion');
 
         JMVC.getView('demo/orientation')
@@ -2309,41 +2283,39 @@ JMVC.controllers.demo = function () {
                 'content': ''
             })
             .render(function () {
-
                 // experimental
 
                 // JMVC.vendors.twitter.linkShare(document.body, {
-                // 	//url : 'http://www.jmvc.org'
-                // 	title : 'mytitle'
-                // 	,text : 'testo del tweet'
-                // 	//,via : 'via me'
-                // 	//,size : 'large'
-                // 	,related : '#javascript'
-                // 	,hashtags : 'javascript, pure javascript'
+                //  //url : 'http://www.jmvc.org'
+                //  title : 'mytitle'
+                //  ,text : 'testo del tweet'
+                //  //,via : 'via me'
+                //  //,size : 'large'
+                //  ,related : '#javascript'
+                //  ,hashtags : 'javascript, pure javascript'
                 // });
 
                 // JMVC.vendors.twitter.follow(document.body, {
-                // 	'show-count' : false
-                // 	,'size' : 'large'
-                // 	,'show-screen-name' : true
+                //  'show-count' : false
+                //  ,'size' : 'large'
+                //  ,'show-screen-name' : true
                 // });
 
                 // JMVC.vendors.twitter.hashTag(document.body, {
-                // 	size : 'large'
-                // 	,related : 'purejmvc'
-                // 	//,url : 'http://www.jmvc.dev'
-                // 	//,button_hashtag : '#javascript'
-                // 	,text : 'my text'
+                //  size : 'large'
+                //  ,related : 'purejmvc'
+                //  //,url : 'http://www.jmvc.dev'
+                //  //,button_hashtag : '#javascript'
+                //  ,text : 'my text'
                 // });
 
                 // JMVC.vendors.twitter.mention(document.body, {
-                // 	size : 'large'
-                // 	,related : 'purejmvc'
-                // 	,url : 'http://www.jmvc.dev'
-                // 	,screen_name : 'purejmvc'
-                // 	,text : 'my text'
+                //  size : 'large'
+                //  ,related : 'purejmvc'
+                //  ,url : 'http://www.jmvc.dev'
+                //  ,screen_name : 'purejmvc'
+                //  ,text : 'my text'
                 // });
-
 
                 JMVC.head.addStyle(JMVC.vars.baseurl + '/app/views/demo/orientation.css', true);
 
@@ -2361,12 +2333,10 @@ JMVC.controllers.demo = function () {
                         $('#beta').innerHTML = Mr(je.beta);
                         $('#gamma').innerHTML = Mr(je.gamma);
                         $('#alpha').innerHTML = Mr(je.alpha);
-                        $('#is-absolute').innerHTML = je.absolute ? "true" : "false";
+                        $('#is-absolute').innerHTML = je.absolute ? 'true' : 'false';
                     }, true);
-
-
-
                 }
+
                 if (!window.DeviceMotionEvent) {
                     $('#dm-unsupported').classList.remove('hidden');
                 } else {
@@ -2392,15 +2362,12 @@ JMVC.controllers.demo = function () {
                         alert('Compass needs calibrating! Wave your device in a figure-eight motion');
                     });
                 }
-
             });
     };
 
     this.action_inlineVideo = function () {
         JMVC.require('core/html5/inlineVideo');
         JMVC.css.fontAwesome();
-
-
         JMVC.head.title('JMVC inline mobile video');
         var mobile = JMVC.util.isMobile;
         JMVC.getView('vacuum')
@@ -2409,7 +2376,6 @@ JMVC.controllers.demo = function () {
                 id: 'container'
             })
             .render(function () {
-
                 JMVC.core.widgzard.render({
                     target: document.getElementById('container'),
                     content: [{
@@ -2437,7 +2403,7 @@ JMVC.controllers.demo = function () {
                     cb: function () {
                         var $video = this.getNode('wideo').node,
                             ev = mobile ? 'canplaythrough' : 'loadeddata';
-                        JMVC.events.on($video, mobile ? 'canplaythrough' : 'loadeddata', function () {
+                        JMVC.events.on($video, ev, function () {
                             var c = JMVC.html5.inlineVideo($video);
                             c.canvas.style.border = '5px solid red';
                             c.canvas.parentNode.style.margin = '20px';
@@ -2448,7 +2414,6 @@ JMVC.controllers.demo = function () {
             });
     };
     this.action_previewVideo = function () {
-
         JMVC.require('core/html5/videoPreview');
         JMVC.css.fontAwesome();
         JMVC.head.title('JMVC inline mobile video preview');
@@ -2485,9 +2450,8 @@ JMVC.controllers.demo = function () {
                         end: function () {
                             var $video = this.node,
                                 ev = mobile ? 'canplaythrough' : 'loadeddata';
-                            JMVC.events.one($video, mobile ? 'canplaythrough' : 'loadeddata', function () {
-                                // $elf.load();
-                                var c = JMVC.html5.videoPreview($video);
+                            JMVC.events.one($video, ev, function () {
+                                JMVC.html5.videoPreview($video);
                             }, false);
                             $video.load();
                         }
@@ -2497,7 +2461,6 @@ JMVC.controllers.demo = function () {
     };
 
     this.action_previewInlineVideo = function () {
-
         JMVC.require('core/html5/inlinePreviewVideo');
         JMVC.css.fontAwesome();
 
@@ -2509,7 +2472,6 @@ JMVC.controllers.demo = function () {
                 id: 'container'
             })
             .render(function () {
-
                 JMVC.core.widgzard.render({
                     target: document.getElementById('container'),
                     content: [{
@@ -2533,28 +2495,15 @@ JMVC.controllers.demo = function () {
                             }
                         }],
                         end: function () {
-
                             var $video = this.node,
                                 ev = mobile ? 'canplaythrough' : 'loadeddata';
 
                             // $video.addEventListener(ev, function () {
 
-                            JMVC.events.one($video, mobile ? 'canplaythrough' : 'loadeddata', function () {
-
+                            JMVC.events.one($video, ev, function () {
                                 // $elf.load();
-                                var c = JMVC.html5.previewInlineVideo($video);
-
-
+                                JMVC.html5.previewInlineVideo($video);
                             }, false);
-                            /*
-                            JMVC.events.one($video,'loadeddata', function () {
-    
-                                // $elf.load();
-                                var c = JMVC.html5.previewInlineVideo($video);
-    
-                            	
-                            }, false);
-                            */
                             $video.load();
                         }
                     }]
@@ -2563,18 +2512,14 @@ JMVC.controllers.demo = function () {
     };
 
     this.action_wwdb = function () {
-
         JMVC.css.fontAwesome();
         JMVC.head.title('JMVC two way data binding');
-        var mobile = JMVC.util.isMobile;
-
         JMVC.getView('vacuum')
             .set({
                 style: 'padding:0px 10px 50px;line-height:30px;font-family:Verdana, sans',
                 id: 'container'
             })
             .render(function () {
-
                 var t = { value: 'please edit me' },
                     secToGo = 60;
                 window.t = t;
@@ -2609,7 +2554,7 @@ JMVC.controllers.demo = function () {
                         wid: 'text'
                     }, { tag: 'br' }, { tag: 'span', html: '4:' }, {
                         tag: 'textarea',
-                        attrs: { rows: 20, cols: "50" },
+                        attrs: { rows: 20, cols: 50 },
                         wid: 'ta'
                     }, {
                         style: { color: 'red', fontWeight: 'bold' },
