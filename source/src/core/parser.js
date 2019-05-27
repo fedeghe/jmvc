@@ -11,16 +11,17 @@ Parser = {
     tpl: function (content) {
         return (content.match(/<%/))
             ? (function (str) {
+                // eslint-disable-next-line no-new-func
                 var fn = new Function('obj',
                     "var p=[]; p.push('" +
-                    str.replace(/[\r\t\n]/g, " ")
-                    .split("<%").join("\t")
-                    .replace(/((^|%>)[^\t]*)'/g, "$1\r")
-                    .replace(/\t=(.*?)%>/g, "',$1,'")
-                    .split("\t").join("');")
-                    .split("%>").join("p.push('")
-                    .split("\r").join("\\'") + "');  return p.join('');"
-                    );
+                    str.replace(/[\r\t\n]/g, ' ')
+                        .split('<%').join('\t')
+                        .replace(/((^|%>)[^\t]*)'/g, '$1\r')
+                        .replace(/\t=(.*?)%>/g, "',$1,'")
+                        .split('\t').join("');")
+                        .split('%>').join("p.push('")
+                        .split('\r').join("\\'") + "');  return p.join('');"
+                );
                 return fn(str);
             })(content) : content;
     },
@@ -33,7 +34,7 @@ Parser = {
      * @return {[type]}         [description]
      */
     parse: function (content) {
-        if (typeof content === undef) {
+        if (typeof content === 'undefined') {
             return '';
         }
         //
@@ -47,7 +48,7 @@ Parser = {
                 // for variables
                 pattvar: '\\$(.[^\\$\\s}]*)\\$',
                 // for getting only the viewname
-                viewname: '^(.[A-z_\/]*)\\s'
+                viewname: '^(.[A-z_/]*)\\s'
             },
             // some loop counters
             i = 0, j, k,
@@ -61,7 +62,7 @@ Parser = {
             orig,
             // to store inner variables found in the placeholder
             register,
-            // results of view hunt 
+            // results of view hunt
             res,
             // the view instance
             myview,
@@ -145,4 +146,4 @@ Parser = {
     }
 };
 // END PARSER
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------

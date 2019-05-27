@@ -1,8 +1,12 @@
-/* eslint-disable no-unused-vars */
+
 /*
  INIT
  */
+/* eslint-disable */
 $$src/core/onError.js$$
+/* eslint-enable */
+
+/* eslint-disable no-unused-vars */
 
 // store starting time, that's not truly the starting time but
 // it's really next to the real value
@@ -92,7 +96,7 @@ var timeBegin = +new Date(),
     URL_ALLOWED_EXTENSIONS = [
         'asp', 'do', 'deinemutter', 'exe', 'html', 'htm',
         'java', 'jmvc', 'jsp', 'js', 'jeti', 'j', 'ninja',
-        'milfhunter', 'mvc', 'ohmygod', 'omg', 'php', 'wtf',
+        'milfhunter', 'milf', 'mvc', 'ohmygod', 'omg', 'php', 'wtf',
         'whathafuck', 'trojan'
     ],
     //
@@ -153,9 +157,6 @@ var timeBegin = +new Date(),
     defaultlang = 'en',
 
     currentlang = defaultlang,
-
-    // undefined string for typeof
-    undef = 'undefined',
 
     //
     // getmode used in the require function
