@@ -16,13 +16,11 @@ dispatched = (function () {
             hash: WDL.hash.substr(1),
             port: WDL.port ? ':' + WDL.port : ''
         },
-
-        // adjust extensions allowed
-        els = mid.path.replace(new RegExp('\\.' + URL_ALLOWED_EXTENSIONS.join('|\\.'), 'gm'), '').substr(1).split(US),
+        pathPart = mid.path,
+        els,
         controller = false,
         action = false,
         params = {},
-
         controllerPrepath = '',
         controllerPrepathParts = [],
         controllerSplitter = /_|-/,
@@ -30,6 +28,18 @@ dispatched = (function () {
         baseurl = WDL.protocol + US + US + WDL.hostname,
         i, len;
 
+    // adjust extensions allowed
+    // els = mid.path.replace(new RegExp('\\.' + URL_ALLOWED_EXTENSIONS.join('|\\.'), 'gm'), '').substr(1).split(US),
+    /*
+     * a bit more flexible
+     */
+    URL_ALLOWED_EXTENSIONS.forEach(function (ext) {
+        pathPart = pathPart.replace(new RegExp('\\.' + ext + '([/?]?)'), function (x, delim) {
+            return delim || '';
+        });
+    });
+
+    els = pathPart.substr(1).split(US);
     // maybe is the case to load testsuite
     els[0].match(/^test_/) && Modules.push('testsuite');
     controller = els.shift() || JMVC_DEFAULT.controller;
