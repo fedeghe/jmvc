@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 Parser = {
     /**
      * microtemplating function
@@ -105,7 +106,7 @@ Parser = {
                     // You should use that method, and you'll do for sure if You mean to use View's variable
                     // but if You just load a view as a simple chunk with {{myview}} placeholder inside another one
                     // then $JMVC will load it automatically (take care to not loop, parsing stops after 100 replacements)
-                    : $JMVC.factory('view', viewname); 
+                    : $JMVC.factory('view', viewname);
 
                 // in case there are some vars in placeholder
                 // register will hold values obtained above

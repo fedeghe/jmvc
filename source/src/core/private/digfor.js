@@ -72,4 +72,5 @@
         dig(obj, target, [], 0);
         return res;
     };
+// eslint-disable-next-line semi
 })()

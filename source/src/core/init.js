@@ -36,8 +36,8 @@ var timeBegin = +new Date(),
     */
     DEV_URL = WDL.protocol + US + US + 'www.jmvc.dev',
     PROD_URL = WDL.protocol + US + US + 'www.jmvc.org',
-    DEV_URLstatic = WDL.protocol + US + US + 'static.jmvc.dev',
-    PROD_URLstatic = WDL.protocol + US + US + 'static.jmvc.org',
+    DEV_URL_STATIC = WDL.protocol + US + US + 'static.jmvc.dev',
+    PROD_URL_STATIC = WDL.protocol + US + US + 'static.jmvc.org',
 
     /**
      * paths for

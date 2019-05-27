@@ -430,6 +430,7 @@ jmvc = {
                         }
                         hooks[f].push(obj[f]);
                     } else {
+                        // eslint-disable-next-line no-throw-literal
                         throw { message: 'EXCEPTION : You`re trying to hook unallowed function "' + f + '"' };
                     }
                 } catch (e) {
@@ -472,6 +473,7 @@ jmvc = {
     htmlChars: function (text, pre) {
         return (pre ? '<pre>' : '') +
             (text
+                // eslint-disable-next-line no-useless-escape
                 .replace(/&(?![\w\#]+;)/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
@@ -848,6 +850,7 @@ jmvc = {
      * @return {void} undefined
      */
     require: function (/* hello guys */) {
+        // eslint-disable-next-line no-unused-vars
         var path, extNS, extNSlength, extname, s,
             i = 0,
             arg = arguments,

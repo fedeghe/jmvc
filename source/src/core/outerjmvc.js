@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 $JMVC = {
     loaded: false,
     W: W,
@@ -16,16 +17,16 @@ $JMVC = {
     views: {},
     interfaces: {},
     vars: {
-        baseurl:    dispatched.baseurl + dispatched.port,
-        extensions: dispatched.baseurl + dispatched.port + PATHS.ext, 
-        engyComponents: dispatched.baseurl + dispatched.port + PATHS.engyComponents, 
+        baseurl: dispatched.baseurl + dispatched.port,
+        extensions: dispatched.baseurl + dispatched.port + PATHS.ext,
+        engyComponents: dispatched.baseurl + dispatched.port + PATHS.engyComponents,
         devurl: DEV_URL,
         produrl: PROD_URL,
-        devurlstatic: DEV_URLstatic,
-        produrlstatic: PROD_URLstatic,
+        devurlstatic: DEV_URL_STATIC,
+        produrlstatic: PROD_URL_STATIC,
         version: JMVC_VERSION,
         date: JMVC_DATE,
-        time:  JMVC_TIME,
+        time: JMVC_TIME,
         last_modified: WD.lastModified,
         starttime: 0,
         rendertime: 0,
@@ -43,7 +44,7 @@ $JMVC = {
     extensions: {},
     extensions_params: {},
     i18n: {
-        langs:{},
+        langs: {},
         load: function (o, lang) {
             lang = lang || JMVC.vars.currentlang;
             JMVC.i18n.langs[lang] = JMVC.object.extend(JMVC.i18n.langs[lang], o);
@@ -70,7 +71,7 @@ $JMVC = {
     code: jmvc.code,
     extend: jmvc.extend,
     define: jmvc.define,
-    factory:    jmvc.factory_method,
+    factory: jmvc.factory_method,
     inherit: jmvc.inherit,
     multinherit: jmvc.multi_inherit,
     preload: preload,
@@ -89,7 +90,7 @@ $JMVC = {
     get: jmvc.get,
     del: jmvc.del,
 
-    //experimental
+    // experimental
     set2: jmvc.set2,
     get2: jmvc.get2,
     del2: jmvc.del2,
@@ -123,7 +124,6 @@ $JMVC = {
      */
     console: function (opts) {
         opts = opts || {};
-        
         if (opts.clear) {
             opts.h = opts.j = opts.c = '';
         }
@@ -133,7 +133,7 @@ $JMVC = {
             return inner();
         }
         function inner () {
-            return JMVC.console.toggle(opts.h, opts.j, opts.c, opts.tab);    
+            return JMVC.console.toggle(opts.h, opts.j, opts.c, opts.tab);
         }
     },
 
@@ -161,11 +161,11 @@ $JMVC = {
         */
         try {
             document.getElementById('JMVCisloading').style.display = 'block';
-            document.getElementById('JMVCloading').style.width =  ~~intperc + '%';
+            document.getElementById('JMVCloading').style.width = ~~intperc + '%';
             if (msg) {
                 document.getElementById('JMVCloadingmessage').innerHTML = msg;
             }
         } catch (e) {}
     }
 };
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
