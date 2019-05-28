@@ -1,3 +1,4 @@
+/* eslint-disable */
 JMVC.controllers.feed = function () {
     'use strict';
 
@@ -17,7 +18,7 @@ JMVC.controllers.feed = function () {
                 for (null; i < l; i++) {
                     try {
                         return new ActiveXObject(progIDs[i]);
-                    } catch (e) {};
+                    } catch (e) {}
                 }
             }
             return null;
@@ -58,3 +59,4 @@ JMVC.controllers.feed = function () {
 
     };
 };
+/* eslint-enable */

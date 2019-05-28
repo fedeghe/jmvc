@@ -60,16 +60,16 @@ JMVC.core.widgzard.render({
                 tng2 = this.getNode('tb2').node,
                 tng3 = this.getNode('tb3').node;
 
-            function hide(cnt, tng) {
+            function hide (cnt, tng) {
                 cnt.style.display = 'none';
                 tng.className = 'tongue respfixed';
             }
-            function show(cnt, tng) {
+            function show (cnt, tng) {
                 cnt.style.display = 'block';
                 tng.className = 'tongue active respfixed';
             }
 
-            function hideall() {
+            function hideall () {
                 hide(cnt1, tng1);
                 hide(cnt2, tng2);
                 hide(cnt3, tng3);

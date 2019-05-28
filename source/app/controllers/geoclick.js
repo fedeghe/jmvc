@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 JMVC.require(
     'core/sniffer/sniffer',
     'core/obj/date/date',
@@ -21,7 +23,6 @@ JMVC.controllers.geoclick = function () {
     JMVC.css.autoHeadings();
 
     this.action_none = function () { };
-
     this.action_index = function () {
         JMVC.events.loadify(500);
         JMVC.head.title('GeoClick');
@@ -78,18 +79,11 @@ JMVC.controllers.geoclick = function () {
                             'Yemen',
                             'Zambia', 'Zimbabwe'
                         ],
-                        subSetSize = 5,
-                        subSet = [],
-                        current = 0,
                         bucket = JMVC.bucket.create(states);
 
-
-                    subSet = states;
                     return {
                         getNext: function () {
-
                             GeoClick.leftQuestions--;
-                            // current = (current + 1) % subSet.length;
                             return bucket.next();
                         },
                         current: function () {
@@ -101,10 +95,9 @@ JMVC.controllers.geoclick = function () {
                     return deg * (Math.PI / 180);
                 },
                 getDistance: function (lat1, lon1, lat2, lon2) {
-
                     var self = this,
                         R = 6371, // Radius of the earth in km
-                        dLat = self.deg2rad(lat2 - lat1),  // deg2rad below
+                        dLat = self.deg2rad(lat2 - lat1), // deg2rad below
                         dLon = self.deg2rad(lon2 - lon1),
                         sinDlat2 = Math.sin(dLat / 2),
                         sinDlon2 = Math.sin(dLon / 2),
@@ -121,7 +114,7 @@ JMVC.controllers.geoclick = function () {
                             lng: lng
                         });
                     JMVC.io.getJson(url, function (res) {
-                        if (res.results.length == 0) {
+                        if (res.results.length === 0) {
                             p.done(false);
                             return;
                         }
@@ -133,7 +126,7 @@ JMVC.controllers.geoclick = function () {
                             l = addressComponents.length,
                             out = false;
                         for (null; i < l && out === false; i++) {
-                            if (JMVC.array.find(addressComponents[i].types, "country") >= 0 && JMVC.array.find(addressComponents[i].types, "political") >= 0) {
+                            if (JMVC.array.find(addressComponents[i].types, 'country') >= 0 && JMVC.array.find(addressComponents[i].types, 'political') >= 0) {
                                 out = addressComponents[i].long_name;
                             }
                         }
@@ -148,8 +141,7 @@ JMVC.controllers.geoclick = function () {
                         flightPlanCoordinates = [
                             { lat: lat1, lng: lng1 },
                             { lat: lat2, lng: lng2 }
-                        ],
-                        dist = self.getDistance(lat1, lng1, lat2, lng2);
+                        ];
 
                     self.flightPath = new google.maps.Polyline({
                         path: flightPlanCoordinates,
@@ -173,23 +165,22 @@ JMVC.controllers.geoclick = function () {
                             lat = latLng.lat(),
                             lng = latLng.lng();
 
-
                         GeoClick.getState(lat, lng).then(function (p, args) {
                             var userInput = args[0] || false,
-                                res = null;
+                                state;
                             inputs.push(userInput);
                             console.debug(inputs);
 
-                            //get from google lat,lng of the current state
-                            var state = GeoClick.states.current();
+                            // get from google lat,lng of the current state
+                            state = GeoClick.states.current();
 
-                            JMVC.io.getJson("http://maps.googleapis.com/maps/api/geocode/json?address=" + state, function (r) {
+                            JMVC.io.getJson('http://maps.googleapis.com/maps/api/geocode/json?address=' + state, function (r) {
                                 var res = null;
                                 if ('results' in r) {
                                     self.removeDistance();
                                     res = r.results[0].geometry.location;
 
-                                    if (userInput && userInput == state) {
+                                    if (userInput && userInput === state) {
                                         pubsub.pub('score', [10]);
                                         self.removeDistance();
                                     } else {
@@ -204,51 +195,46 @@ JMVC.controllers.geoclick = function () {
                 },
 
                 init: function (map) {
-
                     GeoClick.map = map;
                     // drawpanel
                     JMVC.core.widgzard.render({
                         content: [{
                             style: {
-                                position: "absolute",
-                                right: "10px",
-                                top: "10px",
-                                padding: "10px",
-                                border: "1px solid #aaa",
-                                backgroundColor: "white",
-                                zIndex: "999"
+                                position: 'absolute',
+                                right: '10px',
+                                top: '10px',
+                                padding: '10px',
+                                border: '1px solid #aaa',
+                                backgroundColor: 'white',
+                                zIndex: '999'
                             },
                             content: [{
-                                tag: "h3",
-                                html: "GeoClick v.1"
+                                tag: 'h3',
+                                html: 'GeoClick v.1'
                             }, {
-                                tag: "button",
-                                html: "start a new game",
-                                wid: "new Button",
+                                tag: 'button',
+                                html: 'start a new game',
+                                wid: 'new Button',
                                 cb: function () {
                                     var self = this,
                                         $elf = self.node;
 
                                     JMVC.events.on($elf, 'click', function () {
-
                                         JMVC.css.style($elf, 'display', 'none');
-
                                         self.getNode('onGamePanel').node.style.display = 'block';
-
                                         GeoClick.listen();
-
                                     });
                                     this.done();
                                 }
                             }, {
-                                wid: "onGamePanel",
+                                wid: 'onGamePanel',
                                 style: {
-                                    display: "none"
+                                    display: 'none'
                                 },
                                 content: [{
-                                    html: "click into : "
+                                    html: 'click into : '
                                 }, {
-                                    html: "not set",
+                                    html: 'not set',
                                     cb: function () {
                                         var self = this;
                                         pubsub.sub('doNext', function () {
@@ -256,10 +242,10 @@ JMVC.controllers.geoclick = function () {
                                                 JMVC.dom.html(self.node, GeoClick.states.getNext());
                                             } else {
                                                 self.parent.descendant(0).node.style.display = 'none';
-                                                self.parent.descendant(1).node.innerHTML = "Game over";
+                                                self.parent.descendant(1).node.innerHTML = 'Game over';
                                                 self.getNode('gameover').node.style.display = 'block';
                                             }
-                                        })
+                                        });
 
                                         JMVC.dom.html(this.node, GeoClick.states.getNext());
                                         this.done();
@@ -275,19 +261,19 @@ JMVC.controllers.geoclick = function () {
                                                 $elf = self.node;
                                             JMVC.events.on($elf, 'click', function () {
                                                 document.location.reload();
-                                            })
+                                            });
                                             self.done();
                                         }
                                     }]
                                 }, {
-                                    tag: "hr"
+                                    tag: 'hr'
                                 }, {
-                                    tag: "strong",
+                                    tag: 'strong',
                                     content: [{
-                                        tag: "strong",
+                                        tag: 'strong',
                                         html: 'Score: '
                                     }, {
-                                        tag: "span",
+                                        tag: 'span',
                                         html: 0,
                                         data: {
                                             score: 0
@@ -299,7 +285,6 @@ JMVC.controllers.geoclick = function () {
                                                 if (i <= 0) i--;
                                                 self.data.score += i;
                                                 self.node.innerHTML = self.data.score;
-
                                             });
                                             self.done();
                                         }
@@ -307,10 +292,10 @@ JMVC.controllers.geoclick = function () {
 
                                 }]
                             }, {
-                                tag: "hr"
+                                tag: 'hr'
                             }, {
-                                tag: "h6",
-                                html: "All rights reserved to GeoClick.com"
+                                tag: 'h6',
+                                html: 'All rights reserved to GeoClick.com'
                             }]
                         }]
                     });
@@ -321,14 +306,13 @@ JMVC.controllers.geoclick = function () {
                 endGame: function () {
 
                 }
-            }
+            };
         //
-        //index.set('nome', this.get('name') || 'Federico');
+        // index.set('nome', this.get('name') || 'Federico');
         index.set('i_say', '[L[pure javascript mvc framework]]');
 
         index.parse().render(
             function () {
-
                 JMVC.github.forkme('fedeghe');
 
                 JMVC.mobile.topHide();
@@ -337,7 +321,10 @@ JMVC.controllers.geoclick = function () {
                     mapid = 'map',
                     body = JMVC.dom.body();
 
-                JMVC.dom.append(body, JMVC.dom.create('div', { id: mapid, style: 'opacity:0.8;position:absolute;z-index:1;top:0px;left:0px;width:' + dims.width + 'px;height:' + dims.height + 'px' }));
+                JMVC.dom.append(body, JMVC.dom.create('div', {
+                    id: mapid,
+                    style: 'opacity:0.8;position:absolute;z-index:1;top:0px;left:0px;width:' + dims.width + 'px;height:' + dims.height + 'px'
+                }));
 
                 JMVC.gmap2.initialize(function () {
                     JMVC.gmap2.mapme('Dällikerstrasse 35, Regensdorf, Svizzera', function (latlng) {
@@ -354,9 +341,7 @@ JMVC.controllers.geoclick = function () {
 
                         GeoClick.init(map);
                     });
-
                 }, { sensor: 'false' });
-
             }
         );
     };

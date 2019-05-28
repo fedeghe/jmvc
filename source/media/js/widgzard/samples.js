@@ -73,7 +73,7 @@ JMVC.core.widgzard.render({
                     cb: function () {
                         JMVC.events.on(this.node, 'click', function () {
                             JMVC.core.widgzard.load('/media/js/widgzard/script2.js');
-                        })
+                        });
                         this.done();
                     }
                 }]

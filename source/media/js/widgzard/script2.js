@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 JMVC.head.addStyle('/media/css/widgzard/sample2.css');
 
 (function () {
@@ -23,7 +24,6 @@ JMVC.head.addStyle('/media/css/widgzard/sample2.css');
             cb: function () {
                 console.log('THE END');
                 document.body.style.backgroundColor = 'green';
-
             },
 
             content: [{
