@@ -48,4 +48,4 @@ Features
   - 11.5 KB jmvc.min.js (gzipped and packed version, base62 encode, shrinked variables)
   - 24.6 KB jmvc.js (gzipped, development version, fully commented)
 
-For further informations visit <a href="https://www.jmvc.org/info" target="_blank">jmvc.org/info.jmvc</a>
+For further informations visit <a href="https://www.jmvc.org/info.deinemutter" target="_blank">https://jmvc.org/info.jmvc</a>
