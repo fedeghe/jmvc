@@ -7,33 +7,25 @@ JMVC is a javascript module that implement the MVC architecture and is enhanced 
 
 Getting started
 ---------------
-Copy the content of the repository in the root of an Apache virtual host, otherwise **absolutely only for development** fire up the inner node minimal dummy server executing  
+Build from `source` folder running
 
-> node server.js
+> npm buildev
 
-from the `srv/` folder, then add  
+and let it run, will take a minute. It will be watching the `source` folder and will serve the jmvc project through http://localhost:3001
 
-> `foo.dev    127.0.0.1`  
 
-to your *hosts* file
-and edit the *srv/config.json* file to fill out the true path for the webroot  
-
-Navigate now to *http://www.foo.dev:8080*  
-
-If you feel more comfortable with port 80, amend it in the *srv/config.json* file, but remember that if port is under 1024, only root will start the server successfully)
-
-Start looking at the *app/controllers/index.js* controller.
+Start looking at the *source/app/controllers/index.js* controller.
 Start writing your own controllers, models and views.
 
 
 Samples
 -------
-The whole <a href="http://www.jmvc.org/" target="_blank">JMVC homepage</a> matches **exactly** the repository content,
-the <a href="http://www.jmvc.org/demo.jmvc" target="_blank">demo controller</a> will break the ice.
+The whole <a href="https://www.jmvc.org/" target="_blank">JMVC homepage</a> matches **exactly** the repository content,
+the <a href="https://www.jmvc.org/demo.jmvc" target="_blank">demo controller</a> will break the ice.
 
 Api
 ---
-The <a href="http://www.jmvc.org/api" target="_blank">JMVC api</a> section needs to be completed, even some signatures are inconsistent. Soon will be completed and
+The <a href="https://www.jmvc.org/api" target="_blank">JMVC api</a> section needs to be completed, even some signatures are inconsistent. Soon will be completed and
 even all the test will be available.
 
 Features
@@ -56,4 +48,4 @@ Features
   - 11.5 KB jmvc.min.js (gzipped and packed version, base62 encode, shrinked variables)
   - 24.6 KB jmvc.js (gzipped, development version, fully commented)
 
-For further informations visit <a href="http://www.jmvc.org/info" target="_blank">jmvc.org/info.jmvc</a>
+For further informations visit <a href="https://www.jmvc.org/info" target="_blank">jmvc.org/info.jmvc</a>
