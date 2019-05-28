@@ -67,9 +67,9 @@ Options -Indexes
 
 
 	# 0
-	#<FilesMatch "jmvc(\.min)?\.js$">
-    #	Header unset Cache-Control
-	#</FilesMatch>
+	 <FilesMatch "jmvc(\.min)?\.js$">
+    	Header unset Cache-Control
+	 </FilesMatch>
 
 
 
@@ -80,21 +80,21 @@ Options -Indexes
 
 
 	# year
-	#<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|svg|swf|mp3|mp4)$">
-	#	Header set Cache-Control "max-age=31104000, must-revalidate"
-	#	Header unset Last-Modified
-	#</FilesMatch>
+	<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|svg|swf|mp3|mp4)$">
+		Header set Cache-Control "max-age=31104000, must-revalidate"
+		Header unset Last-Modified
+	</FilesMatch>
 	
 	#1 month
-	#<FilesMatch "\.(js|css|json)$">
-	#	Header append Vary: Accept-Encoding
-	#	Header set Cache-Control "max-age=2592000, must-revalidate"
-	#</FilesMatch>
+	<FilesMatch "\.(js|css|json)$">
+		Header append Vary: Accept-Encoding
+		Header set Cache-Control "max-age=2592000, must-revalidate"
+	</FilesMatch>
 	
 	#2 hours
-	#<FilesMatch "\.(html|htm|xml|txt|xsl|xml)$">
-	#	Header set Cache-Control "max-age=7200, must-revalidate"
-	#</FilesMatch>
+	<FilesMatch "\.(html|htm|xml|txt|xsl|xml)$">
+		Header set Cache-Control "max-age=7200, must-revalidate"
+	</FilesMatch>
 </ifModule>    
 
 <IfModule mod_rewrite.c>
@@ -117,6 +117,9 @@ Options -Indexes
 	#for WS
 	RewriteRule ^sub.php?$ - [L]
 
+	RewriteCond %{HTTPS} off
+	RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
+
 	#	Page (if not a file/directory)
 	RewriteCond   %{REQUEST_FILENAME} !-d
 	RewriteCond   %{REQUEST_FILENAME} !-f
@@ -124,3 +127,14 @@ Options -Indexes
 	#
 	RewriteRule ^.*$ index.html [PT,L]
 </IfModule>
+
+# SP BEGIN php handler
+<IfModule mod_fcgid.c>
+          AddHandler fcgid-script .php .php5 .php7 .phtml
+          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php73 .php
+          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php73 .php5
+          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php73 .php7
+          FcgidWrapper    /usr/local/cpanel/cgi-sys/sp-ea-php73 .phtml
+</IfModule>
+# SP END php handler
+
