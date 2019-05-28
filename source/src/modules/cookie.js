@@ -1,5 +1,6 @@
 // type : LIB
 //
+// eslint-disable-next-line no-undef
 _.cookie = {};
 
 JMVC.cookie = {

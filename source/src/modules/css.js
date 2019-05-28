@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // --------------+
 // CSS sub-module |
 // --------------+
@@ -5,8 +6,8 @@
 _.css = {
     opera: navigator.userAgent.match(/opera\/([^\s]*)/i),
     mappedStyles: {},
-    css2js_rule: function(s) {
-        return s[0] === '-' ? s : s.replace(/-(\w)/g, function(str, $1) {
+    css2js_rule: function (s) {
+        return s[0] === '-' ? s : s.replace(/-(\w)/g, function (str, $1) {
             return $1.toUpperCase();
         });
     },
@@ -18,7 +19,7 @@ JMVC.css = {
      * [clearer description]
      * @type {[type]}
      */
-    clearer: function() {
+    clearer: function () {
         return JMVC.dom.create('br', {
             'class': 'clearer'
         });
@@ -31,7 +32,7 @@ JMVC.css = {
      * @param {[type]} rules    [description]
      * @param {[type]} index    [description]
      */
-    addRule: function(sheet, selector, rules, index) {
+    addRule: function (sheet, selector, rules, index) {
         if (JMVC.dom.isNode(sheet)) {
             sheet = sheet.sheet ? sheet.sheet : sheet.styleSheet;
         }
@@ -46,7 +47,7 @@ JMVC.css = {
      * [autoHeadings description]
      * @return {[type]} [description]
      */
-    autoHeadings: function() {
+    autoHeadings: function () {
         JMVC.head.addStyle(
             'h1{font-size:24px !important; line-height:48px !important; padding:12px 0px 12px !important;}' +
             'h2{font-size:20px !important; line-height:36px !important; padding:9px 0px 9px !important;}' +
@@ -60,16 +61,20 @@ JMVC.css = {
      * [beResponsive description]
      * @return {[type]} [description]
      */
-    beResponsive: function(on) {
-        JMVC.dom[typeof on === 'undefined' || !!on ? 'addClass' : 'removeClass'](JMVC.WDB, 'resp');
+    beResponsive: function (on) {
+        var key = typeof on === 'undefined' || !!on
+            ? 'addClass'
+            : 'removeClass';
+        JMVC.dom[key](JMVC.WDB, 'resp');
     },
 
     /**
      * [fontAwesome description]
      * @return {[type]} [description]
      */
-    fontAwesome : function () {
-        JMVC.head.addStyle("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
+    fontAwesome: function () {
+        // JMVC.head.addStyle('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css');
+        JMVC.head.addStyle('https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css');
     },
 
     /**
@@ -78,17 +83,17 @@ JMVC.css = {
      * @param  {[type]} styleProperty [description]
      * @return {[type]}               [description]
      */
-    getComputedStyle: function(el, styleProperty) {
+    getComputedStyle: function (el, styleProperty) {
         if (_.css.opera) {
             return JMVC.W.getComputedStyle(el, null).getPropertyValue(styleProperty);
         }
-        var computedStyle = typeof el.currentStyle !== 'undefined' ?
-            el.currentStyle :
-            JMVC.WD.defaultView.getComputedStyle(el, null);
+        var computedStyle = typeof el.currentStyle !== 'undefined'
+            ? el.currentStyle
+            : JMVC.WD.defaultView.getComputedStyle(el, null);
 
-        return styleProperty ?
-            computedStyle[_.css.css2js_rule(styleProperty)] :
-            computedStyle;
+        return styleProperty
+            ? computedStyle[_.css.css2js_rule(styleProperty)]
+            : computedStyle;
     },
 
     //
@@ -99,11 +104,12 @@ JMVC.css = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    getPosition: function(el, rel) {
+    getPosition: function (el, rel) {
         var curleft = 0,
             curtop = 0,
             sT = JMVC.WD.body.scrollTop + JMVC.WD.documentElement.scrollTop,
-            sL = JMVC.WD.body.scrollLeft + JMVC.WD.documentElement.scrollLeft;
+            sL = JMVC.WD.body.scrollLeft + JMVC.WD.documentElement.scrollLeft,
+            left, top;
         if (el.offsetParent) {
             do {
                 curleft += el.offsetLeft;
@@ -111,7 +117,9 @@ JMVC.css = {
                 el = el.offsetParent;
             } while (el);
         }
-        return [!!rel ? curleft - sL : curleft, !!rel ? curtop - sT : curtop];
+        left = rel ? curleft - sL : curleft;
+        top = rel ? curtop - sT : curtop;
+        return [ left, top ];
     },
 
     /**
@@ -119,7 +127,7 @@ JMVC.css = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    height: function(el) {
+    height: function (el) {
         return el.offsetHeight || el.scrollHeight || JMVC.css.getComputedStyle(el, 'height');
     },
 
@@ -128,7 +136,7 @@ JMVC.css = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    hide: function(el) {
+    hide: function (el) {
         if (el instanceof Array) {
             for (var i = 0, l = el.length; i < l; i += 1) {
                 JMVC.css.hide(el[i]);
@@ -144,7 +152,7 @@ JMVC.css = {
      * @param  {[type]} style [description]
      * @return {[type]}       [description]
      */
-    mappedStyle: function(idn, style) {
+    mappedStyle: function (idn, style) {
         var t = JMVC.dom.find('#' + idn);
         if (t) {
             JMVC.dom.remove(t);
@@ -156,7 +164,7 @@ JMVC.css = {
         JMVC.dom.append(JMVC.head.element, _.css.mappedStyles[idn]);
     },
 
-    mappedStyleRemove: function(idn) {
+    mappedStyleRemove: function (idn) {
         idn in _.css.mappedStyles &&
             JMVC.dom.remove(_.css.mappedStyles[idn]);
     },
@@ -166,9 +174,15 @@ JMVC.css = {
      * @param  {[type]} mode [description]
      * @return {[type]}      [description]
      */
-    pest: function() {
+    pest: function () {
         var tmp = JMVC.dom.find('#pest-css'),
-            tmpinfo = JMVC.dom.find('#pest-css-info');
+            tmpinfo = JMVC.dom.find('#pest-css-info'),
+            info = JMVC.dom.create('div', {
+                id: 'pest-css-info'
+            }),
+            positionCookie = 'pestPanelPosition',
+            initialPosition = ~~JMVC.cookie.get(positionCookie) || 0,
+            positions = ['tr', 'br', 'bl', 'tl'];
 
         if (tmp && tmpinfo) {
             JMVC.events.off(JMVC.WD, 'mousemove', fnshow);
@@ -177,79 +191,71 @@ JMVC.css = {
             return;
         }
 
+        function fnshow (e) {
+            var trg = JMVC.events.eventTarget(e),
+                cstyle = JMVC.css.getComputedStyle(trg),
+                filter = {
+                    height: true,
+                    width: true,
+                    display: true,
+                    cssFloat: true,
+                    color: true,
+                    backgroundColor: true,
+                    fontSize: true
+                },
+                li,
+                styleList = document.createElement('ul'),
+                addToList = function (list, lab, val) {
+                    li = document.createElement('li');
+                    li.innerHTML = (lab ? ('<strong>' + lab + '</strong> : ') : '') + val;
+                    list.appendChild(li);
+                },
+                tree,
+                s;
 
-        var info = JMVC.dom.create('div', {
-                id: 'pest-css-info'
-            }),
-            positionCookie = 'pestPanelPosition',
-            initialPosition = ~~JMVC.cookie.get(positionCookie) || 0,
-            positions = ['tr', 'br', 'bl', 'tl'],
+            if (trg === info) {
+                return;
+            }
+            info.innerHTML = '';
 
-            fnshow = function(e) {
-                var trg = JMVC.events.eventTarget(e),
-                    cstyle = JMVC.css.getComputedStyle(trg),
-                    filter = {
-                        height: true,
-                        width: true,
-                        display: true,
-                        cssFloat: true,
-                        color: true,
-                        backgroundColor: true,
-                        fontSize: true
-                    },
-                    li,
-                    styleList = document.createElement('ul'),
-                    addToList = function(list, lab, val) {
-                        li = document.createElement('li');
-                        li.innerHTML = (lab ? ('<strong>' + lab + '</strong> : ') : '') + val;
-                        list.appendChild(li);
-                    },
-                    tree;
+            for (s in cstyle) {
+                s in filter && addToList(styleList, s, cstyle[s]);
+            }
+            info.appendChild(styleList);
 
-                if (trg === info) {
-                    return;
+            info.appendChild(document.createElement('hr'));
+
+            if (!!trg.id || !!trg.className) {
+                if (trg.id) {
+                    addToList(styleList, 'ID', trg.id);
                 }
-                info.innerHTML = '';
-
-                for (var s in cstyle) {
-                    s in filter && addToList(styleList, s, cstyle[s]);
+                if (trg.className) {
+                    addToList(styleList, 'CLASS', trg.className);
                 }
                 info.appendChild(styleList);
+            }
+            info.appendChild(document.createElement('hr'));
 
-                info.appendChild(document.createElement('hr'));
+            tree = document.createElement('ul');
 
-                if (!!trg.id || !!trg.className) {
-                    if (trg.id) {
-                        addToList(styleList, 'ID', trg.id);
-                    }
-                    if (trg.className) {
-                        addToList(styleList, 'CLASS', trg.className);
-                    }
-                    info.appendChild(styleList);
-                }
-                info.appendChild(document.createElement('hr'));
+            while (!!trg && trg.tagName) {
+                addToList(tree, false, trg.tagName);
+                trg = trg.parentNode;
+            }
 
-                tree = document.createElement('ul');
-
-
-                while (!!trg && trg.tagName) {
-                    addToList(tree, false, trg.tagName);
-                    trg = trg.parentNode;
-                }
-
-                info.appendChild(tree);
-            },
-            fnhide = function() {
-                JMVC.dom.remove(info);
-            };
-
+            info.appendChild(tree);
+        }
+        // eslint-disable-next-line no-unused-vars
+        function fnhide () {
+            JMVC.dom.remove(info);
+        }
 
         info.className = 'report respfixed ' + positions[initialPosition];
 
         info.style.position = 'fixed';
         info.style.zIndex = 999;
 
-        JMVC.events.on(info, 'mouseover', function() {
+        JMVC.events.on(info, 'mouseover', function () {
             var old = initialPosition;
             initialPosition = (++initialPosition) % positions.length;
             JMVC.dom.switchClass(info, positions[old], positions[initialPosition]);
@@ -276,7 +282,7 @@ JMVC.css = {
      * [reset description]
      * @return {[type]} [description]
      */
-    reset: function() {
+    reset: function () {
         // http://meyerweb.com/eric/tools/css/reset/
         var style = 'html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,' +
             'acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,' +
@@ -299,7 +305,7 @@ JMVC.css = {
      * @param  {[type]} rot [description]
      * @return {[type]}     [description]
      */
-    rotate: function(el, rot) {
+    rotate: function (el, rot) {
         JMVC.css.style(el, {
             '-webkit-transform': 'rotate(' + rot + 'deg)',
             '-moz-transform': 'rotate(' + rot + 'deg)',
@@ -312,7 +318,7 @@ JMVC.css = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    show: function(el) {
+    show: function (el) {
         if (el instanceof Array) {
             for (var i = 0, l = el.length; i < l; i += 1) {
                 JMVC.css.show(el[i]);
@@ -329,45 +335,45 @@ JMVC.css = {
      * @param  {[type]} val  [description]
      * @return {[type]}      [description]
      */
-    style: function(el /*DOMNode*/ , prop /*String|Object*/ , val /*String*/ ) {
-
-        var prop_is_obj = (typeof prop === 'object' && typeof val === 'undefined'),
+    style: function (el /* DOMNode */, prop /* String|Object */, val /* String */) {
+        var propIsObj = (typeof prop === 'object' && typeof val === 'undefined'),
             ret = false,
             newval, k;
 
-        if (!prop_is_obj && typeof val === 'undefined') {
+        if (!propIsObj && typeof val === 'undefined') {
             /* opera may use currentStyle or getComputedStyle */
-            //ret = (el.currentStyle) ? el.currentStyle[_.css.css_propertymap[prop] || prop + ""] : el.style[prop]; 
+            // ret = (el.currentStyle) ? el.currentStyle[_.css.css_propertymap[prop] || prop + ""] : el.style[prop];
             ret = el.currentStyle ? el.currentStyle[_.css.css2js_rule(prop)] : el.style[prop];
             return (ret === '' || ret === 'auto') ? JMVC.css.getComputedStyle(el, prop) : ret;
         }
 
-        if (prop_is_obj) {
+        if (propIsObj) {
             for (k in prop) {
-
                 if ((prop[k] + '').search(/rand/) !== -1) {
-                    newval = JMVC.nsCheck('JMVC.core.color') ?
-                        JMVC.core.color.getRandomColor() : '#000000';
+                    newval = JMVC.nsCheck('JMVC.core.color')
+                        ? JMVC.core.color.getRandomColor()
+                        : '#000000';
                     prop[k] = prop[k].replace(/rand/, newval);
                 }
                 if (JMVC.array.find(_.css.css3_map, k) + 1) {
                     el.style.cssText += ';' + k + ' : ' + prop[k];
                 } else {
-                    //el.style[_.css.css_propertymap[k] || k + ""] = prop[k];
+                    // el.style[_.css.css_propertymap[k] || k + ""] = prop[k];
                     el.style[_.css.css2js_rule(k)] = prop[k];
                 }
             }
         } else if (typeof val !== 'undefined') {
             val += '';
             if (val.search(/rand/) !== -1) {
-                newval = JMVC.nsCheck('JMVC.core.color') ?
-                    JMVC.core.color.getRandomColor() : '#000000';
+                newval = JMVC.nsCheck('JMVC.core.color')
+                    ? JMVC.core.color.getRandomColor()
+                    : '#000000';
                 val = val.replace(/rand/, newval);
             }
             if (JMVC.array.find(_.css.css3_map, prop) + 1) {
                 el.style.cssText += ';' + prop + ' : ' + val;
             } else {
-                //el.style[_.css.css_propertymap[prop] || prop + ""] = val;
+                // el.style[_.css.css_propertymap[prop] || prop + ""] = val;
                 el.style[_.css.css2js_rule(prop)] = val;
 
                 if (prop === 'opacity') {
@@ -383,7 +389,7 @@ JMVC.css = {
      * @param  {[type]} n [description]
      * @return {[type]}   [description]
      */
-    unselectable: function(n) {
+    unselectable: function (n) {
         JMVC.css.style(n, {
             '-moz-user-select': 'none',
             '-webkit-user-select': 'none',
@@ -395,8 +401,6 @@ JMVC.css = {
             'onselectstart': 'return false;',
             'onmousedown': 'return false;'
         });
-
-
     },
 
     /**
@@ -404,7 +408,7 @@ JMVC.css = {
      * @param  {[type]} el [description]
      * @return {[type]}    [description]
      */
-    width: function(el) {
+    width: function (el) {
         return el.offsetWidth || el.scrollWidth || JMVC.css.getComputedStyle(el, 'width');
     }
 };

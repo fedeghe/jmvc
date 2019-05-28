@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 
 _.events.drag = {
     gd1: false,

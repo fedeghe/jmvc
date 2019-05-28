@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // -----------------+
 // EVENTS sub-module |
 // -----------------+
@@ -59,8 +60,7 @@ _.events = {
     bind: (function () {
         var fn;
 
-        function store(el, evnt, cb) {
-
+        function store (el, evnt, cb) {
             var nid = JMVC.dom.idize(el); // _.events.nodeid(el);
             !(evnt in _.events.bindings) && (_.events.bindings[evnt] = {});
 
@@ -72,13 +72,15 @@ _.events = {
         if ('addEventListener' in W) {
             fn = function (el, evnt, cb) {
                 // cb = _.events.fixCurrentTarget(cb, el);
-                el.addEventListener.apply(el, [evnt, cb, false]);
+                // el.addEventListener.apply(el, [evnt, cb, false]);
+                el.addEventListener(evnt, cb, false);
                 store(el, evnt, cb);
             };
         } else if ('attachEvent' in W) {
             fn = function (el, evnt, cb) {
                 // cb = _.events.fixCurrentTarget(cb, el);
-                el.attachEvent.apply(el, ['on' + evnt, cb]);
+                // el.attachEvent.apply(el, ['on' + evnt, cb]);
+                el.attachEvent('on' + evnt, cb);
                 store(el, evnt, cb);
             };
         } else {
@@ -188,8 +190,9 @@ JMVC.events = {
         _.events.kill(e);
     },
     enableScroll: function () {
-        if (window.removeEventListener)
+        if (window.removeEventListener) {
             window.removeEventListener('DOMMouseScroll', JMVC.events.preventDefault, false);
+        }
         window.onmousewheel = document.onmousewheel = null;
         window.onwheel = null;
         window.ontouchmove = null;
@@ -239,7 +242,7 @@ JMVC.events = {
 
     blurAllAnchorClicks: function () {
         JMVC.events.on(JMVC.W, 'click', function (e) {
-            var target = JMVC.events.eventTarget(e); 
+            var target = JMVC.events.eventTarget(e);
             target.tagName && target.tagName.toLowerCase() === 'a' && target.blur();
         });
     },
@@ -348,7 +351,7 @@ JMVC.events = {
      * @return {[type]}   [description]
      */
     eventTarget: function (e) {
-        e = e ? e : JMVC.W.event;
+        e = e || JMVC.W.event;
         var targetElement = e.currentTarget || (typeof e.target !== 'undefined') ? e.target : e.srcElement;
         if (!targetElement) {
             return false;
@@ -560,7 +563,7 @@ JMVC.events = {
     onEsc: function (cb, w) {
         w = w || JMVC.W;
         JMVC.events.on(w.document, 'keyup', function (e) {
-            if (e.keyCode == 27) {
+            if (e.keyCode === 27) {
                 cb.call(w, e);
             }
         });
@@ -581,8 +584,8 @@ JMVC.events = {
             newWidth = elm.clientWidth;
 
             if (
-                (reactToHeight && lastHeight != newHeight) ||
-                (reactToWidth && lastWidth != newWidth)
+                (reactToHeight && lastHeight !== newHeight) ||
+                (reactToWidth && lastWidth !== newWidth)
             ) callback();
 
             lastHeight = newHeight;
@@ -829,12 +832,13 @@ JMVC.events = {
      * @return {[type]}      [description]
      */
     trigger: function (elem, ev) {
+        var evt, e;
         if ('createEvent' in document) {
-            var evt = document.createEvent('HTMLEvents');
+            evt = document.createEvent('HTMLEvents');
             evt.initEvent(ev, false, true);
             elem.dispatchEvent(evt);
         } else {
-            var e = document.createEventObject();
+            e = document.createEventObject();
             e.eventType = ev;
             elem.fireEvent('on' + e.eventType, e);
         }
@@ -878,7 +882,7 @@ JMVC.events = {
         _.events.wwdb_bindings[el.wwdbID] = window.setInterval(function () {
             if (objLock) return;
             lock(true);
-            if (objOldVal != obj[field]) {
+            if (objOldVal !== obj[field]) {
                 elOldVal = obj[field];
                 objOldVal = elOldVal;
                 el[elDet] = elOldVal;
@@ -892,7 +896,7 @@ JMVC.events = {
         JMVC.events.on(el, 'keyup', function () {
             if (elLock) return;
             lock(true);
-            if (this[elDet] != obj[field]) {
+            if (this[elDet] !== obj[field]) {
                 obj[field] = this[elDet];
                 elOldVal = this[elDet];
                 objOldVal = this[elDet];
@@ -912,7 +916,7 @@ JMVC.events = {
             l = els.length;
         while (l-- > 0) {
             JMVC.events.off(els[l], 'keyup');
-            window.clearInterval(_.events.wwdb_bindings[els[l].wwdbID]);    
+            window.clearInterval(_.events.wwdb_bindings[els[l].wwdbID]);
         }
     }
 };
@@ -930,16 +934,16 @@ JMVC.events.doTab = function (el) {
             selection,
             val;
 
-        if (e.keyCode == 9) { // tab
+        if (e.keyCode === 9) { // tab
             input = textarea.value; // as shown, `this` would also be textarea, just like e.target
             remove = e.shiftKey;
             posstart = textarea.selectionStart;
             posend = textarea.selectionEnd;
 
             // if anything has been selected, add one tab in front of any line in the selection
-            if (posstart != posend) {
+            if (posstart !== posend) {
                 posstart = input.lastIndexOf('\n', posstart) + 1;
-                compensateForNewline = input[posend - 1] == '\n';
+                compensateForNewline = input[posend - 1] === '\n';
                 before = input.substring(0, posstart);
                 after = input.substring(posend - (~~compensateForNewline));
                 selection = input.substring(posstart, posend);
@@ -947,7 +951,7 @@ JMVC.events.doTab = function (el) {
                 // now add or remove tabs at the start of each selected line, depending on shift key state
                 // note: this might not work so good on mobile, as shiftKey is a little unreliable...
                 if (remove) {
-                    if (selection[0] == '\t') {
+                    if (selection[0] === '\t') {
                         selection = selection.substring(1);
                     }
                     selection = selection.split('\n\t').join('\n');
@@ -955,7 +959,7 @@ JMVC.events.doTab = function (el) {
                     selection = selection.split('\n');
                     if (compensateForNewline) {
                         selection.pop();
-                    } 
+                    }
                     selection = '\t' + selection.join('\n\t');
                 }
 
@@ -966,12 +970,12 @@ JMVC.events.doTab = function (el) {
                 textarea.selectionEnd = posstart + selection.length;
             } else {
                 val = textarea.value;
-                textarea.value = val.substring(0,posstart) + '\t' + val.substring(posstart);
+                textarea.value = val.substring(0, posstart) + '\t' + val.substring(posstart);
                 textarea.selectionEnd = textarea.selectionStart = posstart + 1;
             }
             e.preventDefault(); // dont jump. unfortunately, also/still doesnt insert the tab.
         }
-    }
+    };
 };
 
 // blur all clicks

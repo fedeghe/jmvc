@@ -1,6 +1,7 @@
 // preloading function
 // fill cache with a request on a 1X1 iframe that
 // will be deleted as soon as everything is loaded
+// eslint-disable-next-line no-undef
 preload = function (url) {
     W.setTimeout(function () {
         // get a new Promise
@@ -9,7 +10,7 @@ preload = function (url) {
             ifr = null,
             // a function used to remove the imframe once
             // everything is loaded, hence cached
-            cleanup = function (pro, i) {JMVC.dom.remove(i); };
+            cleanup = function (pro, i) { JMVC.dom.remove(i); };
         // when `done` will be called on the promise
         // cleanup will be called, params follows the chain
         p.then(cleanup);

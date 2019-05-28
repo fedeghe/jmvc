@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // --------------+
 // DOM sub-module |
 // --------------+
@@ -34,13 +35,17 @@ JMVC.dom = {
      * @return {[type]}             [description]
      */
     addClass: function (elem, addingClass) {
+        var cls = elem.className
+                ? elem.className.split(' ')
+                : [],
+            i = 0, l = elem.length;
+
         if (JMVC.util.isArray(elem)) {
-            for (var i = 0, l = elem.length; i < l; i++) {
+            for (null; i < l; i++) {
                 JMVC.dom.addClass(elem[i], addingClass);
             }
             return;
         }
-        var cls = !!(elem.className) ? elem.className.split(' ') : [];
         if (JMVC.array.find(cls, addingClass) < 0) {
             cls.push(addingClass);
             elem.className = cls.join(' ');
@@ -105,7 +110,7 @@ JMVC.dom = {
         if (typeof value !== 'undefined') {
             // Set the quick way first
             //
-            elem[{'for': 'htmlFor', 'class': 'className'}[name] || name] = value;
+            elem[{ 'for': 'htmlFor', 'class': 'className' }[name] || name] = value;
 
             // If we can, use setAttribute
             //
@@ -142,7 +147,7 @@ JMVC.dom = {
      * @return {[type]}      [description]
      */
     childs: function (node, onlyElements) {
-        return onlyElements? node.children : node.childNodes;
+        return onlyElements ? node.children : node.childNodes;
     },
 
     /**
@@ -150,7 +155,7 @@ JMVC.dom = {
      * @return {[type]} [description]
      */
     clearer: function () {
-        return JMVC.dom.create('br', {'class': 'clearer'});
+        return JMVC.dom.create('br', { 'class': 'clearer' });
     },
 
     /**
@@ -171,7 +176,7 @@ JMVC.dom = {
      * @return {[type]}       [description]
      */
     create: function (tag, attrs, inner) {
-        if (!tag) {W.alert('no tag'); return false; }
+        if (!tag) { W.alert('no tag'); return false; }
         var node = JMVC.WD.createElement(tag),
             att;
         attrs = attrs || {};
@@ -234,7 +239,7 @@ JMVC.dom = {
             anLength = allnodes.length;
         return {
             numberOfNodes: anLength,
-            KBytes: parseFloat((document.documentElement.outerHTML.split('').length / (2<<9)).toFixed(2), 10)
+            KBytes: parseFloat((document.documentElement.outerHTML.split('').length / (2 << 9)).toFixed(2), 10)
         };
     },
 
@@ -298,7 +303,7 @@ JMVC.dom = {
             toArr = true,
             ret = false,
             isArr = false;
-        if (a == '*') {
+        if (a === '*') {
             return document.getElementsByTagName('*');
         }
         if (a.nodeType === 1) {
@@ -330,24 +335,24 @@ JMVC.dom = {
         isArr = ret instanceof Array;
         return (isArr && ret.length === 1) ? ret[0] : ret;
     },
-    find2: function (a, b) {
-        if (a.nodeType === 1) {return a; }
-        var sel = 'getElement',
-            toArr = 0,
-            ret = 0;
-        // look for no word before something
-        a = a.match(/^(\W)?([A-z0-9-_]*)/);
-        a[1] = a[1] || '=';
-        toArr = a[1] !== '#';
-        ret = (b || JMVC.WD)[sel + ({
-            '#': 'ById',
-            '.': 'ByClassName',
-            '@': 'sByName',
-            '=': 'sByTagName'
-        }[a[1]])](a[2]);
-        ret = toArr ? JMVC.array.coll2array(ret) : ret;
-        return ret instanceof Array ?  (ret.length === 1 ? ret[0] :  ret) : ret;
-    },
+    // find2: function (a, b) {
+    //     if (a.nodeType === 1) {return a; }
+    //     var sel = 'getElement',
+    //         toArr = 0,
+    //         ret = 0;
+    //     // look for no word before something
+    //     a = a.match(/^(\W)?([A-z0-9-_]*)/);
+    //     a[1] = a[1] || '=';
+    //     toArr = a[1] !== '#';
+    //     ret = (b || JMVC.WD)[sel + ({
+    //         '#': 'ById',
+    //         '.': 'ByClassName',
+    //         '@': 'sByName',
+    //         '=': 'sByTagName'
+    //     }[a[1]])](a[2]);
+    //     ret = toArr ? JMVC.array.coll2array(ret) : ret;
+    //     return ret instanceof Array ?  (ret.length === 1 ? ret[0] :  ret) : ret;
+    // },
 
     /**
      * [ description]
@@ -405,8 +410,6 @@ JMVC.dom = {
         while (el && el.tagName !== tagName.toUpperCase());
         return el;
     },
-
-
 
     gebtn: function (n, name) {
         return Array.prototype.slice.call(n.getElementsByTagName(name), 0);
@@ -473,7 +476,6 @@ JMVC.dom = {
                     } else {
                         el.innerHTML = html + '';
                     }
-                    
                 } catch (e) {}
             }
             return JMVC.dom;
@@ -511,7 +513,7 @@ JMVC.dom = {
     insertAfter: function (node, referenceNode) {
         var p = referenceNode.parentNode,
             ns = referenceNode.nextSibling;
-        !!ns ? p.insertBefore(node, ns) : p.appendChild(node);
+        ns ? p.insertBefore(node, ns) : p.appendChild(node);
         return node;
     },
 
@@ -527,7 +529,7 @@ JMVC.dom = {
         return node;
     },
 
-    // Returns true if it is a DOM element    
+    // Returns true if it is a DOM element
     /**
      * [ description]
      * @param  {[type]} o [description]
@@ -671,7 +673,7 @@ JMVC.dom = {
         typeof el === 'string' && (el = JMVC.dom.find(el));
 
         if (JMVC.util.isArray(el)) {
-            for (i  = 0, l = el.length, r = true; i < l; i++) {
+            for (i = 0, l = el.length, r = true; i < l; i++) {
                 r &= JMVC.dom.remove(el[i]);
             }
             return r;
@@ -745,10 +747,9 @@ JMVC.dom = {
                 JMVC.dom.setClass(elem[i], classes);
             }
             return;
-        }    
+        }
         elem.className = classes;
     },
-
 
     /**
      * Swap two existing nodes
@@ -787,7 +788,7 @@ JMVC.dom = {
      * @return {[type]}     [description]
      */
     toggleClass: function (el, cls) {
-        var ret = JMVC.dom.hasClass(el, cls); 
+        var ret = JMVC.dom.hasClass(el, cls);
         JMVC.dom[ret ? 'removeClass' : 'addClass'](el, cls);
         return ret;
     },
@@ -849,7 +850,7 @@ JMVC.dom = {
     wrap: function (node, tag, attrs) {
         var wrap = JMVC.dom.create(tag || 'div', attrs || {});
         JMVC.dom.insertAfter(wrap, node);
-        wrap.appendChild(node);     
+        wrap.appendChild(node);
         return wrap;
     },
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // ----------------+
 // ARRAY sub-module |
 // ----------------+
@@ -13,6 +14,7 @@ _.array = {
     op: function (a, op) {
         var ret = NaN;
         try {
+            // eslint-disable-next-line no-new-func
             ret = (new Function('return ' + a.join(op) + ';'))();
         } catch (e) {}
         return ret;
