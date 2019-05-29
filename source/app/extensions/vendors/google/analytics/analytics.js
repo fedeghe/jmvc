@@ -11,10 +11,13 @@ JMVC.events.end(function () {
         t = /(^true$|^false$)/i,
         doGa = function () {
             JMVC.head.addScript('{{core/vendors/google/analytics ua=`' + ua + '`}}', true, true);
+        },
+        remWww = function (url) {
+            return url.replace(/\/\/www\./, '//');
         };
 
-    // right domain, only production
-    if (JMVC.vars.baseurl === JMVC.vars.produrl) {
+    // right domain, only production, removing the www... only for the check
+    if (remWww(JMVC.vars.baseurl) === remWww(JMVC.vars.produrl)) {
         // ga is in QS and it's 'true' o 'false'
         if (JMVC.util.isSet(JMVC.p.ga) && t.test(JMVC.p.ga)) {
             if (JMVC.p.ga === 'true') {
