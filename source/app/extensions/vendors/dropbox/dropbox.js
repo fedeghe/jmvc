@@ -1,17 +1,16 @@
+/* eslint-disable no-undef */
 /*
 jmvc_db
 App key twg0inkl7altxp6
 App secret htz6a6rceof3eo6
 */
 JMVC.extend('vendors/dropbox', function () {
-
     var APP_KEY = 'twg0inkl7altxp6',
         filebase = 'jmvc_db/';
 
     JMVC.head.lib('dropbox');
 
-
-    function DropBoxDataStore() {
+    function DropBoxDataStore () {
         this.client = null;
         this.tables = {};
         this.dataStoreManager = null;
@@ -19,9 +18,9 @@ JMVC.extend('vendors/dropbox', function () {
     }
     DropBoxDataStore.prototype.login = function (cb) {
         var self = this;
-        self.client = new Dropbox.Client({key: APP_KEY});
+        self.client = new Dropbox.Client({ key: APP_KEY });
 
-        self.client.authenticate({interactive: true}, function (error) {
+        self.client.authenticate({ interactive: true }, function (error) {
             if (error) {
                 JMVC.debug('Authentication error: ' + error);
             }
@@ -43,17 +42,17 @@ JMVC.extend('vendors/dropbox', function () {
             return false;
         }
     };
-    
+
     DropBoxDataStore.prototype.ensureTable = function (tableName) {
         this.tables[tableName] || this.getTable(tableName);
-    }
+    };
 
     DropBoxDataStore.prototype.logout = function () {
         this.client.signOut();
     };
 
     DropBoxDataStore.prototype.getTable = function (tableName) {
-        var tmp =  this.dataStore.getTable(tableName);
+        var tmp = this.dataStore.getTable(tableName);
         if (tmp) {
             this.tables[tableName] = tmp;
             return this.tables[tableName];
@@ -86,11 +85,13 @@ JMVC.extend('vendors/dropbox', function () {
     DropBoxDataStore.prototype.truncate = function (tableName) {
         this.ensureTable(tableName);
 
-        //most generic query
+        // most generic query
         //
-        var res = this.tables[tableName].query();
+        var res = this.tables[tableName].query(),
+            i = 0,
+            l = res.length;
 
-        for (var i = 0, l = res.length; i < l; i++) {
+        for (null; i < l; i++) {
             this.deleteItem(res[i]);
         }
     };
@@ -98,17 +99,17 @@ JMVC.extend('vendors/dropbox', function () {
     DropBoxDataStore.prototype.getFileContent = function (filePath, cb) {
         this.client.readFile(filebase + filePath, cb);
     };
-    
+
     return {
-        create : function () {
+        create: function () {
             return new DropBoxDataStore();
         }
     };
 });
 
+/* eslint-disable */
 
 /*
-
 //--------------------------------------------------------------------------------------------------------- 
 // Instantiate the in-browser file reader
 //--------------------------------------------------------------------------------------------------------- 
@@ -156,3 +157,4 @@ JMVC.extend('vendors/dropbox', function () {
     fileReader.readAsArrayBuffer( file ); 
 
  */
+/* eslint-enable */
