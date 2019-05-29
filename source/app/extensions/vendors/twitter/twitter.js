@@ -1,22 +1,19 @@
 /**
  * Basic Twitter buttons
- * 
  */
 JMVC.extend('vendors/twitter', function () {
-
     var injectTwitterScript = function () {
-            !function (d, s, id) {
+            (function (d, s, id) {
                 var js,
                     fjs = d.getElementsByTagName('head')[0],
                     p = /^http:/.test(d.location) ? 'http' : 'https';
-
                 if (!d.getElementById(id)) {
                     js = d.createElement(s);
                     js.id = id;
                     js.src = p + '://platform.twitter.com/widgets.js';
                     fjs.appendChild(js);
                 }
-            }(document, 'script', 'twitter-wjs');      
+            })(document, 'script', 'twitter-wjs');
         },
 
         inject = function (type, target, options, qstring) {
@@ -26,13 +23,13 @@ JMVC.extend('vendors/twitter', function () {
                 return false;
             }
             attrs = getAttrs(options, qstring || {});
-            node = JMVC.dom.create('div', {}, JMVC.string.replaceAll(tpls[type], attrs, {clean : true})).firstChild;
+            node = JMVC.dom.create('div', {}, JMVC.string.replaceAll(tpls[type], attrs, { clean: true })).firstChild;
             JMVC.dom.append(target, node);
         },
 
         getAttrs = function (attrs, qstring) {
             var out = {}, a;
-            
+
             attrs.lang = attrs.lang || JMVC.vars.currentlang;
             for (a in attrs) {
                 out[a] = 'data-' + a + '="' + attrs[a] + '"';
@@ -42,36 +39,27 @@ JMVC.extend('vendors/twitter', function () {
         },
 
         tpls = {
-            linkShare : '<a href="https://twitter.com/share" class="twitter-share-button" %lang% %url% %title% %text% %via% %size% %related% %hashtags%></a>',
-            //
-            //
-            follow : '<a href="https://twitter.com/%qs%" class="twitter-follow-button" %show-count% %lang% %size% %show-screen-name%></a>',
+            linkShare: '<a href="https://twitter.com/share" class="twitter-share-button" %lang% %url% %title% %text% %via% %size% %related% %hashtags%></a>',
+            follow: '<a href="https://twitter.com/%qs%" class="twitter-follow-button" %show-count% %lang% %size% %show-screen-name%></a>',
             // <a href="https://twitter.com/purejmvc" class="twitter-follow-button" data-show-count="false">Follow @purejmvc</a>
             // <a href="https://twitter.com/purejmvc" class="twitter-follow-button" data-show-count="false" data-lang="ja" data-size="large" data-dnt="true">@purejmvcさんをフォロー</a>
-            // 
-            hashTag : '<a href="https://twitter.com/intent/tweet%qs%" class="twitter-hashtag-button" %lang% %size% %related% %url%></a>',
-            //
-            //
-            mention : '<a href="https://twitter.com/intent/tweet%qs%" class="twitter-mention-button" %lang% %size% %related%></a>'
-            //
-            //
+            hashTag: '<a href="https://twitter.com/intent/tweet%qs%" class="twitter-hashtag-button" %lang% %size% %related% %url%></a>',
+            mention: '<a href="https://twitter.com/intent/tweet%qs%" class="twitter-mention-button" %lang% %size% %related%></a>'
         };
 
     return {
-        init : function () {
+        init: function () {
             // end hook
             JMVC.events.end(injectTwitterScript);
         },
 
-        linkShare : function (node, options) {
+        linkShare: function (node, options) {
             JMVC.events.end(function () {
                 inject('linkShare', node, JMVC.object.extend({}, options, true));
             });
         },
 
-        follow : function (node, options) {
-
-
+        follow: function (node, options) {
             JMVC.events.end(function () {
                 var opts = {},
                     name = '',
@@ -86,8 +74,8 @@ JMVC.extend('vendors/twitter', function () {
                 inject('follow', node, JMVC.object.extend({}, opts, true), name);
             });
         },
-        
-        hashTag : function (node, options) {
+
+        hashTag: function (node, options) {
             JMVC.events.end(function () {
                 var opts = {},
                     qs = {},
@@ -103,7 +91,7 @@ JMVC.extend('vendors/twitter', function () {
             });
         },
 
-        mention : function (node, options) {
+        mention: function (node, options) {
             JMVC.events.end(function () {
                 var opts = {},
                     qs = {},
@@ -118,5 +106,5 @@ JMVC.extend('vendors/twitter', function () {
                 inject('mention', node, JMVC.object.extend({}, opts, true), JMVC.object.toQs(qs));
             });
         }
-    }    
+    };
 });
