@@ -1,46 +1,39 @@
 JMVC.require('core/screen/screen', 'event_scroll/event_scroll');
 JMVC.extend('screensaver', {
-    
-    init : function () {
-        
+    init: function () {
         var self = JMVC.screensaver,
             baseStyle = '';
-            
-        
 
-        self.outer = JMVC.dom.add(JMVC.WD.body, 'div', {'style' : 'display:none;z-index:900;position:absolute;left:0px;right:0px;top:0px;bottom:0px'});
-        self.inner = JMVC.dom.add(self.outer, 'div', {'style' : 'z-index:999;position:relative;height:100%;width:100%'});
+        self.outer = JMVC.dom.add(JMVC.WD.body, 'div', {
+            style: 'display:none;z-index:900;position:absolute;left:0px;right:0px;top:0px;bottom:0px'
+        });
+        self.inner = JMVC.dom.add(self.outer, 'div', { style: 'z-index:999;position:relative;height:100%;width:100%' });
 
-        self.top = JMVC.dom.add(self.inner, 'div', {'style' : baseStyle + 'border-bottom:1px solid white;background-color:black;z-index:900;top:0px;left:0px;right:0px;position:absolute'});
-        self.bottom = JMVC.dom.add(self.inner, 'div', {'style': baseStyle + 'border-top:1px solid white;background-color:black;z-index:900;bottom:0px;left:0px;right:0px;position:absolute'});
-        
-        self._modH = function (j){
-            JMVC.css.style(self.top, {height : j + 'px'});                                 
-            JMVC.css.style(self.bottom, {height : j + 'px'});
+        self.top = JMVC.dom.add(self.inner, 'div', { style: baseStyle + 'border-bottom:1px solid white;background-color:black;z-index:900;top:0px;left:0px;right:0px;position:absolute' });
+        self.bottom = JMVC.dom.add(self.inner, 'div', { style: baseStyle + 'border-top:1px solid white;background-color:black;z-index:900;bottom:0px;left:0px;right:0px;position:absolute' });
+        self._modH = function (j) {
+            JMVC.css.style(self.top, { height: j + 'px' });
+            JMVC.css.style(self.bottom, { height: j + 'px' });
         };
-        
     },
 
-    _shut : function () {
-
+    _shut: function () {
         JMVC.events.disable_scroll();
-        
         JMVC.screensaver.scrolltop = JMVC.screen.getScreenData().scrollTop;
         JMVC.screensaver.height = ~~JMVC.screen.getViewportSize().height;
 
-        var done = false,
-            self = JMVC.screensaver,
+        var self = JMVC.screensaver,
             targetH = self.height / 2,
             i = 0,
-            to; 
+            // eslint-disable-next-line no-unused-vars
+            to;
         self.active = true;
         JMVC.css.show(self.outer);
-        //adjust for scrolling
-        JMVC.css.style(self.top, {top : self.scrolltop + 'px', 'border-color' : 'white'});
-        JMVC.css.style(self.bottom, {bottom : -self.scrolltop + 'px', 'border-color' : 'white'});
-        
-        to = JMVC.W.setTimeout(function x(j) {
-            
+        // adjust for scrolling
+        JMVC.css.style(self.top, { top: self.scrolltop + 'px', 'border-color': 'white' });
+        JMVC.css.style(self.bottom, { bottom: -self.scrolltop + 'px', 'border-color': 'white' });
+
+        to = JMVC.W.setTimeout(function x (j) {
             self._modH(j);
             if (j < targetH) {
                 j += 10;
@@ -54,37 +47,33 @@ JMVC.extend('screensaver', {
             }
         }, i, i);
     },
-    
-    _up : function () {
-        
+    _up: function () {
         var self = JMVC.screensaver;
         JMVC.events.enable_scroll();
         self._modH(0);
         JMVC.css.hide(self.outer);
         self.active = false;
     },
-    off : function () {
+    off: function () {
         this._up();
     },
-    on : function (timeout, pwd) {
-
+    on: function (timeout, pwd) {
         timeout = ~~timeout || 5000;
+        pwd = pwd || false;
         var self = this,
             to,
-            pwd = pwd || false,
-            
             setT = function () {
                 to = JMVC.W.setTimeout(function () {
-                    self._shut();   
+                    self._shut();
                 }, timeout);
             },
-            backT = function (){
+            backT = function () {
                 var p;
                 if (pwd) {
-                    if (self.active){
+                    if (self.active) {
                         do {
-                            p = prompt(pwd.msg || "Enter security password");
-                        } while (p !== pwd.pwd)
+                            p = prompt(pwd.msg || 'Enter security password');
+                        } while (p !== pwd.pwd);
                     }
                 }
                 self._up();
@@ -97,7 +86,6 @@ JMVC.extend('screensaver', {
         JMVC.events.on(JMVC.WD.body, 'keyup', backT);
         JMVC.events.on(JMVC.W, 'scroll', backT);
     }
-
 });
 
 /*
