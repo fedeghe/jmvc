@@ -311,15 +311,15 @@ JMVC.widget.Slider.prototype.init = function (bounds, top, down, step) {
     }
 
     // cmin mousemove
-    function nodeMousemove (e) {
-        if (e.target === that.node) {
-            if (e.layerX < parseInt(that.cursor_min.style.left)) {
-                tmp = that.cursor_min;
-            } else if (e.layerX > parseInt(that.cursor_max.style.left)) {
-                tmp = that.cursor_max;
-            }
-        }
-    }
+    // function nodeMousemove (e) {
+    //     if (e.target === that.node) {
+    //         if (e.layerX < parseInt(that.cursor_min.style.left)) {
+    //             tmp = that.cursor_min;
+    //         } else if (e.layerX > parseInt(that.cursor_max.style.left)) {
+    //             tmp = that.cursor_max;
+    //         }
+    //     }
+    // }
 
     // cminMouseenter
     function cminMouseenter (e) {
@@ -355,7 +355,7 @@ JMVC.widget.Slider.prototype.init = function (bounds, top, down, step) {
 
         // manage isotoph cursors with zindex
         if (that.cursor_min) {
-            dnd.addEventSimple(that.node, 'mousemove', nodeMousemove);
+            // dnd.addEventSimple(that.node, 'mousemove', nodeMousemove);
             dnd.addEventSimple(that.cursor_min, 'mouseenter', cminMouseenter);
             dnd.addEventSimple(that.cursor_max, 'mouseenter', cmaxMouseenter);
         }
@@ -382,7 +382,7 @@ JMVC.widget.Slider.prototype.init = function (bounds, top, down, step) {
 
         // manage isotoph cursors with zindex
         if (that.cursor_min) {
-            dnd.removeEventSimple(that.node, 'mousemove', nodeMousemove);
+            // dnd.removeEventSimple(that.node, 'mousemove', nodeMousemove);
             dnd.removeEventSimple(that.cursor_min, 'mouseenter', cminMouseenter);
             dnd.removeEventSimple(that.cursor_max, 'mouseenter', cmaxMouseenter);
         }
