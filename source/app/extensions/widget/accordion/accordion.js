@@ -28,6 +28,7 @@ JMVC.widget.Accordion.prototype.render = function (container, openIndex, rem) {
         cookieVal,
         showFunc = this.eff === 'default' ? 'show' : 'slideDown',
         hideFunc = this.eff === 'default' ? 'hide' : 'slideUp',
+        // eslint-disable-next-line no-unused-vars
         viewtmp,
         li,
         i,
