@@ -1,12 +1,9 @@
 JMVC.canvas.Editor.getFullscreenManager = function (instance) {
-
-    var self = instance,
-        panel = new JMVC.canvas.Editor.Panel();
-
+    var panel = new JMVC.canvas.Editor.Panel();
     return {
-        launch : function () {
+        launch: function () {
             JMVC.screen.launchFullscreen();
         },
-        panel : panel
+        panel: panel
     };
 };
