@@ -40,7 +40,7 @@ JMVC.canvas.Editor.getUndoredoManager = function (instance) {
             //
             // if the maximum numbersof saves are reached, the states array
             // shift forward loosing oldest elements
-            if (states.length == maxLevels + 1) {
+            if (states.length === maxLevels + 1) {
                 states.shift();
                 index -= 1;
             }
@@ -49,13 +49,13 @@ JMVC.canvas.Editor.getUndoredoManager = function (instance) {
             dopub();
         },
         back: function () {
-            if (index == 0) { return false; }
+            if (index === 0) { return false; }
             index -= 1;
             load(index);
             dopub();
         },
         forth: function () {
-            if (index == states.length - 1) { return false; }
+            if (index === states.length - 1) { return false; }
             index += 1;
             load(index);
             dopub();
