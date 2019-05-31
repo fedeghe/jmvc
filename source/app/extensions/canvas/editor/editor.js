@@ -1,8 +1,7 @@
 // type : CONSTRUCTOR
-// 
+//
 JMVC.nsMake('JMVC.canvas');
 JMVC.nsMake('JMVC.canvas.Editor.fields');
-
 JMVC.require(
     'core/fx/fx',
     'core/color/color',
@@ -28,7 +27,6 @@ JMVC.canvas.Editor = function (options) {
      */
     if (!('node' in options)) {
         throw new Error('A node is needed to create a Editor in it');
-        return false;
     }
 
     // now it`s time to get viewport size
@@ -71,8 +69,8 @@ JMVC.canvas.Editor = function (options) {
     this.panelManager = null;
 
     // on window resize tell the layermanager to resize all layers
-    // 
-    JMVC.events.on(JMVC.W, 'resize', function () {  
+    //
+    JMVC.events.on(JMVC.W, 'resize', function () {
         self.panelManager.getLayerManager().resize();
     });
 
@@ -80,7 +78,6 @@ JMVC.canvas.Editor = function (options) {
      * get the configuration
      */
     JMVC.io.getJson(this.basepath + 'config.json', function (json) {
-        
         self.config = json;
 
         // get all the helpers:
@@ -93,37 +90,25 @@ JMVC.canvas.Editor = function (options) {
         //
         // AND then load styles
         JMVC.require('canvas/editor/helpers/', function () {
-
             // disable right click
-            //
             JMVC.events.disableRightClick();
-            // console.log('loaded')
 
             // Basic editor style
-            // 
             JMVC.head.addStyle(self.basepath + 'css/editor.css', true);
             JMVC.head.addStyle(self.basepath + 'css/tooltip.css', true);
-            JMVC.head.addStyle(self.basepath + 'css/' + self.config.sprite, true);  
+            JMVC.head.addStyle(self.basepath + 'css/' + self.config.sprite, true);
 
             // create and initialize the panelMAnager
-            // 
             self.panelManager = JMVC.canvas.Editor.getPanelManager(self);
 
             // initialize, render and bind the panel manager
-            //
             self.panelManager
                 .init()
                 .render()
                 .bind();
         });
     });
-
-    
-
-    
 };
 //
 // load almost anything else (check canvas/editorNEW/helpers/require.json)
-
 //
-

@@ -10,25 +10,23 @@ JMVC.require('widget/tooltip/tooltip');
 JMVC.require('canvas/editor/panels/');
 
 JMVC.canvas.Editor.getPanelManager = function (editor) {
-
     var mainPanel,
         currentPanel,
         panelID = 'jmvcCEpanel',
         sectionsContainer,
         sections = [],
         getCommand = function (obj) {
-            var o = {'class' : 'icon ' + obj['class']};
+            var o = { 'class': 'icon ' + obj['class'] },
+                ret = JMVC.dom.create('strong', o);
             obj.title && (o.title = obj.title);
-            //obj.data && (o['data-act'] = obj.data);
-            var ret = JMVC.dom.create('strong', o);
-
+            // obj.data && (o['data-act'] = obj.data);
             // avoid tooltip if no title is given
             if (obj.title) {
                 JMVC.widget.Tooltip(
                     ret,
                     false,
-                    {color:'#f60', backgroundColor:'#000', border : '1px solid #f60'},
-                    {follow : true}
+                    { color: '#f60', backgroundColor: '#000', border: '1px solid #f60' },
+                    { follow: true }
                 );
             }
             return ret;
@@ -40,7 +38,7 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
         // declare panel managers, each one will be
         // instantiated here at init time
         toolsManager,
-        undoredoManager, //***
+        // undoredoManager,
         layerManager,
         filterManager,
         exportManager,
@@ -53,89 +51,87 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
 
         commands = [
             {
-                'class' : 'tools active',
-                title : 'tool manager',
-                data : 'toolmanager',
-                hasPanel : true,
-                manager : function () { return toolsManager; }
-            },{
-                'class' : 'undo unactive',
-                name : 'undo',
-                title : 'undo',
-                data : 'undo'
-            },{
-                'class' : 'redo unactive',
-                name : 'redo',
-                title : 'redo',
-                data : 'redo'
-            },{
-                'class' : 'layers active',
-                title : 'layer manager',
-                data : 'layermanager',
-                hasPanel : true,
-                manager : function () { return layerManager;}
-            },{
-                'class' : 'filters active',
-                title : 'filters',
-                data : 'filtersmanager',
-                hasPanel : true,
-                manager : function () { return filterManager;}
-            },{
-                'class' : 'separator'
+                'class': 'tools active',
+                title: 'tool manager',
+                data: 'toolmanager',
+                hasPanel: true,
+                manager: function () { return toolsManager; }
             }, {
-                'class' : 'clean active',
-                title : 'clean canvas',
-                data : 'cleancanvas'
+                'class': 'undo unactive',
+                name: 'undo',
+                title: 'undo',
+                data: 'undo'
             }, {
-                'class' : 'selection active',
-                title : 'select area',
-                data : 'selection'
+                'class': 'redo unactive',
+                name: 'redo',
+                title: 'redo',
+                data: 'redo'
             }, {
-                'class' : 'fullscreen active',
-                title : 'full screen',
-                data : 'fullscreen'
+                'class': 'layers active',
+                title: 'layer manager',
+                data: 'layermanager',
+                hasPanel: true,
+                manager: function () { return layerManager; }
             }, {
-                'class' : 'separator'
+                'class': 'filters active',
+                title: 'filters',
+                data: 'filtersmanager',
+                hasPanel: true,
+                manager: function () { return filterManager; }
             }, {
-                'class' : 'export active',
-                title : 'export image',
-                data : 'exportimage',
-                hasPanel : true,
-                manager : function () { return exportManager;}
+                'class': 'separator'
             }, {
-                'class' : 'file active',
-                title : 'save',
-                data : 'file'
+                'class': 'clean active',
+                title: 'clean canvas',
+                data: 'cleancanvas'
             }, {
-                'class' : 'separator'
+                'class': 'selection active',
+                title: 'select area',
+                data: 'selection'
             }, {
-                //cntClass : 'fright',
-                'class' : 'settings active',
-                title : 'settings',
-                data : 'optionsmanager',
-                hasPanel : true,
-                manager : function () { return settingsManager;}
-            },{
-                //cntClass : 'fright',
-                'class' : 'info active',
-                title : 'usage info',
-                data : 'getinfo',
-                hasPanel : true,
-                manager : function () { return infoManager;}
+                'class': 'fullscreen active',
+                title: 'full screen',
+                data: 'fullscreen'
+            }, {
+                'class': 'separator'
+            }, {
+                'class': 'export active',
+                title: 'export image',
+                data: 'exportimage',
+                hasPanel: true,
+                manager: function () { return exportManager; }
+            }, {
+                'class': 'file active',
+                title: 'save',
+                data: 'file'
+            }, {
+                'class': 'separator'
+            }, {
+                // cntClass : 'fright',
+                'class': 'settings active',
+                title: 'settings',
+                data: 'optionsmanager',
+                hasPanel: true,
+                manager: function () { return settingsManager; }
+            }, {
+                // cntClass : 'fright',
+                'class': 'info active',
+                title: 'usage info',
+                data: 'getinfo',
+                hasPanel: true,
+                manager: function () { return infoManager; }
             }
         ],
         commandsNodes = {};
 
     Channel.sub('UNDOREDO_EVENT', function (topic, elem, status) {
-        JMVC.dom.removeClass(commandsNodes[elem], ['active','unactive']);
+        JMVC.dom.removeClass(commandsNodes[elem], ['active', 'unactive']);
         JMVC.dom.addClass(commandsNodes[elem], status ? 'active' : 'unactive');
     });
 
-
     Channel.sub('PANEL_EVENT', function (topic, action, el, positions, size) {
-
         // maybe a panel is required
-        // 
+        //
         if (el.hasPanel) {
             if (currentPanel) {
                 currentPanel.hide();
@@ -143,15 +139,14 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
             currentPanel = el.manager().panel;
             currentPanel.render();
             currentPanel.show(size, positions[0]);
-            
+
             (function (cp) {
                 // when a panel is opened, close it as a click or a
                 // mousedown event is fired from outside the panel
-                // 
-                JMVC.events.onEventOut(cp.node, 'click', function () {cp.hide(); });
-                JMVC.events.onEventOut(cp.node, 'mousedown', function () {cp.hide(); });
+                //
+                JMVC.events.onEventOut(cp.node, 'click', function () { cp.hide(); });
+                JMVC.events.onEventOut(cp.node, 'mousedown', function () { cp.hide(); });
             })(currentPanel);
-
         } else if (currentPanel) {
             currentPanel.hide();
         }
@@ -159,32 +154,32 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
         //
         // direct actions
         switch (action) {
-            case 'cleancanvas':
-                editor.panelManager.getToolsManager().clear();
+        case 'cleancanvas':
+            editor.panelManager.getToolsManager().clear();
             break;
-            case 'undo':
-                JMVC.canvas.Editor.undoredoManager.back();
+        case 'undo':
+            JMVC.canvas.Editor.undoredoManager.back();
             break;
-            case 'redo':
-                JMVC.canvas.Editor.undoredoManager.forth();
+        case 'redo':
+            JMVC.canvas.Editor.undoredoManager.forth();
             break;
-            case 'selection':
-                selectionManager.init();
+        case 'selection':
+            selectionManager.init();
             break;
-            case 'fullscreen':
-                fullscreenManager.launch();
+        case 'fullscreen':
+            fullscreenManager.launch();
             break;
-            case 'file':
-                fileManager.open();
+        case 'file':
+            fileManager.open();
             break;
         }
     });
 
-    //define a global spinner
-    JMVC.canvas.Editor.Spinner = JMVC.dom.create('div', {'class':'loadingspinner'});
-    
+    // define a global spinner
+    JMVC.canvas.Editor.Spinner = JMVC.dom.create('div', { 'class': 'loadingspinner' });
+
     JMVC.canvas.Editor.Spinner.isVisible = false;
-    
+
     JMVC.canvas.Editor.Spinner.show = function () {
         JMVC.canvas.Editor.Spinner.isVisible = true;
         JMVC.css.show(JMVC.canvas.Editor.Spinner);
@@ -199,20 +194,20 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
     };
 
     return {
-        getToolsManager : function () {return toolsManager; },
-        getLayerManager : function () {return layerManager; },
-        getFilterManager : function () {return filterManager; },
-        getFileManager : function () {return fileManager; },
-        getExportManager : function () {return exportManager; },
-        getSettingsManager : function () {return settingsManager; },
-        getInfoManager : function () {return infoManager; },
-        getFullscreenManager : function () {return fullscreenManager; },
+        getToolsManager: function () { return toolsManager; },
+        getLayerManager: function () { return layerManager; },
+        getFilterManager: function () { return filterManager; },
+        getFileManager: function () { return fileManager; },
+        getExportManager: function () { return exportManager; },
+        getSettingsManager: function () { return settingsManager; },
+        getInfoManager: function () { return infoManager; },
+        getFullscreenManager: function () { return fullscreenManager; },
 
         /**
          * [init description]
          * @return {[type]} [description]
          */
-        init : function () {
+        init: function () {
             // get all managers!!!
             //
             toolsManager = JMVC.canvas.Editor.getToolManager(editor, ['canvas/editor/tools/']);
@@ -225,40 +220,37 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
             fullscreenManager = JMVC.canvas.Editor.getFullscreenManager(editor);
 
             // manager for selection tool
-            // 
+            //
             selectionManager = JMVC.canvas.Editor.getSelectionManager(editor);
-            
+
             // add first layer and activate it
-            // 
+            //
             layerManager.add().activate();
 
             // initialize the undo-redo manager
-            // 
+            //
             JMVC.canvas.Editor.undoredoManager = JMVC.canvas.Editor.getUndoredoManager(editor);
 
             JMVC.canvas.Editor.undoredoManager.init();
 
-            mainPanel = JMVC.dom.create('div', {id : panelID});
-            
-            for (var i = 0, l = commands.length; i < l; i += 1) {
-                var n = getCommand(commands[i]),
-                    sec,
-                    liattrs = {'data-act' : commands[i].data};
-
+            mainPanel = JMVC.dom.create('div', { id: panelID });
+            var i = 0,
+                l = commands.length,
+                n, sec, liattrs;
+            for (null; i < l; i += 1) {
+                n = getCommand(commands[i]);
+                liattrs = { 'data-act': commands[i].data };
                 if ('name' in commands[i]) {
                     commandsNodes[commands[i].name] = n;
                 }
-
                 if ('cntClass' in commands[i]) {
                     liattrs['class'] = commands[i].cntClass;
                 }
 
-                sec = JMVC.dom.create('li', liattrs, n );
+                sec = JMVC.dom.create('li', liattrs, n);
 
                 if (commands[i].hasPanel) {
-                    
                     sec.hasPanel = true;
-                    
                     sec.manager = commands[i].manager;
                 }
                 sections.push(sec);
@@ -281,7 +273,7 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
          * [render description]
          * @return {[type]} [description]
          */
-        render : function () {
+        render: function () {
             JMVC.dom.append(sectionsContainer, sections);
             JMVC.dom.append(mainPanel, sectionsContainer);
             JMVC.dom.append(editor.node, mainPanel);
@@ -296,28 +288,24 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
          * [bind description]
          * @return {[type]} [description]
          */
-        bind : function () {
-
+        bind: function () {
             toolsManager.bind();
-            
             exportManager.bind();
 
-/*
-            JMVC.events.on(mainPanel, 'mouseover', function () {
-                JMVC.css.style(mainPanel, 'top', '0px');
-            });
-            
-            JMVC.events.on(mainPanel, 'mouseout', function () {
-                JMVC.css.style(mainPanel, 'top', '-25px');
-            });
-*/
+            /*
+                        JMVC.events.on(mainPanel, 'mouseover', function () {
+                            JMVC.css.style(mainPanel, 'top', '0px');
+                        });
+                        JMVC.events.on(mainPanel, 'mouseout', function () {
+                            JMVC.css.style(mainPanel, 'top', '-25px');
+                        });
+            */
             JMVC.events.on(sections, 'click', function (e) {
-
                 var trg = this,
                     trgPos = JMVC.css.getPosition(trg),
-                    trgWidth = parseInt(JMVC.css.getComputedStyle(trg, 'width'), 10),
-                    trgHeight = parseInt(JMVC.css.getComputedStyle(trg, 'height'), 10);
- 
+                    trgWidth = parseInt(JMVC.css.getComputedStyle(trg, 'width'), 10);
+                    // trgHeight = parseInt(JMVC.css.getComputedStyle(trg, 'height'), 10);
+
                 // break if is unactive
                 if (JMVC.dom.hasClass(trg, 'unactive')) {
                     return false;
@@ -331,7 +319,7 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
                         trgWidth
                     ]
                 );
-                JMVC.events.kill(e)
+                JMVC.events.kill(e);
             });
             return this;
         },
@@ -341,21 +329,15 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
          * @param  {[type]} name [description]
          * @return {[type]}      [description]
          */
-        export : function (name) {            
+        export: function (name) {
             if (name) {
                 var tmp = JMVC.dom.add(editor.node, 'a', {
-                    download : name + '.png',
-                    href : layerManager.getCurrent().cnv.toDataURL("image/png"),
-                    style : 'display:none'
+                    download: name + '.png',
+                    href: layerManager.getCurrent().cnv.toDataURL('image/png'),
+                    style: 'display:none'
                 }).click();
                 JMVC.dom.remove(tmp);
             }
         }
     };
 };
-
-
-
-
-
-

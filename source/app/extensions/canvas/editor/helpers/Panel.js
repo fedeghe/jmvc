@@ -1,8 +1,8 @@
 //
 JMVC.canvas.Editor.Panel = function () {
-    this.node = JMVC.dom.create('div', {'class' : 'panel'});
-    JMVC.dom.add(this.node, 'div', {'class' : 'arrow'});
-    this.inner = JMVC.dom.add(this.node, 'div', {"class" : "inner"});
+    this.node = JMVC.dom.create('div', { 'class': 'panel' });
+    JMVC.dom.add(this.node, 'div', { 'class': 'arrow' });
+    this.inner = JMVC.dom.add(this.node, 'div', { 'class': 'inner' });
     this.rendered = false;
 };
 
@@ -14,9 +14,13 @@ JMVC.canvas.Editor.Panel.prototype = {
      * @param  {[type]} left [description]
      * @return {[type]}      [description]
      */
-    show : function (top, left) {
+    show: function (top, left) {
         this.onBeforeOpen();
-        JMVC.css.style(this.node, {top : top + 'px', left : (left + 25) + 'px', position : 'absolute'});
+        JMVC.css.style(this.node, {
+            top: top + 'px',
+            left: (left + 25) + 'px',
+            position: 'absolute'
+        });
         JMVC.css.show(this.node);
         this.onAfterOpen();
     },
@@ -25,7 +29,7 @@ JMVC.canvas.Editor.Panel.prototype = {
      * [hide description]
      * @return {[type]} [description]
      */
-    hide : function () {
+    hide: function () {
         this.onBeforeClose();
         JMVC.css.hide(this.node);
         this.onAfterClose();
@@ -35,7 +39,7 @@ JMVC.canvas.Editor.Panel.prototype = {
      * [render description]
      * @return {[type]} [description]
      */
-    render : function () {
+    render: function () {
         !this.rendered && JMVC.dom.append(JMVC.dom.find('#jmvcCEpanel'), this.node);
         this.rendered = true;
     },
@@ -45,7 +49,7 @@ JMVC.canvas.Editor.Panel.prototype = {
      * @param  {[type]} html [description]
      * @return {[type]}      [description]
      */
-    html : function (html) {
+    html: function (html) {
         JMVC.dom.html(this.inner, html);
     },
 
@@ -53,7 +57,7 @@ JMVC.canvas.Editor.Panel.prototype = {
      * [getInnerNode description]
      * @return {[type]} [description]
      */
-    getInnerNode : function () {
+    getInnerNode: function () {
         return this.inner;
     },
 
@@ -61,9 +65,8 @@ JMVC.canvas.Editor.Panel.prototype = {
      * [onBeforeOpen description]
      * @return {[type]} [description]
      */
-    onBeforeOpen : function () {},
-    onAfterOpen : function () {},
-    onBeforeClose : function () {},
-    onAfterClose : function () {}
+    onBeforeOpen: function () {},
+    onAfterOpen: function () {},
+    onBeforeClose: function () {},
+    onAfterClose: function () {}
 };
-
