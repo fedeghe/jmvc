@@ -1,5 +1,4 @@
 JMVC.canvas.Editor.getUndoredoManager = function (instance) {
-
     var self = instance,
         maxLevels = 100,
         states = [],
@@ -16,26 +15,22 @@ JMVC.canvas.Editor.getUndoredoManager = function (instance) {
         //
         // publish to allow the editor to change the icon status
         dopub = function () {
-            JMVC.Channel('canvaseditor').pub('UNDOREDO_EVENT', ['undo', index > 0] );
+            JMVC.Channel('canvaseditor').pub('UNDOREDO_EVENT', ['undo', index > 0]);
             JMVC.Channel('canvaseditor').pub('UNDOREDO_EVENT', ['redo', index < states.length - 1]);
         };
 
     JMVC.Channel('canvaseditor').sub('EDITOR_CLEANED', function () {
         JMVC.canvas.Editor.undoredoManager.clear();
     });
-    
-
-    //autoload first state
-    
-
+    // autoload first state
     return {
 
-        init : function () {
+        init: function () {
             states.length = 0;
             index = 0;
             states.push(self.panelManager.getLayerManager().getCurrent().cnv.toDataURL());
         },
-        save : function () {
+        save: function () {
             //
             // if some backspeps are made, and new edit are done,
             // backsteps are lost
@@ -53,19 +48,19 @@ JMVC.canvas.Editor.getUndoredoManager = function (instance) {
             states.push(self.panelManager.getLayerManager().getCurrent().cnv.toDataURL());
             dopub();
         },
-        back : function () {
-            if (index == 0) {return false; }
+        back: function () {
+            if (index == 0) { return false; }
             index -= 1;
             load(index);
             dopub();
         },
-        forth : function () {
-            if (index == states.length - 1) {return false; }
+        forth: function () {
+            if (index == states.length - 1) { return false; }
             index += 1;
             load(index);
             dopub();
         },
-        clear : function () {
+        clear: function () {
             this.init();
             dopub();
         }
@@ -73,4 +68,4 @@ JMVC.canvas.Editor.getUndoredoManager = function (instance) {
 };
 /*
 () () () () () () () () () ()
- */
+*/

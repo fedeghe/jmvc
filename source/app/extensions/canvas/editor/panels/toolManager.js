@@ -1,55 +1,52 @@
 JMVC.canvas.Editor.getToolManager = function (instance, tools) {
-
     var self = instance,
         panel = new JMVC.canvas.Editor.Panel(),
         currentTool,
         toolObjs,
         toolnodes = [],
-        tools_files = tools,
+        toolsFiles = tools,
         toolOptionsManager = JMVC.canvas.Editor.getToolOptionsManager(),
         getCurrentLayer = function () {
             return self.panelManager.getLayerManager().getCurrent();
         };
 
-    function loadTools() {
+    function loadTools () {
         JMVC.debug('Loading tools');
-        for (var i = 0, l = tools_files.length; i < l; i += 1) {
-            JMVC.require(tools_files[i]);
+        for (var i = 0, l = toolsFiles.length; i < l; i += 1) {
+            JMVC.require(toolsFiles[i]);
         }
     }
 
     return {
-        panel : panel,
+        panel: panel,
 
-        optionsNode : null,
+        optionsNode: null,
 
-        init : function () {
+        init: function () {
             panel.html('tools');
-            JMVC.css.style(panel.node, {'width': '365px'});
+            JMVC.css.style(panel.node, { 'width': '365px' });
             loadTools();
             return this;
         },
 
-        render : function () {
-            
+        render: function () {
             var that = this,
                 dst = panel.getInnerNode(),
-                list = JMVC.dom.create('ul', {'class' : 'tools'}),
+                list = JMVC.dom.create('ul', { 'class': 'tools' }),
                 i, j = 0;
 
-            this.optionsNode = JMVC.dom.create('div', {'id' : 'toolOptions'});
+            this.optionsNode = JMVC.dom.create('div', { 'id': 'toolOptions' });
 
             toolObjs = JMVC.canvas.editortools;
 
             for (i in toolObjs) {
-
-                toolnodes[j] = JMVC.dom.add(list, 'li',{title : i.replace(/_/, ' '), 'class' : i}, '');
+                toolnodes[j] = JMVC.dom.add(list, 'li', { title: i.replace(/_/, ' '), 'class': i }, '');
 
                 JMVC.widget.Tooltip(
                     toolnodes[j],
                     false,
                     {},
-                    {follow : true}
+                    { follow: true }
                 );
 
                 (function (el, tool) {
@@ -63,18 +60,18 @@ JMVC.canvas.Editor.getToolManager = function (instance, tools) {
                 j++;
             }
             JMVC.dom.append(dst, [list, JMVC.dom.clearer(), that.optionsNode]);
-           
+
             return this;
         },
 
-        bind : function () {
+        bind: function () {
             this.changeTool(JMVC.canvas.editortools.neighbour_points);
             return this;
         },
-        
-        changeTool : function (tool) {
+
+        changeTool: function (tool) {
             var layer = getCurrentLayer();
-            
+
             // iniject the layer (canvas, context, ... )
             // and let che tool decide
             tool.use(layer);
@@ -82,30 +79,30 @@ JMVC.canvas.Editor.getToolManager = function (instance, tools) {
             // load the options
             // found on the tool
             toolOptionsManager.loadToolOptions(
-                this.optionsNode,   
+                this.optionsNode,
                 tool,
                 self.panelManager.getLayerManager()
             );
             currentTool = tool;
         },
 
-        getCurrentTool : function () {
+        getCurrentTool: function () {
             return currentTool;
         },
 
-        noTool : function () {
+        noTool: function () {
             var el = getCurrentLayer().cnv;
             el.onmousedown = el.onmousemove = el.onmouseup = null;
         },
 
-        clear : function () {
+        clear: function () {
             var lm = self.panelManager.getLayerManager(),
                 l = lm.getCurrent();
             lm.clean(l);
             JMVC.Channel('canvaseditor').pub('EDITOR_CLEANED');
         },
 
-        pickColor : function (x, y) {
+        pickColor: function (x, y) {
             var pixel = getCurrentLayer().ctx.getImageData(x, y, 1, 1);
             return {
                 r: pixel.data[0],
@@ -114,6 +111,5 @@ JMVC.canvas.Editor.getToolManager = function (instance, tools) {
                 a: pixel.data[3]
             };
         }
-    };  
-    
+    };
 };

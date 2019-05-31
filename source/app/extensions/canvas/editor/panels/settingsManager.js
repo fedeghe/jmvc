@@ -1,13 +1,10 @@
 JMVC.canvas.Editor.getSettingsManager = function (instance) {
-
-    var self = instance,
-        panel = new JMVC.canvas.Editor.Panel(),
-        options = {};
+    var panel = new JMVC.canvas.Editor.Panel();
 
     return {
-        init : function () {
+        init: function () {
             panel.html('settings');
         },
-        panel : panel
+        panel: panel
     };
 };
