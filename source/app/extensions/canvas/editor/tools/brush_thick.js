@@ -1,29 +1,28 @@
 JMVC.extend('canvas.editortools.brush_thick', {
-    use : function (instance) {
+    use: function (instance) {
         var self = this,
             el = instance.cnv,
-            ctx = instance.ctx;
+            ctx = instance.ctx,
+            isDrawing, lastPoint;
 
         el.onmousedown = el.onmousemove = el.onmouseup = null;
 
         ctx.lineWidth = self.options.linewidth.value;
 
-        ctx.strokeStyle = JMVC.string.replaceAll('hsla({h}, {s}%, {l}%, {a})',{
-            h : self.options.color.hueZero,
-            s : self.options.color.satZero * 100,
-            l : self.options.color.lumZero * 100,
-            a : self.options.color.alpZero
-        }, {delim: ['{', '}']});
+        ctx.strokeStyle = JMVC.string.replaceAll('hsla({h}, {s}%, {l}%, {a})', {
+            h: self.options.color.hueZero,
+            s: self.options.color.satZero * 100,
+            l: self.options.color.lumZero * 100,
+            a: self.options.color.alpZero
+        }, { delim: ['{', '}'] });
         ctx.lineJoin = ctx.lineCap = 'butt';
 
-        var isDrawing, lastPoint;
-
-        el.onmousedown = function(e) {
+        el.onmousedown = function (e) {
             isDrawing = true;
             lastPoint = { x: e.clientX, y: e.clientY };
         };
 
-        el.onmousemove = function(e) {
+        el.onmousemove = function (e) {
             if (!isDrawing) return;
 
             ctx.lineWidth = self.options.linewidth.value;
@@ -41,30 +40,29 @@ JMVC.extend('canvas.editortools.brush_thick', {
             lastPoint = { x: e.clientX, y: e.clientY };
         };
 
-        el.onmouseup = function() {
+        el.onmouseup = function () {
             JMVC.canvas.Editor.undoredoManager.save();
             isDrawing = false;
         };
     },
 
-    options : {
-        linewidth : {
-            value : 10,
-            name : 'linewidth',
-            type : 'int',
-            min : 1,
-            max : 250,
-            step : 10
+    options: {
+        linewidth: {
+            value: 10,
+            name: 'linewidth',
+            type: 'int',
+            min: 1,
+            max: 250,
+            step: 10
         },
-        color : {
-            value : '',
-            hueZero : 1,
-            satZero : 1,
-            lumZero : 0,
-            alpZero : 0.05,
-            name : 'color',
-            type : 'color'
+        color: {
+            value: '',
+            hueZero: 1,
+            satZero: 1,
+            lumZero: 0,
+            alpZero: 0.05,
+            name: 'color',
+            type: 'color'
         }
     }
 });
-

@@ -1,13 +1,12 @@
 JMVC.extend('canvas.editortools.ribbon', {
 
-    use: function(instance) {
-
-        console.debug('Using ribbon')
+    use: function (instance) {
+        console.debug('Using ribbon');
 
         var self = this,
             el = instance.cnv,
             ctx = instance.ctx,
-            
+
             Ww = window.innerWidth,
             Wh = window.innerHeight,
             mx = Ww / 2,
@@ -20,29 +19,31 @@ JMVC.extend('canvas.editortools.ribbon', {
 
         ctx.lineWidth = 1;
         ctx.lineJoin = ctx.lineCap = 'round';
-        ctx.strokeStyle = JMVC.string.replaceAll('hsla({h}, {s}%, {l}%, {a})', {
-            h: self.options.color.hueZero,
-            s: self.options.color.satZero * 100,
-            l: self.options.color.lumZero * 100,
-            a: self.options.color.alpZero
-        }, {
-            delim: ['{', '}']
-        });
+        ctx.strokeStyle = JMVC.string.replaceAll(
+            'hsla({h}, {s}%, {l}%, {a})',
+            {
+                h: self.options.color.hueZero,
+                s: self.options.color.satZero * 100,
+                l: self.options.color.lumZero * 100,
+                a: self.options.color.alpZero
+            },
+            {
+                delim: ['{', '}']
+            });
 
         // save it back
         self.options.color.value = ctx.strokeStyle;
 
-        el.onmousedown = function(e) {
-
-            var a;
+        el.onmousedown = function (e) {
+            var a, b;
             points = [];
             isDrawing = true;
 
-            mx =  e.clientX;
+            mx = e.clientX;
             my = e.clientY;
-            
-            ctx.globalCompositeOperation = "source-over";
-                        
+
+            ctx.globalCompositeOperation = 'source-over';
+
             for (a = 0; a < self.options.lines.value; a++) {
                 points.push({
                     dx: Ww / 2,
@@ -51,14 +52,14 @@ JMVC.extend('canvas.editortools.ribbon', {
                     ay: 0,
                     div: 0.1,
                     ease: Math.random() * 0.2 + 0.6
-                })
+                });
             }
             interval = setInterval(d, 1000 / 60);
 
             ctx.lineWidth = self.options.radius.value;
             ctx.strokeStyle = self.options.color.value;
 
-            function d() {
+            function d () {
                 for (var j = 0, k = points.length; j < k; j++) {
                     ctx.beginPath();
                     ctx.moveTo(points[j].dx, points[j].dy);
@@ -68,53 +69,53 @@ JMVC.extend('canvas.editortools.ribbon', {
                     ctx.stroke();
                 }
             }
-            
-            for (var b = 0; b < points.length; b++) {
+
+            for (b = 0; b < points.length; b++) {
                 points[b].dx = mx;
                 points[b].dy = my;
             }
-            //isDrawing = false;
+            // isDrawing = false;
         };
 
-        el.onmousemove = function(e) {
+        el.onmousemove = function (e) {
             JMVC.events.preventDefault(e);
             if (!isDrawing) return;
             mx = e.clientX;
             my = e.clientY;
         };
 
-        el.onmouseup = function() {
+        el.onmouseup = function () {
             JMVC.canvas.Editor.undoredoManager.save();
             clearInterval(interval);
             isDrawing = false;
         };
     },
 
-    options : {
-        radius : {
-            name : 'radius',
-            type : 'int',
-            value : 1,
-            min : 1,
-            max : 10,
-            step : 1
+    options: {
+        radius: {
+            name: 'radius',
+            type: 'int',
+            value: 1,
+            min: 1,
+            max: 10,
+            step: 1
         },
-        color : {
-            value : '',
-            hueZero : 1,
-            satZero : 1,
-            lumZero : 0,
-            alpZero : .1,
-            name : 'color',
-            type : 'color'
+        color: {
+            value: '',
+            hueZero: 1,
+            satZero: 1,
+            lumZero: 0,
+            alpZero: 0.1,
+            name: 'color',
+            type: 'color'
         },
-        lines : {
-            value : 10,
-            min : 2,
-            max : 200,
+        lines: {
+            value: 10,
+            min: 2,
+            max: 200,
             step: 2,
-            name : 'lines',
-            type : 'int'
+            name: 'lines',
+            type: 'int'
         }
 
     }
@@ -224,12 +225,6 @@ shaded.prototype = {
     },
     strokeEnd: function() {}
 };
-
-
-
-
-
-
 
 function HSB2RGB(j, d, c) {
     var e, g, l, h, k, b, a, m;
@@ -494,10 +489,6 @@ ColorSelector.prototype = {
         this.dispatcher.removeEventListener(b, c, a)
     }
 };
-
-
-
-
 
 function Palette() {
     var e, d, b, a, n = 90,
@@ -945,9 +936,6 @@ function onCanvasMouseUp() {
     }
 }
 
-
-
-
 function onCanvasTouchStart(a) {
     cleanPopUps();
     if (a.touches.length == 1) {
@@ -973,13 +961,6 @@ function onCanvasTouchEnd(a) {
         window.removeEventListener("touchend", onCanvasTouchEnd, false)
     }
 }
-
-
-
-
-
-
-
 
 function saveToLocalStorage() {
     localStorage.canvas = canvas.toDataURL("image/png")

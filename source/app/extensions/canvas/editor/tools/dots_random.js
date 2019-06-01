@@ -1,36 +1,36 @@
 JMVC.extend('canvas.editortools.dots_random', {
-    use : function (instance) {
+    use: function (instance) {
         var self = this,
             el = instance.cnv,
             ctx = instance.ctx,
-            clientX, clientY, timeout,
-            density = 40;
+            clientX, clientY, timeout;
 
         el.onmousedown = el.onmousemove = el.onmouseup = null;
 
-        ctx.fillStyle = 'hsla('+self.options.color.hueZero+', ' + (self.options.color.satZero * 100) + '% ,' + (self.options.color.lumZero * 100) + '%, ' + (self.options.color.alpZero) + ')'; 
+        ctx.fillStyle = 'hsla(' + self.options.color.hueZero + ', ' + (self.options.color.satZero * 100) + '% ,' + (self.options.color.lumZero * 100) + '%, ' + (self.options.color.alpZero) + ')';
 
-        function getRandomFloat(min, max) {
+        function getRandomFloat (min, max) {
             return Math.random() * (max - min) + min;
         }
 
         el.onmousedown = function (e) {
-
             ctx.fillStyle = self.options.color.value;
 
             ctx.lineJoin = ctx.lineCap = 'round';
             clientX = e.clientX;
             clientY = e.clientY;
 
-            timeout = setTimeout(function draw() {
-                for (var i = self.options.density.value; i--; ) {
-                    var angle = getRandomFloat(0, Math.PI * 2),
-                        radius = getRandomFloat(0, self.options.radius.value);
+            timeout = setTimeout(function draw () {
+                var i = self.options.density.value,
+                    angle, radius;
+                while (i--) {
+                    angle = getRandomFloat(0, Math.PI * 2);
+                    radius = getRandomFloat(0, self.options.radius.value);
 
                     ctx.globalAlpha = getRandomFloat(0, self.options.pressure.value);
                     ctx.fillRect(
                         clientX + radius * Math.cos(angle),
-                        clientY + radius * Math.sin(angle), 
+                        clientY + radius * Math.sin(angle),
                         getRandomFloat(1, 2),
                         getRandomFloat(1, 2)
                     );
@@ -40,52 +40,50 @@ JMVC.extend('canvas.editortools.dots_random', {
             }, 50);
         };
 
-        el.onmousemove = function(e) {
+        el.onmousemove = function (e) {
             clientX = e.clientX;
             clientY = e.clientY;
         };
 
-        el.onmouseup = function() {
+        el.onmouseup = function () {
             ctx.globalAlpha = 1;
             JMVC.canvas.Editor.undoredoManager.save();
             clearTimeout(timeout);
         };
     },
 
-    
-    options : {
-        radius : {
-            name : 'radius',
-            type : 'int',
-            value : 30
+    options: {
+        radius: {
+            name: 'radius',
+            type: 'int',
+            value: 30
         },
-        color : {
-            value : '',
+        color: {
+            value: '',
 
-            hueZero : 100,
-            satZero : 1,
-            lumZero : 0.5,
+            hueZero: 100,
+            satZero: 1,
+            lumZero: 0.5,
 
-            alpZero : 1,
-            name : 'color',
-            type : 'color'
+            alpZero: 1,
+            name: 'color',
+            type: 'color'
         },
-        pressure : {
-            name : 'pressure',
-            type : 'int',
-            value : .5,
-            min : .1,
-            max : 1,
-            step: .1
+        pressure: {
+            name: 'pressure',
+            type: 'int',
+            value: 0.5,
+            min: 0.1,
+            max: 1,
+            step: 0.1
         },
-        density : {
-            name : 'density',
-            type : 'int',
-            value : 50,
-            min : 5,
-            max : 100,
-            step : 5
+        density: {
+            name: 'density',
+            type: 'int',
+            value: 50,
+            min: 5,
+            max: 100,
+            step: 5
         }
-
     }
 });

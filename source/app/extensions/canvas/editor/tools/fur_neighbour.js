@@ -1,39 +1,35 @@
-JMVC.extend('canvas.editortools.fur_neighbour', function() {
-
+JMVC.extend('canvas.editortools.fur_neighbour', function () {
     return {
-        use : function (instance) {
-
+        use: function (instance) {
             var self = this,
                 el = instance.cnv,
                 ctx = instance.ctx,
-                clientX, clientY, timeout,
-                density = 40,
                 radius = self.options.radius.value,
                 isDrawing,
-                points = [ ];
+                points = [];
 
             el.onmousedown = el.onmousemove = el.onmouseup = null;
 
-            //ctx.fillStyle = self.options.color.value;
-            ctx.strokeStyle = 'hsla('+self.options.color.hueZero+', ' + (self.options.color.satZero * 100) + '% ,' + (self.options.color.lumZero * 100) + '%, ' + (self.options.color.alpZero) + ')'; 
+            // ctx.fillStyle = self.options.color.value;
+            ctx.strokeStyle = 'hsla(' + self.options.color.hueZero + ', ' + (self.options.color.satZero * 100) + '% ,' + (self.options.color.lumZero * 100) + '%, ' + (self.options.color.alpZero) + ')';
 
             ctx.lineWidth = 1;
             ctx.lineJoin = ctx.lineCap = 'round';
 
-        
-
-            el.onmousedown = function(e) {
-                points = [ ];
+            el.onmousedown = function (e) {
+                points = [];
                 isDrawing = true;
                 points.push({ x: e.clientX, y: e.clientY });
             };
 
-            el.onmousemove = function(e) {
+            el.onmousemove = function (e) {
                 if (!isDrawing) return;
 
+                var dx, dy, d,
+                    i = 0, len;
                 radius = self.options.radius.value;
 
-                //ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+                // ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
                 points.push({ x: e.clientX, y: e.clientY });
 
                 ctx.beginPath();
@@ -41,7 +37,7 @@ JMVC.extend('canvas.editortools.fur_neighbour', function() {
                 ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
                 ctx.stroke();
 
-                for (var i = 0, len = points.length; i < len; i++) {
+                for (len = points.length; i < len; i++) {
                     dx = points[i].x - points[points.length - 1].x;
                     dy = points[i].y - points[points.length - 1].y;
                     d = dx * dx + dy * dy;
@@ -50,52 +46,41 @@ JMVC.extend('canvas.editortools.fur_neighbour', function() {
                         ctx.beginPath();
                         ctx.strokeStyle = self.options.color.value;
 
-                        ctx.moveTo( points[points.length - 1].x + (dx * 0.5), points[points.length - 1].y + (dy * 0.5));
-                        ctx.lineTo( points[points.length - 1].x - (dx * 0.5), points[points.length - 1].y - (dy * 0.5));
+                        ctx.moveTo(points[points.length - 1].x + (dx * 0.5), points[points.length - 1].y + (dy * 0.5));
+                        ctx.lineTo(points[points.length - 1].x - (dx * 0.5), points[points.length - 1].y - (dy * 0.5));
                         ctx.stroke();
                     }
                 }
             };
 
-            el.onmouseup = function() {
+            el.onmouseup = function () {
                 JMVC.canvas.Editor.undoredoManager.save();
                 isDrawing = false;
                 points.length = 0;
             };
-            
         },
 
-        
-        options : {
-            radius : {
-                name : 'radius',
-                type : 'int',
-                value : 2000,
-                min : 1000,
-                max : 100000,
-                step : 100
+        options: {
+            radius: {
+                name: 'radius',
+                type: 'int',
+                value: 2000,
+                min: 1000,
+                max: 100000,
+                step: 100
             },
-            color : {
-                value : '',
-                hueZero : 1,
-                satZero : 1,
-                lumZero : 0.5,
+            color: {
+                value: '',
+                hueZero: 1,
+                satZero: 1,
+                lumZero: 0.5,
 
-                alpZero : 0.1,
+                alpZero: 0.1,
 
-                name : 'color',
-                type : 'color'
+                name: 'color',
+                type: 'color'
             }
 
         }
-
-    }
+    };
 });
-
-
-
-
-
-
-
-
