@@ -1,17 +1,14 @@
 JMVC.require('core/lib/widgzard/widgzard');
 
 JMVC.extend('core/engy', function () {
-    "use strict";
-
     JMVC.head.addStyle(JMVC.vars.extensions + 'core/lib/widgzard/engy.min.css');
 
-    
     var components = {},
         config = {
-            fileNameSeparator : "/",
-            fileNamePrepend : "",
-            ext : ".js",
-            componentsUrl : JMVC.vars.engyComponents
+            fileNameSeparator: '/',
+            fileNamePrepend: '',
+            ext: '.js',
+            componentsUrl: JMVC.vars.engyComponents
         };
 
     /**
@@ -21,13 +18,12 @@ JMVC.extend('core/engy', function () {
      * @param  {object} o    the object to be inserted
      * @return {void}        [description]
      */
-    function _overwrite(destObj, path, obj) {
-
+    function _overwrite (destObj, path, obj) {
         // path can be
         // str1
         // str1/str2[/str3[...]] (or str1.str2[.str3])
-        // 
-        // in any case we need the elements of it 
+        //
+        // in any case we need the elements of it
         //
         var pathEls = path.split(/\.|\//),
             l = pathEls.length,
@@ -38,11 +34,11 @@ JMVC.extend('core/engy', function () {
         // aaa/bbb/ccc/ddd
         // dig destObj to destObj.aaa.bbb.ccc
         //
-        while (i < l-1) destObj = destObj[pathEls[i++]];
+        while (i < l - 1) destObj = destObj[pathEls[i++]];
 
         // now the object is inserted
         //
-        destObj[pathEls[l-1]] = obj;
+        destObj[pathEls[l - 1]] = obj;
     }
 
     /**
@@ -52,30 +48,25 @@ JMVC.extend('core/engy', function () {
      * @param  {[type]} o    [description]
      * @return {[type]}      [description]
      */
-    function _mergeComponent(ns, path, o) {
-        
+    function _mergeComponent (ns, path, o) {
         var componentPH = JMVC.nsCheck(path, ns),
             replacementOBJ = o,
-            merged = {}, i,
-            pathEls = path.split(/\.|\//),
-            i = 0, l = pathEls.length;
+            merged = {},
+            i = 0;
 
         // start from the replacement
-        // 
-        for (i in replacementOBJ)
+        for (i in replacementOBJ) {
             merged[i] = replacementOBJ[i];
-
+        }
         // copy everything but 'component' & 'params', overriding
-        // 
-        for (i in componentPH) 
-            !(i.match(/component|params/))
-            &&
+        for (i in componentPH) {
+            !(i.match(/component|params/)) &&
             (merged[i] = componentPH[i]);
-        
+        }
         _overwrite(ns, path, merged);
     }
 
-    function Processor(config) {
+    function Processor (config) {
         this.config = config;
         this.endPromise = JMVC.Promise.create();
     }
@@ -85,12 +76,12 @@ JMVC.extend('core/engy', function () {
             res = n,
             l = els.length;
         // if (els.length > 1) {
-            els[l-1] = config.fileNamePrepend + els[l-1];
+        els[l - 1] = config.fileNamePrepend + els[l - 1];
         // }
         res = els.join(config.fileNameSeparator);
-        return config.componentsUrl  + res + config.ext;
+        return config.componentsUrl + res + config.ext;
     };
-    
+
     Processor.prototype.run = function () {
         var self = this,
             langFunc = JMVC.i18n.parse,
@@ -101,8 +92,7 @@ JMVC.extend('core/engy', function () {
             xhrTot = 0,
             cback;
 
-
-        (function solve() {
+        (function solve () {
             var component = JMVC.object.digForKey(self.config, 'component', 1),
                 componentName, cached,
                 innerPromise = JMVC.Promise.create(),
@@ -143,37 +133,27 @@ JMVC.extend('core/engy', function () {
                         .replace(/\/n|\/r/mg, '')
                         .replace(/(;?\n?)$/, '');
 
+                    // eslint-disable-next-line no-eval
                     obj = eval('(' + xhrResponseText + ')');
 
                     // before merging the object I check for the presence of parameters
-                    //
                     if (params) {
-
                         // check if into the component are used var placeholders
-                        // 
                         usedParams = JMVC.object.digForValue(obj, /#PARAM{([^}|]*)?\|?([^}]*)}/);
-
                         l = usedParams.length;
 
                         if (l) {
-
                             for (i = 0; i < l; i++) {
-                                
                                 // check if the label of the placeholder is in the params
-                                //
                                 foundParam = JMVC.nsCheck(usedParams[i].regexp[1], params);
-                                
-                                // in case use it otherwise, the fallback otherwise cleanup
-                                //
-                                foundParamValue = foundParam ? foundParam : (usedParams[i].regexp[2] || "");
-                                
-                                // string or an object?
-                                //
-                                if ((typeof foundParamValue).match(/string/i)){
 
+                                // in case use it otherwise, the fallback otherwise cleanup
+                                foundParamValue = foundParam || usedParams[i].regexp[2] || '';
+
+                                // string or an object?
+                                if ((typeof foundParamValue).match(/string/i)) {
                                     foundParamValueReplaced = JMVC.nsCheck(usedParams[i].path, obj)
-                                        .replace(usedParams[i].regexp[0],  foundParamValue);
-                                    
+                                        .replace(usedParams[i].regexp[0], foundParamValue);
                                     _overwrite(obj, usedParams[i].path, foundParamValueReplaced);
                                 } else {
                                     _overwrite(obj, usedParams[i].path, foundParamValue);
@@ -193,44 +173,44 @@ JMVC.extend('core/engy', function () {
                 // maybe is cached
                 //
                 if (cached) {
-                    cback (components[componentName]);
+                    cback(components[componentName]);
                 } else {
-                    xhrStart = +new Date;
+                    xhrStart = +new Date();
                     JMVC.io.get(componentName, cback, true);
                 }
             }
         })();
-        
+
         // now i18n
         //
         langFunc && JMVC.i18n.parse(self.config);
-        
-        countPromise.then(function (pro ,par){
-            console.log("Engy components used: " + par[0]);
+
+        countPromise.then(function (pro, par) {
+            console.log('Engy components used: ' + par[0]);
         });
 
-        solveTime.then(function (pro ,par){            
-            console.log("Engy time for getting components via xhr: " + xhrTot);
-            console.log("      \"       unfolding : " + (par[0] - xhrTot));
-            console.log("      \"       solving (xhr included): " + par[0]);
+        solveTime.then(function (pro, par) {
+            console.log('Engy time for getting components via xhr: ' + xhrTot);
+            console.log('      "       unfolding : ' + (par[0] - xhrTot));
+            console.log('      "       solving (xhr included): ' + par[0]);
         });
-        
+
         return self.endPromise;
     };
 
     return {
-        process : function (a) {
+        process: function (a) {
             return (new Processor(a)).run();
         },
 
-        render : function (params, clean, name) {
-            var t = +new Date,
+        render: function (params, clean, name) {
+            var t = +new Date(),
                 pRet = JMVC.Promise.create();
 
-            this.process(params).then(function(p, r) {
-                var r = JMVC.core.widgzard.render(r[0], clean, name);
-                console.log('t: ' + (+new Date - t));
-                pRet.done(r);
+            this.process(params).then(function (p, r) {
+                var ret = JMVC.core.widgzard.render(r[0], clean, name);
+                console.log('t: ' + (+new Date() - t));
+                pRet.done(ret);
             });
             return pRet;
         }
