@@ -1,9 +1,8 @@
 // type : LIB
 //
 
-
 JMVC.extend('core.lib.pwd', {
-    generate : function (o) {
+    generate: function (o) {
         o = o || {};
         var alphaLower = o.alphaLower || 0,
             alphaUpper = o.alphaUpper || 0,
@@ -11,17 +10,16 @@ JMVC.extend('core.lib.pwd', {
             symbol = o.symbol || 0,
             range = JMVC.array.range,
             sets = {
-                alpha : {
-                    lower : range(97, 122),
-                    upper : range(65, 90)
+                alpha: {
+                    lower: range(97, 122),
+                    upper: range(65, 90)
                 },
-                number : range(48, 57),
-                symbol : range(33, 47).concat(range(58,64)).concat(range(91,96))
+                number: range(48, 57),
+                symbol: range(33, 47).concat(range(58, 64)).concat(range(91, 96))
             },
             size = ~~o.size || 8,
             tmp = [],
             pwd = '',
-            i = 0,
             basestrength = 0,
             strength;
 
@@ -32,16 +30,16 @@ JMVC.extend('core.lib.pwd', {
 
         // get cardinality
         //
-        basestrength += (alphaLower ? sets.alpha.lower.length : 0)
-                    + (alphaUpper ? sets.alpha.upper.length : 0)
-                    + (number ? sets.number.length : 0)
-                    + (symbol ? sets.symbol.length : 0);
-        
-        // raw brute-force strenght 
+        basestrength += (alphaLower ? sets.alpha.lower.length : 0) +
+            (alphaUpper ? sets.alpha.upper.length : 0) +
+            (number ? sets.number.length : 0) +
+            (symbol ? sets.symbol.length : 0);
+
+        // raw brute-force strenght
         //
         strength = Math.log10(Math.pow(basestrength, size)).toFixed(2);
 
-        while (alphaLower--) tmp = tmp.concat(sets.alpha.lower)
+        while (alphaLower--) tmp = tmp.concat(sets.alpha.lower);
         while (alphaUpper--) tmp = tmp.concat(sets.alpha.upper);
         while (number--) tmp = tmp.concat(sets.number);
         while (symbol--) tmp = tmp.concat(sets.symbol);
@@ -49,7 +47,7 @@ JMVC.extend('core.lib.pwd', {
         while (size--) {
             pwd += String.fromCharCode(JMVC.array.rand(tmp));
         }
-        
+
         if (o.nerd) {
             pwd = pwd.replace(/a/ig, '4')
                 .replace(/e/ig, '3')
@@ -57,8 +55,8 @@ JMVC.extend('core.lib.pwd', {
                 .replace(/o/ig, '0');
         }
         return {
-            pwd : pwd,
-            strength : strength
+            pwd: pwd,
+            strength: strength
         };
     }
-})
+});
