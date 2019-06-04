@@ -1,32 +1,25 @@
-// 
-// 
-//------------------------------------------------ 
-//  
-//    https://gist.github.com/Yaffle/2757614
-// 
-//------------------------------------------------
 //
-// 
-/*jslint plusplus: true, vars: true, indent: 2 */
-
-
+//
+// ------------------------------------------------
+//
+//
+// ------------------------------------------------
+//
 (function (exports) {
-    "use strict";
+    var random = Math.random,
+        levels = 8, // Math.floor(Math.log(MAX_SIZE) / Math.log(p))
+        p = 4;
 
-    var random = Math.random;
-    var Node = function (down, key, value) {
+    function Node (down, key, value) {
         this.next = null;
         this.down = down;
         this.key = key;
         this.value = value;
-    };
+    }
 
-    var levels = 8; // Math.floor(Math.log(MAX_SIZE) / Math.log(p))
-    var p = 4;
-
-    function SkipList(lessFunction) {
-        var head = null;
-        var i = levels;
+    function SkipList (lessFunction) {
+        var head = null,
+            i = levels;
         do {
             head = new Node(head, undefined, undefined);
         } while (--i >= 0);
@@ -36,7 +29,7 @@
         };
     }
 
-    function f(head, less, key, node, k) {
+    function f (head, less, key, node, k) {
         var x = null;
         while ((head = head.down) !== null) {
             while ((x = head.next) !== null && less(x.key, key)) {
@@ -65,20 +58,18 @@
             return f(this.head, this.less, key, null, 0);
         },
         set: function (key, value) {
-            var node = null;
-            var l = levels;
-            var z = random();
+            var node = null,
+                l = levels,
+                z = random();
             do {
                 node = new Node(node, key, value);
                 z *= p;
             } while (--l > 0 && z < 1);
             f(this.head, this.less, key, node, l);
         },
-        "delete": function (key) {
+        'delete': function (key) {
             f(this.head, this.less, key, null, 1);
         }
     };
-
     exports.SkipList = SkipList;
-
 }(JMVC));
