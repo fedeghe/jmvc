@@ -1,6 +1,5 @@
 JMVC.extend('hyperpub', {
-	init : function () {},
-	map : function (sub, pub){
-
-	}
+    init: function () {},
+    map: function (sub, pub) {
+    }
 });
