@@ -1,8 +1,8 @@
-JMVC.extend('def.yyy', function  () {
+JMVC.extend('def.yyy', function () {
     return {
-        name : 'Gabriele',
-        surname : 'Ghedina',
-        getName : function () {
+        name: 'Gabriele',
+        surname: 'Ghedina',
+        getName: function () {
             return this.name;
         }
     };
