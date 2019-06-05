@@ -1,5 +1,4 @@
 JMVC.extend('def.xxx', {
-    name : 'Federico',
-    surname : 'Ghedina'
+    name: 'Federico',
+    surname: 'Ghedina'
 });
-
