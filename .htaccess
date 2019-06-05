@@ -117,8 +117,14 @@ Options -Indexes
 	#for WS
 	RewriteRule ^sub.php?$ - [L]
 
-	RewriteCond %{HTTPS} off
-	RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
+	#RewriteCond %{HTTPS} off
+	#RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
+
+    # force HTTPS and www.
+    RewriteEngine On
+    RewriteCond %{HTTP_HOST} (?!^www\.)^(.+)$ [OR]
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://www.%1%{REQUEST_URI} [R=301,L]
 
 	#	Page (if not a file/directory)
 	RewriteCond   %{REQUEST_FILENAME} !-d
