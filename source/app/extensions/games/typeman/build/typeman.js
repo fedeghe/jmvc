@@ -1,5 +1,2 @@
-(function (W){
-
-    
-
+(function (W) {
 })(window);
