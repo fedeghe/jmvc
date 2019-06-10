@@ -5,6 +5,7 @@
  * [View description]
  * @param {String} cnt beginning content for the view
  */
+// eslint-disable-next-line no-undef
 View = function (cnt) {
     // the view container
     this.container = false;
@@ -30,6 +31,7 @@ View = function (cnt) {
  * @param  {[type]} obj [description]
  * @return {}     [description]
  */
+// eslint-disable-next-line no-undef
 View.prototype.parse = function (obj) {
     var j;
     if (this.content) {
@@ -54,6 +56,7 @@ View.prototype.parse = function (obj) {
  * and reset all vars
  * @return {[type]} [description]
  */
+// eslint-disable-next-line no-undef
 View.prototype.reset = function () {
     // get back the original content
     this.content = this.ocontent;
@@ -68,6 +71,7 @@ View.prototype.reset = function () {
  * @param {[type]} vname [description]
  * @param {[type]} alt   [description]
  */
+// eslint-disable-next-line no-undef
 View.prototype.setFromUrl = function (vname, alt) {
     this.set(String(vname), $JMVC.controllers[$JMVC.c].get(vname) || alt || 'unset');
     // allow chain
@@ -79,6 +83,7 @@ View.prototype.setFromUrl = function (vname, alt) {
  * @param {[type]} vname [description]
  * @param {[type]} alt   [description]
  */
+// eslint-disable-next-line no-undef
 View.prototype.getFromUrl = function (vname) {
     return $JMVC.controllers[$JMVC.c].get(vname) || false;
 };
@@ -88,6 +93,7 @@ View.prototype.getFromUrl = function (vname) {
  * @param  {[type]} pars [description]
  * @return {[type]}      [description]
  */
+// eslint-disable-next-line no-undef
 View.prototype.render = function (pars) {
     var arg = pars || {},
 
@@ -132,6 +138,7 @@ View.prototype.render = function (pars) {
             cont = cont.replace('$' + resvar[1] + '$', t);
         }
     }
+    // eslint-disable-next-line no-undef
     cont = Parser.parse(cont);
     this.content = cont;
     this.container = target;
@@ -152,6 +159,7 @@ View.prototype.render = function (pars) {
             console.debug(this.container)
             */
             // time
+            // eslint-disable-next-line no-undef
             $JMVC.vars.starttime = timeBegin;
             $JMVC.vars.endtime = +new Date();
 
@@ -196,12 +204,15 @@ View.prototype.render = function (pars) {
  * @param  {[type]} name [description]
  * @return {[type]}      [description]
  */
+// eslint-disable-next-line no-undef
 View.prototype.clone = function (name) {
     var ret = false;
     if (typeof name !== 'undefined') {
+        // eslint-disable-next-line no-undef
         $JMVC.views[name] = new View(this.ocontent);
         ret = $JMVC.views[name];
     } else {
+        // eslint-disable-next-line no-undef
         ret = new View(this.ocontest);
     }
     return ret;
