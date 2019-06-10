@@ -20,8 +20,8 @@ JMVC.controllers.info = function () {
             readme = JMVC.getView('info/readme'),
             // extend = JMVC.getView('info/extend'),
             features = JMVC.getView('info/features'),
-            info_intro = JMVC.getView('info/info_intro'),
-            infoutro = JMVC.getView('info/info_outro'),
+            infoIntro = JMVC.getView('info/info_intro'),
+            infOutro = JMVC.getView('info/info_outro'),
             backtotop = '<a href="#top" class="goToTop">go to top</a>',
             toplinks = [],
             toplinksdata = {
@@ -67,14 +67,14 @@ JMVC.controllers.info = function () {
             'toplinks': toplinks.join(' ~ '),
             'logo': 'jmvc_n2.png'
         });
-        info_intro.set({
+        infoIntro.set({
             'review': JMVC.vars.review,
             'version': JMVC.vars.version,
             'last_modified': JMVC.vars.date + ' @ ' + JMVC.vars.time, // JMVC.vars.last_modified,
             'gmt': 'GMT+' + -(new Date().getTimezoneOffset() / 60),
             'backtotop': backtotop
         });
-        infoutro.set({
+        infOutro.set({
             'backtotop': backtotop
         });
 
