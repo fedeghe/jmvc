@@ -1,8 +1,6 @@
 /**
- * 
  * @param function f
  * @returns Object
- * 
  * @sample
 var p1 ={
         'a' : 1,
@@ -17,8 +15,9 @@ var p1 ={
 p1.forEach(function(e){s1 += ~~e;});
 p2.forEach(function(e){s2 += ~~e;});
 console.debug(s1, s2);
- *	
+ *
  */
+// eslint-disable-next-line no-extend-native
 Object.prototype.forEach = function (f, self, i) {
     self = this;
     for (i in self) {
