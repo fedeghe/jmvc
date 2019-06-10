@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 /**
  * Base don the work of Binny
  * http://www.openjs.com/scripts/events/keyboard_shortcuts/
@@ -30,7 +31,6 @@ JMVC.extend('key', {
 
     // EXPERIMENTAL
     disable: function (element, shortcut) {
-
         JMVC.events.on(element, 'keydown', function (e) {
             // var code = JMVC.events.code(e);
             // if (code && code == shortcut) {
@@ -100,7 +100,6 @@ JMVC.extend('key', {
                 if (element.nodeType === 3) {
                     element = element.parentNode;
                 }
-
                 if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                     return;
                 }
@@ -204,7 +203,7 @@ JMVC.extend('key', {
                 shift: { wanted: false, pressed: false },
                 ctrl: { wanted: false, pressed: false },
                 alt: { wanted: false, pressed: false },
-                meta: { wanted: false, pressed: false }	// Meta is Mac specific
+                meta: { wanted: false, pressed: false }// Meta is Mac specific
             };
 
             if (e.ctrlKey) {
@@ -220,7 +219,7 @@ JMVC.extend('key', {
                 modifiers.meta.pressed = true;
             }
 
-            for (i = 0, l = keys.length; k = keys[i], i < l; i += 1) {
+            for (i = 0, l = keys.length; i < l; i += 1) {
                 switch (k) {
                 case 'ctrl':
                 case 'control':
@@ -244,12 +243,10 @@ JMVC.extend('key', {
                         if (specialKeys[k] === code) {
                             kp += 1;
                         }
-
                     } else if (opt.keycode) {
                         if (opt.keycode === code) {
                             kp += 1;
                         }
-
                     } else { // The special keys did not match
                         if (character === k) {
                             kp += 1;
@@ -264,7 +261,7 @@ JMVC.extend('key', {
                     }
                     break;
                 }
-
+                k = keys[i];
             }
 
             if (kp === keys.length &&
@@ -293,8 +290,8 @@ JMVC.extend('key', {
         'use strict';
         var binding,
             type,
-            ele,
-            callback;
+            ele;
+            // callback;
         shortcutCombination = shortcutCombination.toLowerCase();
         binding = this.all_shortcuts[shortcutCombination];
         this.all_shortcuts[shortcutCombination] = null;
@@ -304,7 +301,7 @@ JMVC.extend('key', {
         }
         type = binding.event;
         ele = binding.target;
-        callback = binding.callback;
+        // callback = binding.callback;
 
         JMVC.events.off(window, type);
         ele['on' + type] = false;
