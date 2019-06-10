@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 Interface = (function () {
     var _interface = function (name, a) {
         var i = 0,
@@ -15,7 +16,7 @@ Interface = (function () {
     };
 
     return {
-        create : function (_n, _a) {
+        create: function (_n, _a) {
             return new _interface(_n, _a);
         }
     };
@@ -44,6 +45,7 @@ function checkInterface(f) {
  * @param  {[type]} intrfc [description]
  * @return {[type]}        [description]
  */
+// eslint-disable-next-line no-undef
 Interface.checkImplements = function (obj) {
     var m,
         i = 0,
