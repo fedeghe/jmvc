@@ -115,7 +115,8 @@ var ___ = {
                     size: len,
                     postElements: [],
                     postData: {}
-                };
+                },
+                t, u, k, id, elem, el, ul, inp, multi, name;
 
             // the callback of this node (the form) is intended
             // to be used to create the whole form, and that will be done
@@ -125,25 +126,22 @@ var ___ = {
 
             // now process qa to write into tpl content
             for (null; j < len; j++) {
-                var t = qa[j],
-                    elem = { tag: 'li', content: [], style: {} },
-                    ul = { tag: 'ol', content: [] },
-                    inp = { tag: 'p', style: { lineHeight: '20px' }, html: (j + 1) + '. ' + t.question },
-                    multi = t.multi || false,
-                    name;
-
+                t = qa[j];
+                elem = { tag: 'li', content: [], style: {} };
+                ul = { tag: 'ol', content: [] };
+                inp = { tag: 'p', style: { lineHeight: '20px' }, html: (j + 1) + '. ' + t.question };
+                multi = t.multi || false;
                 name = t.name + (multi ? '[]' : '');
 
                 elem.content.push(inp);
 
                 // now answers
-                // 
-                for (var u = 0, k = t.answers.length; u < k; u++) {
-                    var id = JMVC.util.uniqueid + '',
-                        el = multi ?
-                            { tag: 'input', attrs: { type: 'checkbox', name: name, id: id, value: u } }
-                            :
-                            { tag: 'input', attrs: { type: 'radio', name: name, id: id, value: u } }
+                //
+                for (u = 0, k = t.answers.length; u < k; u++) {
+                    id = JMVC.util.uniqueid + '';
+                    el = multi
+                        ? { tag: 'input', attrs: { type: 'checkbox', name: name, id: id, value: u } }
+                        : { tag: 'input', attrs: { type: 'radio', name: name, id: id, value: u } };
 
                     ul.content.push({
                         tag: 'li',
@@ -174,12 +172,10 @@ var ___ = {
                     next = this.getNode('nextB'),
                     gauge = this.getNode('gauge'),
                     setButtons = function () {
-                        previous.node.style.visibility = Poll.current > 0
-                            ? ''
-                            : 'hidden';
+                        previous.node.style.visibility = Poll.current > 0 ? '' : 'hidden';
                         submit.node.style.visibility = (Poll.current === (Poll.answered - 1)) && (Poll.answered === Poll.size)
                             ? ''
-                            : 'hidden',
+                            : 'hidden';
                         next.node.style.visibility = (Poll.current < Poll.answered) && (Poll.size - 1 > Poll.current)
                             ? ''
                             : 'hidden';
@@ -217,8 +213,8 @@ var ___ = {
                     JMVC.events.kill(e);
                     var el = JMVC.events.eventTarget(e),
                         val = [], tmp, i = 0;
-                    if (el.tagName.toLowerCase() == 'input') {
-                        if (el.type == 'radio') {
+                    if (el.tagName.toLowerCase() === 'input') {
+                        if (el.type === 'radio') {
                             if (!given[Poll.current]) {
                                 Poll.answered++;
                                 given[Poll.current] = true;
@@ -226,20 +222,22 @@ var ___ = {
                             updateGauge();
                             setButtons();
                         }
-                        if (el.type == 'checkbox') {
+                        if (el.type === 'checkbox') {
                             if (!given[Poll.current]) {
                                 Poll.answered++;
                                 given[Poll.current] = true;
                             }
 
-                            //collect
-                            while (tmp = self.node[el.name].item(i)) {
+                            // collect
+                            tmp = self.node[el.name].item(i);
+                            while (tmp) {
                                 if (tmp.checked) {
                                     val.push(tmp.value);
                                 }
                                 i++;
+                                tmp = self.node[el.name].item(i);
                             }
-                            if (val.join() == '') {
+                            if (val.join() === '') {
                                 Poll.answered--;
                                 given[Poll.current] = false;
                             }
@@ -250,29 +248,23 @@ var ___ = {
                 });
 
                 JMVC.events.on(self.node, 'keydown', function (e) {
-                    e.keyCode == 9 && JMVC.events.kill(e);
+                    e.keyCode === 9 && JMVC.events.kill(e);
                 });
 
                 JMVC.events.on(self.node, 'submit', function () {
-
+                    var i, j, l, k, el, tmp, vals;
                     // build data
-                    for (var i = 0, l = Poll.postElements.length, el, tmp = [], vals; i < l; i++) {
+                    for (i = 0, l = Poll.postElements.length, el, tmp = [], vals; i < l; i++) {
                         el = Poll.postElements[i];
-
-
-
                         vals = self.node[el.name];
-                        for (var j = 0, k = vals.length; j < k; j++) {
+                        for (j = 0, k = vals.length; j < k; j++) {
                             if (vals[j].checked) tmp.push(vals[j].value);
                         }
 
                         if (el.multi) {
                             Poll.postData[el.name.replace('[]', '')] = '[' + tmp.join(',') + ']';
-
-
                         } else {
                             Poll.postData[el.name] = tmp[0];
-
                         }
                         tmp.length = 0;
                     }
@@ -292,9 +284,7 @@ var ___ = {
                         Poll.postData
                     );
                 }, false);
-
             };
-
             JMVC.core.widgzard.render(tpl, true);
             self.done();
         }
