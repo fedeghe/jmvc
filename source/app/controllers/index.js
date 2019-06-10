@@ -100,7 +100,6 @@ JMVC.controllers.index = function () {
                 JMVC.dom.append(logo, newlogo);
 
                 if (JMVC.p.map && JMVC.p.map === 'true') {
-
                     JMVC.require('vendors/google/gmap2/gmap2');
                     dims = JMVC.screen.getViewportSize();
                     mapid = 'map';
@@ -110,9 +109,12 @@ JMVC.controllers.index = function () {
                     JMVC.gmap2.initialize(function () {
                         JMVC.gmap2.mapme('Dällikerstrasse 35, Regensdorf, Svizzera', function (latlng) {
                             var mapDiv = document.getElementById(mapid),
+                                // eslint-disable-next-line no-undef
                                 map = new google.maps.Map(mapDiv, {
+                                    // eslint-disable-next-line no-undef
                                     center: new google.maps.LatLng(latlng.lat(), latlng.lng()),
                                     zoom: 4,
+                                    // eslint-disable-next-line no-undef
                                     mapTypeId: google.maps.MapTypeId.SATELLITE,
                                     tilt: 45,
                                     styles: [{ featureType: 'water', stylers: [{ lightness: 0 }, { saturation: 100 }, { hue: '#000000' }, { gamma: 0.2 }], elementType: 'geometry' }]
@@ -324,9 +326,12 @@ JMVC.controllers.index = function () {
             JMVC.gmap2.initialize(function () {
                 JMVC.gmap2.mapme('via Maggio 18, Lugano, Svizzera', function (latlng) {
                     var mapDiv = document.getElementById(mapid),
+                        // eslint-disable-next-line no-undef
                         map = new google.maps.Map(mapDiv, {
+                            // eslint-disable-next-line no-undef
                             center: new google.maps.LatLng(latlng.lat(), latlng.lng()),
                             zoom: 4,
+                            // eslint-disable-next-line no-undef
                             mapTypeId: google.maps.MapTypeId.SATELLITE,
                             tilt: 45,
                             styles: [{
