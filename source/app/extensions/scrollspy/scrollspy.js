@@ -1,3 +1,2 @@
 JMVC.extend('scrollspy', function () {
-    
 });
