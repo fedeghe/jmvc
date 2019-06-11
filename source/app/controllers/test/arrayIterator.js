@@ -1,13 +1,10 @@
-JMVC.controllers.arrayIterator = function() {
-    this.action_index = function() {
-
+JMVC.controllers.arrayIterator = function () {
+    this.action_index = function () {
         JMVC.events.loadify(500);
+        // JMVC.head.lib('jquery');
 
-        //JMVC.head.lib('jquery');
-
-        this.render(function test() {
-            "use strict";
-
+        this.render(function test () {
+            'use strict';
             JMVC.test.initialize(true);
             JMVC.test.startAll();
             JMVC.test.describe('Looping over some arrays or/and literals');
@@ -16,8 +13,8 @@ JMVC.controllers.arrayIterator = function() {
                 times = 1,
                 big = [],
 
-                iter = function(arr) {
-                    var a = array_input_iterator(arr),
+                iter = function (arr) {
+                    var a = arrayInputIterator(arr),
                         sum = 0,
                         tmp;
                     while (1) {
@@ -26,25 +23,23 @@ JMVC.controllers.arrayIterator = function() {
                         sum += tmp.value;
                     }
 
-
-                    function done() {
+                    function done () {
                         return {
                             done: true
                         };
                     }
 
-                    function value(e) {
+                    function value (e) {
                         return {
                             done: false,
                             value: e
                         };
                     }
 
-                    function array_input_iterator(array) {
-                    	
+                    function arrayInputIterator (array) {
                         var i = 0;
 
-                        function next() {
+                        function next () {
                             if (i < array.length) {
                                 return value(array[i++]);
                             } else {
@@ -58,7 +53,7 @@ JMVC.controllers.arrayIterator = function() {
                     return sum;
                 },
 
-                nativeforarray = function(arr) {
+                nativeforarray = function (arr) {
                     var res = 0,
                         i = 0,
                         l = arr.length;
@@ -73,12 +68,7 @@ JMVC.controllers.arrayIterator = function() {
                 big.push(JMVC.util.rand(-1E6, 1E6));
             }
 
-
-
-
-
             JMVC.test.finishAll();
-
 
             JMVC.test.describe('With Array');
 
@@ -89,10 +79,7 @@ JMVC.controllers.arrayIterator = function() {
             // JMVC.test.testTime('native for (obj literal)', nativeforobj, times, [obig]);
             //  //JMVC.test.testTime('jQuery.each (obj literal)', jqueryeach, times, [obig]);
             // JMVC.test.testTime('JMVC.each (obj literal)', jmvceach, times, [obig]);
-
-
             // JMVC.test.describe('Avoid using any <i>each</i> function is the best choice you can take!');
-
         });
-    }
+    };
 };
