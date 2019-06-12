@@ -1,40 +1,49 @@
-JMVC.controllers.game = function() {
+JMVC.require('core/lib/game/game');
 
-	this.action_index = function(){
+JMVC.controllers.game = function () {
+    this.action_index = function () {
+        JMVC.getModel('game/Rect');
+        JMVC.getModel('game/Circle');
 
-		JMVC.require('core/lib/game/game');
-
-		JMVC.getModel('game/Rect');
-
-		this.render(function test(){
-			"use strict";
-			JMVC.test.initialize(true);
-			JMVC.test.startAll();
-			JMVC.test.describe('<canvas id="viewport" height="480" width="640"></canvas>');
-			JMVC.test.finishAll();
-		});
-		
-		
-		var Game = JMVC.game.create(
-			function() {
-				this.entities = [];
-				this.context = document.getElementById("viewport").getContext("2d");
-				var i = 40;
-				while(i--){
-					this.entities.push(new JMVC.models.Rect());
-				}
-			},
-			function () {
-				this.context.clearRect(0, 0, 640, 480);
-				for (var i = 0; i < this.entities.length; i++) {
-					this.entities[i].draw(this.context);
-				}
-			},
-			function () {
-				for (var i = 0; i < this.entities.length; i++) {
-					this.entities[i].update();
-				}
-			}
-		);
-	}
+        var density = 1E3,
+            Game = JMVC.game.create(
+                function () {
+                    // var t = 0;
+                    this.size = {
+                        width: 640,
+                        height: 480
+                    };
+                    this.entities = [];
+                    this.context = document.getElementById('viewport').getContext('2d');
+                    this.context.imageSmoothingEnabled = true;
+                    this.context.clearRect(0, 0, this.size.width, this.size.height);
+                    while (density--) {
+                        // t = Math.random() > 0.5;
+                        // this.entities.push(new JMVC.models[t ? 'Rect' : 'Circle'](this.size));
+                        this.entities.push(new JMVC.models.Rect(this.size));
+                    }
+                },
+                function () {
+                    this.context.clearRect(0, 0, this.size.width, this.size.height);
+                    var i = 0,
+                        l = this.entities.length;
+                    for (null; i < l; i++) {
+                        this.entities[i].draw(this.context);
+                    }
+                },
+                function () {
+                    for (var i = 0; i < this.entities.length; i++) {
+                        this.entities[i].update(this.context);
+                    }
+                }
+            );
+        this.render(function test () {
+            'use strict';
+            JMVC.test.initialize(true);
+            JMVC.test.startAll();
+            JMVC.test.describe('<canvas style="border:1px solid black" id="viewport" height="480" width="640"></canvas>');
+            JMVC.test.finishAll();
+            Game.start();
+        });
+    };
 };
