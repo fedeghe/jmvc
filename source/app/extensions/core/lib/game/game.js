@@ -44,10 +44,10 @@ JMVC.extend('game', {
             }
         })();
 
-        JMVC.W.onEachFrame(self.run);
-
         return {
             'start': function () {
+                self.init();
+                JMVC.W.onEachFrame(self.run);
                 self.intervalId = setInterval(self.run, 0);
             },
             'stop': function () {
