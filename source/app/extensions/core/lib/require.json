@@ -25,6 +25,7 @@
     "source/app/extensions/core/lib/carpet/default.css": "app/extensions/core/lib/carpet",
     "source/app/extensions/core/lib/cookieMonster/cookieMonster.js": "app/extensions/core/lib/cookieMonster",
     "source/app/extensions/core/lib/crypt/crypt.js": "app/extensions/core/lib/crypt",
+    "source/app/extensions/core/lib/game/*.js": "app/extensions/core/lib/game",
     "source/app/extensions/core/lib/grind/*.js": "app/extensions/core/lib/grind",
     "source/app/extensions/core/lib/grind/*.css": "app/extensions/core/lib/grind",
     "source/app/extensions/core/lib/hotBox/hotBox.js": "app/extensions/core/lib/hotBox",
