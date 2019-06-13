@@ -2,9 +2,7 @@ JMVC.controllers.info = function () {
     'use strict';
     this.action_index = function () {
         JMVC.css.autoHeadings();
-
         JMVC.events.loadify(500);
-
         JMVC.require(
             'core/codeview/script/script',
             // ,'core/responsive/basic/basic',
@@ -12,8 +10,8 @@ JMVC.controllers.info = function () {
             'core/sniffer/sniffer',
             'core/mobile/mobile',
             'core/screen/screen',
-            'vendors/github/forkme/forkme'
-            , 'core/lib/cookieMonster/cookieMonster'
+            'vendors/github/forkme/forkme',
+            'core/lib/cookieMonster/cookieMonster'
         );
 
         var main = JMVC.getView('info/info'),
@@ -67,6 +65,7 @@ JMVC.controllers.info = function () {
             'toplinks': toplinks.join(' ~ '),
             'logo': 'jmvc_n2.png'
         });
+
         infoIntro.set({
             'review': JMVC.vars.review,
             'version': JMVC.vars.version,
@@ -74,6 +73,7 @@ JMVC.controllers.info = function () {
             'gmt': 'GMT+' + -(new Date().getTimezoneOffset() / 60),
             'backtotop': backtotop
         });
+
         infOutro.set({
             'backtotop': backtotop
         });

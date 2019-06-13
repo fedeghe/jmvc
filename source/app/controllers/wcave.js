@@ -1,24 +1,22 @@
 JMVC.controllers.wcave = function () {
+    'use strict';
 
-	'use strict';
+    this.action_index = function () {
+        JMVC.require('games/wcave/wcave');
 
-	this.action_index = function () {
+        JMVC.head.title('Wcave game');
 
-		JMVC.require('games/wcave/wcave');
+        JMVC.events.loadify(500);
 
-		JMVC.head.title('Wcave game');
+        var v = JMVC.getView('vacuum'),
+            containerID = 'container';
 
-		JMVC.events.loadify(500);
-
-		var v = JMVC.getView('vacuum'),
-			containerID = 'container';
-		
-		v.set({'id' : containerID}).render(function () {
-			Wcave.call(JMVC.W, {
-				'id' : containerID,
-				'size' : 'auto'
-			});
-		});
-
-	};
+        v.set({ 'id': containerID }).render(function () {
+            // eslint-disable-next-line no-undef
+            Wcave.call(JMVC.W, {
+                'id': containerID,
+                'size': 'auto'
+            });
+        });
+    };
 };

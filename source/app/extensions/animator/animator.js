@@ -105,8 +105,8 @@ JMVC.extend('animator', {
         ani.threeD = JMVC.object.contains(options, 'threeD') ? options.threeD : false;
         ani.range = (
             prange &&
-                JMVC.object.contains(prange, 'from') &&
-                JMVC.object.contains(prange, 'to')
+            JMVC.object.contains(prange, 'from') &&
+            JMVC.object.contains(prange, 'to')
         ) ? prange
             : { from: 0, to: 10000 };
 
