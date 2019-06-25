@@ -974,10 +974,11 @@ jmvc = {
                     case 'model':
                         jmvc.jeval(res);
                         jmvc.model_inherit($JMVC[type + 's'][name]);
-                        // o = new $JMVC.models[name]();
-                        // params && $JMVC.models[name].apply(o, params);
-                        // o.vars = {};
-                        // ret = o;
+                        
+                        o = new $JMVC.models[name]();
+                        params && $JMVC.models[name].apply(o, params);
+                        o.vars = {};
+                        ret = o;
                         break;
                     case 'interface':
                         !(name in JMVC.interfaces) && jmvc.jeval(res);

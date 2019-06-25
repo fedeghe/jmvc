@@ -8,6 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "buildev": "malta buildev.json",
     "build": "malta build.json",
+    "buildjmvc": "malta buildjmvc.json",
     "eslint": "eslint source"
   },
   "repository": {

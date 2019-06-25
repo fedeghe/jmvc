@@ -1,0 +1,3 @@
+{
+    "#source/jmvc.js": "app -plugins=malta-js-uglify...malta-header-comment[name:'source/src/head.txt']"
+}
