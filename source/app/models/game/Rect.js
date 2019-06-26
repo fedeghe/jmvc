@@ -10,8 +10,8 @@ JMVC.models.Rect = function (fieldSize) {
 };
 
 JMVC.models.Rect.prototype.draw = function (ctx) {
-    this.bounces = this.bounces % 10;
-    var o = 1 - this.bounces / 10;
+    // this.bounces = this.bounces % 10;
+    var o = 1 - Math.atan(this.bounces) / (Math.PI / 2);
     ctx.fillStyle = 'rgba(255,255,255,' + o + ')';
     ctx.fillRect(this.x, this.y, this.size, this.size);
 };
