@@ -974,9 +974,9 @@ jmvc = {
                     case 'model':
                         jmvc.jeval(res);
                         jmvc.model_inherit($JMVC[type + 's'][name]);
-                        
-                        o = new $JMVC.models[name]();
-                        params && $JMVC.models[name].apply(o, params);
+
+                        o = new $JMVC.models[name](params || {});
+                        // params && $JMVC.models[name].apply(o, params);
                         o.vars = {};
                         ret = o;
                         break;
