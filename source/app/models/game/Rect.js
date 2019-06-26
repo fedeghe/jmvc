@@ -1,11 +1,23 @@
+function rndSign () {
+    return Math.random() > 0.5 ? 1 : -1;
+}
+function rndSize (min, max) {
+    return min + (max - min) * Math.random();
+}
 JMVC.models.Rect = function (fieldSize) {
-    var speedFactor = 2;
-    this.size = 5;
+    var speedFactor = 0.1,
+        speed = speedFactor * rndSize(0, 2),
+        direction = rndSize(0, 2 * Math.PI);
+    this.time = 0;
+    this.size = rndSize(1, 10);
     this.fieldSize = fieldSize;
     this.x = fieldSize.width / 2; // + Math.floor(Math.random() * (this.fieldSize.width - 2 * this.size));
     this.y = fieldSize.height / 2; // + Math.floor(Math.random() * (this.fieldSize.height - 2 * this.size));
-    this.velocityX = speedFactor * Math.random() * (Math.random() > 0.5 ? 1 : -1);
-    this.velocityY = speedFactor * Math.random() * (Math.random() > 0.5 ? 1 : -1);
+
+    this.velocityX = speed * Math.cos(direction);
+    this.velocityY = speed * Math.sin(direction);
+    // this.velocityX = speedFactor * Math.random() * rndSign();
+    // this.velocityY = speedFactor * Math.random() * rndSign();
     this.bounces = 0;
 };
 
@@ -19,9 +31,11 @@ JMVC.models.Rect.prototype.draw = function (ctx) {
 JMVC.models.Rect.prototype.update = function (ctx) {
     var invX = this.x < 0 || this.x > (this.fieldSize.width - this.size),
         invY = this.y < 0 || this.y > (this.fieldSize.height - this.size);
+    this.time++;
     if (invX) this.velocityX = -this.velocityX;
     if (invY) this.velocityY = -this.velocityY;
-    if (invX || invY) this.bounces += 2;
-    this.x += this.velocityX;
-    this.y += this.velocityY;
+    if (invX || invY) this.bounces += 1;
+
+    this.x += this.time * this.velocityX;
+    this.y += this.time * this.velocityY;
 };

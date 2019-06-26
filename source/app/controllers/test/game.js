@@ -8,7 +8,7 @@ JMVC.controllers.game = function () {
         var density = 1E3,
             Game = JMVC.game.create(
                 function () {
-                    // var t = 0;
+                    var t = null;
                     this.size = {
                         width: 640,
                         height: 480
@@ -20,7 +20,9 @@ JMVC.controllers.game = function () {
                     while (density--) {
                         // t = Math.random() > 0.5;
                         // this.entities.push(new JMVC.models[t ? 'Rect' : 'Circle'](this.size));
-                        this.entities.push(new JMVC.models.Rect(this.size));
+                        t = new JMVC.models.Rect(this.size);
+                        // t = new JMVC.models.Circle(this.size);
+                        this.entities.push(t);
                     }
                 },
                 function () {
