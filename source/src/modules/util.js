@@ -226,6 +226,28 @@ JMVC.util = {
         }
         return ret;
     },
+    interval: (fn, interval, err) => {
+        let active = true,
+            i = 0,
+            int = interval;
+        const init = +new Date();
+        (function run () {
+            int = interval + (init + (i++ * interval) - new Date());
+            setTimeout(() => {
+                try {
+                    fn();
+                } catch (e) {
+                    err && err(e);
+                    active = false;
+                }
+                active && run();
+            },
+            int);
+        })();
+        return () => {
+            active = false;
+        };
+    },
     /**
      * [description]
      * @return {[type]} [description]
