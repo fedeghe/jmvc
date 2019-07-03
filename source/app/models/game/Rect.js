@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 function rndSign () {
     return Math.random() > 0.5 ? 1 : -1;
 }
