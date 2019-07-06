@@ -30,11 +30,11 @@
     "eslint-plugin-node": "^9.0.1",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
-    "malta": "^3.9.14",
-    "malta-dev-srv": "^1.1.1",
-    "malta-header-comment": "^1.0.5",
-    "malta-js-toolkit": "^1.0.11",
-    "malta-js-uglify": "^1.0.5",
-    "malta-less": "^1.0.6"
+    "malta": "^3.9.17",
+    "malta-dev-srv": "^1.1.3",
+    "malta-header-comment": "^1.0.6",
+    "malta-js-toolkit": "^1.0.12",
+    "malta-js-uglify": "^1.0.6",
+    "malta-less": "^1.0.8"
   }
 }
