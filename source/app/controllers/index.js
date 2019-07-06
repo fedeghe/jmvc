@@ -232,7 +232,7 @@ JMVC.controllers.index = function () {
 
     this.action_index3 = function () {
         /* directly render something */
-        this.render('<div id="space">Direct render</div>');
+        this.render('<div id="space">Direct render xyz</div>');
     };
 
     this.action_codesNoworkers = function () {
