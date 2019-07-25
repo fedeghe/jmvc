@@ -57,21 +57,16 @@ JMVC.controllers.info = function () {
         });
 
         readme.set({
-            'extend': extend,
-            // 'api': '{{info_outro}}',
-            'githublink': 'https://github.com/fedeghe/jmvc',
-            'legend': '<b>*</b> : mandatory parameter',
-            'backtotop': backtotop,
-            'toplinks': toplinks.join(' ~ '),
-            'logo': 'jmvc_n2.png'
+            githublink: 'https://github.com/fedeghe/jmvc',
+            backtotop: backtotop,
+            toplinks: toplinks.join(' ~ '),
+            logo: 'jmvc_n2.png'
         });
 
         infoIntro.set({
-            'review': JMVC.vars.review,
-            'version': JMVC.vars.version,
-            'last_modified': JMVC.vars.date + ' @ ' + JMVC.vars.time, // JMVC.vars.last_modified,
-            'gmt': 'GMT+' + -(new Date().getTimezoneOffset() / 60),
-            'backtotop': backtotop
+            version: JMVC.vars.version,
+            last_modified: JMVC.vars.date + ' @ ' + JMVC.vars.time, // JMVC.vars.last_modified,
+            gmt: 'GMT+' + -(new Date().getTimezoneOffset() / 60)
         });
 
         infoOutro.set({

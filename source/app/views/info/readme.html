@@ -2,14 +2,9 @@
     <a href="$baseurl$">
         <img src="$baseurl$/media/img/$logo$" style="align:left;margin-right:30px;margin-bottom:20px" class="floatl" />
     </a>
-
-    <p class="floatl resp_dskt">
-        {{info_intro}}
-    </p>
+    <p class="floatl resp_dskt">{{info_intro}}</p>
     <br class="clearer" />
-    <p class="resp_mobi">
-        {{info_intro}}
-    </p>
+    <p class="resp_mobi">{{info_intro}}</p>
 </div>
 <br class="clearer" />
 
@@ -28,7 +23,6 @@
     into an <i>extremely funny</i> experience.
     <br />The repository is filled out of extensions which provides many useful ready to use objects and widgets.</p>
 $backtotop$
-
 
 <a name="req"></a>
 <h2>Requirements</h2>
@@ -52,7 +46,6 @@ $backtotop$
 <p>If you feel more confortable with port 80, change port setting in the <i>srv/config.json</i> file, but remember that
     if port is under 1024, only root will start the server successfully.</p>
 $backtotop$
-
 
 <a name="started"></a>
 <h2>Get started</h2>
@@ -82,7 +75,6 @@ $backtotop$
 </p>
 $backtotop$
 
-
 <a name="howiw"></a>
 <h2>How JMVC works, distilled</h2>
 <p>JMVC relies on a single entry page, the <i>index.html</i>, thanks to a minimal <i>.htaccess</i> file. In that page
@@ -91,8 +83,9 @@ $backtotop$
     <br />Once the <i>Controller</i> is loaded, with a synchronous xhr call, the action function is executed, and within
     that function at least a view is supposed to be rendered in the document body (or elsewhere).
 </p>
-$backtotop$ {{features}}
+$backtotop$
 
+{{features}}
 
 <a name="urlstruc"></a>
 <h2>Url structure</h2>
@@ -111,6 +104,7 @@ $backtotop$ {{features}}
     <li><label class="lab" style="color:#f0f">extra parameters</label>: n1/v1/n2/v2/n3</li>
     <li><label class="lab" style="color:#63c">querystring</label>: ?v4=Fede&v5=ghe</li>
 </ul>
+
 <p>All parameters (including those ones coming from querystring) will be automatically loaded into the current
     controller register, meaning that any view rendered from it can use the placeholders to show their value.
 </p>
@@ -118,13 +112,13 @@ $backtotop$ {{features}}
     n1="v1" and n2="v2"; the third one will be ignored because unvalued.</p>
 $backtotop$
 
-
 <a name="samples"></a>
 <h2>Looking for samples?</h2>
-<p>This site relies
-    <strong>completely</strong> on JMVC and the whole code can be found on <a href="$githublink$"
+<p>This site relies <strong>completely</strong> on JMVC and the whole code can be found on <a href="$githublink$"
         target="_blank">GitHub</a>. Take a look at the <a href="$baseurl$/demo">demo controller</a> for some demos.</p>
 $backtotop$
+
 {{extend}}
 $backtotop$
+
 {{info_outro}}
