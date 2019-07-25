@@ -1,90 +1,104 @@
-<h2><a name="features" ></a>Features</h2>
+<a name="features"></a>
+<h2>Features</h2>
 <ul class="features">
-	<li>$fr$
-		<p class="feature">One global variable.</p>
-	</li>
-	<li>$fr$
-		<p class="feature">Supports all alive browsers.</p>
-	</li>
-	<li>$fr$
-		<p class="feature">Includes many useful utilities: ajax, dom manipulation, event binding, etc...</p>
-	</li>
-	<li>$fr$
-		<p class="feature">Default `index` Controller and action (configurable).</p>
-	</li>
-	<li>$fr$
-		<p class="feature">Easily add aliases to actions.</p>
-	</li>
-	<li>$fr$
-		<p class="feature">Each View, Model, Controller or Interface inherits from built in constructors.</p>
-	</li>
-	<li>$fr$
-		<p class="feature">
-			In views you can write special variable placeholders in a View to render another View on the fly or to assign a value to a View`s variable:
-			<ul class="inner">
-				<li><strong>&#36;myvar&#36;</strong> for substitute a variable that you set to the View instance through the <strong>set</strong> method</li>
-				<li><strong>&#123;&#123;my_view&#125;&#125;</strong> for loading the content of my_view in place of that</li>
-				<li><strong>&#123;&#123;my_view name=`Federico` surname=`Ghedina`&#125;&#125;</strong> as previous but
-					here You can add on the fly variables to my_view, use &#36;name&#36; and &#36;surname&#36; in it,
-					and find them replaced at render time.
-				</li>
-			</ul>
-		</p>
-	</li>
-	<li>$fr$
-		<p class="feature">Dinamically load other scripts and stylesheets, both parsable, so they can depend on Your variables.</p>
-	</li>
-	<li>$fr$
-		<p class="feature">The content produced by default affects the content of the body tag, but You can choose to affect
-	the content of any node which can be found by the tiny minimal dummy selection engine.</p>
-	</li>
-	
-	<li>$fr$
-		<p class="feature">Optimize Extensions dependencies using the <b>JMVC.require</b> function.</p>
-	</li>
-	<li>$fr$
-		<p class="feature">Automatic get extra parameters from url.</p>
-	</li>
-	<li>$fr$
-		<p class="feature">Add action routes in the Controller (see the <i>demo</i> controller).</p>
-	</li>
-	<li>$fr$
-		<p class="feature">Easily extend the JMVC object with your code (see any extension).</p>
-	</li>
-	<li>$fr$
-		<p class="feature">Allow <b>any</b> file extension You prefer in the url... I know You noticed the .jmvc extension in this page url.</p>
-	</li>
-	<li>$fr$
-		<p class="feature">Handle 404 Status for requests not matching a route rendering an error View and redirecting after three seconds to the default route.</p>
-	</li>
-	<li>$fr$
-		<p class="feature">Easily enque callbacks to some predefined hooks :onBeforeRender, onAfterRender, onBeforeParse, onAfterParse (i18n works thanks to a hook).</p>
-	</li>
-	<li>$fr$
-		<p class="feature">If a <i>foo</i> actions is dispatched JMVC will seek for a <i>action_foo</i> function in the controller, allowing <i>private</i> functions within the controller.</p>
-	</li>
-	<li>$fr$
-		<p class="feature">If a <i>foo</i> actions is dispatched, some hard named function if found will be executed:
-			<ul class="inner">
-				<li><strong>before</strong> : called before any action</li>
-				<li><strong>before_<i>foo</i></strong> : called immediately before calling <i>action_foo</i> </li>
-				<li>now <i>action_foo</i> is called</li>
-				<li><strong>after_<i>foo</i></strong> : called immediately after calling <i>action_foo</i> </li>
-				<li><strong>after</strong> : called after any action</li>
-				<li><strong>action</strong> : if found in the controller, will be called if <i>foo_action</i> is not in the controller, as parameters will be passed the name of the view (<i>foo</i> here) and a literal containing all found parameters</li>
-			</ul>
-		</p>
-	</li>
-	<li>$fr$
-		<p class="feature">Use placeholders even in js and css to substitute your own variables or the special
-			preset variable <strong>&#36;baseurl&#36;</strong> (this can be useful for absolute path to images, or for chunks of style rules shared among more selectors)
-			or <strong>&#36;rendertime&#36;</strong> (just to have an idea of the whole time spent from dispatching to page render)</p>
-	</li>
-	<li>$fr$
-		<p class="feature">many ready to use extensions, wrappers and widgets.</p>
-	</li>
-	<li>$fr$
-		<p class="feature">and MUCH MORE!</p>
-	</li>
+    <li>$fr$
+        <p class="feature">One global variable.</p>
+    </li>
+    <li>$fr$
+        <p class="feature">Supports all alive browsers.</p>
+    </li>
+    <li>$fr$
+        <p class="feature">Includes many useful utilities: ajax, dom manipulation, event binding, etc...</p>
+    </li>
+    <li>$fr$
+        <p class="feature">Default `index` Controller and action (configurable).</p>
+    </li>
+    <li>$fr$
+        <p class="feature">Easily add aliases to actions.</p>
+    </li>
+    <li>$fr$
+        <p class="feature">Each View, Model, Controller or Interface inherits from built in constructors.</p>
+    </li>
+    <li>$fr$
+        <p class="feature">
+            In views you can write special variable placeholders in a View to render another View on the fly or to
+            assign a value to a View`s variable:
+            <ul class="inner">
+                <li><strong>&#36;myvar&#36;</strong> for substitute a variable that you set to the View instance through
+                    the <strong>set</strong> method</li>
+                <li><strong>&#123;&#123;my_view&#125;&#125;</strong> for loading the content of my_view in place of that
+                </li>
+                <li><strong>&#123;&#123;my_view name=`Federico` surname=`Ghedina`&#125;&#125;</strong> as previous but
+                    here You can add on the fly variables to my_view, use &#36;name&#36; and &#36;surname&#36; in it,
+                    and find them replaced at render time.
+                </li>
+            </ul>
+        </p>
+    </li>
+    <li>$fr$
+        <p class="feature">Dinamically load other scripts and stylesheets, both parsable, so they can depend on Your
+            variables.</p>
+    </li>
+    <li>$fr$
+        <p class="feature">The content produced by default affects the content of the body tag, but You can choose to
+            affect
+            the content of any node which can be found by the tiny minimal dummy selection engine.</p>
+    </li>
+
+    <li>$fr$
+        <p class="feature">Optimize Extensions dependencies using the <b>JMVC.require</b> function.</p>
+    </li>
+    <li>$fr$
+        <p class="feature">Automatic get extra parameters from url.</p>
+    </li>
+    <li>$fr$
+        <p class="feature">Add action routes in the Controller (see the <i>demo</i> controller).</p>
+    </li>
+    <li>$fr$
+        <p class="feature">Easily extend the JMVC object with your code (see any extension).</p>
+    </li>
+    <li>$fr$
+        <p class="feature">Allow <b>any</b> file extension You prefer in the url... I know You noticed the .jmvc
+            extension in this page url.</p>
+    </li>
+    <li>$fr$
+        <p class="feature">Handle 404 Status for requests not matching a route rendering an error View and redirecting
+            after three seconds to the default route.</p>
+    </li>
+    <li>$fr$
+        <p class="feature">Easily enque callbacks to some predefined hooks :onBeforeRender, onAfterRender,
+            onBeforeParse, onAfterParse (i18n works thanks to a hook).</p>
+    </li>
+    <li>$fr$
+        <p class="feature">If a <i>foo</i> actions is dispatched JMVC will seek for a <i>action_foo</i> function in the
+            controller, allowing <i>private</i> functions within the controller.</p>
+    </li>
+    <li>$fr$
+        <p class="feature">If a <i>foo</i> actions is dispatched, some hard named function if found will be executed:
+            <ul class="inner">
+                <li><strong>before</strong> : called before any action</li>
+                <li><strong>before_<i>foo</i></strong> : called immediately before calling <i>action_foo</i> </li>
+                <li>now <i>action_foo</i> is called</li>
+                <li><strong>after_<i>foo</i></strong> : called immediately after calling <i>action_foo</i> </li>
+                <li><strong>after</strong> : called after any action</li>
+                <li><strong>action</strong> : if found in the controller, will be called if <i>foo_action</i> is not in
+                    the controller, as parameters will be passed the name of the view (<i>foo</i> here) and a literal
+                    containing all found parameters</li>
+            </ul>
+        </p>
+    </li>
+    <li>$fr$
+        <p class="feature">Use placeholders even in js and css to substitute your own variables or the special
+            preset variable <strong>&#36;baseurl&#36;</strong> (this can be useful for absolute path to images, or for
+            chunks of style rules shared among more selectors)
+            or <strong>&#36;rendertime&#36;</strong> (just to have an idea of the whole time spent from dispatching to
+            page render)</p>
+    </li>
+    <li>$fr$
+        <p class="feature">many ready to use extensions, wrappers and widgets.</p>
+    </li>
+    <li>$fr$
+        <p class="feature">and MUCH MORE!</p>
+    </li>
 </ul>
 $backtotop$

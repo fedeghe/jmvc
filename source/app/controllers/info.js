@@ -16,10 +16,10 @@ JMVC.controllers.info = function () {
 
         var main = JMVC.getView('info/info'),
             readme = JMVC.getView('info/readme'),
-            // extend = JMVC.getView('info/extend'),
+            extend = JMVC.getView('info/extend'),
             features = JMVC.getView('info/features'),
             infoIntro = JMVC.getView('info/info_intro'),
-            infOutro = JMVC.getView('info/info_outro'),
+            infoOutro = JMVC.getView('info/info_outro'),
             backtotop = '<a href="#top" class="goToTop">go to top</a>',
             toplinks = [],
             toplinksdata = {
@@ -52,12 +52,12 @@ JMVC.controllers.info = function () {
 
         features.set({
             fr: '<b class="index">&#9758;</b>',
-            clearer: '<br class="clearer" />',
+            // clearer: '<br class="clearer" />',
             backtotop: backtotop
         });
 
         readme.set({
-            // 'extend' : '{{extend}}',
+            'extend': extend,
             // 'api': '{{info_outro}}',
             'githublink': 'https://github.com/fedeghe/jmvc',
             'legend': '<b>*</b> : mandatory parameter',
@@ -74,7 +74,7 @@ JMVC.controllers.info = function () {
             'backtotop': backtotop
         });
 
-        infOutro.set({
+        infoOutro.set({
             'backtotop': backtotop
         });
 
