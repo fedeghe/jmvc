@@ -226,14 +226,14 @@ JMVC.util = {
         }
         return ret;
     },
-    interval: (fn, interval, err) => {
+    interval: function (fn, interval, err) {
         let active = true,
             i = 0,
             int = interval;
         const init = +new Date();
         (function run () {
             int = interval + (init + (i++ * interval) - new Date());
-            setTimeout(() => {
+            setTimeout(function () {
                 try {
                     fn();
                 } catch (e) {

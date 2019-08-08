@@ -4,14 +4,17 @@ JMVC.controllers.game = function () {
     this.action_index = function () {
         JMVC.getModel('game/Rect');
         JMVC.getModel('game/Circle');
+        JMVC.getModel('game/Star');
 
         var density = 1E3,
+            width = 640,
+            height = 640,
             Game = JMVC.game.create(
                 function () {
                     var t = null;
                     this.size = {
-                        width: 640,
-                        height: 480
+                        width: width,
+                        height: height
                     };
                     this.entities = [];
                     this.context = document.getElementById('viewport').getContext('2d');
@@ -20,8 +23,10 @@ JMVC.controllers.game = function () {
                     while (density--) {
                         // t = Math.random() > 0.5;
                         // this.entities.push(new JMVC.models[t ? 'Rect' : 'Circle'](this.size));
-                        t = new JMVC.models.Rect(this.size);
+                        // t = new JMVC.models[Math.random() > 0.5 ? 'Rect' : 'Circle'](this.size);
                         // t = new JMVC.models.Circle(this.size);
+                        t = new JMVC.models.Rect(this.size);
+                        // t = new JMVC.models.Star(this.size);
                         this.entities.push(t);
                     }
                 },
@@ -43,7 +48,8 @@ JMVC.controllers.game = function () {
             'use strict';
             JMVC.test.initialize(true);
             JMVC.test.startAll();
-            JMVC.test.describe('<canvas style="border:1px solid black" id="viewport" height="480" width="640"></canvas>');
+            JMVC.test.describe('<canvas style="border:1px solid black" id="viewport" height="' + height + '" width="' + width + '"></canvas>');
+            // JMVC.test.describe('<canvas style="border:1px solid black" id="viewport" height="480" width="640"></canvas>');
             JMVC.test.finishAll();
             Game.start();
         });

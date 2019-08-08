@@ -45,12 +45,13 @@ JMVC.extend('game', {
         })();
 
         return {
-            'start': function () {
+            game: self,
+            start: function () {
                 self.init();
                 JMVC.W.onEachFrame(self.run);
                 self.intervalId = setInterval(self.run, 0);
             },
-            'stop': function () {
+            stop: function () {
                 clearInterval(self.intervalId);
             }
         };

@@ -945,47 +945,47 @@ longest@^1.0.1:
   resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
   integrity sha1-MKCy2jj3N3DoKUoNIuZiXtd9AJc=
 
-malta-dev-srv@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/malta-dev-srv/-/malta-dev-srv-1.1.3.tgz#37c4c4c777610b6fe612f75bc7829b0d2687018f"
-  integrity sha512-AWUYOEUaR79yp5G4hIlWObGy4VWxBMTc1bZC1hHglsQrAe0B9WQNB8T0nmMLaWx2S3TXm5YlilBVrCr5SHoCOw==
+malta-dev-srv@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/malta-dev-srv/-/malta-dev-srv-1.1.5.tgz#1efe9c91c6420ec64b7f211eb602aee092b62c6a"
+  integrity sha512-/Tom3LuZ6QaOHhBhrJFwuSV1r2iJoKWGJB7nxzGVrggKDwY/fa5waR7G+l/G3iCCjr1tS886Mw9FRgFFwQkCNw==
   dependencies:
-    malta ">=3.8.14"
+    malta "^4.0.4"
 
-malta-header-comment@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/malta-header-comment/-/malta-header-comment-1.0.6.tgz#6c2429faaf6819b2e720e78024bfe6a5e680f8a2"
-  integrity sha512-nvdisoo1wouCTMAgrdD6Pyr4yEhwNxmTNGFlMGvNVQ48GAGQtFUV1bu09BhPSkyyK/c35069Lf+36CGwfZq4bg==
+malta-header-comment@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/malta-header-comment/-/malta-header-comment-1.0.8.tgz#5f233b16178d31fd40bfd7d98d4b6c07c27fd391"
+  integrity sha512-DZG/6uPToc0oM9/hJtj45dMNUwXan/AUALHt3kPm+BxyIgu7x3cS88ZUgKg1SKWvTiJGf3OODu+Pit1VQnPM+Q==
   dependencies:
-    malta ">=3.8.14"
+    malta "^4.0.4"
 
-malta-js-toolkit@^1.0.12:
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/malta-js-toolkit/-/malta-js-toolkit-1.0.12.tgz#c85b417ae0a957c27cd1a2938cc95eb871e99af8"
-  integrity sha512-EDoRpmR0xNMBup71l4duiarFPl5yfbEQsk26t4ORd8jxZPiw/TEi3DnuJdLoX5XWTjElBtOwy95pPn++cZDq5A==
+malta-js-toolkit@^1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/malta-js-toolkit/-/malta-js-toolkit-1.0.14.tgz#645e079020a6178d28ac1cae00dd0cc1bf36e14f"
+  integrity sha512-LPDCupXxmzgSBXd2PDzobBa4+AlVivGiqEQSjZ4cXd6DuOVzqrt1EGE3erawCg2YsFVDwbTNCMYJn6LG5r2EMw==
   dependencies:
-    malta ">=3.8.14"
+    malta "^4.0.4"
 
-malta-js-uglify@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/malta-js-uglify/-/malta-js-uglify-1.0.6.tgz#9ea0c09be0155476deb0b05de1fcfd5412de7460"
-  integrity sha512-CP7ieR2LvTDW0yPEyGUoXJLPWQuXNiHLiZk7NyJivBZDeUUAKYWWa9bOtMn1F0h2DBWiCaqxSE+gUsTDKhCJ4A==
+malta-js-uglify@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/malta-js-uglify/-/malta-js-uglify-1.0.7.tgz#0517aa757c55168e2055e94bd9527d46dd271554"
+  integrity sha512-3vn4/0YwElYdo6MpgNZ4lwicSE1hGuN6OtTTMG/0N0XvPMRNapNNEXUKgdzoU5XrQzxqSpKV4nTHc/iKXGJQqA==
   dependencies:
-    malta ">=3.8.14"
+    malta "^4.0.4"
     uglify-js "^2.8.29"
 
-malta-less@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/malta-less/-/malta-less-1.0.8.tgz#62593864374a84711f81854b735d3d8aa25bf55a"
-  integrity sha512-PNE/bMdDgpvC5CooLl61qRk2FBCyd0Uc4CiHAePcRTgHvjjm0o2A5RmmdJEn1Ms0X7s3/GqTH4qi28Dtf0qXcA==
+malta-less@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/malta-less/-/malta-less-1.0.10.tgz#5fb9e720052eae6d8f534eb55a889f13377581f4"
+  integrity sha512-fvhH83dgMP3lOOjxbvDvrVYyqWy+QoYR2rfvlJqT9TPfFKT6CL4VHPOQjnZtN9Mxl4eSYSbJs+B1q4+0MpO0kA==
   dependencies:
     less "^3.8.1"
-    malta ">=3.9.11"
+    malta "^4.0.4"
 
-malta@>=3.8.14, malta@>=3.9.11, malta@^3.9.17:
-  version "3.9.17"
-  resolved "https://registry.yarnpkg.com/malta/-/malta-3.9.17.tgz#a8e5cebb8616c2040c52ac9b6f835ed656773fd0"
-  integrity sha512-dmk3pHFGtu2XddA7djUQRHsFTzPiSpyOo+u+VCebUxexSYEPYZ3b+QwvSEzn4rXsUvU+ra6I+5yfb5i9dpDvjg==
+malta@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/malta/-/malta-4.0.4.tgz#9ab860454307e57479daad3452c7abc62deddc4b"
+  integrity sha512-7+6zUDM2Az4t51mdLFk6XMgheExGNhl3Kwgp/hVp07bcJylu8VKwXwxVdFujxRxjxJmwGUHdjV9ABgaEpQuL0Q==
 
 mime-db@1.40.0:
   version "1.40.0"
