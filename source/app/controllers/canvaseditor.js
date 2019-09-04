@@ -26,7 +26,7 @@ JMVC.controllers.canvaseditor = function () {
                 return new JMVC.canvas.Editor({
                     node: JMVC.dom.find('#' + editorContainerId)
                     // ,width: 300
-                    // ,height: 400
+                    // ,height: 400 //
                 });
             });
     };
