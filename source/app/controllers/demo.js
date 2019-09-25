@@ -89,6 +89,7 @@ JMVC.controllers.demo = function () {
             bu = JMVC.vars.baseurl,
             v = JMVC.getView('vacuum'),
             links = {
+                'Event delegation on steroids': 'pub',
                 'Canvas editor (WorkInProgress)': 'canvaseditor',
                 'Widgzard SPA': 'widgzard/sample/',
                 // 'Widgzard<sup> n</sup> = Engy' : 'widgzard/engy/',
@@ -217,11 +218,11 @@ JMVC.controllers.demo = function () {
             'core/lib/widgzard/widgzard'
         );
 
-        function makeList(title, links) {
+        function makeList (title, links) {
             var cnt = [{
-                style: { padding: '10px 0px' },
-                html: '<strong>' + title + '</strong>'
-            }],
+                    style: { padding: '10px 0px' },
+                    html: '<strong>' + title + '</strong>'
+                }],
                 inner = { tag: 'ul', content: [] },
                 k;
 
@@ -249,7 +250,7 @@ JMVC.controllers.demo = function () {
             };
         }
 
-        function getConfig() {
+        function getConfig () {
             return {
                 cb: function () {
                     console.debug('done');
@@ -665,51 +666,51 @@ JMVC.controllers.demo = function () {
 
         JMVC.dom.preloadImage(JMVC.vars.baseurl + '/media/img/' + img, function () {
             var elements = [{
-                id: 'brightness',
-                label: 'Brightness'
-            }, {
-                id: 'threshold',
-                label: 'Threshold'
-            }, {
-                id: 'grayscale',
-                label: 'Grayscale'
-            }, {
-                id: 'invert',
-                label: 'Invert'
-            }, {
-                id: 'blur',
-                label: 'Blur'
-            }, {
-                id: 'emboss',
-                label: 'Emboss'
-            }, {
-                id: 'sharpen',
-                label: 'Sharpen'
-            }, {
-                id: 'laplace',
-                label: 'Laplace'
-            }, {
-                id: 'sobeloriz',
-                label: 'Sobel oriz'
-            }, {
-                id: 'sobelvert',
-                label: 'Sobel vert'
-            }, {
-                id: 'red',
-                label: 'Remove RED channel'
-            }, {
-                id: 'green',
-                label: 'Remove GREEN channel'
-            }, {
-                id: 'blue',
-                label: 'Remove BLUE channel'
-            }, {
-                id: 'x',
-                label: 'x'
-            }, {
-                id: 'mblur',
-                label: 'Mblur'
-            }],
+                    id: 'brightness',
+                    label: 'Brightness'
+                }, {
+                    id: 'threshold',
+                    label: 'Threshold'
+                }, {
+                    id: 'grayscale',
+                    label: 'Grayscale'
+                }, {
+                    id: 'invert',
+                    label: 'Invert'
+                }, {
+                    id: 'blur',
+                    label: 'Blur'
+                }, {
+                    id: 'emboss',
+                    label: 'Emboss'
+                }, {
+                    id: 'sharpen',
+                    label: 'Sharpen'
+                }, {
+                    id: 'laplace',
+                    label: 'Laplace'
+                }, {
+                    id: 'sobeloriz',
+                    label: 'Sobel oriz'
+                }, {
+                    id: 'sobelvert',
+                    label: 'Sobel vert'
+                }, {
+                    id: 'red',
+                    label: 'Remove RED channel'
+                }, {
+                    id: 'green',
+                    label: 'Remove GREEN channel'
+                }, {
+                    id: 'blue',
+                    label: 'Remove BLUE channel'
+                }, {
+                    id: 'x',
+                    label: 'x'
+                }, {
+                    id: 'mblur',
+                    label: 'Mblur'
+                }],
                 butts = '',
                 i, l = elements.length;
 
@@ -717,7 +718,7 @@ JMVC.controllers.demo = function () {
                 butts += JMVC.string.replaceAll('<button id="%id%" class="flt">%label%</button>', elements[i]);
             }
 
-            function track(msg) {
+            function track (msg) {
                 JMVC.dom.append(JMVC.dom.find('#done'), JMVC.dom.create('li', {}, msg));
             }
             track.reset = function () {
@@ -1060,10 +1061,10 @@ JMVC.controllers.demo = function () {
         v.render({
             cback: function () {
                 var buttPlus = JMVC.dom.add(B, 'input', {
-                    type: 'button',
-                    value: '+',
-                    id: 'buttPlus'
-                }),
+                        type: 'button',
+                        value: '+',
+                        id: 'buttPlus'
+                    }),
                     buttMinus = JMVC.dom.add(B, 'input', {
                         type: 'button',
                         value: '-',
@@ -1118,8 +1119,8 @@ JMVC.controllers.demo = function () {
                 }, '&bull;');
 
                 var trg = JMVC.dom.add(B, 'div', {
-                    id: 'timer'
-                }),
+                        id: 'timer'
+                    }),
                     cal = JMVC.dom.add(B, 'div', {
                         id: 'cal'
                     }),
@@ -1735,7 +1736,7 @@ JMVC.controllers.demo = function () {
                             self.done();
                         }
                     },
-                        'clearer',
+                    'clearer',
                     {
                         content: [{
                             style: {
@@ -1847,7 +1848,7 @@ JMVC.controllers.demo = function () {
                     console.log(logo.outerHTML);
                 });
 
-                function go(img) {
+                function go (img) {
                     JMVC.shadowMatrix.getMatrixFromImage({
                         size: size,
                         // imgUrl : img || (JMVC.vars.baseurl + '/media/img/fgk.jpg')

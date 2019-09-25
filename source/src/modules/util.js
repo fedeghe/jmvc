@@ -227,10 +227,10 @@ JMVC.util = {
         return ret;
     },
     interval: function (fn, interval, err) {
-        let active = true,
+        var active = true,
             i = 0,
-            int = interval;
-        const init = +new Date();
+            int = interval,
+            init = +new Date();
         (function run () {
             int = interval + (init + (i++ * interval) - new Date());
             setTimeout(function () {
@@ -244,7 +244,7 @@ JMVC.util = {
             },
             int);
         })();
-        return () => {
+        return function () {
             active = false;
         };
     },
