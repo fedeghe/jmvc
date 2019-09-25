@@ -35,6 +35,7 @@
         "malta-header-comment": "^1.0.8",
         "malta-js-toolkit": "^1.0.14",
         "malta-js-uglify": "^1.0.7",
-        "malta-less": "^1.0.10"
+        "malta-less": "^1.0.10",
+        "lodash": "^4.17.15"
     }
 }
