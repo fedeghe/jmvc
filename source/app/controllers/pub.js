@@ -8,7 +8,7 @@ JMVC.controllers.pub = function () {
         );
 
         JMVC.head.addStyle(JMVC.vars.baseurl + '/media/css/pub.css');
-        JMVC.head.addStyle('http://fonts.googleapis.com/css?family=Freckle+Face');
+        JMVC.head.addStyle('https://fonts.googleapis.com/css?family=Freckle+Face');
         JMVC.head.title('Observers');
 
         JMVC.events.loadify(500);
