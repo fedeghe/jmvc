@@ -1,7 +1,6 @@
 {
     "EXE": [
-        "mkdir -p app/extensions/affix",
-        "mkdir -p app/extensions/animator",
+        "mkdir -p app/extensions/{affix,animator}",
         "mkdir -p app/extensions/def",
         "mkdir -p app/extensions/event_scroll",
         "mkdir -p app/extensions/iscroll",
@@ -36,7 +35,6 @@
     "source/app/extensions/timer/*.js": "app/extensions/timer",
     "source/app/extensions/trial/*.js": "app/extensions/trial",
     "source/app/extensions/tricks/*.js": "app/extensions/tricks",
-    
     "source/app/extensions/calendar/require.json": true,
     "source/app/extensions/canvas/require.json": true,
     "source/app/extensions/core/require.json": true,

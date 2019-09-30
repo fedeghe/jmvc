@@ -1,12 +1,6 @@
 {
     "EXE": [
-        "mkdir app/controllers",
-        "mkdir app/controllers/jmvcdoc",
-        "mkdir -p app/controllers/test/api",
-        "mkdir app/controllers/test/api/array",
-        "mkdir app/controllers/test/api/jmvc",
-        "mkdir app/controllers/test/api/object",
-        "mkdir app/controllers/test/api/string"
+        "mkdir -p app/controllers/{jmvcdoc,test/api/{array,jmvc,object,string}}"
     ],
     "source/app/controllers/index.html": "app/controllers",
     "source/app/controllers/*.js": "app/controllers",

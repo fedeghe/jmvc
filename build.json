@@ -1,8 +1,6 @@
 {
     "EXE": [
-        "rm -rf app",
-        "rm -rf srv",
-        "rm -rf media",
+        "rm -rf app srv media",
         "mkdir app srv media",
         "cp -R source/media ."
     ],
