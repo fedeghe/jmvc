@@ -15,8 +15,8 @@ JMVC.controllers.pub = function () {
 
         var content = '' +
             '<div style="position:relative; height:140px">' +
-            '<span id="e2" style="position:absolute;z-index:1;top:26px;left:151px;font-size:62px; color:#0f0">&bull;</span>' +
-            '<span id="e1" style="position:absolute;z-index:2;top:46px;left:161px;font-size:32px">&bull;</span>' +
+            '<span id="e2" style="position:absolute;z-index:1;top:26px;left:140px;font-size:62px; color:#0f0">&bull;</span>' +
+            '<span id="e1" style="position:absolute;z-index:2;top:46px;left:151px;font-size:32px">&bull;</span>' +
             '<h1 style="z-index:20;position:absolute">around <font style="font-size:100px;">O</font>BSERVERS</h1>' +
             '</div>',
             v = JMVC.getView('vacuum'),
