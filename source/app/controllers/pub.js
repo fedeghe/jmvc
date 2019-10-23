@@ -83,6 +83,7 @@ JMVC.controllers.pub = function () {
                 // .listen('mousemove', function (p) {JMVC.debug(p); }, 'alert')
                 .listen('dblclick', function (p) { JMVC.debug('dblclick', p); }, 'alert2')
                 .listen('mouseover', function (p) { JMVC.debug('over ', p); }, 'overout')
+                .listen('mouseover', function (p) { JMVC.debug('over ', p); }, 'blood')
                 .listen('mouseout', function (p) { JMVC.debug('out ', p); }, 'overout')
                 .listen('change', function (p) { JMVC.debug(p.node.value); }, 'sel')
                 .bind();

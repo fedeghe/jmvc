@@ -15,10 +15,6 @@ Header always set X-Frame-Options SAMEORIGIN
 
 ## https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
 
-
-
-
-
 # pass the default character set
 AddDefaultCharset utf-8
 
@@ -105,11 +101,11 @@ Options -Indexes
 
 	# PREVENT HOTLINKING
 	# RewriteCond %{HTTP_REFERER} !^$
-	# RewriteCond %{HTTP_REFERER} !^http://www.jmvc.dev/.*$ [NC]
+	# RewriteCond %{HTTP_REFERER} !^http://www.jmvc.loc/.*$ [NC]
 	# RewriteRule .*.(png|gif|jpe?g)$ [F,NC]
 	# RewriteCond %{HTTP_REFERER} !^$
-	# RewriteCond %{HTTP_REFERER} !^http://www.jmvc.dev/.*$ [NC]
-	# RewriteRule \.(js)$ http://www.jmvc.dev/hotlink.js [R,L]
+	# RewriteCond %{HTTP_REFERER} !^http://www.jmvc.loc/.*$ [NC]
+	# RewriteRule \.(js)$ http://www.jmvc.loc/hotlink.js [R,L]
 
 	# models, views, controllers, extensions and media
 	RewriteRule ^(app|media)(.*)?$ - [L]

@@ -82,7 +82,7 @@ JMVC.extend('xvents', {
          */
         Area.prototype.bind = function () {
             var self = this;
-            // console.debug(self.map)
+            // console.debug(JSON.stringify(self.map));
             if (!self.binded) {
                 // loop the map
                 JMVC.each(self.map, function (fnArr, ev) {
