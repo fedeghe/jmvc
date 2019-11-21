@@ -94,7 +94,8 @@
     TTT.Game.prototype.highLightWinner = function (score) {
         var i, s, l;
         for (i in score) {
-            if (score[i].length === this.toWin) break;
+            // eslint-disable-next-line eqeqeq
+            if (score[i].length == this.toWin) break;
         }
         s = score[i];
         for (i = 0, l = this.toWin; i < l; i++) {
