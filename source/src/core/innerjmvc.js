@@ -555,7 +555,9 @@ jmvc = {
     jeval: function (r) {
         try {
             return JMVC.W.eval(r);
-        } catch (e) {}
+        } catch (e) {
+            console.log('Evel err: ', e);
+        }
         return false;
     },
 
