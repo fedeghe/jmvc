@@ -23,6 +23,7 @@
         this.movenum = 0;
         this.toWin = o.toWin || this.cplx;
         this.moves = [[], []];
+        this.active = true;
         // this.winningSequences();
     };
     /*
@@ -82,6 +83,7 @@
     TTT.Game.prototype.win = function (score) {
         var self = this;
         // player = this.movenum % 2;
+        self.active = false;
         self.highLightWinner(score);
         // alert('Player ' + (player+1) + ' WINS!!!');
         window.setTimeout(function () {
@@ -176,7 +178,8 @@
         for (i in score) {
             max = score[i].length > max ? score[i].length : max;
         }
-        if (max === this.toWin) {
+        // eslint-disable-next-line eqeqeq
+        if (max == this.toWin) {
             window.setTimeout(function () {
                 self.win(score);
             }, 10);
@@ -187,6 +190,7 @@
     };
 
     TTT.Game.prototype.restart = function () {
+        this.active = true;
         this.movenum = 0;
         this.boxes = [];
         this.moves = [[], []];
@@ -210,6 +214,7 @@
     TTT.Game.prototype.handleEvents = function () {
         var self = this;
         this.board.addEventListener(isMobile ? 'touchstart' : 'click', function (e) {
+            if (!self.active) return;
             self.board.blur();
             var trg = e.originalTarget || e.target,
                 player = self.movenum % 2,
@@ -271,7 +276,7 @@
         t.className = 'clear';
         self.board.appendChild(t);
         this.dom.appendChild(this.board);
-        this.drawpanel && this.drawPanel();
+        // this.drawpanel && this.drawPanel();
     };
     JMVC.TTT = RET;
 })();
