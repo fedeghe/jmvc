@@ -993,6 +993,11 @@ malta@^4.0.4:
   resolved "https://registry.yarnpkg.com/malta/-/malta-4.0.4.tgz#9ab860454307e57479daad3452c7abc62deddc4b"
   integrity sha512-7+6zUDM2Az4t51mdLFk6XMgheExGNhl3Kwgp/hVp07bcJylu8VKwXwxVdFujxRxjxJmwGUHdjV9ABgaEpQuL0Q==
 
+malta@^4.0.7:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/malta/-/malta-4.0.7.tgz#4413fa6b00a5dd45d86ed8af0441b291d414f168"
+  integrity sha512-DVvnbnJ9ltwCaEcihNJNcN+Y+nt6uz+oCb4Rim4wfuBsBAbKp7DLv2Okf7w9pisoDmo4KZJHF3tXvjqguoS52A==
+
 mime-db@1.40.0:
   version "1.40.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.40.0.tgz#a65057e998db090f732a68f6c276d387d4126c32"

@@ -197,9 +197,9 @@ JMVC.object = {
      * [fromQs description]
      * @return {[type]} [description]
      */
-    fromQs: function () {
+    fromQs: function (qs) {
         'use strict';
-        var els = document.location.search.substr(1).split('&'),
+        var els = (qs || document.location.search).substr(1).split('&'),
             i, len, tmp, out = {};
 
         for (i = 0, len = els.length; i < len; i += 1) {
