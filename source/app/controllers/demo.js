@@ -633,6 +633,9 @@ JMVC.controllers.demo = function () {
                 'margin-right': '5px',
                 'cursor': 'pointer'
             },
+            'button:focus': {
+                'outline': 'none'
+            },
             'button.flt:hover': {
                 'background-color': 'green',
                 'color': 'white'
@@ -712,7 +715,7 @@ JMVC.controllers.demo = function () {
                     label: 'Mblur'
                 }],
                 butts = '',
-                i, l = elements.length;
+                i = 0, l = elements.length;
 
             for (null; i < l; i += 1) {
                 butts += JMVC.string.replaceAll('<button id="%id%" class="flt">%label%</button>', elements[i]);
