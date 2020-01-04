@@ -1,4 +1,4 @@
-*.buildNum
+*.buildNum.json
 *.printVersion
 /app
 /srv

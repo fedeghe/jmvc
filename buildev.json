@@ -1,7 +1,7 @@
 {
     "EXE": [
         "rm -rf app srv media",
-        "mkdir app srv media",
+        "mkdir app srv",
         "cp -R source/media ."
     ],
     "source/index.html": ". -plugins=malta-dev-srv[staticEp:'index.html',staticFree:'app|media']",
