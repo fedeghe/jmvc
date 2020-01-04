@@ -1,0 +1,7 @@
+{
+    "EXE": [
+        "mkdir -p app/extensions/core/screen"
+    ],
+    "source/jmvc/extensions/core/screen/*.js": "app/extensions/core/screen",
+    "source/jmvc/extensions/core/screen/*.xml": "app/extensions/core/screen"
+}

@@ -18,24 +18,24 @@
 		// @return {object literal} $JMVC inner object
 		// 
 		JMVC = W.JMVC = (function () {
-			$$src/core/init.js$$
-			$$src/core/innerjmvc.js$$
-			$$src/core/preload.js$$
-			$$src/core/constructors/errors.js$$
-			$$src/core/constructors/event.js$$
-			$$src/core/constructors/channel.js$$
-			$$src/core/constructors/extension.js$$
-			$$src/core/constructors/promise.js$$
-			$$src/core/constructors/interface.js$$
-			$$src/core/constructors/functionqueue.js$$
-			$$src/core/constructors/controller.js$$
-			$$src/core/constructors/model.js$$
-			$$src/core/constructors/view.js$$   
-			$$src/core/constructors/mvc_common.js$$
-			$$src/core/parser.js$$
-			$$src/core/dispatched.js$$
-			$$src/core/outerjmvc.js$$
-			$$src/core/cleanup.js$$
+			$$jmvc/core/init.js$$
+			$$jmvc/core/innerjmvc.js$$
+			$$jmvc/core/preload.js$$
+			$$jmvc/core/constructors/errors.js$$
+			$$jmvc/core/constructors/event.js$$
+			$$jmvc/core/constructors/channel.js$$
+			$$jmvc/core/constructors/extension.js$$
+			$$jmvc/core/constructors/promise.js$$
+			$$jmvc/core/constructors/interface.js$$
+			$$jmvc/core/constructors/functionqueue.js$$
+			$$jmvc/core/constructors/controller.js$$
+			$$jmvc/core/constructors/model.js$$
+			$$jmvc/core/constructors/view.js$$   
+			$$jmvc/core/constructors/mvc_common.js$$
+			$$jmvc/core/parser.js$$
+			$$jmvc/core/dispatched.js$$
+			$$jmvc/core/outerjmvc.js$$
+			$$jmvc/core/cleanup.js$$
 			// what should be ever returned?
             return $JMVC;
 		})();
@@ -45,22 +45,22 @@
 	//
 	// MANDATORY MODULES START
 	//
-	$$src/core/private.js$$
-	$$src/modules/cookie.js$$
-	$$src/modules/io.js$$
-	$$src/modules/util.js$$
-	$$src/modules/dom.js$$
-	$$src/modules/bom.js$$
-	$$src/modules/events.js$$
-	$$src/modules/head.js$$
-	$$src/modules/css.js$$
-	$$src/modules/array.js$$
-	$$src/modules/string.js$$
-	$$src/modules/object.js$$
-	$$src/modules/match.js$$
-	$$src/modules/num.js$$
-	$$src/modules/dnd.js$$
-	$$src/modules/minishim.js$$
+	$$jmvc/core/private.js$$
+	$$jmvc/modules/cookie.js$$
+	$$jmvc/modules/io.js$$
+	$$jmvc/modules/util.js$$
+	$$jmvc/modules/dom.js$$
+	$$jmvc/modules/bom.js$$
+	$$jmvc/modules/events.js$$
+	$$jmvc/modules/head.js$$
+	$$jmvc/modules/css.js$$
+	$$jmvc/modules/array.js$$
+	$$jmvc/modules/string.js$$
+	$$jmvc/modules/object.js$$
+	$$jmvc/modules/match.js$$
+	$$jmvc/modules/num.js$$
+	$$jmvc/modules/dnd.js$$
+	$$jmvc/modules/minishim.js$$
 	//
 	// MANDATORY MODULES END
 	// 
@@ -69,9 +69,9 @@
 	//***********************//
 	//
 	// TIME TO RENDER
-	$$src/core/render.js$$
-	$$src/amd.js$$
+	$$jmvc/core/render.js$$
+	$$jmvc/amd.js$$
 //
 }(this);
-$$src/foot.js$$
+$$jmvc/foot.js$$
 /* the endline */

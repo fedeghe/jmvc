@@ -1,0 +1,29 @@
+{
+    "EXE": [
+        "mkdir -p app/extensions/core/lib/{array,bin,border,carpet,cookieMonster,crypt,game,grind}",
+        "mkdir -p app/extensions/core/lib/{hotBox,image,pixel,pwd,shl,svg,utf8,widgzard}"
+    ],
+    "source/jmvc/extensions/core/lib/array/array.js": "app/extensions/core/lib/array",
+    "source/jmvc/extensions/core/lib/bin/bin.js": "app/extensions/core/lib/bin",
+    "source/jmvc/extensions/core/lib/border/border.js": "app/extensions/core/lib/border",
+    "source/jmvc/extensions/core/lib/border/default.css": "app/extensions/core/lib/border",
+    "source/jmvc/extensions/core/lib/carpet/carpet.js": "app/extensions/core/lib/carpet",
+    "source/jmvc/extensions/core/lib/carpet/default.css": "app/extensions/core/lib/carpet",
+    "source/jmvc/extensions/core/lib/cookieMonster/cookieMonster.js": "app/extensions/core/lib/cookieMonster",
+    "source/jmvc/extensions/core/lib/crypt/crypt.js": "app/extensions/core/lib/crypt",
+    "source/jmvc/extensions/core/lib/game/*.js": "app/extensions/core/lib/game",
+    "source/jmvc/extensions/core/lib/grind/*.js": "app/extensions/core/lib/grind",
+    "source/jmvc/extensions/core/lib/grind/*.css": "app/extensions/core/lib/grind",
+    "source/jmvc/extensions/core/lib/hotBox/hotBox.js": "app/extensions/core/lib/hotBox",
+    "source/jmvc/extensions/core/lib/image/image.js": "app/extensions/core/lib/image",
+    "source/jmvc/extensions/core/lib/pixel/pixel.js": "app/extensions/core/lib/pixel",
+    "source/jmvc/extensions/core/lib/pwd/generator.js": "app/extensions/core/lib/pwd",
+    "source/jmvc/extensions/core/lib/pwd/generator.xml": "app/extensions/core/lib/pwd",
+    "source/jmvc/extensions/core/lib/shl/shl.js": "app/extensions/core/lib/shl",
+    "source/jmvc/extensions/core/lib/svg/svg.js": "app/extensions/core/lib/svg",
+    "source/jmvc/extensions/core/lib/utf8/utf8.js": "app/extensions/core/lib/utf8",
+    "source/jmvc/extensions/core/lib/widgzard/require.json": true,
+    "source/jmvc/extensions/core/lib/ddd/require.json": true,
+    "source/jmvc/extensions/core/lib/jmap/require.json": true,
+    "source/jmvc/extensions/core/lib/math/require.json": true
+}

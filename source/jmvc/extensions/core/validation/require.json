@@ -1,0 +1,8 @@
+{
+    "EXE": [
+        "mkdir -p app/extensions/core/validation/messages"
+    ],
+    "source/jmvc/extensions/core/validation/*.css": "app/extensions/core/validation",
+    "source/jmvc/extensions/core/validation/*.js": "app/extensions/core/validation",
+    "source/jmvc/extensions/core/validation/messages/*.js": "app/extensions/core/validation/messages"
+}

@@ -1,0 +1,12 @@
+{
+    "EXE": [
+        "mkdir -p app/extensions/core/pub/hyperpub",
+        "mkdir -p app/extensions/core/pub/xpub",
+        "mkdir -p app/extensions/core/pub/xvents",
+        "mkdir -p app/extensions/core/pub/zpub"
+    ],
+    "source/jmvc/extensions/core/pub/hyperpub/*.js": "app/extensions/core/pub/hyperpub",
+    "source/jmvc/extensions/core/pub/xpub/*.js": "app/extensions/core/pub/xpub",
+    "source/jmvc/extensions/core/pub/xvents/*.js": "app/extensions/core/pub/xvents",
+    "source/jmvc/extensions/core/pub/zpub/*.js": "app/extensions/core/pub/zpub"
+}

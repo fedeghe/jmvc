@@ -1,0 +1,15 @@
+{
+    "EXE": [
+        "mkdir -p app/extensions/core/lib/math/complex",
+        "mkdir -p app/extensions/core/lib/math/dd",
+        "mkdir -p app/extensions/core/lib/math/ddd",
+        "mkdir -p app/extensions/core/lib/math/matrix",
+        "mkdir -p app/extensions/core/lib/math/vector"
+    ],
+    "source/jmvc/extensions/core/lib/math/complex/complex.js": "app/extensions/core/lib/math/complex",
+    "source/jmvc/extensions/core/lib/math/dd/dd.js": "app/extensions/core/lib/math/dd",
+    "source/jmvc/extensions/core/lib/math/ddd/ddd.js": "app/extensions/core/lib/math/ddd",
+    "source/jmvc/extensions/core/lib/math/matrix/matrix.js": "app/extensions/core/lib/math/matrix",
+    "source/jmvc/extensions/core/lib/math/vector/vector.js": "app/extensions/core/lib/math/vector",
+    "source/jmvc/extensions/core/lib/math/math.js": "app/extensions/core/lib/math"
+}

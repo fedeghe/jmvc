@@ -6,7 +6,6 @@
     "source/app/models/require.json": true,
     "source/app/testsuite/require.json": true,
     "source/app/views/require.json": true,
-    "source/app/extensions/require.json": true,
     "source/app/config.js": "app",
     "source/app/index.html": "app"
 }

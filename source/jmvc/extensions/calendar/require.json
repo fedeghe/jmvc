@@ -1,0 +1,7 @@
+{
+    "EXE": [
+        "mkdir -p app/extensions/calendar/styles"
+    ],
+    "source/jmvc/extensions/calendar/*.js": "app/extensions/calendar",
+    "source/jmvc/extensions/calendar/styles/*.css": "app/extensions/calendar/styles"
+}
