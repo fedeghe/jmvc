@@ -1,0 +1,4 @@
+{
+    "source/jmvc/extensions/core/fvalidation/*.js": "app/extensions/core/fvalidation",
+    "source/jmvc/extensions/core/fvalidation/*.css": "app/extensions/core/fvalidation"
+}

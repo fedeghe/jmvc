@@ -1,0 +1,23 @@
+{
+    "EXE": [
+        "mkdir -p app/extensions/canvas/editor/css",
+        "mkdir -p app/extensions/canvas/editor/helpers/inputs",
+        "mkdir -p app/extensions/canvas/editor/panels",
+        "mkdir -p app/extensions/canvas/editor/tools/originals",
+        "cp source/jmvc/extensions/canvas/editor/css/*.gif app/extensions/canvas/editor/css",
+        "cp source/jmvc/extensions/canvas/editor/css/*.jpg app/extensions/canvas/editor/css",
+        "cp source/jmvc/extensions/canvas/editor/css/*.png app/extensions/canvas/editor/css"
+    ],
+    "source/jmvc/extensions/canvas/canvas.js": "app/extensions/canvas",
+    "source/jmvc/extensions/canvas/editor/editor.js": "app/extensions/canvas/editor",
+    "source/jmvc/extensions/canvas/editor/config.json": "app/extensions/canvas/editor",
+    "source/jmvc/extensions/canvas/editor/css/*.css": "app/extensions/canvas/editor/css",
+    "source/jmvc/extensions/canvas/editor/helpers/*.js": "app/extensions/canvas/editor/helpers",
+    "source/jmvc/extensions/canvas/editor/helpers/*.json": "app/extensions/canvas/editor/helpers",
+    "source/jmvc/extensions/canvas/editor/helpers/inputs/*.js": "app/extensions/canvas/editor/helpers/inputs",
+    "source/jmvc/extensions/canvas/editor/helpers/inputs/*.json": "app/extensions/canvas/editor/helpers/inputs",
+    "source/jmvc/extensions/canvas/editor/panels/*.js": "app/extensions/canvas/editor/panels",
+    "source/jmvc/extensions/canvas/editor/panels/*.json": "app/extensions/canvas/editor/panels",
+    "source/jmvc/extensions/canvas/editor/tools/*.js": "app/extensions/canvas/editor/tools",
+    "source/jmvc/extensions/canvas/editor/tools/*.json": "app/extensions/canvas/editor/tools"
+}

@@ -1,7 +1,0 @@
-{
-    "EXE": [
-        "mkdir -p app/extensions/calendar/styles"
-    ],
-    "source/app/extensions/calendar/*.js": "app/extensions/calendar",
-    "source/app/extensions/calendar/styles/*.css": "app/extensions/calendar/styles"
-}

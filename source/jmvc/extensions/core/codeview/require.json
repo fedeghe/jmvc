@@ -1,0 +1,9 @@
+{
+    "EXE": [
+        "mkdir -p app/extensions/core/codeview/{code,codehl,script}"
+    ],
+    "source/jmvc/extensions/core/codeview/*.css": "app/extensions/core/codeview",
+    "source/jmvc/extensions/core/codeview/code/*.js": "app/extensions/core/codeview/code",
+    "source/jmvc/extensions/core/codeview/codehl/*.js": "app/extensions/core/codeview/codehl",
+    "source/jmvc/extensions/core/codeview/script/*.js": "app/extensions/core/codeview/script"
+}

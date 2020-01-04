@@ -1,7 +1,0 @@
-{
-    "EXE": [
-        "mkdir -p app/extensions/core/lib/widgzard"
-    ],
-    "source/app/extensions/core/lib/widgzard/*.js": "app/extensions/core/lib/widgzard",
-    "source/app/extensions/core/lib/widgzard/*.css": "app/extensions/core/lib/widgzard"
-}

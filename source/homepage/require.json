@@ -1,0 +1,10 @@
+{
+    "source/homepage/components/require.json": true,
+    "source/homepage/controllers/require.json": true,
+    "source/homepage/i18n/require.json": true,
+    "source/homepage/interfaces/require.json": true,
+    "source/homepage/models/require.json": true,
+    "source/homepage/views/require.json": true,
+    "source/homepage/config.js": "app",
+    "source/homepage/index.html": "app"
+}

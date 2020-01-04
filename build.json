@@ -1,12 +1,11 @@
 {
     "EXE": [
-        "rm -rf app srv media",
-        "mkdir app srv media",
+        "rm -rf app media",
+        "mkdir app media",
         "cp -R source/media ."
     ],
     "#source/index.html": ".",
     "#source/jmvc.js": "app -plugins=malta-js-uglify...malta-header-comment[name:'source/src/head.txt']",
     "#source/documentation/documentation.xml": "media",
-    "#source/srv/require.json": true,
     "#source/app/require.json": true
 }

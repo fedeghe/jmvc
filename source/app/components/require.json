@@ -1,7 +1,0 @@
-{
-    "EXE" : [
-        "mkdir app/components"
-    ],
-    "source/app/components/index.html" : "app/components",
-    "source/app/components/*.js" : "app/components"
-}

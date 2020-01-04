@@ -1,6 +1,0 @@
-{
-    "EXE": [
-        "mkdir -p app/interfaces"
-    ],
-    "source/app/interfaces/*.js": "app/interfaces"
-}

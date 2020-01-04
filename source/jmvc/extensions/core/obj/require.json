@@ -1,0 +1,17 @@
+{
+    "EXE": [
+        "mkdir -p app/extensions/core/obj/bucket",
+        "mkdir -p app/extensions/core/obj/calendar",
+        "mkdir -p app/extensions/core/obj/date",
+        "mkdir -p app/extensions/core/obj/deque",
+        "mkdir -p app/extensions/core/obj/skip_list",
+        "mkdir -p app/extensions/core/obj/styles"
+    ],
+    "source/jmvc/extensions/core/obj/bucket/*.js": "app/extensions/core/obj/bucket",
+    "source/jmvc/extensions/core/obj/calendar/*.js": "app/extensions/core/obj/calendar",
+    "source/jmvc/extensions/core/obj/calendar/*.css": "app/extensions/core/obj/calendar",
+    "source/jmvc/extensions/core/obj/date/*.js": "app/extensions/core/obj/date",
+    "source/jmvc/extensions/core/obj/deque/*.js": "app/extensions/core/obj/deque",
+    "source/jmvc/extensions/core/obj/skip_list/*.js": "app/extensions/core/obj/skip_list",
+    "source/jmvc/extensions/core/obj/styles/*.css": "app/extensions/core/obj/styles"
+}

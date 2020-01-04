@@ -1,0 +1,7 @@
+{
+    "EXE": [
+        "cp source/jmvc/extensions/core/console/*.png app/extensions/core/console/"
+    ],
+    "source/jmvc/extensions/core/console/console.less": "app/extensions/core/console -plugins=malta-less",
+    "source/jmvc/extensions/core/console/console.js": "app/extensions/core/console"
+}
