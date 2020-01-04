@@ -1,6 +1,0 @@
-{
-    "EXE" : [
-        "mkdir -p app/i18n"
-    ],
-    "source/app/i18n/*.js" : "app/i18n"
-}

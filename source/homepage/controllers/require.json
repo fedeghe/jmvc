@@ -1,0 +1,13 @@
+{
+    "EXE": [
+        "mkdir -p app/controllers/{jmvcdoc,test/api/{array,jmvc,object,string}}"
+    ],
+    "source/homepage/controllers/index.html": "app/controllers",
+    "source/homepage/controllers/*.js": "app/controllers",
+    "source/homepage/controllers/test/*.js": "app/controllers/test",
+    "source/homepage/controllers/jmvcdoc/*.js": "app/controllers/jmvcdoc",
+    "source/homepage/controllers/test/api/array/*.js": "app/controllers/test/api/array",
+    "source/homepage/controllers/test/api/jmvc/*.js": "app/controllers/test/api/jmvc",
+    "source/homepage/controllers/test/api/object/*.js": "app/controllers/test/api/object",
+    "source/homepage/controllers/test/api/string/*.js": "app/controllers/test/api/string"
+}

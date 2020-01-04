@@ -1,4 +1,5 @@
 {
-    "source/jmvc.js": "app -plugins=malta-header-comment[name:'source/jmvc/head.txt']",
+    "source/jmvc/jmvc.js": "app -plugins=malta-header-comment[name:'source/jmvc/head.txt']",
+    "source/jmvc/testsuite/require.json": true,
     "source/jmvc/extensions/require.json": true
 }

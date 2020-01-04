@@ -1,0 +1,9 @@
+{
+    "EXE": [
+        "mkdir -p app/testsuite/css",
+        "cp -R source/jmvc/testsuite/images app/testsuite/"
+    ],
+    "source/jmvc/testsuite/index.html": "app/testsuite",
+    "source/jmvc/testsuite/testsuite.js": "app/testsuite",
+    "source/jmvc/testsuite/css/*.css": "app/testsuite/css"
+}

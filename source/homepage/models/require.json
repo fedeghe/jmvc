@@ -1,0 +1,14 @@
+{
+    "EXE": [
+        "mkdir -p app/models/api",
+        "mkdir -p app/models/game",
+        "mkdir -p app/models/test",
+        "mkdir -p app/models/xxx"
+    ],
+    "source/homepage/models/index.html": "app/models/",
+    "source/homepage/models/*.js": "app/models/",
+    "source/homepage/models/api/*.js": "app/models/api",
+    "source/homepage/models/game/*.js": "app/models/game",
+    "source/homepage/models/test/*.js": "app/models/test",
+    "source/homepage/models/xxx/*.js": "app/models/xxx"
+}

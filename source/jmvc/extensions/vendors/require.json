@@ -10,16 +10,16 @@
         "mkdir -p app/extensions/vendors/gravatar",
         "mkdir -p app/extensions/vendors/twitter"
     ],
-    "source/jmvc/extensions/vendors/dropbox/*.js": "app/extensions/vendors/dropbox -vars=source/vars.json",
-    "source/jmvc/extensions/vendors/fb/*.js": "app/extensions/vendors/fb -vars=source/vars.json",
-    "source/jmvc/extensions/vendors/github/forkme/*.js": "app/extensions/vendors/github/forkme -vars=source/vars.json",
-    "source/jmvc/extensions/vendors/google/analytics/*.js": "app/extensions/vendors/google/analytics -vars=source/vars.json",
-    "source/jmvc/extensions/vendors/google/gmap/*.js": "app/extensions/vendors/google/gmap -vars=source/vars.json",
-    "source/jmvc/extensions/vendors/google/gmap/*.css": "app/extensions/vendors/google/gmap -vars=source/vars.json",
-    "source/jmvc/extensions/vendors/google/gmap2/*.js": "app/extensions/vendors/google/gmap2 -vars=source/vars.json",
-    "source/jmvc/extensions/vendors/google/gmap2/*.css": "app/extensions/vendors/google/gmap2 -vars=source/vars.json",
-    "source/jmvc/extensions/vendors/google/gmaps-v.3.14/*.js": "app/extensions/vendors/google/gmaps-v.3.14 -vars=source/vars.json",
-    "source/jmvc/extensions/vendors/google/gmaps-v.3.14/*.css": "app/extensions/vendors/google/gmaps-v.3.14 -vars=source/vars.json",
-    "source/jmvc/extensions/vendors/gravatar/*.js": "app/extensions/vendors/gravatar -vars=source/vars.json",
-    "source/jmvc/extensions/vendors/twitter/*.js": "app/extensions/vendors/twitter -vars=source/vars.json"
+    "source/jmvc/extensions/vendors/dropbox/*.js": "app/extensions/vendors/dropbox -vars=source/jmvc/vars.json",
+    "source/jmvc/extensions/vendors/fb/*.js": "app/extensions/vendors/fb -vars=source/jmvc/vars.json",
+    "source/jmvc/extensions/vendors/github/forkme/*.js": "app/extensions/vendors/github/forkme -vars=source/jmvc/vars.json",
+    "source/jmvc/extensions/vendors/google/analytics/*.js": "app/extensions/vendors/google/analytics -vars=source/jmvc/vars.json",
+    "source/jmvc/extensions/vendors/google/gmap/*.js": "app/extensions/vendors/google/gmap -vars=source/jmvc/vars.json",
+    "source/jmvc/extensions/vendors/google/gmap/*.css": "app/extensions/vendors/google/gmap -vars=source/jmvc/vars.json",
+    "source/jmvc/extensions/vendors/google/gmap2/*.js": "app/extensions/vendors/google/gmap2 -vars=source/jmvc/vars.json",
+    "source/jmvc/extensions/vendors/google/gmap2/*.css": "app/extensions/vendors/google/gmap2 -vars=source/jmvc/vars.json",
+    "source/jmvc/extensions/vendors/google/gmaps-v.3.14/*.js": "app/extensions/vendors/google/gmaps-v.3.14 -vars=source/jmvc/vars.json",
+    "source/jmvc/extensions/vendors/google/gmaps-v.3.14/*.css": "app/extensions/vendors/google/gmaps-v.3.14 -vars=source/jmvc/vars.json",
+    "source/jmvc/extensions/vendors/gravatar/*.js": "app/extensions/vendors/gravatar -vars=source/jmvc/vars.json",
+    "source/jmvc/extensions/vendors/twitter/*.js": "app/extensions/vendors/twitter -vars=source/jmvc/vars.json"
 }

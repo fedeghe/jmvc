@@ -1,0 +1,19 @@
+{
+    "EXE": [
+        "mkdir -p app/views/{api,core/vendors/google,demo,home,info,pub/info,test/widget,xxx}"
+    ],
+    "source/homepage/views/*.less": "app/views -plugins=malta-less",
+    "source/homepage/views/*.html": "app/views",
+    "source/homepage/views/core/*.html": "app/views/core",
+    "source/homepage/views/api/*.html": "app/views/api",
+    "source/homepage/views/core/vendors/google/*.html": "app/views/core/vendors/google",
+    "source/homepage/views/demo/*.html": "app/views/demo",
+    "source/homepage/views/demo/*.css": "app/views/demo",
+    "source/homepage/views/home/*.html": "app/views/home",
+    "source/homepage/views/info/*.html": "app/views/info",
+    "source/homepage/views/pub/*.html": "app/views/pub",
+    "source/homepage/views/pub/info/*.html": "app/views/pub/info",
+    "source/homepage/views/test/*.html": "app/views/test",
+    "source/homepage/views/test/widget/*.html": "app/views/test/widget",
+    "source/homepage/views/xxx/*.html": "app/views/xxx"
+}

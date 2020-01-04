@@ -4,6 +4,6 @@
 var _ = {};
 _.common = {
     digFor : 
-    $$jmvc/core/private/digfor.js$$
+    $$core/private/digfor.js$$
 };
 /* eslint-enable */

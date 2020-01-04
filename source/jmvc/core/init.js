@@ -3,7 +3,7 @@
  INIT
  */
 /* eslint-disable */
-$$jmvc/core/onError.js$$
+$$core/onError.js$$
 /* eslint-enable */
 
 /* eslint-disable no-unused-vars */
