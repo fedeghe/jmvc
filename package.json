@@ -6,8 +6,9 @@
     "main": "hotlink.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "buildev": "malta buildev.json",
-        "build": "malta build.json",
+        "buildhomedev": "malta builhomedev.json",
+        "buildhome": "malta buildhome.json",
+        "buildjmvcdev": "malta buildjmvcdev.json",
         "buildjmvc": "malta buildjmvc.json",
         "eslint": "eslint source"
     },
@@ -37,5 +38,8 @@
         "malta-js-toolkit": "^1.0.14",
         "malta-js-uglify": "^1.0.7",
         "malta-less": "^1.0.10"
+    },
+    "dependencies": {
+        "malta-browser-refresh": "^1.2.5"
     }
 }

@@ -1,3 +1,10 @@
 {
-    "#source/jmvc/jmvc.js": "app -plugins=malta-js-uglify...malta-header-comment[name:'source/jmvc/head.txt']"
+    "EXE": [
+        "rm -rf app",
+        "mkdir app"
+    ],
+    "#source/index.html": ".",
+    "#source/jmvc/jmvc.js": "app -plugins=malta-js-uglify...malta-header-comment[name:'source/jmvc/head.txt']",
+    "#source/jmvc/require.json": true,
+    "#source/start/require.json": true
 }

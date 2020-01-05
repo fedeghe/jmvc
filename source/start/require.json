@@ -1,0 +1,9 @@
+{
+    "EXE": [
+        "rm -rf app/controllers app/views",
+        "mkdir app/{controllers,views}"
+    ],
+    "source/start/controllers/*.js": "app/controllers",
+    "source/start/views/*.html": "app/views",
+    "source/start/config.js": "app"
+}

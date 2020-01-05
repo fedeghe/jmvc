@@ -951,6 +951,13 @@ longest@^1.0.1:
   resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
   integrity sha1-MKCy2jj3N3DoKUoNIuZiXtd9AJc=
 
+malta-browser-refresh@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/malta-browser-refresh/-/malta-browser-refresh-1.2.5.tgz#40e35a8835b2bf7934d9206240fa2a04e8739238"
+  integrity sha512-haSkdtsYxEB26QKrYlFknQyatRRJRmy5yn2hIG5Q/Pl2ceEM/JYzWKq2Msvze/j6CEXgXlGaY81UJZbLb2/Kzg==
+  dependencies:
+    malta "^4.0.4"
+
 malta-dev-srv@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/malta-dev-srv/-/malta-dev-srv-1.1.5.tgz#1efe9c91c6420ec64b7f211eb602aee092b62c6a"

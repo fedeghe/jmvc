@@ -1,0 +1,10 @@
+{
+    "EXE": [
+        "rm -rf app",
+        "mkdir app"
+    ],
+    "source/index.html": ". -plugins=malta-dev-srv[staticEp:'index.html',staticFree:'app|media']",
+    "source/jmvc/jmvc.js": "app -plugins=malta-js-uglify...malta-header-comment[name:'source/jmvc/head.txt']",
+    "source/jmvc/require.json": true,
+    "source/start/require.json": true
+}
