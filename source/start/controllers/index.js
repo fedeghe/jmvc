@@ -7,7 +7,7 @@ JMVC.controllers.index = function () {
             .set('styles', '')
             .set('id', 'container')
             .set('message', 'sample minimal controller')
-            .set('content', 'JMVC')
+            .set('image_title', 'JMVC')
             .render();
     };
 };
