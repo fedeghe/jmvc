@@ -10,6 +10,7 @@
         "buildhome": "malta buildhome.json",
         "buildjmvcdev": "malta buildjmvcdev.json",
         "buildjmvc": "malta buildjmvc.json",
+        "serve": "malta serve.json",
         "eslint": "eslint source"
     },
     "repository": {
