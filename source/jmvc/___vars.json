@@ -1,0 +1,11 @@
+{
+    "name": "JMVC",
+    "version": "3.9.1",
+    "review": "x",
+    "author": "Federico Ghedina - $email$",
+    "email": "fedeghe@gmail.com",
+    "build_system": "Malta",
+    "gmaps_key": "PUT_YOURS_HERE",
+    "ganalytics_key": "PUT_YOURS_HERE",
+    "build_system_link": "http://www.github.com/fedeghe/malta"
+}
