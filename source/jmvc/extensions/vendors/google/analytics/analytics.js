@@ -6,7 +6,7 @@ JMVC.events.end(function () {
     // set here your UA
     // ################
     /* eslint-disable */
-    var ua = $ganalytics_key$,
+    var ua = '$ganalytics_key$',
     /* eslint-enable */
         t = /(^true$|^false$)/i,
         doGa = function () {

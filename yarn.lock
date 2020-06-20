@@ -1093,10 +1093,10 @@ malta@^4.0.4:
   resolved "https://registry.yarnpkg.com/malta/-/malta-4.0.4.tgz#9ab860454307e57479daad3452c7abc62deddc4b"
   integrity sha512-7+6zUDM2Az4t51mdLFk6XMgheExGNhl3Kwgp/hVp07bcJylu8VKwXwxVdFujxRxjxJmwGUHdjV9ABgaEpQuL0Q==
 
-malta@^4.1.10:
-  version "4.1.10"
-  resolved "https://registry.yarnpkg.com/malta/-/malta-4.1.10.tgz#2b768204b28e476b31c789b0a7e351bf9b7e8763"
-  integrity sha512-MXwMyX2bjH4BqwHJMx5WWJx5tpUZ1EIS26AZWUHRjn0/na/mT5/OT1katNCr5v4WdosIFtj1Z95hcqtcJAXlNQ==
+malta@^4.1.19:
+  version "4.1.19"
+  resolved "https://registry.yarnpkg.com/malta/-/malta-4.1.19.tgz#0213af7afc66245f75688dd8a931e9f550e7dd8f"
+  integrity sha512-EQT2oG1cKzhPJNBEYvw4UJjY8UdejVpf5WucwarOENKB4hT1A2pD/OzAvX/mlQ9c+OwWndmqjmUHYxvrKBc8kA==
 
 mime-db@1.40.0:
   version "1.40.0"
