@@ -7,6 +7,7 @@ JMVC is a javascript module that implement the MVC architecture and is enhanced 
 
 Getting started
 ---------------
+
 Build from `source` folder running
 
 > npm buildhomedev
