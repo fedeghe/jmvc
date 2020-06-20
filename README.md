@@ -10,7 +10,7 @@ Getting started
 
 Build from `source` folder running
 
-> npm buildhomedev
+    yarn buildhomedev
 
 and let it run, will take a minute. It will be watching the `source` folder and will serve the jmvc project through http://localhost:3001
 
