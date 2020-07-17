@@ -32,7 +32,7 @@
         "eslint-plugin-node": "^9.0.1",
         "eslint-plugin-promise": "^4.1.1",
         "eslint-plugin-standard": "^4.0.0",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.19",
         "malta": "^4.1.19",
         "malta-browser-refresh": "^1.2.5",
         "malta-dev-srv": "^1.1.5",
