@@ -6,7 +6,7 @@
     "main": "hotlink.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "buildhomedev": "malta builhomedev.json",
+        "buildhomedev": "malta buildhomedev.json",
         "buildhome": "malta buildhome.json",
         "buildjmvcdev": "malta buildjmvcdev.json",
         "buildjmvc": "malta buildjmvc.json",
