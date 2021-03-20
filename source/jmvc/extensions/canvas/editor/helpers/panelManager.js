@@ -22,9 +22,10 @@ JMVC.canvas.Editor.getPanelManager = function (editor) {
             // obj.data && (o['data-act'] = obj.data);
             // avoid tooltip if no title is given
             if (obj.title) {
+                // debugger;
                 JMVC.widget.Tooltip(
                     ret,
-                    false,
+                    obj.title,
                     { color: '#f60', backgroundColor: '#000', border: '1px solid #f60' },
                     { follow: true }
                 );
