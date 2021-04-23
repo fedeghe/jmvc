@@ -13,12 +13,27 @@ _.util = {};
  * @type {Object}
  */
 JMVC.util = {
+
+    checksum: function(s) {
+        var hash = 0,
+            strlen = s.length,
+            i, c;
+        if (strlen === 0) {
+            return hash;
+        }
+        for (i = 0; i < strlen; i++) {
+            c = s.charCodeAt(i);
+            hash = ((hash << 5) - hash) + c;
+            hash = hash & hash;
+        }
+        return hash;
+    },
     /**
      * [ description]
      * @param  {[type]} d [description]
      * @return {[type]}   [description]
      */
-    deg2rad: function (d) { return d * JMVC.M.PI / 180; },
+    deg2rad: function(d) { return d * JMVC.M.PI / 180; },
     /**
      * [getLink description]
      * @param  {[type]} cnt  [description]
@@ -26,7 +41,7 @@ JMVC.util = {
      * @param  {[type]} prms [description]
      * @return {[type]}      [description]
      */
-    getLink: function (cnt, act, prms) {
+    getLink: function(cnt, act, prms) {
         var path = [];
         if (cnt) { path.push(cnt); }
         if (act) { path.push(act); }
@@ -38,7 +53,7 @@ JMVC.util = {
      * @param  {[type]} scriptname [description]
      * @return {[type]}            [description]
      */
-    getParameters: function (scriptid /** string **/, pname /** string **/) {
+    getParameters: function(scriptid /** string **/ , pname /** string **/ ) {
         var script = document.getElementById(scriptid),
             p = false,
             parameters = false;
@@ -49,11 +64,12 @@ JMVC.util = {
         return parameters;
     },
 
-    getSignature: function (func) {
+    getSignature: function(func) {
         var funcStr = func.toString(),
             params = funcStr.split(/\n/)[0].match(/\((.*)\)/)[1].split(','),
             out = {},
-            i = -1, l = params.length,
+            i = -1,
+            l = params.length,
             tmp;
         while (++i < l) {
             tmp = JMVC.string.trim(params[i]).match(/(\w*)\s?(\/\*\*?([^*]*)\*\*?\/)?/);
@@ -68,17 +84,17 @@ JMVC.util = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    getType: function (o) {
+    getType: function(o) {
         return ({}).toString.call(o).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
     },
 
-    isMobile: (function () {
+    isMobile: (function() {
         var ua = navigator.userAgent || navigator.vendor || window.opera;
         // eslint-disable-next-line no-useless-escape
         return /android|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(ad|hone|od)|iris|kindle|lge |maemo|meego.+mobile|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino|playbook|silk/i.test(ua) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(di|rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(ua.substr(0, 4));
     })(),
 
-    typeOf: function (o) {
+    typeOf: function(o) {
         if (o === null) {
             return 'null';
         }
@@ -93,7 +109,7 @@ JMVC.util = {
      * @param  {[type]} hex [description]
      * @return {[type]}     [description]
      */
-    hex2int: function (hex) {
+    hex2int: function(hex) {
         return parseInt(hex, 16);
     },
     /**
@@ -101,7 +117,7 @@ JMVC.util = {
      * @param  {[type]} i [description]
      * @return {[type]}   [description]
      */
-    int2hex: function (i) {
+    int2hex: function(i) {
         return parseInt(i, 10).toString(16);
     },
     /**
@@ -109,7 +125,7 @@ JMVC.util = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    isArray: function (o) {
+    isArray: function(o) {
         if (Array.isArray && Array.isArray(o)) {
             return true;
         }
@@ -119,11 +135,11 @@ JMVC.util = {
         return t1 && !!(t2 && t2.length);
     },
 
-    isBoolean: function (o) {
+    isBoolean: function(o) {
         return typeof o === 'boolean' || o instanceof Boolean;
     },
 
-    isDefined: function (o) {
+    isDefined: function(o) {
         return o !== null && o !== void 0;
     },
 
@@ -132,11 +148,11 @@ JMVC.util = {
      * @param  {[type]}  f [description]
      * @return {Boolean}   [description]
      */
-    isFunction: function (f) {
+    isFunction: function(f) {
         return typeof f === 'function' || o instanceof Function;
     },
 
-    isNumber: function (o) {
+    isNumber: function(o) {
         return typeof o === 'number' || o instanceof Number;
     },
 
@@ -145,7 +161,7 @@ JMVC.util = {
      * @param  {[type]} o [description]
      * @return {[type]}   [description]
      */
-    isObject: function (o) {
+    isObject: function(o) {
         var t0 = String(o) !== o,
             t1 = o === Object(o),
             t2 = typeof o !== 'function',
@@ -153,7 +169,7 @@ JMVC.util = {
         return t0 && t1 && t2 && !!(t3 && t3.length);
     },
 
-    isPrimitive: function (o) {
+    isPrimitive: function(o) {
         return /string|number|boolean/.test(typeof o);
     },
 
@@ -162,11 +178,11 @@ JMVC.util = {
      * @param  {[type]} e [description]
      * @return {[type]}   [description]
      */
-    isSet: function (e) {
+    isSet: function(e) {
         return typeof e !== 'undefined';
     },
 
-    isString: function (o) {
+    isString: function(o) {
         return typeof o === 'string' || o instanceof String;
     },
 
@@ -176,12 +192,12 @@ JMVC.util = {
      * @param  {[type]} type [description]
      * @return {[type]}      [description]
      */
-    isTypeOf: function (el, type) {
+    isTypeOf: function(el, type) {
         // eslint-disable-next-line valid-typeof
         return typeof el === type;
     },
 
-    isUndefined: function (o) {
+    isUndefined: function(o) {
         return o === null || o === void 0;
     },
 
@@ -190,7 +206,7 @@ JMVC.util = {
      * @param  {[type]} ) {return      +new Date( [description]
      * @return {[type]}   [description]
      */
-    now: function () {
+    now: function() {
         return +new Date();
     },
     /**
@@ -199,7 +215,7 @@ JMVC.util = {
      * @param  {[type]} max) {return      min + ~~(JMVC.M.random() * (max - min + 1) [description]
      * @return {[type]}      [description]
      */
-    rand: function (min, max) {
+    rand: function(min, max) {
         return min + ~~(JMVC.M.random() * (max - min + 1));
     },
     /**
@@ -207,7 +223,7 @@ JMVC.util = {
      * @param  {[type]} r [description]
      * @return {[type]}   [description]
      */
-    rad2deg: function (r) {
+    rad2deg: function(r) {
         return r * 180 / JMVC.M.PI;
     },
     /**
@@ -216,7 +232,7 @@ JMVC.util = {
      * @param  {[type]} end   [description]
      * @return {[type]}       [description]
      */
-    range: function (start, end) {
+    range: function(start, end) {
         if (start > end) {
             throw new JMVC.Errors.BadParams('ERROR: JMVC.util.range function #badparams (' + start + ', ' + end + ')');
         }
@@ -226,25 +242,25 @@ JMVC.util = {
         }
         return ret;
     },
-    interval: function (fn, interval, err) {
+    interval: function(fn, interval, err) {
         var active = true,
             i = 0,
             int = interval,
             init = +new Date();
-        (function run () {
+        (function run() {
             int = interval + (init + (i++ * interval) - new Date());
-            setTimeout(function () {
-                try {
-                    fn();
-                } catch (e) {
-                    err && err(e);
-                    active = false;
-                }
-                active && run();
-            },
-            int);
+            setTimeout(function() {
+                    try {
+                        fn();
+                    } catch (e) {
+                        err && err(e);
+                        active = false;
+                    }
+                    active && run();
+                },
+                int);
         })();
-        return function () {
+        return function() {
             active = false;
         };
     },
@@ -252,11 +268,11 @@ JMVC.util = {
      * [description]
      * @return {[type]} [description]
      */
-    uniqueid: new function () {
+    uniqueid: new function() {
         var count = 0,
             self = this;
         this.prefix = 'JMVCID';
-        this.toString = function () {
+        this.toString = function() {
             ++count;
             return self.prefix + count;
         };
