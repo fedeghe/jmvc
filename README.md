@@ -19,7 +19,7 @@ Start looking at the *source/app/controllers/index.js* controller.
 Start writing your own controllers, models and views.
 
 
-Samples
+Samples 
 -------
 The whole <a href="https://www.jmvc.org/" target="_blank">JMVC homepage</a> matches **exactly** the repository content,
 the <a href="https://www.jmvc.org/demo.jmvc" target="_blank">demo controller</a> will break the ice.
