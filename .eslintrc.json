@@ -21,9 +21,22 @@
         "ecmaVersion": 2018
     },
     "rules": {
-        "indent": ["error", 4],
+        "indent": [
+            "error",
+            4
+        ],
         "no-extra-semi": "error",
-        "semi": ["error", "always"],
-        "one-var": ["error", "always"]
+        "semi": [
+            "error",
+            "always"
+        ],
+        "one-var": [
+            "error",
+            "always"
+        ],
+        "space-before-function-paren": [
+            "error",
+            "never"
+        ],
     }
 }
