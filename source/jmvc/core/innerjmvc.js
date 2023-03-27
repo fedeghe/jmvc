@@ -539,7 +539,7 @@ jmvc = {
                 Child.baseConstructor = Parent;
 
                 // but ...
-                Child.super = function() {
+                Child.prototype.super = function() {
                     var args = [].slice.call(arguments, 0);
                     Parent.apply(this, args);
                 };
