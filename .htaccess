@@ -106,7 +106,7 @@ Options -Indexes
 	# RewriteRule \.(js)$ http://www.jmvc.loc/hotlink.js [R,L]
 
 	# models, views, controllers, extensions and media
-	RewriteRule ^(app|media)(.*)?$ - [L]
+	RewriteRule ^(app|media|srv)(.*)?$ - [L]
 
 	#for WS
 	RewriteRule ^sub.php?$ - [L]
