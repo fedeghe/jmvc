@@ -1807,7 +1807,7 @@ JMVC.controllers.demo = function () {
                         JMVCdomCreate('a', { href: 'javascript:;', alt: '/media/img/shad/javascript-save-all.jpg' }, 'will save us all'),
                         JMVCdomCreate('a', { href: 'javascript:;', alt: '/media/img/shad/Maurizio.png' }, 'java won`t'),
                         JMVCdomCreate('a', { href: 'javascript:;', alt: '/media/img/shad/raja.jpg' }, 'what about Raja?'),
-                        JMVCdomCreate('a', { href: 'javascript:;', alt: '/media/img/shad/mememe.jpg' }, '&Lucas?'),
+                        JMVCdomCreate('a', { href: 'javascript:;', alt: '/media/img/shad/tina.jpg' }, '🌸'),
                         JMVCdomCreate('a', { href: 'javascript:;', alt: '/media/img/shad/verkstedt.png' }, 'verkstedt')
                     ];
 
