@@ -4,9 +4,10 @@ JMVC.controllers.array = function () {
         JMVC.events.loadify(1000);
         this.render(function test () {
             'use strict';
-            var s = [-3.33E30, -10.2, 1, 20, 30, 40, 50, 60, 70, 80, 90, 95.3, 110, 120, 130, 140, 300, 1E4],
+            var arr = [-3.33E30, -10.2, 1, 20, 30, 40, 50, 60, 70, 80, 90, 95.3, 110, 120, 130, 140, 300, 1E4],
                 times = 5000,
-                n = s = 10000,
+                n = 10000,
+                s = 10000,
                 rn = JMVC.util.rand(-s, s) + 0.3456,
                 a = [];
             JMVC.test.initialize(true);
@@ -20,26 +21,26 @@ JMVC.controllers.array = function () {
             JMVC.test.code('var s = [' + s.toString() + '];');
 
             function pool (f) {
-                JMVC.test.testValue('f(1.2, s) = 1', function () { return f(1.2, s); }, 1);
-                JMVC.test.testValue('f(-3.33E31, s) = -3.33E30', function () { return f(-3.33E31, s); }, -3.33E30);
-                JMVC.test.testValue('f(-100, s) = -10.2', function () { return f(-100, s); }, -10.2);
-                JMVC.test.testValue('f(2, s) = 1', function () { return f(2, s); }, 1);
-                JMVC.test.testValue('f(10, s) = 1', function () { return f(10, s); }, 1);
-                JMVC.test.testValue('f(11, s) = 20', function () { return f(11, s); }, 20);
-                JMVC.test.testValue('f(19, s) = 20', function () { return f(19, s); }, 20);
-                JMVC.test.testValue('f(20, s) = 20', function () { return f(20, s); }, 20);
-                JMVC.test.testValue('f(21, s) = 20', function () { return f(21, s); }, 20);
-                JMVC.test.testValue('f(25, s) = 30', function () { return f(25, s); }, 30);
+                JMVC.test.testValue('f(1.2, s) = 1', function () { return f(1.2, arr); }, 1);
+                JMVC.test.testValue('f(-3.33E31, s) = -3.33E30', function () { return f(-3.33E31, arr); }, -3.33E30);
+                JMVC.test.testValue('f(-100, s) = -10.2', function () { return f(-100, arr); }, -10.2);
+                JMVC.test.testValue('f(2, s) = 1', function () { return f(2, arr); }, 1);
+                JMVC.test.testValue('f(10, s) = 1', function () { return f(10, arr); }, 1);
+                JMVC.test.testValue('f(11, s) = 20', function () { return f(11, arr); }, 20);
+                JMVC.test.testValue('f(19, s) = 20', function () { return f(19, arr); }, 20);
+                JMVC.test.testValue('f(20, s) = 20', function () { return f(20, arr); }, 20);
+                JMVC.test.testValue('f(21, s) = 20', function () { return f(21, arr); }, 20);
+                JMVC.test.testValue('f(25, s) = 30', function () { return f(25, arr); }, 30);
                 JMVC.test.message('next two test a milli bound');
-                JMVC.test.testValue('f(92.649, s) = 90', function () { return f(92.649, s); }, 90);
-                JMVC.test.testValue('f(92.65, s) = 95.3', function () { return f(92.65, s); }, 95.3);
-                JMVC.test.testValue('f(130, s) = 130', function () { return f(130, s); }, 130);
-                JMVC.test.testValue('f(219, s) = 140', function () { return f(219, s); }, 140);
-                JMVC.test.testValue('f(221, s) = 300', function () { return f(221, s); }, 300);
-                JMVC.test.testValue('f(9E3, s) = 1E4', function () { return f(9E3, s); }, 1E4);
-                JMVC.test.testValue('f(9E5, s) = 1E4', function () { return f(9E5, s); }, 1E4);
-                JMVC.test.testValue('f(9E10, s) = 1E4', function () { return f(9E10, s); }, 1E4);
-                JMVC.test.testValue('f(Infinity, s) = 1E4', function () { return f(Infinity, s); }, 1E4);
+                JMVC.test.testValue('f(92.649, s) = 90', function () { return f(92.649, arr); }, 90);
+                JMVC.test.testValue('f(92.65, s) = 95.3', function () { return f(92.65, arr); }, 95.3);
+                JMVC.test.testValue('f(130, s) = 130', function () { return f(130, arr); }, 130);
+                JMVC.test.testValue('f(219, s) = 140', function () { return f(219, arr); }, 140);
+                JMVC.test.testValue('f(221, s) = 300', function () { return f(221, arr); }, 300);
+                JMVC.test.testValue('f(9E3, s) = 1E4', function () { return f(9E3, arr); }, 1E4);
+                JMVC.test.testValue('f(9E5, s) = 1E4', function () { return f(9E5, arr); }, 1E4);
+                JMVC.test.testValue('f(9E10, s) = 1E4', function () { return f(9E10, arr); }, 1E4);
+                JMVC.test.testValue('f(Infinity, s) = 1E4', function () { return f(Infinity, arr); }, 1E4);
             }
             JMVC.test.message('O(n)');
             JMVC.test.code(JMVC.array.nearestElement.toString());
